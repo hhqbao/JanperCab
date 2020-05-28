@@ -1,0 +1,12 @@
+D:\Documents\GitHub\JanperCab\JanperCab\2-Persistent\bin\Debug\netcoreapp3.1\2-Persistent.deps.json
+D:\Documents\GitHub\JanperCab\JanperCab\2-Persistent\bin\Debug\netcoreapp3.1\2-Persistent.dll
+D:\Documents\GitHub\JanperCab\JanperCab\2-Persistent\bin\Debug\netcoreapp3.1\2-Persistent.pdb
+D:\Documents\GitHub\JanperCab\JanperCab\2-Persistent\obj\Debug\netcoreapp3.1\2-Persistent.AssemblyInfoInputs.cache
+D:\Documents\GitHub\JanperCab\JanperCab\2-Persistent\obj\Debug\netcoreapp3.1\2-Persistent.AssemblyInfo.cs
+D:\Documents\GitHub\JanperCab\JanperCab\2-Persistent\obj\Debug\netcoreapp3.1\2-Persistent.dll
+D:\Documents\GitHub\JanperCab\JanperCab\2-Persistent\obj\Debug\netcoreapp3.1\2-Persistent.pdb
+D:\Documents\GitHub\JanperCab\JanperCab\2-Persistent\bin\Debug\netcoreapp3.1\1-Domain.dll
+D:\Documents\GitHub\JanperCab\JanperCab\2-Persistent\bin\Debug\netcoreapp3.1\1-Domain.pdb
+D:\Documents\GitHub\JanperCab\JanperCab\2-Persistent\obj\Debug\netcoreapp3.1\2-Persistent.csprojAssemblyReference.cache
+D:\Documents\GitHub\JanperCab\JanperCab\2-Persistent\obj\Debug\netcoreapp3.1\2-Persistent.csproj.CopyComplete
+D:\Documents\GitHub\JanperCab\JanperCab\2-Persistent\obj\Debug\netcoreapp3.1\2-Persistent.csproj.CoreCompileInputs.cache

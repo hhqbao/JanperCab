@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>_3_Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\1-Domain\1-Domain.csproj" />
+    <ProjectReference Include="..\2-Persistent\2-Persistent.csproj" />
+  </ItemGroup>
+
+</Project>
