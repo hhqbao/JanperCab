@@ -1,5 +1,7 @@
 using _1_Domain;
 using _2_Persistent;
+using _3_Application.Interfaces.Services;
+using _4_Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -32,7 +34,13 @@ namespace _5_JanperCab
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(options =>
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -53,6 +61,9 @@ namespace _5_JanperCab
             services.AddAuthentication();
 
             services.AddMvcCore();
+
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ITokenGenerator, TokenGenerator>();
 
             services.AddSpaStaticFiles(configuration =>
             {

@@ -1,0 +1,23 @@
+@mixin hide-scrollbar {
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@mixin no-user-select {
+  *,
+  *::before,
+  *::after {
+    user-select: none;
+  }
+}
+
+@mixin clear-both {
+  &::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+}

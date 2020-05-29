@@ -1,0 +1,4 @@
+<div class="home-page">
+  <app-register-form *ngIf="!auth.isLoggedIn"></app-register-form>
+  <app-dashboard *ngIf="auth.isLoggedIn"></app-dashboard>
+</div>

@@ -1,0 +1,80 @@
+.duraform-process {
+  cursor: pointer;
+  display: flex;
+  list-style: none;
+
+  .step {
+    flex: 1;
+    padding-bottom: 2rem;
+    position: relative;
+    text-align: center;
+
+    &__number,
+    &__text {
+      transition: all 0.4s ease;
+    }
+
+    &__number {
+      align-items: center;
+      background-color: rgba($color: black, $alpha: 0.1);
+      border-radius: 100%;
+      color: rgba($color: black, $alpha: 0.2);
+      display: inline-flex;
+      font-size: 2.5rem;
+      height: 3rem;
+      justify-content: center;
+      width: 3rem;
+    }
+
+    &__text {
+      background-color: $grey-primary;
+      color: rgba($color: black, $alpha: 0.2);
+      font-size: 1.8rem;
+      margin: 0 auto;
+      padding-top: 1rem;
+      position: relative;
+      width: 60%;
+      z-index: 3;
+    }
+
+    &::before,
+    &::after {
+      background-color: $red-primary;
+      content: "";
+      display: block;
+      height: 1px;
+      left: 0;
+      position: absolute;
+      top: 45%;
+      transform: translateY(-50%);
+      transition: all 1s ease;
+      width: 100%;
+      z-index: 2;
+    }
+
+    &::before {
+      transform-origin: left;
+      transform: scaleX(0) translateY(-50%);
+    }
+
+    &::after {
+      background-color: rgba($color: black, $alpha: 0.1);
+      z-index: 1;
+    }
+
+    &.active {
+      &::before {
+        transform: scaleX(1) translateY(-50%);
+      }
+
+      .step__number {
+        background-color: $red-primary;
+        color: white;
+      }
+
+      .step__text {
+        color: $text-default;
+      }
+    }
+  }
+}

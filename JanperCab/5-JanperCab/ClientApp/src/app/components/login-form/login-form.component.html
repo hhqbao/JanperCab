@@ -1,0 +1,32 @@
+<div class="login-form">
+  <form [formGroup]="loginFormGroup" (submit)="onSubmit()">
+    <div class="form__inline-group">
+      <input
+        formControlName="email"
+        type="text"
+        class="form__control"
+        placeholder="Email address"
+        autocomplete="new-password"
+      />
+    </div>
+    <div class="form__inline-group">
+      <input
+        formControlName="password"
+        type="password"
+        class="form__control"
+        placeholder="Password"
+        autocomplete="new-password"
+      />
+    </div>
+    <div class="form__inline-group">
+      <button
+        type="submit"
+        class="btn btn--primary"
+        [disabled]="loginFormGroup.invalid || isLoading"
+      >
+        <span *ngIf="!isLoading">Sign In</span>
+        <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
+      </button>
+    </div>
+  </form>
+</div>

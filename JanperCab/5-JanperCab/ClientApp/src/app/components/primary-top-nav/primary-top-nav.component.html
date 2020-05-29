@@ -1,0 +1,18 @@
+<div class="primary-top-nav row">
+  <div class="col-1-2 middle pl-3">
+    <button
+      type="button"
+      class="primary-top-nav__btn"
+      (click)="layoutService.toggleLeftNav()"
+    >
+      <i class="fa fa-bars"></i>
+    </button>
+    <button type="button" class="primary-top-nav__btn">
+      <i class="fa fa-search"></i>
+    </button>
+  </div>
+  <div class="col-1-2 middle primary-top-nav__right-box">
+    <app-login-form *ngIf="!authService.isLoggedIn"></app-login-form>
+    <app-user-control-box *ngIf="authService.isLoggedIn"></app-user-control-box>
+  </div>
+</div>

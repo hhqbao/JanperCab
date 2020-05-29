@@ -1,0 +1,24 @@
+@import "./1-abstract/colors";
+@import "./1-abstract/mixins";
+@import "./2-base/ultilities";
+@import "./2-base/base";
+@import "./2-base/typography";
+@import "./2-base/animation";
+@import "./3-component/button";
+@import "./3-component/form";
+@import "./3-component/primary-top-nav";
+@import "./3-component/primary-left-nav";
+@import "./3-component/dropdown";
+@import "./3-component/loading-panel";
+@import "./3-component/register-form";
+@import "./3-component/duraform-process";
+@import "./3-component/duraform-door-list";
+@import "./4-layout/grid";
+@import "./4-layout/primary-layout";
+@import "./5-page/duraform-page";
+
+@import "./../../../node_modules/alertifyjs/build/css/alertify.min.css";
+.ajs-message {
+  background-color: $blue-primary;
+  color: white;
+}

@@ -1,0 +1,94 @@
+<div class="primary-left-nav">
+  <a [routerLink]="['']" class="header">
+    <img src="./../../../assets/images/logo.webp" class="header__logo" />
+    <h1 class="header__title">Janper Cab.</h1>
+  </a>
+  <div class="nav-body">
+    <ul class="nav">
+      <li class="nav__item">
+        <a
+          [routerLink]="['']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <div class="nav__item__icon">
+            <i class="fa fa-home"></i>
+          </div>
+          <div class="nav__item__text">
+            Dashboard
+          </div>
+        </a>
+      </li>
+      <li class="nav__item">
+        <a>
+          <div class="nav__item__icon">
+            <i class="fa fa-envelope-o"></i>
+          </div>
+          <div class="nav__item__text">
+            Email
+          </div>
+        </a>
+      </li>
+      <li class="nav__item">
+        <a appClassToggle="active">
+          <div class="nav__item__icon">
+            <i class="fa fa-table"></i>
+          </div>
+          <div class="nav__item__text">
+            Tables
+            <ul class="nav__item__sub-menu">
+              <li>
+                <a>Basic Table</a>
+              </li>
+              <li>
+                <a>Data Table</a>
+              </li>
+            </ul>
+          </div>
+        </a>
+      </li>
+      <li class="nav__item">
+        <a appClassToggle="active">
+          <div class="nav__item__icon">
+            <i class="fa fa-map-o"></i>
+          </div>
+          <div class="nav__item__text">
+            Maps
+            <ul class="nav__item__sub-menu">
+              <li>
+                <a>Google Map</a>
+              </li>
+              <li>
+                <a>Vector Map</a>
+              </li>
+            </ul>
+          </div>
+        </a>
+      </li>
+      <li class="nav__item">
+        <a appClassToggle="active">
+          <div class="nav__item__icon">
+            <i class="fa fa-files-o"></i>
+          </div>
+          <div class="nav__item__text">
+            Pages
+            <ul class="nav__item__sub-menu">
+              <li>
+                <a>404</a>
+              </li>
+              <li>
+                <a>500</a>
+              </li>
+              <li>
+                <a>Sign In</a>
+              </li>
+              <li>
+                <a>Sign Up</a>
+              </li>
+            </ul>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
