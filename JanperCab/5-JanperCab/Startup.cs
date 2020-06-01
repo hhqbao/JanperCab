@@ -1,7 +1,10 @@
 using _1_Domain;
 using _2_Persistent;
+using _3_Application.Interfaces.Repositories;
 using _3_Application.Interfaces.Services;
+using _4_Infrastructure.Repositories;
 using _4_Infrastructure.Services;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -14,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.Text;
 
 namespace _5_JanperCab
@@ -60,10 +64,15 @@ namespace _5_JanperCab
 
             services.AddAuthentication();
 
-            services.AddMvcCore();
+            services.AddMvcCore().AddNewtonsoftJson(opt =>
+                {
+                    opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
 
+            services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenGenerator, TokenGenerator>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddSpaStaticFiles(configuration =>
             {

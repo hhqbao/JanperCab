@@ -301,6 +301,47 @@ namespace _2_Persistent.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("_1_Domain.DuraformDoor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DuraformSerieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("varchar(1000)");
+
+                    b.Property<bool>("IsPopular")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DuraformSerieId");
+
+                    b.ToTable("DuraformDoors");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformSerie", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DuraformSeries");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -349,6 +390,15 @@ namespace _2_Persistent.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformDoor", b =>
+                {
+                    b.HasOne("_1_Domain.DuraformSerie", "DuraformSerie")
+                        .WithMany("DuraformDoors")
+                        .HasForeignKey("DuraformSerieId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

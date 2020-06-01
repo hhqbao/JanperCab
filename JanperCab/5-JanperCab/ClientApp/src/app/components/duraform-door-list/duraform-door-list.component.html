@@ -1,27 +1,6 @@
 <div class="duraform-door-list">
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
-  <app-duraform-door></app-duraform-door>
+  <app-duraform-door
+    *ngFor="let door of displayedDoors"
+    [door]="door"
+  ></app-duraform-door>
 </div>

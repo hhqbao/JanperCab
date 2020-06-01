@@ -1,3 +1,4 @@
+@import "./1-abstract/variables";
 @import "./1-abstract/colors";
 @import "./1-abstract/mixins";
 @import "./2-base/ultilities";
@@ -12,7 +13,7 @@
 @import "./3-component/loading-panel";
 @import "./3-component/register-form";
 @import "./3-component/duraform-process";
-@import "./3-component/duraform-door-list";
+@import "./3-component/duraform-door";
 @import "./4-layout/grid";
 @import "./4-layout/primary-layout";
 @import "./5-page/duraform-page";

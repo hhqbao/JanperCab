@@ -1,3 +1,6 @@
+import { DuraformOrderStepOneComponent } from './components/duraform-order-step-one/duraform-order-step-one.component';
+import { DuraformDoorService } from './_services/duraform-door.service';
+import { DuraformSerieService } from './_services/duraform-serie.service';
 import { DuraformFilterBoxComponent } from './components/duraform-filter-box/duraform-filter-box.component';
 import { DuraformDoorListComponent } from './components/duraform-door-list/duraform-door-list.component';
 import { RemoveWrapperDirective } from './_directives/remove-wrapper.directive';
@@ -43,6 +46,7 @@ import { UserControlBoxComponent } from './components/user-control-box/user-cont
     RegisterFormComponent,
     DashboardComponent,
     DuraformProcessComponent,
+    DuraformOrderStepOneComponent,
     DuraformDoorComponent,
     DuraformDoorListComponent,
     DuraformFilterBoxComponent,
@@ -59,7 +63,10 @@ import { UserControlBoxComponent } from './components/user-control-box/user-cont
       config: {
         tokenGetter: () => localStorage.getItem('token'),
         whitelistedDomains: [environment.domain],
-        blacklistedRoutes: [`${environment.baseUrl}/auth`],
+        blacklistedRoutes: [
+          `${environment.baseUrl}/auth`,
+          `${environment.baseUrl}/DuraformSeries`,
+        ],
       },
     }),
   ],
@@ -67,6 +74,8 @@ import { UserControlBoxComponent } from './components/user-control-box/user-cont
     AuthService,
     DialogService,
     LayoutService,
+    DuraformSerieService,
+    DuraformDoorService,
     ErrorInterceptorProvider,
   ],
   bootstrap: [AppComponent],

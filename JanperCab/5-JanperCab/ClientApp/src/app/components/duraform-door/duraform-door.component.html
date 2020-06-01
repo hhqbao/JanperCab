@@ -1,12 +1,19 @@
-<div class="duraform-door" appRemoveWrapper>
+<div class="duraform-door">
   <div class="duraform-door__img-box">
+    <div class="img-loader" *ngIf="isLoadingImg">
+      <i class="fa fa-spinner fa-spin"></i>
+    </div>
     <img
-      src="../../../assets/images/Duraform/Doors/S1/Bass.jpg"
-      alt="Duraform Door - Bass"
+      [hidden]="isLoadingImg"
+      src="../../../assets/images/Duraform/Doors/S{{ door.duraformSerieId }}/{{
+        door.imageUrl
+      }}"
+      alt="Duraform Door - {{ door.name }}"
+      (load)="this.isLoadingImg = false"
     />
   </div>
   <div class="duraform-door__control-box">
-    <div class="duraform-door__control-box__door-name">Bass</div>
+    <div class="duraform-door__control-box__door-name">{{ door.name }}</div>
     <div class="duraform-door__control-box__profile-name">
       6mm Pencil Round
     </div>
@@ -15,8 +22,5 @@
       alt="6mm Pencil Round"
       class="duraform-door__control-box__profile-img"
     />
-    <div class="duraform-door__color-btn">
-      <i class="fa fa-shopping-cart"></i>
-    </div>
   </div>
 </div>
