@@ -1,5 +1,5 @@
-import { DuraformDoorForOrderMenu } from './../../_models/duraform-door/DuraformDoorForOrderMenu';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { DuraformDoorForOrderMenu } from 'src/app/_models/duraform-door/DuraformDoorForOrderMenu';
 
 @Component({
   selector: 'app-duraform-door-list',
@@ -7,8 +7,13 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DuraformDoorListComponent implements OnInit {
   @Input() displayedDoors: DuraformDoorForOrderMenu[] = [];
+  @Output() selectDoor = new EventEmitter<DuraformDoorForOrderMenu>();
 
   constructor() {}
 
   ngOnInit() {}
+
+  onSelectDoor = (selectedDoor: DuraformDoorForOrderMenu) => {
+    this.selectDoor.emit(selectedDoor);
+  };
 }

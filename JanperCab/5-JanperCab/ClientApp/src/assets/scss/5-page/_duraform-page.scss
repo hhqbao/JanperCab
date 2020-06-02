@@ -22,48 +22,6 @@
         &:not(:first-child) {
           margin-left: 10rem;
         }
-
-        & > label {
-          cursor: pointer;
-
-          & > input[type="radio"] {
-            left: -999.9rem;
-            position: absolute;
-          }
-
-          & > span {
-            font-size: 2rem;
-            position: relative;
-            transition: all 0.3s ease;
-
-            &::after {
-              align-items: center;
-              border: solid 1px $text-default;
-              border-radius: 100%;
-              content: "\f111";
-              color: transparent;
-              display: inline-flex;
-              font-family: "FontAwesome";
-              font-size: 1.4rem;
-              height: 2.4rem;
-              justify-content: center;
-              position: absolute;
-              right: -3rem;
-              top: 50%;
-              transform: translateY(-50%);
-              transition: inherit;
-              width: 2.4rem;
-            }
-          }
-
-          & > input[type="radio"]:checked ~ span {
-            color: $red-primary;
-
-            &::after {
-              color: $red-primary;
-            }
-          }
-        }
       }
     }
   }

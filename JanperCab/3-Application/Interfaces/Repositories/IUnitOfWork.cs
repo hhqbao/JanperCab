@@ -8,6 +8,10 @@ namespace _3_Application.Interfaces.Repositories
 
         IDuraformDoorRepo DuraformDoors { get; }
 
+        IDuraformWrapTypeRepo DuraformWrapTypes { get; }
+
+        IDuraformWrapColorRepo DuraformWrapColors { get; }
+
         Task<int> CompleteAsync();
     }
 }

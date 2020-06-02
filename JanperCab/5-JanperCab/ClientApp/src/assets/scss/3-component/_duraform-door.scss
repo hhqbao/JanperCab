@@ -43,21 +43,6 @@
     position: relative;
     width: 15rem;
 
-    .img-loader {
-      animation: fadeIn 0.3s ease;
-      align-items: center;
-      border: solid 1px rgba($color: black, $alpha: 0.1);
-      background-color: white;
-      display: flex;
-      height: 100%;
-      font-size: 4rem;
-      justify-content: center;
-      left: 0;
-      position: absolute;
-      top: 0;
-      width: 100%;
-    }
-
     img {
       display: block;
       max-height: 100%;
@@ -77,14 +62,13 @@
     }
 
     &__profile-name {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       margin-top: 0.3rem;
     }
 
     &__profile-img {
       display: block;
       margin-top: 0.8rem;
-      margin-bottom: 1.3rem;
       width: 15rem;
     }
   }

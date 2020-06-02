@@ -9,3 +9,18 @@
 .pr-3 {
   padding-right: 3rem;
 }
+
+.img-loader {
+  animation: fadeIn 0.3s ease;
+  align-items: center;
+  border: solid 1px rgba($color: black, $alpha: 0.1);
+  background-color: white;
+  display: flex;
+  height: 100%;
+  font-size: 4rem;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}

@@ -11,6 +11,9 @@ namespace _2_Persistent
     {
         public DbSet<DuraformSerie> DuraformSeries { get; set; }
         public DbSet<DuraformDoor> DuraformDoors { get; set; }
+        public DbSet<DuraformWrapType> DuraformWrapTypes { get; set; }
+        public DbSet<DuraformWrapColor> DuraformWrapColors { get; set; }
+        public DbSet<NotAvailableDoorWrapType> NotAvailableDoorWrapTypes { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,
@@ -22,6 +25,9 @@ namespace _2_Persistent
         {
             builder.ApplyConfiguration(new DuraformSerieConfig());
             builder.ApplyConfiguration(new DuraformDoorConfig());
+            builder.ApplyConfiguration(new DuraformWrapTypeConfig());
+            builder.ApplyConfiguration(new DuraformWrapColorConfig());
+            builder.ApplyConfiguration(new NotAvailableDoorWrapTypeConfig());
 
             base.OnModelCreating(builder);
         }

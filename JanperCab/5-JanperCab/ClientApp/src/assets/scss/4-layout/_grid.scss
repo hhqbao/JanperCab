@@ -38,4 +38,8 @@ $col-gap: 1rem;
   .col-3-4 {
     width: calc(3 * ((100% - 3 * #{$col-gap}) / 4) + 2 * #{$col-gap});
   }
+
+  .col-1-5 {
+    width: calc((100% - 4 * #{$col-gap}) / 5);
+  }
 }

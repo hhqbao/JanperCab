@@ -1,3 +1,7 @@
+import { DuraformWrapColorService } from './_services/duraform-wrap-color.service';
+import { DuraformWrapTypeService } from './_services/duraform-wrap-type.service';
+import { ColorCardComponent } from './components/color-card/color-card.component';
+import { DuraformColorSelectorComponent } from './components/duraform-color-selector/duraform-color-selector.component';
 import { DuraformOrderStepOneComponent } from './components/duraform-order-step-one/duraform-order-step-one.component';
 import { DuraformDoorService } from './_services/duraform-door.service';
 import { DuraformSerieService } from './_services/duraform-serie.service';
@@ -50,6 +54,8 @@ import { UserControlBoxComponent } from './components/user-control-box/user-cont
     DuraformDoorComponent,
     DuraformDoorListComponent,
     DuraformFilterBoxComponent,
+    DuraformColorSelectorComponent,
+    ColorCardComponent,
     HomePageComponent,
     DuraformPageComponent,
   ],
@@ -63,10 +69,7 @@ import { UserControlBoxComponent } from './components/user-control-box/user-cont
       config: {
         tokenGetter: () => localStorage.getItem('token'),
         whitelistedDomains: [environment.domain],
-        blacklistedRoutes: [
-          `${environment.baseUrl}/auth`,
-          `${environment.baseUrl}/DuraformSeries`,
-        ],
+        blacklistedRoutes: [`${environment.baseUrl}`],
       },
     }),
   ],
@@ -76,6 +79,8 @@ import { UserControlBoxComponent } from './components/user-control-box/user-cont
     LayoutService,
     DuraformSerieService,
     DuraformDoorService,
+    DuraformWrapTypeService,
+    DuraformWrapColorService,
     ErrorInterceptorProvider,
   ],
   bootstrap: [AppComponent],

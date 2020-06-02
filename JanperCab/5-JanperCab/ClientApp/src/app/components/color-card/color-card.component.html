@@ -1,0 +1,20 @@
+<div class="color-card">
+  <div class="color-card__img-box">
+    <div class="img-loader" *ngIf="isLoadingImage">
+      <i class="fa fa-spinner fa-spin"></i>
+    </div>
+    <img
+      src="./../../../assets/images/Duraform/Colours/{{
+        color.duraformWrapTypeId
+      }}/{{ color.imageUrl }}"
+      alt="{{ color.name }}"
+      (load)="isLoadingImage = false"
+    />
+  </div>
+  <div class="color-card__type-name" *ngIf="showType">
+    {{ color.duraformWrapTypeName }}
+  </div>
+  <div class="color-card__name">
+    {{ color.name }}
+  </div>
+</div>

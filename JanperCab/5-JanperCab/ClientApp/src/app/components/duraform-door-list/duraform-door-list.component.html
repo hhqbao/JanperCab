@@ -2,5 +2,6 @@
   <app-duraform-door
     *ngFor="let door of displayedDoors"
     [door]="door"
+    (selectDoor)="onSelectDoor($event)"
   ></app-duraform-door>
 </div>

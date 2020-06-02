@@ -21,17 +21,22 @@ export class DuraformFilterBoxComponent implements OnInit {
     });
 
     setTimeout(() => {
-      (this.filterFg.get('search') as any).nativeElement.focus();
+      this.focusOnSearchBox();
     }, 100);
   }
 
-  onSearchKeyUp = (event: KeyboardEvent) => {
+  private focusOnSearchBox = () => {
+    (this.filterFg.get('search') as any).nativeElement.focus();
+  };
+
+  onSearchKeyUp = (event) => {
     if (event.key === 'Escape') {
       this.filterFg.patchValue({
         search: '',
         serie: 0,
       });
 
+      this.focusOnSearchBox();
       this.filterChange.emit(this.filterFg.value);
     }
   };
@@ -56,6 +61,8 @@ export class DuraformFilterBoxComponent implements OnInit {
     this.filterFg.patchValue({
       search: '',
     });
+
+    this.focusOnSearchBox();
 
     this.filterChange.emit(this.filterFg.value);
   };

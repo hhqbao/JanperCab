@@ -1,4 +1,4 @@
-<div class="duraform-door">
+<div class="duraform-door" (click)="onSelectDoor()">
   <div class="duraform-door__img-box">
     <div class="img-loader" *ngIf="isLoadingImg">
       <i class="fa fa-spinner fa-spin"></i>
@@ -18,9 +18,11 @@
       6mm Pencil Round
     </div>
     <img
-      src="../../../assets/images/Duraform/Profiles/S1/series-one-bass-tech_300px.png"
-      alt="6mm Pencil Round"
       class="duraform-door__control-box__profile-img"
+      src="../../../assets/images/Duraform/Profiles/S{{
+        door.duraformSerieId
+      }}/{{ door.imageUrl.replace('.jpg', '.png') }}"
+      alt="Duraform Profile - {{ door.name }}"
     />
   </div>
 </div>

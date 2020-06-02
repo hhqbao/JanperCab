@@ -12,6 +12,7 @@
         />
         <i
           class="fa fa-times"
+          (click)="onSearchKeyUp({ key: 'Escape' })"
           *ngIf="filterFg.get('search').value.trim() !== ''"
         ></i>
       </div>
@@ -25,7 +26,7 @@
     <div class="col-3-4 middle">
       <ul class="filter-box__serie-list">
         <li class="serie">
-          <label>
+          <label class="form__radio-btn">
             <input
               type="radio"
               formControlName="serie"
@@ -36,7 +37,7 @@
           </label>
         </li>
         <li class="serie" *ngFor="let serie of duraformSeries">
-          <label>
+          <label class="form__radio-btn">
             <input
               type="radio"
               formControlName="serie"

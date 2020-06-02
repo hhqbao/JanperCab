@@ -41,7 +41,6 @@ export class LoginFormComponent implements OnInit {
     this.auth.login(this.loginFormGroup.value).subscribe(
       (_) => {
         this.isLoading = false;
-        this.layoutService.toggleLeftNav(true);
         this.dialog.message('You have been signed in.');
       },
       (error) => {

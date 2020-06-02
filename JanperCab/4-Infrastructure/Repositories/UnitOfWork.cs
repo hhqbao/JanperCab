@@ -12,12 +12,18 @@ namespace _4_Infrastructure.Repositories
 
         public IDuraformDoorRepo DuraformDoors { get; }
 
+        public IDuraformWrapTypeRepo DuraformWrapTypes { get; }
+
+        public IDuraformWrapColorRepo DuraformWrapColors { get; }
+
         public UnitOfWork(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
 
             DuraformSeries = new DuraformSerieRepo(_dbContext);
             DuraformDoors = new DuraformDoorRepo(_dbContext);
+            DuraformWrapTypes = new DuraformWrapTypeRepo(_dbContext);
+            DuraformWrapColors = new DuraformWrapColorRepo(_dbContext);
         }
 
         public async Task<int> CompleteAsync()

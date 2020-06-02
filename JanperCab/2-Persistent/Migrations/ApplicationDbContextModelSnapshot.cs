@@ -342,6 +342,68 @@ namespace _2_Persistent.Migrations
                     b.ToTable("DuraformSeries");
                 });
 
+            modelBuilder.Entity("_1_Domain.DuraformWrapColor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DuraformWrapTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("varchar(1000)");
+
+                    b.Property<bool>("IsJanperMatching")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsLaminexMatching")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DuraformWrapTypeId");
+
+                    b.ToTable("DuraformWrapColors");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformWrapType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DuraformWrapTypes");
+                });
+
+            modelBuilder.Entity("_1_Domain.NotAvailableDoorWrapType", b =>
+                {
+                    b.Property<int>("DuraformDoorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DuraformWrapTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DuraformDoorId", "DuraformWrapTypeId");
+
+                    b.HasIndex("DuraformWrapTypeId");
+
+                    b.ToTable("NotAvailableDoorWrapTypes");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -399,6 +461,30 @@ namespace _2_Persistent.Migrations
                         .WithMany("DuraformDoors")
                         .HasForeignKey("DuraformSerieId")
                         .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformWrapColor", b =>
+                {
+                    b.HasOne("_1_Domain.DuraformWrapType", "DuraformWrapType")
+                        .WithMany("DuraformWrapColors")
+                        .HasForeignKey("DuraformWrapTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("_1_Domain.NotAvailableDoorWrapType", b =>
+                {
+                    b.HasOne("_1_Domain.DuraformDoor", "DuraformDoor")
+                        .WithMany("NotAvailableDoorWrapTypes")
+                        .HasForeignKey("DuraformDoorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("_1_Domain.DuraformWrapType", "DuraformWrapType")
+                        .WithMany("NotAvailableDoorWrapTypes")
+                        .HasForeignKey("DuraformWrapTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

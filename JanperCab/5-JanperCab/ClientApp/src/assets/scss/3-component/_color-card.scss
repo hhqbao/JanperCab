@@ -1,0 +1,57 @@
+.color-card {
+  cursor: pointer;
+  float: left;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 3rem;
+  width: calc((100% - 5 * 2rem) / 5);
+
+  &__img-box {
+    border: solid 1px black;
+    font-size: 0;
+    min-width: 20rem;
+    min-height: 20rem;
+    margin-bottom: 0.4rem;
+    position: relative;
+    transition: all 0.3s ease;
+
+    &::before {
+      box-shadow: 0 0 2rem rgba($red-primary, 0.5);
+      border-radius: inherit;
+      content: "";
+      display: inline-block;
+      height: 100%;
+      left: 0;
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      transition: all 0.3s ease;
+      width: 100%;
+      z-index: 0;
+    }
+
+    img {
+      display: inline-block;
+      max-width: 100%;
+    }
+  }
+
+  &__type-name {
+    color: $red-primary;
+    font-size: 2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  &__name {
+    font-size: 1.8rem;
+  }
+
+  &:hover &__img-box {
+    border: solid 1px $red-primary;
+    transform: translateY(-0.5rem);
+
+    &::before {
+      opacity: 1;
+    }
+  }
+}

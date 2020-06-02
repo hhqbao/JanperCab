@@ -5,4 +5,10 @@
 <app-duraform-door-list
   *ngIf="displayedDoors.length > 0"
   [displayedDoors]="displayedDoors"
+  (selectDoor)="onSelectDoor($event)"
 ></app-duraform-door-list>
+<app-duraform-color-selector
+  *ngIf="selectedDuraformDoor"
+  [door]="selectedDuraformDoor"
+  (cancel)="onCancelColorSelection()"
+></app-duraform-color-selector>

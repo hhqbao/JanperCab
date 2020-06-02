@@ -1,0 +1,76 @@
+<div class="duraform-color-selector" (click)="onWrapperClick($event.target)">
+  <div class="container">
+    <div class="door">
+      <div class="row">
+        <div class="col-1-4">
+          <div class="door__img-box">
+            <div class="door-detail">
+              <div class="door-detail__name">{{ door.name }}</div>
+              <div class="door-detail__profile-name">6mm Pencil Round</div>
+              <img
+                class="door-detail__profile-img"
+                src="../../../assets/images/Duraform/Profiles/S{{
+                  door.duraformSerieId
+                }}/{{ door.imageUrl.replace('.jpg', '.png') }}"
+                alt="Duraform Profile - {{ door.name }}"
+              />
+            </div>
+            <img
+              class="door-img"
+              src="./../../../assets/images/Duraform/Doors/S{{
+                door.duraformSerieId
+              }}/{{ door.imageUrl }}"
+              alt="Duraform Door - {{ door.name }}"
+            />
+          </div>
+        </div>
+        <div class="col-3-4" [formGroup]="filterFg">
+          <div class="door__search-box">
+            <div class="form__icon-control right door__search-box__search">
+              <input
+                formControlName="search"
+                type="text"
+                class="form__control"
+                placeholder="Search for colors..."
+                (input)="onSearchChange()"
+                (keyup)="onSearchClear($event)"
+              />
+              <i
+                class="fa fa-times"
+                *ngIf="filterFg.get('search').value.trim() !== ''"
+                (click)="onSearchClear({ key: 'Escape' })"
+              ></i>
+            </div>
+            <span
+              class="door__search-box__tip"
+              *ngIf="filterFg.get('search').value.trim() !== ''"
+            >
+              <i>press 'Esc' to clear.</i>
+            </span>
+          </div>
+          <ul class="door__type-list">
+            <li class="type" *ngFor="let type of wrapTypes">
+              <label class="form__radio-btn left">
+                <input
+                  type="radio"
+                  formControlName="type"
+                  [value]="type.id"
+                  (change)="onTypeChange()"
+                />
+                <span>{{ type.name }}</span>
+              </label>
+            </li>
+          </ul>
+          <div class="door__color-box">
+            <app-color-card
+              *ngFor="let color of wrapColors"
+              [showType]="filterFg.get('search').value.trim() !== ''"
+              [hidden]="hideColor(color)"
+              [color]="color"
+            ></app-color-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

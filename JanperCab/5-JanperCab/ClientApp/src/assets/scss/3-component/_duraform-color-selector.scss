@@ -1,0 +1,94 @@
+.duraform-color-selector {
+  animation: fadeIn 0.4s ease;
+  align-items: center;
+  background-color: rgba(black, 0.3);
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 999;
+
+  .container {
+    animation: zoomIn 0.4s ease;
+    box-shadow: 0 0 2rem rgba($color: black, $alpha: 0.5);
+    border: solid 1px $grey-primary;
+    border-radius: 0.5rem;
+    background-color: white;
+    height: 80%;
+    overflow-y: auto;
+    width: 80%;
+  }
+
+  .door {
+    padding: 2.5rem 4.5rem;
+
+    &__img-box {
+      .door-detail {
+        &__name {
+          color: $red-primary;
+          font-size: 3.5rem;
+          font-weight: 500;
+        }
+
+        &__profile-name {
+          font-size: 2.2rem;
+          margin-top: 0.9rem;
+        }
+
+        &__profile-img {
+          display: block;
+          margin-top: 1.3rem;
+        }
+      }
+
+      .door-img {
+        display: block;
+        max-width: 100%;
+        max-height: 55rem;
+        transform: translateX(-3rem);
+      }
+    }
+
+    &__search-box {
+      margin-bottom: 3.5rem;
+
+      &__search {
+        display: inline-block;
+        width: 25rem;
+      }
+
+      &__tip {
+        font-size: 1.4rem;
+        margin-left: 2rem;
+      }
+    }
+
+    &__type-list {
+      @include clear-both;
+
+      list-style: none;
+
+      .type {
+        float: left;
+        margin-bottom: 2rem;
+        width: calc((100% - 3 * 2rem) / 4);
+
+        &:not(:first-child) {
+          margin-left: 2rem;
+        }
+
+        &:nth-child(4n + 5) {
+          margin-left: 0;
+        }
+      }
+    }
+
+    &__color-box {
+      @include clear-both;
+      margin: 0 -1rem;
+    }
+  }
+}

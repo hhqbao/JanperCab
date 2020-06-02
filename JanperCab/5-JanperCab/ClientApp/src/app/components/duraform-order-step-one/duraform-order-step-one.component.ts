@@ -13,6 +13,7 @@ import { forkJoin } from 'rxjs';
 })
 export class DuraformOrderStepOneComponent implements OnInit {
   private duraformDoors: DuraformDoorForOrderMenu[] = [];
+  public selectedDuraformDoor: DuraformDoorForOrderMenu = null;
 
   duraformSeries: DuraformSerieForList[] = [];
   displayedDoors: DuraformDoorForOrderMenu[] = [];
@@ -39,17 +40,15 @@ export class DuraformOrderStepOneComponent implements OnInit {
     );
   }
 
-  loadSeries = () => {
+  private loadSeries = () => {
     return this.duraformSerieService.getAll();
   };
 
-  loadDuraformDoors = () => {
+  private loadDuraformDoors = () => {
     return this.duraformDoorService.getForOrderMenu();
   };
 
   onFilterChange = (changeValue: any) => {
-    console.log(changeValue);
-
     if (changeValue.serie === null) {
       this.displayedDoors = this.duraformDoors.filter((x) =>
         x.name.toLowerCase().includes(changeValue.search.toLowerCase())
@@ -63,5 +62,13 @@ export class DuraformOrderStepOneComponent implements OnInit {
         );
       }
     }
+  };
+
+  onSelectDoor = (selectedDoor: DuraformDoorForOrderMenu) => {
+    this.selectedDuraformDoor = selectedDoor;
+  };
+
+  onCancelColorSelection = () => {
+    this.selectedDuraformDoor = null;
   };
 }
