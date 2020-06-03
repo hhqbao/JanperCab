@@ -1,14 +1,13 @@
-<app-duraform-filter-box
-  [duraformSeries]="duraformSeries"
-  (filterChange)="onFilterChange($event)"
-></app-duraform-filter-box>
 <app-duraform-door-list
-  *ngIf="displayedDoors.length > 0"
-  [displayedDoors]="displayedDoors"
+  *ngIf="duraformDoors.length > 0"
+  [doors]="duraformDoors"
+  [series]="duraformSeries"
   (selectDoor)="onSelectDoor($event)"
 ></app-duraform-door-list>
 <app-duraform-color-selector
-  *ngIf="selectedDuraformDoor"
+  *ngIf="showColorSelector"
   [door]="selectedDuraformDoor"
   (cancel)="onCancelColorSelection()"
+  (colorPick)="onPickColor($event)"
+  (routingPick)="onRoutingPick()"
 ></app-duraform-color-selector>

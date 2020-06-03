@@ -24,7 +24,7 @@ namespace _5_JanperCab.Controllers
         [HttpGet("GetForOrderMenu")]
         public async Task<IActionResult> GetForOrderMenu()
         {
-            var duraformDoors = await _unitOfWork.DuraformDoors.GetAllAsync();
+            var duraformDoors = await _unitOfWork.DuraformDoors.GetForOrderMenuAsync();
 
             return Ok(_mapper.Map<List<DuraformDoor>, List<DuraformDoorForOrderMenu>>(duraformDoors));
         }

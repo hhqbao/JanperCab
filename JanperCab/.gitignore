@@ -25,7 +25,8 @@ OS junk files
 *.pyc
 *.xml
 ipch/
-obj/
+*/obj/
+*/bin/
 [Bb]in
 [Dd]ebug*/
 [Rr]elease*/

@@ -23,6 +23,9 @@ import { DuraformWrapColorForSelection } from 'src/app/_models/duraform-wrap-col
 })
 export class DuraformColorSelectorComponent implements OnInit {
   @Input() door: DuraformDoorForOrderMenu;
+
+  @Output() colorPick = new EventEmitter<DuraformWrapColorForSelection>();
+  @Output() routingPick = new EventEmitter<DuraformWrapColorForSelection>();
   @Output() cancel = new EventEmitter();
 
   wrapTypes: DuraformWrapTypeForSelection[] = [];
@@ -121,5 +124,13 @@ export class DuraformColorSelectorComponent implements OnInit {
     });
 
     this.focusSearchBox();
+  };
+
+  onPickColor = (color: DuraformWrapColorForSelection) => {
+    this.colorPick.emit(color);
+  };
+
+  onRoutingOnlyClick = () => {
+    this.routingPick.emit();
   };
 }

@@ -28,7 +28,8 @@
 
     &:not(:disabled) {
       &:hover {
-        transform: scale(1.05);
+        box-shadow: 2px 2px 1rem rgba(black, 0.6);
+        transform: translateY(-0.5rem);
 
         &::after {
           opacity: 0;

@@ -1,4 +1,10 @@
 <div class="duraform-page">
-  <app-duraform-process></app-duraform-process>
-  <app-duraform-order-step-one></app-duraform-order-step-one>
+  <app-duraform-process
+    [processValue]="processValue"
+    (processClick)="onProcessClick($event)"
+  ></app-duraform-process>
+  <app-duraform-order-step-one
+    *ngIf="displayStepOne()"
+    (finish)="onStepOneFinish($event)"
+  ></app-duraform-order-step-one>
 </div>

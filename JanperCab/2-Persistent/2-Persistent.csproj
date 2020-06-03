@@ -8,6 +8,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200531224059_CreateTable_DuraformSeries.cs" />
     <Compile Remove="Migrations\20200531224059_CreateTable_DuraformSeries.Designer.cs" />
+    <Compile Remove="Migrations\20200603031800_CreateTable_DuraformEdgeProfiles.cs" />
+    <Compile Remove="Migrations\20200603031800_CreateTable_DuraformEdgeProfiles.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

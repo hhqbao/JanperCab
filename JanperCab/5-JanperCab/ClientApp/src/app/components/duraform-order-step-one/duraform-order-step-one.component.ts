@@ -1,4 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { DuraformWrapTypeForSelection } from './../../_models/duraform-wrap-type/DuraformWrapTypeForSelection';
+import { StepOneReturnValue } from './../../_models/duraform-order-process/StepOneReturnValue';
+import { DuraformWrapColorForSelection } from './../../_models/duraform-wrap-color/DuraformWrapColorForSelection';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DuraformDoorForOrderMenu } from 'src/app/_models/duraform-door/DuraformDoorForOrderMenu';
 import { DuraformSerieForList } from 'src/app/_models/duraform-serie/DuraformSerieForList';
 import { LayoutService } from 'src/app/_services/layout.service';
@@ -12,11 +15,13 @@ import { forkJoin } from 'rxjs';
   templateUrl: 'duraform-order-step-one.component.html',
 })
 export class DuraformOrderStepOneComponent implements OnInit {
-  private duraformDoors: DuraformDoorForOrderMenu[] = [];
-  public selectedDuraformDoor: DuraformDoorForOrderMenu = null;
+  @Output() finish = new EventEmitter<StepOneReturnValue>();
 
+  duraformDoors: DuraformDoorForOrderMenu[] = [];
   duraformSeries: DuraformSerieForList[] = [];
-  displayedDoors: DuraformDoorForOrderMenu[] = [];
+
+  selectedDuraformDoor: DuraformDoorForOrderMenu = null;
+  showColorSelector = false;
 
   constructor(
     private layout: LayoutService,
@@ -31,7 +36,6 @@ export class DuraformOrderStepOneComponent implements OnInit {
       (responses) => {
         this.duraformSeries = responses[0];
         this.duraformDoors = responses[1];
-        this.onFilterChange({ serie: 0 });
         this.layout.closeLoadingPanel();
       },
       (error) => {
@@ -48,27 +52,52 @@ export class DuraformOrderStepOneComponent implements OnInit {
     return this.duraformDoorService.getForOrderMenu();
   };
 
-  onFilterChange = (changeValue: any) => {
-    if (changeValue.serie === null) {
-      this.displayedDoors = this.duraformDoors.filter((x) =>
-        x.name.toLowerCase().includes(changeValue.search.toLowerCase())
-      );
-    } else {
-      if (changeValue.serie === 0) {
-        this.displayedDoors = this.duraformDoors.filter((x) => x.isPopular);
-      } else {
-        this.displayedDoors = this.duraformDoors.filter(
-          (x) => x.duraformSerieId === changeValue.serie
-        );
-      }
-    }
-  };
-
   onSelectDoor = (selectedDoor: DuraformDoorForOrderMenu) => {
     this.selectedDuraformDoor = selectedDoor;
+    this.showColorSelector = true;
+  };
+
+  onPickColor = (color: DuraformWrapColorForSelection) => {
+    const selectedSerie = this.duraformSeries.find(
+      (x) => x.id === this.selectedDuraformDoor.duraformSerieId
+    );
+
+    const selectedWrapType: DuraformWrapTypeForSelection = {
+      id: color.duraformWrapTypeId,
+      name: color.duraformWrapTypeName,
+    };
+
+    const returnValue: StepOneReturnValue = {
+      door: this.selectedDuraformDoor,
+      serie: selectedSerie,
+      isRoutingOnly: false,
+      wrapType: selectedWrapType,
+      wrapColor: color,
+    };
+
+    this.showColorSelector = false;
+    this.finish.emit(returnValue);
+  };
+
+  onRoutingPick = () => {
+    const selectedSerie = this.duraformSeries.find(
+      (x) => x.id === this.selectedDuraformDoor.duraformSerieId
+    );
+
+    const returnValue: StepOneReturnValue = {
+      door: this.selectedDuraformDoor,
+      serie: selectedSerie,
+      isRoutingOnly: true,
+      wrapType: null,
+      wrapColor: null,
+    };
+
+    this.showColorSelector = false;
+    this.finish.emit(returnValue);
   };
 
   onCancelColorSelection = () => {
     this.selectedDuraformDoor = null;
+    this.showColorSelector = false;
   };
 }

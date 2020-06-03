@@ -1,11 +1,11 @@
 <ul class="duraform-process">
-  <li class="step active">
+  <li class="step active" (click)="onStepOneClick()">
     <div class="step__number">1</div>
     <div class="step__text">
       Selec Door Design
     </div>
   </li>
-  <li class="step">
+  <li class="step" [class]="{ active: processValue.stepOneValue }">
     <div class="step__number">2</div>
     <div class="step__text">
       Add Components

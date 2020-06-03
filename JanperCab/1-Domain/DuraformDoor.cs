@@ -13,10 +13,20 @@ namespace _1_Domain
 
         public bool IsPopular { get; set; }
 
-
         public DuraformSerie.DuraformSerieKey DuraformSerieId { get; set; }
 
+        public int? FixedEdgeProfileId { get; set; }
+
+        public int? DefaultEdgeProfileId { get; set; }
+
+
+
+
         public virtual DuraformSerie DuraformSerie { get; set; }
+
+        public virtual DuraformEdgeProfile FixedEdgeProfile { get; set; }
+
+        public virtual DuraformEdgeProfile DefaultEdgeProfile { get; set; }
 
         public virtual ICollection<NotAvailableDoorWrapType> NotAvailableDoorWrapTypes { get; set; }
 

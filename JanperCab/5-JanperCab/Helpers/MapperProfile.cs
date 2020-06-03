@@ -13,7 +13,15 @@ namespace _5_JanperCab.Helpers
         {
             CreateMap<DuraformSerie, DuraformSerieForList>();
 
-            CreateMap<DuraformDoor, DuraformDoorForOrderMenu>();
+            CreateMap<DuraformDoor, DuraformDoorForOrderMenu>()
+                .ForMember(
+                    dest => dest.FixedEdgeProfileName,
+                    opt => opt.MapFrom(src => src.FixedEdgeProfile.Name)
+                )
+                .ForMember(
+                    dest => dest.DefaultEdgeProfileName,
+                    opt => opt.MapFrom(src => src.DefaultEdgeProfile.Name)
+                );
 
             CreateMap<DuraformWrapType, DuraformWrapTypeForSelection>();
 

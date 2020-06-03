@@ -18,7 +18,6 @@ export class UserControlBoxComponent implements OnInit {
 
   onLogOut = () => {
     this.authService.logOut();
-    this.layout.toggleLeftNav(false);
     this.router.navigated = false;
     this.router.navigate([this.router.url]);
   };

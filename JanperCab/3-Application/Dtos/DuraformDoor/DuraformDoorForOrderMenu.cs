@@ -11,5 +11,13 @@
         public bool IsPopular { get; set; }
 
         public _1_Domain.DuraformSerie.DuraformSerieKey DuraformSerieId { get; set; }
+
+        public int? FixedEdgeProfileId { get; set; }
+
+        public int? DefaultEdgeProfileId { get; set; }
+
+        public string FixedEdgeProfileName { get; set; }
+
+        public string DefaultEdgeProfileName { get; set; }
     }
 }

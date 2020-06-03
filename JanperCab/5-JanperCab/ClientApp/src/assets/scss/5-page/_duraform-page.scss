@@ -29,18 +29,6 @@
   .duraform-door-list {
     @include clear-both;
 
-    & > app-duraform-door {
-      &:not(:first-child) {
-        .duraform-door {
-          margin-left: $duraform-door-gap;
-        }
-      }
-
-      &:nth-child(#{$duraform-per-row}n + #{$duraform-per-row + 1}) {
-        .duraform-door {
-          margin-left: 0;
-        }
-      }
-    }
+    margin: 0 -$duraform-door-gap;
   }
 }

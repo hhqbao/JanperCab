@@ -4,4 +4,8 @@ export class DuraformDoorForOrderMenu {
   imageUrl: string;
   isPopular: boolean;
   duraformSerieId: number;
+  fixedEdgeProfileId: number;
+  defaultEdgeProfileId: number;
+  fixedEdgeProfileName: string;
+  defaultEdgeProfileName: string;
 }

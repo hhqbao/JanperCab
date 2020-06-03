@@ -7,12 +7,14 @@
   cursor: pointer;
   display: flex;
   float: left;
+  margin-left: $duraform-door-gap;
+  margin-right: $duraform-door-gap;
   margin-bottom: 1.5rem;
   padding: 1rem;
   position: relative;
   transition: all 0.4s ease;
   width: calc(
-    (100% - (#{$duraform-per-row - 1}) * #{$duraform-door-gap}) / #{$duraform-per-row}
+    (100% - 2 * #{$duraform-per-row} * #{$duraform-door-gap}) / #{$duraform-per-row}
   );
 
   &::before {
@@ -64,6 +66,7 @@
     &__profile-name {
       font-size: 1.6rem;
       margin-top: 0.3rem;
+      min-height: 1.9rem;
     }
 
     &__profile-img {

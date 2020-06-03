@@ -6,7 +6,9 @@
           <div class="door__img-box">
             <div class="door-detail">
               <div class="door-detail__name">{{ door.name }}</div>
-              <div class="door-detail__profile-name">6mm Pencil Round</div>
+              <div class="door-detail__profile-name">
+                {{ door.fixedEdgeProfileName || door.defaultEdgeProfileName }}
+              </div>
               <img
                 class="door-detail__profile-img"
                 src="../../../assets/images/Duraform/Profiles/S{{
@@ -47,6 +49,13 @@
             >
               <i>press 'Esc' to clear.</i>
             </span>
+            <button
+              type="button"
+              class="btn door__search-box__btn-routing-only"
+              (click)="onRoutingOnlyClick()"
+            >
+              Routing Only
+            </button>
           </div>
           <ul class="door__type-list">
             <li class="type" *ngFor="let type of wrapTypes">
@@ -67,6 +76,7 @@
               [showType]="filterFg.get('search').value.trim() !== ''"
               [hidden]="hideColor(color)"
               [color]="color"
+              (pick)="onPickColor($event)"
             ></app-color-card>
           </div>
         </div>

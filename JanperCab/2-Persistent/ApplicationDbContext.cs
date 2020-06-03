@@ -13,6 +13,7 @@ namespace _2_Persistent
         public DbSet<DuraformDoor> DuraformDoors { get; set; }
         public DbSet<DuraformWrapType> DuraformWrapTypes { get; set; }
         public DbSet<DuraformWrapColor> DuraformWrapColors { get; set; }
+        public DbSet<DuraformEdgeProfile> DuraformEdgeProfiles { set; get; }
         public DbSet<NotAvailableDoorWrapType> NotAvailableDoorWrapTypes { get; set; }
 
         public ApplicationDbContext(
@@ -27,6 +28,7 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformDoorConfig());
             builder.ApplyConfiguration(new DuraformWrapTypeConfig());
             builder.ApplyConfiguration(new DuraformWrapColorConfig());
+            builder.ApplyConfiguration(new DuraformEdgeProfileConfig());
             builder.ApplyConfiguration(new NotAvailableDoorWrapTypeConfig());
 
             base.OnModelCreating(builder);

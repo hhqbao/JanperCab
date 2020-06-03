@@ -64,6 +64,15 @@
         font-size: 1.4rem;
         margin-left: 2rem;
       }
+
+      &__btn-routing-only {
+        border-radius: 0.3rem;
+        background-color: $red-primary;
+        color: white;
+        font-size: 1.8rem;
+        margin-left: 15rem;
+        padding: 1rem 3rem;
+      }
     }
 
     &__type-list {

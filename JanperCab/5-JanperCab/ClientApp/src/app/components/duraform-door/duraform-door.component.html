@@ -15,7 +15,7 @@
   <div class="duraform-door__control-box">
     <div class="duraform-door__control-box__door-name">{{ door.name }}</div>
     <div class="duraform-door__control-box__profile-name">
-      6mm Pencil Round
+      {{ door.fixedEdgeProfileName || door.defaultEdgeProfileName }}
     </div>
     <img
       class="duraform-door__control-box__profile-img"
