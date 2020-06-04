@@ -10,11 +10,11 @@ namespace _2_Persistent
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
         public DbSet<DuraformSerie> DuraformSeries { get; set; }
-        public DbSet<DuraformDoor> DuraformDoors { get; set; }
+        public DbSet<DuraformDesign> DuraformDesigns { get; set; }
         public DbSet<DuraformWrapType> DuraformWrapTypes { get; set; }
         public DbSet<DuraformWrapColor> DuraformWrapColors { get; set; }
         public DbSet<DuraformEdgeProfile> DuraformEdgeProfiles { set; get; }
-        public DbSet<NotAvailableDoorWrapType> NotAvailableDoorWrapTypes { get; set; }
+        public DbSet<NotAvailableDesignWrapType> NotAvailableDesignWrapTypes { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,
@@ -25,11 +25,11 @@ namespace _2_Persistent
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new DuraformSerieConfig());
-            builder.ApplyConfiguration(new DuraformDoorConfig());
+            builder.ApplyConfiguration(new DuraformDesignConfig());
             builder.ApplyConfiguration(new DuraformWrapTypeConfig());
             builder.ApplyConfiguration(new DuraformWrapColorConfig());
             builder.ApplyConfiguration(new DuraformEdgeProfileConfig());
-            builder.ApplyConfiguration(new NotAvailableDoorWrapTypeConfig());
+            builder.ApplyConfiguration(new NotAvailableDesignWrapTypeConfig());
 
             base.OnModelCreating(builder);
         }

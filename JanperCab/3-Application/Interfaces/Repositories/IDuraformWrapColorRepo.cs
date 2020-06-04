@@ -6,6 +6,6 @@ namespace _3_Application.Interfaces.Repositories
 {
     public interface IDuraformWrapColorRepo : IBaseRepository<DuraformWrapColor>
     {
-        Task<List<DuraformWrapColor>> GetForDoorAsync(int doorId);
+        Task<List<DuraformWrapColor>> GetForDesignAsync(int designId);
     }
 }

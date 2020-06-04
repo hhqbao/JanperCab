@@ -6,6 +6,6 @@ namespace _3_Application.Interfaces.Repositories
 {
     public interface IDuraformWrapTypeRepo : IBaseRepository<DuraformWrapType>
     {
-        Task<List<DuraformWrapType>> GetForDoorAsync(int doorId);
+        Task<List<DuraformWrapType>> GetForDesignAsync(int designId);
     }
 }

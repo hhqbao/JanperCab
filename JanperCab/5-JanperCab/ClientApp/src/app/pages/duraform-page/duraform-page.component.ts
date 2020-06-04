@@ -1,6 +1,6 @@
+import { DuraformOrderService } from './../../_services/duraform-order.service';
 import { DuraformProcessStep } from './../../_enums/DuraformProcessStep';
-import { DuraformDoorProcessValue } from './../../_models/duraform-order-process/DuraformDoorProcessValue';
-import { StepOneReturnValue } from './../../_models/duraform-order-process/StepOneReturnValue';
+import { StepOneReturnValue } from '../../_models/duraform-order/StepOneReturnValue';
 import { Component, OnInit } from '@angular/core';
 import { LayoutService } from 'src/app/_services/layout.service';
 
@@ -9,24 +9,38 @@ import { LayoutService } from 'src/app/_services/layout.service';
   templateUrl: 'duraform-page.component.html',
 })
 export class DuraformPageComponent implements OnInit {
-  processValue = new DuraformDoorProcessValue();
+  duraformProcessStep = DuraformProcessStep;
+  loadedSteps: DuraformProcessStep[] = [DuraformProcessStep.StepOne];
   displayedStep = DuraformProcessStep.StepOne;
 
-  constructor(private layout: LayoutService) {}
+  constructor(
+    private layout: LayoutService,
+    private order: DuraformOrderService
+  ) {
+    this.order.reset();
+  }
 
   ngOnInit() {
     this.layout.toggleLeftNav(true);
   }
-
-  displayStepOne = () => {
-    return this.displayedStep === DuraformProcessStep.StepOne;
-  };
 
   onProcessClick = (step: DuraformProcessStep) => {
     this.displayedStep = step;
   };
 
   onStepOneFinish = (returnValue: StepOneReturnValue) => {
-    this.processValue.stepOneValue = returnValue;
+    this.order.submitStepOne(returnValue);
+
+    if (this.loadedSteps.includes(DuraformProcessStep.StepTwo)) {
+      this.loadedSteps = [DuraformProcessStep.StepOne];
+
+      setTimeout(() => {
+        this.loadedSteps.push(DuraformProcessStep.StepTwo);
+      }, 100);
+    } else {
+      this.loadedSteps.push(DuraformProcessStep.StepTwo);
+    }
+
+    this.displayedStep = this.duraformProcessStep.StepTwo;
   };
 }

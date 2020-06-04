@@ -14,14 +14,14 @@ namespace _1_Domain
         public bool? ForcedValuePerItem { get; set; }
 
 
-        public ICollection<DuraformDoor> DuraformDoorsWithFixed { get; set; }
+        public ICollection<DuraformDesign> DuraformDesignsWithFixed { get; set; }
 
-        public ICollection<DuraformDoor> DuraformDoorsWithDefault { get; set; }
+        public ICollection<DuraformDesign> DuraformDesignsWithDefault { get; set; }
 
         public DuraformEdgeProfile()
         {
-            DuraformDoorsWithFixed = new Collection<DuraformDoor>();
-            DuraformDoorsWithDefault = new Collection<DuraformDoor>();
+            DuraformDesignsWithFixed = new Collection<DuraformDesign>();
+            DuraformDesignsWithDefault = new Collection<DuraformDesign>();
         }
     }
 }

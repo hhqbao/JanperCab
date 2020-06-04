@@ -301,7 +301,7 @@ namespace _2_Persistent.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("_1_Domain.DuraformDoor", b =>
+            modelBuilder.Entity("_1_Domain.DuraformDesign", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -335,7 +335,7 @@ namespace _2_Persistent.Migrations
 
                     b.HasIndex("FixedEdgeProfileId");
 
-                    b.ToTable("DuraformDoors");
+                    b.ToTable("DuraformDesigns");
                 });
 
             modelBuilder.Entity("_1_Domain.DuraformEdgeProfile", b =>
@@ -422,19 +422,19 @@ namespace _2_Persistent.Migrations
                     b.ToTable("DuraformWrapTypes");
                 });
 
-            modelBuilder.Entity("_1_Domain.NotAvailableDoorWrapType", b =>
+            modelBuilder.Entity("_1_Domain.NotAvailableDesignWrapType", b =>
                 {
-                    b.Property<int>("DuraformDoorId")
+                    b.Property<int>("DuraformDesignId")
                         .HasColumnType("int");
 
                     b.Property<int>("DuraformWrapTypeId")
                         .HasColumnType("int");
 
-                    b.HasKey("DuraformDoorId", "DuraformWrapTypeId");
+                    b.HasKey("DuraformDesignId", "DuraformWrapTypeId");
 
                     b.HasIndex("DuraformWrapTypeId");
 
-                    b.ToTable("NotAvailableDoorWrapTypes");
+                    b.ToTable("NotAvailableDesignWrapTypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -488,21 +488,21 @@ namespace _2_Persistent.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("_1_Domain.DuraformDoor", b =>
+            modelBuilder.Entity("_1_Domain.DuraformDesign", b =>
                 {
                     b.HasOne("_1_Domain.DuraformEdgeProfile", "DefaultEdgeProfile")
-                        .WithMany("DuraformDoorsWithDefault")
+                        .WithMany("DuraformDesignsWithDefault")
                         .HasForeignKey("DefaultEdgeProfileId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("_1_Domain.DuraformSerie", "DuraformSerie")
-                        .WithMany("DuraformDoors")
+                        .WithMany("DuraformDesigns")
                         .HasForeignKey("DuraformSerieId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("_1_Domain.DuraformEdgeProfile", "FixedEdgeProfile")
-                        .WithMany("DuraformDoorsWithFixed")
+                        .WithMany("DuraformDesignsWithFixed")
                         .HasForeignKey("FixedEdgeProfileId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
@@ -516,16 +516,16 @@ namespace _2_Persistent.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("_1_Domain.NotAvailableDoorWrapType", b =>
+            modelBuilder.Entity("_1_Domain.NotAvailableDesignWrapType", b =>
                 {
-                    b.HasOne("_1_Domain.DuraformDoor", "DuraformDoor")
-                        .WithMany("NotAvailableDoorWrapTypes")
-                        .HasForeignKey("DuraformDoorId")
+                    b.HasOne("_1_Domain.DuraformDesign", "DuraformDesign")
+                        .WithMany("NotAvailableDesignWrapTypes")
+                        .HasForeignKey("DuraformDesignId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("_1_Domain.DuraformWrapType", "DuraformWrapType")
-                        .WithMany("NotAvailableDoorWrapTypes")
+                        .WithMany("NotAvailableDesignWrapTypes")
                         .HasForeignKey("DuraformWrapTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -1,5 +1,6 @@
 ﻿using _1_Domain;
-using _3_Application.Dtos.DuraformDoor;
+using _3_Application.Dtos.DuraformDesign;
+using _3_Application.Dtos.DuraformEdgeProfile;
 using _3_Application.Dtos.DuraformSerie;
 using _3_Application.Dtos.DuraformWrapColor;
 using _3_Application.Dtos.DuraformWrapType;
@@ -13,7 +14,7 @@ namespace _5_JanperCab.Helpers
         {
             CreateMap<DuraformSerie, DuraformSerieForList>();
 
-            CreateMap<DuraformDoor, DuraformDoorForOrderMenu>()
+            CreateMap<DuraformDesign, DuraformDesignForOrderMenu>()
                 .ForMember(
                     dest => dest.FixedEdgeProfileName,
                     opt => opt.MapFrom(src => src.FixedEdgeProfile.Name)
@@ -30,6 +31,8 @@ namespace _5_JanperCab.Helpers
                     dest => dest.DuraformWrapTypeName,
                     opt => opt.MapFrom(src => src.DuraformWrapType.Name)
                 );
+
+            CreateMap<DuraformEdgeProfile, DuraformEdgeProfileForList>();
         }
     }
 }

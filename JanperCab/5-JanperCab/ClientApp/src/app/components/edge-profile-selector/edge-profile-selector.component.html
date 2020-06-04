@@ -1,0 +1,31 @@
+<div class="edge-profile-selector" appDropdownBtn="show">
+  <div class="profile-name" [ngClass]="{ disabled: !canSelect }">
+    <span *ngIf="!selectedEdgeProfile">
+      -- Select Edge Profile --
+    </span>
+    <span *ngIf="selectedEdgeProfile">
+      {{ selectedEdgeProfile.name }}
+    </span>
+  </div>
+  <ul class="edge-profile-list" *ngIf="canSelect">
+    <li
+      class="edge-profile"
+      [ngClass]="{
+        selected: selectedEdgeProfile && selectedEdgeProfile.id === profile.id
+      }"
+      *ngFor="let profile of edgeProfileList"
+      (click)="onSelectProfile(profile)"
+    >
+      <img
+        src="./../../../assets/images/Duraform/EdgeProfiles/{{
+          profile.imageUrl
+        }}"
+        alt="Edge Profile"
+        class="edge-profile__img"
+      />
+      <div class="edge-profile__name">
+        {{ profile.name }}
+      </div>
+    </li>
+  </ul>
+</div>

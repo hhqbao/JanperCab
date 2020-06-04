@@ -1,16 +1,19 @@
+import { DuraformOrderService } from './../../_services/duraform-order.service';
+import { DialogService } from './../../_services/dialog.service';
 import { DuraformProcessStep } from './../../_enums/DuraformProcessStep';
-import { DuraformDoorProcessValue } from './../../_models/duraform-order-process/DuraformDoorProcessValue';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-duraform-process',
   templateUrl: 'duraform-process.component.html',
 })
 export class DuraformProcessComponent implements OnInit {
-  @Input() processValue: DuraformDoorProcessValue;
   @Output() processClick = new EventEmitter<DuraformProcessStep>();
 
-  constructor() {}
+  constructor(
+    private dialog: DialogService,
+    public order: DuraformOrderService
+  ) {}
 
   ngOnInit() {}
 
@@ -19,7 +22,8 @@ export class DuraformProcessComponent implements OnInit {
   };
 
   onStepTwoClick = () => {
-    if (!this.processValue.stepOneValue) {
+    if (!this.order.selectedDesign) {
+      this.dialog.error('Please select a door to process.');
       return;
     }
 

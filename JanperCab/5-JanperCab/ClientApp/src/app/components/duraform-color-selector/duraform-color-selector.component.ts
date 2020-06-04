@@ -1,3 +1,4 @@
+import { DuraformDesignForOrderMenu } from '../../_models/duraform-design/DuraformDesignForOrderMenu';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DuraformWrapTypeForSelection } from './../../_models/duraform-wrap-type/DuraformWrapTypeForSelection';
 import { DialogService } from 'src/app/_services/dialog.service';
@@ -5,7 +6,7 @@ import { forkJoin } from 'rxjs';
 import { DuraformWrapColorService } from './../../_services/duraform-wrap-color.service';
 import { DuraformWrapTypeService } from './../../_services/duraform-wrap-type.service';
 import { LayoutService } from 'src/app/_services/layout.service';
-import { DuraformDoorForOrderMenu } from 'src/app/_models/duraform-door/DuraformDoorForOrderMenu';
+
 import {
   Component,
   OnInit,
@@ -22,7 +23,7 @@ import { DuraformWrapColorForSelection } from 'src/app/_models/duraform-wrap-col
   templateUrl: 'duraform-color-selector.component.html',
 })
 export class DuraformColorSelectorComponent implements OnInit {
-  @Input() door: DuraformDoorForOrderMenu;
+  @Input() design: DuraformDesignForOrderMenu;
 
   @Output() colorPick = new EventEmitter<DuraformWrapColorForSelection>();
   @Output() routingPick = new EventEmitter<DuraformWrapColorForSelection>();
@@ -72,11 +73,11 @@ export class DuraformColorSelectorComponent implements OnInit {
   };
 
   private loadWrapTypes = () => {
-    return this.wrapTypeService.getForDoor(this.door.id);
+    return this.wrapTypeService.getForDesign(this.design.id);
   };
 
   private loadWrapColors = () => {
-    return this.wrapColorService.getForDoor(this.door.id);
+    return this.wrapColorService.getForDesign(this.design.id);
   };
 
   private focusSearchBox = () => {

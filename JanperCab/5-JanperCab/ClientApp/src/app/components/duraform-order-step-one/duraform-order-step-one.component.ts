@@ -1,12 +1,12 @@
+import { DuraformDesignService } from './../../_services/duraform-design.service';
+import { DuraformDesignForOrderMenu } from '../../_models/duraform-design/DuraformDesignForOrderMenu';
 import { DuraformWrapTypeForSelection } from './../../_models/duraform-wrap-type/DuraformWrapTypeForSelection';
-import { StepOneReturnValue } from './../../_models/duraform-order-process/StepOneReturnValue';
+import { StepOneReturnValue } from '../../_models/duraform-order/StepOneReturnValue';
 import { DuraformWrapColorForSelection } from './../../_models/duraform-wrap-color/DuraformWrapColorForSelection';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { DuraformDoorForOrderMenu } from 'src/app/_models/duraform-door/DuraformDoorForOrderMenu';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { DuraformSerieForList } from 'src/app/_models/duraform-serie/DuraformSerieForList';
 import { LayoutService } from 'src/app/_services/layout.service';
 import { DuraformSerieService } from 'src/app/_services/duraform-serie.service';
-import { DuraformDoorService } from 'src/app/_services/duraform-door.service';
 import { DialogService } from 'src/app/_services/dialog.service';
 import { forkJoin } from 'rxjs';
 
@@ -17,25 +17,25 @@ import { forkJoin } from 'rxjs';
 export class DuraformOrderStepOneComponent implements OnInit {
   @Output() finish = new EventEmitter<StepOneReturnValue>();
 
-  duraformDoors: DuraformDoorForOrderMenu[] = [];
+  duraformDesigns: DuraformDesignForOrderMenu[] = [];
   duraformSeries: DuraformSerieForList[] = [];
 
-  selectedDuraformDoor: DuraformDoorForOrderMenu = null;
+  selectedDuraformDesign: DuraformDesignForOrderMenu = null;
   showColorSelector = false;
 
   constructor(
     private layout: LayoutService,
     private duraformSerieService: DuraformSerieService,
-    private duraformDoorService: DuraformDoorService,
+    private duraformDesignService: DuraformDesignService,
     private dialog: DialogService
   ) {}
 
   ngOnInit() {
     this.layout.showLoadingPanel();
-    forkJoin([this.loadSeries(), this.loadDuraformDoors()]).subscribe(
+    forkJoin([this.loadSeries(), this.loadDuraformDesigns()]).subscribe(
       (responses) => {
         this.duraformSeries = responses[0];
-        this.duraformDoors = responses[1];
+        this.duraformDesigns = responses[1];
         this.layout.closeLoadingPanel();
       },
       (error) => {
@@ -48,18 +48,18 @@ export class DuraformOrderStepOneComponent implements OnInit {
     return this.duraformSerieService.getAll();
   };
 
-  private loadDuraformDoors = () => {
-    return this.duraformDoorService.getForOrderMenu();
+  private loadDuraformDesigns = () => {
+    return this.duraformDesignService.getForOrderMenu();
   };
 
-  onSelectDoor = (selectedDoor: DuraformDoorForOrderMenu) => {
-    this.selectedDuraformDoor = selectedDoor;
+  onSelectDesign = (selectedDesign: DuraformDesignForOrderMenu) => {
+    this.selectedDuraformDesign = selectedDesign;
     this.showColorSelector = true;
   };
 
   onPickColor = (color: DuraformWrapColorForSelection) => {
     const selectedSerie = this.duraformSeries.find(
-      (x) => x.id === this.selectedDuraformDoor.duraformSerieId
+      (x) => x.id === this.selectedDuraformDesign.duraformSerieId
     );
 
     const selectedWrapType: DuraformWrapTypeForSelection = {
@@ -68,7 +68,7 @@ export class DuraformOrderStepOneComponent implements OnInit {
     };
 
     const returnValue: StepOneReturnValue = {
-      door: this.selectedDuraformDoor,
+      design: { ...this.selectedDuraformDesign },
       serie: selectedSerie,
       isRoutingOnly: false,
       wrapType: selectedWrapType,
@@ -81,11 +81,11 @@ export class DuraformOrderStepOneComponent implements OnInit {
 
   onRoutingPick = () => {
     const selectedSerie = this.duraformSeries.find(
-      (x) => x.id === this.selectedDuraformDoor.duraformSerieId
+      (x) => x.id === this.selectedDuraformDesign.duraformSerieId
     );
 
     const returnValue: StepOneReturnValue = {
-      door: this.selectedDuraformDoor,
+      design: { ...this.selectedDuraformDesign },
       serie: selectedSerie,
       isRoutingOnly: true,
       wrapType: null,
@@ -97,7 +97,7 @@ export class DuraformOrderStepOneComponent implements OnInit {
   };
 
   onCancelColorSelection = () => {
-    this.selectedDuraformDoor = null;
+    this.selectedDuraformDesign = null;
     this.showColorSelector = false;
   };
 }

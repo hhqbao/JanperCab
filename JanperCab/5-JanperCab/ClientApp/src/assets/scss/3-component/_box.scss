@@ -1,0 +1,23 @@
+.box {
+  display: block;
+
+  &__heading {
+    border-top-left-radius: 0.5rem;
+    background-color: $red-primary;
+    color: white;
+    clip-path: polygon(0 0, 90% 0, 100% 100%, 0 100%);
+    font-size: 1.8rem;
+    padding: 0.5rem 1rem;
+    position: relative;
+    transform-origin: center;
+    transform: scaleX(0.97);
+  }
+
+  &__content {
+    border: solid 1px rgba($color: black, $alpha: 0.1);
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    background-color: white;
+    padding: 1rem;
+  }
+}

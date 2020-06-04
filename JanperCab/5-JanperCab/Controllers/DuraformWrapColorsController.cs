@@ -29,10 +29,10 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<List<DuraformWrapColor>, List<DuraformWrapColorForSelection>>(colors));
         }
 
-        [HttpGet("ForDoor/{doorId}")]
-        public async Task<IActionResult> ForDoor(int doorId)
+        [HttpGet("ForDesign/{designId}")]
+        public async Task<IActionResult> ForDoor(int designId)
         {
-            var colors = await _unitOfWork.DuraformWrapColors.GetForDoorAsync(doorId);
+            var colors = await _unitOfWork.DuraformWrapColors.GetForDesignAsync(designId);
 
             return Ok(_mapper.Map<List<DuraformWrapColor>, List<DuraformWrapColorForSelection>>(colors));
         }

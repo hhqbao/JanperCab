@@ -19,13 +19,13 @@ namespace _1_Domain
         public string Name { get; set; }
 
 
-        public virtual ICollection<DuraformDoor> DuraformDoors { get; set; }
+        public virtual ICollection<DuraformDesign> DuraformDesigns { get; set; }
 
 
 
         public DuraformSerie()
         {
-            DuraformDoors = new Collection<DuraformDoor>();
+            DuraformDesigns = new Collection<DuraformDesign>();
         }
     }
 }

@@ -13,11 +13,11 @@ namespace _4_Infrastructure.Repositories
         {
         }
 
-        public async Task<List<DuraformWrapColor>> GetForDoorAsync(int doorId)
+        public async Task<List<DuraformWrapColor>> GetForDesignAsync(int designId)
         {
             var colors = await _dbSet
                 .Include(x => x.DuraformWrapType)
-                .Where(x => x.DuraformWrapType.NotAvailableDoorWrapTypes.All(y => y.DuraformDoorId != doorId))
+                .Where(x => x.DuraformWrapType.NotAvailableDesignWrapTypes.All(y => y.DuraformDesignId != designId))
                 .ToListAsync();
 
             return colors;

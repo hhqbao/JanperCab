@@ -1,0 +1,56 @@
+<div
+  class="duraform-design"
+  [ngClass]="{ 'can-select': canSelect }"
+  (click)="onSelectDesign()"
+>
+  <div class="duraform-design__img-box">
+    <div class="img-loader" *ngIf="isLoadingImg">
+      <i class="fa fa-spinner fa-spin"></i>
+    </div>
+    <img
+      [hidden]="isLoadingImg"
+      src="../../../assets/images/Duraform/Doors/S{{
+        design.duraformSerieId
+      }}/{{ design.imageUrl }}"
+      alt="Duraform Door - {{ design.name }}"
+      (load)="this.isLoadingImg = false"
+    />
+  </div>
+  <div class="duraform-design__control-box">
+    <div class="duraform-design__control-box__door-name">{{ design.name }}</div>
+    <div class="duraform-design__control-box__profile-name">
+      <span *ngIf="showOrderDetails && order.selectedEdgeProfile">
+        {{ order.selectedEdgeProfile.name }}
+      </span>
+      <span *ngIf="!showOrderDetails">
+        {{ design.fixedEdgeProfileName || design.defaultEdgeProfileName }}
+      </span>
+    </div>
+    <img
+      class="duraform-design__control-box__profile-img"
+      src="../../../assets/images/Duraform/Profiles/S{{
+        design.duraformSerieId
+      }}/{{ design.imageUrl.replace('.jpg', '.png') }}"
+      alt="Duraform Profile - {{ design.name }}"
+    />
+    <div *ngIf="showOrderDetails">
+      <div
+        class="duraform-design__control-box__route-only"
+        *ngIf="order.isRoutingOnly"
+      >
+        ROUTE ONLY
+      </div>
+      <div
+        class="duraform-design__control-box__wrapping"
+        *ngIf="!order.isRoutingOnly"
+      >
+        <div class="wrap-type">
+          {{ order.selectedWrapType.name }}
+        </div>
+        <div class="wrap-color">
+          {{ order.selectedWrapColor.name }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

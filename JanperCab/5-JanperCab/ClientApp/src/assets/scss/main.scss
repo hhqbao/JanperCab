@@ -5,6 +5,7 @@
 @import "./2-base/base";
 @import "./2-base/typography";
 @import "./2-base/animation";
+@import "./3-component/box";
 @import "./3-component/button";
 @import "./3-component/form";
 @import "./3-component/primary-top-nav";
@@ -13,9 +14,12 @@
 @import "./3-component/loading-panel";
 @import "./3-component/register-form";
 @import "./3-component/duraform-process";
-@import "./3-component/duraform-door";
+@import "./3-component/duraform-design";
+@import "./3-component/duraform-design-list";
 @import "./3-component/duraform-color-selector";
 @import "./3-component/color-card";
+@import "./3-component/duraform-order-step-two";
+@import "./3-component/edge-profile-selector";
 @import "./4-layout/grid";
 @import "./4-layout/primary-layout";
 @import "./5-page/duraform-page";

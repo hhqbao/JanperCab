@@ -13,9 +13,9 @@ export class DuraformWrapColorService {
     );
   };
 
-  getForDoor = (doorId: number) => {
+  getForDesign = (designId: number) => {
     return this.http.get<DuraformWrapColorForSelection[]>(
-      `${environment.baseUrl}/DuraformWrapColors/ForDoor/${doorId}`
+      `${environment.baseUrl}/DuraformWrapColors/ForDesign/${designId}`
     );
   };
 }

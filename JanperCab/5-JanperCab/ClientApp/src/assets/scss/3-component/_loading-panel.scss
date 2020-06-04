@@ -1,6 +1,6 @@
 .loading-panel {
   align-items: center;
-  background-color: rgba(black, 0.3);
+  background-color: transparent;
   display: flex;
   height: 100vh;
   justify-content: center;
@@ -14,7 +14,7 @@
     animation: zoomOut 0.4s ease-out;
     background-color: white;
     border-radius: 0.5rem;
-    box-shadow: 0 0 2rem rgba($color: black, $alpha: 0.5);
+    box-shadow: 0 0 2rem rgba($color: black, $alpha: 0.7);
     max-width: 35rem;
     padding: 3rem 1rem;
     text-align: center;

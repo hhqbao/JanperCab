@@ -21,3 +21,28 @@
     display: table;
   }
 }
+
+@mixin hover-shadow($color) {
+  position: relative;
+
+  &::before {
+    box-shadow: 0 0 2rem rgba($color, 0.5);
+    border-radius: inherit;
+    content: "";
+    display: inline-block;
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    transition: all 0.3s ease;
+    width: 100%;
+    z-index: 0;
+  }
+
+  &:hover {
+    &::before {
+      opacity: 1;
+    }
+  }
+}

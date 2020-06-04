@@ -13,10 +13,10 @@ namespace _4_Infrastructure.Repositories
         {
         }
 
-        public async Task<List<DuraformWrapType>> GetForDoorAsync(int doorId)
+        public async Task<List<DuraformWrapType>> GetForDesignAsync(int designId)
         {
             var types = await _dbSet
-                .Where(x => x.NotAvailableDoorWrapTypes.All(y => y.DuraformDoorId != doorId))
+                .Where(x => x.NotAvailableDesignWrapTypes.All(y => y.DuraformDesignId != designId))
                 .ToListAsync();
 
             return types;

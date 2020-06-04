@@ -6,11 +6,13 @@ namespace _3_Application.Interfaces.Repositories
     {
         IDuraformSerieRepo DuraformSeries { get; }
 
-        IDuraformDoorRepo DuraformDoors { get; }
+        IDuraformDesignRepo DuraformDesigns { get; }
 
         IDuraformWrapTypeRepo DuraformWrapTypes { get; }
 
         IDuraformWrapColorRepo DuraformWrapColors { get; }
+
+        IDuraformEdgeProfileRepo DuraformEdgeProfiles { get; }
 
         Task<int> CompleteAsync();
     }

@@ -12,12 +12,12 @@ namespace _1_Domain
 
         public virtual ICollection<DuraformWrapColor> DuraformWrapColors { get; set; }
 
-        public virtual ICollection<NotAvailableDoorWrapType> NotAvailableDoorWrapTypes { get; set; }
+        public virtual ICollection<NotAvailableDesignWrapType> NotAvailableDesignWrapTypes { get; set; }
 
         public DuraformWrapType()
         {
             DuraformWrapColors = new Collection<DuraformWrapColor>();
-            NotAvailableDoorWrapTypes = new Collection<NotAvailableDoorWrapType>();
+            NotAvailableDesignWrapTypes = new Collection<NotAvailableDesignWrapType>();
         }
     }
 }

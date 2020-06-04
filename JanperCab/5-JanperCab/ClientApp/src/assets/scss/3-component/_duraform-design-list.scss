@@ -1,0 +1,15 @@
+.duraform-design-list {
+  @include clear-both;
+
+  margin: 0 -$duraform-door-gap;
+
+  .duraform-design {
+    float: left;
+    margin-left: $duraform-door-gap;
+    margin-right: $duraform-door-gap;
+    margin-bottom: 1.5rem;
+    width: calc(
+      (100% - 2 * #{$duraform-per-row} * #{$duraform-door-gap}) / #{$duraform-per-row}
+    );
+  }
+}

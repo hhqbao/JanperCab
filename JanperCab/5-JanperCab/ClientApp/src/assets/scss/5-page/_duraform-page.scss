@@ -1,5 +1,8 @@
 .duraform-page {
   @include no-user-select;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
   .filter-box {
     margin-bottom: 2rem;
@@ -24,11 +27,5 @@
         }
       }
     }
-  }
-
-  .duraform-door-list {
-    @include clear-both;
-
-    margin: 0 -$duraform-door-gap;
   }
 }

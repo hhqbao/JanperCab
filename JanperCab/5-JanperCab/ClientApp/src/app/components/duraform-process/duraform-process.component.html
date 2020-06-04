@@ -5,7 +5,11 @@
       Selec Door Design
     </div>
   </li>
-  <li class="step" [class]="{ active: processValue.stepOneValue }">
+  <li
+    class="step"
+    [class]="{ active: order.selectedDesign }"
+    (click)="onStepTwoClick()"
+  >
     <div class="step__number">2</div>
     <div class="step__text">
       Add Components

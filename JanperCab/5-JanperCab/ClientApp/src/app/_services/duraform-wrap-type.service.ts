@@ -13,9 +13,9 @@ export class DuraformWrapTypeService {
     );
   };
 
-  getForDoor = (doorId: number) => {
+  getForDesign = (designId: number) => {
     return this.http.get<DuraformWrapTypeForSelection[]>(
-      `${environment.baseUrl}/DuraformWrapTypes/ForDoor/${doorId}`
+      `${environment.baseUrl}/DuraformWrapTypes/ForDesign/${designId}`
     );
   };
 }

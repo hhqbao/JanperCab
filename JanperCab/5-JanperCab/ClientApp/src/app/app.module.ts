@@ -1,14 +1,19 @@
+import { DuraformOrderService } from './_services/duraform-order.service';
+import { DuraformEdgeProfileService } from './_services/duraform-edge-profile.service';
+import { EdgeProfileSelectorComponent } from './components/edge-profile-selector/edge-profile-selector.component';
+import { BoxComponent } from './components/box/box.component';
+import { DuraformDesignService } from './_services/duraform-design.service';
+import { DuraformOrderStepTwoComponent } from './components/duraform-order-step-two/duraform-order-step-two.component';
 import { DuraformWrapColorService } from './_services/duraform-wrap-color.service';
 import { DuraformWrapTypeService } from './_services/duraform-wrap-type.service';
 import { ColorCardComponent } from './components/color-card/color-card.component';
 import { DuraformColorSelectorComponent } from './components/duraform-color-selector/duraform-color-selector.component';
 import { DuraformOrderStepOneComponent } from './components/duraform-order-step-one/duraform-order-step-one.component';
-import { DuraformDoorService } from './_services/duraform-door.service';
 import { DuraformSerieService } from './_services/duraform-serie.service';
 import { DuraformFilterBoxComponent } from './components/duraform-filter-box/duraform-filter-box.component';
-import { DuraformDoorListComponent } from './components/duraform-door-list/duraform-door-list.component';
+import { DuraformDesignListComponent } from './components/duraform-design-list/duraform-design-list.component';
 import { RemoveWrapperDirective } from './_directives/remove-wrapper.directive';
-import { DuraformDoorComponent } from './components/duraform-door/duraform-door.component';
+import { DuraformDesignComponent } from './components/duraform-design/duraform-design.component';
 import { DuraformProcessComponent } from './components/duraform-process/duraform-process.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LayoutService } from './_services/layout.service';
@@ -42,6 +47,7 @@ import { UserControlBoxComponent } from './components/user-control-box/user-cont
     DropdownBtnDirective,
     FormInvalidFocusDirective,
     RemoveWrapperDirective,
+    BoxComponent,
     PrimaryLayoutComponent,
     PrimaryTopNavComponent,
     PrimaryLeftNavComponent,
@@ -51,11 +57,13 @@ import { UserControlBoxComponent } from './components/user-control-box/user-cont
     DashboardComponent,
     DuraformProcessComponent,
     DuraformOrderStepOneComponent,
-    DuraformDoorComponent,
-    DuraformDoorListComponent,
+    DuraformOrderStepTwoComponent,
+    DuraformDesignComponent,
+    DuraformDesignListComponent,
     DuraformFilterBoxComponent,
     DuraformColorSelectorComponent,
     ColorCardComponent,
+    EdgeProfileSelectorComponent,
     HomePageComponent,
     DuraformPageComponent,
   ],
@@ -78,9 +86,11 @@ import { UserControlBoxComponent } from './components/user-control-box/user-cont
     DialogService,
     LayoutService,
     DuraformSerieService,
-    DuraformDoorService,
+    DuraformDesignService,
     DuraformWrapTypeService,
     DuraformWrapColorService,
+    DuraformEdgeProfileService,
+    DuraformOrderService,
     ErrorInterceptorProvider,
   ],
   bootstrap: [AppComponent],
