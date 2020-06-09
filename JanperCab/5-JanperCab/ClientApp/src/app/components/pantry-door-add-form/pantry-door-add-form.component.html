@@ -3,7 +3,6 @@
   appOrderForm
   [formGroup]="formGroup"
   (submit)="onSubmit()"
-  [hidden]="!isSelected"
 >
   <td>
     <input
@@ -57,6 +56,51 @@
     />
   </td>
   <td>
+    <input
+      class="form__control"
+      currencyMask
+      appSelectOnFocus
+      formControlName="chairRailHeight"
+      [options]="{
+        align: 'center',
+        allowZero: false,
+        precision: '0',
+        decimal: '',
+        prefix: '',
+        thousands: '',
+        max: 500
+      }"
+    />
+  </td>
+  <td>
+    <select
+      class="form__control text-center"
+      style="width: 95%;"
+      formControlName="chairRailTypeId"
+    >
+      <option *ngFor="let type of pantryDoorChairRailTypes" [value]="type.id">
+        {{ type.name }}
+      </option>
+    </select>
+  </td>
+  <td>
+    <input
+      class="form__control"
+      currencyMask
+      appSelectOnFocus
+      formControlName="extraRailBottom"
+      [options]="{
+        align: 'center',
+        allowZero: false,
+        precision: '0',
+        decimal: '',
+        prefix: '',
+        thousands: '',
+        max: 500
+      }"
+    />
+  </td>
+  <td>
     <label class="form__checkbox">
       <input type="checkbox" formControlName="top" />
       <span></span>
@@ -81,18 +125,6 @@
     </label>
   </td>
   <td>
-    <select
-      class="form__control"
-      style="width: 95%;"
-      formControlName="optionId"
-    >
-      <option [value]="null"></option>
-      <option *ngFor="let option of doorOptions" [value]="option.id">
-        {{ option.name }}
-      </option>
-    </select>
-  </td>
-  <td colspan="2">
     <input
       type="text"
       class="form__control"
@@ -101,34 +133,15 @@
       formControlName="note"
     />
   </td>
-</tr>
-<tr
-  class="duraform-order-step-two__cart-list-item"
-  [ngClass]="{ animated: !hasSelected }"
-  [hidden]="isSelected"
-  (click)="onSelect()"
->
-  <td>{{ door.quantity }}</td>
-  <td>{{ door.height }}</td>
-  <td>{{ door.width }}</td>
-  <td>{{ door.top ? "Y" : "" }}</td>
-  <td>{{ door.bottom ? "Y" : "" }}</td>
-  <td>{{ door.left ? "Y" : "" }}</td>
-  <td>{{ door.right ? "Y" : "" }}</td>
-  <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
-    {{ door.duraformDoorOption?.name }}
-  </td>
-  <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
-    {{ door.note }}
-  </td>
   <td style="width: 5rem;">
     <button
+      [disabled]="formGroup.invalid"
       type="button"
-      class="btn btn--secondary"
+      class="btn btn--primary"
       style="padding: 0.5rem 1rem;"
-      (click)="onRemove()"
+      (click)="onSubmit()"
     >
-      <i class="fa fa-trash"></i>
+      <i class="fa fa-plus-circle"></i>
     </button>
   </td>
 </tr>

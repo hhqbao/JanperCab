@@ -92,7 +92,7 @@ export class DuraformDoorCartItemComponent implements OnInit {
     this.isSelected = false;
   };
 
-  onSelectDoor = () => {
+  onSelect = () => {
     this.formGroup.patchValue({ ...this.door });
     this.formGroup.patchValue({
       optionId: this.door.duraformDoorOption
@@ -103,7 +103,7 @@ export class DuraformDoorCartItemComponent implements OnInit {
     this.hasSelected = true;
   };
 
-  onRemoveDoor = () => {
+  onRemove = () => {
     this.dialog.confirm('Remove Door', 'Are you sure?', () => {
       this.removeDoor.emit(this.door);
     });

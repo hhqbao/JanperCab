@@ -1,4 +1,4 @@
-<div class="duraform-order-step-two">
+<div class="duraform-order-step-two" *ngIf="isLoaded">
   <div class="col-left">
     <div class="info-box">
       <app-duraform-design
@@ -43,14 +43,12 @@
           ></app-duraform-door-tab>
         </li>
         <li class="page">
-          Pantry Doors Page
+          <app-pantry-door-tab
+            [pantryDoorChairRailTypes]="pantryDoorChairRailTypes"
+          ></app-pantry-door-tab>
         </li>
-        <li class="page">
-          End Panels & IB Backs Page
-        </li>
-        <li class="page">
-          Drawers Page
-        </li>
+        <li class="page"></li>
+        <li class="page"></li>
       </ul>
     </div>
   </div>

@@ -1,3 +1,6 @@
+import { PantryDoorChairRailTypeService } from './_services/pantry-door-chair-rail-type.service';
+import { PantryDoorTabComponent } from './components/pantry-door-tab/pantry-door-tab.component';
+import { PantryDoorAddFormComponent } from './components/pantry-door-add-form/pantry-door-add-form.component';
 import { DuraformDoorTabComponent } from './components/duraform-door-tab/duraform-door-tab.component';
 import { DuraformDoorOptionService } from './_services/duraform-door-option.service';
 import { RemoveTagDirective } from './_directives/remove-tag.directive';
@@ -51,6 +54,7 @@ import { DuraformPageComponent } from './pages/duraform-page/duraform-page.compo
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { UserControlBoxComponent } from './components/user-control-box/user-control-box.component';
 import { customCurrencyMaskConfig } from './_helpers/CurrencyMaskInputOption';
+import { PantryDoorCartItemComponent } from './components/pantry-door-cart-item/pantry-door-cart-item.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +86,9 @@ import { customCurrencyMaskConfig } from './_helpers/CurrencyMaskInputOption';
     DuraformDoorAddFormComponent,
     DuraformDoorCartItemComponent,
     DuraformDoorTabComponent,
+    PantryDoorAddFormComponent,
+    PantryDoorTabComponent,
+    PantryDoorCartItemComponent,
     HomePageComponent,
     DuraformPageComponent,
   ],
@@ -112,6 +119,7 @@ import { customCurrencyMaskConfig } from './_helpers/CurrencyMaskInputOption';
     DuraformOrderService,
     DuraformArchService,
     DuraformDoorOptionService,
+    PantryDoorChairRailTypeService,
     ErrorInterceptorProvider,
   ],
   bootstrap: [AppComponent],

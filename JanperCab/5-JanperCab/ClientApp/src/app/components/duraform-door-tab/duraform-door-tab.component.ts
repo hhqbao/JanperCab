@@ -21,7 +21,7 @@ export class DuraformDoorTabComponent implements OnInit {
   onAddDoor = (door: DuraformDoorForCart) => {
     this.order.addDoor(door);
 
-    this.dialog.success('New Door Added');
+    this.dialog.success('New Door Added.');
   };
 
   onRemoveDoor = (door: DuraformDoorForCart) => {

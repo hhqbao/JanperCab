@@ -9,7 +9,7 @@ export class DuraformDoorOptionService {
 
   getAllActive = () => {
     return this.http.get<DuraformDoorOptionForList[]>(
-      `${environment.baseUrl}/DuraformDoorOptions/GetAllActive`
+      `${environment.baseUrl}/DuraformDoorOptions`
     );
   };
 }

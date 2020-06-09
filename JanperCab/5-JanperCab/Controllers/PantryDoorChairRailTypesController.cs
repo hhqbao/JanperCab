@@ -1,5 +1,5 @@
 ﻿using _1_Domain;
-using _3_Application.Dtos.DuraformDoorOption;
+using _3_Application.Dtos.PantryDoorChairRailType;
 using _3_Application.Interfaces.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -10,12 +10,12 @@ namespace _5_JanperCab.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DuraformDoorOptionsController : ControllerBase
+    public class PantryDoorChairRailTypesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public DuraformDoorOptionsController(IUnitOfWork unitOfWork, IMapper mapper)
+        public PantryDoorChairRailTypesController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -24,9 +24,9 @@ namespace _5_JanperCab.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var options = await _unitOfWork.DuraformDoorOptions.GetAllActiveAsync();
+            var types = await _unitOfWork.PantryDoorChairRailTypes.GetAllActiveAsync();
 
-            return Ok(_mapper.Map<List<DuraformDoorOption>, List<DuraformDoorOptionForList>>(options));
+            return Ok(_mapper.Map<List<PantryDoorChairRailType>, List<PantryDoorChairRailTypeForList>>(types));
         }
     }
 }

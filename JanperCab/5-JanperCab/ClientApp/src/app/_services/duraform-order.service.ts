@@ -1,3 +1,4 @@
+import { PantryDoorForCart } from './../_models/pantry-door/PantryDoorForCart';
 import { DuraformDoorForCart } from './../_models/duraform-door/DuraformDoorForCart';
 import { DuraformArchForList } from './../_models/duraform-arch/DuraformArchForList';
 import { SelectedArch } from './../_models/duraform-arch/SelectedArch';
@@ -21,6 +22,7 @@ export class DuraformOrderService {
   selectedArch: SelectedArch;
 
   doors: DuraformDoorForCart[] = [];
+  pantryDoors: PantryDoorForCart[] = [];
 
   get hasFixedEdgeProfile(): boolean {
     return !!this.selectedDesign.fixedEdgeProfileId;
@@ -57,6 +59,20 @@ export class DuraformOrderService {
     }
 
     this.doors.splice(index, 1);
+  };
+
+  addPantryDoor = (model: PantryDoorForCart) => {
+    this.pantryDoors.push(model);
+  };
+
+  removePantryDoor = (pantryDoor: PantryDoorForCart) => {
+    const index = this.pantryDoors.indexOf(pantryDoor);
+
+    if (index < 0) {
+      return;
+    }
+
+    this.pantryDoors.splice(index, 1);
   };
 
   reset = () => {
