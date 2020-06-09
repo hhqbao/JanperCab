@@ -1,0 +1,114 @@
+<tr
+  class="form__order-form-group"
+  appOrderForm
+  [formGroup]="formGroup"
+  (submit)="onSubmit()"
+>
+  <td>
+    <input
+      class="form__control"
+      currencyMask
+      appSelectOnFocus
+      formControlName="quantity"
+      [options]="{
+        align: 'center',
+        allowZero: false,
+        precision: '0',
+        decimal: '',
+        prefix: '',
+        thousands: '',
+        max: 100
+      }"
+    />
+  </td>
+  <td>
+    <input
+      class="form__control"
+      currencyMask
+      appSelectOnFocus
+      formControlName="height"
+      [options]="{
+        align: 'center',
+        allowZero: false,
+        precision: '0',
+        decimal: '',
+        prefix: '',
+        thousands: '',
+        max: 2500
+      }"
+    />
+  </td>
+  <td>
+    <input
+      class="form__control"
+      currencyMask
+      appSelectOnFocus
+      formControlName="width"
+      [options]="{
+        align: 'center',
+        allowZero: false,
+        precision: '0',
+        decimal: '',
+        prefix: '',
+        thousands: '',
+        max: 2500
+      }"
+    />
+  </td>
+  <td>
+    <label class="form__checkbox">
+      <input type="checkbox" formControlName="top" />
+      <span></span>
+    </label>
+  </td>
+  <td>
+    <label class="form__checkbox">
+      <input type="checkbox" formControlName="bottom" />
+      <span></span>
+    </label>
+  </td>
+  <td>
+    <label class="form__checkbox">
+      <input type="checkbox" formControlName="left" />
+      <span></span>
+    </label>
+  </td>
+  <td>
+    <label class="form__checkbox">
+      <input type="checkbox" formControlName="right" />
+      <span></span>
+    </label>
+  </td>
+  <td>
+    <select
+      class="form__control"
+      style="width: 95%;"
+      formControlName="optionId"
+    >
+      <option [value]="null"></option>
+      <option *ngFor="let option of doorOptions" [value]="option.id">{{
+        option.name
+      }}</option>
+    </select>
+  </td>
+  <td>
+    <input
+      type="text"
+      class="form__control"
+      style="text-align: left; width: 99%;"
+      appSelectOnFocus
+      formControlName="note"
+    />
+  </td>
+  <td style="width: 5rem;">
+    <button
+      [disabled]="formGroup.invalid"
+      type="button"
+      class="btn btn--primary"
+      style="padding: 0.5rem 1rem;"
+      (click)="onSubmit()"
+    >
+      <i class="fa fa-plus-circle"></i>
+    </button>
+  </td>
+</tr>

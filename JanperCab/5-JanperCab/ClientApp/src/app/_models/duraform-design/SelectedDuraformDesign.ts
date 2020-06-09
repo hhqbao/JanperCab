@@ -4,4 +4,5 @@ export class SelectedDuraformDesign {
   imageUrl: string;
   fixedEdgeProfileId: number;
   defaultEdgeProfileId: number;
+  hasNoArch: boolean;
 }

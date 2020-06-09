@@ -18,6 +18,10 @@ namespace _4_Infrastructure.Repositories
 
         public IDuraformEdgeProfileRepo DuraformEdgeProfiles { get; }
 
+        public IDuraformArchRepo DuraformArches { get; }
+
+        public IDuraformDoorOptionRepo DuraformDoorOptions { get; }
+
         public UnitOfWork(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -27,6 +31,8 @@ namespace _4_Infrastructure.Repositories
             DuraformWrapTypes = new DuraformWrapTypeRepo(_dbContext);
             DuraformWrapColors = new DuraformWrapColorRepo(_dbContext);
             DuraformEdgeProfiles = new DuraformEdgeProfileRepo(_dbContext);
+            DuraformArches = new DuraformArchRepo(_dbContext);
+            DuraformDoorOptions = new DuraformDoorOptionRepo(_dbContext);
         }
 
         public async Task<int> CompleteAsync()

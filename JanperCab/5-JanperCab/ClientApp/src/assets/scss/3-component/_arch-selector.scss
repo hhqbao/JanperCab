@@ -1,0 +1,120 @@
+.arch-selector {
+  cursor: pointer;
+  position: relative;
+
+  .arch-name {
+    border: solid 1px rgba(black, 0.3);
+    border-radius: 0.3rem;
+    font-weight: 700;
+    padding: 1rem;
+    position: relative;
+
+    &:not(.disabled) {
+      @include hover-shadow($blue-primary);
+
+      &::after {
+        content: "\f040";
+        display: inline-block;
+        font-family: "FontAwesome";
+        position: absolute;
+        right: 1rem;
+        top: 45%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+
+  $arch-gap: 1rem;
+  .arch-list {
+    animation: slideInLeft 0.4s ease;
+    background-color: white;
+    border: solid 1px rgba(black, 0.3);
+    box-shadow: 0 0 1rem rgba($color: black, $alpha: 0.4);
+    bottom: -15rem;
+    display: none;
+    list-style: none;
+    left: calc(100% + 4rem);
+    margin-left: -$arch-gap;
+    margin-right: -$arch-gap;
+    position: absolute;
+    padding: 1rem 0;
+    transform-origin: left;
+    width: 80rem;
+    z-index: 9;
+
+    &::before {
+      background-color: white;
+      border-left: solid 1px rgba(black, 0.3);
+      border-bottom: solid 1px rgba(black, 0.3);
+      bottom: 15rem;
+      content: "";
+      display: inline-block;
+      height: 3rem;
+      left: -1.6rem;
+      position: absolute;
+      transform: rotate(45deg);
+      width: 3rem;
+    }
+
+    @include clear-both;
+
+    .arch {
+      float: left;
+      margin: 0 $arch-gap;
+      padding: 1rem;
+      position: relative;
+      width: calc((100% - 10 * #{$arch-gap}) / 5);
+
+      &::before,
+      &::after {
+        box-shadow: 0 0 2rem rgba($red-primary, 0.5);
+        border-radius: inherit;
+        content: "";
+        display: inline-block;
+        height: 100%;
+        left: 0;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        transition: all 0.3s ease;
+        width: 100%;
+        z-index: 0;
+      }
+
+      &::after {
+        box-shadow: 0 0 2rem rgba($blue-primary, 0.5);
+      }
+
+      &.selected {
+        &::before {
+          opacity: 1;
+        }
+      }
+
+      &:hover {
+        &:not(.selected) {
+          &::after {
+            opacity: 1;
+          }
+        }
+      }
+
+      &__img {
+        display: block;
+        max-width: 100%;
+      }
+
+      &__name {
+        font-weight: bold;
+        margin-top: 0.5rem;
+        text-align: center;
+      }
+    }
+  }
+
+  &.show {
+    .arch-list {
+      display: block;
+    }
+  }
+}

@@ -5,10 +5,15 @@ import * as alertify from 'alertifyjs';
 export class DialogService {
   constructor() {}
 
-  confirm = (message: any, callBack: () => any) => {
-    alertify.confirm(message, () => {
-      callBack();
-    });
+  confirm = (title: string, message: string, callBack: () => any) => {
+    alertify.confirm(
+      title,
+      message,
+      () => {
+        callBack();
+      },
+      () => {}
+    );
   };
 
   error = (message: string) => {

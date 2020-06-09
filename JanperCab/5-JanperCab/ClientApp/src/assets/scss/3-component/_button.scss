@@ -47,6 +47,13 @@
     padding: 1rem 1.5rem;
   }
 
+  &--secondary {
+    background-color: $red-primary;
+    border-radius: 0.4rem;
+    color: white;
+    padding: 1rem 1.5rem;
+  }
+
   &--link {
     color: $blue-primary;
     padding: 0;

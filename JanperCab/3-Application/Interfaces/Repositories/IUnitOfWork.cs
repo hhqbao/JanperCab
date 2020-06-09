@@ -14,6 +14,10 @@ namespace _3_Application.Interfaces.Repositories
 
         IDuraformEdgeProfileRepo DuraformEdgeProfiles { get; }
 
+        IDuraformArchRepo DuraformArches { get; }
+
+        IDuraformDoorOptionRepo DuraformDoorOptions { get; }
+
         Task<int> CompleteAsync();
     }
 }

@@ -8,4 +8,5 @@ export class DuraformDesignForOrderMenu {
   defaultEdgeProfileId: number;
   fixedEdgeProfileName: string;
   defaultEdgeProfileName: string;
+  hasNoArch: boolean;
 }

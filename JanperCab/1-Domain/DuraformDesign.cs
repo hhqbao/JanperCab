@@ -19,6 +19,8 @@ namespace _1_Domain
 
         public int? DefaultEdgeProfileId { get; set; }
 
+        public bool HasNoArch { get; set; }
+
 
 
 

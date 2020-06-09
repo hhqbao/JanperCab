@@ -1,3 +1,6 @@
+import { DuraformDoorForCart } from './../_models/duraform-door/DuraformDoorForCart';
+import { DuraformArchForList } from './../_models/duraform-arch/DuraformArchForList';
+import { SelectedArch } from './../_models/duraform-arch/SelectedArch';
 import { DuraformEdgeProfileForList } from './../_models/duraform-edge-profile/DuraformEdgeProfileForList';
 import { SelectedDuraformEdgeProfile } from './../_models/duraform-edge-profile/SelectedDuraformEdgeProfile';
 import { StepOneReturnValue } from '../_models/duraform-order/StepOneReturnValue';
@@ -15,6 +18,9 @@ export class DuraformOrderService {
   selectedWrapType: SelectedDuraformWrapType;
   selectedWrapColor: SelectedDuraformWrapColor;
   selectedEdgeProfile: SelectedDuraformEdgeProfile;
+  selectedArch: SelectedArch;
+
+  doors: DuraformDoorForCart[] = [];
 
   get hasFixedEdgeProfile(): boolean {
     return !!this.selectedDesign.fixedEdgeProfileId;
@@ -28,10 +34,29 @@ export class DuraformOrderService {
     this.isRoutingOnly = model.isRoutingOnly;
     this.selectedWrapType = model.wrapType ? { ...model.wrapType } : null;
     this.selectedWrapColor = model.wrapColor ? { ...model.wrapColor } : null;
+    this.selectedArch = model.design.hasNoArch ? null : this.selectedArch;
   };
 
   selectEdgeProfile = (model: DuraformEdgeProfileForList) => {
     this.selectedEdgeProfile = { ...model };
+  };
+
+  selectArch = (model: DuraformArchForList) => {
+    this.selectedArch = model ? { ...model } : null;
+  };
+
+  addDoor = (model: DuraformDoorForCart) => {
+    this.doors.push(model);
+  };
+
+  removeDoor = (door: DuraformDoorForCart) => {
+    const index = this.doors.indexOf(door);
+
+    if (index < 0) {
+      return;
+    }
+
+    this.doors.splice(index, 1);
   };
 
   reset = () => {
@@ -41,5 +66,8 @@ export class DuraformOrderService {
     this.selectedWrapType = null;
     this.selectedWrapColor = null;
     this.selectedEdgeProfile = null;
+    this.selectedArch = null;
+
+    this.doors = [];
   };
 }

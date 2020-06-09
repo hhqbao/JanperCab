@@ -1,3 +1,9 @@
+import { DuraformDoorOptionForList } from './../../_models/duraform-door-option/DuraformDoorOptionForList';
+import { DuraformDoorOptionService } from './../../_services/duraform-door-option.service';
+import { DuraformDoorForCart } from './../../_models/duraform-door/DuraformDoorForCart';
+import { DuraformArchForList } from './../../_models/duraform-arch/DuraformArchForList';
+import { DuraformArchService } from './../../_services/duraform-arch.service';
+import { forkJoin } from 'rxjs';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
 import { LayoutService } from './../../_services/layout.service';
 import { DialogService } from './../../_services/dialog.service';
@@ -11,9 +17,13 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DuraformOrderStepTwoComponent implements OnInit {
   edgeProfileList: DuraformEdgeProfileForList[] = [];
+  archList: DuraformArchForList[] = [];
+  doorOptions: DuraformDoorOptionForList[] = [];
 
   constructor(
     private edgeProfileService: DuraformEdgeProfileService,
+    private archService: DuraformArchService,
+    private doorOptionService: DuraformDoorOptionService,
     private dialog: DialogService,
     private layout: LayoutService,
     public order: DuraformOrderService
@@ -21,36 +31,59 @@ export class DuraformOrderStepTwoComponent implements OnInit {
 
   ngOnInit() {
     this.layout.showLoadingPanel();
-    this.loadEdgeProfiles();
-  }
 
-  private loadEdgeProfiles = () => {
-    this.edgeProfileService.getAll().subscribe(
-      (response) => {
-        this.edgeProfileList = response;
+    forkJoin([
+      this.loadEdgeProfiles(),
+      this.loadArches(),
+      this.loadDuraformDoorOptions(),
+    ]).subscribe(
+      (responses) => {
+        this.edgeProfileList = responses[0];
+        this.archList = responses[1];
+        this.doorOptions = responses[2];
 
-        let defaultEdgeProfile: DuraformEdgeProfileForList;
-        if (this.order.hasFixedEdgeProfile) {
-          defaultEdgeProfile = this.edgeProfileList.find(
-            (x) => x.id === this.order.selectedDesign.fixedEdgeProfileId
-          );
-        } else {
-          defaultEdgeProfile = this.edgeProfileList.find(
-            (x) => x.id === this.order.selectedDesign.defaultEdgeProfileId
-          );
-        }
-
-        this.order.selectEdgeProfile(defaultEdgeProfile);
+        this.initialDefaultEdgeProfile();
         this.layout.closeLoadingPanel();
       },
       (error) => {
-        this.dialog.error(error);
         this.layout.closeLoadingPanel();
+        this.dialog.error(error);
       }
     );
+  }
+
+  private loadEdgeProfiles = () => {
+    return this.edgeProfileService.getAll();
+  };
+
+  private loadArches = () => {
+    return this.archService.getAll();
+  };
+
+  private loadDuraformDoorOptions = () => {
+    return this.doorOptionService.getAllActive();
+  };
+
+  private initialDefaultEdgeProfile = () => {
+    let defaultEdgeProfile: DuraformEdgeProfileForList;
+    if (this.order.hasFixedEdgeProfile) {
+      defaultEdgeProfile = this.edgeProfileList.find(
+        (x) => x.id === this.order.selectedDesign.fixedEdgeProfileId
+      );
+    } else {
+      defaultEdgeProfile = this.edgeProfileList.find(
+        (x) => x.id === this.order.selectedDesign.defaultEdgeProfileId
+      );
+    }
+
+    this.order.selectEdgeProfile(defaultEdgeProfile);
   };
 
   onSelectProfile = (profile: DuraformEdgeProfileForList) => {
     this.order.selectEdgeProfile(profile);
+  };
+
+  onSelectArch = (arch: DuraformArchForList) => {
+    this.order.selectArch(arch);
   };
 }

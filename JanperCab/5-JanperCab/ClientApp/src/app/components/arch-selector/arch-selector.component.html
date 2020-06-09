@@ -1,0 +1,43 @@
+<div class="arch-selector" appDropdownBtn="show">
+  <div class="arch-name" [ngClass]="{ disabled: !canSelect }">
+    <span *ngIf="!selectedArch">Square - No Arch</span>
+    <span *ngIf="selectedArch">
+      {{ selectedArch.name }}
+    </span>
+  </div>
+  <ul class="arch-list" *ngIf="canSelect">
+    <li
+      class="arch"
+      [ngClass]="{
+        selected: !selectedArch
+      }"
+      (click)="onSelectArch(null)"
+    >
+      <img
+        src="./../../../assets/images/Duraform/Arches/square.jpg"
+        alt="Arch"
+        class="arch__img"
+      />
+      <div class="arch__name">
+        Square - No Arch
+      </div>
+    </li>
+    <li
+      class="arch"
+      [ngClass]="{
+        selected: selectedArch && selectedArch.id === arch.id
+      }"
+      *ngFor="let arch of archList"
+      (click)="onSelectArch(arch)"
+    >
+      <img
+        src="./../../../assets/images/Duraform/Arches/{{ arch.imageUrl }}"
+        alt="Arch"
+        class="arch__img"
+      />
+      <div class="arch__name">
+        {{ arch.name }}
+      </div>
+    </li>
+  </ul>
+</div>

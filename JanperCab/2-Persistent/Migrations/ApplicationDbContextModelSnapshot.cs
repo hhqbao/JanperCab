@@ -301,6 +301,26 @@ namespace _2_Persistent.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("_1_Domain.DuraformArch", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("varchar(1000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DuraformArches");
+                });
+
             modelBuilder.Entity("_1_Domain.DuraformDesign", b =>
                 {
                     b.Property<int>("Id")
@@ -316,6 +336,9 @@ namespace _2_Persistent.Migrations
 
                     b.Property<int?>("FixedEdgeProfileId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("HasNoArch")
+                        .HasColumnType("bit");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("varchar(1000)");
@@ -336,6 +359,25 @@ namespace _2_Persistent.Migrations
                     b.HasIndex("FixedEdgeProfileId");
 
                     b.ToTable("DuraformDesigns");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformDoorOption", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DuraformDoorOptions");
                 });
 
             modelBuilder.Entity("_1_Domain.DuraformEdgeProfile", b =>

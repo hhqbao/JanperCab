@@ -1,3 +1,13 @@
+import { DuraformDoorTabComponent } from './components/duraform-door-tab/duraform-door-tab.component';
+import { DuraformDoorOptionService } from './_services/duraform-door-option.service';
+import { RemoveTagDirective } from './_directives/remove-tag.directive';
+import { DuraformDoorAddFormComponent } from './components/duraform-door-add-form/duraform-door-add-form.component';
+import { DuraformDoorCartItemComponent } from './components/duraform-door-cart-item/duraform-door-cart-item.component';
+import { SelectOnFocusDirective } from './_directives/select-on-focus.directive';
+import { OrderFormDirective } from './_directives/order-form.directive';
+import { TabDirective } from './_directives/tab.directive';
+import { DuraformArchService } from './_services/duraform-arch.service';
+import { ArchSelectorComponent } from './components/arch-selector/arch-selector.component';
 import { DuraformOrderService } from './_services/duraform-order.service';
 import { DuraformEdgeProfileService } from './_services/duraform-edge-profile.service';
 import { EdgeProfileSelectorComponent } from './components/edge-profile-selector/edge-profile-selector.component';
@@ -12,7 +22,6 @@ import { DuraformOrderStepOneComponent } from './components/duraform-order-step-
 import { DuraformSerieService } from './_services/duraform-serie.service';
 import { DuraformFilterBoxComponent } from './components/duraform-filter-box/duraform-filter-box.component';
 import { DuraformDesignListComponent } from './components/duraform-design-list/duraform-design-list.component';
-import { RemoveWrapperDirective } from './_directives/remove-wrapper.directive';
 import { DuraformDesignComponent } from './components/duraform-design/duraform-design.component';
 import { DuraformProcessComponent } from './components/duraform-process/duraform-process.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -27,6 +36,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { routes } from './app.routes';
+import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
 
 import { JwtModule } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
@@ -40,13 +50,17 @@ import { DropdownBtnDirective } from './_directives/dropdown-btn.directive';
 import { DuraformPageComponent } from './pages/duraform-page/duraform-page.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { UserControlBoxComponent } from './components/user-control-box/user-control-box.component';
+import { customCurrencyMaskConfig } from './_helpers/CurrencyMaskInputOption';
 
 @NgModule({
   declarations: [
     AppComponent,
     DropdownBtnDirective,
     FormInvalidFocusDirective,
-    RemoveWrapperDirective,
+    TabDirective,
+    SelectOnFocusDirective,
+    OrderFormDirective,
+    RemoveTagDirective,
     BoxComponent,
     PrimaryLayoutComponent,
     PrimaryTopNavComponent,
@@ -64,6 +78,10 @@ import { UserControlBoxComponent } from './components/user-control-box/user-cont
     DuraformColorSelectorComponent,
     ColorCardComponent,
     EdgeProfileSelectorComponent,
+    ArchSelectorComponent,
+    DuraformDoorAddFormComponent,
+    DuraformDoorCartItemComponent,
+    DuraformDoorTabComponent,
     HomePageComponent,
     DuraformPageComponent,
   ],
@@ -80,6 +98,7 @@ import { UserControlBoxComponent } from './components/user-control-box/user-cont
         blacklistedRoutes: [`${environment.baseUrl}`],
       },
     }),
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
   ],
   providers: [
     AuthService,
@@ -91,6 +110,8 @@ import { UserControlBoxComponent } from './components/user-control-box/user-cont
     DuraformWrapColorService,
     DuraformEdgeProfileService,
     DuraformOrderService,
+    DuraformArchService,
+    DuraformDoorOptionService,
     ErrorInterceptorProvider,
   ],
   bootstrap: [AppComponent],

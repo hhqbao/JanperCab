@@ -1,4 +1,5 @@
-﻿namespace _3_Application.Dtos.DuraformDesign
+﻿
+namespace _3_Application.Dtos.DuraformDesign
 {
     public class DuraformDesignForOrderMenu
     {
@@ -15,6 +16,8 @@
         public int? FixedEdgeProfileId { get; set; }
 
         public int? DefaultEdgeProfileId { get; set; }
+
+        public bool HasNoArch { get; set; }
 
         public string FixedEdgeProfileName { get; set; }
 
