@@ -16,4 +16,20 @@ export class PantryDoorForCart {
   constructor() {
     this.chairRailType = null;
   }
+
+  update = (formValue: any, railTypes: PantryDoorChairRailTypeForList[]) => {
+    this.quantity = formValue.quantity;
+    this.height = formValue.height;
+    this.width = formValue.width;
+    this.chairRailHeight = formValue.chairRailHeight;
+    this.extraRailBottom = formValue.extraRailBottom;
+    this.top = formValue.top;
+    this.bottom = formValue.bottom;
+    this.left = formValue.left;
+    this.right = formValue.right;
+    this.note = formValue.note;
+
+    const railType = railTypes.find((x) => x.id === +formValue.chairRailTypeId);
+    this.chairRailType = railType;
+  };
 }

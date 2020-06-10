@@ -1,14 +1,15 @@
-import { EndPanelForCart } from './../../_models/end-panel/EndPanelForCart';
-import { DialogService } from './../../_services/dialog.service';
+import { EndPanelForCart } from '../../_models/end-panel/EndPanelForCart';
+import { DialogService } from '../../_services/dialog.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-end-panel-add-form',
-  templateUrl: 'end-panel-add-form.component.html',
+  selector: 'app-end-panel-form',
+  templateUrl: 'end-panel-form.component.html',
 })
-export class EndPanelAddFormComponent implements OnInit {
-  @Output() formSubmit = new EventEmitter<EndPanelForCart>();
+export class EndPanelFormComponent implements OnInit {
+  @Input() endPanel: EndPanelForCart;
+  @Output() formSubmit = new EventEmitter<FormGroup>();
 
   formGroup: FormGroup;
 
@@ -37,15 +38,13 @@ export class EndPanelAddFormComponent implements OnInit {
       right: [false],
       note: [''],
     });
+
+    if (this.endPanel) {
+      this.formGroup.patchValue({ ...this.endPanel });
+    }
   }
 
   onSubmit = () => {
-    if (this.formGroup.invalid) {
-      return;
-    }
-
-    const endPanel: EndPanelForCart = { ...this.formGroup.value };
-
-    this.formSubmit.emit(endPanel);
+    this.formSubmit.emit(this.formGroup);
   };
 }

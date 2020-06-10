@@ -1,3 +1,4 @@
+import { FormGroup } from '@angular/forms';
 import { DialogService } from './../../_services/dialog.service';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { DuraformDrawerForCart } from './../../_models/duraform-drawer/DuraformDrawerForCart';
@@ -18,7 +19,15 @@ export class DuraformDrawerTabComponent implements OnInit {
 
   ngOnInit() {}
 
-  onAddDrawer = (drawer: DuraformDrawerForCart) => {
+  onAddDrawer = (formGroup: FormGroup) => {
+    if (formGroup.invalid) {
+      return;
+    }
+
+    const formValue = formGroup.value;
+    const drawer = new DuraformDrawerForCart();
+    drawer.update(formValue, this.duraformDrawerTypes);
+
     this.order.duraformDrawers.push(drawer);
 
     this.dialog.success('New Drawer Added.');

@@ -33,11 +33,11 @@
     </tr>
   </thead>
   <tbody>
-    <app-pantry-door-add-form
+    <app-pantry-door-form
       appRemoveTag
       [pantryDoorChairRailTypes]="pantryDoorChairRailTypes"
       (formSubmit)="onAddPantryDoor($event)"
-    ></app-pantry-door-add-form>
+    ></app-pantry-door-form>
   </tbody>
   <tbody class="table__spacer" *ngIf="order.pantryDoors.length > 0">
     <tr>
@@ -55,11 +55,13 @@
       <td></td>
     </tr>
   </tbody>
-  <tbody
-    app-pantry-door-cart-item
-    *ngFor="let pantryDoor of order.pantryDoors"
-    [pantryDoor]="pantryDoor"
-    [pantryDoorChairRailTypes]="pantryDoorChairRailTypes"
-    (removePantryDoor)="onRemovePantryDoor($event)"
-  ></tbody>
+  <tbody>
+    <app-pantry-door-cart-item
+      appRemoveTag
+      *ngFor="let pantryDoor of order.pantryDoors"
+      [pantryDoor]="pantryDoor"
+      [pantryDoorChairRailTypes]="pantryDoorChairRailTypes"
+      (removePantryDoor)="onRemovePantryDoor($event)"
+    ></app-pantry-door-cart-item>
+  </tbody>
 </table>

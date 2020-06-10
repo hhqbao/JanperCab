@@ -1,19 +1,29 @@
 import { PantryDoorChairRailTypeForList } from 'src/app/_models/pantry-door-chair-rail-type/PantryDoorChairRailTypeForList';
-import { PantryDoorForCart } from './../../_models/pantry-door/PantryDoorForCart';
+import { PantryDoorForCart } from '../../_models/pantry-door/PantryDoorForCart';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  HostListener,
+  ElementRef,
+} from '@angular/core';
 
 @Component({
-  selector: 'app-pantry-door-add-form',
-  templateUrl: 'pantry-door-add-form.component.html',
+  selector: 'app-pantry-door-form',
+  templateUrl: 'pantry-door-form.component.html',
 })
-export class PantryDoorAddFormComponent implements OnInit {
+export class PantryDoorFormComponent implements OnInit {
+  @Input() pantryDoor: PantryDoorForCart = null;
   @Input() pantryDoorChairRailTypes: PantryDoorChairRailTypeForList[] = [];
-  @Output() formSubmit = new EventEmitter<PantryDoorForCart>();
+
+  @Output() formSubmit = new EventEmitter<FormGroup>();
 
   formGroup: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private ef: ElementRef) {}
 
   ngOnInit() {
     this.formGroup = this.fb.group({
@@ -46,36 +56,22 @@ export class PantryDoorAddFormComponent implements OnInit {
       right: [false],
       note: [''],
     });
+
+    if (this.pantryDoor) {
+      this.formGroup.patchValue({ ...this.pantryDoor });
+      this.formGroup.patchValue({
+        chairRailTypeId: this.pantryDoor.chairRailType.id,
+      });
+    }
   }
 
   onSubmit = () => {
-    if (this.formGroup.invalid) {
-      return;
-    }
-
     const formValue = this.formGroup.value;
-
-    const pantryDoor = new PantryDoorForCart();
-    pantryDoor.quantity = formValue.quantity;
-    pantryDoor.height = formValue.height;
-    pantryDoor.width = formValue.width;
-    pantryDoor.chairRailHeight = formValue.chairRailHeight;
-    pantryDoor.extraRailBottom =
-      formValue.extraRailBottom === 0 ? null : formValue.extraRailBottom;
-    pantryDoor.top = formValue.top;
-    pantryDoor.bottom = formValue.bottom;
-    pantryDoor.left = formValue.left;
-    pantryDoor.right = formValue.right;
-    pantryDoor.note = formValue.note;
-
-    const railType = this.pantryDoorChairRailTypes.find(
-      (x) => x.id === +formValue.chairRailTypeId
-    );
-    pantryDoor.chairRailType = railType;
 
     if (formValue.extraRailBottom === 0) {
       this.formGroup.patchValue({ extraRailBottom: null });
     }
-    this.formSubmit.emit(pantryDoor);
+
+    this.formSubmit.emit(this.formGroup);
   };
 }

@@ -1,3 +1,4 @@
+import { FormGroup } from '@angular/forms';
 import { DialogService } from './../../_services/dialog.service';
 import { EndPanelForCart } from './../../_models/end-panel/EndPanelForCart';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
@@ -15,7 +16,14 @@ export class EndPanelTabComponent implements OnInit {
 
   ngOnInit() {}
 
-  onAddEndPanel = (endPanel: EndPanelForCart) => {
+  onAddEndPanel = (formGroup: FormGroup) => {
+    if (formGroup.invalid) {
+      return;
+    }
+
+    const endPanel = new EndPanelForCart();
+    endPanel.update(formGroup.value);
+
     this.order.endPanels.push(endPanel);
 
     this.dialog.success('New End Panel Added.');

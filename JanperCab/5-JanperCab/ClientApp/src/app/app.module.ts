@@ -1,17 +1,17 @@
 import { DuraformDrawerCartItemComponent } from './components/duraform-drawer-cart-item/duraform-drawer-cart-item.component';
 import { DuraformDrawerTypeService } from './_services/duraform-drawer-type.service';
-import { DuraformDrawerAddFormComponent } from './components/duraform-drawer-add-form/duraform-drawer-add-form.component';
+import { DuraformDrawerFormComponent } from './components/duraform-drawer-form/duraform-drawer-form.component';
 import { DuraformDrawerTabComponent } from './components/duraform-drawer-tab/duraform-drawer-tab.component';
 import { EndPanelCartItemComponent } from './components/end-panel-cart-item/end-panel-cart-item.component';
-import { EndPanelAddFormComponent } from './components/end-panel-add-form/end-panel-add-form.component';
+import { EndPanelFormComponent } from './components/end-panel-form/end-panel-form.component';
 import { EndPanelTabComponent } from './components/end-panel-tab/end-panel-tab.component';
 import { PantryDoorChairRailTypeService } from './_services/pantry-door-chair-rail-type.service';
 import { PantryDoorTabComponent } from './components/pantry-door-tab/pantry-door-tab.component';
-import { PantryDoorAddFormComponent } from './components/pantry-door-add-form/pantry-door-add-form.component';
+import { PantryDoorFormComponent } from './components/pantry-door-form/pantry-door-form.component';
 import { DuraformDoorTabComponent } from './components/duraform-door-tab/duraform-door-tab.component';
 import { DuraformDoorOptionService } from './_services/duraform-door-option.service';
 import { RemoveTagDirective } from './_directives/remove-tag.directive';
-import { DuraformDoorAddFormComponent } from './components/duraform-door-add-form/duraform-door-add-form.component';
+import { DuraformDoorFormComponent } from './components/duraform-door-form/duraform-door-form.component';
 import { DuraformDoorCartItemComponent } from './components/duraform-door-cart-item/duraform-door-cart-item.component';
 import { SelectOnFocusDirective } from './_directives/select-on-focus.directive';
 import { OrderFormDirective } from './_directives/order-form.directive';
@@ -90,16 +90,16 @@ import { PantryDoorCartItemComponent } from './components/pantry-door-cart-item/
     ColorCardComponent,
     EdgeProfileSelectorComponent,
     ArchSelectorComponent,
-    DuraformDoorAddFormComponent,
+    DuraformDoorFormComponent,
     DuraformDoorCartItemComponent,
     DuraformDoorTabComponent,
-    PantryDoorAddFormComponent,
+    PantryDoorFormComponent,
     PantryDoorTabComponent,
     PantryDoorCartItemComponent,
-    EndPanelAddFormComponent,
+    EndPanelFormComponent,
     EndPanelCartItemComponent,
     EndPanelTabComponent,
-    DuraformDrawerAddFormComponent,
+    DuraformDrawerFormComponent,
     DuraformDrawerCartItemComponent,
     DuraformDrawerTabComponent,
     HomePageComponent,

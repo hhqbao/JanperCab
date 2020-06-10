@@ -38,20 +38,19 @@ export class OrderFormDirective implements OnInit {
     const currentIndex = this.controls.indexOf(target);
     if (currentIndex + 1 === this.controls.length) {
       if (this.formGroup.valid) {
-        this.submit.emit();
         (this.controls[0] as any).focus();
-        return;
+      } else {
+        const invalidControl = this.controls.filter((x) =>
+          x.classList.contains('ng-invalid')
+        )[0];
+
+        if (invalidControl) {
+          (invalidControl as any).focus();
+        }
+
+        this.dialog.error('Please provide all the required fields.');
       }
-
-      const invalidControl = this.controls.filter((x) =>
-        x.classList.contains('ng-invalid')
-      )[0];
-
-      if (invalidControl) {
-        (invalidControl as any).focus();
-      }
-
-      this.dialog.error('Please provide all the required fields.');
+      this.submit.emit();
     } else {
       (this.controls[currentIndex + 1] as any).focus();
     }

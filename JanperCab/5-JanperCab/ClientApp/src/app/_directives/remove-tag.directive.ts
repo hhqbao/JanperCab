@@ -5,10 +5,8 @@ export class RemoveTagDirective implements OnInit {
   constructor(private ef: ElementRef) {}
 
   ngOnInit(): void {
-    const target = this.ef.nativeElement as Element;
-    const parent = target.parentElement;
+    const target = this.ef.nativeElement as HTMLElement;
 
-    parent.insertBefore(target.firstElementChild, target.nextElementSibling);
-    parent.removeChild(target);
+    target.style.display = 'contents';
   }
 }

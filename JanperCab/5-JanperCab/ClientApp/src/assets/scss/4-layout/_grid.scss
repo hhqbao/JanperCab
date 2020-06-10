@@ -20,7 +20,7 @@ $col-gap: 1rem;
   }
 
   .col-1-2 {
-    width: calc((100% -#{$col-gap}) / 2);
+    width: calc((100% - #{$col-gap}) / 2);
   }
 
   .col-1-3 {

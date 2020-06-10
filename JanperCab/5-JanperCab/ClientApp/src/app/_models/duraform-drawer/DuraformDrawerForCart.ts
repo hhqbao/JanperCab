@@ -19,4 +19,25 @@ export class DuraformDrawerForCart {
   constructor() {
     this.duraformDrawerType = null;
   }
+
+  update(formValue: any, duraformDrawerTypes: DuraformDrawerTypeForList[]) {
+    this.quantity = formValue.quantity;
+    this.height = formValue.height;
+    this.width = formValue.width;
+    this.top = formValue.top;
+    this.bottom = formValue.bottom;
+    this.left = formValue.left;
+    this.right = formValue.right;
+    this.drawerOne = formValue.drawerOne;
+    this.drawerTwo = formValue.drawerTwo;
+    this.drawerThree = formValue.drawerThree;
+    this.drawerFour = formValue.drawerFour;
+    this.drawerFive = formValue.drawerFive;
+    this.note = formValue.note;
+
+    const drawerType = duraformDrawerTypes.find(
+      (x) => x.id === +formValue.duraformDrawerTypeId
+    );
+    this.duraformDrawerType = drawerType;
+  }
 }

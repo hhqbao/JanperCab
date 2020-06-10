@@ -25,11 +25,11 @@
     </tr>
   </thead>
   <tbody>
-    <app-duraform-door-add-form
+    <app-duraform-door-form
       appRemoveTag
       [doorOptions]="doorOptions"
       (formSubmit)="onAddDoor($event)"
-    ></app-duraform-door-add-form>
+    ></app-duraform-door-form>
   </tbody>
   <tbody class="table__spacer" *ngIf="order.doors.length > 0">
     <tr>
@@ -45,11 +45,13 @@
       <td></td>
     </tr>
   </tbody>
-  <tbody
-    app-duraform-door-cart-item
-    *ngFor="let door of order.doors"
-    [door]="door"
-    [doorOptions]="doorOptions"
-    (removeDoor)="onRemoveDoor($event)"
-  ></tbody>
+  <tbody>
+    <app-duraform-door-cart-item
+      appRemoveTag
+      *ngFor="let door of order.doors"
+      [door]="door"
+      [doorOptions]="doorOptions"
+      (removeDoor)="onRemoveDoor($event)"
+    ></app-duraform-door-cart-item>
+  </tbody>
 </table>

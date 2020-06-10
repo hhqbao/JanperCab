@@ -30,11 +30,11 @@
     </tr>
   </thead>
   <tbody>
-    <app-duraform-drawer-add-form
+    <app-duraform-drawer-form
       appRemoveTag
       [duraformDrawerTypes]="duraformDrawerTypes"
       (formSubmit)="onAddDrawer($event)"
-    ></app-duraform-drawer-add-form>
+    ></app-duraform-drawer-form>
   </tbody>
   <tbody class="table__spacer" *ngIf="order.duraformDrawers.length > 0">
     <td></td>
@@ -52,11 +52,13 @@
     <td></td>
     <td></td>
   </tbody>
-  <tbody
-    app-duraform-drawer-cart-item
-    *ngFor="let drawer of order.duraformDrawers"
-    [duraformDrawer]="drawer"
-    [duraformDrawerTypes]="duraformDrawerTypes"
-    (removeDrawer)="onRemoveDrawer($event)"
-  ></tbody>
+  <tbody>
+    <app-duraform-drawer-cart-item
+      appRemoveTag
+      *ngFor="let drawer of order.duraformDrawers"
+      [duraformDrawer]="drawer"
+      [duraformDrawerTypes]="duraformDrawerTypes"
+      (removeDrawer)="onRemoveDrawer($event)"
+    ></app-duraform-drawer-cart-item>
+  </tbody>
 </table>

@@ -33,10 +33,10 @@
     </tr>
   </thead>
   <tbody>
-    <app-end-panel-add-form
+    <app-end-panel-form
       appRemoveTag
       (formSubmit)="onAddEndPanel($event)"
-    ></app-end-panel-add-form>
+    ></app-end-panel-form>
   </tbody>
   <tbody class="table__spacer" *ngIf="order.endPanels.length > 0">
     <tr>
@@ -54,10 +54,12 @@
       <td></td>
     </tr>
   </tbody>
-  <tbody
-    app-end-panel-cart-item
-    *ngFor="let endPanel of order.endPanels"
-    [endPanel]="endPanel"
-    (removeEndPanel)="onRemoveEndPanel($event)"
-  ></tbody>
+  <tbody>
+    <app-end-panel-cart-item
+      appRemoveTag
+      *ngFor="let endPanel of order.endPanels"
+      [endPanel]="endPanel"
+      (removeEndPanel)="onRemoveEndPanel($event)"
+    ></app-end-panel-cart-item>
+  </tbody>
 </table>

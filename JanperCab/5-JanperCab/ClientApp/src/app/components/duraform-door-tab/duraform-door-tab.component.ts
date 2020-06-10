@@ -1,3 +1,4 @@
+import { FormGroup } from '@angular/forms';
 import { DialogService } from 'src/app/_services/dialog.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { DuraformDoorOptionForList } from 'src/app/_models/duraform-door-option/DuraformDoorOptionForList';
@@ -18,7 +19,15 @@ export class DuraformDoorTabComponent implements OnInit {
 
   ngOnInit() {}
 
-  onAddDoor = (door: DuraformDoorForCart) => {
+  onAddDoor = (formGroup: FormGroup) => {
+    if (formGroup.invalid) {
+      return;
+    }
+
+    const formValue = formGroup.value;
+    const door = new DuraformDoorForCart();
+    door.update(formValue, this.doorOptions);
+
     this.order.doors.push(door);
 
     this.dialog.success('New Door Added.');
