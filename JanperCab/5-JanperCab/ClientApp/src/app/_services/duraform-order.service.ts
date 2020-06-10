@@ -1,3 +1,4 @@
+import { DuraformDrawerForCart } from './../_models/duraform-drawer/DuraformDrawerForCart';
 import { EndPanelForCart } from './../_models/end-panel/EndPanelForCart';
 import { PantryDoorForCart } from './../_models/pantry-door/PantryDoorForCart';
 import { DuraformDoorForCart } from './../_models/duraform-door/DuraformDoorForCart';
@@ -25,6 +26,7 @@ export class DuraformOrderService {
   doors: DuraformDoorForCart[] = [];
   pantryDoors: PantryDoorForCart[] = [];
   endPanels: EndPanelForCart[] = [];
+  duraformDrawers: DuraformDrawerForCart[] = [];
 
   get hasFixedEdgeProfile(): boolean {
     return !!this.selectedDesign.fixedEdgeProfileId;
@@ -70,6 +72,14 @@ export class DuraformOrderService {
 
     if (index >= 0) {
       this.endPanels.splice(index, 1);
+    }
+  };
+
+  removeDuraformDrawer = (drawer: DuraformDrawerForCart) => {
+    const index = this.duraformDrawers.indexOf(drawer);
+
+    if (index >= 0) {
+      this.duraformDrawers.splice(index, 1);
     }
   };
 

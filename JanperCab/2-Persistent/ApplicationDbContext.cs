@@ -19,6 +19,7 @@ namespace _2_Persistent
         public DbSet<NotAvailableDesignWrapType> NotAvailableDesignWrapTypes { get; set; }
 
         public DbSet<PantryDoorChairRailType> PantryDoorChairRailTypes { get; set; }
+        public DbSet<DuraformDrawerType> DuraformDrawerTypes { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,
@@ -37,6 +38,7 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformDoorOptionConfig());
             builder.ApplyConfiguration(new NotAvailableDesignWrapTypeConfig());
             builder.ApplyConfiguration(new PantryDoorChairRailTypeConfig());
+            builder.ApplyConfiguration(new DuraformDrawerTypeConfig());
 
             base.OnModelCreating(builder);
         }

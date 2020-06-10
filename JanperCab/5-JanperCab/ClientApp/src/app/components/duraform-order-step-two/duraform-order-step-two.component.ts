@@ -1,7 +1,8 @@
+import { DuraformDrawerTypeForList } from './../../_models/duraform-drawer-type/DuraformDrawerTypeForList';
+import { DuraformDrawerTypeService } from './../../_services/duraform-drawer-type.service';
 import { PantryDoorChairRailTypeService } from './../../_services/pantry-door-chair-rail-type.service';
 import { DuraformDoorOptionForList } from './../../_models/duraform-door-option/DuraformDoorOptionForList';
 import { DuraformDoorOptionService } from './../../_services/duraform-door-option.service';
-import { DuraformDoorForCart } from './../../_models/duraform-door/DuraformDoorForCart';
 import { DuraformArchForList } from './../../_models/duraform-arch/DuraformArchForList';
 import { DuraformArchService } from './../../_services/duraform-arch.service';
 import { forkJoin } from 'rxjs';
@@ -23,12 +24,14 @@ export class DuraformOrderStepTwoComponent implements OnInit {
   archList: DuraformArchForList[] = [];
   doorOptions: DuraformDoorOptionForList[] = [];
   pantryDoorChairRailTypes: PantryDoorChairRailTypeForList[] = [];
+  duraformDrawerTypes: DuraformDrawerTypeForList[] = [];
 
   constructor(
     private edgeProfileService: DuraformEdgeProfileService,
     private archService: DuraformArchService,
     private doorOptionService: DuraformDoorOptionService,
     private pantryDoorRailTypeService: PantryDoorChairRailTypeService,
+    private drawerTypeService: DuraformDrawerTypeService,
     private dialog: DialogService,
     private layout: LayoutService,
     public order: DuraformOrderService
@@ -42,12 +45,14 @@ export class DuraformOrderStepTwoComponent implements OnInit {
       this.loadArches(),
       this.loadDuraformDoorOptions(),
       this.loadPantryDoorChairRailTypes(),
+      this.loadDuraformDrawerTypes(),
     ]).subscribe(
       (responses) => {
         this.edgeProfileList = responses[0];
         this.archList = responses[1];
         this.doorOptions = responses[2];
         this.pantryDoorChairRailTypes = responses[3];
+        this.duraformDrawerTypes = responses[4];
 
         this.initialDefaultEdgeProfile();
         this.layout.closeLoadingPanel();
@@ -74,6 +79,10 @@ export class DuraformOrderStepTwoComponent implements OnInit {
 
   private loadPantryDoorChairRailTypes = () => {
     return this.pantryDoorRailTypeService.getAllActive();
+  };
+
+  private loadDuraformDrawerTypes = () => {
+    return this.drawerTypeService.getAllActive();
   };
 
   private initialDefaultEdgeProfile = () => {

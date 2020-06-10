@@ -1,3 +1,7 @@
+import { DuraformDrawerCartItemComponent } from './components/duraform-drawer-cart-item/duraform-drawer-cart-item.component';
+import { DuraformDrawerTypeService } from './_services/duraform-drawer-type.service';
+import { DuraformDrawerAddFormComponent } from './components/duraform-drawer-add-form/duraform-drawer-add-form.component';
+import { DuraformDrawerTabComponent } from './components/duraform-drawer-tab/duraform-drawer-tab.component';
 import { EndPanelCartItemComponent } from './components/end-panel-cart-item/end-panel-cart-item.component';
 import { EndPanelAddFormComponent } from './components/end-panel-add-form/end-panel-add-form.component';
 import { EndPanelTabComponent } from './components/end-panel-tab/end-panel-tab.component';
@@ -95,6 +99,9 @@ import { PantryDoorCartItemComponent } from './components/pantry-door-cart-item/
     EndPanelAddFormComponent,
     EndPanelCartItemComponent,
     EndPanelTabComponent,
+    DuraformDrawerAddFormComponent,
+    DuraformDrawerCartItemComponent,
+    DuraformDrawerTabComponent,
     HomePageComponent,
     DuraformPageComponent,
   ],
@@ -126,6 +133,7 @@ import { PantryDoorCartItemComponent } from './components/pantry-door-cart-item/
     DuraformArchService,
     DuraformDoorOptionService,
     PantryDoorChairRailTypeService,
+    DuraformDrawerTypeService,
     ErrorInterceptorProvider,
   ],
   bootstrap: [AppComponent],

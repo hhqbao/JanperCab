@@ -2,6 +2,7 @@
 using _3_Application.Dtos.DuraformArch;
 using _3_Application.Dtos.DuraformDesign;
 using _3_Application.Dtos.DuraformDoorOption;
+using _3_Application.Dtos.DuraformDrawerType;
 using _3_Application.Dtos.DuraformEdgeProfile;
 using _3_Application.Dtos.DuraformSerie;
 using _3_Application.Dtos.DuraformWrapColor;
@@ -39,6 +40,7 @@ namespace _5_JanperCab.Helpers
             CreateMap<DuraformArch, DuraformArchForList>();
             CreateMap<DuraformDoorOption, DuraformDoorOptionForList>();
             CreateMap<PantryDoorChairRailType, PantryDoorChairRailTypeForList>();
+            CreateMap<DuraformDrawerType, DuraformDrawerTypeForList>();
         }
     }
 }

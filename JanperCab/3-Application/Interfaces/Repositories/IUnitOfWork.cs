@@ -20,6 +20,8 @@ namespace _3_Application.Interfaces.Repositories
 
         IPantryDoorChairRailTypeRepo PantryDoorChairRailTypes { get; }
 
+        IDuraformDrawerTypeRepo DuraformDrawerTypes { get; }
+
         Task<int> CompleteAsync();
     }
 }
