@@ -1,26 +1,24 @@
-import { DialogService } from './../../_services/dialog.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DuraformDoorForCart } from './../../_models/duraform-door/DuraformDoorForCart';
+import { DialogService } from './../../_services/dialog.service';
+import { EndPanelForCart } from './../../_models/end-panel/EndPanelForCart';
 import {
   Component,
   OnInit,
   Input,
-  HostListener,
-  ElementRef,
   Output,
   EventEmitter,
+  HostListener,
+  ElementRef,
 } from '@angular/core';
-import { DuraformDoorOptionForList } from 'src/app/_models/duraform-door-option/DuraformDoorOptionForList';
 
 @Component({
   // tslint:disable-next-line: component-selector
-  selector: '[app-duraform-door-cart-item]',
-  templateUrl: 'duraform-door-cart-item.component.html',
+  selector: '[app-end-panel-cart-item]',
+  templateUrl: 'end-panel-cart-item.component.html',
 })
-export class DuraformDoorCartItemComponent implements OnInit {
-  @Input() door: DuraformDoorForCart;
-  @Input() doorOptions: DuraformDoorOptionForList[] = [];
-  @Output() removeDoor = new EventEmitter<DuraformDoorForCart>();
+export class EndPanelCartItemComponent implements OnInit {
+  @Input() endPanel: EndPanelForCart;
+  @Output() removeEndPanel = new EventEmitter<EndPanelForCart>();
 
   formGroup: FormGroup;
   hasAnimated = false;
@@ -61,11 +59,13 @@ export class DuraformDoorCartItemComponent implements OnInit {
         null,
         [Validators.required, Validators.min(50), Validators.max(2500)],
       ],
+      numberOfShields: [null, [Validators.min(0), Validators.max(10)]],
+      extraRailBottom: [null, [Validators.min(0), Validators.max(500)]],
+      extraRailTop: [null, [Validators.min(0), Validators.max(500)]],
       top: [false],
       bottom: [false],
       left: [false],
       right: [false],
-      optionId: [null],
       note: [''],
     });
 
@@ -80,40 +80,29 @@ export class DuraformDoorCartItemComponent implements OnInit {
     }
 
     const formValue = this.formGroup.value;
-
-    this.door.quantity = formValue.quantity;
-    this.door.height = formValue.height;
-    this.door.width = formValue.width;
-    this.door.top = formValue.top;
-    this.door.bottom = formValue.bottom;
-    this.door.left = formValue.left;
-    this.door.right = formValue.right;
-    this.door.note = formValue.note;
-
-    if (formValue.optionId) {
-      const option = this.doorOptions.find((x) => x.id === +formValue.optionId);
-      this.door.duraformDoorOption = option;
-    } else {
-      this.door.duraformDoorOption = null;
-    }
-
+    this.endPanel.quantity = formValue.quantity;
+    this.endPanel.height = formValue.height;
+    this.endPanel.width = formValue.width;
+    this.endPanel.numberOfShields = formValue.numberOfShields;
+    this.endPanel.extraRailBottom = formValue.extraRailBottom;
+    this.endPanel.extraRailTop = formValue.extraRailTop;
+    this.endPanel.top = formValue.top;
+    this.endPanel.bottom = formValue.bottom;
+    this.endPanel.left = formValue.left;
+    this.endPanel.right = formValue.right;
+    this.endPanel.note = formValue.note;
     this.isSelected = false;
   };
 
   onSelect = () => {
-    this.formGroup.patchValue({ ...this.door });
-    this.formGroup.patchValue({
-      optionId: this.door.duraformDoorOption
-        ? this.door.duraformDoorOption.id
-        : null,
-    });
+    this.formGroup.patchValue({ ...this.endPanel });
 
     this.isSelected = true;
   };
 
   onRemove = () => {
-    this.dialog.confirm('Remove Door', 'Are you sure?', () => {
-      this.removeDoor.emit(this.door);
+    this.dialog.confirm('Remove End Panel', 'Are you sure?', () => {
+      this.removeEndPanel.emit(this.endPanel);
     });
   };
 }

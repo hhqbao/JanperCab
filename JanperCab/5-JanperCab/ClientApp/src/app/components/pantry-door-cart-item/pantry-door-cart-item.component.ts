@@ -22,7 +22,7 @@ export class PantryDoorCartItemComponent implements OnInit {
   @Input() pantryDoorChairRailTypes: PantryDoorChairRailTypeForList[] = [];
   @Output() removePantryDoor = new EventEmitter<PantryDoorForCart>();
 
-  hasSelected = false;
+  hasAnimated = false;
   isSelected = false;
 
   formGroup: FormGroup;
@@ -37,7 +37,7 @@ export class PantryDoorCartItemComponent implements OnInit {
   onFocusOut = (target: Element) => {
     const self = this.ef.nativeElement as Element;
 
-    if (self === target || self.contains(target)) {
+    if (self === target || self.contains(target) || !this.isSelected) {
       return;
     }
 
@@ -74,9 +74,17 @@ export class PantryDoorCartItemComponent implements OnInit {
       right: [false],
       note: [''],
     });
+
+    setTimeout(() => {
+      this.hasAnimated = true;
+    }, 1000);
   }
 
   onSubmit = () => {
+    if (this.formGroup.invalid) {
+      return;
+    }
+
     const formValue = this.formGroup.value;
     this.pantryDoor.quantity = formValue.quantity;
     this.pantryDoor.height = formValue.height;
@@ -103,7 +111,6 @@ export class PantryDoorCartItemComponent implements OnInit {
       chairRailTypeId: this.pantryDoor.chairRailType.id,
     });
 
-    this.hasSelected = true;
     this.isSelected = true;
   };
 

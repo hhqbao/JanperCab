@@ -1,0 +1,63 @@
+<table class="table table--bordered">
+  <thead>
+    <tr>
+      <th rowspan="2" style="width: 9rem;">Qty.</th>
+      <th rowspan="2" style="width: 9rem;">
+        O/A <br />
+        Height
+      </th>
+      <th rowspan="2" style="width: 9rem;">
+        O/A <br />
+        Width
+      </th>
+      <th rowspan="2" style="width: 9rem;">
+        No. <br />
+        Shields
+      </th>
+      <th rowspan="2" style="width: 11rem;">
+        Extra Rail <br />
+        Bottom
+      </th>
+      <th rowspan="2" style="width: 11rem;">
+        Extra Rail <br />
+        Top
+      </th>
+      <th colspan="4">'X' For Square Edge</th>
+      <th rowspan="2" colspan="2">Note</th>
+    </tr>
+    <tr>
+      <th style="width: 4rem;">T</th>
+      <th style="width: 4rem;">B</th>
+      <th style="width: 4rem;">L</th>
+      <th style="width: 4rem;">R</th>
+    </tr>
+  </thead>
+  <tbody>
+    <app-end-panel-add-form
+      appRemoveTag
+      (formSubmit)="onAddEndPanel($event)"
+    ></app-end-panel-add-form>
+  </tbody>
+  <tbody class="table__spacer" *ngIf="order.endPanels.length > 0">
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+  <tbody
+    app-end-panel-cart-item
+    *ngFor="let endPanel of order.endPanels"
+    [endPanel]="endPanel"
+    (removeEndPanel)="onRemoveEndPanel($event)"
+  ></tbody>
+</table>

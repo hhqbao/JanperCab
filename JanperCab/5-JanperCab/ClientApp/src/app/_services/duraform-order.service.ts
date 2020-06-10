@@ -1,3 +1,4 @@
+import { EndPanelForCart } from './../_models/end-panel/EndPanelForCart';
 import { PantryDoorForCart } from './../_models/pantry-door/PantryDoorForCart';
 import { DuraformDoorForCart } from './../_models/duraform-door/DuraformDoorForCart';
 import { DuraformArchForList } from './../_models/duraform-arch/DuraformArchForList';
@@ -23,6 +24,7 @@ export class DuraformOrderService {
 
   doors: DuraformDoorForCart[] = [];
   pantryDoors: PantryDoorForCart[] = [];
+  endPanels: EndPanelForCart[] = [];
 
   get hasFixedEdgeProfile(): boolean {
     return !!this.selectedDesign.fixedEdgeProfileId;
@@ -47,32 +49,28 @@ export class DuraformOrderService {
     this.selectedArch = model ? { ...model } : null;
   };
 
-  addDoor = (model: DuraformDoorForCart) => {
-    this.doors.push(model);
-  };
-
   removeDoor = (door: DuraformDoorForCart) => {
     const index = this.doors.indexOf(door);
 
-    if (index < 0) {
-      return;
+    if (index >= 0) {
+      this.doors.splice(index, 1);
     }
-
-    this.doors.splice(index, 1);
-  };
-
-  addPantryDoor = (model: PantryDoorForCart) => {
-    this.pantryDoors.push(model);
   };
 
   removePantryDoor = (pantryDoor: PantryDoorForCart) => {
     const index = this.pantryDoors.indexOf(pantryDoor);
 
-    if (index < 0) {
-      return;
+    if (index >= 0) {
+      this.pantryDoors.splice(index, 1);
     }
+  };
 
-    this.pantryDoors.splice(index, 1);
+  removeEndPanel = (endPanel: EndPanelForCart) => {
+    const index = this.endPanels.indexOf(endPanel);
+
+    if (index >= 0) {
+      this.endPanels.splice(index, 1);
+    }
   };
 
   reset = () => {
@@ -85,5 +83,7 @@ export class DuraformOrderService {
     this.selectedArch = null;
 
     this.doors = [];
+    this.pantryDoors = [];
+    this.endPanels = [];
   };
 }

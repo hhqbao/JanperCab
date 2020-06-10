@@ -19,7 +19,7 @@ export class PantryDoorTabComponent implements OnInit {
   ngOnInit() {}
 
   onAddPantryDoor = (pantryDoor: PantryDoorForCart) => {
-    this.order.addPantryDoor(pantryDoor);
+    this.order.pantryDoors.push(pantryDoor);
 
     this.dialog.success('New Pantry Door Added.');
   };

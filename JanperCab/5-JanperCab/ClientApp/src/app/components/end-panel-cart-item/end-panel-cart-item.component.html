@@ -2,8 +2,8 @@
   class="form__order-form-group"
   appOrderForm
   [formGroup]="formGroup"
-  (submit)="onSubmit()"
   [hidden]="!isSelected"
+  (submit)="onSubmit()"
 >
   <td>
     <input
@@ -56,12 +56,27 @@
       }"
     />
   </td>
+  <input
+    class="form__control"
+    currencyMask
+    appSelectOnFocus
+    formControlName="numberOfShields"
+    [options]="{
+      align: 'center',
+      allowZero: false,
+      precision: '0',
+      decimal: '',
+      prefix: '',
+      thousands: '',
+      max: 10
+    }"
+  />
   <td>
     <input
       class="form__control"
       currencyMask
       appSelectOnFocus
-      formControlName="chairRailHeight"
+      formControlName="extraRailBottom"
       [options]="{
         align: 'center',
         allowZero: false,
@@ -74,22 +89,11 @@
     />
   </td>
   <td>
-    <select
-      class="form__control text-center"
-      style="width: 95%;"
-      formControlName="chairRailTypeId"
-    >
-      <option *ngFor="let type of pantryDoorChairRailTypes" [value]="type.id">
-        {{ type.name }}
-      </option>
-    </select>
-  </td>
-  <td>
     <input
       class="form__control"
       currencyMask
       appSelectOnFocus
-      formControlName="extraRailBottom"
+      formControlName="extraRailTop"
       [options]="{
         align: 'center',
         allowZero: false,
@@ -141,18 +145,18 @@
   [hidden]="isSelected"
   (click)="onSelect()"
 >
-  <td>{{ pantryDoor.quantity }}</td>
-  <td>{{ pantryDoor.height }}</td>
-  <td>{{ pantryDoor.width }}</td>
-  <td>{{ pantryDoor.chairRailHeight }}</td>
-  <td>{{ pantryDoor.chairRailType.name }}</td>
-  <td>{{ pantryDoor.extraRailBottom }}</td>
-  <td>{{ pantryDoor.top ? "Y" : "" }}</td>
-  <td>{{ pantryDoor.bottom ? "Y" : "" }}</td>
-  <td>{{ pantryDoor.left ? "Y" : "" }}</td>
-  <td>{{ pantryDoor.right ? "Y" : "" }}</td>
+  <td>{{ endPanel.quantity }}</td>
+  <td>{{ endPanel.height }}</td>
+  <td>{{ endPanel.width }}</td>
+  <td>{{ endPanel.numberOfShields }}</td>
+  <td>{{ endPanel.extraRailBottom }}</td>
+  <td>{{ endPanel.extraRailTop }}</td>
+  <td>{{ endPanel.top ? "Y" : "" }}</td>
+  <td>{{ endPanel.bottom ? "Y" : "" }}</td>
+  <td>{{ endPanel.left ? "Y" : "" }}</td>
+  <td>{{ endPanel.right ? "Y" : "" }}</td>
   <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
-    {{ pantryDoor.note }}
+    {{ endPanel.note }}
   </td>
   <td style="width: 5rem;">
     <button

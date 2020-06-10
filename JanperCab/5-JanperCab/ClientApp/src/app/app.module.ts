@@ -1,3 +1,6 @@
+import { EndPanelCartItemComponent } from './components/end-panel-cart-item/end-panel-cart-item.component';
+import { EndPanelAddFormComponent } from './components/end-panel-add-form/end-panel-add-form.component';
+import { EndPanelTabComponent } from './components/end-panel-tab/end-panel-tab.component';
 import { PantryDoorChairRailTypeService } from './_services/pantry-door-chair-rail-type.service';
 import { PantryDoorTabComponent } from './components/pantry-door-tab/pantry-door-tab.component';
 import { PantryDoorAddFormComponent } from './components/pantry-door-add-form/pantry-door-add-form.component';
@@ -89,6 +92,9 @@ import { PantryDoorCartItemComponent } from './components/pantry-door-cart-item/
     PantryDoorAddFormComponent,
     PantryDoorTabComponent,
     PantryDoorCartItemComponent,
+    EndPanelAddFormComponent,
+    EndPanelCartItemComponent,
+    EndPanelTabComponent,
     HomePageComponent,
     DuraformPageComponent,
   ],
