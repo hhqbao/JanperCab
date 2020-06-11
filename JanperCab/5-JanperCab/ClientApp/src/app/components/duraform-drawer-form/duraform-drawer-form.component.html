@@ -22,15 +22,12 @@
     />
   </td>
   <td>
-    <select
-      class="form__control"
-      style="width: 95%;"
-      formControlName="duraformDrawerTypeId"
-    >
-      <option *ngFor="let type of duraformDrawerTypes" [value]="type.id">
-        {{ type.name }}
-      </option>
-    </select>
+    <app-select-menu
+      [control]="formGroup.get('duraformDrawerTypeId')"
+      [values]="duraformDrawerTypes"
+      [valueKey]="'id'"
+      [valueDisplay]="'name'"
+    ></app-select-menu>
   </td>
   <td>
     <input

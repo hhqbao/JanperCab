@@ -1,0 +1,30 @@
+<div class="select-menu">
+  <input
+    #menuInput
+    type="text"
+    class="form__control"
+    readonly
+    [ngClass]="{ 'ng-invalid': control.invalid }"
+    value="{{ selectedValue ? selectedValue[valueDisplay] : '' }}"
+    (click)="onFocus()"
+    (focus)="onFocus()"
+  />
+  <ul [ngClass]="{ show: isFocused }">
+    <li
+      *ngIf="allowNull"
+      [ngClass]="{ selected: currentIndex === -1 }"
+      (click)="onSelect(null)"
+      (mouseenter)="onMouseEnter(null)"
+    >
+      -- NONE --
+    </li>
+    <li
+      *ngFor="let value of values"
+      [ngClass]="{ selected: currentIndex === values.indexOf(value) }"
+      (click)="onSelect(value)"
+      (mouseenter)="onMouseEnter(value)"
+    >
+      {{ value[valueDisplay] }}
+    </li>
+  </ul>
+</div>

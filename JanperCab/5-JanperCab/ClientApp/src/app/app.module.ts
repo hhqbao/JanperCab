@@ -1,3 +1,4 @@
+import { SelectMenuComponent } from './components/select-menu/select-menu.component';
 import { DuraformDrawerCartItemComponent } from './components/duraform-drawer-cart-item/duraform-drawer-cart-item.component';
 import { DuraformDrawerTypeService } from './_services/duraform-drawer-type.service';
 import { DuraformDrawerFormComponent } from './components/duraform-drawer-form/duraform-drawer-form.component';
@@ -73,6 +74,7 @@ import { PantryDoorCartItemComponent } from './components/pantry-door-cart-item/
     OrderFormDirective,
     RemoveTagDirective,
     BoxComponent,
+    SelectMenuComponent,
     PrimaryLayoutComponent,
     PrimaryTopNavComponent,
     PrimaryLeftNavComponent,

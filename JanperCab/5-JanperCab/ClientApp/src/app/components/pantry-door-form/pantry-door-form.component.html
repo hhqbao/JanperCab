@@ -68,20 +68,17 @@
         decimal: '',
         prefix: '',
         thousands: '',
-        max: 500
+        max: 2500
       }"
     />
   </td>
   <td>
-    <select
-      class="form__control text-center"
-      style="width: 95%;"
-      formControlName="chairRailTypeId"
-    >
-      <option *ngFor="let type of pantryDoorChairRailTypes" [value]="type.id">
-        {{ type.name }}
-      </option>
-    </select>
+    <app-select-menu
+      [control]="formGroup.get('chairRailTypeId')"
+      [values]="pantryDoorChairRailTypes"
+      [valueKey]="'id'"
+      [valueDisplay]="'name'"
+    ></app-select-menu>
   </td>
   <td>
     <input

@@ -80,16 +80,13 @@
     </label>
   </td>
   <td>
-    <select
-      class="form__control"
-      style="width: 95%;"
-      formControlName="optionId"
-    >
-      <option [value]="null"></option>
-      <option *ngFor="let option of doorOptions" [value]="option.id">{{
-        option.name
-      }}</option>
-    </select>
+    <app-select-menu
+      [control]="formGroup.get('optionId')"
+      [allowNull]="true"
+      [values]="doorOptions"
+      [valueKey]="'id'"
+      [valueDisplay]="'name'"
+    ></app-select-menu>
   </td>
   <td>
     <input
