@@ -1,3 +1,4 @@
+import { DuraformWrappingOptionForList } from './../duraform-wrapping-option/DuraformWrappingOptionForList';
 import { PantryDoorChairRailTypeForList } from '../pantry-door-chair-rail-type/PantryDoorChairRailTypeForList';
 
 export class PantryDoorForCart {
@@ -7,6 +8,7 @@ export class PantryDoorForCart {
   chairRailHeight: number;
   chairRailType: PantryDoorChairRailTypeForList;
   extraRailBottom: number;
+  duraformWrappingOption: DuraformWrappingOptionForList;
   top: boolean;
   bottom: boolean;
   left: boolean;
@@ -15,9 +17,14 @@ export class PantryDoorForCart {
 
   constructor() {
     this.chairRailType = null;
+    this.duraformWrappingOption = null;
   }
 
-  update = (formValue: any, railTypes: PantryDoorChairRailTypeForList[]) => {
+  update = (
+    formValue: any,
+    railTypes: PantryDoorChairRailTypeForList[],
+    wrappingOptions: DuraformWrappingOptionForList[]
+  ) => {
     this.quantity = formValue.quantity;
     this.height = formValue.height;
     this.width = formValue.width;
@@ -31,5 +38,14 @@ export class PantryDoorForCart {
 
     const railType = railTypes.find((x) => x.id === +formValue.chairRailTypeId);
     this.chairRailType = railType;
+
+    if (formValue.wrappingOptionId) {
+      const wrappingOption = wrappingOptions.find(
+        (x) => x.id === +formValue.wrappingOptionId
+      );
+      this.duraformWrappingOption = wrappingOption;
+    } else {
+      this.duraformWrappingOption = null;
+    }
   };
 }

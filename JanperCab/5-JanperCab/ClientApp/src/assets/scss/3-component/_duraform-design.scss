@@ -52,7 +52,7 @@
     padding-left: 1rem;
 
     &__door-name {
-      color: $red-primary;
+      color: $blue-primary;
       font-size: 2rem;
       font-weight: 500;
       padding-top: 1.5rem;
@@ -67,7 +67,7 @@
     &__profile-img {
       display: block;
       margin-top: 0.8rem;
-      width: 15rem;
+      max-width: 100%;
     }
 
     &__route-only {
@@ -75,6 +75,7 @@
       font-weight: bold;
       font-size: 3rem;
       margin-top: 3rem;
+      text-align: center;
     }
 
     &__wrapping {
@@ -83,6 +84,7 @@
       .wrap-type {
         color: $red-primary;
         font-size: 2rem;
+        font-weight: 700;
         margin-bottom: 0.3rem;
       }
 

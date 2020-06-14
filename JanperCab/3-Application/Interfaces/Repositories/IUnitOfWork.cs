@@ -22,6 +22,8 @@ namespace _3_Application.Interfaces.Repositories
 
         IDuraformDrawerTypeRepo DuraformDrawerTypes { get; }
 
+        IDuraformWrappingOptionRepo DuraformWrappingOptions { get; }
+
         Task<int> CompleteAsync();
     }
 }

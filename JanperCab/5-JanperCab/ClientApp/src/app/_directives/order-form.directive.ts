@@ -17,8 +17,8 @@ export class OrderFormDirective implements OnInit {
   // tslint:disable-next-line: no-output-native
   @Output() submit = new EventEmitter();
 
-  self: Element;
-  controls: Element[] = [];
+  self: HTMLElement;
+  controls: HTMLElement[] = [];
 
   constructor(private ef: ElementRef, private dialog: DialogService) {
     this.self = this.ef.nativeElement;
@@ -28,31 +28,49 @@ export class OrderFormDirective implements OnInit {
     this.controls = Array.from(this.self.querySelectorAll('input,select'));
   }
 
-  @HostListener('keydown.enter', ['$event'])
-  @HostListener('keydown.tab', ['$event'])
+  private onSubmit = () => {
+    if (this.formGroup.valid) {
+      this.controls[0].focus();
+    } else {
+      const invalidControl = this.controls.filter((x) =>
+        x.classList.contains('ng-invalid')
+      )[0];
+
+      if (invalidControl) {
+        invalidControl.focus();
+      }
+
+      this.dialog.error('Please provide all the required fields.');
+    }
+    this.submit.emit();
+  };
+
+  @HostListener('keydown.Enter', ['$event'])
+  @HostListener('keydown.Tab', ['$event'])
   onNavigateControl = (event: KeyboardEvent) => {
     event.preventDefault();
 
-    const target = event.target as Element;
+    const target = event.target as HTMLElement;
 
     const currentIndex = this.controls.indexOf(target);
     if (currentIndex + 1 === this.controls.length) {
-      if (this.formGroup.valid) {
-        (this.controls[0] as any).focus();
-      } else {
-        const invalidControl = this.controls.filter((x) =>
-          x.classList.contains('ng-invalid')
-        )[0];
-
-        if (invalidControl) {
-          (invalidControl as any).focus();
-        }
-
-        this.dialog.error('Please provide all the required fields.');
-      }
-      this.submit.emit();
+      this.onSubmit();
     } else {
-      (this.controls[currentIndex + 1] as any).focus();
+      this.controls[currentIndex + 1].focus();
     }
+  };
+
+  @HostListener('keydown.0', ['$event'])
+  onZeroDown = (event) => {
+    const target = event.target as HTMLElement;
+
+    if (target.getAttribute('type') === 'checkbox') {
+      target.click();
+    }
+  };
+
+  @HostListener('keydown.Control')
+  onCtrlDown = () => {
+    this.onSubmit();
   };
 }

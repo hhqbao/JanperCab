@@ -36,11 +36,11 @@ export class DuraformDrawerFormComponent implements OnInit {
       bottom: [false],
       left: [false],
       right: [false],
-      drawerOne: [null, [Validators.min(0)]],
-      drawerTwo: [null, [Validators.min(0)]],
-      drawerThree: [null, [Validators.min(0)]],
-      drawerFour: [null, [Validators.min(0)]],
-      drawerFive: [null, [Validators.min(0)]],
+      drawerOne: [null, [Validators.min(0), Validators.max(2500)]],
+      drawerTwo: [null, [Validators.min(0), Validators.max(2500)]],
+      drawerThree: [null, [Validators.min(0), Validators.max(2500)]],
+      drawerFour: [null, [Validators.min(0), Validators.max(2500)]],
+      drawerFive: [null, [Validators.min(0), Validators.max(2500)]],
       note: [''],
     });
 

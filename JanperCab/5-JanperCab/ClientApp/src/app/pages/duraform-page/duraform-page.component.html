@@ -1,5 +1,6 @@
 <div class="duraform-page">
   <app-duraform-process
+    [currentDisplayStep]="displayedStep"
     (processClick)="onProcessClick($event)"
   ></app-duraform-process>
   <app-duraform-order-step-one

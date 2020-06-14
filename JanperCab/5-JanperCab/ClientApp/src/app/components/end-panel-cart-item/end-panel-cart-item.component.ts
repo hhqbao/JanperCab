@@ -1,3 +1,4 @@
+import { DuraformWrappingOptionForList } from './../../_models/duraform-wrapping-option/DuraformWrappingOptionForList';
 import { EndPanelFormComponent } from '../end-panel-form/end-panel-form.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DialogService } from './../../_services/dialog.service';
@@ -20,6 +21,7 @@ import {
 export class EndPanelCartItemComponent implements OnInit {
   @ViewChild('endPanelForm') endPanelForm: EndPanelFormComponent;
   @Input() endPanel: EndPanelForCart;
+  @Input() wrappingOptions: DuraformWrappingOptionForList[] = [];
   @Output() removeEndPanel = new EventEmitter<EndPanelForCart>();
 
   hasAnimated = false;
@@ -50,8 +52,7 @@ export class EndPanelCartItemComponent implements OnInit {
       return;
     }
 
-    const formValue = formGroup.value;
-    this.endPanel.update(formValue);
+    this.endPanel.update(formGroup.value, this.wrappingOptions);
 
     this.isSelected = false;
   };

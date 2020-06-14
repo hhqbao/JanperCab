@@ -1,3 +1,4 @@
+import { DuraformWrappingOptionService } from './_services/duraform-wrapping-option.service';
 import { SelectMenuComponent } from './components/select-menu/select-menu.component';
 import { DuraformDrawerCartItemComponent } from './components/duraform-drawer-cart-item/duraform-drawer-cart-item.component';
 import { DuraformDrawerTypeService } from './_services/duraform-drawer-type.service';
@@ -134,6 +135,7 @@ import { PantryDoorCartItemComponent } from './components/pantry-door-cart-item/
     DuraformOrderService,
     DuraformArchService,
     DuraformDoorOptionService,
+    DuraformWrappingOptionService,
     PantryDoorChairRailTypeService,
     DuraformDrawerTypeService,
     ErrorInterceptorProvider,

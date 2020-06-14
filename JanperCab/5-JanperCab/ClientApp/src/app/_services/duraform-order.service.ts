@@ -95,5 +95,6 @@ export class DuraformOrderService {
     this.doors = [];
     this.pantryDoors = [];
     this.endPanels = [];
+    this.duraformDrawers = [];
   };
 }

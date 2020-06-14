@@ -4,6 +4,7 @@
   *ngIf="isSelected"
   [pantryDoor]="pantryDoor"
   [pantryDoorChairRailTypes]="pantryDoorChairRailTypes"
+  [wrappingOptions]="wrappingOptions"
   (formSubmit)="onEdit($event)"
 ></app-pantry-door-form>
 
@@ -17,8 +18,15 @@
   <td>{{ pantryDoor.height }}</td>
   <td>{{ pantryDoor.width }}</td>
   <td>{{ pantryDoor.chairRailHeight }}</td>
-  <td>{{ pantryDoor.chairRailType.name }}</td>
+  <td>{{ pantryDoor.chairRailType.name | uppercase }}</td>
   <td>{{ pantryDoor.extraRailBottom }}</td>
+  <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
+    {{
+      pantryDoor.duraformWrappingOption
+        ? pantryDoor.duraformWrappingOption.name
+        : "SINGLE SIDED"
+    }}
+  </td>
   <td>{{ pantryDoor.top ? "Y" : "" }}</td>
   <td>{{ pantryDoor.bottom ? "Y" : "" }}</td>
   <td>{{ pantryDoor.left ? "Y" : "" }}</td>

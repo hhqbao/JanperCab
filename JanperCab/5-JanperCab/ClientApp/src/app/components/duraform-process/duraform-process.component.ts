@@ -1,13 +1,14 @@
 import { DuraformOrderService } from './../../_services/duraform-order.service';
 import { DialogService } from './../../_services/dialog.service';
 import { DuraformProcessStep } from './../../_enums/DuraformProcessStep';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-duraform-process',
   templateUrl: 'duraform-process.component.html',
 })
 export class DuraformProcessComponent implements OnInit {
+  @Input() currentDisplayStep: DuraformProcessStep;
   @Output() processClick = new EventEmitter<DuraformProcessStep>();
 
   constructor(

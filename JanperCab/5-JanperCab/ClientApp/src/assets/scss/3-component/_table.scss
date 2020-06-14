@@ -7,14 +7,9 @@
     text-align: center;
   }
 
-  thead {
-    th {
-      color: $red-primary;
-      padding: 0.3rem 0;
-    }
-  }
-
-  tbody {
+  th {
+    color: $red-primary;
+    padding: 0.3rem 0;
   }
 
   &--bordered {

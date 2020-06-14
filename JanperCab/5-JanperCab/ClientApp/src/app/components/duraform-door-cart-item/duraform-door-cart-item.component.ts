@@ -1,3 +1,4 @@
+import { DuraformWrappingOptionForList } from './../../_models/duraform-wrapping-option/DuraformWrappingOptionForList';
 import { DuraformDoorFormComponent } from '../duraform-door-form/duraform-door-form.component';
 import { DialogService } from './../../_services/dialog.service';
 import { FormGroup } from '@angular/forms';
@@ -22,6 +23,7 @@ export class DuraformDoorCartItemComponent implements OnInit {
   @ViewChild('doorForm') doorForm: DuraformDoorFormComponent;
   @Input() door: DuraformDoorForCart;
   @Input() doorOptions: DuraformDoorOptionForList[] = [];
+  @Input() wrappingOptions: DuraformWrappingOptionForList[] = [];
   @Output() removeDoor = new EventEmitter<DuraformDoorForCart>();
 
   hasAnimated = false;
@@ -53,7 +55,7 @@ export class DuraformDoorCartItemComponent implements OnInit {
     }
 
     const formValue = formGroup.value;
-    this.door.update(formValue, this.doorOptions);
+    this.door.update(formValue, this.doorOptions, this.wrappingOptions);
 
     this.isSelected = false;
   };

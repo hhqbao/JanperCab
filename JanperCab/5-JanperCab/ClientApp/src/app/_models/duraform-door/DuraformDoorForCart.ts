@@ -1,3 +1,4 @@
+import { DuraformWrappingOptionForList } from './../duraform-wrapping-option/DuraformWrappingOptionForList';
 import { DuraformDoorOptionForList } from './../duraform-door-option/DuraformDoorOptionForList';
 
 export class DuraformDoorForCart {
@@ -9,13 +10,19 @@ export class DuraformDoorForCart {
   left: boolean;
   right: boolean;
   duraformDoorOption: DuraformDoorOptionForList;
+  duraformWrappingOption: DuraformWrappingOptionForList;
   note: string;
 
   constructor() {
     this.duraformDoorOption = null;
+    this.duraformWrappingOption = null;
   }
 
-  update = (formValue: any, doorOptions: DuraformDoorOptionForList[]) => {
+  update = (
+    formValue: any,
+    doorOptions: DuraformDoorOptionForList[],
+    wrappingOptions: DuraformWrappingOptionForList[]
+  ) => {
     this.quantity = formValue.quantity;
     this.height = formValue.height;
     this.width = formValue.width;
@@ -30,6 +37,15 @@ export class DuraformDoorForCart {
       this.duraformDoorOption = option;
     } else {
       this.duraformDoorOption = null;
+    }
+
+    if (formValue.wrappingOptionId) {
+      const option = wrappingOptions.find(
+        (x) => x.id === +formValue.wrappingOptionId
+      );
+      this.duraformWrappingOption = option;
+    } else {
+      this.duraformWrappingOption = null;
     }
   };
 }

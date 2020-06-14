@@ -13,7 +13,11 @@
       <th colspan="4">'X' For Square Edge</th>
       <th rowspan="2" style="width: 30rem;">
         Options <br />
-        (e.g Door, Panel, Drawers)
+        (e.g Panel, Frame)
+      </th>
+      <th rowspan="2" style="width: 30rem;">
+        Duraform Options <br />
+        (e.g Double Sided, Fold Back)
       </th>
       <th rowspan="2" colspan="2">Note</th>
     </tr>
@@ -28,11 +32,13 @@
     <app-duraform-door-form
       appRemoveTag
       [doorOptions]="doorOptions"
+      [wrappingOptions]="wrappingOptions"
       (formSubmit)="onAddDoor($event)"
     ></app-duraform-door-form>
   </tbody>
   <tbody class="table__spacer" *ngIf="order.doors.length > 0">
     <tr>
+      <td></td>
       <td></td>
       <td></td>
       <td></td>
@@ -51,6 +57,7 @@
       *ngFor="let door of order.doors"
       [door]="door"
       [doorOptions]="doorOptions"
+      [wrappingOptions]="wrappingOptions"
       (removeDoor)="onRemoveDoor($event)"
     ></app-duraform-door-cart-item>
   </tbody>

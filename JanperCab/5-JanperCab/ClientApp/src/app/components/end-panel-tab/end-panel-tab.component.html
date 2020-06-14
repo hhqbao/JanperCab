@@ -2,6 +2,10 @@
   <thead>
     <tr>
       <th rowspan="2" style="width: 5rem;">Qty.</th>
+      <th rowspan="2" style="width: 6rem;">
+        No. <br />
+        Shields
+      </th>
       <th rowspan="2" style="width: 9rem;">
         O/A <br />
         Height
@@ -10,22 +14,22 @@
         O/A <br />
         Width
       </th>
-      <th rowspan="2" style="width: 9rem;">
-        No. <br />
-        Shields
+
+      <th colspan="4">
+        Extra Rail
       </th>
-      <th rowspan="2" style="width: 11rem;">
-        Extra Rail <br />
-        Bottom
-      </th>
-      <th rowspan="2" style="width: 11rem;">
-        Extra Rail <br />
-        Top
+      <th rowspan="2" style="width: 25rem;">
+        Duraform Options <br />
+        (e.g Double Sided, Fold Back)
       </th>
       <th colspan="4">'X' For Square Edge</th>
       <th rowspan="2" colspan="2">Note</th>
     </tr>
     <tr>
+      <th style="width: 6rem;">Top</th>
+      <th style="width: 6rem;">Bottom</th>
+      <th style="width: 6rem;">Left</th>
+      <th style="width: 6rem;">Right</th>
       <th style="width: 4rem;">T</th>
       <th style="width: 4rem;">B</th>
       <th style="width: 4rem;">L</th>
@@ -35,11 +39,16 @@
   <tbody>
     <app-end-panel-form
       appRemoveTag
+      [wrappingOptions]="wrappingOptions"
       (formSubmit)="onAddEndPanel($event)"
     ></app-end-panel-form>
   </tbody>
+
   <tbody class="table__spacer" *ngIf="order.endPanels.length > 0">
     <tr>
+      <td></td>
+      <td></td>
+      <td></td>
       <td></td>
       <td></td>
       <td></td>
@@ -59,6 +68,7 @@
       appRemoveTag
       *ngFor="let endPanel of order.endPanels"
       [endPanel]="endPanel"
+      [wrappingOptions]="wrappingOptions"
       (removeEndPanel)="onRemoveEndPanel($event)"
     ></app-end-panel-cart-item>
   </tbody>

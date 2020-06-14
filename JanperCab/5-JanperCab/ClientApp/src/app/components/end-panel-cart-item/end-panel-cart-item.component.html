@@ -3,6 +3,7 @@
   *ngIf="isSelected"
   appRemoveTag
   [endPanel]="endPanel"
+  [wrappingOptions]="wrappingOptions"
   (formSubmit)="onEdit($event)"
 ></app-end-panel-form>
 <tr
@@ -12,11 +13,20 @@
   (click)="onSelect()"
 >
   <td>{{ endPanel.quantity }}</td>
+  <td>{{ endPanel.numberOfShields }}</td>
   <td>{{ endPanel.height }}</td>
   <td>{{ endPanel.width }}</td>
-  <td>{{ endPanel.numberOfShields }}</td>
-  <td>{{ endPanel.extraRailBottom }}</td>
   <td>{{ endPanel.extraRailTop }}</td>
+  <td>{{ endPanel.extraRailBottom }}</td>
+  <td>{{ endPanel.extraRailLeft }}</td>
+  <td>{{ endPanel.extraRailRight }}</td>
+  <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
+    {{
+      endPanel.duraformWrappingOption
+        ? endPanel.duraformWrappingOption.name
+        : "SINGLE SIDED"
+    }}
+  </td>
   <td>{{ endPanel.top ? "Y" : "" }}</td>
   <td>{{ endPanel.bottom ? "Y" : "" }}</td>
   <td>{{ endPanel.left ? "Y" : "" }}</td>

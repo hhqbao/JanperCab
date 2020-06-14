@@ -17,7 +17,10 @@ export class SelectMenuComponent implements OnInit {
   @Input() values: any[] = [];
   @Input() valueKey: string;
   @Input() valueDisplay: string;
+
   @Input() allowNull = false;
+  @Input() nullText = '-- NONE --';
+  @Input() nullOnLabel = false;
 
   @ViewChild('menuInput') menuInput: ElementRef;
   isFocused = false;
@@ -31,12 +34,12 @@ export class SelectMenuComponent implements OnInit {
 
     if (!self.contains(target)) {
       this.isFocused = false;
-      this.adjustIndex();
     }
   };
 
-  @HostListener('keydown.tab')
-  @HostListener('keydown.enter')
+  @HostListener('keydown.Tab')
+  @HostListener('keydown.Enter')
+  @HostListener('keydown.Control')
   onTab = () => {
     this.isFocused = false;
     if (this.currentIndex > -2) {
@@ -47,7 +50,6 @@ export class SelectMenuComponent implements OnInit {
         this.setValue(value);
       }
     }
-    this.adjustIndex();
   };
 
   @HostListener('keydown.ArrowUp', ['$event'])
@@ -105,6 +107,18 @@ export class SelectMenuComponent implements OnInit {
     return selectedValue;
   }
 
+  get displayedLabel(): string {
+    if (this.selectedValue) {
+      return this.selectedValue[this.valueDisplay];
+    } else {
+      if (this.allowNull) {
+        return this.nullOnLabel ? this.nullText : '';
+      } else {
+        return '';
+      }
+    }
+  }
+
   onFocus = () => {
     this.isFocused = true;
 
@@ -121,7 +135,6 @@ export class SelectMenuComponent implements OnInit {
 
   onSelect = (value) => {
     this.setValue(value);
-    this.adjustIndex();
     (this.menuInput.nativeElement as HTMLElement).focus();
     this.isFocused = false;
   };
