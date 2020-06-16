@@ -40,13 +40,11 @@
     <app-pantry-door-form
       appRemoveTag
       [pantryDoorChairRailTypes]="pantryDoorChairRailTypes"
-      [wrappingOptions]="wrappingOptions"
       (formSubmit)="onAddPantryDoor($event)"
     ></app-pantry-door-form>
   </tbody>
   <tbody class="table__spacer" *ngIf="order.pantryDoors.length > 0">
     <tr>
-      <td></td>
       <td></td>
       <td></td>
       <td></td>
@@ -67,7 +65,6 @@
       *ngFor="let pantryDoor of order.pantryDoors"
       [pantryDoor]="pantryDoor"
       [pantryDoorChairRailTypes]="pantryDoorChairRailTypes"
-      [wrappingOptions]="wrappingOptions"
       (removePantryDoor)="onRemovePantryDoor($event)"
     ></app-pantry-door-cart-item>
   </tbody>

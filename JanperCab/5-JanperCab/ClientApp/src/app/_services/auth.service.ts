@@ -50,19 +50,6 @@ export class AuthService {
       );
   };
 
-  register = (model: UserForRegister) => {
-    return this.http
-      .post<UserTokenDto>(environment.baseUrl + '/auth/register', model)
-      .pipe(
-        map((response) => {
-          if (response) {
-            this.token = response.token;
-            localStorage.setItem('token', this.token);
-          }
-        })
-      );
-  };
-
   logOut = () => {
     this.token = null;
     localStorage.removeItem('token');

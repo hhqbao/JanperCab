@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { LayoutService } from './../../_services/layout.service';
 import { AuthService } from './../../_services/auth.service';
 import { DialogService } from './../../_services/dialog.service';
@@ -15,8 +16,8 @@ export class LoginFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialog: DialogService,
-    private auth: AuthService,
-    private layoutService: LayoutService
+    private router: Router,
+    private auth: AuthService
   ) {}
 
   ngOnInit() {
@@ -30,10 +31,18 @@ export class LoginFormComponent implements OnInit {
       ],
       password: ['', Validators.required],
     });
+
+    setTimeout(() => {
+      (this.loginFormGroup.get('email') as any).nativeElement.focus();
+    }, 100);
   }
 
   onSubmit = () => {
-    if (this.loginFormGroup.invalid) {
+    if (this.loginFormGroup.invalid || this.isLoading) {
+      if (this.loginFormGroup.get('email').invalid) {
+        this.dialog.error('Email Not Valid!');
+      }
+
       return;
     }
 
@@ -41,10 +50,12 @@ export class LoginFormComponent implements OnInit {
     this.auth.login(this.loginFormGroup.value).subscribe(
       (_) => {
         this.isLoading = false;
-        this.dialog.message('You have been signed in.');
+        this.router.navigate(['dashboard']);
+        this.dialog.success('You have been signed in.');
       },
       (error) => {
         this.isLoading = false;
+        (this.loginFormGroup.get('email') as any).nativeElement.focus();
         this.dialog.error(error);
       }
     );

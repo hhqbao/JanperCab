@@ -2,12 +2,14 @@
 using _3_Application.Dtos.DuraformDesign;
 using _3_Application.Interfaces.Repositories;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace _5_JanperCab.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DuraformDesignsController : ControllerBase

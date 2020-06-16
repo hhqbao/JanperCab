@@ -11,5 +11,10 @@
   <app-duraform-order-step-two
     *ngIf="loadedSteps.includes(duraformProcessStep.StepTwo)"
     [hidden]="displayedStep !== duraformProcessStep.StepTwo"
+    (finish)="onStepTwoFinish()"
   ></app-duraform-order-step-two>
+  <app-duraform-order-step-three
+    *ngIf="loadedSteps.includes(duraformProcessStep.StepThree)"
+    [hidden]="displayedStep !== duraformProcessStep.StepThree"
+  ></app-duraform-order-step-three>
 </div>

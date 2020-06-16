@@ -1,0 +1,7 @@
+.duraform-option-double-sided-form {
+  display: flex;
+
+  & > * {
+    flex: 1;
+  }
+}

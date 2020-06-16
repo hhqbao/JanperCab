@@ -1,6 +1,5 @@
-import { DuraformWrappingOptionForList } from './../duraform-wrapping-option/DuraformWrappingOptionForList';
-import { DuraformDoorOptionForList } from './../duraform-door-option/DuraformDoorOptionForList';
-
+import { DuraformOptionType } from 'src/app/_models/duraform-option/DuraformOptionType';
+import { DuraformOption } from '../duraform-option/DuraformOption';
 export class DuraformDoorForCart {
   quantity: number;
   height: number;
@@ -9,20 +8,14 @@ export class DuraformDoorForCart {
   bottom: boolean;
   left: boolean;
   right: boolean;
-  duraformDoorOption: DuraformDoorOptionForList;
-  duraformWrappingOption: DuraformWrappingOptionForList;
+  duraformOption: DuraformOption;
   note: string;
 
   constructor() {
-    this.duraformDoorOption = null;
-    this.duraformWrappingOption = null;
+    this.duraformOption = null;
   }
 
-  update = (
-    formValue: any,
-    doorOptions: DuraformDoorOptionForList[],
-    wrappingOptions: DuraformWrappingOptionForList[]
-  ) => {
+  update = (formValue: any, duraformOptionTypes: DuraformOptionType[]) => {
     this.quantity = formValue.quantity;
     this.height = formValue.height;
     this.width = formValue.width;
@@ -32,20 +25,21 @@ export class DuraformDoorForCart {
     this.right = formValue.right;
     this.note = formValue.note;
 
-    if (formValue.optionId) {
-      const option = doorOptions.find((x) => x.id === +formValue.optionId);
-      this.duraformDoorOption = option;
-    } else {
-      this.duraformDoorOption = null;
-    }
-
-    if (formValue.wrappingOptionId) {
-      const option = wrappingOptions.find(
-        (x) => x.id === +formValue.wrappingOptionId
+    if (formValue.optionGroup) {
+      const optionType = duraformOptionTypes.find(
+        (x) => x.id === formValue.optionGroup.optionTypeId
       );
-      this.duraformWrappingOption = option;
+
+      if (!optionType) {
+        throw new Error('Duraform Option Type Not Found');
+      }
+
+      this.duraformOption = DuraformOptionType.GetDuraformOptionInstance(
+        optionType,
+        formValue.optionGroup
+      );
     } else {
-      this.duraformWrappingOption = null;
+      this.duraformOption = null;
     }
   };
 }

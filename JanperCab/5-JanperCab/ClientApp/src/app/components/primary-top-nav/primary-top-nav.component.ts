@@ -8,10 +8,7 @@ import { AuthService } from './../../_services/auth.service';
   templateUrl: 'primary-top-nav.component.html',
 })
 export class PrimaryTopNavComponent implements OnInit {
-  constructor(
-    public authService: AuthService,
-    public layoutService: LayoutService
-  ) {}
+  constructor(public layoutService: LayoutService) {}
 
   ngOnInit() {}
 }

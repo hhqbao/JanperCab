@@ -3,8 +3,7 @@
   appRemoveTag
   *ngIf="isSelected"
   [door]="door"
-  [doorOptions]="doorOptions"
-  [wrappingOptions]="wrappingOptions"
+  [duraformOptionTypes]="duraformOptionTypes"
   (formSubmit)="onEdit($event)"
 ></app-duraform-door-form>
 <tr
@@ -21,18 +20,7 @@
   <td>{{ door.left ? "Y" : "" }}</td>
   <td>{{ door.right ? "Y" : "" }}</td>
   <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
-    {{
-      (door.duraformDoorOption ? door.duraformDoorOption.name : "Door")
-        | uppercase
-    }}
-  </td>
-  <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
-    {{
-      (door.duraformWrappingOption
-        ? door.duraformWrappingOption.name
-        : "Single Sided"
-      ) | uppercase
-    }}
+    {{ door.duraformOption?.toString() | uppercase }}
   </td>
   <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
     {{ door.note }}

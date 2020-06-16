@@ -1,4 +1,7 @@
-import { DuraformWrappingOptionService } from './_services/duraform-wrapping-option.service';
+import { DuraformOptionNoFaceComponent } from './components/duraform-option-no-face-form/duraform-option-no-face.component';
+import { DuraformOptionSelectorComponent } from './components/duraform-option-selector/duraform-option-selector.component';
+import { DuraformOptionTypeService } from './_services/duraform-option-type.service';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { SelectMenuComponent } from './components/select-menu/select-menu.component';
 import { DuraformDrawerCartItemComponent } from './components/duraform-drawer-cart-item/duraform-drawer-cart-item.component';
 import { DuraformDrawerTypeService } from './_services/duraform-drawer-type.service';
@@ -11,7 +14,6 @@ import { PantryDoorChairRailTypeService } from './_services/pantry-door-chair-ra
 import { PantryDoorTabComponent } from './components/pantry-door-tab/pantry-door-tab.component';
 import { PantryDoorFormComponent } from './components/pantry-door-form/pantry-door-form.component';
 import { DuraformDoorTabComponent } from './components/duraform-door-tab/duraform-door-tab.component';
-import { DuraformDoorOptionService } from './_services/duraform-door-option.service';
 import { RemoveTagDirective } from './_directives/remove-tag.directive';
 import { DuraformDoorFormComponent } from './components/duraform-door-form/duraform-door-form.component';
 import { DuraformDoorCartItemComponent } from './components/duraform-door-cart-item/duraform-door-cart-item.component';
@@ -39,7 +41,6 @@ import { DuraformProcessComponent } from './components/duraform-process/duraform
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LayoutService } from './_services/layout.service';
 import { FormInvalidFocusDirective } from './_directives/form-invalid-focus.directive';
-import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -64,6 +65,8 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { UserControlBoxComponent } from './components/user-control-box/user-control-box.component';
 import { customCurrencyMaskConfig } from './_helpers/CurrencyMaskInputOption';
 import { PantryDoorCartItemComponent } from './components/pantry-door-cart-item/pantry-door-cart-item.component';
+import { DuraformOrderStepThreeComponent } from './components/duraform-order-step-three/duraform-order-step-three.component';
+import { DuraformOptionDoubleSidedFormComponent } from './components/duraform-option-double-sided-form/duraform-option-double-sided.component';
 
 @NgModule({
   declarations: [
@@ -81,11 +84,11 @@ import { PantryDoorCartItemComponent } from './components/pantry-door-cart-item/
     PrimaryLeftNavComponent,
     UserControlBoxComponent,
     LoginFormComponent,
-    RegisterFormComponent,
     DashboardComponent,
     DuraformProcessComponent,
     DuraformOrderStepOneComponent,
     DuraformOrderStepTwoComponent,
+    DuraformOrderStepThreeComponent,
     DuraformDesignComponent,
     DuraformDesignListComponent,
     DuraformFilterBoxComponent,
@@ -105,6 +108,10 @@ import { PantryDoorCartItemComponent } from './components/pantry-door-cart-item/
     DuraformDrawerFormComponent,
     DuraformDrawerCartItemComponent,
     DuraformDrawerTabComponent,
+    DuraformOptionSelectorComponent,
+    DuraformOptionNoFaceComponent,
+    DuraformOptionDoubleSidedFormComponent,
+    LoginPageComponent,
     HomePageComponent,
     DuraformPageComponent,
   ],
@@ -118,7 +125,7 @@ import { PantryDoorCartItemComponent } from './components/pantry-door-cart-item/
       config: {
         tokenGetter: () => localStorage.getItem('token'),
         whitelistedDomains: [environment.domain],
-        blacklistedRoutes: [`${environment.baseUrl}`],
+        blacklistedRoutes: [`${environment.baseUrl}/Auth/Login`],
       },
     }),
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
@@ -134,10 +141,9 @@ import { PantryDoorCartItemComponent } from './components/pantry-door-cart-item/
     DuraformEdgeProfileService,
     DuraformOrderService,
     DuraformArchService,
-    DuraformDoorOptionService,
-    DuraformWrappingOptionService,
     PantryDoorChairRailTypeService,
     DuraformDrawerTypeService,
+    DuraformOptionTypeService,
     ErrorInterceptorProvider,
   ],
   bootstrap: [AppComponent],

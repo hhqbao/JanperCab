@@ -1,4 +1,3 @@
-import { DuraformWrappingOptionForList } from './../../_models/duraform-wrapping-option/DuraformWrappingOptionForList';
 import { EndPanelForCart } from '../../_models/end-panel/EndPanelForCart';
 import { DialogService } from '../../_services/dialog.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -10,7 +9,6 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 })
 export class EndPanelFormComponent implements OnInit {
   @Input() endPanel: EndPanelForCart;
-  @Input() wrappingOptions: DuraformWrappingOptionForList[] = [];
   @Output() formSubmit = new EventEmitter<FormGroup>();
 
   formGroup: FormGroup;
@@ -39,7 +37,6 @@ export class EndPanelFormComponent implements OnInit {
       extraRailTop: [null, [Validators.min(0), Validators.max(500)]],
       extraRailLeft: [null, [Validators.min(0), Validators.max(500)]],
       extraRailRight: [null, [Validators.min(0), Validators.max(500)]],
-      wrappingOptionId: [null],
       top: [false],
       bottom: [false],
       left: [false],
@@ -50,7 +47,6 @@ export class EndPanelFormComponent implements OnInit {
     if (this.endPanel) {
       this.formGroup.patchValue({
         ...this.endPanel,
-        wrappingOptionId: this.endPanel.duraformWrappingOption?.id,
       });
     }
   }

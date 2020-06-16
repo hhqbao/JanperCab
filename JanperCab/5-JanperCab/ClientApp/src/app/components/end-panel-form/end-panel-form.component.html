@@ -141,17 +141,6 @@
     />
   </td>
   <td>
-    <app-select-menu
-      [control]="formGroup.get('wrappingOptionId')"
-      [allowNull]="true"
-      [nullText]="'Single Sided'"
-      [nullOnLabel]="true"
-      [values]="wrappingOptions"
-      [valueKey]="'id'"
-      [valueDisplay]="'name'"
-    ></app-select-menu>
-  </td>
-  <td>
     <label class="form__checkbox">
       <input type="checkbox" formControlName="top" />
       <span></span>

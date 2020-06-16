@@ -1,32 +1,56 @@
-<div class="login-form">
-  <form [formGroup]="loginFormGroup" (submit)="onSubmit()">
-    <div class="form__inline-group">
+<form
+  appFormInvalidFocus
+  [formGroup]="loginFormGroup"
+  (ngSubmit)="onSubmit()"
+  class="login-form"
+>
+  <div class="login-form__title">Sign In</div>
+  <div class="form__group">
+    <div class="form__icon-control">
+      <i class="fa fa-user"></i>
       <input
-        formControlName="email"
-        type="text"
+        type="email"
         class="form__control"
-        placeholder="Email address"
+        placeholder="Email Address"
         autocomplete="new-password"
+        formControlName="email"
       />
     </div>
-    <div class="form__inline-group">
+  </div>
+  <div class="form__group">
+    <div class="form__icon-control">
+      <i class="fa fa-lock"></i>
       <input
-        formControlName="password"
         type="password"
         class="form__control"
         placeholder="Password"
         autocomplete="new-password"
+        formControlName="password"
       />
     </div>
-    <div class="form__inline-group">
-      <button
-        type="submit"
-        class="btn btn--primary"
-        [disabled]="loginFormGroup.invalid || isLoading"
-      >
-        <span *ngIf="!isLoading">Sign In</span>
-        <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
+  </div>
+  <div class="row">
+    <div class="col-2-3 middle">
+      <div>
+        Forgot your password?
+        <button class="btn btn--link" type="button">
+          Click here!
+        </button>
+      </div>
+    </div>
+    <div class="col-1-3 text-right">
+      <button class="btn btn--primary" type="submit" [disabled]="isLoading">
+        <i
+          class="fa"
+          [ngClass]="{
+            'fa-sign-in': !isLoading,
+            'fa-spinner fa-spin': isLoading
+          }"
+        ></i>
+        <span [hidden]="isLoading">
+          Sign In
+        </span>
       </button>
     </div>
-  </form>
-</div>
+  </div>
+</form>

@@ -16,13 +16,13 @@ namespace _3_Application.Interfaces.Repositories
 
         IDuraformArchRepo DuraformArches { get; }
 
-        IDuraformDoorOptionRepo DuraformDoorOptions { get; }
 
         IPantryDoorChairRailTypeRepo PantryDoorChairRailTypes { get; }
 
         IDuraformDrawerTypeRepo DuraformDrawerTypes { get; }
 
-        IDuraformWrappingOptionRepo DuraformWrappingOptions { get; }
+        IDuraformOptionTypeRepo DuraformOptionTypes { get; }
+
 
         Task<int> CompleteAsync();
     }

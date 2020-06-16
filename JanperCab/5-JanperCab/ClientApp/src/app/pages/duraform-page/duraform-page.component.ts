@@ -43,4 +43,21 @@ export class DuraformPageComponent implements OnInit {
 
     this.displayedStep = this.duraformProcessStep.StepTwo;
   };
+
+  onStepTwoFinish = () => {
+    if (this.loadedSteps.includes(DuraformProcessStep.StepThree)) {
+      this.loadedSteps = [
+        DuraformProcessStep.StepOne,
+        DuraformProcessStep.StepTwo,
+      ];
+
+      setTimeout(() => {
+        this.loadedSteps.push(DuraformProcessStep.StepThree);
+      }, 100);
+    } else {
+      this.loadedSteps.push(DuraformProcessStep.StepThree);
+    }
+
+    this.displayedStep = this.duraformProcessStep.StepThree;
+  };
 }

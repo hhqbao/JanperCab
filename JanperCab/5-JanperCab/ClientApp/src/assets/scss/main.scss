@@ -14,7 +14,7 @@
 @import "./3-component/tab";
 @import "./3-component/table";
 @import "./3-component/loading-panel";
-@import "./3-component/register-form";
+@import "./3-component/login-form";
 @import "./3-component/duraform-process";
 @import "./3-component/duraform-design";
 @import "./3-component/duraform-design-list";
@@ -24,9 +24,12 @@
 @import "./3-component/edge-profile-selector";
 @import "./3-component/arch-selector";
 @import "./3-component/select-menu";
+@import "./3-component/duraform-option-selector";
+@import "./3-component/duraform-option-double-sided-form";
 @import "./4-layout/grid";
 @import "./4-layout/primary-layout";
 @import "./5-page/duraform-page";
+@import "./5-page/login-page";
 
 @import "./../../../node_modules/alertifyjs/build/css/alertify.min.css";
 .ajs-message {

@@ -1,18 +1,16 @@
-import { DuraformWrappingOptionForList } from './../../_models/duraform-wrapping-option/DuraformWrappingOptionForList';
 import { FormGroup } from '@angular/forms';
 import { DialogService } from 'src/app/_services/dialog.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { DuraformDoorOptionForList } from 'src/app/_models/duraform-door-option/DuraformDoorOptionForList';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { DuraformDoorForCart } from 'src/app/_models/duraform-door/DuraformDoorForCart';
+import { DuraformOptionType } from 'src/app/_models/duraform-option/DuraformOptionType';
 
 @Component({
   selector: 'app-duraform-door-tab',
   templateUrl: 'duraform-door-tab.component.html',
 })
 export class DuraformDoorTabComponent implements OnInit {
-  @Input() doorOptions: DuraformDoorOptionForList[] = [];
-  @Input() wrappingOptions: DuraformWrappingOptionForList[] = [];
+  @Input() duraformOptionTypes: DuraformOptionType[] = [];
 
   constructor(
     public order: DuraformOrderService,
@@ -26,9 +24,8 @@ export class DuraformDoorTabComponent implements OnInit {
       return;
     }
 
-    const formValue = formGroup.value;
     const door = new DuraformDoorForCart();
-    door.update(formValue, this.doorOptions, this.wrappingOptions);
+    door.update(formGroup.value, this.duraformOptionTypes);
 
     this.order.doors.unshift(door);
 

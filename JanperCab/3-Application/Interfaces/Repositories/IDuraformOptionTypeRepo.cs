@@ -1,0 +1,9 @@
+﻿using _1_Domain;
+
+namespace _3_Application.Interfaces.Repositories
+{
+    public interface IDuraformOptionTypeRepo : IBaseRepository<DuraformOptionType>
+    {
+
+    }
+}

@@ -24,14 +24,14 @@ namespace _5_JanperCab.Controllers
             return Ok(userToken);
         }
 
-        [HttpPost("Register")]
-        public async Task<IActionResult> Register(UserForRegister modelDto)
-        {
-            var user = await _authService.Register(modelDto);
+        //[HttpPost("Register")]
+        //public async Task<IActionResult> Register(UserForRegister modelDto)
+        //{
+        //    var user = await _authService.Register(modelDto);
 
-            var userToken = await _authService.Login(user.Email, modelDto.Password);
+        //    var userToken = await _authService.Login(user.Email, modelDto.Password);
 
-            return Ok(userToken);
-        }
+        //    return Ok(userToken);
+        //}
     }
 }

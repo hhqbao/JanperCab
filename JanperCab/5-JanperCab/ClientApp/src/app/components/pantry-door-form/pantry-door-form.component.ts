@@ -1,4 +1,3 @@
-import { DuraformWrappingOptionForList } from './../../_models/duraform-wrapping-option/DuraformWrappingOptionForList';
 import { PantryDoorChairRailTypeForList } from 'src/app/_models/pantry-door-chair-rail-type/PantryDoorChairRailTypeForList';
 import { PantryDoorForCart } from '../../_models/pantry-door/PantryDoorForCart';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -19,7 +18,6 @@ import {
 export class PantryDoorFormComponent implements OnInit {
   @Input() pantryDoor: PantryDoorForCart = null;
   @Input() pantryDoorChairRailTypes: PantryDoorChairRailTypeForList[] = [];
-  @Input() wrappingOptions: DuraformWrappingOptionForList[] = [];
 
   @Output() formSubmit = new EventEmitter<FormGroup>();
 
@@ -52,7 +50,6 @@ export class PantryDoorFormComponent implements OnInit {
         Validators.required,
       ],
       extraRailBottom: [null, [Validators.min(0), Validators.max(500)]],
-      wrappingOptionId: [null],
       top: [false],
       bottom: [false],
       left: [false],
@@ -64,7 +61,6 @@ export class PantryDoorFormComponent implements OnInit {
       this.formGroup.patchValue({ ...this.pantryDoor });
       this.formGroup.patchValue({
         chairRailTypeId: this.pantryDoor.chairRailType.id,
-        wrappingOptionId: this.pantryDoor.duraformWrappingOption?.id,
       });
     }
   }

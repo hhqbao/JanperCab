@@ -1,4 +1,3 @@
-import { DuraformWrappingOptionForList } from './../../_models/duraform-wrapping-option/DuraformWrappingOptionForList';
 import { FormGroup } from '@angular/forms';
 import { DialogService } from 'src/app/_services/dialog.service';
 import { PantryDoorChairRailTypeForList } from 'src/app/_models/pantry-door-chair-rail-type/PantryDoorChairRailTypeForList';
@@ -12,7 +11,6 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PantryDoorTabComponent implements OnInit {
   @Input() pantryDoorChairRailTypes: PantryDoorChairRailTypeForList[] = [];
-  @Input() wrappingOptions: DuraformWrappingOptionForList[] = [];
 
   constructor(
     public order: DuraformOrderService,
@@ -26,14 +24,8 @@ export class PantryDoorTabComponent implements OnInit {
       return;
     }
 
-    const formValue = formGroup.value;
-
     const pantryDoor = new PantryDoorForCart();
-    pantryDoor.update(
-      formValue,
-      this.pantryDoorChairRailTypes,
-      this.wrappingOptions
-    );
+    pantryDoor.update(formGroup.value, this.pantryDoorChairRailTypes);
 
     this.order.pantryDoors.unshift(pantryDoor);
 

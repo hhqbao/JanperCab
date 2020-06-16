@@ -32,6 +32,15 @@ export class DuraformOrderService {
     return !!this.selectedDesign.fixedEdgeProfileId;
   }
 
+  get hasComponent(): boolean {
+    return (
+      this.doors.length > 0 ||
+      this.pantryDoors.length > 0 ||
+      this.endPanels.length > 0 ||
+      this.duraformDrawers.length > 0
+    );
+  }
+
   constructor() {}
 
   submitStepOne = (model: StepOneReturnValue) => {

@@ -1,4 +1,3 @@
-import { DuraformWrappingOptionForList } from './../../_models/duraform-wrapping-option/DuraformWrappingOptionForList';
 import { PantryDoorFormComponent } from '../pantry-door-form/pantry-door-form.component';
 import { DialogService } from 'src/app/_services/dialog.service';
 import { PantryDoorForCart } from './../../_models/pantry-door/PantryDoorForCart';
@@ -22,7 +21,6 @@ import { PantryDoorChairRailTypeForList } from 'src/app/_models/pantry-door-chai
 export class PantryDoorCartItemComponent implements OnInit {
   @Input() pantryDoor: PantryDoorForCart;
   @Input() pantryDoorChairRailTypes: PantryDoorChairRailTypeForList[] = [];
-  @Input() wrappingOptions: DuraformWrappingOptionForList[] = [];
   @Output() removePantryDoor = new EventEmitter<PantryDoorForCart>();
 
   @ViewChild('pantryDoorForm') pantryDoorForm: PantryDoorFormComponent;
@@ -55,12 +53,7 @@ export class PantryDoorCartItemComponent implements OnInit {
       return;
     }
 
-    const formValue = formGroup.value;
-    this.pantryDoor.update(
-      formValue,
-      this.pantryDoorChairRailTypes,
-      this.wrappingOptions
-    );
+    this.pantryDoor.update(formGroup.value, this.pantryDoorChairRailTypes);
 
     this.isSelected = false;
   };

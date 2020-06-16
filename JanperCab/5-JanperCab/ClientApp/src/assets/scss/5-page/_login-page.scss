@@ -1,0 +1,21 @@
+.login-page {
+  animation: fadeIn 0.5s linear;
+  align-items: center;
+  background-color: $blue-primary;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+
+  &__container {
+    max-width: 40rem;
+    width: 85%;
+  }
+
+  &__footer {
+    animation: zoomOut 1s ease-out 1.2s backwards;
+    font-weight: 500;
+    margin-top: 2rem;
+    text-align: center;
+  }
+}

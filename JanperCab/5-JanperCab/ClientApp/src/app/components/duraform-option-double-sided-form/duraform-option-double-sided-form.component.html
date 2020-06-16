@@ -1,0 +1,23 @@
+<div
+  class="duraform-option-double-sided-form option-form__form-wrapper"
+  [formGroup]="formGroup.get('optionGroup')"
+>
+  <label class="form__radio-btn">
+    <input
+      type="radio"
+      formControlName="hasProfile"
+      [value]="false"
+      (change)="onChange()"
+    />
+    <span>No Profile</span>
+  </label>
+  <label class="form__radio-btn">
+    <input
+      type="radio"
+      formControlName="hasProfile"
+      [value]="true"
+      (change)="onChange()"
+    />
+    <span>With Profile</span>
+  </label>
+</div>

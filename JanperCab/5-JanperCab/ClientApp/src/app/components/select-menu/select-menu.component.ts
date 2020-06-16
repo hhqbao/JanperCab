@@ -5,6 +5,8 @@ import {
   HostListener,
   ElementRef,
   ViewChild,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
@@ -21,6 +23,8 @@ export class SelectMenuComponent implements OnInit {
   @Input() allowNull = false;
   @Input() nullText = '-- NONE --';
   @Input() nullOnLabel = false;
+
+  @Output() afterSet = new EventEmitter();
 
   @ViewChild('menuInput') menuInput: ElementRef;
   isFocused = false;
@@ -145,6 +149,8 @@ export class SelectMenuComponent implements OnInit {
     } else {
       this.control.setValue(value[this.valueKey]);
     }
+
+    this.afterSet.emit();
   };
 
   private adjustIndex = () => {

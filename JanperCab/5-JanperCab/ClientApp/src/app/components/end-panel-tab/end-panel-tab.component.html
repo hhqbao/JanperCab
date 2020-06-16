@@ -39,7 +39,6 @@
   <tbody>
     <app-end-panel-form
       appRemoveTag
-      [wrappingOptions]="wrappingOptions"
       (formSubmit)="onAddEndPanel($event)"
     ></app-end-panel-form>
   </tbody>
@@ -68,7 +67,6 @@
       appRemoveTag
       *ngFor="let endPanel of order.endPanels"
       [endPanel]="endPanel"
-      [wrappingOptions]="wrappingOptions"
       (removeEndPanel)="onRemoveEndPanel($event)"
     ></app-end-panel-cart-item>
   </tbody>

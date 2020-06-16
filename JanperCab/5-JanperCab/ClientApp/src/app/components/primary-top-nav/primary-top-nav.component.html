@@ -12,7 +12,6 @@
     </button>
   </div>
   <div class="col-1-2 middle primary-top-nav__right-box">
-    <app-login-form *ngIf="!authService.isLoggedIn"></app-login-form>
-    <app-user-control-box *ngIf="authService.isLoggedIn"></app-user-control-box>
+    <app-user-control-box></app-user-control-box>
   </div>
 </div>

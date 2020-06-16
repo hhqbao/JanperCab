@@ -8,17 +8,12 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: 'user-control-box.component.html',
 })
 export class UserControlBoxComponent implements OnInit {
-  constructor(
-    public authService: AuthService,
-    private router: Router,
-    private layout: LayoutService
-  ) {}
+  constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit() {}
 
   onLogOut = () => {
     this.authService.logOut();
-    this.router.navigated = false;
-    this.router.navigate([this.router.url]);
+    this.router.navigate(['']);
   };
 }

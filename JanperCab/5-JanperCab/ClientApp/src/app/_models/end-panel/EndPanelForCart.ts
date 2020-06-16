@@ -1,4 +1,3 @@
-import { DuraformWrappingOptionForList } from './../duraform-wrapping-option/DuraformWrappingOptionForList';
 export class EndPanelForCart {
   quantity: number;
   height: number;
@@ -8,21 +7,15 @@ export class EndPanelForCart {
   extraRailTop: number;
   extraRailLeft: number;
   extraRailRight: number;
-  duraformWrappingOption: DuraformWrappingOptionForList;
   top: boolean;
   bottom: boolean;
   left: boolean;
   right: boolean;
   note: string;
 
-  constructor() {
-    this.duraformWrappingOption = null;
-  }
+  constructor() {}
 
-  update = (
-    formValue: any,
-    wrappingOptions: DuraformWrappingOptionForList[]
-  ) => {
+  update = (formValue: any) => {
     this.quantity = formValue.quantity;
     this.height = formValue.height;
     this.width = formValue.width;
@@ -36,14 +29,5 @@ export class EndPanelForCart {
     this.left = formValue.left;
     this.right = formValue.right;
     this.note = formValue.note;
-
-    if (formValue.wrappingOptionId) {
-      const wrappingOption = wrappingOptions.find(
-        (x) => x.id === +formValue.wrappingOptionId
-      );
-      this.duraformWrappingOption = wrappingOption;
-    } else {
-      this.duraformWrappingOption = null;
-    }
   };
 }

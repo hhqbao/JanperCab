@@ -361,25 +361,6 @@ namespace _2_Persistent.Migrations
                     b.ToTable("DuraformDesigns");
                 });
 
-            modelBuilder.Entity("_1_Domain.DuraformDoorOption", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("IsDisabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DuraformDoorOptions");
-                });
-
             modelBuilder.Entity("_1_Domain.DuraformDrawerType", b =>
                 {
                     b.Property<int>("Id")
@@ -423,6 +404,20 @@ namespace _2_Persistent.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DuraformEdgeProfiles");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformOptionType", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DuraformOptionTypes");
                 });
 
             modelBuilder.Entity("_1_Domain.DuraformSerie", b =>
@@ -518,25 +513,6 @@ namespace _2_Persistent.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PantryDoorChairRailTypes");
-                });
-
-            modelBuilder.Entity("_2_Persistent.DuraformWrappingOption", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("IsDisabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DuraformWrappingOptions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

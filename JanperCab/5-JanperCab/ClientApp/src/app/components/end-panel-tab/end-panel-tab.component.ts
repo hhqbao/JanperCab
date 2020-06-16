@@ -1,4 +1,3 @@
-import { DuraformWrappingOptionForList } from './../../_models/duraform-wrapping-option/DuraformWrappingOptionForList';
 import { FormGroup } from '@angular/forms';
 import { DialogService } from './../../_services/dialog.service';
 import { EndPanelForCart } from './../../_models/end-panel/EndPanelForCart';
@@ -10,8 +9,6 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: 'end-panel-tab.component.html',
 })
 export class EndPanelTabComponent implements OnInit {
-  @Input() wrappingOptions: DuraformWrappingOptionForList[] = [];
-
   constructor(
     public order: DuraformOrderService,
     private dialog: DialogService
@@ -25,7 +22,7 @@ export class EndPanelTabComponent implements OnInit {
     }
 
     const endPanel = new EndPanelForCart();
-    endPanel.update(formGroup.value, this.wrappingOptions);
+    endPanel.update(formGroup.value);
 
     this.order.endPanels.unshift(endPanel);
 

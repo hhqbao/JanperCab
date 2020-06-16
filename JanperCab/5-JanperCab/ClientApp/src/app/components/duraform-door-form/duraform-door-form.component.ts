@@ -1,8 +1,7 @@
-import { DuraformWrappingOptionForList } from './../../_models/duraform-wrapping-option/DuraformWrappingOptionForList';
 import { DuraformDoorForCart } from '../../_models/duraform-door/DuraformDoorForCart';
-import { DuraformDoorOptionForList } from '../../_models/duraform-door-option/DuraformDoorOptionForList';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { DuraformOptionType } from 'src/app/_models/duraform-option/DuraformOptionType';
 
 @Component({
   selector: 'app-duraform-door-form',
@@ -10,8 +9,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 })
 export class DuraformDoorFormComponent implements OnInit {
   @Input() door: DuraformDoorForCart;
-  @Input() doorOptions: DuraformDoorOptionForList[] = [];
-  @Input() wrappingOptions: DuraformWrappingOptionForList[] = [];
+  @Input() duraformOptionTypes: DuraformOptionType[] = [];
   @Output() formSubmit = new EventEmitter<FormGroup>();
 
   formGroup: FormGroup;
@@ -36,17 +34,17 @@ export class DuraformDoorFormComponent implements OnInit {
       bottom: [false],
       left: [false],
       right: [false],
-      optionId: [null],
-      wrappingOptionId: [null],
       note: [''],
     });
 
     if (this.door) {
       this.formGroup.patchValue({ ...this.door });
-      this.formGroup.patchValue({
-        optionId: this.door.duraformDoorOption?.id,
-        wrappingOptionId: this.door.duraformWrappingOption?.id,
-      });
+      if (this.door.duraformOption) {
+        this.formGroup.addControl(
+          'optionGroup',
+          this.door.duraformOption.toFormGroup()
+        );
+      }
     }
   }
 

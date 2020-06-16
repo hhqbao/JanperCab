@@ -52,4 +52,25 @@ app-duraform-order-step-two {
       background-color: rgba($blue-primary, 0.1);
     }
   }
+
+  &__check-out-btn {
+    border: none;
+    border-radius: 0.5rem;
+    background-color: $blue-primary;
+    color: white;
+    cursor: pointer;
+    display: block;
+    font-weight: 700;
+    font-size: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4rem;
+    padding: 1.5rem;
+    width: 70%;
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
 }

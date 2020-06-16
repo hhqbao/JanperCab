@@ -20,13 +20,11 @@ namespace _4_Infrastructure.Repositories
 
         public IDuraformArchRepo DuraformArches { get; }
 
-        public IDuraformDoorOptionRepo DuraformDoorOptions { get; }
-
         public IPantryDoorChairRailTypeRepo PantryDoorChairRailTypes { get; }
 
         public IDuraformDrawerTypeRepo DuraformDrawerTypes { get; }
 
-        public IDuraformWrappingOptionRepo DuraformWrappingOptions { get; }
+        public IDuraformOptionTypeRepo DuraformOptionTypes { get; }
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {
@@ -38,10 +36,9 @@ namespace _4_Infrastructure.Repositories
             DuraformWrapColors = new DuraformWrapColorRepo(_dbContext);
             DuraformEdgeProfiles = new DuraformEdgeProfileRepo(_dbContext);
             DuraformArches = new DuraformArchRepo(_dbContext);
-            DuraformDoorOptions = new DuraformDoorOptionRepo(_dbContext);
             PantryDoorChairRailTypes = new PantryDoorChairRailTypeRepo(_dbContext);
             DuraformDrawerTypes = new DuraformDrawerTypeRepo(_dbContext);
-            DuraformWrappingOptions = new DuraformWrappingOptionRepo(_dbContext);
+            DuraformOptionTypes = new DuraformOptionTypeRepo(_dbContext);
         }
 
         public async Task<int> CompleteAsync()

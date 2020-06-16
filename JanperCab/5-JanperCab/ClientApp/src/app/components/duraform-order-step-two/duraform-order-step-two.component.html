@@ -27,6 +27,14 @@
         ></app-arch-selector>
       </div>
     </app-box>
+    <button
+      type="button"
+      class="duraform-order-step-two__check-out-btn"
+      [disabled]="!order.hasComponent"
+      (click)="onCheckOutClick()"
+    >
+      Check Out
+    </button>
   </div>
   <div class="col-right">
     <div class="tab scrollable" appTab>
@@ -39,25 +47,24 @@
       <ul class="tab__pages">
         <li class="page active">
           <app-duraform-door-tab
-            [doorOptions]="doorOptions"
-            [wrappingOptions]="wrappingOptions"
+            [duraformOptionTypes]="duraformOptionTypes"
           ></app-duraform-door-tab>
         </li>
         <li class="page">
-          <app-pantry-door-tab
+          <!-- <app-pantry-door-tab
             [pantryDoorChairRailTypes]="pantryDoorChairRailTypes"
             [wrappingOptions]="wrappingOptions"
-          ></app-pantry-door-tab>
+          ></app-pantry-door-tab> -->
         </li>
         <li class="page">
-          <app-end-panel-tab
+          <!-- <app-end-panel-tab
             [wrappingOptions]="wrappingOptions"
-          ></app-end-panel-tab>
+          ></app-end-panel-tab> -->
         </li>
         <li class="page">
-          <app-duraform-drawer-tab
+          <!-- <app-duraform-drawer-tab
             [duraformDrawerTypes]="duraformDrawerTypes"
-          ></app-duraform-drawer-tab>
+          ></app-duraform-drawer-tab> -->
         </li>
       </ul>
     </div>

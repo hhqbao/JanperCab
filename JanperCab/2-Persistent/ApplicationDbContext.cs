@@ -15,12 +15,10 @@ namespace _2_Persistent
         public DbSet<DuraformWrapColor> DuraformWrapColors { get; set; }
         public DbSet<DuraformEdgeProfile> DuraformEdgeProfiles { set; get; }
         public DbSet<DuraformArch> DuraformArches { get; set; }
-        public DbSet<DuraformDoorOption> DuraformDoorOptions { set; get; }
-        public DbSet<DuraformWrappingOption> DuraformWrappingOptions { get; set; }
         public DbSet<NotAvailableDesignWrapType> NotAvailableDesignWrapTypes { get; set; }
-
         public DbSet<PantryDoorChairRailType> PantryDoorChairRailTypes { get; set; }
         public DbSet<DuraformDrawerType> DuraformDrawerTypes { get; set; }
+        public DbSet<DuraformOptionType> DuraformOptionTypes { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,
@@ -36,11 +34,10 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformWrapColorConfig());
             builder.ApplyConfiguration(new DuraformEdgeProfileConfig());
             builder.ApplyConfiguration(new DuraformArchConfig());
-            builder.ApplyConfiguration(new DuraformDoorOptionConfig());
-            builder.ApplyConfiguration(new DuraformWrappingOptionConfig());
             builder.ApplyConfiguration(new NotAvailableDesignWrapTypeConfig());
             builder.ApplyConfiguration(new PantryDoorChairRailTypeConfig());
             builder.ApplyConfiguration(new DuraformDrawerTypeConfig());
+            builder.ApplyConfiguration(new DuraformOptionTypeConfig());
 
             base.OnModelCreating(builder);
         }
