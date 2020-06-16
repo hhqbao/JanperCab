@@ -1,3 +1,4 @@
+import { DuraformOptionFoldBackFormComponent } from './components/duraform-option-fold-back-form/duraform-option-fold-back-form.component';
 import { DuraformOptionNoFaceComponent } from './components/duraform-option-no-face-form/duraform-option-no-face.component';
 import { DuraformOptionSelectorComponent } from './components/duraform-option-selector/duraform-option-selector.component';
 import { DuraformOptionTypeService } from './_services/duraform-option-type.service';
@@ -111,6 +112,7 @@ import { DuraformOptionDoubleSidedFormComponent } from './components/duraform-op
     DuraformOptionSelectorComponent,
     DuraformOptionNoFaceComponent,
     DuraformOptionDoubleSidedFormComponent,
+    DuraformOptionFoldBackFormComponent,
     LoginPageComponent,
     HomePageComponent,
     DuraformPageComponent,

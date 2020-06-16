@@ -74,8 +74,18 @@ export class DuraformOptionSelectorComponent implements OnInit {
   };
 
   onFocus = () => {
-    this.showTypeList = true;
+    if (!this.selectedType) {
+      this.showTypeList = true;
+      this.showOptionForm = false;
+    } else {
+      this.showTypeList = false;
+      this.showOptionForm = true;
+    }
+  };
+
+  onEditBtnClick = () => {
     this.showOptionForm = false;
+    this.showTypeList = !this.showTypeList;
   };
 
   onOptionTypeSelect = (optionType: DuraformOptionType) => {

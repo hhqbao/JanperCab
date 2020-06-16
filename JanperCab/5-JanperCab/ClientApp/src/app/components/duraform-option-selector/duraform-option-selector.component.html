@@ -1,4 +1,13 @@
 <div class="duraform-option-selector">
+  <button
+    type="button"
+    class="btn btn--primary edit-btn"
+    style="padding: 0.5rem 1rem;"
+    *ngIf="selectedType"
+    (click)="onEditBtnClick()"
+  >
+    <i class="fa fa-edit"></i>
+  </button>
   <input
     #typeInput
     type="text"
@@ -7,15 +16,6 @@
     (click)="onFocus()"
     (focus)="onFocus()"
   />
-  <button
-    type="button"
-    class="btn btn--primary edit-btn"
-    style="padding: 0.5rem 1rem;"
-    *ngIf="selectedType"
-    (click)="showOptionForm = !showOptionForm; showTypeList = false"
-  >
-    <i class="fa fa-edit"></i>
-  </button>
   <ul class="type-list" [ngClass]="{ show: showTypeList && !showOptionForm }">
     <li *ngIf="selectedType" (click)="onClearOption()">
       <i class="fa fa-eraser text-alert" aria-hidden="true"></i>
@@ -45,9 +45,12 @@
       [formGroup]="formGroup"
       (valueChange)="onUpdateDisplayValue()"
     ></app-duraform-option-double-sided-form>
-    <div *ngIf="selectedType.id === typeKeyEnum.FoldBack">
-      Fold Back
-    </div>
+    <app-duraform-option-fold-back-form
+      appRemoveTag
+      *ngIf="selectedType.id === typeKeyEnum.FoldBack"
+      [formGroup]="formGroup"
+      (valueChange)="onUpdateDisplayValue()"
+    ></app-duraform-option-fold-back-form>
     <div *ngIf="selectedType.id === typeKeyEnum.PaneFrame">
       Pane Frame
     </div>

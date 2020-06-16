@@ -100,7 +100,7 @@ export class SelectMenuComponent implements OnInit {
   ngOnInit() {}
 
   get selectedValue(): any {
-    if (!this.control.value) {
+    if (this.control.value === null || this.control.value === undefined) {
       return null;
     }
 

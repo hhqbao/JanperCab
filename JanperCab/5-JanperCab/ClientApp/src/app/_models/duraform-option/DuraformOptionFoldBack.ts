@@ -1,6 +1,6 @@
 import { DuraformOptionType } from 'src/app/_models/duraform-option/DuraformOptionType';
 import { DuraformOption } from './DuraformOption';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 export class DuraformOptionFoldBack extends DuraformOption {
   hasProfile: boolean;
@@ -17,15 +17,23 @@ export class DuraformOptionFoldBack extends DuraformOption {
   }
 
   toFormGroup(): FormGroup {
-    throw new Error('Method not implemented.');
+    const formGroup = new FormGroup({
+      optionTypeId: new FormControl(this.duraformOptionTypeId, [
+        Validators.required,
+      ]),
+      hasProfile: new FormControl(this.hasProfile),
+      length: new FormControl(this.length, [Validators.required]),
+      thickness: new FormControl(this.thickness, [Validators.required]),
+      hasDoubleReturn: new FormControl(this.hasDoubleReturn),
+    });
+
+    return formGroup;
   }
 
   toString(): string {
-    let value = `FOLD BACK - ${
-      this.hasProfile ? 'With Profile' : 'No Face Route'
-    } - `;
-    value += `${this.length}mm - ${this.thickness}mm - `;
-    value += `${this.hasDoubleReturn ? 'Double' : 'Single'}`;
+    let value = `${this.length}x${this.thickness} `;
+    value += `${this.hasDoubleReturn ? 'Double' : 'Single'} Return`;
+    value += `${this.hasProfile ? '' : ' End Panel'}`;
 
     return value;
   }
