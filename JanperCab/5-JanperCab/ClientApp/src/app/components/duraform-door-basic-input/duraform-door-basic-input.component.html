@@ -1,0 +1,51 @@
+<td>
+  <input
+    class="form__control"
+    currencyMask
+    appSelectOnFocus
+    [formControl]="formGroup.get('quantity')"
+    [options]="{
+      align: 'center',
+      allowZero: false,
+      precision: '0',
+      decimal: '',
+      prefix: '',
+      thousands: '',
+      max: 100
+    }"
+  />
+</td>
+<td>
+  <input
+    class="form__control"
+    currencyMask
+    appSelectOnFocus
+    [formControl]="formGroup.get('height')"
+    [options]="{
+      align: 'center',
+      allowZero: false,
+      precision: '0',
+      decimal: '',
+      prefix: '',
+      thousands: '',
+      max: 2500
+    }"
+  />
+</td>
+<td>
+  <input
+    class="form__control"
+    currencyMask
+    appSelectOnFocus
+    [formControl]="formGroup.get('width')"
+    [options]="{
+      align: 'center',
+      allowZero: false,
+      precision: '0',
+      decimal: '',
+      prefix: '',
+      thousands: '',
+      max: 1200
+    }"
+  />
+</td>

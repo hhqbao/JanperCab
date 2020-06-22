@@ -1,3 +1,4 @@
+import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DuraformEdgeProfileForList } from './../../_models/duraform-edge-profile/DuraformEdgeProfileForList';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
@@ -6,13 +7,12 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: 'edge-profile-selector.component.html',
 })
 export class EdgeProfileSelectorComponent implements OnInit {
-  @Input() edgeProfileList: DuraformEdgeProfileForList[] = [];
   @Input() selectedEdgeProfile: DuraformEdgeProfileForList;
   @Input() canSelect = true;
 
   @Output() selectProfile = new EventEmitter<DuraformEdgeProfileForList>();
 
-  constructor() {}
+  constructor(public asset: DuraformAssetService) {}
 
   ngOnInit() {}
 

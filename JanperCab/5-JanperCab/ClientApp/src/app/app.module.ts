@@ -1,3 +1,7 @@
+import { DuraformDoorBasicInputComponent } from './components/duraform-door-basic-input/duraform-door-basic-input.component';
+import { EdgeProfileFormControlComponent } from './components/edge-profile-form-control/edge-profile-form-control.component';
+import { DuraformAssetService } from './_services/duraform-asset.service';
+import { DuraformOptionPaneFrameFormComponent } from './components/duraform-option-pane-frame-form/duraform-option-pane-frame-form.component';
 import { DuraformOptionFoldBackFormComponent } from './components/duraform-option-fold-back-form/duraform-option-fold-back-form.component';
 import { DuraformOptionNoFaceComponent } from './components/duraform-option-no-face-form/duraform-option-no-face.component';
 import { DuraformOptionSelectorComponent } from './components/duraform-option-selector/duraform-option-selector.component';
@@ -97,6 +101,8 @@ import { DuraformOptionDoubleSidedFormComponent } from './components/duraform-op
     ColorCardComponent,
     EdgeProfileSelectorComponent,
     ArchSelectorComponent,
+    DuraformDoorBasicInputComponent,
+    EdgeProfileFormControlComponent,
     DuraformDoorFormComponent,
     DuraformDoorCartItemComponent,
     DuraformDoorTabComponent,
@@ -113,6 +119,7 @@ import { DuraformOptionDoubleSidedFormComponent } from './components/duraform-op
     DuraformOptionNoFaceComponent,
     DuraformOptionDoubleSidedFormComponent,
     DuraformOptionFoldBackFormComponent,
+    DuraformOptionPaneFrameFormComponent,
     LoginPageComponent,
     HomePageComponent,
     DuraformPageComponent,
@@ -136,6 +143,7 @@ import { DuraformOptionDoubleSidedFormComponent } from './components/duraform-op
     AuthService,
     DialogService,
     LayoutService,
+    DuraformAssetService,
     DuraformSerieService,
     DuraformDesignService,
     DuraformWrapTypeService,

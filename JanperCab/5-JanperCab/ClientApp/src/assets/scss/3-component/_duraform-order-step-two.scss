@@ -35,21 +35,23 @@ app-duraform-order-step-two {
       animation: moveInRight 0.5s ease-out;
     }
 
-    & > td {
-      border-bottom: none;
-      border-top: none;
-      font-weight: 700;
-      padding: 0.5rem 0.3rem;
-    }
-
-    &:last-child {
-      & > td {
-        border-bottom: solid 1px rgba($color: black, $alpha: 0.3);
+    & > tr {
+      td {
+        border-bottom: none;
+        border-top: none;
+        font-weight: 700;
+        padding: 0.5rem 0.3rem;
       }
-    }
 
-    &:hover {
-      background-color: rgba($blue-primary, 0.1);
+      &:last-child {
+        & > td {
+          border-bottom: solid 1px rgba($color: black, $alpha: 0.3);
+        }
+      }
+
+      &:hover {
+        background-color: rgba($blue-primary, 0.1);
+      }
     }
   }
 

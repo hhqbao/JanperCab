@@ -10,6 +10,9 @@
         Width <br />
         (mm)
       </th>
+      <th rowspan="2" style="width: 20rem;">
+        Edge Profile
+      </th>
       <th colspan="4">'X' For Square Edge</th>
       <th rowspan="2" style="width: 35rem;">
         Option <br />
@@ -24,13 +27,10 @@
       <th style="width: 4rem;">R</th>
     </tr>
   </thead>
-  <tbody>
-    <app-duraform-door-form
-      appRemoveTag
-      [duraformOptionTypes]="duraformOptionTypes"
-      (formSubmit)="onAddDoor($event)"
-    ></app-duraform-door-form>
-  </tbody>
+  <app-duraform-door-form
+    appRemoveTag
+    (formSubmit)="onAddDoor($event)"
+  ></app-duraform-door-form>
   <tbody class="table__spacer" *ngIf="order.doors.length > 0">
     <tr>
       <td></td>
@@ -42,15 +42,14 @@
       <td></td>
       <td></td>
       <td></td>
+      <td></td>
+      <td></td>
     </tr>
   </tbody>
-  <tbody>
-    <app-duraform-door-cart-item
-      appRemoveTag
-      *ngFor="let door of order.doors"
-      [door]="door"
-      [duraformOptionTypes]="duraformOptionTypes"
-      (removeDoor)="onRemoveDoor($event)"
-    ></app-duraform-door-cart-item>
-  </tbody>
+  <app-duraform-door-cart-item
+    appRemoveTag
+    *ngFor="let door of order.doors"
+    [door]="door"
+    (removeDoor)="onRemoveDoor($event)"
+  ></app-duraform-door-cart-item>
 </table>

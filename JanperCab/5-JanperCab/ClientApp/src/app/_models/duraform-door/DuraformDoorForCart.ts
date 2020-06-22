@@ -1,9 +1,11 @@
 import { DuraformOptionType } from 'src/app/_models/duraform-option/DuraformOptionType';
 import { DuraformOption } from '../duraform-option/DuraformOption';
+import { SelectedDuraformEdgeProfile } from '../duraform-edge-profile/SelectedDuraformEdgeProfile';
 export class DuraformDoorForCart {
   quantity: number;
   height: number;
   width: number;
+  duraformEdgeProfileId: number;
   top: boolean;
   bottom: boolean;
   left: boolean;
@@ -19,6 +21,7 @@ export class DuraformDoorForCart {
     this.quantity = formValue.quantity;
     this.height = formValue.height;
     this.width = formValue.width;
+    this.duraformEdgeProfileId = formValue.duraformEdgeProfileId;
     this.top = formValue.top;
     this.bottom = formValue.bottom;
     this.left = formValue.left;

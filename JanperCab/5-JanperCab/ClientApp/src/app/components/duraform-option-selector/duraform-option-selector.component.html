@@ -16,43 +16,54 @@
     (click)="onFocus()"
     (focus)="onFocus()"
   />
-  <ul class="type-list" [ngClass]="{ show: showTypeList && !showOptionForm }">
-    <li *ngIf="selectedType" (click)="onClearOption()">
-      <i class="fa fa-eraser text-alert" aria-hidden="true"></i>
-      <span style="margin-left: 0.8rem;">Clear Option</span>
-    </li>
-    <li
-      *ngFor="let optionType of duraformOptionTypes"
-      (click)="onOptionTypeSelect(optionType)"
-    >
-      {{ optionType.name }}
-    </li>
-  </ul>
-  <div
-    class="option-form"
-    [ngClass]="{ show: showOptionForm && !showTypeList }"
+  <button
+    type="button"
+    class="btn btn--secondary clear-btn"
+    style="padding: 0.5rem 1rem;"
     *ngIf="selectedType"
+    (click)="onClearOption()"
   >
-    <app-duraform-option-no-face
-      appRemoveTag
-      *ngIf="selectedType.id === typeKeyEnum.NoFaceRoute"
-      [formGroup]="formGroup"
-      (valueChange)="onUpdateDisplayValue()"
-    ></app-duraform-option-no-face>
-    <app-duraform-option-double-sided-form
-      appRemoveTag
-      *ngIf="selectedType.id === typeKeyEnum.DoubleSided"
-      [formGroup]="formGroup"
-      (valueChange)="onUpdateDisplayValue()"
-    ></app-duraform-option-double-sided-form>
-    <app-duraform-option-fold-back-form
-      appRemoveTag
-      *ngIf="selectedType.id === typeKeyEnum.FoldBack"
-      [formGroup]="formGroup"
-      (valueChange)="onUpdateDisplayValue()"
-    ></app-duraform-option-fold-back-form>
-    <div *ngIf="selectedType.id === typeKeyEnum.PaneFrame">
-      Pane Frame
+    <i class="fa fa-eraser" aria-hidden="true"></i>
+  </button>
+  <div class="container" [hidden]="!showTypeList || showOptionForm">
+    <ul class="type-list">
+      <li
+        *ngFor="let optionType of filtereddOptionTypes"
+        (click)="onOptionTypeSelect(optionType)"
+      >
+        {{ optionType.name }}
+      </li>
+    </ul>
+  </div>
+  <div
+    class="container"
+    *ngIf="selectedType && showOptionForm && !showTypeList"
+  >
+    <div class="option-form">
+      <app-duraform-option-no-face
+        appRemoveTag
+        *ngIf="selectedType.id === typeKeyEnum.NoFaceRoute"
+        [formGroup]="formGroup"
+        (valueChange)="onUpdateDisplayValue()"
+      ></app-duraform-option-no-face>
+      <app-duraform-option-double-sided-form
+        appRemoveTag
+        *ngIf="selectedType.id === typeKeyEnum.DoubleSided"
+        [formGroup]="formGroup"
+        (valueChange)="onUpdateDisplayValue()"
+      ></app-duraform-option-double-sided-form>
+      <app-duraform-option-fold-back-form
+        appRemoveTag
+        *ngIf="selectedType.id === typeKeyEnum.FoldBack"
+        [formGroup]="formGroup"
+        (valueChange)="onUpdateDisplayValue()"
+      ></app-duraform-option-fold-back-form>
+      <app-duraform-option-pane-frame-form
+        appRemoveTag
+        *ngIf="selectedType.id === typeKeyEnum.PaneFrame"
+        [formGroup]="formGroup"
+        (valueChange)="onUpdateDisplayValue()"
+      ></app-duraform-option-pane-frame-form>
     </div>
   </div>
 </div>

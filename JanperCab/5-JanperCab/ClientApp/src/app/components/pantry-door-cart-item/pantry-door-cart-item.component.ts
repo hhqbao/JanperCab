@@ -1,3 +1,4 @@
+import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { PantryDoorFormComponent } from '../pantry-door-form/pantry-door-form.component';
 import { DialogService } from 'src/app/_services/dialog.service';
 import { PantryDoorForCart } from './../../_models/pantry-door/PantryDoorForCart';
@@ -20,7 +21,6 @@ import { PantryDoorChairRailTypeForList } from 'src/app/_models/pantry-door-chai
 })
 export class PantryDoorCartItemComponent implements OnInit {
   @Input() pantryDoor: PantryDoorForCart;
-  @Input() pantryDoorChairRailTypes: PantryDoorChairRailTypeForList[] = [];
   @Output() removePantryDoor = new EventEmitter<PantryDoorForCart>();
 
   @ViewChild('pantryDoorForm') pantryDoorForm: PantryDoorFormComponent;
@@ -28,7 +28,11 @@ export class PantryDoorCartItemComponent implements OnInit {
   hasAnimated = false;
   isSelected = false;
 
-  constructor(private ef: ElementRef, private dialog: DialogService) {}
+  constructor(
+    public asset: DuraformAssetService,
+    private ef: ElementRef,
+    private dialog: DialogService
+  ) {}
 
   @HostListener('document:click', ['$event.target'])
   onFocusOut = (target: Element) => {
@@ -53,7 +57,11 @@ export class PantryDoorCartItemComponent implements OnInit {
       return;
     }
 
-    this.pantryDoor.update(formGroup.value, this.pantryDoorChairRailTypes);
+    this.pantryDoor.update(
+      formGroup.value,
+      this.asset.pantryDoorChairRailTypes,
+      this.asset.duraformOptionTypes
+    );
 
     this.isSelected = false;
   };

@@ -32,12 +32,27 @@ export class DuraformOrderService {
     return !!this.selectedDesign.fixedEdgeProfileId;
   }
 
+  get canTickEdgeProfile(): boolean {
+    const { forcedValuePerItem } = this.selectedEdgeProfile;
+
+    if (
+      this.hasFixedEdgeProfile &&
+      [true, false].includes(forcedValuePerItem)
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
   get hasComponent(): boolean {
+    const { doors, pantryDoors, endPanels, duraformDrawers } = this;
+
     return (
-      this.doors.length > 0 ||
-      this.pantryDoors.length > 0 ||
-      this.endPanels.length > 0 ||
-      this.duraformDrawers.length > 0
+      doors.length > 0 ||
+      pantryDoors.length > 0 ||
+      endPanels.length > 0 ||
+      duraformDrawers.length > 0
     );
   }
 
@@ -45,6 +60,7 @@ export class DuraformOrderService {
 
   submitStepOne = (model: StepOneReturnValue) => {
     this.selectedDesign = { ...model.design };
+    this.selectedEdgeProfile = { ...model.edgeProfile };
     this.selectedSerie = { ...model.serie };
     this.isRoutingOnly = model.isRoutingOnly;
     this.selectedWrapType = model.wrapType ? { ...model.wrapType } : null;
@@ -94,6 +110,7 @@ export class DuraformOrderService {
 
   reset = () => {
     this.selectedDesign = null;
+    this.selectedEdgeProfile = null;
     this.selectedSerie = null;
     this.isRoutingOnly = null;
     this.selectedWrapType = null;

@@ -1,10 +1,9 @@
 <app-duraform-filter-box
-  [duraformSeries]="series"
   (filterChange)="onFilterChange($event)"
 ></app-duraform-filter-box>
 <div class="duraform-design-list">
   <app-duraform-design
-    *ngFor="let design of designs"
+    *ngFor="let design of asset.duraformDesigns"
     [hidden]="hideDesign(design)"
     [design]="design"
     (selectDesign)="onSelectDesign($event)"

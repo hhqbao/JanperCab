@@ -1,3 +1,4 @@
+import { SelectedDuraformEdgeProfile } from './../../_models/duraform-edge-profile/SelectedDuraformEdgeProfile';
 import { DuraformDoorFormComponent } from '../duraform-door-form/duraform-door-form.component';
 import { DialogService } from './../../_services/dialog.service';
 import { FormGroup } from '@angular/forms';
@@ -13,21 +14,26 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DuraformOptionType } from 'src/app/_models/duraform-option/DuraformOptionType';
+import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 
 @Component({
   selector: 'app-duraform-door-cart-item',
   templateUrl: 'duraform-door-cart-item.component.html',
 })
 export class DuraformDoorCartItemComponent implements OnInit {
-  @ViewChild('doorForm') doorForm: DuraformDoorFormComponent;
   @Input() door: DuraformDoorForCart;
-  @Input() duraformOptionTypes: DuraformOptionType[] = [];
   @Output() removeDoor = new EventEmitter<DuraformDoorForCart>();
+
+  @ViewChild('doorForm') doorForm: DuraformDoorFormComponent;
 
   hasAnimated = false;
   isSelected = false;
 
-  constructor(private ef: ElementRef, private dialog: DialogService) {}
+  constructor(
+    public asset: DuraformAssetService,
+    private ef: ElementRef,
+    private dialog: DialogService
+  ) {}
 
   @HostListener('document:click', ['$event.target'])
   onFocusOut = (target: Element) => {
@@ -53,7 +59,7 @@ export class DuraformDoorCartItemComponent implements OnInit {
     }
 
     const formValue = formGroup.value;
-    this.door.update(formValue, this.duraformOptionTypes);
+    this.door.update(formValue, this.asset.duraformOptionTypes);
 
     this.isSelected = false;
   };

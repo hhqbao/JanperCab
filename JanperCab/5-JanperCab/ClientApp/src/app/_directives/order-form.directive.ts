@@ -18,14 +18,15 @@ export class OrderFormDirective implements OnInit {
   @Output() submit = new EventEmitter();
 
   self: HTMLElement;
-  controls: HTMLElement[] = [];
 
   constructor(private ef: ElementRef, private dialog: DialogService) {
     this.self = this.ef.nativeElement;
   }
 
-  ngOnInit(): void {
-    this.controls = Array.from(this.self.querySelectorAll('input,select'));
+  ngOnInit(): void {}
+
+  private get controls(): HTMLElement[] {
+    return Array.from(this.self.querySelectorAll('input,select'));
   }
 
   private onSubmit = () => {

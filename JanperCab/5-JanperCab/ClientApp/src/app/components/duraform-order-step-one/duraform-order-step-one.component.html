@@ -1,8 +1,6 @@
 <div class="duraform-order-step-one">
   <app-duraform-design-list
-    *ngIf="duraformDesigns.length > 0"
-    [designs]="duraformDesigns"
-    [series]="duraformSeries"
+    *ngIf="asset.duraformDesigns.length > 0"
     (selectDesign)="onSelectDesign($event)"
   ></app-duraform-design-list>
   <app-duraform-color-selector

@@ -9,22 +9,24 @@
     (click)="onFocus()"
     (focus)="onFocus()"
   />
-  <ul [ngClass]="{ show: isFocused }">
-    <li
-      *ngIf="allowNull"
-      [ngClass]="{ selected: currentIndex === -1 }"
-      (click)="onSelect(null)"
-      (mouseenter)="onMouseEnter(null)"
-    >
-      {{ nullText | uppercase }}
-    </li>
-    <li
-      *ngFor="let value of values"
-      [ngClass]="{ selected: currentIndex === values.indexOf(value) }"
-      (click)="onSelect(value)"
-      (mouseenter)="onMouseEnter(value)"
-    >
-      {{ value[valueDisplay] | uppercase }}
-    </li>
-  </ul>
+  <div class="select-menu__menu-box" [hidden]="!isFocused || isDisabled">
+    <ul>
+      <li
+        *ngIf="allowNull"
+        [ngClass]="{ selected: currentIndex === -1 }"
+        (click)="onSelect(null)"
+        (mouseenter)="onMouseEnter(null)"
+      >
+        {{ nullText | uppercase }}
+      </li>
+      <li
+        *ngFor="let value of values"
+        [ngClass]="{ selected: currentIndex === values.indexOf(value) }"
+        (click)="onSelect(value)"
+        (mouseenter)="onMouseEnter(value)"
+      >
+        {{ value[valueDisplay] | uppercase }}
+      </li>
+    </ul>
+  </div>
 </div>

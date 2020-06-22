@@ -23,6 +23,7 @@ export class SelectMenuComponent implements OnInit {
   @Input() allowNull = false;
   @Input() nullText = '-- NONE --';
   @Input() nullOnLabel = false;
+  @Input() isDisabled = false;
 
   @Output() afterSet = new EventEmitter();
 
@@ -138,8 +139,8 @@ export class SelectMenuComponent implements OnInit {
   };
 
   onSelect = (value) => {
-    this.setValue(value);
     (this.menuInput.nativeElement as HTMLElement).focus();
+    this.setValue(value);
     this.isFocused = false;
   };
 

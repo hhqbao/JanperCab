@@ -27,7 +27,7 @@
       [ngClass]="{
         selected: selectedArch && selectedArch.id === arch.id
       }"
-      *ngFor="let arch of archList"
+      *ngFor="let arch of asset.arches"
       (click)="onSelectArch(arch)"
     >
       <img

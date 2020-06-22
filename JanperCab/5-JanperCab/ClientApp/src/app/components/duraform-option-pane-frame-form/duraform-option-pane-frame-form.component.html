@@ -1,0 +1,36 @@
+<div
+  class="duraform-option-pane-frame-form option-form__form-wrapper"
+  [formGroup]="formGroup.get('optionGroup')"
+>
+  <div class="row">
+    <div class="col-1-4">
+      <div class="form__group">
+        <label class="form__label">Columns</label>
+        <app-select-menu
+          [control]="formGroup.get('optionGroup').get('columns')"
+          [values]="columns"
+          [valueKey]="'value'"
+          [valueDisplay]="'text'"
+          (afterSet)="onValueChange()"
+        ></app-select-menu>
+      </div>
+      <div class="form__group">
+        <label class="form__label">Rows</label>
+        <app-select-menu
+          [control]="formGroup.get('optionGroup').get('rows')"
+          [values]="rows"
+          [valueKey]="'value'"
+          [valueDisplay]="'text'"
+          (afterSet)="onValueChange()"
+        ></app-select-menu>
+      </div>
+    </div>
+    <div class="col-3-4">
+      <div class="drawing-box">
+        <div class="column" *ngFor="let column of columnArray">
+          <div class="box" *ngFor="let row of rowArray"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

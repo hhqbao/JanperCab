@@ -1,18 +1,17 @@
+import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { FormGroup } from '@angular/forms';
 import { DialogService } from 'src/app/_services/dialog.service';
-import { PantryDoorChairRailTypeForList } from 'src/app/_models/pantry-door-chair-rail-type/PantryDoorChairRailTypeForList';
 import { PantryDoorForCart } from './../../_models/pantry-door/PantryDoorForCart';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-pantry-door-tab',
   templateUrl: 'pantry-door-tab.component.html',
 })
 export class PantryDoorTabComponent implements OnInit {
-  @Input() pantryDoorChairRailTypes: PantryDoorChairRailTypeForList[] = [];
-
   constructor(
+    public asset: DuraformAssetService,
     public order: DuraformOrderService,
     private dialog: DialogService
   ) {}
@@ -25,7 +24,11 @@ export class PantryDoorTabComponent implements OnInit {
     }
 
     const pantryDoor = new PantryDoorForCart();
-    pantryDoor.update(formGroup.value, this.pantryDoorChairRailTypes);
+    pantryDoor.update(
+      formGroup.value,
+      this.asset.pantryDoorChairRailTypes,
+      this.asset.duraformOptionTypes
+    );
 
     this.order.pantryDoors.unshift(pantryDoor);
 

@@ -1,3 +1,6 @@
+import { DuraformEdgeProfileForList } from './../../_models/duraform-edge-profile/DuraformEdgeProfileForList';
+import { DuraformEdgeProfileService } from './../../_services/duraform-edge-profile.service';
+import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DuraformDesignService } from './../../_services/duraform-design.service';
 import { DuraformDesignForOrderMenu } from '../../_models/duraform-design/DuraformDesignForOrderMenu';
 import { DuraformWrapTypeForSelection } from './../../_models/duraform-wrap-type/DuraformWrapTypeForSelection';
@@ -17,25 +20,29 @@ import { forkJoin } from 'rxjs';
 export class DuraformOrderStepOneComponent implements OnInit {
   @Output() finish = new EventEmitter<StepOneReturnValue>();
 
-  duraformDesigns: DuraformDesignForOrderMenu[] = [];
-  duraformSeries: DuraformSerieForList[] = [];
-
   selectedDuraformDesign: DuraformDesignForOrderMenu = null;
   showColorSelector = false;
 
   constructor(
     private layout: LayoutService,
+    public asset: DuraformAssetService,
     private duraformSerieService: DuraformSerieService,
     private duraformDesignService: DuraformDesignService,
+    private edgeProfileService: DuraformEdgeProfileService,
     private dialog: DialogService
   ) {}
 
   ngOnInit() {
     this.layout.showLoadingPanel();
-    forkJoin([this.loadSeries(), this.loadDuraformDesigns()]).subscribe(
+    forkJoin([
+      this.loadSeries(),
+      this.loadDuraformDesigns(),
+      this.loadEdgeProfiles(),
+    ]).subscribe(
       (responses) => {
-        this.duraformSeries = responses[0];
-        this.duraformDesigns = responses[1];
+        this.asset.duraformSeries = responses[0];
+        this.asset.duraformDesigns = responses[1];
+        this.asset.edgeProfiles = responses[2];
         this.layout.closeLoadingPanel();
       },
       (error) => {
@@ -52,13 +59,33 @@ export class DuraformOrderStepOneComponent implements OnInit {
     return this.duraformDesignService.getForOrderMenu();
   };
 
+  private loadEdgeProfiles = () => {
+    return this.edgeProfileService.getAll();
+  };
+
+  private get selectedEdgeProfile(): DuraformEdgeProfileForList {
+    if (!this.selectedDuraformDesign) {
+      return null;
+    }
+    const {
+      fixedEdgeProfileId,
+      defaultEdgeProfileId,
+    } = this.selectedDuraformDesign;
+
+    const edgeProfileId = fixedEdgeProfileId
+      ? fixedEdgeProfileId
+      : defaultEdgeProfileId;
+
+    return this.asset.edgeProfiles.find((x) => x.id === edgeProfileId);
+  }
+
   onSelectDesign = (selectedDesign: DuraformDesignForOrderMenu) => {
     this.selectedDuraformDesign = selectedDesign;
     this.showColorSelector = true;
   };
 
   onPickColor = (color: DuraformWrapColorForSelection) => {
-    const selectedSerie = this.duraformSeries.find(
+    const selectedSerie = this.asset.duraformSeries.find(
       (x) => x.id === this.selectedDuraformDesign.duraformSerieId
     );
 
@@ -69,6 +96,7 @@ export class DuraformOrderStepOneComponent implements OnInit {
 
     const returnValue: StepOneReturnValue = {
       design: { ...this.selectedDuraformDesign },
+      edgeProfile: this.selectedEdgeProfile,
       serie: selectedSerie,
       isRoutingOnly: false,
       wrapType: selectedWrapType,
@@ -80,12 +108,13 @@ export class DuraformOrderStepOneComponent implements OnInit {
   };
 
   onRoutingPick = () => {
-    const selectedSerie = this.duraformSeries.find(
+    const selectedSerie = this.asset.duraformSeries.find(
       (x) => x.id === this.selectedDuraformDesign.duraformSerieId
     );
 
     const returnValue: StepOneReturnValue = {
       design: { ...this.selectedDuraformDesign },
+      edgeProfile: this.selectedEdgeProfile,
       serie: selectedSerie,
       isRoutingOnly: true,
       wrapType: null,

@@ -102,3 +102,17 @@
     transform: scaleX(1);
   }
 }
+
+@keyframes slideInTop {
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+  80% {
+    transform: scaleY(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}

@@ -1,3 +1,5 @@
+import { DuraformOrderService } from './../../_services/duraform-order.service';
+import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DuraformDoorForCart } from '../../_models/duraform-door/DuraformDoorForCart';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
@@ -9,12 +11,15 @@ import { DuraformOptionType } from 'src/app/_models/duraform-option/DuraformOpti
 })
 export class DuraformDoorFormComponent implements OnInit {
   @Input() door: DuraformDoorForCart;
-  @Input() duraformOptionTypes: DuraformOptionType[] = [];
   @Output() formSubmit = new EventEmitter<FormGroup>();
 
   formGroup: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    public asset: DuraformAssetService,
+    public order: DuraformOrderService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit() {
     this.formGroup = this.fb.group({
@@ -28,7 +33,11 @@ export class DuraformDoorFormComponent implements OnInit {
       ],
       width: [
         null,
-        [Validators.required, Validators.min(50), Validators.max(2500)],
+        [Validators.required, Validators.min(50), Validators.max(1200)],
+      ],
+      duraformEdgeProfileId: [
+        this.order.selectedEdgeProfile.id,
+        [Validators.required],
       ],
       top: [false],
       bottom: [false],

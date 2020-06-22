@@ -1,3 +1,4 @@
+import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DuraformDesignForOrderMenu } from '../../_models/duraform-design/DuraformDesignForOrderMenu';
 import { DuraformSerieForList } from '../../_models/duraform-serie/DuraformSerieForList';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
@@ -7,13 +8,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: 'duraform-design-list.component.html',
 })
 export class DuraformDesignListComponent implements OnInit {
-  @Input() designs: DuraformDesignForOrderMenu[] = [];
-  @Input() series: DuraformSerieForList[] = [];
   @Output() selectDesign = new EventEmitter<DuraformDesignForOrderMenu>();
 
   private filterValue: any = { serie: 0 };
 
-  constructor() {}
+  constructor(public asset: DuraformAssetService) {}
 
   ngOnInit() {}
 

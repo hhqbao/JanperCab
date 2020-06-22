@@ -1,3 +1,4 @@
+import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DuraformArchForList } from './../../_models/duraform-arch/DuraformArchForList';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
@@ -8,11 +9,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class ArchSelectorComponent implements OnInit {
   @Input() canSelect = true;
   @Input() selectedArch: DuraformArchForList;
-  @Input() archList: DuraformArchForList[] = [];
 
   @Output() selectArch = new EventEmitter();
 
-  constructor() {}
+  constructor(public asset: DuraformAssetService) {}
 
   ngOnInit() {}
 

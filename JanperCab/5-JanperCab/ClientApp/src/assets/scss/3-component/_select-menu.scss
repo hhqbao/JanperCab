@@ -1,40 +1,39 @@
 .select-menu {
   position: relative;
 
-  & > ul {
-    background-color: white;
-    border: solid 1px #8c8c8c;
-    border-radius: 0.3rem;
-    box-shadow: 0 0 1rem rgba(black, 0.3);
-    cursor: pointer;
-    list-style: none;
-    left: 50%;
-    padding: 0.7rem 0;
-    position: absolute;
-    text-align: left;
-    top: calc(100% + 0.5rem);
-    transform: scaleY(0) translateX(-50%);
-    transform-origin: top center;
-    transition: transform 0.2s ease;
-    width: calc(100% + 2rem);
-    z-index: 99999;
-
-    &.show {
-      transform: scaleY(1) translateX(-50%);
-    }
-
-    & > li {
-      font-weight: bold;
-      padding: 0.5rem 0.7rem;
-
-      &.selected {
-        background-color: rgba($blue-primary, 0.1);
-      }
-    }
-  }
-
   & > input[type="text"] {
     text-align: left;
     width: 100%;
+  }
+
+  &__menu-box {
+    left: 50%;
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    transform: translateX(-50%);
+    width: calc(100% + 2rem);
+    z-index: 99999;
+
+    & > ul {
+      animation: slideInTop 0.3s ease-out;
+      background-color: white;
+      border: solid 1px #8c8c8c;
+      border-radius: 0.3rem;
+      box-shadow: 0 0 1rem rgba(black, 0.3);
+      cursor: pointer;
+      list-style: none;
+      padding: 0.7rem 0;
+      text-align: left;
+      transform-origin: top;
+
+      & > li {
+        font-weight: bold;
+        padding: 0.5rem 0.7rem;
+
+        &.selected {
+          background-color: rgba($blue-primary, 0.1);
+        }
+      }
+    }
   }
 }

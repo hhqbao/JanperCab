@@ -1,3 +1,4 @@
+import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DuraformSerieForList } from './../../_models/duraform-serie/DuraformSerieForList';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
@@ -7,12 +8,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: 'duraform-filter-box.component.html',
 })
 export class DuraformFilterBoxComponent implements OnInit {
-  @Input() duraformSeries: DuraformSerieForList[] = [];
   @Output() filterChange = new EventEmitter();
 
   filterFg: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, public asset: DuraformAssetService) {}
 
   ngOnInit() {
     this.filterFg = this.fb.group({
