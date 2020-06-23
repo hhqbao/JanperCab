@@ -1,187 +1,150 @@
-<tr
+<tbody
   class="form__order-form-group"
   appOrderForm
   [formGroup]="formGroup"
   (submit)="onSubmit()"
 >
-  <td>
-    <input
-      class="form__control"
-      currencyMask
-      appSelectOnFocus
-      formControlName="quantity"
-      [options]="{
-        align: 'center',
-        allowZero: false,
-        precision: '0',
-        decimal: '',
-        prefix: '',
-        thousands: '',
-        max: 100
-      }"
-    />
-  </td>
-  <td>
-    <input
-      class="form__control"
-      currencyMask
-      appSelectOnFocus
-      formControlName="numberOfShields"
-      [options]="{
-        align: 'center',
-        allowZero: false,
-        precision: '0',
-        decimal: '',
-        prefix: '',
-        thousands: '',
-        max: 10
-      }"
-    />
-  </td>
-  <td>
-    <input
-      class="form__control"
-      currencyMask
-      appSelectOnFocus
-      formControlName="height"
-      [options]="{
-        align: 'center',
-        allowZero: false,
-        precision: '0',
-        decimal: '',
-        prefix: '',
-        thousands: '',
-        max: 2500
-      }"
-    />
-  </td>
-  <td>
-    <input
-      class="form__control"
-      currencyMask
-      appSelectOnFocus
-      formControlName="width"
-      [options]="{
-        align: 'center',
-        allowZero: false,
-        precision: '0',
-        decimal: '',
-        prefix: '',
-        thousands: '',
-        max: 2500
-      }"
-    />
-  </td>
-  <td>
-    <input
-      class="form__control"
-      currencyMask
-      appSelectOnFocus
-      formControlName="extraRailTop"
-      [options]="{
-        align: 'center',
-        allowZero: false,
-        precision: '0',
-        decimal: '',
-        prefix: '',
-        thousands: '',
-        max: 500
-      }"
-    />
-  </td>
-  <td>
-    <input
-      class="form__control"
-      currencyMask
-      appSelectOnFocus
-      formControlName="extraRailBottom"
-      [options]="{
-        align: 'center',
-        allowZero: false,
-        precision: '0',
-        decimal: '',
-        prefix: '',
-        thousands: '',
-        max: 500
-      }"
-    />
-  </td>
-  <td>
-    <input
-      class="form__control"
-      currencyMask
-      appSelectOnFocus
-      formControlName="extraRailLeft"
-      [options]="{
-        align: 'center',
-        allowZero: false,
-        precision: '0',
-        decimal: '',
-        prefix: '',
-        thousands: '',
-        max: 500
-      }"
-    />
-  </td>
-  <td>
-    <input
-      class="form__control"
-      currencyMask
-      appSelectOnFocus
-      formControlName="extraRailRight"
-      [options]="{
-        align: 'center',
-        allowZero: false,
-        precision: '0',
-        decimal: '',
-        prefix: '',
-        thousands: '',
-        max: 500
-      }"
-    />
-  </td>
-  <td>
-    <label class="form__checkbox">
-      <input type="checkbox" formControlName="top" />
-      <span></span>
-    </label>
-  </td>
-  <td>
-    <label class="form__checkbox">
-      <input type="checkbox" formControlName="bottom" />
-      <span></span>
-    </label>
-  </td>
-  <td>
-    <label class="form__checkbox">
-      <input type="checkbox" formControlName="left" />
-      <span></span>
-    </label>
-  </td>
-  <td>
-    <label class="form__checkbox">
-      <input type="checkbox" formControlName="right" />
-      <span></span>
-    </label>
-  </td>
-  <td>
-    <input
-      type="text"
-      class="form__control"
-      style="text-align: left; width: 99%;"
-      appSelectOnFocus
-      formControlName="note"
-    />
-  </td>
-  <td style="width: 5rem;">
-    <button
-      [disabled]="formGroup.invalid"
-      type="button"
-      class="btn btn--primary"
-      style="padding: 0.5rem 1rem;"
-      (click)="onSubmit()"
-    >
-      <i class="fa fa-save"></i>
-    </button>
-  </td>
-</tr>
+  <tr>
+    <app-duraform-door-basic-input
+      appRemoveTag
+      [formGroup]="formGroup"
+    ></app-duraform-door-basic-input>
+    <td>
+      <input
+        class="form__control"
+        currencyMask
+        appSelectOnFocus
+        formControlName="numberOfShields"
+        (blur)="numberOfShields.invalid && numberOfShields.setValue(2)"
+        [options]="{
+          align: 'center',
+          allowZero: false,
+          precision: '0',
+          decimal: '',
+          prefix: '',
+          thousands: '',
+          min: 2,
+          max: 5
+        }"
+      />
+    </td>
+    <td>
+      <input
+        class="form__control"
+        currencyMask
+        appSelectOnFocus
+        formControlName="railLeft"
+        (blur)="railLeft.invalid && railLeft.setValue(56)"
+        [options]="{
+          align: 'center',
+          allowZero: false,
+          precision: '0',
+          decimal: '',
+          prefix: '',
+          thousands: '',
+          max: 100
+        }"
+      />
+    </td>
+    <td>
+      <input
+        class="form__control"
+        currencyMask
+        appSelectOnFocus
+        formControlName="railCenter"
+        (blur)="railCenter.invalid && railCenter.setValue(56)"
+        [options]="{
+          align: 'center',
+          allowZero: false,
+          precision: '0',
+          decimal: '',
+          prefix: '',
+          thousands: '',
+          max: 100
+        }"
+      />
+    </td>
+    <td>
+      <input
+        class="form__control"
+        currencyMask
+        appSelectOnFocus
+        formControlName="railRight"
+        (blur)="railRight.invalid && railRight.setValue(56)"
+        [options]="{
+          align: 'center',
+          allowZero: false,
+          precision: '0',
+          decimal: '',
+          prefix: '',
+          thousands: '',
+          max: 100
+        }"
+      />
+    </td>
+    <td>
+      <input
+        class="form__control"
+        currencyMask
+        appSelectOnFocus
+        formControlName="extraRailTop"
+        [options]="{
+          align: 'center',
+          allowZero: false,
+          precision: '0',
+          decimal: '',
+          prefix: '',
+          thousands: '',
+          max: 500
+        }"
+      />
+    </td>
+    <td>
+      <input
+        class="form__control"
+        currencyMask
+        appSelectOnFocus
+        formControlName="extraRailBottom"
+        [options]="{
+          align: 'center',
+          allowZero: false,
+          precision: '0',
+          decimal: '',
+          prefix: '',
+          thousands: '',
+          max: 500
+        }"
+      />
+    </td>
+    <app-edge-profile-form-control
+      appRemoveTag
+      [formGroup]="formGroup"
+    ></app-edge-profile-form-control>
+    <td>
+      <app-duraform-option-selector
+        [formGroup]="formGroup"
+        [hideOptionTypeKeys]="[duraformOptionTypeKey.PaneFrame]"
+      ></app-duraform-option-selector>
+    </td>
+    <td>
+      <input
+        type="text"
+        class="form__control"
+        style="text-align: left; width: 99%;"
+        appSelectOnFocus
+        formControlName="note"
+      />
+    </td>
+    <td style="width: 5rem;">
+      <button
+        [disabled]="formGroup.invalid"
+        type="button"
+        class="btn btn--primary"
+        style="padding: 0.5rem 1rem;"
+        (click)="onSubmit()"
+      >
+        <i class="fa fa-save"></i>
+      </button>
+    </td>
+  </tr>
+</tbody>

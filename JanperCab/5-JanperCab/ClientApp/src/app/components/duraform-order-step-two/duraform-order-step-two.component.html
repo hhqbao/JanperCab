@@ -1,40 +1,25 @@
 <div class="duraform-order-step-two" *ngIf="isLoaded">
-  <div class="col-left">
-    <div class="info-box">
-      <app-duraform-design
-        [design]="order.selectedDesign"
-        [showOrderDetails]="true"
-        [canSelect]="false"
-      ></app-duraform-design>
-    </div>
-    <app-box [headingText]="'Options & Accessories'">
-      <div class="form__group">
-        <div class="form__label">Edge Profile</div>
-        <app-edge-profile-selector
-          [canSelect]="!order.hasFixedEdgeProfile"
-          [selectedEdgeProfile]="order.selectedEdgeProfile"
-          (selectProfile)="onSelectProfile($event)"
-        ></app-edge-profile-selector>
-      </div>
-      <div class="form__group">
-        <div class="form__label">Arch Style</div>
-        <app-arch-selector
-          [canSelect]="!order.selectedDesign.hasNoArch"
-          [selectedArch]="order.selectedArch"
-          (selectArch)="onSelectArch($event)"
-        ></app-arch-selector>
-      </div>
+  <div class="section-one">
+    <app-duraform-info-box appRemoveTag></app-duraform-info-box>
+    <app-box [headingText]="'Actions'">
+      <button
+        type="button"
+        class="btn duraform-order-step-two__go-back-btn"
+        (click)="onGoBackClick()"
+      >
+        Go Back
+      </button>
+      <button
+        type="button"
+        class="btn duraform-order-step-two__check-out-btn"
+        [disabled]="!order.hasComponent"
+        (click)="onCheckOutClick()"
+      >
+        Check Out
+      </button>
     </app-box>
-    <button
-      type="button"
-      class="duraform-order-step-two__check-out-btn"
-      [disabled]="!order.hasComponent"
-      (click)="onCheckOutClick()"
-    >
-      Check Out
-    </button>
   </div>
-  <div class="col-right">
+  <div class="section-two">
     <div class="tab scrollable" appTab>
       <ul class="tab__headers">
         <li class="header active">Doors & Panels</li>
@@ -50,9 +35,7 @@
           <app-pantry-door-tab></app-pantry-door-tab>
         </li>
         <li class="page">
-          <!-- <app-end-panel-tab
-            [wrappingOptions]="wrappingOptions"
-          ></app-end-panel-tab> -->
+          <app-end-panel-tab></app-end-panel-tab>
         </li>
         <li class="page">
           <!-- <app-duraform-drawer-tab

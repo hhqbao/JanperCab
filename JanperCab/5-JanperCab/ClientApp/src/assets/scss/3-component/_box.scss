@@ -1,5 +1,10 @@
+app-box {
+  display: contents;
+}
+
 .box {
-  display: block;
+  display: flex;
+  flex-direction: column;
 
   &__heading {
     border-top-left-radius: 0.5rem;
@@ -18,6 +23,7 @@
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
     background-color: white;
+    flex: 1;
     padding: 1rem;
   }
 }

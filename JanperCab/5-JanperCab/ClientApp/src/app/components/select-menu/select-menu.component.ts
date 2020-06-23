@@ -47,6 +47,7 @@ export class SelectMenuComponent implements OnInit {
   @HostListener('keydown.Control')
   onTab = () => {
     this.isFocused = false;
+
     if (this.currentIndex > -2) {
       if (this.currentIndex === -1) {
         this.setValue(null);
@@ -141,6 +142,7 @@ export class SelectMenuComponent implements OnInit {
   onSelect = (value) => {
     (this.menuInput.nativeElement as HTMLElement).focus();
     this.setValue(value);
+    this.adjustIndex();
     this.isFocused = false;
   };
 

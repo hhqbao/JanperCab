@@ -9,14 +9,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class DuraformDesignComponent implements OnInit {
   @Input() design: DuraformDesignForOrderMenu;
 
-  @Input() canSelect = true;
-  @Input() showOrderDetails = false;
-
   @Output() selectDesign = new EventEmitter<DuraformDesignForOrderMenu>();
 
   isLoadingImg = true;
 
-  constructor(public order: DuraformOrderService) {}
+  constructor() {}
 
   ngOnInit() {}
 

@@ -1,3 +1,4 @@
+import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { FormGroup } from '@angular/forms';
 import { DialogService } from './../../_services/dialog.service';
 import { EndPanelForCart } from './../../_models/end-panel/EndPanelForCart';
@@ -10,6 +11,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class EndPanelTabComponent implements OnInit {
   constructor(
+    public asset: DuraformAssetService,
     public order: DuraformOrderService,
     private dialog: DialogService
   ) {}
@@ -22,7 +24,7 @@ export class EndPanelTabComponent implements OnInit {
     }
 
     const endPanel = new EndPanelForCart();
-    endPanel.update(formGroup.value);
+    endPanel.updateWithOption(formGroup.value, this.asset.duraformOptionTypes);
 
     this.order.endPanels.unshift(endPanel);
 

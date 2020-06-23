@@ -74,18 +74,17 @@
       color: $red-primary;
       font-weight: bold;
       font-size: 3rem;
-      margin-top: 3rem;
-      text-align: center;
+      margin-top: 2rem;
     }
 
     &__wrapping {
-      margin-top: 3rem;
+      margin-top: 2rem;
 
       .wrap-type {
         color: $red-primary;
         font-size: 2rem;
         font-weight: 700;
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.5rem;
       }
 
       .wrap-color {

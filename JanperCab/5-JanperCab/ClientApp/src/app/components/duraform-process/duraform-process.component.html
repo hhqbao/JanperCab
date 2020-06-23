@@ -1,4 +1,7 @@
-<div class="duraform-process">
+<div
+  class="duraform-process"
+  [ngClass]="{ 'step-two': currentDisplayStep === 2 }"
+>
   <ul>
     <li
       class="step active"

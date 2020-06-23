@@ -60,4 +60,8 @@ export class DuraformPageComponent implements OnInit {
 
     this.displayedStep = this.duraformProcessStep.StepThree;
   };
+
+  onStepTwoGoBack = () => {
+    this.displayedStep = DuraformProcessStep.StepOne;
+  };
 }

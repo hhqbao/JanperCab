@@ -5,35 +5,46 @@
   [endPanel]="endPanel"
   (formSubmit)="onEdit($event)"
 ></app-end-panel-form>
-<tr
+<tbody
   class="duraform-order-step-two__cart-list-item"
   [ngClass]="{ animated: !hasAnimated }"
   [hidden]="isSelected"
   (click)="onSelect()"
 >
-  <td>{{ endPanel.quantity }}</td>
-  <td>{{ endPanel.numberOfShields }}</td>
-  <td>{{ endPanel.height }}</td>
-  <td>{{ endPanel.width }}</td>
-  <td>{{ endPanel.extraRailTop }}</td>
-  <td>{{ endPanel.extraRailBottom }}</td>
-  <td>{{ endPanel.extraRailLeft }}</td>
-  <td>{{ endPanel.extraRailRight }}</td>
-  <td>{{ endPanel.top ? "Y" : "" }}</td>
-  <td>{{ endPanel.bottom ? "Y" : "" }}</td>
-  <td>{{ endPanel.left ? "Y" : "" }}</td>
-  <td>{{ endPanel.right ? "Y" : "" }}</td>
-  <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
-    {{ endPanel.note }}
-  </td>
-  <td style="width: 5rem;">
-    <button
-      type="button"
-      class="btn btn--secondary"
-      style="padding: 0.5rem 1rem;"
-      (click)="onRemove()"
-    >
-      <i class="fa fa-trash"></i>
-    </button>
-  </td>
-</tr>
+  <tr>
+    <td>{{ endPanel.quantity }}</td>
+    <td>{{ endPanel.height }}</td>
+    <td>{{ endPanel.width }}</td>
+    <td>{{ endPanel.numberOfShields }}</td>
+    <td>{{ endPanel.railLeft }}</td>
+    <td>{{ endPanel.railCenter }}</td>
+    <td>{{ endPanel.railRight }}</td>
+    <td>{{ endPanel.extraRailTop }}</td>
+    <td>{{ endPanel.extraRailBottom }}</td>
+    <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
+      {{
+        asset.getEdgeProfile(endPanel.duraformEdgeProfileId).name | uppercase
+      }}
+    </td>
+    <td>{{ endPanel.top ? "Y" : "" }}</td>
+    <td>{{ endPanel.bottom ? "Y" : "" }}</td>
+    <td>{{ endPanel.left ? "Y" : "" }}</td>
+    <td>{{ endPanel.right ? "Y" : "" }}</td>
+    <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
+      {{ endPanel.duraformOption?.toString() }}
+    </td>
+    <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
+      {{ endPanel.note }}
+    </td>
+    <td style="width: 5rem;">
+      <button
+        type="button"
+        class="btn btn--secondary"
+        style="padding: 0.5rem 1rem;"
+        (click)="onRemove()"
+      >
+        <i class="fa fa-trash"></i>
+      </button>
+    </td>
+  </tr>
+</tbody>

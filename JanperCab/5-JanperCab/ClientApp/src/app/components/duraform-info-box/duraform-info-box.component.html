@@ -1,0 +1,53 @@
+<div class="info-box">
+  <div class="duraform-design">
+    <div class="duraform-design__img-box">
+      <div class="img-loader" *ngIf="isLoadingImg">
+        <i class="fa fa-spinner fa-spin"></i>
+      </div>
+      <img
+        [hidden]="isLoadingImg"
+        src="../../../assets/images/Duraform/Doors/S{{
+          order.selectedSerie.id
+        }}/{{ order.selectedDesign.imageUrl }}"
+        alt="Duraform Door - {{ order.selectedDesign.name }}"
+        (load)="this.isLoadingImg = false"
+      />
+    </div>
+    <div class="duraform-design__control-box">
+      <div
+        class="duraform-design__control-box__door-name"
+        style="padding-top: 3px;"
+      >
+        {{ order.selectedDesign.name }}
+      </div>
+      <div class="duraform-design__control-box__profile-name">
+        {{ order.selectedEdgeProfile.name }}
+      </div>
+      <div
+        class="duraform-design__control-box__route-only"
+        *ngIf="order.isRoutingOnly"
+      >
+        ROUTE ONLY
+      </div>
+      <div
+        class="duraform-design__control-box__wrapping"
+        *ngIf="!order.isRoutingOnly"
+      >
+        <div class="wrap-type">
+          {{ order.selectedWrapType.name }}
+        </div>
+        <div class="wrap-color">
+          {{ order.selectedWrapColor.name }}
+        </div>
+      </div>
+      <div class="form__group">
+        <div class="form__label">Arch Style</div>
+        <app-arch-selector
+          [canSelect]="!order.selectedDesign.hasNoArch"
+          [selectedArch]="order.selectedArch"
+          (selectArch)="onSelectArch($event)"
+        ></app-arch-selector>
+      </div>
+    </div>
+  </div>
+</div>

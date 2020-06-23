@@ -59,12 +59,12 @@
   }
 
   &.scrollable {
-    height: 100%;
+    flex: 1;
     max-height: 100%;
   }
 
   &.scrollable &__pages {
-    height: 100%;
+    flex: 1;
     max-height: 100%;
     overflow-y: auto;
   }

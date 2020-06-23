@@ -2,7 +2,12 @@ import { DuraformOptionTypeKey } from './../../_enums/DuraformOptionTypeKey';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { PantryDoorForCart } from '../../_models/pantry-door/PantryDoorForCart';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
@@ -38,8 +43,8 @@ export class PantryDoorFormComponent implements OnInit {
         [Validators.required, Validators.min(50), Validators.max(1200)],
       ],
       chairRailHeight: [
-        null,
-        [Validators.required, Validators.min(50), Validators.max(2500)],
+        56,
+        [Validators.required, Validators.min(30), Validators.max(100)],
       ],
       chairRailTypeId: [
         this.asset.pantryDoorChairRailTypes[0]?.id,
@@ -69,6 +74,10 @@ export class PantryDoorFormComponent implements OnInit {
         );
       }
     }
+  }
+
+  get chairRailHeight(): AbstractControl {
+    return this.formGroup.get('chairRailHeight');
   }
 
   onSubmit = () => {

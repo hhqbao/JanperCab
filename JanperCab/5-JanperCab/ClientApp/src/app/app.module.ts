@@ -1,3 +1,4 @@
+import { DuraformInfoBoxComponent } from './components/duraform-info-box/duraform-info-box.component';
 import { DuraformDoorBasicInputComponent } from './components/duraform-door-basic-input/duraform-door-basic-input.component';
 import { EdgeProfileFormControlComponent } from './components/edge-profile-form-control/edge-profile-form-control.component';
 import { DuraformAssetService } from './_services/duraform-asset.service';
@@ -54,7 +55,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { routes } from './app.routes';
-import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 import { JwtModule } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
@@ -95,6 +96,7 @@ import { DuraformOptionDoubleSidedFormComponent } from './components/duraform-op
     DuraformOrderStepTwoComponent,
     DuraformOrderStepThreeComponent,
     DuraformDesignComponent,
+    DuraformInfoBoxComponent,
     DuraformDesignListComponent,
     DuraformFilterBoxComponent,
     DuraformColorSelectorComponent,

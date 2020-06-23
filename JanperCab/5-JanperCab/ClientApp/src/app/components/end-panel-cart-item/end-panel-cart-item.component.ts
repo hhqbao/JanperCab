@@ -1,3 +1,4 @@
+import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { EndPanelFormComponent } from '../end-panel-form/end-panel-form.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DialogService } from './../../_services/dialog.service';
@@ -25,7 +26,11 @@ export class EndPanelCartItemComponent implements OnInit {
   hasAnimated = false;
   isSelected = false;
 
-  constructor(private ef: ElementRef, private dialog: DialogService) {}
+  constructor(
+    public asset: DuraformAssetService,
+    private ef: ElementRef,
+    private dialog: DialogService
+  ) {}
 
   @HostListener('document:click', ['$event.target'])
   onFocusOut = (target: Element) => {
@@ -50,7 +55,10 @@ export class EndPanelCartItemComponent implements OnInit {
       return;
     }
 
-    this.endPanel.update(formGroup.value);
+    this.endPanel.updateWithOption(
+      formGroup.value,
+      this.asset.duraformOptionTypes
+    );
 
     this.isSelected = false;
   };

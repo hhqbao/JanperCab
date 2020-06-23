@@ -1,4 +1,4 @@
-import { FormGroup } from '@angular/forms';
+import { FormGroup, AbstractControl } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -11,4 +11,16 @@ export class DuraformDoorBasicInputComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  get quantity(): AbstractControl {
+    return this.formGroup.get('quantity');
+  }
+
+  get height(): AbstractControl {
+    return this.formGroup.get('height');
+  }
+
+  get width(): AbstractControl {
+    return this.formGroup.get('width');
+  }
 }

@@ -10,6 +10,7 @@
         currencyMask
         appSelectOnFocus
         formControlName="chairRailHeight"
+        (blur)="chairRailHeight.invalid && chairRailHeight.setValue(56)"
         [options]="{
           align: 'center',
           allowZero: false,
@@ -17,7 +18,7 @@
           decimal: '',
           prefix: '',
           thousands: '',
-          max: 2500
+          max: 100
         }"
       />
     </td>

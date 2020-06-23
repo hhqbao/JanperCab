@@ -1,5 +1,6 @@
 <div class="duraform-page">
   <app-duraform-process
+    appRemoveTag
     [currentDisplayStep]="displayedStep"
     (processClick)="onProcessClick($event)"
   ></app-duraform-process>
@@ -11,6 +12,7 @@
   <app-duraform-order-step-two
     *ngIf="loadedSteps.includes(duraformProcessStep.StepTwo)"
     [hidden]="displayedStep !== duraformProcessStep.StepTwo"
+    (goBack)="onStepTwoGoBack()"
     (finish)="onStepTwoFinish()"
   ></app-duraform-order-step-two>
   <app-duraform-order-step-three

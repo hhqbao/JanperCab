@@ -1,8 +1,4 @@
-<div
-  class="duraform-design"
-  [ngClass]="{ 'can-select': canSelect }"
-  (click)="onSelectDesign()"
->
+<div class="duraform-design can-select" (click)="onSelectDesign()">
   <div class="duraform-design__img-box">
     <div class="img-loader" *ngIf="isLoadingImg">
       <i class="fa fa-spinner fa-spin"></i>
@@ -19,12 +15,7 @@
   <div class="duraform-design__control-box">
     <div class="duraform-design__control-box__door-name">{{ design.name }}</div>
     <div class="duraform-design__control-box__profile-name">
-      <span *ngIf="showOrderDetails && order.selectedEdgeProfile">
-        {{ order.selectedEdgeProfile.name }}
-      </span>
-      <span *ngIf="!showOrderDetails">
-        {{ design.fixedEdgeProfileName || design.defaultEdgeProfileName }}
-      </span>
+      {{ design.fixedEdgeProfileName || design.defaultEdgeProfileName }}
     </div>
     <img
       class="duraform-design__control-box__profile-img"
@@ -33,24 +24,5 @@
       }}/{{ design.imageUrl.replace('.jpg', '.png') }}"
       alt="Duraform Profile - {{ design.name }}"
     />
-    <div *ngIf="showOrderDetails">
-      <div
-        class="duraform-design__control-box__route-only"
-        *ngIf="order.isRoutingOnly"
-      >
-        ROUTE ONLY
-      </div>
-      <div
-        class="duraform-design__control-box__wrapping"
-        *ngIf="!order.isRoutingOnly"
-      >
-        <div class="wrap-type">
-          {{ order.selectedWrapType.name }}
-        </div>
-        <div class="wrap-color">
-          {{ order.selectedWrapColor.name }}
-        </div>
-      </div>
-    </div>
   </div>
 </div>

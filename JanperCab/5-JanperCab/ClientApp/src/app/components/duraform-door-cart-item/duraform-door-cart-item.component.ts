@@ -59,7 +59,7 @@ export class DuraformDoorCartItemComponent implements OnInit {
     }
 
     const formValue = formGroup.value;
-    this.door.update(formValue, this.asset.duraformOptionTypes);
+    this.door.updateWithOption(formValue, this.asset.duraformOptionTypes);
 
     this.isSelected = false;
   };

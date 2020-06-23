@@ -3,7 +3,8 @@
     class="form__control"
     currencyMask
     appSelectOnFocus
-    [formControl]="formGroup.get('quantity')"
+    [formControl]="quantity"
+    (blur)="quantity.invalid && quantity.setValue(1)"
     [options]="{
       align: 'center',
       allowZero: false,
@@ -20,7 +21,7 @@
     class="form__control"
     currencyMask
     appSelectOnFocus
-    [formControl]="formGroup.get('height')"
+    [formControl]="height"
     [options]="{
       align: 'center',
       allowZero: false,
@@ -37,7 +38,7 @@
     class="form__control"
     currencyMask
     appSelectOnFocus
-    [formControl]="formGroup.get('width')"
+    [formControl]="width"
     [options]="{
       align: 'center',
       allowZero: false,
