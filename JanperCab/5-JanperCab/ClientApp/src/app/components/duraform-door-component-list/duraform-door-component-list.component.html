@@ -1,0 +1,42 @@
+<div class="panel">
+  <div class="panel__heading">DOORS & PANELS</div>
+  <div class="panel__content">
+    <table class="table table--component-list">
+      <thead>
+        <tr>
+          <th rowspan="2" style="width: 4rem;">Qty</th>
+          <th rowspan="2" style="width: 6rem;">Height</th>
+          <th rowspan="2" style="width: 6rem;">Width</th>
+          <th colspan="4">'X' For Square Edge</th>
+          <th rowspan="2" style="width: 26rem;">Option</th>
+          <th rowspan="2" style="width: 20rem;">
+            Edge Profile
+          </th>
+          <th rowspan="2">Note</th>
+        </tr>
+        <tr>
+          <th style="width: 4rem;">T</th>
+          <th style="width: 4rem;">B</th>
+          <th style="width: 4rem;">L</th>
+          <th style="width: 4rem;">R</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let door of order.doors">
+          <td>{{ door.quantity }}</td>
+          <td>{{ door.height }}</td>
+          <td>{{ door.width }}</td>
+          <td>{{ door.top ? "Y" : null }}</td>
+          <td>{{ door.bottom ? "Y" : null }}</td>
+          <td>{{ door.left ? "Y" : null }}</td>
+          <td>{{ door.right ? "Y" : null }}</td>
+          <td class="text-left">{{ door.duraformOption?.toString() }}</td>
+          <td class="text-left">
+            {{ asset.getEdgeProfile(door.duraformEdgeProfileId).name }}
+          </td>
+          <td class="text-left">{{ door.note }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

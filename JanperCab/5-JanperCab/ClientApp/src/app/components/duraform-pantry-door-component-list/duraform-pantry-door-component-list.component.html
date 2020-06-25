@@ -1,0 +1,69 @@
+<div class="panel">
+  <div class="panel__heading">PANTRY DOORS</div>
+  <div class="panel__content">
+    <table class="table table--component-list">
+      <thead>
+        <tr>
+          <th rowspan="2" style="width: 4rem;">Qty</th>
+          <th rowspan="2" style="width: 6rem;">
+            O/A <br />
+            Height
+          </th>
+          <th rowspan="2" style="width: 6rem;">
+            O/A <br />
+            Width
+          </th>
+          <th rowspan="2" style="width: 9rem;">
+            Chair Rail <br />
+            Height
+          </th>
+          <th rowspan="2" style="width: 9rem;">
+            Chair Rail <br />
+            Type
+          </th>
+          <th rowspan="2" style="width: 9rem;">
+            Extra Rail <br />
+            Bottom
+          </th>
+          <th colspan="4">'X' For Square Edge</th>
+          <th rowspan="2" style="width: 26rem;">Option</th>
+          <th rowspan="2" style="width: 20rem;">
+            Edge Profile
+          </th>
+          <th rowspan="2">Note</th>
+        </tr>
+        <tr>
+          <th style="width: 4rem;">T</th>
+          <th style="width: 4rem;">B</th>
+          <th style="width: 4rem;">L</th>
+          <th style="width: 4rem;">R</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pantryDoor of order.pantryDoors">
+          <td>{{ pantryDoor.quantity }}</td>
+          <td>{{ pantryDoor.height }}</td>
+          <td>{{ pantryDoor.width }}</td>
+          <td>{{ pantryDoor.chairRailHeight }}</td>
+          <td>
+            {{ asset.getChairRailType(pantryDoor.chairRailTypeId).name }}
+          </td>
+          <td>{{ pantryDoor.extraRailBottom }}</td>
+          <td>{{ pantryDoor.top ? "Y" : null }}</td>
+          <td>{{ pantryDoor.bottom ? "Y" : null }}</td>
+          <td>{{ pantryDoor.left ? "Y" : null }}</td>
+          <td>{{ pantryDoor.right ? "Y" : null }}</td>
+          <td class="text-left">
+            {{ pantryDoor.duraformOption?.toString() }}
+          </td>
+          <td class="text-left">
+            {{ asset.getEdgeProfile(pantryDoor.duraformEdgeProfileId).name }}
+          </td>
+          <td class="text-left">
+            {{ pantryDoor.note }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -24,9 +24,8 @@ export class PantryDoorTabComponent implements OnInit {
     }
 
     const pantryDoor = new PantryDoorForCart();
-    pantryDoor.update(
+    pantryDoor.updateWithOption(
       formGroup.value,
-      this.asset.pantryDoorChairRailTypes,
       this.asset.duraformOptionTypes
     );
 

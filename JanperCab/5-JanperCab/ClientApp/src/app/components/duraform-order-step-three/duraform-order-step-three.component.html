@@ -1,3 +1,171 @@
 <div class="duraform-order-step-three">
-  Step Three
+  <div class="component-box">
+    <app-box [showHeading]="false">
+      <div class="row">
+        <div class="col-2-3">
+          <ul class="selection-list">
+            <li class="selection">
+              <span class="selection__door-design">
+                {{ order.selectedDesign.name }}
+              </span>
+            </li>
+            <li class="selection" *ngIf="order.isRoutingOnly">
+              <div class="selection__route-only">ROUTE ONLY</div>
+            </li>
+            <li class="selection" *ngIf="!order.isRoutingOnly">
+              <span class="selection__wrap-type">
+                {{ order.selectedWrapType?.name }}
+              </span>
+              <span class="selection__wrap-color">
+                {{ order.selectedWrapColor?.name }}
+              </span>
+            </li>
+            <li class="selection">
+              <span class="selection__door-serie">
+                {{ order.selectedSerie.name }}
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="col-1-3">
+          <div class="row">
+            <div class="col-1-3 middle">
+              <div class="dropdown dropdown--1" appDropdownBtn>
+                <button type="button" class="dropdown__toggle">
+                  Action Center
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <ul class="dropdown__list" style="top: 125%;">
+                  <li>
+                    <a (click)="onEditClick()">
+                      <i class="fa fa-pencil"></i>
+                      Go Back & Edit
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <i class="fa fa-file-text"></i>
+                      Save as Draft
+                    </a>
+                  </li>
+                  <li class="dropdown__divider"></li>
+                  <li>
+                    <a>
+                      <i class="fa fa-plug"></i>
+                      Send In Order
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-2-3">
+              <div class="form__inline-group">
+                <label class="form__label">Display</label>
+                <select
+                  class="form__control"
+                  [(ngModel)]="selectedDisplayOption"
+                >
+                  <option value="{{ displayOptions.all }}">
+                    {{ displayOptions.all }}
+                  </option>
+                  <option
+                    *ngIf="order.doors.length > 0"
+                    value="{{ displayOptions.doors }}"
+                  >
+                    {{ displayOptions.doors }}
+                  </option>
+                  <option
+                    *ngIf="order.pantryDoors.length > 0"
+                    value="{{ displayOptions.pantryDoors }}"
+                  >
+                    {{ displayOptions.pantryDoors }}
+                  </option>
+                  <option
+                    *ngIf="order.endPanels.length > 0"
+                    value="{{ displayOptions.ibBacks }}"
+                  >
+                    {{ displayOptions.ibBacks }}
+                  </option>
+                  <option
+                    *ngIf="order.duraformDrawers.length > 0"
+                    value="{{ displayOptions.drawers }}"
+                  >
+                    {{ displayOptions.drawers }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </app-box>
+    <app-box [showHeading]="false" [isScrollable]="true" [isTransparent]="true">
+      <div
+        class="component-list"
+        *ngIf="order.doors.length > 0"
+        [hidden]="
+          selectedDisplayOption !== displayOptions.all &&
+          selectedDisplayOption !== displayOptions.doors
+        "
+      >
+        <app-duraform-door-component-list></app-duraform-door-component-list>
+      </div>
+      <div
+        class="component-list"
+        *ngIf="order.pantryDoors.length > 0"
+        [hidden]="
+          selectedDisplayOption !== displayOptions.all &&
+          selectedDisplayOption !== displayOptions.pantryDoors
+        "
+      >
+        <app-duraform-pantry-door-component-list></app-duraform-pantry-door-component-list>
+      </div>
+      <div
+        class="component-list"
+        *ngIf="order.endPanels.length > 0"
+        [hidden]="
+          selectedDisplayOption !== displayOptions.all &&
+          selectedDisplayOption !== displayOptions.ibBacks
+        "
+      >
+        <app-duraform-end-panel-component-list></app-duraform-end-panel-component-list>
+      </div>
+      <div
+        class="component-list"
+        *ngIf="order.duraformDrawers.length > 0"
+        [hidden]="
+          selectedDisplayOption !== displayOptions.all &&
+          selectedDisplayOption !== displayOptions.drawers
+        "
+      >
+        <app-duraform-drawer-component-list></app-duraform-drawer-component-list>
+      </div>
+    </app-box>
+  </div>
+  <div class="option-box">
+    <div class="panel panel--5">
+      <div class="panel__heading text-center">Customer Order Number</div>
+      <div class="panel__content">
+        <div class="form__group">
+          <input
+            type="text"
+            class="form__control text-center"
+            style="font-weight: bold;"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="panel panel--3">
+      <div class="panel__heading">Invoice To</div>
+      <div class="panel__content">
+        <app-invoice-detail-form></app-invoice-detail-form>
+      </div>
+    </div>
+    <div class="panel panel--1">
+      <div class="panel__heading">Deliver To</div>
+      <div class="panel__content">
+        <app-delivery-detail-form></app-delivery-detail-form>
+      </div>
+    </div>
+  </div>
 </div>

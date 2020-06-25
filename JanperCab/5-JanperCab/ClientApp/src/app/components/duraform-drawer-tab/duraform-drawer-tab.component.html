@@ -2,9 +2,6 @@
   <thead>
     <tr>
       <th rowspan="2" style="width: 5rem;">Qty.</th>
-      <th rowspan="2" style="width: 25rem;">
-        Drawer Type
-      </th>
       <th rowspan="2" style="width: 9rem;">
         Height <br />
         (mm)
@@ -12,6 +9,12 @@
       <th rowspan="2" style="width: 9rem;">
         Width <br />
         (mm)
+      </th>
+      <th rowspan="2" style="width: 25rem;">
+        Drawer Type
+      </th>
+      <th rowspan="2" style="width: 20rem;">
+        Edge Profile
       </th>
       <th colspan="4">'X' For Square Edge</th>
       <th colspan="5">Drawer Size</th>
@@ -29,13 +32,10 @@
       <th style="width: 7rem;">5</th>
     </tr>
   </thead>
-  <tbody>
-    <app-duraform-drawer-form
-      appRemoveTag
-      [duraformDrawerTypes]="duraformDrawerTypes"
-      (formSubmit)="onAddDrawer($event)"
-    ></app-duraform-drawer-form>
-  </tbody>
+  <app-duraform-drawer-form
+    appRemoveTag
+    (formSubmit)="onAddDrawer($event)"
+  ></app-duraform-drawer-form>
   <tbody class="table__spacer" *ngIf="order.duraformDrawers.length > 0">
     <td></td>
     <td></td>
@@ -51,14 +51,12 @@
     <td></td>
     <td></td>
     <td></td>
+    <td></td>
   </tbody>
-  <tbody>
-    <app-duraform-drawer-cart-item
-      appRemoveTag
-      *ngFor="let drawer of order.duraformDrawers"
-      [duraformDrawer]="drawer"
-      [duraformDrawerTypes]="duraformDrawerTypes"
-      (removeDrawer)="onRemoveDrawer($event)"
-    ></app-duraform-drawer-cart-item>
-  </tbody>
+  <app-duraform-drawer-cart-item
+    appRemoveTag
+    *ngFor="let drawer of order.duraformDrawers"
+    [duraformDrawer]="drawer"
+    (removeDrawer)="onRemoveDrawer($event)"
+  ></app-duraform-drawer-cart-item>
 </table>

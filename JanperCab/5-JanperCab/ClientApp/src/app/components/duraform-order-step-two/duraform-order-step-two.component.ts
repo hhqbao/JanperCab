@@ -75,11 +75,11 @@ export class DuraformOrderStepTwoComponent implements OnInit {
   //   this.order.selectEdgeProfile(profile);
   // };
 
-  onGoBackClick = () => {
+  onRepickClick = () => {
     this.goBack.emit();
   };
 
-  onCheckOutClick = () => {
+  onPreviewOrderClick = () => {
     this.finish.emit();
   };
 }

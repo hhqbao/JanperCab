@@ -17,6 +17,11 @@ $col-gap: 1rem;
       align-items: center;
       display: flex;
     }
+
+    &.right {
+      display: flex;
+      justify-content: flex-end;
+    }
   }
 
   .col-1-2 {
@@ -41,5 +46,9 @@ $col-gap: 1rem;
 
   .col-1-5 {
     width: calc((100% - 4 * #{$col-gap}) / 5);
+  }
+
+  .col-4-5 {
+    width: calc(4 * ((100% - 4 * #{$col-gap}) / 5) + 3 * #{$col-gap});
   }
 }

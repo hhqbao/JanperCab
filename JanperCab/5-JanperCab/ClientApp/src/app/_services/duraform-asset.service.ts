@@ -22,4 +22,12 @@ export class DuraformAssetService {
   getEdgeProfile = (id: number) => {
     return this.edgeProfiles.find((x) => x.id === id);
   };
+
+  getChairRailType = (id: number) => {
+    return this.pantryDoorChairRailTypes.find((x) => x.id === id);
+  };
+
+  getDrawerType = (id: number) => {
+    return this.duraformDrawerTypes.find((x) => x.id === id);
+  };
 }

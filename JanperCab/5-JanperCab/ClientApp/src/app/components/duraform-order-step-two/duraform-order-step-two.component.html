@@ -5,17 +5,17 @@
       <button
         type="button"
         class="btn duraform-order-step-two__go-back-btn"
-        (click)="onGoBackClick()"
+        (click)="onRepickClick()"
       >
-        Go Back
+        Repick Door
       </button>
       <button
         type="button"
         class="btn duraform-order-step-two__check-out-btn"
         [disabled]="!order.hasComponent"
-        (click)="onCheckOutClick()"
+        (click)="onPreviewOrderClick()"
       >
-        Check Out
+        Preview Order
       </button>
     </app-box>
   </div>
@@ -38,9 +38,7 @@
           <app-end-panel-tab></app-end-panel-tab>
         </li>
         <li class="page">
-          <!-- <app-duraform-drawer-tab
-            [duraformDrawerTypes]="duraformDrawerTypes"
-          ></app-duraform-drawer-tab> -->
+          <app-duraform-drawer-tab></app-duraform-drawer-tab>
         </li>
       </ul>
     </div>

@@ -16,7 +16,9 @@
     <td>{{ pantryDoor.height }}</td>
     <td>{{ pantryDoor.width }}</td>
     <td>{{ pantryDoor.chairRailHeight }}</td>
-    <td>{{ pantryDoor.chairRailType.name | uppercase }}</td>
+    <td>
+      {{ asset.getChairRailType(pantryDoor.chairRailTypeId).name | uppercase }}
+    </td>
     <td>{{ pantryDoor.extraRailBottom }}</td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
       {{

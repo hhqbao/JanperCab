@@ -6,6 +6,9 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class BoxComponent implements OnInit {
   @Input() headingText = 'Box Heading';
+  @Input() isScrollable = false;
+  @Input() showHeading = true;
+  @Input() isTransparent = false;
 
   constructor() {}
 

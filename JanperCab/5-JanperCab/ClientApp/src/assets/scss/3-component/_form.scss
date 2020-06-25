@@ -1,18 +1,4 @@
 .form {
-  &__group {
-    &:not(:first-child) {
-      margin-top: 1.5rem;
-    }
-  }
-
-  &__inline-group {
-    display: inline-block;
-
-    &:not(:first-child) {
-      margin-left: 1rem;
-    }
-  }
-
   &__label {
     display: block;
     font-weight: bold;
@@ -22,9 +8,63 @@
   &__control {
     border-radius: 0.3rem;
     border: solid 1px rgba(black, 0.3);
+    color: black;
     display: block;
+    font-size: inherit;
     padding: 1rem;
     width: 100%;
+
+    option {
+      font-size: 1.5rem;
+    }
+
+    &.ng-invalid {
+      background-color: rgba($red-primary, 0.1) !important;
+    }
+  }
+
+  &__group,
+  &__inline-group {
+    &:not(:first-child) {
+      margin-top: 1.5rem;
+    }
+  }
+
+  &__group {
+    &.sm {
+      position: relative;
+
+      .form__label {
+        background-color: white;
+        font-size: 1.4rem;
+        font-weight: 500;
+        left: 1rem;
+        margin: 0;
+        position: absolute;
+        top: -0.8rem;
+      }
+
+      .form__control {
+        font-weight: bold;
+        letter-spacing: 1px;
+        padding-top: 1.3rem;
+      }
+    }
+  }
+
+  &__inline-group {
+    display: flex;
+
+    .form__label {
+      align-items: center;
+      display: flex;
+      margin-bottom: unset;
+      margin-right: 0.8rem;
+    }
+
+    .form__control {
+      flex: 1;
+    }
   }
 
   &__error {
@@ -157,15 +197,10 @@
   &__order-form-group &__control {
     border: solid 1px black;
     background-color: rgba(yellow, 0.2);
-    font-weight: 900;
+    font-weight: 700;
     margin: 0 auto;
     outline-color: blue;
     padding: 0.5rem;
     text-align: center;
-    width: 90%;
-
-    &.ng-invalid {
-      background-color: rgba($red-primary, 0.1);
-    }
   }
 }

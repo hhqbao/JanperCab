@@ -1,3 +1,7 @@
+import { DeliveryDetailFormComponent } from './components/delivery-detail-form/delivery-detail-form.component';
+import { InvoiceDetailFormComponent } from './components/invoice-detail-form/invoice-detail-form.component';
+import { DuraformPantryDoorComponentListComponent } from './components/duraform-pantry-door-component-list/duraform-pantry-door-component-list.component';
+import { DuraformDoorComponentListComponent } from './components/duraform-door-component-list/duraform-door-component-list.component';
 import { DuraformInfoBoxComponent } from './components/duraform-info-box/duraform-info-box.component';
 import { DuraformDoorBasicInputComponent } from './components/duraform-door-basic-input/duraform-door-basic-input.component';
 import { EdgeProfileFormControlComponent } from './components/edge-profile-form-control/edge-profile-form-control.component';
@@ -73,6 +77,8 @@ import { customCurrencyMaskConfig } from './_helpers/CurrencyMaskInputOption';
 import { PantryDoorCartItemComponent } from './components/pantry-door-cart-item/pantry-door-cart-item.component';
 import { DuraformOrderStepThreeComponent } from './components/duraform-order-step-three/duraform-order-step-three.component';
 import { DuraformOptionDoubleSidedFormComponent } from './components/duraform-option-double-sided-form/duraform-option-double-sided.component';
+import { DuraformEndPanelComponentListComponent } from './components/duraform-end-panel-component-list/duraform-end-panel-component-list.component';
+import { DuraformDrawerComponentListComponent } from './components/duraform-drawer-component-list/duraform-drawer-component-list.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +95,8 @@ import { DuraformOptionDoubleSidedFormComponent } from './components/duraform-op
     PrimaryTopNavComponent,
     PrimaryLeftNavComponent,
     UserControlBoxComponent,
+    InvoiceDetailFormComponent,
+    DeliveryDetailFormComponent,
     LoginFormComponent,
     DashboardComponent,
     DuraformProcessComponent,
@@ -122,6 +130,10 @@ import { DuraformOptionDoubleSidedFormComponent } from './components/duraform-op
     DuraformOptionDoubleSidedFormComponent,
     DuraformOptionFoldBackFormComponent,
     DuraformOptionPaneFrameFormComponent,
+    DuraformDoorComponentListComponent,
+    DuraformPantryDoorComponentListComponent,
+    DuraformEndPanelComponentListComponent,
+    DuraformDrawerComponentListComponent,
     LoginPageComponent,
     HomePageComponent,
     DuraformPageComponent,

@@ -1,3 +1,4 @@
+import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DuraformDrawerFormComponent } from '../duraform-drawer-form/duraform-drawer-form.component';
 import { DialogService } from './../../_services/dialog.service';
 import { DuraformDrawerForCart } from './../../_models/duraform-drawer/DuraformDrawerForCart';
@@ -21,14 +22,18 @@ import {
 export class DuraformDrawerCartItemComponent implements OnInit {
   @ViewChild('duraformDrawerForm')
   duraformDrawerForm: DuraformDrawerFormComponent;
+
   @Input() duraformDrawer: DuraformDrawerForCart;
-  @Input() duraformDrawerTypes: DuraformDrawerTypeForList[] = [];
   @Output() removeDrawer = new EventEmitter<DuraformDrawerForCart>();
 
   hasAnimated = false;
   isSelected = false;
 
-  constructor(private ef: ElementRef, private dialog: DialogService) {}
+  constructor(
+    public asset: DuraformAssetService,
+    private ef: ElementRef,
+    private dialog: DialogService
+  ) {}
 
   @HostListener('document:click', ['$event.target'])
   onFocusOut = (target: Element) => {
@@ -54,7 +59,7 @@ export class DuraformDrawerCartItemComponent implements OnInit {
     }
 
     const formValue = formGroup.value;
-    this.duraformDrawer.update(formValue, this.duraformDrawerTypes);
+    this.duraformDrawer.update(formValue);
 
     this.isSelected = false;
   };

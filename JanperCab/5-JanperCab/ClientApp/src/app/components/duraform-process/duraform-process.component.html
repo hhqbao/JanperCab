@@ -1,5 +1,6 @@
 <div
   class="duraform-process"
+  *ngIf="currentDisplayStep < 3"
   [ngClass]="{ 'step-two': currentDisplayStep === 2 }"
 >
   <ul>

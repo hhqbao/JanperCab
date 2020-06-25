@@ -64,9 +64,7 @@ export class PantryDoorFormComponent implements OnInit {
 
     if (this.pantryDoor) {
       this.formGroup.patchValue({ ...this.pantryDoor });
-      this.formGroup.patchValue({
-        chairRailTypeId: this.pantryDoor.chairRailType.id,
-      });
+
       if (this.pantryDoor.duraformOption) {
         this.formGroup.addControl(
           'optionGroup',

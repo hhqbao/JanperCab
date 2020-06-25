@@ -15,7 +15,7 @@ export class LoginPageComponent implements OnInit {
     private router: Router,
     private authService: AuthService
   ) {
-    document.title = 'Manufact - Sign In';
+    document.title = 'JanperCab - Sign In';
   }
 
   ngOnInit(): void {

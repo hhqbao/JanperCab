@@ -18,5 +18,6 @@
   <app-duraform-order-step-three
     *ngIf="loadedSteps.includes(duraformProcessStep.StepThree)"
     [hidden]="displayedStep !== duraformProcessStep.StepThree"
+    (processClick)="onProcessClick($event)"
   ></app-duraform-order-step-three>
 </div>

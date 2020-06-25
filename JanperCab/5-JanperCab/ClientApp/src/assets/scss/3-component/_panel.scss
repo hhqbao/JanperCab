@@ -1,0 +1,56 @@
+.panel {
+  &:not(:first-child) {
+    margin-top: 1rem;
+  }
+
+  &__heading {
+    background-color: rgba($color: black, $alpha: 0.5);
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    color: white;
+    font-weight: 500;
+    padding: 0.8rem 1rem 0.6rem 1rem;
+  }
+
+  &__content {
+    border: solid 1px rgba($color: black, $alpha: 0.1);
+    border-top: none;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    background-color: white;
+    padding: 0.8rem;
+  }
+
+  &--1 {
+    .panel__heading {
+      background-color: $blue-primary;
+    }
+  }
+
+  &--2 {
+    .panel__heading {
+      background-color: $green-primary;
+    }
+  }
+
+  &--3 {
+    .panel__heading {
+      background-color: $yellow-primary;
+      border: solid 1px rgba($color: black, $alpha: 0.1);
+      border-bottom: none;
+      color: black;
+    }
+  }
+
+  &--4 {
+    .panel__heading {
+      background-color: $cyan-primary;
+    }
+  }
+
+  &--5 {
+    .panel__heading {
+      background-color: $red-primary;
+    }
+  }
+}

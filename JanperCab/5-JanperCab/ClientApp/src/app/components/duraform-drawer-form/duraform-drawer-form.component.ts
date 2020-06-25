@@ -1,3 +1,5 @@
+import { DuraformOrderService } from './../../_services/duraform-order.service';
+import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DuraformDrawerForCart } from '../../_models/duraform-drawer/DuraformDrawerForCart';
 import { DuraformDoorForCart } from '../../_models/duraform-door/DuraformDoorForCart';
 import { DuraformDrawerTypeForList } from '../../_models/duraform-drawer-type/DuraformDrawerTypeForList';
@@ -10,12 +12,15 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 })
 export class DuraformDrawerFormComponent implements OnInit {
   @Input() duraformDrawer: DuraformDrawerForCart;
-  @Input() duraformDrawerTypes: DuraformDrawerTypeForList[] = [];
   @Output() formSubmit = new EventEmitter<FormGroup>();
 
   formGroup: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    public asset: DuraformAssetService,
+    public order: DuraformOrderService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit() {
     this.formGroup = this.fb.group({
@@ -32,6 +37,10 @@ export class DuraformDrawerFormComponent implements OnInit {
         null,
         [Validators.required, Validators.min(150), Validators.max(1200)],
       ],
+      duraformEdgeProfileId: [
+        this.order.selectedEdgeProfile.id,
+        [Validators.required],
+      ],
       top: [false],
       bottom: [false],
       left: [false],
@@ -46,9 +55,6 @@ export class DuraformDrawerFormComponent implements OnInit {
 
     if (this.duraformDrawer) {
       this.formGroup.patchValue({ ...this.duraformDrawer });
-      this.formGroup.patchValue({
-        duraformDrawerTypeId: this.duraformDrawer.duraformDrawerType?.id,
-      });
     }
   }
 

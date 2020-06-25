@@ -10,8 +10,6 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: 'duraform-drawer-tab.component.html',
 })
 export class DuraformDrawerTabComponent implements OnInit {
-  @Input() duraformDrawerTypes: DuraformDrawerTypeForList[] = [];
-
   constructor(
     public order: DuraformOrderService,
     private dialog: DialogService
@@ -26,7 +24,7 @@ export class DuraformDrawerTabComponent implements OnInit {
 
     const formValue = formGroup.value;
     const drawer = new DuraformDrawerForCart();
-    drawer.update(formValue, this.duraformDrawerTypes);
+    drawer.update(formValue);
 
     this.order.duraformDrawers.unshift(drawer);
 

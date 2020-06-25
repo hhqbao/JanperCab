@@ -57,9 +57,8 @@ export class PantryDoorCartItemComponent implements OnInit {
       return;
     }
 
-    this.pantryDoor.update(
+    this.pantryDoor.updateWithOption(
       formGroup.value,
-      this.asset.pantryDoorChairRailTypes,
       this.asset.duraformOptionTypes
     );
 
