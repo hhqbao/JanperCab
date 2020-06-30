@@ -67,6 +67,7 @@ namespace _5_JanperCab
             services.AddMvcCore().AddNewtonsoftJson(opt =>
                 {
                     opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    opt.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
                 });
 
             services.AddAutoMapper(typeof(Startup).Assembly);

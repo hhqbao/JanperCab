@@ -19,6 +19,7 @@ namespace _2_Persistent
         public DbSet<PantryDoorChairRailType> PantryDoorChairRailTypes { get; set; }
         public DbSet<DuraformDrawerType> DuraformDrawerTypes { get; set; }
         public DbSet<DuraformOptionType> DuraformOptionTypes { get; set; }
+        public DbSet<HingeHoleType> HingeHoleTypes { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,
@@ -38,6 +39,7 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new PantryDoorChairRailTypeConfig());
             builder.ApplyConfiguration(new DuraformDrawerTypeConfig());
             builder.ApplyConfiguration(new DuraformOptionTypeConfig());
+            builder.ApplyConfiguration(new HingeHoleTypeConfig());
 
             base.OnModelCreating(builder);
         }

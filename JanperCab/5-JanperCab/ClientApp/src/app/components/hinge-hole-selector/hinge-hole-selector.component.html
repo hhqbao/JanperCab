@@ -1,0 +1,79 @@
+<div class="hinge-hole-selector">
+  <div class="control-box">
+    <input
+      #mainInput
+      type="text"
+      class="form__control"
+      readonly
+      (keydown)="onMainInputTab($event)"
+      (click)="onInputClick()"
+      (focus)="onInputFocus()"
+    />
+  </div>
+  <div class="absolute-container" *ngIf="showOption">
+    <div class="form-box">
+      <div class="form__group">
+        <label class="form__label">Hinge Hole</label>
+        <app-select-menu
+          [control]="sideFormControl"
+          [values]="options"
+          [valueKey]="'value'"
+          [valueDisplay]="'text'"
+          [allowNull]="true"
+          [nullText]="'No Hinge Hole'"
+          [nullOnLabel]="true"
+          [isTabIgnored]="true"
+          (afterSet)="onSelectOption()"
+        ></app-select-menu>
+      </div>
+      <div
+        class="row"
+        *ngIf="formGroup.get('hingeHole')"
+        [formGroup]="formGroup.get('hingeHole')"
+      >
+        <div class="col-1-2">
+          <label class="form__label">Top</label>
+          <input
+            #topInput
+            type="text"
+            class="form__control tab-ignore"
+            currencyMask
+            appSelectOnFocus
+            formControlName="top"
+            [options]="{
+              align: 'center',
+              allowZero: false,
+              precision: '0',
+              decimal: '',
+              prefix: '',
+              thousands: ''
+            }"
+            (blur)="onTopBlur()"
+            (keydown)="onTopTab($event)"
+          />
+        </div>
+        <div class="col-1-2">
+          <label class="form__label">Bottom</label>
+          <input
+            #bottomInput
+            type="text"
+            class="form__control tab-ignore"
+            currencyMask
+            appSelectOnFocus
+            formControlName="bottom"
+            [options]="{
+              align: 'center',
+              allowZero: false,
+              precision: '0',
+              decimal: '',
+              prefix: '',
+              thousands: ''
+            }"
+            (blur)="onBottomBlur()"
+            (keydown)="onBottomTab($event)"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -54,10 +54,20 @@ export class DuraformDoorFormComponent implements OnInit {
           this.door.duraformOption.toFormGroup()
         );
       }
+      if (this.door.hingeHoleOption) {
+        this.formGroup.addControl(
+          'hingeHole',
+          this.door.hingeHoleOption.toFormGroup()
+        );
+      }
     }
   }
 
   onSubmit = () => {
+    if (!this.order.hingeHoleTypeId) {
+      this.formGroup.removeControl('hingeHole');
+    }
+
     this.formSubmit.emit(this.formGroup);
   };
 }

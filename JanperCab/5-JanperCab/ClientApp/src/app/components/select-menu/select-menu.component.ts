@@ -24,6 +24,7 @@ export class SelectMenuComponent implements OnInit {
   @Input() nullText = '-- NONE --';
   @Input() nullOnLabel = false;
   @Input() isDisabled = false;
+  @Input() isTabIgnored = false;
 
   @Output() afterSet = new EventEmitter();
 

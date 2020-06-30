@@ -19,6 +19,12 @@
       ></app-duraform-option-selector>
     </td>
     <td>
+      <app-hinge-hole-selector
+        *ngIf="order.hingeHoleTypeId"
+        [formGroup]="formGroup"
+      ></app-hinge-hole-selector>
+    </td>
+    <td>
       <input
         type="text"
         class="form__control"

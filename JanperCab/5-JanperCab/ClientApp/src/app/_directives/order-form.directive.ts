@@ -26,7 +26,11 @@ export class OrderFormDirective implements OnInit {
   ngOnInit(): void {}
 
   private get controls(): HTMLElement[] {
-    return Array.from(this.self.querySelectorAll('input,select'));
+    const controls = Array.from<HTMLElement>(
+      this.self.querySelectorAll('input,select')
+    );
+
+    return controls.filter((x) => !x.classList.contains('tab-ignore'));
   }
 
   private onSubmit = () => {
@@ -52,6 +56,10 @@ export class OrderFormDirective implements OnInit {
     event.preventDefault();
 
     const target = event.target as HTMLElement;
+
+    if (target.classList.contains('tab-ignore')) {
+      return;
+    }
 
     const currentIndex = this.controls.indexOf(target);
     if (currentIndex + 1 === this.controls.length) {

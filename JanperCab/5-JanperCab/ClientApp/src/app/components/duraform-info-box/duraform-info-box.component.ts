@@ -12,8 +12,4 @@ export class DuraformInfoBoxComponent implements OnInit {
   constructor(public order: DuraformOrderService) {}
 
   ngOnInit() {}
-
-  onSelectArch = (arch: DuraformArchForList) => {
-    this.order.selectArch(arch);
-  };
 }

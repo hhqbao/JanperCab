@@ -12,6 +12,9 @@
           <th rowspan="2" style="width: 20rem;">
             Edge Profile
           </th>
+          <th rowspan="2" style="width: 15rem;">
+            Hinge Hole
+          </th>
           <th rowspan="2">Note</th>
         </tr>
         <tr>
@@ -33,6 +36,9 @@
           <td class="text-left">{{ door.duraformOption?.toString() }}</td>
           <td class="text-left">
             {{ asset.getEdgeProfile(door.duraformEdgeProfileId).name }}
+          </td>
+          <td>
+            {{ door.hingeHoleOption?.toString() }}
           </td>
           <td class="text-left">{{ door.note }}</td>
         </tr>

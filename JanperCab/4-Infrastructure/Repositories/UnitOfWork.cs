@@ -26,6 +26,8 @@ namespace _4_Infrastructure.Repositories
 
         public IDuraformOptionTypeRepo DuraformOptionTypes { get; }
 
+        public IHingeHoleTypeRepo HingeHoleTypes { get; }
+
         public UnitOfWork(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -39,6 +41,7 @@ namespace _4_Infrastructure.Repositories
             PantryDoorChairRailTypes = new PantryDoorChairRailTypeRepo(_dbContext);
             DuraformDrawerTypes = new DuraformDrawerTypeRepo(_dbContext);
             DuraformOptionTypes = new DuraformOptionTypeRepo(_dbContext);
+            HingeHoleTypes = new HingeHoleTypeRepo(_dbContext);
         }
 
         public async Task<int> CompleteAsync()

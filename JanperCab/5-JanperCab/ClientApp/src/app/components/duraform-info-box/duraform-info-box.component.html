@@ -40,14 +40,6 @@
           {{ order.selectedWrapColor.name }}
         </div>
       </div>
-      <div class="form__group">
-        <div class="form__label">Arch Style</div>
-        <app-arch-selector
-          [canSelect]="!order.selectedDesign.hasNoArch"
-          [selectedArch]="order.selectedArch"
-          (selectArch)="onSelectArch($event)"
-        ></app-arch-selector>
-      </div>
     </div>
   </div>
 </div>

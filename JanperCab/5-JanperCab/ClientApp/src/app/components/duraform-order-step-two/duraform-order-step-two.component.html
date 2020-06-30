@@ -1,13 +1,14 @@
 <div class="duraform-order-step-two" *ngIf="isLoaded">
   <div class="section-one">
     <app-duraform-info-box appRemoveTag></app-duraform-info-box>
-    <app-box [headingText]="'Actions'">
+    <app-duraform-accessories-box appRemoveTag></app-duraform-accessories-box>
+    <app-box [showHeading]="false">
       <button
         type="button"
         class="btn duraform-order-step-two__go-back-btn"
         (click)="onRepickClick()"
       >
-        Repick Door
+        Back
       </button>
       <button
         type="button"
@@ -15,7 +16,7 @@
         [disabled]="!order.hasComponent"
         (click)="onPreviewOrderClick()"
       >
-        Preview Order
+        Next
       </button>
     </app-box>
   </div>

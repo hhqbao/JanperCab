@@ -1,4 +1,3 @@
-import { SelectedDuraformEdgeProfile } from './../../_models/duraform-edge-profile/SelectedDuraformEdgeProfile';
 import { DuraformDoorFormComponent } from '../duraform-door-form/duraform-door-form.component';
 import { DialogService } from './../../_services/dialog.service';
 import { FormGroup } from '@angular/forms';
@@ -13,8 +12,8 @@ import {
   EventEmitter,
   ViewChild,
 } from '@angular/core';
-import { DuraformOptionType } from 'src/app/_models/duraform-option/DuraformOptionType';
 import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
+import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 
 @Component({
   selector: 'app-duraform-door-cart-item',
@@ -31,6 +30,7 @@ export class DuraformDoorCartItemComponent implements OnInit {
 
   constructor(
     public asset: DuraformAssetService,
+    public order: DuraformOrderService,
     private ef: ElementRef,
     private dialog: DialogService
   ) {}

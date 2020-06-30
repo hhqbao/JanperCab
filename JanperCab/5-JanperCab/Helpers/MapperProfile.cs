@@ -7,6 +7,7 @@ using _3_Application.Dtos.DuraformOptionType;
 using _3_Application.Dtos.DuraformSerie;
 using _3_Application.Dtos.DuraformWrapColor;
 using _3_Application.Dtos.DuraformWrapType;
+using _3_Application.Dtos.HingeHoleType;
 using _3_Application.Dtos.PantryDoorChairRailType;
 using AutoMapper;
 
@@ -41,6 +42,7 @@ namespace _5_JanperCab.Helpers
             CreateMap<PantryDoorChairRailType, PantryDoorChairRailTypeForList>();
             CreateMap<DuraformDrawerType, DuraformDrawerTypeForList>();
             CreateMap<DuraformOptionType, DuraformOptionTypeDto>();
+            CreateMap<HingeHoleType, HingeHoleTypeDto>();
         }
     }
 }

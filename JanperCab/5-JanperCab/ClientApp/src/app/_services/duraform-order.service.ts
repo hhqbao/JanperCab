@@ -21,6 +21,7 @@ export class DuraformOrderService {
   selectedWrapType: SelectedDuraformWrapType;
   selectedWrapColor: SelectedDuraformWrapColor;
   selectedEdgeProfile: SelectedDuraformEdgeProfile;
+  private selectedHingeHoleTypeId: number;
   selectedArch: SelectedArch;
 
   doors: DuraformDoorForCart[] = [];
@@ -54,6 +55,21 @@ export class DuraformOrderService {
       endPanels.length > 0 ||
       duraformDrawers.length > 0
     );
+  }
+
+  get hingeHoleTypeId(): number {
+    return this.selectedHingeHoleTypeId;
+  }
+
+  set hingeHoleTypeId(typeId: number) {
+    this.selectedHingeHoleTypeId = typeId;
+
+    if (!this.hingeHoleTypeId) {
+      this.doors = this.doors.map((x) => {
+        x.hingeHoleOption = null;
+        return x;
+      });
+    }
   }
 
   constructor() {}
@@ -116,6 +132,7 @@ export class DuraformOrderService {
     this.selectedWrapType = null;
     this.selectedWrapColor = null;
     this.selectedEdgeProfile = null;
+    this.selectedHingeHoleTypeId = null;
     this.selectedArch = null;
 
     this.doors = [];

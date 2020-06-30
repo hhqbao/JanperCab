@@ -1,0 +1,25 @@
+<div class="options-box">
+  <app-box [headingText]="'Options & Accessories'">
+    <div class="form__group">
+      <label class="form__label">Hinge Hole Type</label>
+      <app-select-menu
+        [control]="formGroup.get('hingeHoleTypeId')"
+        [values]="asset.hingeHoleTypes"
+        [valueKey]="'id'"
+        [valueDisplay]="'name'"
+        [allowNull]="true"
+        [nullText]="'No Hinge Hole'"
+        [nullOnLabel]="true"
+        (afterSet)="onSelectHingeHoleType()"
+      ></app-select-menu>
+    </div>
+    <div class="form__group">
+      <label class="form__label">Arch Style</label>
+      <app-arch-selector
+        [canSelect]="!order.selectedDesign.hasNoArch"
+        [selectedArch]="order.selectedArch"
+        (selectArch)="onSelectArch($event)"
+      ></app-arch-selector>
+    </div>
+  </app-box>
+</div>

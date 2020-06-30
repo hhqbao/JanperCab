@@ -6,6 +6,7 @@ import { DuraformArchForList } from '../_models/duraform-arch/DuraformArchForLis
 import { PantryDoorChairRailTypeForList } from '../_models/pantry-door-chair-rail-type/PantryDoorChairRailTypeForList';
 import { DuraformDrawerTypeForList } from '../_models/duraform-drawer-type/DuraformDrawerTypeForList';
 import { DuraformOptionType } from '../_models/duraform-option/DuraformOptionType';
+import { HingeHoleTypeDto } from '../_models/hinge-hole-type/HingeHoleTypeDto';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformAssetService {
@@ -16,6 +17,7 @@ export class DuraformAssetService {
   duraformSeries: DuraformSerieForList[] = [];
   edgeProfiles: DuraformEdgeProfileForList[] = [];
   pantryDoorChairRailTypes: PantryDoorChairRailTypeForList[] = [];
+  hingeHoleTypes: HingeHoleTypeDto[] = [];
 
   constructor() {}
 

@@ -1,3 +1,4 @@
+import { HingeHoleTypeService } from './../../_services/hinge-hole-type.service';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DuraformOptionTypeService } from './../../_services/duraform-option-type.service';
 import { DuraformDrawerTypeService } from './../../_services/duraform-drawer-type.service';
@@ -25,6 +26,7 @@ export class DuraformOrderStepTwoComponent implements OnInit {
     private pantryDoorRailTypeService: PantryDoorChairRailTypeService,
     private drawerTypeService: DuraformDrawerTypeService,
     private optionTypeService: DuraformOptionTypeService,
+    private hingeHoleTypeService: HingeHoleTypeService,
     private dialog: DialogService,
     private layout: LayoutService,
     public order: DuraformOrderService
@@ -38,12 +40,14 @@ export class DuraformOrderStepTwoComponent implements OnInit {
       this.loadPantryDoorChairRailTypes(),
       this.loadDuraformDrawerTypes(),
       this.loadDuraformOptionTypes(),
+      this.loadHingeHoleTypes(),
     ]).subscribe(
       (responses) => {
         this.asset.arches = responses[0];
         this.asset.pantryDoorChairRailTypes = responses[1];
         this.asset.duraformDrawerTypes = responses[2];
         this.asset.duraformOptionTypes = responses[3];
+        this.asset.hingeHoleTypes = responses[4];
 
         this.layout.closeLoadingPanel();
         this.isLoaded = true;
@@ -71,9 +75,9 @@ export class DuraformOrderStepTwoComponent implements OnInit {
     return this.optionTypeService.getAll();
   };
 
-  // onSelectProfile = (profile: DuraformEdgeProfileForList) => {
-  //   this.order.selectEdgeProfile(profile);
-  // };
+  private loadHingeHoleTypes = () => {
+    return this.hingeHoleTypeService.getAllActive();
+  };
 
   onRepickClick = () => {
     this.goBack.emit();

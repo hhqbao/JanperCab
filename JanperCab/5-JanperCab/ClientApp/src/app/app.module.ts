@@ -1,3 +1,6 @@
+import { HingeHoleSelectorComponent } from './components/hinge-hole-selector/hinge-hole-selector.component';
+import { DuraformAccessoriesBoxComponent } from './components/duraform-accessories-box/duraform-accessories-box.component';
+import { HingeHoleTypeService } from './_services/hinge-hole-type.service';
 import { DeliveryDetailFormComponent } from './components/delivery-detail-form/delivery-detail-form.component';
 import { InvoiceDetailFormComponent } from './components/invoice-detail-form/invoice-detail-form.component';
 import { DuraformPantryDoorComponentListComponent } from './components/duraform-pantry-door-component-list/duraform-pantry-door-component-list.component';
@@ -105,6 +108,8 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
     DuraformOrderStepThreeComponent,
     DuraformDesignComponent,
     DuraformInfoBoxComponent,
+    DuraformAccessoriesBoxComponent,
+    HingeHoleSelectorComponent,
     DuraformDesignListComponent,
     DuraformFilterBoxComponent,
     DuraformColorSelectorComponent,
@@ -168,6 +173,7 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
     PantryDoorChairRailTypeService,
     DuraformDrawerTypeService,
     DuraformOptionTypeService,
+    HingeHoleTypeService,
     ErrorInterceptorProvider,
   ],
   bootstrap: [AppComponent],

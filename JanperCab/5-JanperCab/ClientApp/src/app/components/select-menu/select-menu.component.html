@@ -4,8 +4,8 @@
     type="text"
     class="form__control"
     readonly
-    [ngClass]="{ 'ng-invalid': control.invalid }"
-    value="{{ displayedLabel | uppercase }}"
+    [ngClass]="{ 'ng-invalid': control.invalid, 'tab-ignore': isTabIgnored }"
+    value="{{ displayedLabel }}"
     (click)="onFocus()"
     (focus)="onFocus()"
   />
@@ -17,7 +17,7 @@
         (click)="onSelect(null)"
         (mouseenter)="onMouseEnter(null)"
       >
-        {{ nullText | uppercase }}
+        {{ nullText }}
       </li>
       <li
         *ngFor="let value of values"
@@ -25,7 +25,7 @@
         (click)="onSelect(value)"
         (mouseenter)="onMouseEnter(value)"
       >
-        {{ value[valueDisplay] | uppercase }}
+        {{ value[valueDisplay] }}
       </li>
     </ul>
   </div>

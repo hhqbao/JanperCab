@@ -23,6 +23,8 @@ namespace _3_Application.Interfaces.Repositories
 
         IDuraformOptionTypeRepo DuraformOptionTypes { get; }
 
+        IHingeHoleTypeRepo HingeHoleTypes { get; }
+
 
         Task<int> CompleteAsync();
     }
