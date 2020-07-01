@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { DuraformProcessStep } from 'src/app/_enums/DuraformProcessStep';
-import { plainToClass } from 'class-transformer';
 
 @Component({
   selector: 'app-duraform-order-step-three',
@@ -23,16 +22,7 @@ export class DuraformOrderStepThreeComponent implements OnInit {
     this.selectedDisplayOption = this.displayOptions.all;
   }
 
-  ngOnInit() {
-    const jsonString = JSON.stringify(this.order);
-    const clonePlain = JSON.parse(jsonString);
-    const clone = plainToClass(DuraformOrderService, clonePlain);
-    clone.hingeHoleTypeId = null;
-
-    console.log(jsonString);
-    console.log(clone);
-    console.log(this.order);
-  }
+  ngOnInit() {}
 
   onEditClick = () => {
     this.processClick.emit(DuraformProcessStep.StepTwo);

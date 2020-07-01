@@ -71,6 +71,12 @@ export class PantryDoorFormComponent implements OnInit {
           this.pantryDoor.duraformOption.toFormGroup()
         );
       }
+      if (this.pantryDoor.hingeHoleOption) {
+        this.formGroup.addControl(
+          'hingeHole',
+          this.pantryDoor.hingeHoleOption.toFormGroup()
+        );
+      }
     }
   }
 
@@ -83,6 +89,10 @@ export class PantryDoorFormComponent implements OnInit {
 
     if (formValue.extraRailBottom === 0) {
       this.formGroup.patchValue({ extraRailBottom: null });
+    }
+
+    if (!this.order.hingeHoleTypeId) {
+      this.formGroup.removeControl('hingeHole');
     }
 
     this.formSubmit.emit(this.formGroup);

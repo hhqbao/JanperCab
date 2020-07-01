@@ -69,6 +69,10 @@ export class DuraformOrderService {
         x.hingeHoleOption = null;
         return x;
       });
+      this.pantryDoors = this.pantryDoors.map((x) => {
+        x.hingeHoleOption = null;
+        return x;
+      });
     }
   }
 

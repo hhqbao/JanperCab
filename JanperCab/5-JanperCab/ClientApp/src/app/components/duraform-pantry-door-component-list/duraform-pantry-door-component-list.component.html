@@ -30,6 +30,9 @@
           <th rowspan="2" style="width: 20rem;">
             Edge Profile
           </th>
+          <th rowspan="2" style="width: 15rem;">
+            Hinge Hole
+          </th>
           <th rowspan="2">Note</th>
         </tr>
         <tr>
@@ -58,6 +61,9 @@
           </td>
           <td class="text-left">
             {{ asset.getEdgeProfile(pantryDoor.duraformEdgeProfileId).name }}
+          </td>
+          <td>
+            {{ pantryDoor.hingeHoleOption?.toString() }}
           </td>
           <td class="text-left">
             {{ pantryDoor.note }}
