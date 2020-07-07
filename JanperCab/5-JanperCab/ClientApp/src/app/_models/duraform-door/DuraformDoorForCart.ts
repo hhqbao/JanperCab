@@ -1,6 +1,6 @@
 import { HingeHoleOptionDto } from './../hinge-hole-option/HingeHoleOptionDto';
-import { DuraformOptionType } from 'src/app/_models/duraform-option/DuraformOptionType';
-import { DuraformOption } from '../duraform-option/DuraformOption';
+import { DuraformOptionTypeDto } from 'src/app/_models/duraform-option/DuraformOptionTypeDto';
+import { DuraformOptionDto } from '../duraform-option/DuraformOptionDto';
 import { DuraformComponentWithOptionForCart } from '../duraform-component-for-cart/DuraformComponentWithOptionForCart';
 
 export class DuraformDoorForCart extends DuraformComponentWithOptionForCart {
@@ -11,7 +11,10 @@ export class DuraformDoorForCart extends DuraformComponentWithOptionForCart {
     this.hingeHoleOption = null;
   }
 
-  updateWithOption(formValue: any, duraformOptionTypes: DuraformOptionType[]) {
+  updateWithOption(
+    formValue: any,
+    duraformOptionTypes: DuraformOptionTypeDto[]
+  ) {
     super.updateWithOption(formValue, duraformOptionTypes);
 
     if (formValue.hingeHole) {

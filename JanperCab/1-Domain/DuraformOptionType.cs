@@ -1,4 +1,6 @@
-﻿namespace _1_Domain
+﻿using System.Collections.Generic;
+
+namespace _1_Domain
 {
     public class DuraformOptionType
     {
@@ -13,5 +15,8 @@
         public DuraformOptionTypeKey Id { get; set; }
 
         public string Name { get; set; }
+
+
+        public ICollection<DuraformOption> DuraformOptions { get; set; }
     }
 }

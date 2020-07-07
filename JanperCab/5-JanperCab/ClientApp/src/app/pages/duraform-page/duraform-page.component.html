@@ -1,23 +1,20 @@
-<div class="duraform-page">
+<div class="duraform-page" *ngIf="!isLoadingAsset">
   <app-duraform-process
     appRemoveTag
     [currentDisplayStep]="displayedStep"
     (processClick)="onProcessClick($event)"
   ></app-duraform-process>
   <app-duraform-order-step-one
-    *ngIf="loadedSteps.includes(duraformProcessStep.StepOne)"
-    [hidden]="displayedStep !== duraformProcessStep.StepOne"
+    *ngIf="displayedStep === duraformProcessStep.StepOne"
     (finish)="onStepOneFinish($event)"
   ></app-duraform-order-step-one>
   <app-duraform-order-step-two
-    *ngIf="loadedSteps.includes(duraformProcessStep.StepTwo)"
-    [hidden]="displayedStep !== duraformProcessStep.StepTwo"
+    *ngIf="displayedStep === duraformProcessStep.StepTwo"
     (goBack)="onStepTwoGoBack()"
     (finish)="onStepTwoFinish()"
   ></app-duraform-order-step-two>
   <app-duraform-order-step-three
-    *ngIf="loadedSteps.includes(duraformProcessStep.StepThree)"
-    [hidden]="displayedStep !== duraformProcessStep.StepThree"
+    *ngIf="displayedStep === duraformProcessStep.StepThree"
     (processClick)="onProcessClick($event)"
   ></app-duraform-order-step-three>
 </div>

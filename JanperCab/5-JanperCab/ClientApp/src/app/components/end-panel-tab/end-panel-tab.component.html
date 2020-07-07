@@ -47,7 +47,7 @@
     (formSubmit)="onAddEndPanel($event)"
   ></app-end-panel-form>
 
-  <tbody class="table__spacer" *ngIf="order.endPanels.length > 0">
+  <tbody class="table__spacer" *ngIf="order.formData.endPanels.length > 0">
     <tr>
       <td></td>
       <td></td>
@@ -71,7 +71,7 @@
   </tbody>
   <app-end-panel-cart-item
     appRemoveTag
-    *ngFor="let endPanel of order.endPanels"
+    *ngFor="let endPanel of order.formData.endPanels"
     [endPanel]="endPanel"
     (removeEndPanel)="onRemoveEndPanel($event)"
   ></app-end-panel-cart-item>

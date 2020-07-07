@@ -321,6 +321,56 @@ namespace _2_Persistent.Migrations
                     b.ToTable("DuraformArches");
                 });
 
+            modelBuilder.Entity("_1_Domain.DuraformComponent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Bottom")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DuraformEdgeProfileId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("DuraformFormId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Height")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Left")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("varchar(1000)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Right")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Top")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Width")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DuraformEdgeProfileId");
+
+                    b.ToTable("DuraformComponents");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("DuraformComponent");
+                });
+
             modelBuilder.Entity("_1_Domain.DuraformDesign", b =>
                 {
                     b.Property<int>("Id")
@@ -406,6 +456,101 @@ namespace _2_Persistent.Migrations
                     b.ToTable("DuraformEdgeProfiles");
                 });
 
+            modelBuilder.Entity("_1_Domain.DuraformForm", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedByUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CustomerOrderNumber")
+                        .IsRequired()
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DuraformArchId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DuraformDesignId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DuraformEdgeProfileId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DuraformSerieId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DuraformWrapColorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DuraformWrapTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HingeHoleTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsRoutingOnly")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OrderType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("DuraformArchId");
+
+                    b.HasIndex("DuraformDesignId");
+
+                    b.HasIndex("DuraformEdgeProfileId");
+
+                    b.HasIndex("DuraformSerieId");
+
+                    b.HasIndex("DuraformWrapColorId");
+
+                    b.HasIndex("DuraformWrapTypeId");
+
+                    b.HasIndex("HingeHoleTypeId");
+
+                    b.ToTable("DuraformForms");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("DuraformForm");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformOption", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DuraformOptionTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DuraformOptionTypeId");
+
+                    b.ToTable("DuraformOptions");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("DuraformOption");
+                });
+
             modelBuilder.Entity("_1_Domain.DuraformOptionType", b =>
                 {
                     b.Property<int>("Id")
@@ -481,6 +626,45 @@ namespace _2_Persistent.Migrations
                     b.ToTable("DuraformWrapTypes");
                 });
 
+            modelBuilder.Entity("_1_Domain.HingeHoleOption", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Bottom")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Side")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<decimal>("Top")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HingeHoleOptions");
+                });
+
+            modelBuilder.Entity("_1_Domain.HingeHoleType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HingeHoleTypes");
+                });
+
             modelBuilder.Entity("_1_Domain.NotAvailableDesignWrapType", b =>
                 {
                     b.Property<int>("DuraformDesignId")
@@ -515,23 +699,85 @@ namespace _2_Persistent.Migrations
                     b.ToTable("PantryDoorChairRailTypes");
                 });
 
-            modelBuilder.Entity("_2_Persistent.HingeHoleType", b =>
+            modelBuilder.Entity("_1_Domain.DuraformComponentWithOption", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.HasBaseType("_1_Domain.DuraformComponent");
 
-                    b.Property<bool>("IsDisabled")
+                    b.HasDiscriminator().HasValue("DuraformComponentWithOption");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformDraft", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformForm");
+
+                    b.HasDiscriminator().HasValue("DuraformDraft");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformOptionDoubleSided", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformOption");
+
+                    b.Property<bool>("HasProfile")
+                        .HasColumnName("HasProfile")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
+                    b.HasDiscriminator().HasValue("DuraformOptionDoubleSided");
+                });
 
-                    b.HasKey("Id");
+            modelBuilder.Entity("_1_Domain.DuraformOptionFoldBack", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformOption");
 
-                    b.ToTable("HingeHoleTypes");
+                    b.Property<bool>("HasDoubleReturn")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasProfile")
+                        .HasColumnName("HasProfile")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Length")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Thickness")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasDiscriminator().HasValue("DuraformOptionFoldBack");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformOptionNoFace", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformOption");
+
+                    b.HasDiscriminator().HasValue("DuraformOptionNoFace");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformOptionPaneFrame", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformOption");
+
+                    b.Property<int>("Columns")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rows")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("DuraformOptionPaneFrame");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformComponentWithOptionAndHingeHole", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformComponentWithOption");
+
+                    b.HasDiscriminator().HasValue("DuraformComponentWithOptionAndHingeHole");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformDoor", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformComponentWithOptionAndHingeHole");
+
+                    b.HasIndex("DuraformFormId");
+
+                    b.HasDiscriminator().HasValue("DuraformDoor");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -585,6 +831,15 @@ namespace _2_Persistent.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("_1_Domain.DuraformComponent", b =>
+                {
+                    b.HasOne("_1_Domain.DuraformEdgeProfile", "DuraformEdgeProfile")
+                        .WithMany("DuraformComponents")
+                        .HasForeignKey("DuraformEdgeProfileId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("_1_Domain.DuraformDesign", b =>
                 {
                     b.HasOne("_1_Domain.DuraformEdgeProfile", "DefaultEdgeProfile")
@@ -604,12 +859,83 @@ namespace _2_Persistent.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
+            modelBuilder.Entity("_1_Domain.DuraformForm", b =>
+                {
+                    b.HasOne("_1_Domain.ApplicationUser", "CreatedByUser")
+                        .WithMany("DuraformForms")
+                        .HasForeignKey("CreatedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("_1_Domain.DuraformArch", "DuraformArch")
+                        .WithMany("DuraformForms")
+                        .HasForeignKey("DuraformArchId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("_1_Domain.DuraformDesign", "DuraformDesign")
+                        .WithMany("DuraformForms")
+                        .HasForeignKey("DuraformDesignId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("_1_Domain.DuraformEdgeProfile", "DuraformEdgeProfile")
+                        .WithMany("DuraformForms")
+                        .HasForeignKey("DuraformEdgeProfileId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("_1_Domain.DuraformSerie", "DuraformSerie")
+                        .WithMany("DuraformForms")
+                        .HasForeignKey("DuraformSerieId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("_1_Domain.DuraformWrapColor", "DuraformWrapColor")
+                        .WithMany("DuraformForms")
+                        .HasForeignKey("DuraformWrapColorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("_1_Domain.DuraformWrapType", "DuraformWrapType")
+                        .WithMany("DuraformForms")
+                        .HasForeignKey("DuraformWrapTypeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("_1_Domain.HingeHoleType", "HingeHoleType")
+                        .WithMany("DuraformForms")
+                        .HasForeignKey("HingeHoleTypeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformOption", b =>
+                {
+                    b.HasOne("_1_Domain.DuraformOptionType", "DuraformOptionType")
+                        .WithMany("DuraformOptions")
+                        .HasForeignKey("DuraformOptionTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("_1_Domain.DuraformComponentWithOption", "DuraformComponentWithOption")
+                        .WithOne("DuraformOption")
+                        .HasForeignKey("_1_Domain.DuraformOption", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("_1_Domain.DuraformWrapColor", b =>
                 {
                     b.HasOne("_1_Domain.DuraformWrapType", "DuraformWrapType")
                         .WithMany("DuraformWrapColors")
                         .HasForeignKey("DuraformWrapTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("_1_Domain.HingeHoleOption", b =>
+                {
+                    b.HasOne("_1_Domain.DuraformComponentWithOptionAndHingeHole", "DuraformComponentWithOptionAndHingeHole")
+                        .WithOne("HingeHoleOption")
+                        .HasForeignKey("_1_Domain.HingeHoleOption", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -624,6 +950,15 @@ namespace _2_Persistent.Migrations
                     b.HasOne("_1_Domain.DuraformWrapType", "DuraformWrapType")
                         .WithMany("NotAvailableDesignWrapTypes")
                         .HasForeignKey("DuraformWrapTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformDoor", b =>
+                {
+                    b.HasOne("_1_Domain.DuraformForm", "DuraformForm")
+                        .WithMany("DuraformDoors")
+                        .HasForeignKey("DuraformFormId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

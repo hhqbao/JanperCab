@@ -4,7 +4,6 @@ import { DialogService } from 'src/app/_services/dialog.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { DuraformDoorForCart } from 'src/app/_models/duraform-door/DuraformDoorForCart';
-import { DuraformOptionType } from 'src/app/_models/duraform-option/DuraformOptionType';
 
 @Component({
   selector: 'app-duraform-door-tab',
@@ -28,7 +27,7 @@ export class DuraformDoorTabComponent implements OnInit {
     const door = new DuraformDoorForCart();
     door.updateWithOption(formValue, this.asset.duraformOptionTypes);
 
-    this.order.doors.unshift(door);
+    this.order.formData.doors.unshift(door);
 
     this.dialog.success('New Door Added.');
   };

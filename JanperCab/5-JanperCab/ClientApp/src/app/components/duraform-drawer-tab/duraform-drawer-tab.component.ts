@@ -26,7 +26,7 @@ export class DuraformDrawerTabComponent implements OnInit {
     const drawer = new DuraformDrawerForCart();
     drawer.update(formValue);
 
-    this.order.duraformDrawers.unshift(drawer);
+    this.order.formData.duraformDrawers.unshift(drawer);
 
     this.dialog.success('New Drawer Added.');
   };

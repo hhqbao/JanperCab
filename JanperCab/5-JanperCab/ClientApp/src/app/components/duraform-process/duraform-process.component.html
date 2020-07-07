@@ -14,7 +14,7 @@
     <li
       class="step"
       [class]="{
-        active: order.selectedDesign,
+        active: order.formData.selectedDesign,
         current: currentDisplayStep === 2
       }"
       (click)="onStepTwoClick()"

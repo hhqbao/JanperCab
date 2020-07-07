@@ -29,7 +29,7 @@ export class PantryDoorTabComponent implements OnInit {
       this.asset.duraformOptionTypes
     );
 
-    this.order.pantryDoors.unshift(pantryDoor);
+    this.order.formData.pantryDoors.unshift(pantryDoor);
 
     this.dialog.success('New Pantry Door Added.');
   };

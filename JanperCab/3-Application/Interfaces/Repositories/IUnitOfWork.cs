@@ -25,6 +25,8 @@ namespace _3_Application.Interfaces.Repositories
 
         IHingeHoleTypeRepo HingeHoleTypes { get; }
 
+        IDuraformOrderRepo DuraformOrders { get; }
+
 
         Task<int> CompleteAsync();
     }

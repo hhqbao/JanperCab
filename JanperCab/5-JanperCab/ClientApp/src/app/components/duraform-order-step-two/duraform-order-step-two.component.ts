@@ -18,66 +18,9 @@ export class DuraformOrderStepTwoComponent implements OnInit {
   @Output() goBack = new EventEmitter();
   @Output() finish = new EventEmitter();
 
-  isLoaded = false;
+  constructor(public order: DuraformOrderService) {}
 
-  constructor(
-    public asset: DuraformAssetService,
-    private archService: DuraformArchService,
-    private pantryDoorRailTypeService: PantryDoorChairRailTypeService,
-    private drawerTypeService: DuraformDrawerTypeService,
-    private optionTypeService: DuraformOptionTypeService,
-    private hingeHoleTypeService: HingeHoleTypeService,
-    private dialog: DialogService,
-    private layout: LayoutService,
-    public order: DuraformOrderService
-  ) {}
-
-  ngOnInit() {
-    this.layout.showLoadingPanel();
-
-    forkJoin([
-      this.loadArches(),
-      this.loadPantryDoorChairRailTypes(),
-      this.loadDuraformDrawerTypes(),
-      this.loadDuraformOptionTypes(),
-      this.loadHingeHoleTypes(),
-    ]).subscribe(
-      (responses) => {
-        this.asset.arches = responses[0];
-        this.asset.pantryDoorChairRailTypes = responses[1];
-        this.asset.duraformDrawerTypes = responses[2];
-        this.asset.duraformOptionTypes = responses[3];
-        this.asset.hingeHoleTypes = responses[4];
-
-        this.layout.closeLoadingPanel();
-        this.isLoaded = true;
-      },
-      (error) => {
-        this.layout.closeLoadingPanel();
-        this.dialog.error(error);
-      }
-    );
-  }
-
-  private loadArches = () => {
-    return this.archService.getAll();
-  };
-
-  private loadPantryDoorChairRailTypes = () => {
-    return this.pantryDoorRailTypeService.getAllActive();
-  };
-
-  private loadDuraformDrawerTypes = () => {
-    return this.drawerTypeService.getAllActive();
-  };
-
-  private loadDuraformOptionTypes = () => {
-    return this.optionTypeService.getAll();
-  };
-
-  private loadHingeHoleTypes = () => {
-    return this.hingeHoleTypeService.getAllActive();
-  };
+  ngOnInit() {}
 
   onRepickClick = () => {
     this.goBack.emit();

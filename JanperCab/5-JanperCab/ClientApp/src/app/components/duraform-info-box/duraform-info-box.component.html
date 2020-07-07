@@ -7,9 +7,9 @@
       <img
         [hidden]="isLoadingImg"
         src="../../../assets/images/Duraform/Doors/S{{
-          order.selectedSerie.id
-        }}/{{ order.selectedDesign.imageUrl }}"
-        alt="Duraform Door - {{ order.selectedDesign.name }}"
+          order.formData.selectedSerie.id
+        }}/{{ order.formData.selectedDesign.imageUrl }}"
+        alt="Duraform Door - {{ order.formData.selectedDesign.name }}"
         (load)="this.isLoadingImg = false"
       />
     </div>
@@ -18,26 +18,26 @@
         class="duraform-design__control-box__door-name"
         style="padding-top: 3px;"
       >
-        {{ order.selectedDesign.name }}
+        {{ order.formData.selectedDesign.name }}
       </div>
       <div class="duraform-design__control-box__profile-name">
-        {{ order.selectedEdgeProfile.name }}
+        {{ order.formData.selectedEdgeProfile.name }}
       </div>
       <div
         class="duraform-design__control-box__route-only"
-        *ngIf="order.isRoutingOnly"
+        *ngIf="order.formData.isRoutingOnly"
       >
         ROUTE ONLY
       </div>
       <div
         class="duraform-design__control-box__wrapping"
-        *ngIf="!order.isRoutingOnly"
+        *ngIf="!order.formData.isRoutingOnly"
       >
         <div class="wrap-type">
-          {{ order.selectedWrapType.name }}
+          {{ order.formData.selectedWrapType.name }}
         </div>
         <div class="wrap-color">
-          {{ order.selectedWrapColor.name }}
+          {{ order.formData.selectedWrapColor.name }}
         </div>
       </div>
     </div>

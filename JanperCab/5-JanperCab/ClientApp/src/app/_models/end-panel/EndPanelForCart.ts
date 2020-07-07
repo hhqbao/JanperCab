@@ -1,4 +1,4 @@
-import { DuraformOptionType } from './../duraform-option/DuraformOptionType';
+import { DuraformOptionTypeDto } from '../duraform-option/DuraformOptionTypeDto';
 import { DuraformComponentWithOptionForCart } from '../duraform-component-for-cart/DuraformComponentWithOptionForCart';
 
 export class EndPanelForCart extends DuraformComponentWithOptionForCart {
@@ -9,7 +9,10 @@ export class EndPanelForCart extends DuraformComponentWithOptionForCart {
   extraRailBottom: number;
   extraRailTop: number;
 
-  updateWithOption(formValue: any, duraformOptionTypes: DuraformOptionType[]) {
+  updateWithOption(
+    formValue: any,
+    duraformOptionTypes: DuraformOptionTypeDto[]
+  ) {
     super.updateWithOption(formValue, duraformOptionTypes);
     this.numberOfShields = formValue.numberOfShields;
     this.railLeft = formValue.railLeft;

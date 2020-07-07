@@ -56,7 +56,7 @@ export class EndPanelFormComponent implements OnInit {
       extraRailBottom: [null, [Validators.min(0), Validators.max(500)]],
       extraRailTop: [null, [Validators.min(0), Validators.max(500)]],
       duraformEdgeProfileId: [
-        this.order.selectedEdgeProfile.id,
+        this.order.formData.selectedEdgeProfile.id,
         [Validators.required],
       ],
       top: [false],

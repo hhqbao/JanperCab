@@ -16,8 +16,8 @@
     <div class="form__group">
       <label class="form__label">Arch Style</label>
       <app-arch-selector
-        [canSelect]="!order.selectedDesign.hasNoArch"
-        [selectedArch]="order.selectedArch"
+        [canSelect]="!order.formData.selectedDesign.hasNoArch"
+        [selectedArch]="order.formData.selectedArch"
         (selectArch)="onSelectArch($event)"
       ></app-arch-selector>
     </div>

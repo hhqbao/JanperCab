@@ -23,45 +23,9 @@ export class DuraformOrderStepOneComponent implements OnInit {
   selectedDuraformDesign: DuraformDesignForOrderMenu = null;
   showColorSelector = false;
 
-  constructor(
-    private layout: LayoutService,
-    public asset: DuraformAssetService,
-    private duraformSerieService: DuraformSerieService,
-    private duraformDesignService: DuraformDesignService,
-    private edgeProfileService: DuraformEdgeProfileService,
-    private dialog: DialogService
-  ) {}
+  constructor(public asset: DuraformAssetService) {}
 
-  ngOnInit() {
-    this.layout.showLoadingPanel();
-    forkJoin([
-      this.loadSeries(),
-      this.loadDuraformDesigns(),
-      this.loadEdgeProfiles(),
-    ]).subscribe(
-      (responses) => {
-        this.asset.duraformSeries = responses[0];
-        this.asset.duraformDesigns = responses[1];
-        this.asset.edgeProfiles = responses[2];
-        this.layout.closeLoadingPanel();
-      },
-      (error) => {
-        this.dialog.error(error);
-      }
-    );
-  }
-
-  private loadSeries = () => {
-    return this.duraformSerieService.getAll();
-  };
-
-  private loadDuraformDesigns = () => {
-    return this.duraformDesignService.getForOrderMenu();
-  };
-
-  private loadEdgeProfiles = () => {
-    return this.edgeProfileService.getAll();
-  };
+  ngOnInit() {}
 
   private get selectedEdgeProfile(): DuraformEdgeProfileForList {
     if (!this.selectedDuraformDesign) {

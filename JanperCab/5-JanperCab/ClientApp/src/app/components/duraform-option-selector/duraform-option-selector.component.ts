@@ -1,7 +1,7 @@
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DuraformOptionTypeKey } from './../../_enums/DuraformOptionTypeKey';
 import { FormGroup } from '@angular/forms';
-import { DuraformOptionType } from 'src/app/_models/duraform-option/DuraformOptionType';
+import { DuraformOptionTypeDto } from 'src/app/_models/duraform-option/DuraformOptionTypeDto';
 import {
   Component,
   OnInit,
@@ -10,7 +10,7 @@ import {
   HostListener,
   ElementRef,
 } from '@angular/core';
-import { DuraformOption } from 'src/app/_models/duraform-option/DuraformOption';
+import { DuraformOptionDto } from 'src/app/_models/duraform-option/DuraformOptionDto';
 
 @Component({
   selector: 'app-duraform-option-selector',
@@ -25,7 +25,7 @@ export class DuraformOptionSelectorComponent implements OnInit {
   readonly typeKeyEnum = DuraformOptionTypeKey;
   showTypeList = false;
   showOptionForm = false;
-  selectedType: DuraformOptionType = null;
+  selectedType: DuraformOptionTypeDto = null;
 
   get filtereddOptionTypes() {
     return this.asset.duraformOptionTypes.filter(
@@ -44,7 +44,7 @@ export class DuraformOptionSelectorComponent implements OnInit {
           (x) => x.id === optionValues.optionTypeId
         );
 
-        const duraformOption: DuraformOption = DuraformOptionType.GetDuraformOptionInstance(
+        const duraformOption: DuraformOptionDto = DuraformOptionTypeDto.GetDuraformOptionInstance(
           this.selectedType,
           optionValues
         );
@@ -89,7 +89,7 @@ export class DuraformOptionSelectorComponent implements OnInit {
     this.showTypeList = !this.showTypeList;
   };
 
-  onOptionTypeSelect = (optionType: DuraformOptionType) => {
+  onOptionTypeSelect = (optionType: DuraformOptionTypeDto) => {
     if (this.selectedType === optionType) {
       return;
     }
@@ -111,7 +111,7 @@ export class DuraformOptionSelectorComponent implements OnInit {
     }
 
     const optionValues = this.formGroup.get('optionGroup').value;
-    const duraformOption: DuraformOption = DuraformOptionType.GetDuraformOptionInstance(
+    const duraformOption: DuraformOptionDto = DuraformOptionTypeDto.GetDuraformOptionInstance(
       this.selectedType,
       optionValues
     );

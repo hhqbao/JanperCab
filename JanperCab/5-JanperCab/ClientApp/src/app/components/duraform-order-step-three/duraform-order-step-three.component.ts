@@ -1,3 +1,6 @@
+import { DialogService } from 'src/app/_services/dialog.service';
+import { LayoutService } from 'src/app/_services/layout.service';
+import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { DuraformProcessStep } from 'src/app/_enums/DuraformProcessStep';
@@ -18,7 +21,12 @@ export class DuraformOrderStepThreeComponent implements OnInit {
     drawers: 'Drawers',
   };
 
-  constructor(public order: DuraformOrderService) {
+  constructor(
+    public asset: DuraformAssetService,
+    public order: DuraformOrderService,
+    private layout: LayoutService,
+    private dialog: DialogService
+  ) {
     this.selectedDisplayOption = this.displayOptions.all;
   }
 
@@ -26,5 +34,19 @@ export class DuraformOrderStepThreeComponent implements OnInit {
 
   onEditClick = () => {
     this.processClick.emit(DuraformProcessStep.StepTwo);
+  };
+
+  onSaveDraft = () => {
+    this.layout.showLoadingPanel();
+    this.order.saveDraft().subscribe(
+      (_) => {
+        this.layout.closeLoadingPanel();
+        this.dialog.success('Draft has been saved!');
+      },
+      (error) => {
+        this.layout.closeLoadingPanel();
+        this.dialog.error(error);
+      }
+    );
   };
 }

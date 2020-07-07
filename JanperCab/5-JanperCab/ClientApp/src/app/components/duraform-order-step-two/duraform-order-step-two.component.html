@@ -1,4 +1,4 @@
-<div class="duraform-order-step-two" *ngIf="isLoaded">
+<div class="duraform-order-step-two">
   <div class="section-one">
     <app-duraform-info-box appRemoveTag></app-duraform-info-box>
     <app-duraform-accessories-box appRemoveTag></app-duraform-accessories-box>
@@ -13,7 +13,7 @@
       <button
         type="button"
         class="btn duraform-order-step-two__check-out-btn"
-        [disabled]="!order.hasComponent"
+        [disabled]="!order.formData.hasComponent"
         (click)="onPreviewOrderClick()"
       >
         Next

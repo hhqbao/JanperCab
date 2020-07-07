@@ -1,14 +1,14 @@
-import { DuraformOptionType } from 'src/app/_models/duraform-option/DuraformOptionType';
-import { DuraformOption } from './DuraformOption';
+import { DuraformOptionTypeDto } from 'src/app/_models/duraform-option/DuraformOptionTypeDto';
+import { DuraformOptionDto } from './DuraformOptionDto';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-export class DuraformOptionFoldBack extends DuraformOption {
+export class DuraformOptionFoldBackDto extends DuraformOptionDto {
   hasProfile: boolean;
   length: number;
   thickness: number;
   hasDoubleReturn: boolean;
 
-  constructor(optionType: DuraformOptionType, optionValues: any) {
+  constructor(optionType: DuraformOptionTypeDto, optionValues: any) {
     super(optionType);
     this.hasProfile = optionValues.hasProfile;
     this.length = optionValues.length;

@@ -1,4 +1,7 @@
-﻿namespace _1_Domain
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+namespace _1_Domain
 {
     public class DuraformWrapColor
     {
@@ -16,5 +19,11 @@
 
 
         public virtual DuraformWrapType DuraformWrapType { get; set; }
+        public ICollection<DuraformForm> DuraformForms { get; set; }
+
+        public DuraformWrapColor()
+        {
+            DuraformForms = new Collection<DuraformForm>();
+        }
     }
 }

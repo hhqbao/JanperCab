@@ -116,6 +116,16 @@ app-duraform-order-step-three {
         font-weight: 500;
         font-size: 2rem;
       }
+
+      &__hinge-hole {
+        border: solid 2px $red-primary;
+        border-radius: 0.7rem;
+        color: $red-primary;
+        display: block;
+        font-size: 3rem;
+        font-weight: bold;
+        padding: 0.5rem;
+      }
     }
   }
 }

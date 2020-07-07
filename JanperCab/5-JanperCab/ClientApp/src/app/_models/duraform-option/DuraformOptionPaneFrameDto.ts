@@ -1,12 +1,12 @@
-import { DuraformOption } from './DuraformOption';
-import { DuraformOptionType } from './DuraformOptionType';
+import { DuraformOptionDto } from './DuraformOptionDto';
+import { DuraformOptionTypeDto } from './DuraformOptionTypeDto';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-export class DuraformOptionPaneFrame extends DuraformOption {
+export class DuraformOptionPaneFrameDto extends DuraformOptionDto {
   columns: number;
   rows: number;
 
-  constructor(optionType: DuraformOptionType, optionValues: any) {
+  constructor(optionType: DuraformOptionTypeDto, optionValues: any) {
     super(optionType);
     this.columns = optionValues.columns;
     this.rows = optionValues.rows;

@@ -21,11 +21,13 @@ namespace _1_Domain
 
         public virtual ICollection<DuraformDesign> DuraformDesigns { get; set; }
 
+        public ICollection<DuraformForm> DuraformForms { get; set; }
 
 
         public DuraformSerie()
         {
             DuraformDesigns = new Collection<DuraformDesign>();
+            DuraformForms = new Collection<DuraformForm>();
         }
     }
 }

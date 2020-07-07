@@ -3,7 +3,6 @@ import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DuraformDoorForCart } from '../../_models/duraform-door/DuraformDoorForCart';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { DuraformOptionType } from 'src/app/_models/duraform-option/DuraformOptionType';
 
 @Component({
   selector: 'app-duraform-door-form',
@@ -36,7 +35,7 @@ export class DuraformDoorFormComponent implements OnInit {
         [Validators.required, Validators.min(50), Validators.max(1200)],
       ],
       duraformEdgeProfileId: [
-        this.order.selectedEdgeProfile.id,
+        this.order.formData.selectedEdgeProfile.id,
         [Validators.required],
       ],
       top: [false],
@@ -64,7 +63,7 @@ export class DuraformDoorFormComponent implements OnInit {
   }
 
   onSubmit = () => {
-    if (!this.order.hingeHoleTypeId) {
+    if (!this.order.formData.hingeHoleTypeId) {
       this.formGroup.removeControl('hingeHole');
     }
 

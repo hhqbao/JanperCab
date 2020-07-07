@@ -1,11 +1,11 @@
-import { DuraformOptionType } from './DuraformOptionType';
-import { DuraformOption } from './DuraformOption';
+import { DuraformOptionTypeDto } from './DuraformOptionTypeDto';
+import { DuraformOptionDto } from './DuraformOptionDto';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 
-export class DuraformOptionDoubleSided extends DuraformOption {
+export class DuraformOptionDoubleSidedDto extends DuraformOptionDto {
   hasProfile: boolean;
 
-  constructor(optionType: DuraformOptionType, optionValues: any) {
+  constructor(optionType: DuraformOptionTypeDto, optionValues: any) {
     super(optionType);
     this.hasProfile = optionValues.hasProfile;
   }

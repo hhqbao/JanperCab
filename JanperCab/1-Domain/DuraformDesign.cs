@@ -32,9 +32,12 @@ namespace _1_Domain
 
         public virtual ICollection<NotAvailableDesignWrapType> NotAvailableDesignWrapTypes { get; set; }
 
+        public ICollection<DuraformForm> DuraformForms { get; set; }
+
         public DuraformDesign()
         {
             NotAvailableDesignWrapTypes = new Collection<NotAvailableDesignWrapType>();
+            DuraformForms = new Collection<DuraformForm>();
         }
     }
 }

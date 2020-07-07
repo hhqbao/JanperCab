@@ -36,7 +36,10 @@
     appRemoveTag
     (formSubmit)="onAddDrawer($event)"
   ></app-duraform-drawer-form>
-  <tbody class="table__spacer" *ngIf="order.duraformDrawers.length > 0">
+  <tbody
+    class="table__spacer"
+    *ngIf="order.formData.duraformDrawers.length > 0"
+  >
     <td></td>
     <td></td>
     <td></td>
@@ -55,7 +58,7 @@
   </tbody>
   <app-duraform-drawer-cart-item
     appRemoveTag
-    *ngFor="let drawer of order.duraformDrawers"
+    *ngFor="let drawer of order.formData.duraformDrawers"
     [duraformDrawer]="drawer"
     (removeDrawer)="onRemoveDrawer($event)"
   ></app-duraform-drawer-cart-item>

@@ -26,7 +26,7 @@ export class EndPanelTabComponent implements OnInit {
     const endPanel = new EndPanelForCart();
     endPanel.updateWithOption(formGroup.value, this.asset.duraformOptionTypes);
 
-    this.order.endPanels.unshift(endPanel);
+    this.order.formData.endPanels.unshift(endPanel);
 
     this.dialog.success('New End Panel Added.');
   };

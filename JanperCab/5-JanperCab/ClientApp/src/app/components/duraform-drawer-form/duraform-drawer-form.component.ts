@@ -38,7 +38,7 @@ export class DuraformDrawerFormComponent implements OnInit {
         [Validators.required, Validators.min(150), Validators.max(1200)],
       ],
       duraformEdgeProfileId: [
-        this.order.selectedEdgeProfile.id,
+        this.order.formData.selectedEdgeProfile.id,
         [Validators.required],
       ],
       top: [false],

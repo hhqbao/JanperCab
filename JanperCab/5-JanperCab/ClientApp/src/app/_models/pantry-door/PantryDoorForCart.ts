@@ -1,4 +1,4 @@
-import { DuraformOptionType } from './../duraform-option/DuraformOptionType';
+import { DuraformOptionTypeDto } from '../duraform-option/DuraformOptionTypeDto';
 import { DuraformComponentWithOptionForCart } from '../duraform-component-for-cart/DuraformComponentWithOptionForCart';
 import { HingeHoleOptionDto } from '../hinge-hole-option/HingeHoleOptionDto';
 
@@ -13,7 +13,10 @@ export class PantryDoorForCart extends DuraformComponentWithOptionForCart {
     this.hingeHoleOption = null;
   }
 
-  updateWithOption(formValue: any, duraformOptionTypes: DuraformOptionType[]) {
+  updateWithOption(
+    formValue: any,
+    duraformOptionTypes: DuraformOptionTypeDto[]
+  ) {
     super.updateWithOption(formValue, duraformOptionTypes);
     this.chairRailHeight = formValue.chairRailHeight;
     this.chairRailTypeId = formValue.chairRailTypeId;

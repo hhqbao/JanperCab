@@ -12,12 +12,27 @@
     <Compile Remove="Migrations\20200603031800_CreateTable_DuraformEdgeProfiles.Designer.cs" />
     <Compile Remove="Migrations\20200604052748_CreateTable_DuraformArches.cs" />
     <Compile Remove="Migrations\20200604052748_CreateTable_DuraformArches.Designer.cs" />
+    <Compile Remove="Migrations\20200706004922_CreateTables_DuraformForms.cs" />
+    <Compile Remove="Migrations\20200706004922_CreateTables_DuraformForms.Designer.cs" />
+    <Compile Remove="Migrations\20200706005131_CreateTables_DuraformForms.cs" />
+    <Compile Remove="Migrations\20200706005131_CreateTables_DuraformForms.Designer.cs" />
+    <Compile Remove="Migrations\20200706010108_CreateTables_DuraformForms.cs" />
+    <Compile Remove="Migrations\20200706010108_CreateTables_DuraformForms.Designer.cs" />
+    <Compile Remove="Migrations\20200706010429_CreateTables_DuraformForms.cs" />
+    <Compile Remove="Migrations\20200706010429_CreateTables_DuraformForms.Designer.cs" />
+    <Compile Remove="Migrations\20200706224851_CreateTables_DuraformOptions.cs" />
+    <Compile Remove="Migrations\20200706224851_CreateTables_DuraformOptions.Designer.cs" />
+    <Compile Remove="Migrations\20200706225107_CreateTables_DuraformOptions.cs" />
+    <Compile Remove="Migrations\20200706225107_CreateTables_DuraformOptions.Designer.cs" />
+    <Compile Remove="Migrations\20200707003347_CreateTables_DuraformComponents.cs" />
+    <Compile Remove="Migrations\20200707003347_CreateTables_DuraformComponents.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="IdentityServer4.EntityFramework.Storage" Version="3.1.3" />
-    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.1.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
+
 namespace _1_Domain
 {
     public class DuraformEdgeProfile
@@ -18,10 +19,16 @@ namespace _1_Domain
 
         public ICollection<DuraformDesign> DuraformDesignsWithDefault { get; set; }
 
+        public ICollection<DuraformForm> DuraformForms { get; set; }
+
+        public ICollection<DuraformComponent> DuraformComponents { get; set; }
+
         public DuraformEdgeProfile()
         {
             DuraformDesignsWithFixed = new Collection<DuraformDesign>();
             DuraformDesignsWithDefault = new Collection<DuraformDesign>();
+            DuraformForms = new Collection<DuraformForm>();
+            DuraformComponents = new Collection<DuraformComponent>();
         }
     }
 }

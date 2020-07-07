@@ -5,14 +5,14 @@ import { DuraformEdgeProfileForList } from '../_models/duraform-edge-profile/Dur
 import { DuraformArchForList } from '../_models/duraform-arch/DuraformArchForList';
 import { PantryDoorChairRailTypeForList } from '../_models/pantry-door-chair-rail-type/PantryDoorChairRailTypeForList';
 import { DuraformDrawerTypeForList } from '../_models/duraform-drawer-type/DuraformDrawerTypeForList';
-import { DuraformOptionType } from '../_models/duraform-option/DuraformOptionType';
+import { DuraformOptionTypeDto } from '../_models/duraform-option/DuraformOptionTypeDto';
 import { HingeHoleTypeDto } from '../_models/hinge-hole-type/HingeHoleTypeDto';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformAssetService {
   arches: DuraformArchForList[] = [];
   duraformDrawerTypes: DuraformDrawerTypeForList[] = [];
-  duraformOptionTypes: DuraformOptionType[] = [];
+  duraformOptionTypes: DuraformOptionTypeDto[] = [];
   duraformDesigns: DuraformDesignForOrderMenu[] = [];
   duraformSeries: DuraformSerieForList[] = [];
   edgeProfiles: DuraformEdgeProfileForList[] = [];
@@ -31,5 +31,9 @@ export class DuraformAssetService {
 
   getDrawerType = (id: number) => {
     return this.duraformDrawerTypes.find((x) => x.id === id);
+  };
+
+  getHingeType = (id: number) => {
+    return this.hingeHoleTypes.find((x) => x.id === id);
   };
 }

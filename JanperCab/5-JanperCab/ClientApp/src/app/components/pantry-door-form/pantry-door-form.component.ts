@@ -52,7 +52,7 @@ export class PantryDoorFormComponent implements OnInit {
       ],
       extraRailBottom: [null, [Validators.min(0), Validators.max(500)]],
       duraformEdgeProfileId: [
-        this.order.selectedEdgeProfile.id,
+        this.order.formData.selectedEdgeProfile.id,
         [Validators.required],
       ],
       top: [false],
@@ -91,7 +91,7 @@ export class PantryDoorFormComponent implements OnInit {
       this.formGroup.patchValue({ extraRailBottom: null });
     }
 
-    if (!this.order.hingeHoleTypeId) {
+    if (!this.order.formData.hingeHoleTypeId) {
       this.formGroup.removeControl('hingeHole');
     }
 

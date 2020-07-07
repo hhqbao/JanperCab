@@ -5,6 +5,7 @@ using _3_Application.Interfaces.Services;
 using _4_Infrastructure.Repositories;
 using _4_Infrastructure.Services;
 using AutoMapper;
+using AutoMapper.EquivalencyExpression;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -70,7 +71,11 @@ namespace _5_JanperCab
                     opt.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
                 });
 
-            services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.AddCollectionMappers();
+            }, typeof(Startup).Assembly);
+
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenGenerator, TokenGenerator>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

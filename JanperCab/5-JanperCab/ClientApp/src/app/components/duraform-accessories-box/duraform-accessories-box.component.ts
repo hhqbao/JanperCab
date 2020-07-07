@@ -21,12 +21,12 @@ export class DuraformAccessoriesBoxComponent implements OnInit {
 
   ngOnInit() {
     this.formGroup = this.fb.group({
-      hingeHoleTypeId: [this.order.hingeHoleTypeId],
+      hingeHoleTypeId: [this.order.formData.hingeHoleTypeId],
     });
   }
 
   onSelectHingeHoleType = () => {
-    this.order.hingeHoleTypeId = this.formGroup.value.hingeHoleTypeId;
+    this.order.formData.hingeHoleTypeId = this.formGroup.value.hingeHoleTypeId;
   };
 
   onSelectArch = (arch: DuraformArchForList) => {

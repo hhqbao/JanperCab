@@ -10,8 +10,4 @@
     <ProjectReference Include="..\2-Persistent\2-Persistent.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Dtos\DuraformDoor\" />
-  </ItemGroup>
-
 </Project>

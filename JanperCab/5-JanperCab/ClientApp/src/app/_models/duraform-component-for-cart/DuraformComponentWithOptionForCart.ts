@@ -1,16 +1,19 @@
-import { DuraformOptionType } from './../duraform-option/DuraformOptionType';
+import { DuraformOptionTypeDto } from '../duraform-option/DuraformOptionTypeDto';
 import { DuraformComponentForCart } from './DuraformComponentForCart';
-import { DuraformOption } from '../duraform-option/DuraformOption';
+import { DuraformOptionDto } from '../duraform-option/DuraformOptionDto';
 
 export abstract class DuraformComponentWithOptionForCart extends DuraformComponentForCart {
-  duraformOption: DuraformOption;
+  duraformOption: DuraformOptionDto;
 
   constructor() {
     super();
     this.duraformOption = null;
   }
 
-  updateWithOption(formValue: any, duraformOptionTypes: DuraformOptionType[]) {
+  updateWithOption(
+    formValue: any,
+    duraformOptionTypes: DuraformOptionTypeDto[]
+  ) {
     this.update(formValue);
 
     if (formValue.optionGroup) {
@@ -22,7 +25,7 @@ export abstract class DuraformComponentWithOptionForCart extends DuraformCompone
         throw new Error('Duraform Option Type Not Found');
       }
 
-      this.duraformOption = DuraformOptionType.GetDuraformOptionInstance(
+      this.duraformOption = DuraformOptionTypeDto.GetDuraformOptionInstance(
         optionType,
         formValue.optionGroup
       );

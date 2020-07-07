@@ -10,10 +10,12 @@ namespace _4_Infrastructure.Repositories
 {
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     {
+        protected readonly DbContext _dbContext;
         protected readonly DbSet<T> _dbSet;
 
         protected BaseRepository(DbContext dbContext)
         {
+            _dbContext = dbContext;
             _dbSet = dbContext.Set<T>();
         }
 

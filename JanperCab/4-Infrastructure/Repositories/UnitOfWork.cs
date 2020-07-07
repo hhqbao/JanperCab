@@ -28,6 +28,10 @@ namespace _4_Infrastructure.Repositories
 
         public IHingeHoleTypeRepo HingeHoleTypes { get; }
 
+        public IDuraformOrderRepo DuraformOrders { get; }
+
+
+
         public UnitOfWork(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -42,6 +46,7 @@ namespace _4_Infrastructure.Repositories
             DuraformDrawerTypes = new DuraformDrawerTypeRepo(_dbContext);
             DuraformOptionTypes = new DuraformOptionTypeRepo(_dbContext);
             HingeHoleTypes = new HingeHoleTypeRepo(_dbContext);
+            DuraformOrders = new DuraformOrderRepo(_dbContext);
         }
 
         public async Task<int> CompleteAsync()

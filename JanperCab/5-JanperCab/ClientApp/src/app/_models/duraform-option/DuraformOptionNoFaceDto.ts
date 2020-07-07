@@ -1,9 +1,9 @@
-import { DuraformOptionType } from './DuraformOptionType';
-import { DuraformOption } from './DuraformOption';
+import { DuraformOptionTypeDto } from './DuraformOptionTypeDto';
+import { DuraformOptionDto } from './DuraformOptionDto';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 
-export class DuraformOptionNoFace extends DuraformOption {
-  constructor(optionType: DuraformOptionType, optionValues: any) {
+export class DuraformOptionNoFaceDto extends DuraformOptionDto {
+  constructor(optionType: DuraformOptionTypeDto, optionValues: any) {
     super(optionType);
   }
 
