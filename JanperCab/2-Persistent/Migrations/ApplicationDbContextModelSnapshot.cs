@@ -15,7 +15,7 @@ namespace _2_Persistent.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.4")
+                .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -339,6 +339,7 @@ namespace _2_Persistent.Migrations
                         .HasColumnType("int");
 
                     b.Property<Guid>("DuraformFormId")
+                        .HasColumnName("DuraformFormId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Height")
@@ -706,6 +707,36 @@ namespace _2_Persistent.Migrations
                     b.HasDiscriminator().HasValue("DuraformComponentWithOption");
                 });
 
+            modelBuilder.Entity("_1_Domain.DuraformDrawer", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformComponent");
+
+                    b.Property<decimal>("DrawerFive")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DrawerFour")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DrawerOne")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DrawerThree")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DrawerTwo")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("DuraformDrawerTypeId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("DuraformDrawerTypeId");
+
+                    b.HasIndex("DuraformFormId")
+                        .HasName("IX_DuraformComponents_DuraformFormId1");
+
+                    b.HasDiscriminator().HasValue("DuraformDrawer");
+                });
+
             modelBuilder.Entity("_1_Domain.DuraformDraft", b =>
                 {
                     b.HasBaseType("_1_Domain.DuraformForm");
@@ -771,6 +802,35 @@ namespace _2_Persistent.Migrations
                     b.HasDiscriminator().HasValue("DuraformComponentWithOptionAndHingeHole");
                 });
 
+            modelBuilder.Entity("_1_Domain.DuraformEndPanel", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformComponentWithOption");
+
+                    b.Property<decimal>("ExtraRailBottom")
+                        .HasColumnName("ExtraRailBottom")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ExtraRailTop")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("NumberOfShields")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("RailCenter")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("RailLeft")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("RailRight")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasIndex("DuraformFormId")
+                        .HasName("IX_DuraformComponents_DuraformFormId2");
+
+                    b.HasDiscriminator().HasValue("DuraformEndPanel");
+                });
+
             modelBuilder.Entity("_1_Domain.DuraformDoor", b =>
                 {
                     b.HasBaseType("_1_Domain.DuraformComponentWithOptionAndHingeHole");
@@ -778,6 +838,28 @@ namespace _2_Persistent.Migrations
                     b.HasIndex("DuraformFormId");
 
                     b.HasDiscriminator().HasValue("DuraformDoor");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformPantryDoor", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformComponentWithOptionAndHingeHole");
+
+                    b.Property<decimal>("ChairRailHeight")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ChairRailTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("ExtraRailBottom")
+                        .HasColumnName("ExtraRailBottom")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasIndex("ChairRailTypeId");
+
+                    b.HasIndex("DuraformFormId")
+                        .HasName("IX_DuraformComponents_DuraformFormId3");
+
+                    b.HasDiscriminator().HasValue("DuraformPantryDoor");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -954,12 +1036,54 @@ namespace _2_Persistent.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("_1_Domain.DuraformDrawer", b =>
+                {
+                    b.HasOne("_1_Domain.DuraformDrawerType", "DuraformDrawerType")
+                        .WithMany("DuraformDrawers")
+                        .HasForeignKey("DuraformDrawerTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("_1_Domain.DuraformForm", "DuraformForm")
+                        .WithMany("DuraformDrawers")
+                        .HasForeignKey("DuraformFormId")
+                        .HasConstraintName("FK_DuraformComponents_DuraformForms_DuraformFormId1")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformEndPanel", b =>
+                {
+                    b.HasOne("_1_Domain.DuraformForm", "DuraformForm")
+                        .WithMany("EndPanels")
+                        .HasForeignKey("DuraformFormId")
+                        .HasConstraintName("FK_DuraformComponents_DuraformForms_DuraformFormId2")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("_1_Domain.DuraformDoor", b =>
                 {
                     b.HasOne("_1_Domain.DuraformForm", "DuraformForm")
                         .WithMany("DuraformDoors")
                         .HasForeignKey("DuraformFormId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformPantryDoor", b =>
+                {
+                    b.HasOne("_1_Domain.PantryDoorChairRailType", "ChairRailType")
+                        .WithMany("DuraformPantryDoors")
+                        .HasForeignKey("ChairRailTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("_1_Domain.DuraformForm", "DuraformForm")
+                        .WithMany("PantryDoors")
+                        .HasForeignKey("DuraformFormId")
+                        .HasConstraintName("FK_DuraformComponents_DuraformForms_DuraformFormId3")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

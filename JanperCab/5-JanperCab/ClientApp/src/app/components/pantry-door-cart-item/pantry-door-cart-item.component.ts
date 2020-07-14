@@ -1,7 +1,7 @@
+import { DuraformPantryDoorDto } from './../../_models/duraform-component/DuraformPantryDoorDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { PantryDoorFormComponent } from '../pantry-door-form/pantry-door-form.component';
 import { DialogService } from 'src/app/_services/dialog.service';
-import { PantryDoorForCart } from './../../_models/pantry-door/PantryDoorForCart';
 import { FormGroup } from '@angular/forms';
 import {
   Component,
@@ -13,15 +13,14 @@ import {
   EventEmitter,
   ViewChild,
 } from '@angular/core';
-import { PantryDoorChairRailTypeForList } from 'src/app/_models/pantry-door-chair-rail-type/PantryDoorChairRailTypeForList';
 
 @Component({
   selector: 'app-pantry-door-cart-item',
   templateUrl: 'pantry-door-cart-item.component.html',
 })
 export class PantryDoorCartItemComponent implements OnInit {
-  @Input() pantryDoor: PantryDoorForCart;
-  @Output() removePantryDoor = new EventEmitter<PantryDoorForCart>();
+  @Input() pantryDoor: DuraformPantryDoorDto;
+  @Output() removePantryDoor = new EventEmitter<DuraformPantryDoorDto>();
 
   @ViewChild('pantryDoorForm') pantryDoorForm: PantryDoorFormComponent;
 

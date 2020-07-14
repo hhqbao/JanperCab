@@ -61,6 +61,9 @@ namespace _1_Domain
 
 
         public virtual ICollection<DuraformDoor> DuraformDoors { get; set; }
+        public virtual ICollection<DuraformPantryDoor> PantryDoors { get; set; }
+        public virtual ICollection<DuraformEndPanel> EndPanels { get; set; }
+        public virtual ICollection<DuraformDrawer> DuraformDrawers { get; set; }
 
 
         protected DuraformForm()
@@ -69,6 +72,9 @@ namespace _1_Domain
             CreatedDate = DateTime.Now;
 
             DuraformDoors = new Collection<DuraformDoor>();
+            PantryDoors = new Collection<DuraformPantryDoor>();
+            EndPanels = new Collection<DuraformEndPanel>();
+            DuraformDrawers = new Collection<DuraformDrawer>();
         }
     }
 }

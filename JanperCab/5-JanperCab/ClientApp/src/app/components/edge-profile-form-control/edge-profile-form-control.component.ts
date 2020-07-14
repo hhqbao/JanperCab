@@ -65,9 +65,7 @@ export class EdgeProfileFormControlComponent implements OnInit {
       this.formGroup
         .get('duraformEdgeProfileId')
         .setValue(
-          edgeProfile
-            ? edgeProfile.id
-            : this.order.formData.selectedEdgeProfile.id
+          edgeProfile ? edgeProfile.id : this.order.selectedEdgeProfile.id
         );
     } else {
       const edgeId = +this.formGroup.get('duraformEdgeProfileId').value;
@@ -79,7 +77,7 @@ export class EdgeProfileFormControlComponent implements OnInit {
       if (selectedEdgeProfile.forcedValuePerItem === true) {
         this.formGroup
           .get('duraformEdgeProfileId')
-          .setValue(this.order.formData.selectedEdgeProfile.id);
+          .setValue(this.order.selectedEdgeProfile.id);
       }
     }
 

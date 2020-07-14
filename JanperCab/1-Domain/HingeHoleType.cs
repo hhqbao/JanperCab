@@ -10,7 +10,8 @@ namespace _1_Domain
         public string Name { get; set; }
 
         public bool IsDisabled { get; set; }
-        public ICollection<DuraformForm> DuraformForms { get; set; }
+
+        public virtual ICollection<DuraformForm> DuraformForms { get; set; }
 
         public HingeHoleType()
         {

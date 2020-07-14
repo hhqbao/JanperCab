@@ -1,7 +1,8 @@
+import { DuraformDoorDto } from './../../_models/duraform-component/DuraformDoorDto';
 import { DuraformDoorFormComponent } from '../duraform-door-form/duraform-door-form.component';
 import { DialogService } from './../../_services/dialog.service';
 import { FormGroup } from '@angular/forms';
-import { DuraformDoorForCart } from './../../_models/duraform-door/DuraformDoorForCart';
+
 import {
   Component,
   OnInit,
@@ -20,8 +21,8 @@ import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
   templateUrl: 'duraform-door-cart-item.component.html',
 })
 export class DuraformDoorCartItemComponent implements OnInit {
-  @Input() door: DuraformDoorForCart;
-  @Output() removeDoor = new EventEmitter<DuraformDoorForCart>();
+  @Input() door: DuraformDoorDto;
+  @Output() removeDoor = new EventEmitter<DuraformDoorDto>();
 
   @ViewChild('doorForm') doorForm: DuraformDoorFormComponent;
 

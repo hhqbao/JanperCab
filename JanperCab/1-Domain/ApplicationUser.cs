@@ -6,7 +6,7 @@ namespace _1_Domain
 {
     public class ApplicationUser : IdentityUser
     {
-        public ICollection<DuraformForm> DuraformForms { get; set; }
+        public virtual ICollection<DuraformForm> DuraformForms { get; set; }
 
         public ApplicationUser()
         {

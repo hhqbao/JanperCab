@@ -36,8 +36,11 @@ namespace _5_JanperCab
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseLazyLoadingProxies();
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             services.AddDefaultIdentity<ApplicationUser>(options =>
                 {

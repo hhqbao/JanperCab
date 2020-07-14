@@ -23,7 +23,7 @@ export class DuraformProcessComponent implements OnInit {
   };
 
   onStepTwoClick = () => {
-    if (!this.order.formData.selectedDesign) {
+    if (!this.order.selectedDesign) {
       this.dialog.error('Please select a door to process.');
       return;
     }

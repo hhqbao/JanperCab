@@ -49,8 +49,8 @@ export class DuraformOrderStepOneComponent implements OnInit {
   };
 
   onPickColor = (color: DuraformWrapColorForSelection) => {
-    const selectedSerie = this.asset.duraformSeries.find(
-      (x) => x.id === this.selectedDuraformDesign.duraformSerieId
+    const selectedSerie = this.asset.getDoorSerie(
+      this.selectedDuraformDesign.duraformSerieId
     );
 
     const selectedWrapType: DuraformWrapTypeForSelection = {
@@ -72,8 +72,8 @@ export class DuraformOrderStepOneComponent implements OnInit {
   };
 
   onRoutingPick = () => {
-    const selectedSerie = this.asset.duraformSeries.find(
-      (x) => x.id === this.selectedDuraformDesign.duraformSerieId
+    const selectedSerie = this.asset.getDoorSerie(
+      this.selectedDuraformDesign.duraformSerieId
     );
 
     const returnValue: StepOneReturnValue = {

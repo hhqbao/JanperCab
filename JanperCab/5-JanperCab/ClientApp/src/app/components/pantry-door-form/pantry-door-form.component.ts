@@ -1,7 +1,7 @@
+import { DuraformPantryDoorDto } from './../../_models/duraform-component/DuraformPantryDoorDto';
 import { DuraformOptionTypeKey } from './../../_enums/DuraformOptionTypeKey';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
-import { PantryDoorForCart } from '../../_models/pantry-door/PantryDoorForCart';
 import {
   FormGroup,
   FormBuilder,
@@ -15,7 +15,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   templateUrl: 'pantry-door-form.component.html',
 })
 export class PantryDoorFormComponent implements OnInit {
-  @Input() pantryDoor: PantryDoorForCart = null;
+  @Input() pantryDoor: DuraformPantryDoorDto;
 
   @Output() formSubmit = new EventEmitter<FormGroup>();
 
@@ -52,7 +52,7 @@ export class PantryDoorFormComponent implements OnInit {
       ],
       extraRailBottom: [null, [Validators.min(0), Validators.max(500)]],
       duraformEdgeProfileId: [
-        this.order.formData.selectedEdgeProfile.id,
+        this.order.selectedEdgeProfile.id,
         [Validators.required],
       ],
       top: [false],
@@ -91,7 +91,7 @@ export class PantryDoorFormComponent implements OnInit {
       this.formGroup.patchValue({ extraRailBottom: null });
     }
 
-    if (!this.order.formData.hingeHoleTypeId) {
+    if (!this.order.hingeHoleTypeId) {
       this.formGroup.removeControl('hingeHole');
     }
 

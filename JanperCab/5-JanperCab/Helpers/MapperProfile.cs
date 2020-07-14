@@ -80,13 +80,28 @@ namespace _5_JanperCab.Helpers
             CreateMap<HingeHoleOptionDto, HingeHoleOption>();
 
             CreateMap<DuraformComponent, DuraformComponentDto>()
-                .Include<DuraformDoor, DuraformDoorDto>();
+                .Include<DuraformDoor, DuraformDoorDto>()
+                .Include<DuraformPantryDoor, DuraformPantryDoorDto>()
+                .Include<DuraformEndPanel, DuraformEndPanelDto>()
+                .Include<DuraformDrawer, DuraformDrawerDto>();
             CreateMap<DuraformComponentDto, DuraformComponent>()
                 .Include<DuraformDoorDto, DuraformDoor>()
+                .Include<DuraformPantryDoorDto, DuraformPantryDoor>()
+                .Include<DuraformEndPanelDto, DuraformEndPanel>()
+                .Include<DuraformDrawerDto, DuraformDrawer>()
                 .EqualityComparison((dto, x) => dto.Id == x.Id);
 
             CreateMap<DuraformDoor, DuraformDoorDto>();
             CreateMap<DuraformDoorDto, DuraformDoor>();
+
+            CreateMap<DuraformPantryDoor, DuraformPantryDoorDto>();
+            CreateMap<DuraformPantryDoorDto, DuraformPantryDoor>();
+
+            CreateMap<DuraformEndPanel, DuraformEndPanelDto>();
+            CreateMap<DuraformEndPanelDto, DuraformEndPanel>();
+
+            CreateMap<DuraformDrawer, DuraformDrawerDto>();
+            CreateMap<DuraformDrawerDto, DuraformDrawer>();
 
 
             CreateMap<DuraformForm, DuraformFormDto>()

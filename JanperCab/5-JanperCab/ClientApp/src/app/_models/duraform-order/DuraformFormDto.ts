@@ -1,5 +1,9 @@
+import { DuraformDrawerDto } from './../duraform-component/DuraformDrawerDto';
+import { DuraformEndPanelDto } from './../duraform-component/DuraformEndPanelDto';
+import { DuraformPantryDoorDto } from './../duraform-component/DuraformPantryDoorDto';
 import { DuraformOrderTypeKey } from './../../_enums/DuraformOrderTypeKey';
 import { DuraformDoorDto } from './../duraform-component/DuraformDoorDto';
+import { Type } from 'class-transformer';
 
 export abstract class DuraformFormDto {
   id: string;
@@ -16,7 +20,14 @@ export abstract class DuraformFormDto {
   createdDate: Date;
   lastUpdated: Date;
 
-  duraformDoors: DuraformDoorDto[];
+  @Type(() => DuraformDoorDto)
+  duraformDoors: DuraformDoorDto[] = [];
+
+  pantryDoors: DuraformPantryDoorDto[] = [];
+
+  endPanels: DuraformEndPanelDto[] = [];
+
+  duraformDrawers: DuraformDrawerDto[] = [];
 
   constructor() {}
 }

@@ -1,6 +1,6 @@
+import { DuraformEndPanelDto } from './../../_models/duraform-component/DuraformEndPanelDto';
 import { DuraformOptionTypeKey } from './../../_enums/DuraformOptionTypeKey';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
-import { EndPanelForCart } from '../../_models/end-panel/EndPanelForCart';
 import {
   FormGroup,
   FormBuilder,
@@ -15,7 +15,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   templateUrl: 'end-panel-form.component.html',
 })
 export class EndPanelFormComponent implements OnInit {
-  @Input() endPanel: EndPanelForCart;
+  @Input() endPanel: DuraformEndPanelDto;
   @Output() formSubmit = new EventEmitter<FormGroup>();
 
   duraformOptionTypeKey = DuraformOptionTypeKey;
@@ -56,7 +56,7 @@ export class EndPanelFormComponent implements OnInit {
       extraRailBottom: [null, [Validators.min(0), Validators.max(500)]],
       extraRailTop: [null, [Validators.min(0), Validators.max(500)]],
       duraformEdgeProfileId: [
-        this.order.formData.selectedEdgeProfile.id,
+        this.order.selectedEdgeProfile.id,
         [Validators.required],
       ],
       top: [false],

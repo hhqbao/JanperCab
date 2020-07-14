@@ -11,7 +11,7 @@ namespace _1_Domain
 
         public string ImageUrl { get; set; }
 
-        public ICollection<DuraformForm> DuraformForms { get; set; }
+        public virtual ICollection<DuraformForm> DuraformForms { get; set; }
 
         public DuraformArch()
         {

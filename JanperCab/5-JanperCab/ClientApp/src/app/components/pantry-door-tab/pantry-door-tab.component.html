@@ -46,7 +46,7 @@
     appRemoveTag
     (formSubmit)="onAddPantryDoor($event)"
   ></app-pantry-door-form>
-  <tbody class="table__spacer" *ngIf="order.formData.pantryDoors.length > 0">
+  <tbody class="table__spacer" *ngIf="order.pantryDoors.length > 0">
     <tr>
       <td></td>
       <td></td>
@@ -67,7 +67,7 @@
   </tbody>
   <app-pantry-door-cart-item
     appRemoveTag
-    *ngFor="let pantryDoor of order.formData.pantryDoors"
+    *ngFor="let pantryDoor of order.pantryDoors"
     [pantryDoor]="pantryDoor"
     (removePantryDoor)="onRemovePantryDoor($event)"
   ></app-pantry-door-cart-item>

@@ -80,7 +80,7 @@ import { customCurrencyMaskConfig } from './_helpers/CurrencyMaskInputOption';
 import { PantryDoorCartItemComponent } from './components/pantry-door-cart-item/pantry-door-cart-item.component';
 import { DuraformOrderStepThreeComponent } from './components/duraform-order-step-three/duraform-order-step-three.component';
 import { DuraformOptionDoubleSidedFormComponent } from './components/duraform-option-double-sided-form/duraform-option-double-sided.component';
-import { DuraformEndPanelComponentListComponent } from './components/duraform-end-panel-component-list/duraform-end-panel-component-list.component';
+import { EndPanelComponentListComponent } from './components/end-panel-component-list/end-panel-component-list.component';
 import { DuraformDrawerComponentListComponent } from './components/duraform-drawer-component-list/duraform-drawer-component-list.component';
 
 @NgModule({
@@ -137,7 +137,7 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
     DuraformOptionPaneFrameFormComponent,
     DuraformDoorComponentListComponent,
     DuraformPantryDoorComponentListComponent,
-    DuraformEndPanelComponentListComponent,
+    EndPanelComponentListComponent,
     DuraformDrawerComponentListComponent,
     LoginPageComponent,
     HomePageComponent,

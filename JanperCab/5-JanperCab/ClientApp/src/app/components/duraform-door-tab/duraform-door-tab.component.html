@@ -34,7 +34,7 @@
     appRemoveTag
     (formSubmit)="onAddDoor($event)"
   ></app-duraform-door-form>
-  <tbody class="table__spacer" *ngIf="order.formData.doors.length > 0">
+  <tbody class="table__spacer" *ngIf="order.duraformDoors.length > 0">
     <tr>
       <td></td>
       <td></td>
@@ -52,7 +52,7 @@
   </tbody>
   <app-duraform-door-cart-item
     appRemoveTag
-    *ngFor="let door of order.formData.doors"
+    *ngFor="let door of order.duraformDoors"
     [door]="door"
     (removeDoor)="onRemoveDoor($event)"
   ></app-duraform-door-cart-item>

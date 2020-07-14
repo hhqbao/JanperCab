@@ -1,8 +1,8 @@
+import { DuraformEndPanelDto } from './../../_models/duraform-component/DuraformEndPanelDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { EndPanelFormComponent } from '../end-panel-form/end-panel-form.component';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { DialogService } from './../../_services/dialog.service';
-import { EndPanelForCart } from './../../_models/end-panel/EndPanelForCart';
 import {
   Component,
   OnInit,
@@ -20,8 +20,8 @@ import {
 })
 export class EndPanelCartItemComponent implements OnInit {
   @ViewChild('endPanelForm') endPanelForm: EndPanelFormComponent;
-  @Input() endPanel: EndPanelForCart;
-  @Output() removeEndPanel = new EventEmitter<EndPanelForCart>();
+  @Input() endPanel: DuraformEndPanelDto;
+  @Output() removeEndPanel = new EventEmitter<DuraformEndPanelDto>();
 
   hasAnimated = false;
   isSelected = false;

@@ -1,6 +1,7 @@
 import { DuraformOptionTypeDto } from 'src/app/_models/duraform-option/DuraformOptionTypeDto';
 import { DuraformOptionDto } from './DuraformOptionDto';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Expose } from 'class-transformer';
 
 export class DuraformOptionFoldBackDto extends DuraformOptionDto {
   hasProfile: boolean;
@@ -8,14 +9,7 @@ export class DuraformOptionFoldBackDto extends DuraformOptionDto {
   thickness: number;
   hasDoubleReturn: boolean;
 
-  constructor(optionType: DuraformOptionTypeDto, optionValues: any) {
-    super(optionType);
-    this.hasProfile = optionValues.hasProfile;
-    this.length = optionValues.length;
-    this.thickness = optionValues.thickness;
-    this.hasDoubleReturn = optionValues.hasDoubleReturn;
-  }
-
+  @Expose()
   toFormGroup(): FormGroup {
     const formGroup = new FormGroup({
       optionTypeId: new FormControl(this.duraformOptionTypeId, [
@@ -30,6 +24,7 @@ export class DuraformOptionFoldBackDto extends DuraformOptionDto {
     return formGroup;
   }
 
+  @Expose()
   toString(): string {
     let value = `${this.length}x${this.thickness} `;
     value += `${this.hasDoubleReturn ? 'Double' : 'Single'} Return`;

@@ -1,8 +1,7 @@
+import { DuraformDrawerDto } from './../../_models/duraform-component/DuraformDrawerDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DuraformDrawerFormComponent } from '../duraform-drawer-form/duraform-drawer-form.component';
 import { DialogService } from './../../_services/dialog.service';
-import { DuraformDrawerForCart } from './../../_models/duraform-drawer/DuraformDrawerForCart';
-import { DuraformDrawerTypeForList } from './../../_models/duraform-drawer-type/DuraformDrawerTypeForList';
 import { FormGroup } from '@angular/forms';
 import {
   Component,
@@ -23,8 +22,8 @@ export class DuraformDrawerCartItemComponent implements OnInit {
   @ViewChild('duraformDrawerForm')
   duraformDrawerForm: DuraformDrawerFormComponent;
 
-  @Input() duraformDrawer: DuraformDrawerForCart;
-  @Output() removeDrawer = new EventEmitter<DuraformDrawerForCart>();
+  @Input() duraformDrawer: DuraformDrawerDto;
+  @Output() removeDrawer = new EventEmitter<DuraformDrawerDto>();
 
   hasAnimated = false;
   isSelected = false;

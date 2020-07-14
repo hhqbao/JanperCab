@@ -6,26 +6,26 @@
           <ul class="selection-list">
             <li class="selection">
               <span class="selection__door-design">
-                {{ order.formData.selectedDesign.name }}
+                {{ order.selectedDesign.name }}
               </span>
             </li>
-            <li class="selection" *ngIf="order.formData.isRoutingOnly">
+            <li class="selection" *ngIf="order.isRoutingOnly">
               <div class="selection__route-only">ROUTE ONLY</div>
             </li>
-            <li class="selection" *ngIf="!order.formData.isRoutingOnly">
+            <li class="selection" *ngIf="!order.isRoutingOnly">
               <span class="selection__wrap-type">
-                {{ order.formData.selectedWrapType?.name }}
+                {{ order.selectedWrapType?.name }}
               </span>
               <span class="selection__wrap-color">
-                {{ order.formData.selectedWrapColor?.name }}
+                {{ order.selectedWrapColor?.name }}
               </span>
             </li>
             <li class="selection">
               <span class="selection__door-serie">
-                {{ order.formData.selectedSerie.name }}
+                {{ order.selectedSerie.name }}
               </span>
             </li>
-            <li class="selection" *ngIf="order.formData.hingeHoleTypeId">
+            <li class="selection" *ngIf="order.hingeHoleTypeId">
               <span class="selection__hinge-hole">
                 HINGE HOLE
               </span>
@@ -74,25 +74,25 @@
                     {{ displayOptions.all }}
                   </option>
                   <option
-                    *ngIf="order.formData.doors.length > 0"
+                    *ngIf="order.duraformDoors.length > 0"
                     value="{{ displayOptions.doors }}"
                   >
                     {{ displayOptions.doors }}
                   </option>
                   <option
-                    *ngIf="order.formData.pantryDoors.length > 0"
+                    *ngIf="order.pantryDoors.length > 0"
                     value="{{ displayOptions.pantryDoors }}"
                   >
                     {{ displayOptions.pantryDoors }}
                   </option>
                   <option
-                    *ngIf="order.formData.endPanels.length > 0"
+                    *ngIf="order.endPanels.length > 0"
                     value="{{ displayOptions.ibBacks }}"
                   >
                     {{ displayOptions.ibBacks }}
                   </option>
                   <option
-                    *ngIf="order.formData.duraformDrawers.length > 0"
+                    *ngIf="order.duraformDrawers.length > 0"
                     value="{{ displayOptions.drawers }}"
                   >
                     {{ displayOptions.drawers }}
@@ -118,15 +118,12 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngIf="order.formData.hingeHoleTypeId">
+                <tr *ngIf="order.hingeHoleTypeId">
                   <td class="text-left">
-                    {{
-                      asset.getHingeType(order.formData.hingeHoleTypeId).name
-                    }}
+                    {{ asset.getHingeType(order.hingeHoleTypeId).name }}
                   </td>
                   <td>
-                    ({{ order.formData.componentsWithHingeHoleCount }}) Hinge
-                    Holes
+                    ({{ order.componentsWithHingeHoleCount }}) Hinge Holes
                   </td>
                 </tr>
                 <tr>
@@ -135,9 +132,7 @@
                   </td>
                   <td>
                     {{
-                      order.formData.selectedArch
-                        ? order.formData.selectedArch.name
-                        : "SQUARE"
+                      order.selectedArch ? order.selectedArch.name : "SQUARE"
                     }}
                   </td>
                 </tr>
@@ -154,7 +149,7 @@
     <app-box [showHeading]="false" [isScrollable]="true" [isTransparent]="true">
       <div
         class="component-list"
-        *ngIf="order.formData.doors.length > 0"
+        *ngIf="order.duraformDoors.length > 0"
         [hidden]="
           selectedDisplayOption !== displayOptions.all &&
           selectedDisplayOption !== displayOptions.doors
@@ -164,7 +159,7 @@
       </div>
       <div
         class="component-list"
-        *ngIf="order.formData.pantryDoors.length > 0"
+        *ngIf="order.pantryDoors.length > 0"
         [hidden]="
           selectedDisplayOption !== displayOptions.all &&
           selectedDisplayOption !== displayOptions.pantryDoors
@@ -174,17 +169,17 @@
       </div>
       <div
         class="component-list"
-        *ngIf="order.formData.endPanels.length > 0"
+        *ngIf="order.endPanels.length > 0"
         [hidden]="
           selectedDisplayOption !== displayOptions.all &&
           selectedDisplayOption !== displayOptions.ibBacks
         "
       >
-        <app-duraform-end-panel-component-list></app-duraform-end-panel-component-list>
+        <app-end-panel-component-list></app-end-panel-component-list>
       </div>
       <div
         class="component-list"
-        *ngIf="order.formData.duraformDrawers.length > 0"
+        *ngIf="order.duraformDrawers.length > 0"
         [hidden]="
           selectedDisplayOption !== displayOptions.all &&
           selectedDisplayOption !== displayOptions.drawers
@@ -204,7 +199,7 @@
             class="form__control text-center"
             style="font-weight: bold;"
             required
-            [(ngModel)]="order.formData.customerOrderNumber"
+            [(ngModel)]="order.customerOrderNumber"
           />
         </div>
       </div>

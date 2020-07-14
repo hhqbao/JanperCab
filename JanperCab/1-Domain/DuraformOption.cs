@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public _1_Domain.DuraformOptionType.DuraformOptionTypeKey DuraformOptionTypeId { get; set; }
+        public DuraformOptionType.DuraformOptionTypeKey DuraformOptionTypeId { get; set; }
 
 
 

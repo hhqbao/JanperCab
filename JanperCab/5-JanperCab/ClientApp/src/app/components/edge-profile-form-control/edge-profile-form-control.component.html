@@ -4,13 +4,13 @@
     [values]="asset.edgeProfiles"
     [valueDisplay]="'name'"
     [valueKey]="'id'"
-    [isDisabled]="order.formData.hasFixedEdgeProfile"
+    [isDisabled]="order.hasFixedEdgeProfile"
     (afterSet)="onSelectEdgeProfile()"
   ></app-select-menu>
 </td>
 <td>
-  <span [hidden]="order.formData.canTickEdgeProfile">Y</span>
-  <label class="form__checkbox" *ngIf="order.formData.canTickEdgeProfile">
+  <span [hidden]="order.canTickEdgeProfile">Y</span>
+  <label class="form__checkbox" *ngIf="order.canTickEdgeProfile">
     <input
       type="checkbox"
       [formControl]="formGroup.get('top')"
@@ -20,8 +20,8 @@
   </label>
 </td>
 <td>
-  <span [hidden]="order.formData.canTickEdgeProfile">Y</span>
-  <label class="form__checkbox" *ngIf="order.formData.canTickEdgeProfile">
+  <span [hidden]="order.canTickEdgeProfile">Y</span>
+  <label class="form__checkbox" *ngIf="order.canTickEdgeProfile">
     <input
       type="checkbox"
       [formControl]="formGroup.get('bottom')"
@@ -31,8 +31,8 @@
   </label>
 </td>
 <td>
-  <span [hidden]="order.formData.canTickEdgeProfile">Y</span>
-  <label class="form__checkbox" *ngIf="order.formData.canTickEdgeProfile">
+  <span [hidden]="order.canTickEdgeProfile">Y</span>
+  <label class="form__checkbox" *ngIf="order.canTickEdgeProfile">
     <input
       type="checkbox"
       [formControl]="formGroup.get('left')"
@@ -42,8 +42,8 @@
   </label>
 </td>
 <td>
-  <span [hidden]="order.formData.canTickEdgeProfile">Y</span>
-  <label class="form__checkbox" *ngIf="order.formData.canTickEdgeProfile">
+  <span [hidden]="order.canTickEdgeProfile">Y</span>
+  <label class="form__checkbox" *ngIf="order.canTickEdgeProfile">
     <input
       type="checkbox"
       [formControl]="formGroup.get('right')"

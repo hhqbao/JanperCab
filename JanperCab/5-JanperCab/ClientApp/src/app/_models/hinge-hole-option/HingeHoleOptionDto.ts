@@ -1,16 +1,15 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Expose } from 'class-transformer';
 
 export class HingeHoleOptionDto {
+  id: number;
   side: string;
   top: number;
   bottom: number;
 
-  constructor(formValue: any) {
-    this.side = formValue.side;
-    this.top = formValue.top;
-    this.bottom = formValue.bottom;
-  }
+  constructor() {}
 
+  @Expose()
   toFormGroup(): FormGroup {
     const formGroup = new FormGroup({
       side: new FormControl(this.side, [Validators.required]),
@@ -24,6 +23,7 @@ export class HingeHoleOptionDto {
     return formGroup;
   }
 
+  @Expose()
   toString(): string {
     return `${this.side} ${this.top}/${this.bottom}`;
   }

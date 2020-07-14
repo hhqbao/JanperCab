@@ -26,6 +26,16 @@
     <Compile Remove="Migrations\20200706225107_CreateTables_DuraformOptions.Designer.cs" />
     <Compile Remove="Migrations\20200707003347_CreateTables_DuraformComponents.cs" />
     <Compile Remove="Migrations\20200707003347_CreateTables_DuraformComponents.Designer.cs" />
+    <Compile Remove="Migrations\20200708024952_CreateTables_DuraformPantryDoors_DuraformEndPanels_DuraformDrawers.cs" />
+    <Compile Remove="Migrations\20200708024952_CreateTables_DuraformPantryDoors_DuraformEndPanels_DuraformDrawers.Designer.cs" />
+    <Compile Remove="Migrations\20200708025309_CreateTables_DuraformPantryDoors_DuraformEndPanels_DuraformDrawers.cs" />
+    <Compile Remove="Migrations\20200708025309_CreateTables_DuraformPantryDoors_DuraformEndPanels_DuraformDrawers.Designer.cs" />
+    <Compile Remove="Migrations\20200708025432_CreateTables_DuraformPantryDoors_DuraformEndPanels_DuraformDrawers.cs" />
+    <Compile Remove="Migrations\20200708025432_CreateTables_DuraformPantryDoors_DuraformEndPanels_DuraformDrawers.Designer.cs" />
+    <Compile Remove="Migrations\20200714011430_FOO.cs" />
+    <Compile Remove="Migrations\20200714011430_FOO.Designer.cs" />
+    <Compile Remove="Migrations\20200714011527_foo.cs" />
+    <Compile Remove="Migrations\20200714011527_foo.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,7 +1,7 @@
+import { DuraformEndPanelDto } from './../../_models/duraform-component/DuraformEndPanelDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { FormGroup } from '@angular/forms';
 import { DialogService } from './../../_services/dialog.service';
-import { EndPanelForCart } from './../../_models/end-panel/EndPanelForCart';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -23,15 +23,15 @@ export class EndPanelTabComponent implements OnInit {
       return;
     }
 
-    const endPanel = new EndPanelForCart();
+    const endPanel = new DuraformEndPanelDto();
     endPanel.updateWithOption(formGroup.value, this.asset.duraformOptionTypes);
 
-    this.order.formData.endPanels.unshift(endPanel);
+    this.order.endPanels.unshift(endPanel);
 
     this.dialog.success('New End Panel Added.');
   };
 
-  onRemoveEndPanel = (endPanel: EndPanelForCart) => {
+  onRemoveEndPanel = (endPanel: DuraformEndPanelDto) => {
     this.order.removeEndPanel(endPanel);
   };
 }

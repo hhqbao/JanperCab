@@ -1,7 +1,7 @@
+import { DuraformPantryDoorDto } from './../../_models/duraform-component/DuraformPantryDoorDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { FormGroup } from '@angular/forms';
 import { DialogService } from 'src/app/_services/dialog.service';
-import { PantryDoorForCart } from './../../_models/pantry-door/PantryDoorForCart';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -23,18 +23,18 @@ export class PantryDoorTabComponent implements OnInit {
       return;
     }
 
-    const pantryDoor = new PantryDoorForCart();
+    const pantryDoor = new DuraformPantryDoorDto();
     pantryDoor.updateWithOption(
       formGroup.value,
       this.asset.duraformOptionTypes
     );
 
-    this.order.formData.pantryDoors.unshift(pantryDoor);
+    this.order.pantryDoors.unshift(pantryDoor);
 
     this.dialog.success('New Pantry Door Added.');
   };
 
-  onRemovePantryDoor = (pantryDoor: PantryDoorForCart) => {
+  onRemovePantryDoor = (pantryDoor: DuraformPantryDoorDto) => {
     this.order.removePantryDoor(pantryDoor);
   };
 }

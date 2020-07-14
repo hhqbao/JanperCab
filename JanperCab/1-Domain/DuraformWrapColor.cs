@@ -19,7 +19,7 @@ namespace _1_Domain
 
 
         public virtual DuraformWrapType DuraformWrapType { get; set; }
-        public ICollection<DuraformForm> DuraformForms { get; set; }
+        public virtual ICollection<DuraformForm> DuraformForms { get; set; }
 
         public DuraformWrapColor()
         {

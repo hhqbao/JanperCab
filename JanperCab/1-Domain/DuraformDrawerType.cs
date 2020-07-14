@@ -1,4 +1,6 @@
-﻿namespace _1_Domain
+﻿using System.Collections.Generic;
+
+namespace _1_Domain
 {
     public enum DrawerDesign
     {
@@ -17,5 +19,8 @@
         public DrawerDesign DrawerDesign { get; set; }
 
         public bool IsDisabled { get; set; }
+
+
+        public virtual ICollection<DuraformDrawer> DuraformDrawers { get; set; }
     }
 }

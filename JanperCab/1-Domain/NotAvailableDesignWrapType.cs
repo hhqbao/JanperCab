@@ -7,8 +7,8 @@
         public int DuraformWrapTypeId { get; set; }
 
 
-        public DuraformDesign DuraformDesign { get; set; }
+        public virtual DuraformDesign DuraformDesign { get; set; }
 
-        public DuraformWrapType DuraformWrapType { get; set; }
+        public virtual DuraformWrapType DuraformWrapType { get; set; }
     }
 }

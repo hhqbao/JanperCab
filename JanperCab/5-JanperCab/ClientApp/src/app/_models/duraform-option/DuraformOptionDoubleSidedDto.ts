@@ -1,15 +1,12 @@
 import { DuraformOptionTypeDto } from './DuraformOptionTypeDto';
 import { DuraformOptionDto } from './DuraformOptionDto';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { Expose } from 'class-transformer';
 
 export class DuraformOptionDoubleSidedDto extends DuraformOptionDto {
   hasProfile: boolean;
 
-  constructor(optionType: DuraformOptionTypeDto, optionValues: any) {
-    super(optionType);
-    this.hasProfile = optionValues.hasProfile;
-  }
-
+  @Expose()
   toFormGroup(): FormGroup {
     const formGroup = new FormGroup({
       optionTypeId: new FormControl(this.duraformOptionTypeId, [
@@ -21,6 +18,7 @@ export class DuraformOptionDoubleSidedDto extends DuraformOptionDto {
     return formGroup;
   }
 
+  @Expose()
   toString(): string {
     return `${this.hasProfile ? '' : 'Plain Panel'} Double Sided`;
   }

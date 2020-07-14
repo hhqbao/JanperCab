@@ -37,5 +37,9 @@ namespace _3_Application.Dtos.DuraformOrder
 
 
         public ICollection<DuraformDoorDto> DuraformDoors { get; set; }
+        public ICollection<DuraformPantryDoorDto> PantryDoors { get; set; }
+        public ICollection<DuraformEndPanelDto> EndPanels { get; set; }
+        public ICollection<DuraformDrawerDto> DuraformDrawers { get; set; }
+
     }
 }

@@ -9,4 +9,16 @@ export abstract class DuraformComponentDto {
   left: boolean;
   right: boolean;
   note: string;
+
+  protected update(formValue: any) {
+    this.quantity = formValue.quantity;
+    this.height = formValue.height;
+    this.width = formValue.width;
+    this.duraformEdgeProfileId = formValue.duraformEdgeProfileId;
+    this.top = formValue.top;
+    this.bottom = formValue.bottom;
+    this.left = formValue.left;
+    this.right = formValue.right;
+    this.note = formValue.note;
+  }
 }

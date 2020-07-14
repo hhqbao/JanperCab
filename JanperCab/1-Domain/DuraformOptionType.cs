@@ -17,6 +17,6 @@ namespace _1_Domain
         public string Name { get; set; }
 
 
-        public ICollection<DuraformOption> DuraformOptions { get; set; }
+        public virtual ICollection<DuraformOption> DuraformOptions { get; set; }
     }
 }

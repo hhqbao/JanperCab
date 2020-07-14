@@ -1,9 +1,9 @@
+import { DuraformDoorDto } from './../../_models/duraform-component/DuraformDoorDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { FormGroup } from '@angular/forms';
 import { DialogService } from 'src/app/_services/dialog.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
-import { DuraformDoorForCart } from 'src/app/_models/duraform-door/DuraformDoorForCart';
 
 @Component({
   selector: 'app-duraform-door-tab',
@@ -24,15 +24,15 @@ export class DuraformDoorTabComponent implements OnInit {
     }
 
     const formValue = formGroup.value;
-    const door = new DuraformDoorForCart();
+    const door = new DuraformDoorDto();
     door.updateWithOption(formValue, this.asset.duraformOptionTypes);
 
-    this.order.formData.doors.unshift(door);
+    this.order.duraformDoors.unshift(door);
 
     this.dialog.success('New Door Added.');
   };
 
-  onRemoveDoor = (door: DuraformDoorForCart) => {
+  onRemoveDoor = (door: DuraformDoorDto) => {
     this.order.removeDoor(door);
   };
 }

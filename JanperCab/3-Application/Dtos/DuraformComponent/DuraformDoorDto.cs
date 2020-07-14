@@ -1,4 +1,6 @@
-﻿namespace _3_Application.Dtos.DuraformComponent
+﻿
+
+namespace _3_Application.Dtos.DuraformComponent
 {
     public class DuraformDoorDto : DuraformComponentWithOptionAndHingeHoleDto { }
 }

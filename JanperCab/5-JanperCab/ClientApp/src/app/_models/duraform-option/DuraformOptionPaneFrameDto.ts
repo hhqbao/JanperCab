@@ -1,17 +1,13 @@
 import { DuraformOptionDto } from './DuraformOptionDto';
 import { DuraformOptionTypeDto } from './DuraformOptionTypeDto';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Expose } from 'class-transformer';
 
 export class DuraformOptionPaneFrameDto extends DuraformOptionDto {
   columns: number;
   rows: number;
 
-  constructor(optionType: DuraformOptionTypeDto, optionValues: any) {
-    super(optionType);
-    this.columns = optionValues.columns;
-    this.rows = optionValues.rows;
-  }
-
+  @Expose()
   toFormGroup(): FormGroup {
     const formGroup = new FormGroup({
       optionTypeId: new FormControl(this.duraformOptionTypeId, [
@@ -30,6 +26,7 @@ export class DuraformOptionPaneFrameDto extends DuraformOptionDto {
     return formGroup;
   }
 
+  @Expose()
   toString(): string {
     const panes = this.columns * this.rows;
 

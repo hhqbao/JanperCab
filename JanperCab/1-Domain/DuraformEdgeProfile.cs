@@ -15,13 +15,13 @@ namespace _1_Domain
         public bool? ForcedValuePerItem { get; set; }
 
 
-        public ICollection<DuraformDesign> DuraformDesignsWithFixed { get; set; }
+        public virtual ICollection<DuraformDesign> DuraformDesignsWithFixed { get; set; }
 
-        public ICollection<DuraformDesign> DuraformDesignsWithDefault { get; set; }
+        public virtual ICollection<DuraformDesign> DuraformDesignsWithDefault { get; set; }
 
-        public ICollection<DuraformForm> DuraformForms { get; set; }
+        public virtual ICollection<DuraformForm> DuraformForms { get; set; }
 
-        public ICollection<DuraformComponent> DuraformComponents { get; set; }
+        public virtual ICollection<DuraformComponent> DuraformComponents { get; set; }
 
         public DuraformEdgeProfile()
         {

@@ -1,9 +1,8 @@
+import { DuraformDrawerDto } from './../../_models/duraform-component/DuraformDrawerDto';
 import { FormGroup } from '@angular/forms';
 import { DialogService } from './../../_services/dialog.service';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
-import { DuraformDrawerForCart } from './../../_models/duraform-drawer/DuraformDrawerForCart';
-import { DuraformDrawerTypeForList } from './../../_models/duraform-drawer-type/DuraformDrawerTypeForList';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-duraform-drawer-tab',
@@ -23,15 +22,15 @@ export class DuraformDrawerTabComponent implements OnInit {
     }
 
     const formValue = formGroup.value;
-    const drawer = new DuraformDrawerForCart();
+    const drawer = new DuraformDrawerDto();
     drawer.update(formValue);
 
-    this.order.formData.duraformDrawers.unshift(drawer);
+    this.order.duraformDrawers.unshift(drawer);
 
     this.dialog.success('New Drawer Added.');
   };
 
-  onRemoveDrawer = (drawer: DuraformDrawerForCart) => {
+  onRemoveDrawer = (drawer: DuraformDrawerDto) => {
     this.order.removeDuraformDrawer(drawer);
   };
 }

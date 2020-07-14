@@ -17,7 +17,8 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     runGuardsAndResolvers: 'always',
     children: [
-      { path: 'order/duraform', component: DuraformPageComponent },
+      { path: 'duraform/:type/:id', component: DuraformPageComponent },
+      { path: 'duraform', component: DuraformPageComponent },
       { path: '', component: HomePageComponent, pathMatch: 'full' },
     ],
   },

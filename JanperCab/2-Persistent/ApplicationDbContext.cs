@@ -29,6 +29,7 @@ namespace _2_Persistent
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
+
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -52,53 +53,13 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformFormConfig());
             builder.ApplyConfiguration(new DuraformComponentConfig());
             builder.ApplyConfiguration(new DuraformDoorConfig());
+            builder.ApplyConfiguration(new DuraformPantryDoorConfig());
+            builder.ApplyConfiguration(new DuraformEndPanelConfig());
+            builder.ApplyConfiguration(new DuraformDrawerConfig());
             builder.ApplyConfiguration(new HingeHoleOptionConfig());
             builder.ApplyConfiguration(new DuraformDraftConfig());
 
             base.OnModelCreating(builder);
         }
     }
-
-
-    //public class DuraformPantryDoor : DuraformComponentWithOptionAndHingeHole
-    //{
-    //    public decimal ChairRailHeight { get; set; }
-
-    //    public int ChairRailTypeId { get; set; }
-
-    //    public decimal ExtraRailBottom { get; set; }
-
-
-    //    public virtual PantryDoorChairRailType ChairRailType { get; set; }
-    //}
-
-    //public class DuraformEndPanel : DuraformComponentWithOption
-    //{
-    //    public int NumberOfShields { get; set; }
-
-    //    public decimal RailLeft { get; set; }
-
-    //    public decimal RailCenter { get; set; }
-
-    //    public decimal RailRight { get; set; }
-
-    //    public decimal ExtraRailBottom { get; set; }
-
-    //    public decimal ExtraRailTop { get; set; }
-    //}
-
-    //public class DuraformDrawer : DuraformComponent
-    //{
-    //    public int DuraformDrawerTypeId { get; set; }
-
-    //    public decimal DrawerOne { get; set; }
-
-    //    public decimal DrawerTwo { get; set; }
-
-    //    public decimal DrawerThree { get; set; }
-
-    //    public decimal DrawerFour { get; set; }
-
-    //    public decimal DrawerFive { get; set; }
-    //}
 }

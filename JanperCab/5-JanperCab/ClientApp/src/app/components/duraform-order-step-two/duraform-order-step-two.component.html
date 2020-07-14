@@ -13,7 +13,7 @@
       <button
         type="button"
         class="btn duraform-order-step-two__check-out-btn"
-        [disabled]="!order.formData.hasComponent"
+        [disabled]="!order.hasComponent"
         (click)="onPreviewOrderClick()"
       >
         Next

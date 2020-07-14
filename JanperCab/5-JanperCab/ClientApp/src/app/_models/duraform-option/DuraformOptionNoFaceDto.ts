@@ -1,12 +1,10 @@
 import { DuraformOptionTypeDto } from './DuraformOptionTypeDto';
 import { DuraformOptionDto } from './DuraformOptionDto';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { Expose } from 'class-transformer';
 
 export class DuraformOptionNoFaceDto extends DuraformOptionDto {
-  constructor(optionType: DuraformOptionTypeDto, optionValues: any) {
-    super(optionType);
-  }
-
+  @Expose()
   toFormGroup(): FormGroup {
     const formGroup = new FormGroup({
       optionTypeId: new FormControl(this.duraformOptionTypeId, [
@@ -17,6 +15,7 @@ export class DuraformOptionNoFaceDto extends DuraformOptionDto {
     return formGroup;
   }
 
+  @Expose()
   toString(): string {
     return 'Panel No Face Route';
   }

@@ -1,8 +1,8 @@
+import { DuraformOptionDto } from 'src/app/_models/duraform-option/DuraformOptionDto';
 import { DuraformOptionPaneFrameDto } from './DuraformOptionPaneFrameDto';
 import { DuraformOptionFoldBackDto } from './DuraformOptionFoldBackDto';
 import { DuraformOptionNoFaceDto } from './DuraformOptionNoFaceDto';
 import { DuraformOptionTypeKey } from '../../_enums/DuraformOptionTypeKey';
-import { DuraformOptionDto } from './DuraformOptionDto';
 import { DuraformOptionDoubleSidedDto } from './DuraformOptionDoubleSidedDto';
 
 export class DuraformOptionTypeDto {
@@ -14,17 +14,37 @@ export class DuraformOptionTypeDto {
     optionType: DuraformOptionTypeDto,
     optionValues: any
   ): DuraformOptionDto {
+    let option;
+
     switch (optionType.id) {
       case DuraformOptionTypeKey.NoFaceRoute:
-        return new DuraformOptionNoFaceDto(optionType, optionValues);
+        option = new DuraformOptionNoFaceDto();
+        option.$type = optionType.type;
+        break;
       case DuraformOptionTypeKey.DoubleSided:
-        return new DuraformOptionDoubleSidedDto(optionType, optionValues);
+        option = new DuraformOptionDoubleSidedDto();
+        option.$type = optionType.type;
+        option.hasProfile = optionValues.hasProfile;
+        break;
       case DuraformOptionTypeKey.FoldBack:
-        return new DuraformOptionFoldBackDto(optionType, optionValues);
+        option = new DuraformOptionFoldBackDto();
+        option.$type = optionType.type;
+        option.hasProfile = optionValues.hasProfile;
+        option.length = optionValues.length;
+        option.thickness = optionValues.thickness;
+        option.hasDoubleReturn = optionValues.hasDoubleReturn;
+        break;
       case DuraformOptionTypeKey.PaneFrame:
-        return new DuraformOptionPaneFrameDto(optionType, optionValues);
+        option = new DuraformOptionPaneFrameDto();
+        option.$type = optionType.type;
+        option.columns = optionValues.columns;
+        option.rows = optionValues.rows;
+        break;
       default:
-        return null;
+        throw new Error('Unsupported Option Type');
     }
+
+    option.duraformOptionTypeId = optionType.id;
+    return option;
   }
 }

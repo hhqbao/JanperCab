@@ -1,8 +1,6 @@
+import { DuraformDrawerDto } from './../../_models/duraform-component/DuraformDrawerDto';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
-import { DuraformDrawerForCart } from '../../_models/duraform-drawer/DuraformDrawerForCart';
-import { DuraformDoorForCart } from '../../_models/duraform-door/DuraformDoorForCart';
-import { DuraformDrawerTypeForList } from '../../_models/duraform-drawer-type/DuraformDrawerTypeForList';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
@@ -11,7 +9,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   templateUrl: 'duraform-drawer-form.component.html',
 })
 export class DuraformDrawerFormComponent implements OnInit {
-  @Input() duraformDrawer: DuraformDrawerForCart;
+  @Input() duraformDrawer: DuraformDrawerDto;
   @Output() formSubmit = new EventEmitter<FormGroup>();
 
   formGroup: FormGroup;
@@ -38,7 +36,7 @@ export class DuraformDrawerFormComponent implements OnInit {
         [Validators.required, Validators.min(150), Validators.max(1200)],
       ],
       duraformEdgeProfileId: [
-        this.order.formData.selectedEdgeProfile.id,
+        this.order.selectedEdgeProfile.id,
         [Validators.required],
       ],
       top: [false],
