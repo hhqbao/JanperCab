@@ -4,6 +4,7 @@ using _3_Application.Interfaces.Repositories;
 using _3_Application.Interfaces.Services;
 using _4_Infrastructure.Repositories;
 using _4_Infrastructure.Services;
+using _5_JanperCab.Helpers;
 using AutoMapper;
 using AutoMapper.EquivalencyExpression;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -76,6 +77,7 @@ namespace _5_JanperCab
 
             services.AddAutoMapper(cfg =>
             {
+                cfg.AddProfile(new MapperProfile());
                 cfg.AddCollectionMappers();
             }, typeof(Startup).Assembly);
 

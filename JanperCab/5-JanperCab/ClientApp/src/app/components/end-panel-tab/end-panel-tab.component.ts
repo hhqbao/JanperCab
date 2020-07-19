@@ -23,15 +23,15 @@ export class EndPanelTabComponent implements OnInit {
       return;
     }
 
-    const endPanel = new DuraformEndPanelDto();
+    const endPanel = this.asset.generateEndPanel();
     endPanel.updateWithOption(formGroup.value, this.asset.duraformOptionTypes);
 
-    this.order.endPanels.unshift(endPanel);
+    this.order.addComponent(endPanel);
 
     this.dialog.success('New End Panel Added.');
   };
 
   onRemoveEndPanel = (endPanel: DuraformEndPanelDto) => {
-    this.order.removeEndPanel(endPanel);
+    this.order.removeComponent(endPanel);
   };
 }

@@ -8,14 +8,7 @@ namespace _2_Persistent.Configs
     {
         public void Configure(EntityTypeBuilder<DuraformDoor> builder)
         {
-            builder.Property(x => x.DuraformFormId)
-                .HasColumnName("DuraformFormId");
 
-            builder.HasOne(x => x.DuraformForm)
-                .WithMany(y => y.DuraformDoors)
-                .HasForeignKey(x => x.DuraformFormId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

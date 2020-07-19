@@ -1,3 +1,4 @@
+import { DuraformComponentService } from './../../_services/duraform-component.service';
 import { DuraformWrapColorService } from './../../_services/duraform-wrap-color.service';
 import { DuraformWrapTypeService } from './../../_services/duraform-wrap-type.service';
 import { DialogService } from './../../_services/dialog.service';
@@ -43,7 +44,8 @@ export class DuraformPageComponent implements OnInit {
     private pantryDoorRailTypeService: PantryDoorChairRailTypeService,
     private drawerTypeService: DuraformDrawerTypeService,
     private optionTypeService: DuraformOptionTypeService,
-    private hingeHoleTypeService: HingeHoleTypeService
+    private hingeHoleTypeService: HingeHoleTypeService,
+    private componentService: DuraformComponentService
   ) {
     this.order.reset();
   }
@@ -66,6 +68,7 @@ export class DuraformPageComponent implements OnInit {
         this.loadDuraformOptionTypes(),
         this.loadHingeHoleTypes(),
         this.loadWrapColors(),
+        this.loadComponentTypes(),
       ])
     ).subscribe(
       (responses) => {
@@ -79,6 +82,7 @@ export class DuraformPageComponent implements OnInit {
         this.asset.duraformOptionTypes = responses[1][2];
         this.asset.hingeHoleTypes = responses[1][3];
         this.asset.duraformWrapColors = responses[1][4];
+        this.asset.componentTypes = responses[1][5];
         this.loadDuraformForm();
       },
       (error) => {
@@ -152,6 +156,10 @@ export class DuraformPageComponent implements OnInit {
 
   private loadHingeHoleTypes = () => {
     return this.hingeHoleTypeService.getAllActive();
+  };
+
+  private loadComponentTypes = () => {
+    return this.componentService.getComponentTypes();
   };
 
   onProcessClick = (step: DuraformProcessStep) => {

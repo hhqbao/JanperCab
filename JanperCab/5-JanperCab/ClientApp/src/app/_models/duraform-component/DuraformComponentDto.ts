@@ -1,4 +1,5 @@
 export abstract class DuraformComponentDto {
+  $type: string;
   id: number;
   quantity: number;
   height: number;

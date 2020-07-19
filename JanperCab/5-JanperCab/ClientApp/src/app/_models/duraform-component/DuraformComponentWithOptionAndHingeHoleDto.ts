@@ -14,7 +14,7 @@ export abstract class DuraformComponentWithOptionAndHingeHoleDto extends Durafor
     super.updateWithOption(formValue, duraformOptionTypes);
 
     if (formValue.hingeHole) {
-      const id = this.hingeHoleOption.id;
+      const id = this.hingeHoleOption?.id;
 
       this.hingeHoleOption = new HingeHoleOptionDto();
       this.hingeHoleOption.id = id;

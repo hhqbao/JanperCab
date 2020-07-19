@@ -10,11 +10,9 @@
 
         public decimal RailRight { get; set; }
 
-        public decimal ExtraRailBottom { get; set; }
+        public decimal? ExtraRailBottom { get; set; }
 
-        public decimal ExtraRailTop { get; set; }
+        public decimal? ExtraRailTop { get; set; }
 
-
-        public virtual DuraformForm DuraformForm { get; set; }
     }
 }

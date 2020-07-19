@@ -1,3 +1,4 @@
+import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 import { DuraformDrawerDto } from './../../_models/duraform-component/DuraformDrawerDto';
 import { FormGroup } from '@angular/forms';
 import { DialogService } from './../../_services/dialog.service';
@@ -10,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DuraformDrawerTabComponent implements OnInit {
   constructor(
+    private asset: DuraformAssetService,
     public order: DuraformOrderService,
     private dialog: DialogService
   ) {}
@@ -22,15 +24,15 @@ export class DuraformDrawerTabComponent implements OnInit {
     }
 
     const formValue = formGroup.value;
-    const drawer = new DuraformDrawerDto();
+    const drawer = this.asset.generateDuraformDrawer();
     drawer.update(formValue);
 
-    this.order.duraformDrawers.unshift(drawer);
+    this.order.addComponent(drawer);
 
     this.dialog.success('New Drawer Added.');
   };
 
   onRemoveDrawer = (drawer: DuraformDrawerDto) => {
-    this.order.removeDuraformDrawer(drawer);
+    this.order.removeComponent(drawer);
   };
 }

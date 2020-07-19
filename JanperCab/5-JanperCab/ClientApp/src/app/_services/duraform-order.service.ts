@@ -17,6 +17,8 @@ import { StepOneReturnValue } from '../_models/duraform-order/StepOneReturnValue
 import { Injectable } from '@angular/core';
 import { DuraformFormDto } from '../_models/duraform-order/DuraformFormDto';
 import { plainToClass } from 'class-transformer';
+import { DuraformComponentWithOptionAndHingeHoleDto } from '../_models/duraform-component/DuraformComponentWithOptionAndHingeHoleDto';
+import { DuraformComponentDto } from '../_models/duraform-component/DuraformComponentDto';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformOrderService {
@@ -93,15 +95,10 @@ export class DuraformOrderService {
     this.duraformForm.hingeHoleTypeId = typeId;
 
     if (!this.duraformForm.hingeHoleTypeId) {
-      this.duraformForm.duraformDoors = this.duraformForm.duraformDoors.map(
-        (x) => {
-          x.hingeHoleOption = null;
-          return x;
+      this.duraformForm.duraformComponents.forEach((x) => {
+        if (x instanceof DuraformComponentWithOptionAndHingeHoleDto) {
+          (x as DuraformComponentWithOptionAndHingeHoleDto).hingeHoleOption = null;
         }
-      );
-      this.duraformForm.pantryDoors = this.pantryDoors.map((x) => {
-        x.hingeHoleOption = null;
-        return x;
       });
     }
   }
@@ -131,7 +128,9 @@ export class DuraformOrderService {
       (x) => x.hingeHoleOption
     );
 
-    const pantryDoors = this.pantryDoors.filter((x) => x.hingeHoleOption);
+    const pantryDoors = this.duraformForm.pantryDoors.filter(
+      (x) => x.hingeHoleOption
+    );
 
     let count = 0;
     doors.forEach((x) => {
@@ -154,19 +153,19 @@ export class DuraformOrderService {
   }
 
   get duraformDoors(): DuraformDoorDto[] {
-    return this.duraformForm.duraformDoors;
+    return [...this.duraformForm.duraformDoors];
   }
 
   get pantryDoors(): DuraformPantryDoorDto[] {
-    return this.duraformForm.pantryDoors;
+    return [...this.duraformForm.pantryDoors];
   }
 
   get endPanels(): DuraformEndPanelDto[] {
-    return this.duraformForm.endPanels;
+    return [...this.duraformForm.endPanels];
   }
 
   get duraformDrawers(): DuraformDrawerDto[] {
-    return this.duraformForm.duraformDrawers;
+    return [...this.duraformForm.duraformDrawers];
   }
 
   submitStepOne = (model: StepOneReturnValue) => {
@@ -189,35 +188,15 @@ export class DuraformOrderService {
     this.duraformForm.duraformArchId = model ? model.id : null;
   };
 
-  removeDoor = (door: DuraformDoorDto) => {
-    const index = this.duraformDoors.indexOf(door);
-
-    if (index >= 0) {
-      this.duraformDoors.splice(index, 1);
-    }
+  addComponent = (component: DuraformComponentDto) => {
+    this.duraformForm.duraformComponents.unshift(component);
   };
 
-  removePantryDoor = (pantryDoor: DuraformPantryDoorDto) => {
-    const index = this.pantryDoors.indexOf(pantryDoor);
+  removeComponent = (component: DuraformComponentDto) => {
+    const index = this.duraformForm.duraformComponents.indexOf(component);
 
     if (index >= 0) {
-      this.pantryDoors.splice(index, 1);
-    }
-  };
-
-  removeEndPanel = (endPanel: DuraformEndPanelDto) => {
-    const index = this.endPanels.indexOf(endPanel);
-
-    if (index >= 0) {
-      this.endPanels.splice(index, 1);
-    }
-  };
-
-  removeDuraformDrawer = (drawer: DuraformDrawerDto) => {
-    const index = this.duraformDrawers.indexOf(drawer);
-
-    if (index >= 0) {
-      this.duraformDrawers.splice(index, 1);
+      this.duraformForm.duraformComponents.splice(index, 1);
     }
   };
 
@@ -227,6 +206,7 @@ export class DuraformOrderService {
     return this.http.get<DuraformDraftDto>(url).pipe(
       map((response) => {
         this.duraformForm = plainToClass(DuraformDraftDto, response);
+        console.log(this.duraformForm);
       })
     );
   };
@@ -234,15 +214,22 @@ export class DuraformOrderService {
   saveDraft = () => {
     const url = `${environment.baseUrl}/DuraformDrafts`;
     const { duraformForm } = this;
-    console.log(duraformForm);
 
     if (duraformForm.id) {
-      return this.http.put(`${url}/${duraformForm.id}`, duraformForm);
+      console.log(duraformForm);
+      return this.http
+        .put<DuraformDraftDto>(`${url}/${duraformForm.id}`, duraformForm)
+        .pipe(
+          map((response) => {
+            this.duraformForm = plainToClass(DuraformDraftDto, response);
+
+            return this.duraformForm;
+          })
+        );
     } else {
       return this.http.post<DuraformDraftDto>(`${url}`, duraformForm).pipe(
         map((response) => {
           this.duraformForm = plainToClass(DuraformDraftDto, response);
-          console.log(this.duraformForm);
 
           return this.duraformForm;
         })

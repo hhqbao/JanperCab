@@ -54,10 +54,12 @@ export abstract class DuraformComponentWithOptionDto extends DuraformComponentDt
         throw new Error('Duraform Option Type Not Found');
       }
 
+      const id = this.duraformOption?.id;
       this.duraformOption = DuraformOptionTypeDto.GetDuraformOptionInstance(
         optionType,
         formValue.optionGroup
       );
+      this.duraformOption.id = id;
     } else {
       this.duraformOption = null;
     }

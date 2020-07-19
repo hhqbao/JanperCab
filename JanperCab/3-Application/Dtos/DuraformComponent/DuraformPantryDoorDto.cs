@@ -6,6 +6,6 @@
 
         public int ChairRailTypeId { get; set; }
 
-        public decimal ExtraRailBottom { get; set; }
+        public decimal? ExtraRailBottom { get; set; }
     }
 }

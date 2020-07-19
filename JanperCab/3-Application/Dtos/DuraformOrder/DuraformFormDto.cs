@@ -2,6 +2,7 @@
 using _3_Application.Dtos.DuraformComponent;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace _3_Application.Dtos.DuraformOrder
@@ -35,11 +36,11 @@ namespace _3_Application.Dtos.DuraformOrder
 
         public DateTime? LastUpdated { get; set; }
 
+        public ICollection<DuraformComponentDto> DuraformComponents { get; set; }
 
-        public ICollection<DuraformDoorDto> DuraformDoors { get; set; }
-        public ICollection<DuraformPantryDoorDto> PantryDoors { get; set; }
-        public ICollection<DuraformEndPanelDto> EndPanels { get; set; }
-        public ICollection<DuraformDrawerDto> DuraformDrawers { get; set; }
-
+        protected DuraformFormDto()
+        {
+            DuraformComponents = new Collection<DuraformComponentDto>();
+        }
     }
 }

@@ -1,6 +1,5 @@
 import { DuraformComponentWithOptionAndHingeHoleDto } from './DuraformComponentWithOptionAndHingeHoleDto';
 import { DuraformOptionTypeDto } from '../duraform-option/DuraformOptionTypeDto';
-import { HingeHoleOptionDto } from '../hinge-hole-option/HingeHoleOptionDto';
 
 export class DuraformPantryDoorDto extends DuraformComponentWithOptionAndHingeHoleDto {
   chairRailHeight: number;

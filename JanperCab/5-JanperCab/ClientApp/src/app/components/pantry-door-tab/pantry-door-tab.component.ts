@@ -23,18 +23,18 @@ export class PantryDoorTabComponent implements OnInit {
       return;
     }
 
-    const pantryDoor = new DuraformPantryDoorDto();
+    const pantryDoor = this.asset.generatePantryDoor();
     pantryDoor.updateWithOption(
       formGroup.value,
       this.asset.duraformOptionTypes
     );
 
-    this.order.pantryDoors.unshift(pantryDoor);
+    this.order.addComponent(pantryDoor);
 
     this.dialog.success('New Pantry Door Added.');
   };
 
   onRemovePantryDoor = (pantryDoor: DuraformPantryDoorDto) => {
-    this.order.removePantryDoor(pantryDoor);
+    this.order.removeComponent(pantryDoor);
   };
 }

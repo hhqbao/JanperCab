@@ -1,3 +1,9 @@
+import { DuraformDrawerDto } from './../_models/duraform-component/DuraformDrawerDto';
+import { DuraformEndPanelDto } from './../_models/duraform-component/DuraformEndPanelDto';
+import { DuraformPantryDoorDto } from './../_models/duraform-component/DuraformPantryDoorDto';
+import { DuraformDoorDto } from './../_models/duraform-component/DuraformDoorDto';
+import { ComponentType } from './../_enums/ComponentType';
+import { DuraformComponentTypeDto } from './../_models/duraform-component/DuraformComponentType';
 import { DuraformWrapColorForSelection } from './../_models/duraform-wrap-color/DuraformWrapColorForSelection';
 import { DuraformWrapTypeForSelection } from './../_models/duraform-wrap-type/DuraformWrapTypeForSelection';
 import { Injectable } from '@angular/core';
@@ -9,9 +15,11 @@ import { PantryDoorChairRailTypeForList } from '../_models/pantry-door-chair-rai
 import { DuraformDrawerTypeForList } from '../_models/duraform-drawer-type/DuraformDrawerTypeForList';
 import { DuraformOptionTypeDto } from '../_models/duraform-option/DuraformOptionTypeDto';
 import { HingeHoleTypeDto } from '../_models/hinge-hole-type/HingeHoleTypeDto';
+import { DuraformComponentDto } from '../_models/duraform-component/DuraformComponentDto';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformAssetService {
+  componentTypes: DuraformComponentTypeDto[] = [];
   arches: DuraformArchForList[] = [];
   duraformDrawerTypes: DuraformDrawerTypeForList[] = [];
   duraformOptionTypes: DuraformOptionTypeDto[] = [];
@@ -25,17 +33,21 @@ export class DuraformAssetService {
 
   constructor() {}
 
-  getDoorSerie(id: number) {
+  getComponentType = (id: ComponentType): DuraformComponentTypeDto => {
+    return this.componentTypes.find((x) => x.id === id);
+  };
+
+  getDoorSerie = (id: number) => {
     return this.duraformSeries.find((x) => x.id === id);
-  }
+  };
 
-  getWrapType(id: number) {
+  getWrapType = (id: number) => {
     return this.duraformWrapTypes.find((x) => x.id === id);
-  }
+  };
 
-  getWrapColor(id: number) {
+  getWrapColor = (id: number) => {
     return this.duraformWrapColors.find((x) => x.id === id);
-  }
+  };
 
   getDesign = (id: number) => {
     return this.duraformDesigns.find((x) => x.id === id);
@@ -45,9 +57,9 @@ export class DuraformAssetService {
     return this.edgeProfiles.find((x) => x.id === id);
   };
 
-  getArch(id: number) {
+  getArch = (id: number) => {
     return this.arches.find((x) => x.id === id);
-  }
+  };
 
   getChairRailType = (id: number) => {
     return this.pantryDoorChairRailTypes.find((x) => x.id === id);
@@ -59,5 +71,37 @@ export class DuraformAssetService {
 
   getHingeType = (id: number) => {
     return this.hingeHoleTypes.find((x) => x.id === id);
+  };
+
+  generateDuraformDoor = (): DuraformDoorDto => {
+    const component = new DuraformDoorDto();
+    component.$type = this.getComponentType(ComponentType.DuraformDoor).type;
+
+    return component;
+  };
+
+  generatePantryDoor = (): DuraformPantryDoorDto => {
+    const component = new DuraformPantryDoorDto();
+    component.$type = this.getComponentType(
+      ComponentType.DuraformPantryDoor
+    ).type;
+
+    return component;
+  };
+
+  generateEndPanel = (): DuraformEndPanelDto => {
+    const component = new DuraformEndPanelDto();
+    component.$type = this.getComponentType(
+      ComponentType.DuraformEndPanel
+    ).type;
+
+    return component;
+  };
+
+  generateDuraformDrawer = (): DuraformDrawerDto => {
+    const component = new DuraformDrawerDto();
+    component.$type = this.getComponentType(ComponentType.DuraformDrawer).type;
+
+    return component;
   };
 }

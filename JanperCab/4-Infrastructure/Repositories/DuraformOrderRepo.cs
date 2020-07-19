@@ -22,6 +22,7 @@ namespace _4_Infrastructure.Repositories
         public async Task<DuraformDraft> GetDraftAsync(Guid draftId)
         {
             return await _dbSet.OfType<DuraformDraft>()
+                .Include(x => x.DuraformComponents)
                 .FirstOrDefaultAsync(x => x.Id.Equals(draftId));
         }
 

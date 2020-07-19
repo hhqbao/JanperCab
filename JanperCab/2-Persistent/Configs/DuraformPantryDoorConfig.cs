@@ -8,8 +8,7 @@ namespace _2_Persistent.Configs
     {
         public void Configure(EntityTypeBuilder<DuraformPantryDoor> builder)
         {
-            builder.Property(x => x.DuraformFormId)
-                .HasColumnName("DuraformFormId");
+
 
             builder.Property(x => x.ChairRailHeight)
                 .HasColumnType("decimal(18,2)");
@@ -23,12 +22,6 @@ namespace _2_Persistent.Configs
                 .HasForeignKey(x => x.ChairRailTypeId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasOne(x => x.DuraformForm)
-                .WithMany(y => y.PantryDoors)
-                .HasForeignKey(x => x.DuraformFormId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

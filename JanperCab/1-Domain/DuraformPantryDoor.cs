@@ -6,11 +6,9 @@
 
         public int ChairRailTypeId { get; set; }
 
-        public decimal ExtraRailBottom { get; set; }
+        public decimal? ExtraRailBottom { get; set; }
 
 
         public virtual PantryDoorChairRailType ChairRailType { get; set; }
-
-        public virtual DuraformForm DuraformForm { get; set; }
     }
 }

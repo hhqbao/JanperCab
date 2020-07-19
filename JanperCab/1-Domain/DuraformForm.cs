@@ -42,7 +42,6 @@ namespace _1_Domain
         public DateTime? LastUpdated { get; set; }
 
 
-
         public virtual DuraformDesign DuraformDesign { get; set; }
 
         public virtual DuraformSerie DuraformSerie { get; set; }
@@ -59,22 +58,15 @@ namespace _1_Domain
 
         public virtual ApplicationUser CreatedByUser { get; set; }
 
+        public virtual ICollection<DuraformComponent> DuraformComponents { get; set; }
 
-        public virtual ICollection<DuraformDoor> DuraformDoors { get; set; }
-        public virtual ICollection<DuraformPantryDoor> PantryDoors { get; set; }
-        public virtual ICollection<DuraformEndPanel> EndPanels { get; set; }
-        public virtual ICollection<DuraformDrawer> DuraformDrawers { get; set; }
 
 
         protected DuraformForm()
         {
             Id = Guid.NewGuid();
             CreatedDate = DateTime.Now;
-
-            DuraformDoors = new Collection<DuraformDoor>();
-            PantryDoors = new Collection<DuraformPantryDoor>();
-            EndPanels = new Collection<DuraformEndPanel>();
-            DuraformDrawers = new Collection<DuraformDrawer>();
+            DuraformComponents = new Collection<DuraformComponent>();
         }
     }
 }

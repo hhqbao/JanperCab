@@ -2,6 +2,6 @@
 {
     public class DuraformDoor : DuraformComponentWithOptionAndHingeHole
     {
-        public virtual DuraformForm DuraformForm { get; set; }
+
     }
 }

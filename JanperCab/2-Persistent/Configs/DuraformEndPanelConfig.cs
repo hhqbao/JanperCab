@@ -8,9 +8,6 @@ namespace _2_Persistent.Configs
     {
         public void Configure(EntityTypeBuilder<DuraformEndPanel> builder)
         {
-            builder.Property(x => x.DuraformFormId)
-                .HasColumnName("DuraformFormId");
-
             builder.Property(x => x.RailLeft)
                 .HasColumnType("decimal(18,2)");
 
@@ -26,12 +23,6 @@ namespace _2_Persistent.Configs
             builder.Property(x => x.ExtraRailBottom)
                 .HasColumnType("decimal(18,2)")
                 .HasColumnName("ExtraRailBottom");
-
-            builder.HasOne(x => x.DuraformForm)
-                .WithMany(y => y.EndPanels)
-                .HasForeignKey(x => x.DuraformFormId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

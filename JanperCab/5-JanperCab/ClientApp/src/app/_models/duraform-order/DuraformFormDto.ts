@@ -4,6 +4,7 @@ import { DuraformPantryDoorDto } from './../duraform-component/DuraformPantryDoo
 import { DuraformOrderTypeKey } from './../../_enums/DuraformOrderTypeKey';
 import { DuraformDoorDto } from './../duraform-component/DuraformDoorDto';
 import { Type } from 'class-transformer';
+import { DuraformComponentDto } from '../duraform-component/DuraformComponentDto';
 
 export abstract class DuraformFormDto {
   id: string;
@@ -20,14 +21,67 @@ export abstract class DuraformFormDto {
   createdDate: Date;
   lastUpdated: Date;
 
-  @Type(() => DuraformDoorDto)
-  duraformDoors: DuraformDoorDto[] = [];
+  @Type(() => DuraformComponentDto, {
+    keepDiscriminatorProperty: true,
+    discriminator: {
+      property: '$type',
+      subTypes: [
+        {
+          value: DuraformDoorDto,
+          name:
+            '_3_Application.Dtos.DuraformComponent.DuraformDoorDto, 3-Application',
+        },
+        {
+          value: DuraformPantryDoorDto,
+          name:
+            '_3_Application.Dtos.DuraformComponent.DuraformPantryDoorDto, 3-Application',
+        },
+        {
+          value: DuraformEndPanelDto,
+          name:
+            '_3_Application.Dtos.DuraformComponent.DuraformEndPanelDto, 3-Application',
+        },
+        {
+          value: DuraformDrawerDto,
+          name:
+            '_3_Application.Dtos.DuraformComponent.DuraformDrawerDto, 3-Application',
+        },
+      ],
+    },
+  })
+  duraformComponents: DuraformComponentDto[] = [];
 
-  pantryDoors: DuraformPantryDoorDto[] = [];
+  get duraformDoors(): DuraformDoorDto[] {
+    const doors = this.duraformComponents.filter(
+      (x) => x instanceof DuraformDoorDto
+    );
 
-  endPanels: DuraformEndPanelDto[] = [];
+    return doors as DuraformDoorDto[];
+  }
 
-  duraformDrawers: DuraformDrawerDto[] = [];
+  get pantryDoors(): DuraformPantryDoorDto[] {
+    const pantryDoors = this.duraformComponents.filter(
+      (x) => x instanceof DuraformPantryDoorDto
+    );
+
+    return pantryDoors as DuraformPantryDoorDto[];
+  }
+
+  get endPanels(): DuraformEndPanelDto[] {
+    const endPanels = this.duraformComponents.filter(
+      (x) => x instanceof DuraformEndPanelDto
+    );
+
+    return endPanels as DuraformEndPanelDto[];
+  }
+
+  get duraformDrawers(): DuraformDrawerDto[] {
+    const drawers = this.duraformComponents.filter(
+      (x) => x instanceof DuraformDrawerDto
+    );
+
+    return drawers as DuraformDrawerDto[];
+  }
 
   constructor() {}
 }

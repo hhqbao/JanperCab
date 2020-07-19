@@ -29,6 +29,12 @@ namespace _2_Persistent.Configs
                 .IsRequired()
                 .HasForeignKey(x => x.DuraformEdgeProfileId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.DuraformForm)
+                .WithMany(y => y.DuraformComponents)
+                .HasForeignKey(x => x.DuraformFormId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

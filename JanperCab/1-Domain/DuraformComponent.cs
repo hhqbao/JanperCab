@@ -28,5 +28,7 @@ namespace _1_Domain
 
 
         public virtual DuraformEdgeProfile DuraformEdgeProfile { get; set; }
+
+        public virtual DuraformForm DuraformForm { get; set; }
     }
 }

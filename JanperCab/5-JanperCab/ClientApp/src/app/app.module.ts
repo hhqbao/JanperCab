@@ -1,3 +1,4 @@
+import { DuraformComponentService } from './_services/duraform-component.service';
 import { HingeHoleSelectorComponent } from './components/hinge-hole-selector/hinge-hole-selector.component';
 import { DuraformAccessoriesBoxComponent } from './components/duraform-accessories-box/duraform-accessories-box.component';
 import { HingeHoleTypeService } from './_services/hinge-hole-type.service';
@@ -163,6 +164,7 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
     DialogService,
     LayoutService,
     DuraformAssetService,
+    DuraformComponentService,
     DuraformSerieService,
     DuraformDesignService,
     DuraformWrapTypeService,

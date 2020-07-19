@@ -24,15 +24,15 @@ export class DuraformDoorTabComponent implements OnInit {
     }
 
     const formValue = formGroup.value;
-    const door = new DuraformDoorDto();
+    const door = this.asset.generateDuraformDoor();
     door.updateWithOption(formValue, this.asset.duraformOptionTypes);
 
-    this.order.duraformDoors.unshift(door);
+    this.order.addComponent(door);
 
     this.dialog.success('New Door Added.');
   };
 
   onRemoveDoor = (door: DuraformDoorDto) => {
-    this.order.removeDoor(door);
+    this.order.removeComponent(door);
   };
 }

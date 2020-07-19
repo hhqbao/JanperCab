@@ -1,4 +1,5 @@
 ﻿using _1_Domain;
+using _3_Application.Dtos.DuraformComponent;
 using _3_Application.Dtos.DuraformOption;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -28,10 +29,16 @@ namespace _5_JanperCab.Controllers
             }
         }
 
-        [HttpPost("CreateOption")]
-        public async Task<IActionResult> CreateOption(DuraformOptionDto option)
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
-            return Ok();
+            return Ok(new
+            {
+                DuraformDoor = typeof(DuraformDoorDto).AssemblyQualifiedName,
+                PantryDoor = typeof(DuraformPantryDoorDto).AssemblyQualifiedName,
+                EndPanel = typeof(DuraformEndPanelDto).AssemblyQualifiedName,
+                DuraformDrawer = typeof(DuraformDrawerDto).AssemblyQualifiedName,
+            });
         }
     }
 }

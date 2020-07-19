@@ -69,16 +69,13 @@ namespace _5_JanperCab.Controllers
             if (draftInDb == null)
                 return BadRequest("Draft Not Found!");
 
-            //var newDraft = _mapper.Map<DuraformDraftDto, DuraformDraft>(draftDto);
-            //await _unitOfWork.DuraformOrders.UpdateDraftAsync(draftInDb, newDraft);
-
-            _mapper.Map(draftDto, draftInDb);
+            draftInDb = _mapper.Map(draftDto, draftInDb);
             draftInDb.LastUpdated = DateTime.Now;
 
             await _unitOfWork.CompleteAsync();
 
 
-            return Ok();
+            return Ok(_mapper.Map<DuraformDraft, DuraformDraftDto>(draftInDb));
         }
     }
 }

@@ -13,6 +13,7 @@ using _3_Application.Dtos.DuraformWrapType;
 using _3_Application.Dtos.HingeHoleOption;
 using _3_Application.Dtos.HingeHoleType;
 using _3_Application.Dtos.PantryDoorChairRailType;
+using _5_JanperCab.Helpers.Resolvers;
 using AutoMapper;
 using AutoMapper.EquivalencyExpression;
 
@@ -80,16 +81,28 @@ namespace _5_JanperCab.Helpers
             CreateMap<HingeHoleOptionDto, HingeHoleOption>();
 
             CreateMap<DuraformComponent, DuraformComponentDto>()
-                .Include<DuraformDoor, DuraformDoorDto>()
-                .Include<DuraformPantryDoor, DuraformPantryDoorDto>()
-                .Include<DuraformEndPanel, DuraformEndPanelDto>()
+                .Include<DuraformComponentWithOption, DuraformComponentWithOptionDto>()
                 .Include<DuraformDrawer, DuraformDrawerDto>();
             CreateMap<DuraformComponentDto, DuraformComponent>()
-                .Include<DuraformDoorDto, DuraformDoor>()
-                .Include<DuraformPantryDoorDto, DuraformPantryDoor>()
-                .Include<DuraformEndPanelDto, DuraformEndPanel>()
+                .Include<DuraformComponentWithOptionDto, DuraformComponentWithOption>()
                 .Include<DuraformDrawerDto, DuraformDrawer>()
                 .EqualityComparison((dto, x) => dto.Id == x.Id);
+
+            CreateMap<DuraformComponentWithOption, DuraformComponentWithOptionDto>()
+                .Include<DuraformComponentWithOptionAndHingeHole, DuraformComponentWithOptionAndHingeHoleDto>()
+                .Include<DuraformEndPanel, DuraformEndPanelDto>();
+            CreateMap<DuraformComponentWithOptionDto, DuraformComponentWithOption>()
+                .Include<DuraformComponentWithOptionAndHingeHoleDto, DuraformComponentWithOptionAndHingeHole>()
+                .Include<DuraformEndPanelDto, DuraformEndPanel>()
+                .ForMember(x => x.DuraformOption, opt => opt.MapFrom<DuraformOptionResolver>());
+
+            CreateMap<DuraformComponentWithOptionAndHingeHole, DuraformComponentWithOptionAndHingeHoleDto>()
+                .Include<DuraformDoor, DuraformDoorDto>()
+                .Include<DuraformPantryDoor, DuraformPantryDoorDto>();
+            CreateMap<DuraformComponentWithOptionAndHingeHoleDto, DuraformComponentWithOptionAndHingeHole>()
+                .Include<DuraformDoorDto, DuraformDoor>()
+                .Include<DuraformPantryDoorDto, DuraformPantryDoor>()
+                .ForMember(x => x.HingeHoleOption, opt => opt.MapFrom<HingeHoleOptionResolver>());
 
             CreateMap<DuraformDoor, DuraformDoorDto>();
             CreateMap<DuraformDoorDto, DuraformDoor>();
@@ -115,7 +128,6 @@ namespace _5_JanperCab.Helpers
 
             CreateMap<DuraformDraft, DuraformDraftDto>();
             CreateMap<DuraformDraftDto, DuraformDraft>();
-
         }
     }
 }
