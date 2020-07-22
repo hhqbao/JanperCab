@@ -11,7 +11,7 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <div class="nav__item__icon">
+          <div class="nav__item__icon blue">
             <i class="fa fa-home"></i>
           </div>
           <div class="nav__item__text">
@@ -21,7 +21,7 @@
       </li>
       <li class="nav__item">
         <a>
-          <div class="nav__item__icon">
+          <div class="nav__item__icon brown">
             <i class="fa fa-envelope-o"></i>
           </div>
           <div class="nav__item__text">
@@ -30,25 +30,35 @@
         </a>
       </li>
       <li class="nav__item">
-        <a appClassToggle="active">
-          <div class="nav__item__icon">
+        <a [appClassToggle]="'active'">
+          <div class="nav__item__icon orange">
             <i class="fa fa-table"></i>
           </div>
           <div class="nav__item__text">
-            Tables
+            Duraform Doors
             <ul class="nav__item__sub-menu">
               <li>
-                <a>Basic Table</a>
+                <a [routerLink]="['/dashboard/duraform']">
+                  Create New Order
+                </a>
               </li>
               <li>
-                <a>Data Table</a>
+                <a>
+                  Drafts <span class="badge">{{ numberOfDrafts }}</span>
+                </a>
+              </li>
+              <li>
+                <a>Quotes</a>
+              </li>
+              <li>
+                <a>Orders</a>
               </li>
             </ul>
           </div>
         </a>
       </li>
       <li class="nav__item">
-        <a appClassToggle="active">
+        <a [appClassToggle]="'active'">
           <div class="nav__item__icon">
             <i class="fa fa-map-o"></i>
           </div>
@@ -66,7 +76,7 @@
         </a>
       </li>
       <li class="nav__item">
-        <a appClassToggle="active">
+        <a [appClassToggle]="'active'">
           <div class="nav__item__icon">
             <i class="fa fa-files-o"></i>
           </div>

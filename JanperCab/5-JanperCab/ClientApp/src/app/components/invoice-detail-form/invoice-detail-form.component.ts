@@ -1,3 +1,5 @@
+import { FormControl, FormBuilder, Validators } from '@angular/forms';
+import { DuraformOrderService } from './../../_services/duraform-order.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -5,7 +7,26 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: 'invoice-detail-form.component.html',
 })
 export class InvoiceDetailFormComponent implements OnInit {
-  constructor() {}
+  stateControl: FormControl;
+  states: any[] = [
+    { text: 'ACT', value: 'ACT' },
+    { text: 'NSW', value: 'NSW' },
+    { text: 'NT', value: 'NT' },
+    { text: 'QLD', value: 'QLD' },
+    { text: 'SA', value: 'SA' },
+    { text: 'TAS', value: 'TAS' },
+    { text: 'VIC', value: 'VIC' },
+  ];
 
-  ngOnInit() {}
+  constructor(public order: DuraformOrderService, private fb: FormBuilder) {}
+
+  ngOnInit() {
+    this.stateControl = this.fb.control('', [Validators.required]);
+
+    this.stateControl.patchValue(this.order.invoiceState);
+  }
+
+  onSelectState = () => {
+    this.order.invoiceState = this.stateControl.value;
+  };
 }

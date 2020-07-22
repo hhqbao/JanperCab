@@ -1,3 +1,5 @@
+import { DashboardService } from './_services/dashboard.service';
+import { ClassToggleDirective } from './_directives/class-toggle.directive';
 import { DuraformComponentService } from './_services/duraform-component.service';
 import { HingeHoleSelectorComponent } from './components/hinge-hole-selector/hinge-hole-selector.component';
 import { DuraformAccessoriesBoxComponent } from './components/duraform-accessories-box/duraform-accessories-box.component';
@@ -52,7 +54,6 @@ import { DuraformFilterBoxComponent } from './components/duraform-filter-box/dur
 import { DuraformDesignListComponent } from './components/duraform-design-list/duraform-design-list.component';
 import { DuraformDesignComponent } from './components/duraform-design/duraform-design.component';
 import { DuraformProcessComponent } from './components/duraform-process/duraform-process.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LayoutService } from './_services/layout.service';
 import { FormInvalidFocusDirective } from './_directives/form-invalid-focus.directive';
 import { HomePageComponent } from './pages/home-page/home-page.component';
@@ -87,6 +88,7 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
 @NgModule({
   declarations: [
     AppComponent,
+    ClassToggleDirective,
     DropdownBtnDirective,
     FormInvalidFocusDirective,
     TabDirective,
@@ -102,7 +104,6 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
     InvoiceDetailFormComponent,
     DeliveryDetailFormComponent,
     LoginFormComponent,
-    DashboardComponent,
     DuraformProcessComponent,
     DuraformOrderStepOneComponent,
     DuraformOrderStepTwoComponent,
@@ -163,6 +164,7 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
     AuthService,
     DialogService,
     LayoutService,
+    DashboardService,
     DuraformAssetService,
     DuraformComponentService,
     DuraformSerieService,

@@ -24,6 +24,7 @@ namespace _2_Persistent
         public DbSet<DuraformForm> DuraformForms { get; set; }
         public DbSet<DuraformComponent> DuraformComponents { get; set; }
         public DbSet<HingeHoleOption> HingeHoleOptions { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,
@@ -58,6 +59,7 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformDrawerConfig());
             builder.ApplyConfiguration(new HingeHoleOptionConfig());
             builder.ApplyConfiguration(new DuraformDraftConfig());
+            builder.ApplyConfiguration(new CustomerConfig());
 
             base.OnModelCreating(builder);
         }

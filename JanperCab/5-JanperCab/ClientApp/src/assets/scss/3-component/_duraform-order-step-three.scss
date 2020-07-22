@@ -49,6 +49,8 @@ app-duraform-order-step-three {
     flex-direction: column;
     overflow-y: auto;
     width: 30rem;
+
+    @include hide-scrollbar;
   }
 
   .selection-list {

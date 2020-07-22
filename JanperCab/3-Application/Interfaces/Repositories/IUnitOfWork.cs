@@ -4,6 +4,8 @@ namespace _3_Application.Interfaces.Repositories
 {
     public interface IUnitOfWork
     {
+        ICustomerRepo Customers { get; }
+
         IDuraformSerieRepo DuraformSeries { get; }
 
         IDuraformDesignRepo DuraformDesigns { get; }

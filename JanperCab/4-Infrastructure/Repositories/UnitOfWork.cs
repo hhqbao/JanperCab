@@ -8,6 +8,8 @@ namespace _4_Infrastructure.Repositories
     {
         private readonly ApplicationDbContext _dbContext;
 
+        public ICustomerRepo Customers { get; }
+
         public IDuraformSerieRepo DuraformSeries { get; }
 
         public IDuraformDesignRepo DuraformDesigns { get; }
@@ -36,6 +38,7 @@ namespace _4_Infrastructure.Repositories
         {
             _dbContext = dbContext;
 
+            Customers = new CustomerRepo(_dbContext);
             DuraformSeries = new DuraformSerieRepo(_dbContext);
             DuraformDesigns = new DuraformDesignRepo(_dbContext);
             DuraformWrapTypes = new DuraformWrapTypeRepo(_dbContext);

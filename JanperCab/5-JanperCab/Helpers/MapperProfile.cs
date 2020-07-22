@@ -1,4 +1,5 @@
 ﻿using _1_Domain;
+using _3_Application.Dtos.Customer;
 using _3_Application.Dtos.DuraformArch;
 using _3_Application.Dtos.DuraformComponent;
 using _3_Application.Dtos.DuraformDesign;
@@ -23,6 +24,9 @@ namespace _5_JanperCab.Helpers
     {
         public MapperProfile()
         {
+            CreateMap<Customer, CustomerDto>();
+            CreateMap<CustomerDto, Customer>();
+
             CreateMap<DuraformSerie, DuraformSerieForList>();
 
             CreateMap<DuraformDesign, DuraformDesignForOrderMenu>()

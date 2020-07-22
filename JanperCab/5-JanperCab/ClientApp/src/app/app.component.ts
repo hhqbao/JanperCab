@@ -1,3 +1,5 @@
+import { CustomerDto } from './_models/customer/CustomerDto';
+import { plainToClass } from 'class-transformer';
 import { AuthService } from './_services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControlName } from '@angular/forms';
@@ -25,9 +27,14 @@ export class AppComponent implements OnInit {
 
   loadToken = () => {
     const token = localStorage.getItem('token');
+    const customerString = localStorage.getItem('customer');
 
-    if (token) {
+    if (token && customerString) {
       this.auth.token = token;
+      this.auth.customer = plainToClass(
+        CustomerDto,
+        JSON.parse(customerString)
+      );
     }
   };
 }

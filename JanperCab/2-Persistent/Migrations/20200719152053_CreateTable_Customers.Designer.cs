@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _2_Persistent;
 
 namespace _2_Persistent.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200719152053_CreateTable_Customers")]
+    partial class CreateTable_Customers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,7 +250,7 @@ namespace _2_Persistent.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -313,37 +315,50 @@ namespace _2_Persistent.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CustomerLevel")
+                        .HasColumnType("int");
+
                     b.Property<string>("DeliveryAddress")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("DeliveryPostcode")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("DeliveryState")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("DeliverySuburb")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("DeliveryTo")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("varchar(MAX)");
 
                     b.Property<string>("InvoiceAddress")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("InvoicePostcode")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("InvoiceState")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("InvoiceSuburb")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("InvoiceTo")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("Name")
@@ -525,27 +540,9 @@ namespace _2_Persistent.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CustomerOrderNumber")
                         .IsRequired()
                         .HasColumnType("varchar(500)");
-
-                    b.Property<string>("DeliveryAddress")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("DeliveryPostcode")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("DeliveryState")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("DeliverySuburb")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("DeliveryTo")
-                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -572,21 +569,6 @@ namespace _2_Persistent.Migrations
                     b.Property<int?>("HingeHoleTypeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("InvoiceAddress")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("InvoicePostcode")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("InvoiceState")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("InvoiceSuburb")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("InvoiceTo")
-                        .HasColumnType("varchar(255)");
-
                     b.Property<bool>("IsRoutingOnly")
                         .HasColumnType("bit");
 
@@ -599,8 +581,6 @@ namespace _2_Persistent.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedByUserId");
-
-                    b.HasIndex("CustomerId");
 
                     b.HasIndex("DuraformArchId");
 
@@ -997,8 +977,7 @@ namespace _2_Persistent.Migrations
                     b.HasOne("_1_Domain.Customer", "Customer")
                         .WithMany("ApplicationUsers")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("_1_Domain.DuraformComponent", b =>
@@ -1040,12 +1019,6 @@ namespace _2_Persistent.Migrations
                     b.HasOne("_1_Domain.ApplicationUser", "CreatedByUser")
                         .WithMany("DuraformForms")
                         .HasForeignKey("CreatedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("_1_Domain.Customer", "Customer")
-                        .WithMany("DuraformForms")
-                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

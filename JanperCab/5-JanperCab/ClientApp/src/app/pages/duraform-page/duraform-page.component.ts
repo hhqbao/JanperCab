@@ -46,9 +46,7 @@ export class DuraformPageComponent implements OnInit {
     private optionTypeService: DuraformOptionTypeService,
     private hingeHoleTypeService: HingeHoleTypeService,
     private componentService: DuraformComponentService
-  ) {
-    this.order.reset();
-  }
+  ) {}
 
   ngOnInit() {
     this.layout.toggleLeftNav(true);
@@ -112,6 +110,7 @@ export class DuraformPageComponent implements OnInit {
             break;
         }
       } else {
+        this.order.loadNewDraft();
         this.layout.closeLoadingPanel();
         this.isLoadingAsset = false;
       }

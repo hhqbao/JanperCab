@@ -39,5 +39,13 @@ namespace _4_Infrastructure.Repositories
             _dbSet.Add(newDraft);
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<int> CountDraftAsync(string userId)
+        {
+            var count = await _dbSet.CountAsync(x =>
+                x.OrderType == DuraformOrderType.Draft && x.CreatedByUserId.Equals(userId));
+
+            return count;
+        }
     }
 }

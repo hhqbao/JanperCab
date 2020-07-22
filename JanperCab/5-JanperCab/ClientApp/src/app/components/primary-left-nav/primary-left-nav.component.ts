@@ -1,3 +1,6 @@
+import { DialogService } from './../../_services/dialog.service';
+import { DashboardService } from './../../_services/dashboard.service';
+import { AuthService } from './../../_services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -5,7 +8,25 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: 'primary-left-nav.component.html',
 })
 export class PrimaryLeftNavComponent implements OnInit {
-  constructor() {}
+  numberOfDrafts = 0;
 
-  ngOnInit() {}
+  constructor(
+    private dashboard: DashboardService,
+    private dialog: DialogService
+  ) {}
+
+  ngOnInit() {
+    this.countDraft();
+  }
+
+  private countDraft = () => {
+    this.dashboard.countDraft().subscribe(
+      (response) => {
+        this.numberOfDrafts = response;
+      },
+      (error) => {
+        this.dialog.error(error);
+      }
+    );
+  };
 }

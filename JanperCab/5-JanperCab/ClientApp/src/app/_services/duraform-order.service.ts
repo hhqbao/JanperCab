@@ -1,3 +1,4 @@
+import { AuthService } from './auth.service';
 import { DuraformDrawerDto } from './../_models/duraform-component/DuraformDrawerDto';
 import { DuraformEndPanelDto } from './../_models/duraform-component/DuraformEndPanelDto';
 import { DuraformPantryDoorDto } from './../_models/duraform-component/DuraformPantryDoorDto';
@@ -24,7 +25,11 @@ import { DuraformComponentDto } from '../_models/duraform-component/DuraformComp
 export class DuraformOrderService {
   private duraformForm: DuraformFormDto;
 
-  constructor(private http: HttpClient, private asset: DuraformAssetService) {
+  constructor(
+    private http: HttpClient,
+    private asset: DuraformAssetService,
+    private auth: AuthService
+  ) {
     this.duraformForm = new DuraformDraftDto();
   }
 
@@ -34,6 +39,94 @@ export class DuraformOrderService {
 
   set customerOrderNumber(orderNumber: string) {
     this.duraformForm.customerOrderNumber = orderNumber;
+  }
+
+  get customerId(): number {
+    return this.duraformForm.customerId;
+  }
+
+  set customerId(value: number) {
+    this.duraformForm.customerId = value;
+  }
+
+  get invoiceTo(): string {
+    return this.duraformForm.invoiceTo;
+  }
+
+  set invoiceTo(value: string) {
+    this.duraformForm.invoiceTo = value;
+  }
+
+  get invoiceAddress(): string {
+    return this.duraformForm.invoiceAddress;
+  }
+
+  set invoiceAddress(value: string) {
+    this.duraformForm.invoiceAddress = value;
+  }
+
+  get invoiceSuburb(): string {
+    return this.duraformForm.invoiceSuburb;
+  }
+
+  set invoiceSuburb(value: string) {
+    this.duraformForm.invoiceSuburb = value;
+  }
+
+  get invoiceState(): string {
+    return this.duraformForm.invoiceState;
+  }
+
+  set invoiceState(value: string) {
+    this.duraformForm.invoiceState = value;
+  }
+
+  get invoicePostcode(): string {
+    return this.duraformForm.invoicePostcode;
+  }
+
+  set invoicePostcode(value: string) {
+    this.duraformForm.invoicePostcode = value;
+  }
+
+  get deliveryTo(): string {
+    return this.duraformForm.deliveryTo;
+  }
+
+  set deliveryTo(value: string) {
+    this.duraformForm.deliveryTo = value;
+  }
+
+  get deliveryAddress(): string {
+    return this.duraformForm.deliveryAddress;
+  }
+
+  set deliveryAddress(value: string) {
+    this.duraformForm.deliveryAddress = value;
+  }
+
+  get deliverySuburb(): string {
+    return this.duraformForm.deliverySuburb;
+  }
+
+  set deliverySuburb(value: string) {
+    this.duraformForm.deliverySuburb = value;
+  }
+
+  get deliveryState(): string {
+    return this.duraformForm.deliveryState;
+  }
+
+  set deliveryState(value: string) {
+    this.duraformForm.deliveryState = value;
+  }
+
+  get deliveryPostcode(): string {
+    return this.duraformForm.deliveryPostcode;
+  }
+
+  set deliveryPostcode(value: string) {
+    this.duraformForm.deliveryPostcode = value;
   }
 
   get selectedDesign(): DuraformDesignForOrderMenu {
@@ -206,7 +299,6 @@ export class DuraformOrderService {
     return this.http.get<DuraformDraftDto>(url).pipe(
       map((response) => {
         this.duraformForm = plainToClass(DuraformDraftDto, response);
-        console.log(this.duraformForm);
       })
     );
   };
@@ -237,7 +329,18 @@ export class DuraformOrderService {
     }
   };
 
-  reset = () => {
+  loadNewDraft = () => {
     this.duraformForm = new DuraformDraftDto();
+    this.duraformForm.customerId = this.auth.customer.id;
+    this.duraformForm.invoiceTo = this.auth.customer.invoiceTo;
+    this.duraformForm.invoiceAddress = this.auth.customer.invoiceAddress;
+    this.duraformForm.invoiceSuburb = this.auth.customer.invoiceSuburb;
+    this.duraformForm.invoiceState = this.auth.customer.invoiceState;
+    this.duraformForm.invoicePostcode = this.auth.customer.invoicePostcode;
+    this.duraformForm.deliveryTo = this.auth.customer.deliveryTo;
+    this.duraformForm.deliveryAddress = this.auth.customer.deliveryAddress;
+    this.duraformForm.deliverySuburb = this.auth.customer.deliverySuburb;
+    this.duraformForm.deliveryState = this.auth.customer.deliveryState;
+    this.duraformForm.deliveryPostcode = this.auth.customer.deliveryPostcode;
   };
 }

@@ -21,6 +21,18 @@ export abstract class DuraformFormDto {
   createdDate: Date;
   lastUpdated: Date;
 
+  customerId: number;
+  invoiceTo: string;
+  invoiceAddress: string;
+  invoiceSuburb: string;
+  invoiceState: string;
+  invoicePostcode: string;
+  deliveryTo: string;
+  deliveryAddress: string;
+  deliverySuburb: string;
+  deliveryState: string;
+  deliveryPostcode: string;
+
   @Type(() => DuraformComponentDto, {
     keepDiscriminatorProperty: true,
     discriminator: {

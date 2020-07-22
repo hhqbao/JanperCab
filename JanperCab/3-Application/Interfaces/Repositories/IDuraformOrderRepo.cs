@@ -12,5 +12,7 @@ namespace _3_Application.Interfaces.Repositories
         Task<DuraformDraft> GetDraftAsync(Guid draftId);
 
         Task UpdateDraftAsync(DuraformDraft draftInDb, DuraformDraft newDraft);
+
+        Task<int> CountDraftAsync(string userId);
     }
 }

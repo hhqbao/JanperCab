@@ -38,6 +38,10 @@
     <Compile Remove="Migrations\20200714011527_foo.Designer.cs" />
     <Compile Remove="Migrations\20200714035251_MakeExtraValuesNullable.cs" />
     <Compile Remove="Migrations\20200714035251_MakeExtraValuesNullable.Designer.cs" />
+    <Compile Remove="Migrations\20200719151709_CreateTable_Customers.cs" />
+    <Compile Remove="Migrations\20200719151709_CreateTable_Customers.Designer.cs" />
+    <Compile Remove="Migrations\20200719152015_CreateTable_Customers.cs" />
+    <Compile Remove="Migrations\20200719152015_CreateTable_Customers.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,3 +1,5 @@
+import { plainToClass } from 'class-transformer';
+import { CustomerDto } from './../_models/customer/CustomerDto';
 import { UserTokenDto } from './../_models/auth/UserTokenDto';
 import { UserForRegister } from './../_models/auth/UserForRegister';
 import { Injectable, OnInit } from '@angular/core';
@@ -16,6 +18,7 @@ export class AuthService {
   private jwtHelper: JwtHelperService;
 
   token: string;
+  customer: CustomerDto;
 
   constructor(private http: HttpClient, private dialogService: DialogService) {
     this.jwtHelper = new JwtHelperService();
@@ -44,7 +47,10 @@ export class AuthService {
         map((response: any) => {
           if (response) {
             this.token = response.token;
+            this.customer = plainToClass(CustomerDto, response.customer);
+
             localStorage.setItem('token', this.token);
+            localStorage.setItem('customer', JSON.stringify(response.customer));
           }
         })
       );
@@ -52,7 +58,9 @@ export class AuthService {
 
   logOut = () => {
     this.token = null;
+    this.customer = null;
     localStorage.removeItem('token');
+    localStorage.removeItem('customer');
     this.dialogService.message('You have been logged out!');
   };
 }
