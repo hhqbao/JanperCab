@@ -1,3 +1,14 @@
+import { FloatBoxComponent } from './components/float-box/float-box.component';
+import { CustomerService } from './_services/customer.service';
+import { CabinetMakerListPageComponent } from './pages/cabinet-maker-list-page/cabinet-maker-list-page.component';
+import { CommonAssetsService } from './_services/common-assets.service';
+import { CabinetMakerFormComponent } from './components/cabinet-maker-form/cabinet-maker-form.component';
+import { LeadingPipe } from './_pipes/leading.pipe';
+import { DuraformQuotePageComponent } from './pages/duraform-quote-page/duraform-quote-page.component';
+import { DuraformDraftService } from './_services/duraform-draft.service';
+import { DraftListSmallComponent } from './components/draft-list-small/draft-list-small.component';
+import { LatestItemsComponent } from './components/latest-items/latest-items.ccomponent';
+import { SimpleBoxComponent } from './components/simple-box/simple-box.component';
 import { DashboardService } from './_services/dashboard.service';
 import { ClassToggleDirective } from './_directives/class-toggle.directive';
 import { DuraformComponentService } from './_services/duraform-component.service';
@@ -65,6 +76,7 @@ import { environment } from 'src/environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { routes } from './app.routes';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { NgxBarcodeModule } from 'ngx-barcode';
 
 import { JwtModule } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
@@ -88,6 +100,8 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
 @NgModule({
   declarations: [
     AppComponent,
+    LeadingPipe,
+    FloatBoxComponent,
     ClassToggleDirective,
     DropdownBtnDirective,
     FormInvalidFocusDirective,
@@ -96,6 +110,8 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
     OrderFormDirective,
     RemoveTagDirective,
     BoxComponent,
+    SimpleBoxComponent,
+    LatestItemsComponent,
     SelectMenuComponent,
     PrimaryLayoutComponent,
     PrimaryTopNavComponent,
@@ -141,12 +157,17 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
     DuraformPantryDoorComponentListComponent,
     EndPanelComponentListComponent,
     DuraformDrawerComponentListComponent,
+    DraftListSmallComponent,
+    CabinetMakerFormComponent,
     LoginPageComponent,
     HomePageComponent,
+    CabinetMakerListPageComponent,
     DuraformPageComponent,
+    DuraformQuotePageComponent,
   ],
   imports: [
     BrowserModule,
+    NgxBarcodeModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
@@ -161,10 +182,12 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
   ],
   providers: [
+    CommonAssetsService,
     AuthService,
     DialogService,
     LayoutService,
     DashboardService,
+    CustomerService,
     DuraformAssetService,
     DuraformComponentService,
     DuraformSerieService,
@@ -173,6 +196,7 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
     DuraformWrapColorService,
     DuraformEdgeProfileService,
     DuraformOrderService,
+    DuraformDraftService,
     DuraformArchService,
     PantryDoorChairRailTypeService,
     DuraformDrawerTypeService,

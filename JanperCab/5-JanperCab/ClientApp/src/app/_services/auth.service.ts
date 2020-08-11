@@ -1,8 +1,7 @@
-import { plainToClass } from 'class-transformer';
-import { CustomerDto } from './../_models/customer/CustomerDto';
+import { Role } from './../_enums/Role';
+import { plainToClass, classToClass, classToPlain } from 'class-transformer';
 import { UserTokenDto } from './../_models/auth/UserTokenDto';
-import { UserForRegister } from './../_models/auth/UserForRegister';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -10,6 +9,7 @@ import { environment } from './../../environments/environment';
 
 import UserForLogin from 'src/app/_models/auth/UserForLogin';
 import { DialogService } from './dialog.service';
+import { CustomerDto } from '../_models/customer/CustomerDto';
 
 @Injectable({
   providedIn: 'root',
@@ -17,11 +17,19 @@ import { DialogService } from './dialog.service';
 export class AuthService {
   private jwtHelper: JwtHelperService;
 
-  token: string;
-  customer: CustomerDto;
+  private userToken: UserTokenDto;
 
   constructor(private http: HttpClient, private dialogService: DialogService) {
     this.jwtHelper = new JwtHelperService();
+    this.userToken = new UserTokenDto();
+  }
+
+  get token(): string {
+    return this.userToken.token;
+  }
+
+  get customer(): CustomerDto {
+    return this.userToken.customer;
   }
 
   get decodedToken() {
@@ -29,7 +37,7 @@ export class AuthService {
       return null;
     }
 
-    return this.jwtHelper.decodeToken(this.token);
+    return this.jwtHelper.decodeToken(this.userToken.token);
   }
 
   get isLoggedIn(): boolean {
@@ -37,28 +45,48 @@ export class AuthService {
       return false;
     }
 
-    return !this.jwtHelper.isTokenExpired(this.token);
+    return !this.jwtHelper.isTokenExpired(this.userToken.token);
   }
+
+  loadStoredToken = () => {
+    const token = localStorage.getItem('token');
+    const customerString = localStorage.getItem('customer');
+
+    const plainObject = {
+      token,
+      customer: JSON.parse(customerString),
+    };
+
+    if (token && customerString) {
+      this.userToken = plainToClass(UserTokenDto, plainObject);
+    }
+  };
 
   login = (model: UserForLogin) => {
     return this.http
       .post<UserTokenDto>(environment.baseUrl + '/auth/login', model)
       .pipe(
-        map((response: any) => {
+        map((response) => {
           if (response) {
-            this.token = response.token;
-            this.customer = plainToClass(CustomerDto, response.customer);
+            this.userToken = plainToClass(UserTokenDto, response);
 
-            localStorage.setItem('token', this.token);
+            localStorage.setItem('token', this.userToken.token);
             localStorage.setItem('customer', JSON.stringify(response.customer));
           }
         })
       );
   };
 
+  isInRole = (role: string): boolean => {
+    if (!this.decodedToken) {
+      return false;
+    }
+
+    return this.decodedToken.role === role;
+  };
+
   logOut = () => {
-    this.token = null;
-    this.customer = null;
+    this.userToken = new UserTokenDto();
     localStorage.removeItem('token');
     localStorage.removeItem('customer');
     this.dialogService.message('You have been logged out!');

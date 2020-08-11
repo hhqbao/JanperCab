@@ -41,7 +41,12 @@ namespace _1_Domain
 
         public DateTime? LastUpdated { get; set; }
 
-        public int CustomerId { get; set; }
+
+        public int DistributorId { get; set; }
+
+        public int CabinetMakerId { get; set; }
+
+
 
         public string InvoiceTo { get; set; }
 
@@ -63,7 +68,13 @@ namespace _1_Domain
 
         public string DeliveryPostcode { get; set; }
 
-        public virtual Customer Customer { get; set; }
+        public string DeliveryNote { get; set; }
+
+
+        public virtual Distributor Distributor { get; set; }
+
+        public virtual CabinetMaker CabinetMaker { get; set; }
+
 
         public virtual DuraformDesign DuraformDesign { get; set; }
 

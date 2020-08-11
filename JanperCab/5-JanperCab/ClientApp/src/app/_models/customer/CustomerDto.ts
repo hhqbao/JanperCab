@@ -1,19 +1,10 @@
-import { CustomerLevel } from './../../_enums/CustomerLevel';
-export class CustomerDto {
+import { CustomerType } from './../../_enums/CustomerType';
+
+export abstract class CustomerDto {
   id: number;
-  customerLevel: CustomerLevel;
+  customerType: CustomerType;
   name: string;
   imageUrl: string;
-
-  invoiceTo: string;
-  invoiceAddress: string;
-  invoiceSuburb: string;
-  invoiceState: string;
-  invoicePostcode: string;
-
-  deliveryTo: string;
-  deliveryAddress: string;
-  deliverySuburb: string;
-  deliveryState: string;
-  deliveryPostcode: string;
+  email: string;
+  phone: string;
 }

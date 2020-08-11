@@ -1,3 +1,5 @@
+import { Role } from './../../_enums/Role';
+import { CustomerType } from './../../_enums/CustomerType';
 import { DialogService } from './../../_services/dialog.service';
 import { DashboardService } from './../../_services/dashboard.service';
 import { AuthService } from './../../_services/auth.service';
@@ -8,10 +10,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: 'primary-left-nav.component.html',
 })
 export class PrimaryLeftNavComponent implements OnInit {
-  numberOfDrafts = 0;
+  role = Role;
 
   constructor(
-    private dashboard: DashboardService,
+    public auth: AuthService,
+    public dashboard: DashboardService,
     private dialog: DialogService
   ) {}
 
@@ -22,7 +25,7 @@ export class PrimaryLeftNavComponent implements OnInit {
   private countDraft = () => {
     this.dashboard.countDraft().subscribe(
       (response) => {
-        this.numberOfDrafts = response;
+        this.dashboard.numberOfDrafts = response;
       },
       (error) => {
         this.dialog.error(error);

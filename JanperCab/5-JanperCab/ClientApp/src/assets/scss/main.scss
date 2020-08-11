@@ -5,6 +5,7 @@
 @import "./2-base/base";
 @import "./2-base/typography";
 @import "./2-base/animation";
+@import "./3-component/simple-box";
 @import "./3-component/box";
 @import "./3-component/button";
 @import "./3-component/form";
@@ -31,10 +32,15 @@
 @import "./3-component/duraform-option-double-sided-form";
 @import "./3-component/duraform-option-pane-frame-form";
 @import "./3-component/badge";
+@import "./3-component/latest-items";
+@import "./3-component/component-list";
+@import "./3-component/cabinet-maker-form";
+@import "./3-component/float-box";
 @import "./4-layout/grid";
 @import "./4-layout/primary-layout";
 @import "./5-page/duraform-page";
 @import "./5-page/login-page";
+@import "./5-page/duraform-quote-page";
 
 @import "./../../../node_modules/alertifyjs/build/css/alertify.min.css";
 .ajs-message {

@@ -22,6 +22,26 @@
   padding-right: 3rem;
 }
 
+.text-blue {
+  color: $blue-primary !important;
+}
+
+.text-brown {
+  color: $brown-primary !important;
+}
+
+.text-orange {
+  color: $orange-primary !important;
+}
+
+.text-purple {
+  color: $purple-primary !important;
+}
+
+.text-green {
+  color: $green-primary !important;
+}
+
 .img-loader {
   animation: fadeIn 0.3s ease;
   align-items: center;

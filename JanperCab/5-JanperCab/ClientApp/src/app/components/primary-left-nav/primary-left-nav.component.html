@@ -11,7 +11,7 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <div class="nav__item__icon blue">
+          <div class="nav__item__icon text-blue">
             <i class="fa fa-home"></i>
           </div>
           <div class="nav__item__text">
@@ -21,7 +21,7 @@
       </li>
       <li class="nav__item">
         <a>
-          <div class="nav__item__icon brown">
+          <div class="nav__item__icon text-brown">
             <i class="fa fa-envelope-o"></i>
           </div>
           <div class="nav__item__text">
@@ -29,9 +29,19 @@
           </div>
         </a>
       </li>
+      <li class="nav__item" *ngIf="auth.isInRole(role.Distributor)">
+        <a [routerLink]="['/dashboard/customers']">
+          <div class="nav__item__icon text-purple">
+            <i class="fa fa-address-book" aria-hidden="true"></i>
+          </div>
+          <div class="nav__item__text">
+            Customers
+          </div>
+        </a>
+      </li>
       <li class="nav__item">
         <a [appClassToggle]="'active'">
-          <div class="nav__item__icon orange">
+          <div class="nav__item__icon text-orange">
             <i class="fa fa-table"></i>
           </div>
           <div class="nav__item__text">
@@ -44,7 +54,8 @@
               </li>
               <li>
                 <a>
-                  Drafts <span class="badge">{{ numberOfDrafts }}</span>
+                  Drafts
+                  <span class="badge">{{ dashboard.numberOfDrafts }}</span>
                 </a>
               </li>
               <li>

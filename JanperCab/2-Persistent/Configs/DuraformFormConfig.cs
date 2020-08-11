@@ -17,34 +17,47 @@ namespace _2_Persistent.Configs
                 .IsRequired();
 
             builder.Property(x => x.InvoiceTo)
+                .IsRequired()
                 .HasColumnType("varchar(255)");
 
             builder.Property(x => x.InvoiceAddress)
+                .IsRequired()
                 .HasColumnType("varchar(255)");
 
             builder.Property(x => x.InvoiceSuburb)
+                .IsRequired()
                 .HasColumnType("varchar(255)");
 
             builder.Property(x => x.InvoiceState)
+                .IsRequired()
                 .HasColumnType("varchar(255)");
 
             builder.Property(x => x.InvoicePostcode)
+                .IsRequired()
                 .HasColumnType("varchar(255)");
 
             builder.Property(x => x.DeliveryTo)
+                .IsRequired()
                 .HasColumnType("varchar(255)");
 
             builder.Property(x => x.DeliveryAddress)
+                .IsRequired()
                 .HasColumnType("varchar(255)");
 
             builder.Property(x => x.DeliverySuburb)
+                .IsRequired()
                 .HasColumnType("varchar(255)");
 
             builder.Property(x => x.DeliveryState)
+                .IsRequired()
                 .HasColumnType("varchar(255)");
 
             builder.Property(x => x.DeliveryPostcode)
+                .IsRequired()
                 .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.DeliveryNote)
+                .HasColumnType("varchar(2000)");
 
             builder.HasOne(x => x.DuraformDesign)
                 .WithMany(y => y.DuraformForms)
@@ -88,6 +101,18 @@ namespace _2_Persistent.Configs
                 .WithMany(y => y.DuraformForms)
                 .HasForeignKey(x => x.CreatedByUserId)
                 .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.Distributor)
+                .WithMany(y => y.DuraformForms)
+                .IsRequired()
+                .HasForeignKey(x => x.DistributorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.CabinetMaker)
+                .WithMany(y => y.DuraformForms)
+                .IsRequired()
+                .HasForeignKey(x => x.CabinetMakerId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

@@ -1,0 +1,43 @@
+<div class="customer-list-page">
+  <app-cabinet-maker-form
+    *ngIf="showCabinetMakerForm"
+    [cabinetMaker]="selectedCabinetMaker"
+    (submitForm)="onSubmitMakerForm($event)"
+    (closeForm)="showCabinetMakerForm = false"
+  ></app-cabinet-maker-form>
+  <app-simple-box [heading]="'Customer List'">
+    <div style="margin-bottom: 2rem;">
+      <button
+        type="button"
+        class="btn btn--primary"
+        (click)="onAddingNewCabinetMaker()"
+      >
+        <i class="fa fa-plus"></i>
+        Add New Customer
+      </button>
+    </div>
+    <table class="table table--hovered left">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Invoice Address</th>
+          <th>Delivery Address</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let maker of cabinetMakerList"
+          (click)="onSelectCabinetMaker(maker)"
+        >
+          <td>{{ maker.name }}</td>
+          <td>{{ maker.email }}</td>
+          <td>{{ maker.invoiceDetails }}</td>
+          <td>{{ maker.deliveryDetails }}</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </app-simple-box>
+</div>

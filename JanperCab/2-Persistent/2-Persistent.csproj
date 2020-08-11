@@ -42,6 +42,18 @@
     <Compile Remove="Migrations\20200719151709_CreateTable_Customers.Designer.cs" />
     <Compile Remove="Migrations\20200719152015_CreateTable_Customers.cs" />
     <Compile Remove="Migrations\20200719152015_CreateTable_Customers.Designer.cs" />
+    <Compile Remove="Migrations\20200726012457_CreateTable_DuraformQuotes.cs" />
+    <Compile Remove="Migrations\20200726012457_CreateTable_DuraformQuotes.Designer.cs" />
+    <Compile Remove="Migrations\20200726012629_CreateTable_DuraformQuotes.cs" />
+    <Compile Remove="Migrations\20200726012629_CreateTable_DuraformQuotes.Designer.cs" />
+    <Compile Remove="Migrations\20200730105843_RemoveTable_Customers.cs" />
+    <Compile Remove="Migrations\20200730105843_RemoveTable_Customers.Designer.cs" />
+    <Compile Remove="Migrations\20200809224758_Foo.cs" />
+    <Compile Remove="Migrations\20200809224758_Foo.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ValueGenerators\QuoteNumberGenerator.cs~RF33cb614e.TMP" />
   </ItemGroup>
 
   <ItemGroup>

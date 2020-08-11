@@ -1,1 +1,17 @@
-<div class="home-page"></div>
+<div class="home-page">
+  <div class="row">
+    <div class="col-3-5">
+      <app-latest-items></app-latest-items>
+    </div>
+    <div class="col-1-3">
+      <app-simple-box [heading]="'Notifications'">
+        Notifications here
+      </app-simple-box>
+    </div>
+    <div class="col-1-3">
+      <app-simple-box [heading]="'Emails'">
+        My Emails
+      </app-simple-box>
+    </div>
+  </div>
+</div>

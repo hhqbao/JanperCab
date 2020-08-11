@@ -1,5 +1,5 @@
 ﻿using _1_Domain;
-using _3_Application.Dtos.DuraformOrder;
+using _3_Application.Dtos.DuraformDraft;
 using _3_Application.Interfaces.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace _5_JanperCab.Controllers
@@ -27,12 +28,16 @@ namespace _5_JanperCab.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("GetSmallList")]
+        public async Task<IActionResult> GetSmallList()
         {
-            var drafts = await _unitOfWork.DuraformOrders.GetDraftsAsync();
+            var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
 
-            return Ok(_mapper.Map<List<DuraformDraft>, List<DuraformDraftDto>>(drafts));
+            var drafts = currentUser.DuraformForms.OfType<DuraformDraft>().Take(10).ToList();
+
+            var draftDtos = _mapper.Map<List<DuraformDraft>, List<DuraformDraftForSmallList>>(drafts);
+
+            return Ok(draftDtos.OrderByDescending(x => x.CreatedDate).ToList());
         }
 
         [HttpGet("{id}")]
@@ -59,19 +64,22 @@ namespace _5_JanperCab.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(DuraformDraftDto draftDto)
         {
-            var customer = await _unitOfWork.Customers.GetAsync(draftDto.CustomerId);
+            var distributor = await _unitOfWork.Customers.GetDistributorAsync(draftDto.DistributorId);
 
-            if (customer == null)
-                return BadRequest("Customer Not Found!");
+            if (distributor == null)
+                return BadRequest("Distributor Not Found!");
+
+            var cabinetMaker = await _unitOfWork.Customers.GetCabinetMakerAsync(draftDto.CabinetMakerId);
+
+            if (cabinetMaker == null)
+                return BadRequest("Cabinet Maker Not Found!");
 
             var draft = new DuraformDraft();
             _mapper.Map(draftDto, draft);
 
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
-            draft.CreatedByUserId = currentUser.Id;
-            draft.CustomerId = customer.Id;
 
-            _unitOfWork.DuraformOrders.Add(draft);
+            await _unitOfWork.DuraformOrders.AddAsync(draft, distributor, currentUser);
             await _unitOfWork.CompleteAsync();
 
             return Ok(_mapper.Map<DuraformDraft, DuraformDraftDto>(draft));
@@ -84,6 +92,16 @@ namespace _5_JanperCab.Controllers
 
             if (draftInDb == null)
                 return BadRequest("Draft Not Found!");
+
+            var distributor = await _unitOfWork.Customers.GetDistributorAsync(draftDto.DistributorId);
+
+            if (distributor == null)
+                return BadRequest("Distributor Not Found!");
+
+            var cabinetMaker = await _unitOfWork.Customers.GetCabinetMakerAsync(draftDto.CabinetMakerId);
+
+            if (cabinetMaker == null)
+                return BadRequest("Cabinet Maker Not Found!");
 
             draftInDb = _mapper.Map(draftDto, draftInDb);
             draftInDb.LastUpdated = DateTime.Now;

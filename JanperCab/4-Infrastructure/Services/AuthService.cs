@@ -1,7 +1,6 @@
 ﻿using _1_Domain;
 using _3_Application.Dtos.Auth;
 using _3_Application.Dtos.Customer;
-using _3_Application.Interfaces.Repositories;
 using _3_Application.Interfaces.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
@@ -16,15 +15,13 @@ namespace _4_Infrastructure.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ITokenGenerator _tokenGenerator;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ITokenGenerator tokenGenerator, IUnitOfWork unitOfWork, IMapper mapper)
+        public AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ITokenGenerator tokenGenerator, IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenGenerator = tokenGenerator;
-            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 

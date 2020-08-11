@@ -1,32 +1,46 @@
-import { FormControl, FormBuilder, Validators } from '@angular/forms';
+import { CommonAssetsService } from './../../_services/common-assets.service';
+import {
+  FormControl,
+  FormBuilder,
+  Validators,
+  FormGroup,
+} from '@angular/forms';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-invoice-detail-form',
   templateUrl: 'invoice-detail-form.component.html',
 })
 export class InvoiceDetailFormComponent implements OnInit {
-  stateControl: FormControl;
-  states: any[] = [
-    { text: 'ACT', value: 'ACT' },
-    { text: 'NSW', value: 'NSW' },
-    { text: 'NT', value: 'NT' },
-    { text: 'QLD', value: 'QLD' },
-    { text: 'SA', value: 'SA' },
-    { text: 'TAS', value: 'TAS' },
-    { text: 'VIC', value: 'VIC' },
-  ];
+  @Output() update = new EventEmitter<any>();
+  @Output() cancel = new EventEmitter();
 
-  constructor(public order: DuraformOrderService, private fb: FormBuilder) {}
+  formGroup: FormGroup;
+
+  constructor(
+    public order: DuraformOrderService,
+    private fb: FormBuilder,
+    public commonAssets: CommonAssetsService
+  ) {}
 
   ngOnInit() {
-    this.stateControl = this.fb.control('', [Validators.required]);
-
-    this.stateControl.patchValue(this.order.invoiceState);
+    this.formGroup = this.fb.group({
+      invoiceTo: [this.order.invoiceTo, [Validators.required]],
+      invoiceAddress: [this.order.invoiceAddress, [Validators.required]],
+      invoiceSuburb: [this.order.invoiceSuburb, [Validators.required]],
+      invoiceState: [this.order.invoiceState, [Validators.required]],
+      invoicePostcode: [this.order.invoicePostcode, [Validators.required]],
+    });
   }
 
-  onSelectState = () => {
-    this.order.invoiceState = this.stateControl.value;
+  onSubmit = () => {
+    const values = this.formGroup.value;
+
+    this.update.emit(values);
+  };
+
+  onCancel = () => {
+    this.cancel.emit();
   };
 }

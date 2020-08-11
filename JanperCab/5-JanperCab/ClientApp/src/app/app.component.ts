@@ -22,19 +22,6 @@ export class AppComponent implements OnInit {
   constructor(private auth: AuthService) {}
 
   ngOnInit(): void {
-    this.loadToken();
+    this.auth.loadStoredToken();
   }
-
-  loadToken = () => {
-    const token = localStorage.getItem('token');
-    const customerString = localStorage.getItem('customer');
-
-    if (token && customerString) {
-      this.auth.token = token;
-      this.auth.customer = plainToClass(
-        CustomerDto,
-        JSON.parse(customerString)
-      );
-    }
-  };
 }

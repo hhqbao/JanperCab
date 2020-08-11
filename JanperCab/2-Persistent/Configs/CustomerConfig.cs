@@ -22,43 +22,15 @@ namespace _2_Persistent.Configs
             builder.Property(x => x.ImageUrl)
                 .HasColumnType("varchar(MAX)");
 
-            builder.Property(x => x.InvoiceTo)
+            builder.Property(x => x.Email)
+                .IsRequired()
                 .HasColumnType("varchar(255)");
 
-            builder.Property(x => x.InvoiceAddress)
-                .HasColumnType("varchar(255)");
-
-            builder.Property(x => x.InvoiceSuburb)
-                .HasColumnType("varchar(255)");
-
-            builder.Property(x => x.InvoiceState)
-                .HasColumnType("varchar(255)");
-
-            builder.Property(x => x.InvoicePostcode)
-                .HasColumnType("varchar(255)");
-
-            builder.Property(x => x.DeliveryTo)
-                .HasColumnType("varchar(255)");
-
-            builder.Property(x => x.DeliveryAddress)
-                .HasColumnType("varchar(255)");
-
-            builder.Property(x => x.DeliverySuburb)
-                .HasColumnType("varchar(255)");
-
-            builder.Property(x => x.DeliveryState)
-                .HasColumnType("varchar(255)");
-
-            builder.Property(x => x.DeliveryPostcode)
+            builder.Property(x => x.Phone)
+                .IsRequired()
                 .HasColumnType("varchar(255)");
 
             builder.HasMany(x => x.ApplicationUsers)
-                .WithOne(y => y.Customer)
-                .IsRequired()
-                .HasForeignKey(y => y.CustomerId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasMany(x => x.DuraformForms)
                 .WithOne(y => y.Customer)
                 .IsRequired()
                 .HasForeignKey(y => y.CustomerId)

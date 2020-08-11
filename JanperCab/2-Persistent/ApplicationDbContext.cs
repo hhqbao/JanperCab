@@ -45,21 +45,30 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new PantryDoorChairRailTypeConfig());
             builder.ApplyConfiguration(new DuraformDrawerTypeConfig());
             builder.ApplyConfiguration(new DuraformOptionTypeConfig());
+
             builder.ApplyConfiguration(new HingeHoleTypeConfig());
+            builder.ApplyConfiguration(new HingeHoleOptionConfig());
+
             builder.ApplyConfiguration(new DuraformOptionConfig());
             builder.ApplyConfiguration(new DuraformOptionNoFaceConfig());
             builder.ApplyConfiguration(new DuraformOptionDoubleSidedConfig());
             builder.ApplyConfiguration(new DuraformOptionFoldBackConfig());
             builder.ApplyConfiguration(new DuraformOptionPaneFrameConfig());
+
             builder.ApplyConfiguration(new DuraformFormConfig());
+            builder.ApplyConfiguration(new DuraformDraftConfig());
+            builder.ApplyConfiguration(new DuraformQuoteConfig());
+
             builder.ApplyConfiguration(new DuraformComponentConfig());
             builder.ApplyConfiguration(new DuraformDoorConfig());
             builder.ApplyConfiguration(new DuraformPantryDoorConfig());
             builder.ApplyConfiguration(new DuraformEndPanelConfig());
             builder.ApplyConfiguration(new DuraformDrawerConfig());
-            builder.ApplyConfiguration(new HingeHoleOptionConfig());
-            builder.ApplyConfiguration(new DuraformDraftConfig());
+
             builder.ApplyConfiguration(new CustomerConfig());
+            builder.ApplyConfiguration(new ManufacturerConfig());
+            builder.ApplyConfiguration(new DistributorConfig());
+            builder.ApplyConfiguration(new CabinetMakerConfig());
 
             base.OnModelCreating(builder);
         }

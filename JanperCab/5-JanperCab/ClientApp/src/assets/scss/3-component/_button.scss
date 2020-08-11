@@ -3,6 +3,7 @@
   background-color: transparent;
   cursor: pointer;
   display: inline-block;
+  outline: none;
   position: relative;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -37,6 +38,10 @@
           z-index: 1;
         }
       }
+
+      &:active {
+        transform: translateY(-0.2rem);
+      }
     }
   }
 
@@ -49,6 +54,17 @@
 
   &--secondary {
     background-color: $red-primary;
+    border-radius: 0.4rem;
+    color: white;
+    padding: 1rem 1.5rem;
+
+    &.btn--sm {
+      padding: 0.5rem 1rem;
+    }
+  }
+
+  &--default {
+    background-color: rgba(black, 0.6);
     border-radius: 0.4rem;
     color: white;
     padding: 1rem 1.5rem;

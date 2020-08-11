@@ -6,17 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resolvers\DuraformOptionResolver.cs~RFb74ca20.TMP" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\1-Domain\1-Domain.csproj" />
     <ProjectReference Include="..\2-Persistent\2-Persistent.csproj" />
     <ProjectReference Include="..\3-Application\3-Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resolvers\" />
   </ItemGroup>
 
 </Project>

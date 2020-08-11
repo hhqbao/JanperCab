@@ -1,5 +1,6 @@
+import { DuraformPantryDoorDto } from './../../_models/duraform-component/DuraformPantryDoorDto';
 import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 
 @Component({
@@ -7,10 +8,9 @@ import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
   templateUrl: 'duraform-pantry-door-component-list.component.html',
 })
 export class DuraformPantryDoorComponentListComponent implements OnInit {
-  constructor(
-    public order: DuraformOrderService,
-    public asset: DuraformAssetService
-  ) {}
+  @Input() pantryDoors: DuraformPantryDoorDto[] = [];
+
+  constructor(public asset: DuraformAssetService) {}
 
   ngOnInit() {}
 }

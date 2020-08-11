@@ -14,6 +14,30 @@ namespace _4_Infrastructure.Repositories
         {
         }
 
+        public async Task AddAsync(DuraformForm duraformForm, Distributor distributor, ApplicationUser user)
+        {
+            switch (duraformForm)
+            {
+                case DuraformDraft draft:
+                    break;
+                case DuraformQuote quote:
+                    var latestQuote = await _dbSet.OfType<DuraformQuote>()
+                        .Where(x => x.DistributorId == distributor.Id)
+                        .OrderByDescending(x => x.QuoteNumber)
+                        .FirstOrDefaultAsync();
+
+                    quote.QuoteNumber = latestQuote?.QuoteNumber + 1 ?? 1;
+                    quote.QuoteStatus = QuoteStatus.Pending;
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            duraformForm.CreatedByUserId = user.Id;
+
+            Add(duraformForm);
+        }
+
         public async Task<List<DuraformDraft>> GetDraftsAsync()
         {
             return await _dbSet.OfType<DuraformDraft>().ToListAsync();
@@ -46,6 +70,20 @@ namespace _4_Infrastructure.Repositories
                 x.OrderType == DuraformOrderType.Draft && x.CreatedByUserId.Equals(userId));
 
             return count;
+        }
+
+        public async Task<int> CountFinalizedQuoteAsync(int customerId)
+        {
+            var count = await _dbSet.OfType<DuraformQuote>().CountAsync(x => x.QuoteStatus == QuoteStatus.Finalized);
+
+            return count;
+        }
+
+        public async Task<DuraformQuote> GetQuoteAsync(Guid quoteId, int customerId)
+        {
+            throw new NotImplementedException();
+            //return await _dbSet.OfType<DuraformQuote>()
+            //    .FirstOrDefaultAsync(x => x.Id == quoteId && x.CustomerId == customerId);
         }
     }
 }

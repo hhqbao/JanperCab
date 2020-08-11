@@ -46,6 +46,7 @@
           font-weight: 500;
           padding: 1.2rem 1.5rem;
           padding-left: 2.3rem;
+          text-decoration: none;
 
           &.active {
             .nav__item__sub-menu {
@@ -58,18 +59,6 @@
         &__icon {
           font-size: 2rem;
           transform: translateY(-0.3rem);
-
-          &.blue {
-            color: $blue-primary;
-          }
-
-          &.brown {
-            color: $brown-primary;
-          }
-
-          &.orange {
-            color: $orange-primary;
-          }
         }
 
         &__text {

@@ -1,0 +1,146 @@
+<div class="cabinet-maker-form">
+  <div class="container">
+    <app-simple-box
+      [heading]="cabinetMaker ? 'Edit Customer' : 'Create New Customer'"
+    >
+      <form [formGroup]="formGroup" (submit)="onSubmit()">
+        <div class="form__group">
+          <label class="form__label">Customer Name</label>
+          <input
+            #cabinetMakerName
+            type="text"
+            class="form__control"
+            formControlName="name"
+          />
+        </div>
+        <div class="form__group">
+          <label class="form__label">Email Address</label>
+          <input type="email" class="form__control" formControlName="email" />
+        </div>
+        <div class="form__group">
+          <label class="form__label">Phone Number</label>
+          <input type="tel" class="form__control" formControlName="phone" />
+        </div>
+        <div class="row">
+          <div class="col-1-2">
+            <app-simple-box [heading]="'Invoice'">
+              <div class="form__group">
+                <label class="form__label">Invoice To:</label>
+                <input
+                  type="text"
+                  class="form__control"
+                  formControlName="invoiceTo"
+                />
+              </div>
+              <div class="form__group">
+                <label class="form__label">Address:</label>
+                <input
+                  type="text"
+                  class="form__control"
+                  formControlName="invoiceAddress"
+                />
+              </div>
+              <div class="form__group">
+                <label class="form__label">Suburb:</label>
+                <input
+                  type="text"
+                  class="form__control"
+                  formControlName="invoiceSuburb"
+                />
+              </div>
+              <div class="form__group">
+                <div class="row">
+                  <div class="col-1-2">
+                    <label class="form__label">State</label>
+                    <app-select-menu
+                      [control]="formGroup.controls['invoiceState']"
+                      [values]="commonAssets.states"
+                      [valueKey]="'id'"
+                      [valueDisplay]="'name'"
+                    ></app-select-menu>
+                  </div>
+                  <div class="col-1-2">
+                    <label class="form__label">Postcode</label>
+                    <input
+                      type="text"
+                      class="form__control"
+                      formControlName="invoicePostcode"
+                    />
+                  </div>
+                </div>
+              </div>
+            </app-simple-box>
+          </div>
+          <div class="col-1-2">
+            <app-simple-box [heading]="'Delivery'">
+              <div class="form__group">
+                <label class="form__label">Delivery To:</label>
+                <input
+                  type="text"
+                  class="form__control"
+                  formControlName="deliveryTo"
+                />
+              </div>
+              <div class="form__group">
+                <label class="form__label">Address:</label>
+                <input
+                  type="text"
+                  class="form__control"
+                  formControlName="deliveryAddress"
+                />
+              </div>
+              <div class="form__group">
+                <label class="form__label">Suburb:</label>
+                <input
+                  type="text"
+                  class="form__control"
+                  formControlName="deliverySuburb"
+                />
+              </div>
+              <div class="form__group">
+                <div class="row">
+                  <div class="col-1-2">
+                    <label class="form__label">State</label>
+                    <app-select-menu
+                      [control]="formGroup.controls['deliveryState']"
+                      [values]="commonAssets.states"
+                      [valueKey]="'id'"
+                      [valueDisplay]="'name'"
+                    ></app-select-menu>
+                  </div>
+                  <div class="col-1-2">
+                    <label class="form__label">Postcode</label>
+                    <input
+                      type="text"
+                      class="form__control"
+                      formControlName="deliveryPostcode"
+                    />
+                  </div>
+                </div>
+              </div>
+            </app-simple-box>
+          </div>
+        </div>
+        <div class="form__group">
+          <button
+            type="submit"
+            class="btn btn--primary"
+            [disabled]="formGroup.invalid"
+          >
+            <i class="fa fa-floppy-o"></i>
+            {{ cabinetMaker ? "Update Customer" : "Create New Customer" }}
+          </button>
+          <button
+            type="button"
+            class="btn btn--default"
+            style="margin-left: 2rem;"
+            (click)="onCloseForm()"
+          >
+            <i class="fa fa-ban"></i>
+            Cancel
+          </button>
+        </div>
+      </form>
+    </app-simple-box>
+  </div>
+</div>

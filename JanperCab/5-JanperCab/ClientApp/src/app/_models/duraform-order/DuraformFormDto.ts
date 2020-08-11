@@ -21,7 +21,9 @@ export abstract class DuraformFormDto {
   createdDate: Date;
   lastUpdated: Date;
 
-  customerId: number;
+  distributorId: number;
+  cabinetMakerId: number;
+
   invoiceTo: string;
   invoiceAddress: string;
   invoiceSuburb: string;
@@ -32,6 +34,7 @@ export abstract class DuraformFormDto {
   deliverySuburb: string;
   deliveryState: string;
   deliveryPostcode: string;
+  deliveryNote: string;
 
   @Type(() => DuraformComponentDto, {
     keepDiscriminatorProperty: true,

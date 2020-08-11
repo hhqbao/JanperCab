@@ -1,0 +1,30 @@
+<div class="draft-list-small" *ngIf="!isInitializing">
+  <table class="table table--left table--hover">
+    <thead>
+      <tr>
+        <th style="width: 15rem;">Created At</th>
+        <th>Description</th>
+        <th style="width: 15rem;">Last Updated</th>
+        <th style="width: 1rem;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of drafts" (click)="onItemClick(item)">
+        <td>{{ item.createdDate | date: "dd/MM/yyyy HH:mm" }}</td>
+        <td>{{ item.description }}</td>
+        <td>
+          {{
+            item.lastUpdated == null
+              ? "--"
+              : (item.lastUpdated | date: "dd/MM/yyyy HH:mm")
+          }}
+        </td>
+        <td class="text-center">
+          <button type="button" class="btn btn--sm btn--secondary">
+            <i class="fa fa-trash-o"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

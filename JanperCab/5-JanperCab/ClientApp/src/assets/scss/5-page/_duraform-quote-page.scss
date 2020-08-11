@@ -1,0 +1,107 @@
+.duraform-quote-page {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+
+  .col-left {
+    flex: 1;
+  }
+
+  .col-right {
+    margin-left: 1rem;
+    width: 30rem;
+  }
+
+  .quote {
+    background-color: white;
+    box-shadow: 4px -4px 2px rgba(black, 0.2);
+    border: solid 1px rgba(black, 0.6);
+    padding: 3rem;
+    height: 100%;
+    overflow-y: auto;
+
+    &__header {
+      display: flex;
+      margin-bottom: 5rem;
+
+      .manufacturer {
+        flex: 1;
+
+        * {
+          &:not(:first-child) {
+            margin-top: 0.5rem;
+          }
+        }
+
+        &__name {
+          color: $red-primary;
+          font-style: italic;
+          font-weight: bold;
+          text-transform: uppercase;
+        }
+      }
+
+      .details {
+        flex: 1;
+        text-align: right;
+
+        * {
+          &:not(:first-child) {
+            margin-top: 0.5rem;
+          }
+        }
+
+        &__barcode {
+        }
+
+        &__title {
+          color: black;
+          font-size: 2.5rem;
+        }
+
+        &__quote-number {
+          font-size: 2rem;
+        }
+
+        &__created-date {
+          font-size: 1.8rem;
+        }
+      }
+    }
+
+    &__shipping {
+      display: flex;
+
+      .address-box {
+        &:not(:first-child) {
+          margin-left: 30rem;
+        }
+
+        * {
+          &:not(:first-child) {
+            margin-bottom: 0.5rem;
+          }
+        }
+
+        &__title {
+          color: black;
+          font-size: 1.8rem;
+          margin-bottom: 1rem;
+          text-transform: uppercase;
+        }
+      }
+    }
+
+    &__job-details {
+      color: black;
+      font-weight: bold;
+      font-size: 2.5rem;
+      margin-top: 3rem;
+      text-transform: uppercase;
+    }
+
+    &__components {
+      margin-top: 3rem;
+    }
+  }
+}

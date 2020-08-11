@@ -1,3 +1,8 @@
+import { CabinetMakerDto } from './../_models/customer/CabinetMakerDto';
+import { DuraformQuoteDto } from './../_models/duraform-order/DuraformQuoteDto';
+import { DuraformDraftService } from './duraform-draft.service';
+import { Router } from '@angular/router';
+import { DashboardService } from './dashboard.service';
 import { AuthService } from './auth.service';
 import { DuraformDrawerDto } from './../_models/duraform-component/DuraformDrawerDto';
 import { DuraformEndPanelDto } from './../_models/duraform-component/DuraformEndPanelDto';
@@ -17,9 +22,11 @@ import { DuraformEdgeProfileForList } from './../_models/duraform-edge-profile/D
 import { StepOneReturnValue } from '../_models/duraform-order/StepOneReturnValue';
 import { Injectable } from '@angular/core';
 import { DuraformFormDto } from '../_models/duraform-order/DuraformFormDto';
-import { plainToClass } from 'class-transformer';
+import { plainToClass, classToClass, classToPlain } from 'class-transformer';
 import { DuraformComponentWithOptionAndHingeHoleDto } from '../_models/duraform-component/DuraformComponentWithOptionAndHingeHoleDto';
 import { DuraformComponentDto } from '../_models/duraform-component/DuraformComponentDto';
+import { DuraformOrderTypeKey } from '../_enums/DuraformOrderTypeKey';
+import { CustomerType } from '../_enums/CustomerType';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformOrderService {
@@ -28,9 +35,20 @@ export class DuraformOrderService {
   constructor(
     private http: HttpClient,
     private asset: DuraformAssetService,
-    private auth: AuthService
+    private auth: AuthService,
+    private dashboard: DashboardService,
+    private draftService: DuraformDraftService,
+    private router: Router
   ) {
     this.duraformForm = new DuraformDraftDto();
+  }
+
+  get duraformId(): string {
+    return this.duraformForm.id;
+  }
+
+  get isDraft(): boolean {
+    return this.duraformForm instanceof DuraformDraftDto;
   }
 
   get customerOrderNumber(): string {
@@ -41,12 +59,29 @@ export class DuraformOrderService {
     this.duraformForm.customerOrderNumber = orderNumber;
   }
 
-  get customerId(): number {
-    return this.duraformForm.customerId;
+  set cabinetMaker(value: CabinetMakerDto) {
+    this.duraformForm.cabinetMakerId = value.id;
+    this.duraformForm.distributorId = value.distributorId;
+
+    this.invoiceTo = value.invoiceTo;
+    this.invoiceAddress = value.invoiceAddress;
+    this.invoiceSuburb = value.invoiceSuburb;
+    this.invoiceState = value.invoiceState;
+    this.invoicePostcode = value.invoicePostcode;
+
+    this.deliveryTo = value.deliveryTo;
+    this.deliveryAddress = value.deliveryAddress;
+    this.deliverySuburb = value.deliverySuburb;
+    this.deliveryState = value.deliveryState;
+    this.deliveryPostcode = value.deliveryPostcode;
   }
 
-  set customerId(value: number) {
-    this.duraformForm.customerId = value;
+  get cabinetMakerId(): number {
+    return this.duraformForm.cabinetMakerId;
+  }
+
+  set cabinetMakerId(value: number) {
+    this.duraformForm.cabinetMakerId = value;
   }
 
   get invoiceTo(): string {
@@ -127,6 +162,14 @@ export class DuraformOrderService {
 
   set deliveryPostcode(value: string) {
     this.duraformForm.deliveryPostcode = value;
+  }
+
+  get deliveryNote(): string {
+    return this.duraformForm.deliveryNote;
+  }
+
+  set deliveryNote(value: string) {
+    this.duraformForm.deliveryNote = value;
   }
 
   get selectedDesign(): DuraformDesignForOrderMenu {
@@ -294,9 +337,7 @@ export class DuraformOrderService {
   };
 
   loadDraft = (id: string) => {
-    const url = `${environment.baseUrl}/DuraformDrafts/${id}`;
-
-    return this.http.get<DuraformDraftDto>(url).pipe(
+    return this.draftService.get(id).pipe(
       map((response) => {
         this.duraformForm = plainToClass(DuraformDraftDto, response);
       })
@@ -307,40 +348,72 @@ export class DuraformOrderService {
     const url = `${environment.baseUrl}/DuraformDrafts`;
     const { duraformForm } = this;
 
-    if (duraformForm.id) {
-      console.log(duraformForm);
-      return this.http
-        .put<DuraformDraftDto>(`${url}/${duraformForm.id}`, duraformForm)
-        .pipe(
-          map((response) => {
-            this.duraformForm = plainToClass(DuraformDraftDto, response);
+    return this.http.post<DuraformDraftDto>(`${url}`, duraformForm).pipe(
+      map((response) => {
+        this.dashboard.numberOfDrafts += 1;
 
-            return this.duraformForm;
-          })
-        );
-    } else {
-      return this.http.post<DuraformDraftDto>(`${url}`, duraformForm).pipe(
+        const draftDto = plainToClass(DuraformDraftDto, response);
+        this.router.navigate([`dashboard/duraform/1/${draftDto.id}`]);
+
+        return draftDto;
+      })
+    );
+  };
+
+  updateDraft = () => {
+    const url = `${environment.baseUrl}/DuraformDrafts`;
+    const { duraformForm } = this;
+
+    return this.http
+      .put<DuraformDraftDto>(`${url}/${duraformForm.id}`, duraformForm)
+      .pipe(
         map((response) => {
           this.duraformForm = plainToClass(DuraformDraftDto, response);
 
           return this.duraformForm;
         })
       );
-    }
+  };
+
+  sendInQuote = () => {
+    const url = `${environment.baseUrl}/DuraformQuotes`;
+    const { duraformForm } = this;
+
+    const quote = plainToClass(
+      DuraformQuoteDto,
+      JSON.parse(JSON.stringify(duraformForm))
+    );
+    quote.orderType = DuraformOrderTypeKey.Quote;
+
+    return this.http.post<DuraformQuoteDto>(url, quote);
   };
 
   loadNewDraft = () => {
     this.duraformForm = new DuraformDraftDto();
-    this.duraformForm.customerId = this.auth.customer.id;
-    this.duraformForm.invoiceTo = this.auth.customer.invoiceTo;
-    this.duraformForm.invoiceAddress = this.auth.customer.invoiceAddress;
-    this.duraformForm.invoiceSuburb = this.auth.customer.invoiceSuburb;
-    this.duraformForm.invoiceState = this.auth.customer.invoiceState;
-    this.duraformForm.invoicePostcode = this.auth.customer.invoicePostcode;
-    this.duraformForm.deliveryTo = this.auth.customer.deliveryTo;
-    this.duraformForm.deliveryAddress = this.auth.customer.deliveryAddress;
-    this.duraformForm.deliverySuburb = this.auth.customer.deliverySuburb;
-    this.duraformForm.deliveryState = this.auth.customer.deliveryState;
-    this.duraformForm.deliveryPostcode = this.auth.customer.deliveryPostcode;
+
+    switch (this.auth.customer.customerType) {
+      case CustomerType.Distributor:
+        this.duraformForm.distributorId = this.auth.customer.id;
+        break;
+      case CustomerType.CabinetMaker:
+        const cabinetMaker = this.auth.customer as CabinetMakerDto;
+
+        this.duraformForm.distributorId = cabinetMaker.distributorId;
+        this.duraformForm.cabinetMakerId = cabinetMaker.id;
+
+        this.duraformForm.invoiceTo = cabinetMaker.invoiceTo;
+        this.duraformForm.invoiceAddress = cabinetMaker.invoiceAddress;
+        this.duraformForm.invoiceSuburb = cabinetMaker.invoiceSuburb;
+        this.duraformForm.invoiceState = cabinetMaker.invoiceState;
+        this.duraformForm.invoicePostcode = cabinetMaker.invoicePostcode;
+        this.duraformForm.deliveryTo = cabinetMaker.deliveryTo;
+        this.duraformForm.deliveryAddress = cabinetMaker.deliveryAddress;
+        this.duraformForm.deliverySuburb = cabinetMaker.deliverySuburb;
+        this.duraformForm.deliveryState = cabinetMaker.deliveryState;
+        this.duraformForm.deliveryPostcode = cabinetMaker.deliveryPostcode;
+        break;
+      default:
+        throw new Error('Invalid Customer Type! Contact IT Support.');
+    }
   };
 }

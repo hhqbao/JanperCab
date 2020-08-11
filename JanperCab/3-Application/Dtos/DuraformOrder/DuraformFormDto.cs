@@ -36,7 +36,11 @@ namespace _3_Application.Dtos.DuraformOrder
 
         public DateTime? LastUpdated { get; set; }
 
-        public int CustomerId { get; set; }
+
+        public int DistributorId { get; set; }
+
+        public int CabinetMakerId { get; set; }
+
 
         public string InvoiceTo { get; set; }
 
@@ -57,6 +61,9 @@ namespace _3_Application.Dtos.DuraformOrder
         public string DeliveryState { get; set; }
 
         public string DeliveryPostcode { get; set; }
+
+        public string DeliveryNote { get; set; }
+
 
         public ICollection<DuraformComponentDto> DuraformComponents { get; set; }
 

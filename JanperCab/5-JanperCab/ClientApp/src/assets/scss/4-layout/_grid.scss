@@ -48,6 +48,10 @@ $col-gap: 1rem;
     width: calc((100% - 4 * #{$col-gap}) / 5);
   }
 
+  .col-3-5 {
+    width: calc(((100% - 4 * #{$col-gap}) / 5) * 3 + 2 * #{$col-gap});
+  }
+
   .col-4-5 {
     width: calc(4 * ((100% - 4 * #{$col-gap}) / 5) + 3 * #{$col-gap});
   }

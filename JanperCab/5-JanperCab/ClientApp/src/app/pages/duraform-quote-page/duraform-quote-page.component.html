@@ -1,0 +1,70 @@
+<div class="duraform-quote-page">
+  <div class="col-left">
+    <div class="quote" *ngIf="!isLoading && quoteDto">
+      <div class="quote__header">
+        <div class="manufacturer">
+          <h1 class="manufacturer__name">Janper PTY LTD</h1>
+          <h5 class="manufacturer__address">
+            19 Newcastle Road, Bayswater VIC 3153
+          </h5>
+          <h5 class="manufacturer__abn">
+            ABN 45 004 772
+          </h5>
+          <h5 class="manufacturer__tel">
+            Tel: 03 9720 0533
+          </h5>
+        </div>
+        <div class="details">
+          <div class="details__barcode">
+            <ngx-barcode
+              [bc-value]="quoteDto.quoteNumber | leading: '0000000'"
+              [bc-height]="'50px'"
+            ></ngx-barcode>
+          </div>
+          <h1 class="details__title">Duraform Quote</h1>
+          <h2 class="details__quote-number">
+            {{ quoteDto.quoteNumber | leading: "0000000" }}
+          </h2>
+          <h3 class="details__created-date">
+            DATE {{ quoteDto.createdDate | date: "dd/MM/yyyy" }}
+          </h3>
+        </div>
+      </div>
+      <div class="quote__shipping">
+        <div class="address-box">
+          <div class="address-box__title">Invoice To</div>
+          <div class="address-box__name">{{ quoteDto.invoiceTo }}</div>
+          <div class="address-box__street">{{ quoteDto.invoiceAddress }}</div>
+          <div class="address-box__location">
+            {{ quoteDto.invoiceSuburb }} {{ quoteDto.invoiceState }}
+            {{ quoteDto.invoicePostcode }}
+          </div>
+        </div>
+        <div class="address-box">
+          <div class="address-box__title">Deliver To</div>
+          <div class="address-box__name">{{ quoteDto.deliveryTo }}</div>
+          <div class="address-box__street">
+            {{ quoteDto.deliveryAddress }}
+          </div>
+          <div class="address-box__location">
+            {{ quoteDto.deliverySuburb }} {{ quoteDto.deliveryState }}
+            {{ quoteDto.deliveryPostcode }}
+          </div>
+        </div>
+      </div>
+      <div class="quote__job-details">
+        Thomp5m / N Alabaster Satin / Series 4
+      </div>
+      <div class="quote__components">
+        <div class="component-list" *ngIf="quoteDto?.duraformDoors.length > 0">
+          <app-duraform-door-component-list
+            [duraformDoors]="quoteDto.duraformDoors"
+          ></app-duraform-door-component-list>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-right">
+    Something
+  </div>
+</div>

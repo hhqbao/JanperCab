@@ -24,8 +24,23 @@
           <th style="width: 4rem;">R</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let door of order.duraformDoors">
+      <tbody *ngIf="isLoading">
+        <tr>
+          <td colspan="11" class="text-center">
+            <i>Loading... </i>
+            <i class="fa fa-spinner fa-spin"></i>
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="!isLoading && hasError">
+        <tr>
+          <td colspan="11" class="text-center text-alert">
+            {{ errorMessage }}
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="!isLoading && !hasError">
+        <tr *ngFor="let door of duraformDoors">
           <td>{{ door.quantity }}</td>
           <td>{{ door.height }}</td>
           <td>{{ door.width }}</td>
@@ -35,7 +50,7 @@
           <td>{{ door.right ? "Y" : null }}</td>
           <td class="text-left">{{ door.duraformOption?.toString() }}</td>
           <td class="text-left">
-            {{ asset.getEdgeProfile(door.duraformEdgeProfileId).name }}
+            {{ getEdgeProfile(door.duraformEdgeProfileId).name }}
           </td>
           <td>
             {{ door.hingeHoleOption?.toString() }}

@@ -3,11 +3,13 @@ using _3_Application.Dtos.Customer;
 using _3_Application.Dtos.DuraformArch;
 using _3_Application.Dtos.DuraformComponent;
 using _3_Application.Dtos.DuraformDesign;
+using _3_Application.Dtos.DuraformDraft;
 using _3_Application.Dtos.DuraformDrawerType;
 using _3_Application.Dtos.DuraformEdgeProfile;
 using _3_Application.Dtos.DuraformOption;
 using _3_Application.Dtos.DuraformOptionType;
 using _3_Application.Dtos.DuraformOrder;
+using _3_Application.Dtos.DuraformQuote;
 using _3_Application.Dtos.DuraformSerie;
 using _3_Application.Dtos.DuraformWrapColor;
 using _3_Application.Dtos.DuraformWrapType;
@@ -24,8 +26,24 @@ namespace _5_JanperCab.Helpers
     {
         public MapperProfile()
         {
-            CreateMap<Customer, CustomerDto>();
-            CreateMap<CustomerDto, Customer>();
+            CreateMap<Customer, CustomerDto>()
+                .Include<Manufacturer, ManufacturerDto>()
+                .Include<Distributor, DistributorDto>()
+                .Include<CabinetMaker, CabinetMakerDto>();
+            CreateMap<CustomerDto, Customer>()
+                .Include<ManufacturerDto, Manufacturer>()
+                .Include<DistributorDto, Distributor>()
+                .Include<CabinetMakerDto, CabinetMaker>()
+                .ForMember(x => x.Id, opt => opt.Ignore());
+
+            CreateMap<Manufacturer, ManufacturerDto>();
+            CreateMap<ManufacturerDto, Manufacturer>();
+
+            CreateMap<Distributor, DistributorDto>();
+            CreateMap<DistributorDto, Distributor>();
+
+            CreateMap<CabinetMaker, CabinetMakerDto>();
+            CreateMap<CabinetMakerDto, CabinetMaker>();
 
             CreateMap<DuraformSerie, DuraformSerieForList>();
 
@@ -48,6 +66,8 @@ namespace _5_JanperCab.Helpers
                 );
 
             CreateMap<DuraformEdgeProfile, DuraformEdgeProfileForList>();
+            CreateMap<DuraformEdgeProfile, DuraformEdgeProfileDto>();
+
             CreateMap<DuraformArch, DuraformArchForList>();
             CreateMap<PantryDoorChairRailType, PantryDoorChairRailTypeForList>();
             CreateMap<DuraformDrawerType, DuraformDrawerTypeForList>();
@@ -120,18 +140,24 @@ namespace _5_JanperCab.Helpers
             CreateMap<DuraformDrawer, DuraformDrawerDto>();
             CreateMap<DuraformDrawerDto, DuraformDrawer>();
 
-
             CreateMap<DuraformForm, DuraformFormDto>()
-                .Include<DuraformDraft, DuraformDraftDto>();
+                .Include<DuraformDraft, DuraformDraftDto>()
+                .Include<DuraformQuote, DuraformQuoteDto>();
             CreateMap<DuraformFormDto, DuraformForm>()
                 .ForMember(x => x.Id, opt => opt.Ignore())
                 .ForMember(x => x.OrderType, opt => opt.Ignore())
                 .ForMember(x => x.CreatedDate, opt => opt.Ignore())
                 .ForMember(x => x.LastUpdated, opt => opt.Ignore())
-                .Include<DuraformDraftDto, DuraformDraft>();
+                .Include<DuraformDraftDto, DuraformDraft>()
+                .Include<DuraformQuoteDto, DuraformQuote>();
 
             CreateMap<DuraformDraft, DuraformDraftDto>();
+            CreateMap<DuraformDraft, DuraformDraftForSmallList>()
+                .ForMember(x => x.Description, opt => opt.MapFrom<DuraformDraftDescriptionResolver>());
             CreateMap<DuraformDraftDto, DuraformDraft>();
+
+            CreateMap<DuraformQuote, DuraformQuoteDto>();
+            CreateMap<DuraformQuoteDto, DuraformQuote>();
         }
     }
 }

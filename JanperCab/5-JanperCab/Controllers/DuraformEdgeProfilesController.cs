@@ -30,5 +30,16 @@ namespace _5_JanperCab.Controllers
 
             return Ok(_mapper.Map<List<DuraformEdgeProfile>, List<DuraformEdgeProfileForList>>(profiles));
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var profile = await _unitOfWork.DuraformEdgeProfiles.GetAsync(id);
+
+            if (profile == null)
+                return BadRequest("Edge Profile Not Found!");
+
+            return Ok(_mapper.Map<DuraformEdgeProfile, DuraformEdgeProfileDto>(profile));
+        }
     }
 }
