@@ -40,7 +40,7 @@ export class PantryDoorFormComponent implements OnInit {
       ],
       width: [
         null,
-        [Validators.required, Validators.min(50), Validators.max(1200)],
+        [Validators.required, Validators.min(50), Validators.max(2500)],
       ],
       chairRailHeight: [
         56,

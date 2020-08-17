@@ -1,0 +1,38 @@
+<div class="pdf-viewer">
+  <div class="container">
+    <div class="menu">
+      <div class="dropdown dropdown--1" appDropdownBtn>
+        <button type="button" class="dropdown__toggle">
+          Options
+          <i class="fa fa-cogs" aria-hidden="true"></i>
+        </button>
+        <ul class="dropdown__list">
+          <li>
+            <a (click)="onView()">
+              <i class="fa fa-file-pdf-o text-alert" aria-hidden="true"></i>
+              View PDF
+            </a>
+          </li>
+          <li>
+            <a (click)="onSaveToDisk()">
+              <i class="fa fa-floppy-o text-blue" aria-hidden="true"></i>
+              Save to Disk
+            </a>
+          </li>
+          <li class="dropdown__divider"></li>
+          <li>
+            <a (click)="closePanel.emit()">
+              <i class="fa fa-window-close text-brown" aria-hidden="true"></i>
+              Close
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="printable-form">
+      <div #printableForm>
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

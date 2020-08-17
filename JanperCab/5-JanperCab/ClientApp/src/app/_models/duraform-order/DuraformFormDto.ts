@@ -3,7 +3,7 @@ import { DuraformEndPanelDto } from './../duraform-component/DuraformEndPanelDto
 import { DuraformPantryDoorDto } from './../duraform-component/DuraformPantryDoorDto';
 import { DuraformOrderTypeKey } from './../../_enums/DuraformOrderTypeKey';
 import { DuraformDoorDto } from './../duraform-component/DuraformDoorDto';
-import { Type } from 'class-transformer';
+import { Type, plainToClass } from 'class-transformer';
 import { DuraformComponentDto } from '../duraform-component/DuraformComponentDto';
 
 export abstract class DuraformFormDto {
@@ -36,6 +36,9 @@ export abstract class DuraformFormDto {
   deliveryPostcode: string;
   deliveryNote: string;
 
+  notEditable: boolean;
+  totalPrice: number;
+
   @Type(() => DuraformComponentDto, {
     keepDiscriminatorProperty: true,
     discriminator: {
@@ -65,6 +68,10 @@ export abstract class DuraformFormDto {
     },
   })
   duraformComponents: DuraformComponentDto[] = [];
+
+  get discriminator(): string {
+    return `${this.orderType}`;
+  }
 
   get duraformDoors(): DuraformDoorDto[] {
     const doors = this.duraformComponents.filter(

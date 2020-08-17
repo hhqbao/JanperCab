@@ -1,4 +1,4 @@
-﻿using _3_Application.Dtos.DuraformOrder;
+﻿using _3_Application.Dtos.DuraformForm;
 
 namespace _3_Application.Dtos.DuraformDraft
 {

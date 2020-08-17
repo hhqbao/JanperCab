@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace _3_Application.Dtos.DuraformOrder
+namespace _3_Application.Dtos.DuraformForm
 {
     public abstract class DuraformFormDto
     {
@@ -63,6 +63,10 @@ namespace _3_Application.Dtos.DuraformOrder
         public string DeliveryPostcode { get; set; }
 
         public string DeliveryNote { get; set; }
+
+        public bool NotEditable { get; set; }
+
+        public decimal? TotalPrice { get; set; }
 
 
         public ICollection<DuraformComponentDto> DuraformComponents { get; set; }

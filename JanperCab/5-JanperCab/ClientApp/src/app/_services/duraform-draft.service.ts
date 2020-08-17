@@ -1,3 +1,5 @@
+import { plainToClass } from 'class-transformer';
+import { map } from 'rxjs/operators';
 import { DuraformDraftForSmallList } from './../_models/duraform-draft/DuraformDraftForSmallList';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -12,7 +14,11 @@ export class DuraformDraftService {
   get = (id: string): Observable<DuraformDraftDto> => {
     const url = `${environment.baseUrl}/DuraformDrafts/${id}`;
 
-    return this.http.get<DuraformDraftDto>(url);
+    return this.http.get<DuraformDraftDto>(url).pipe(
+      map((response) => {
+        return plainToClass(DuraformDraftDto, response);
+      })
+    );
   };
 
   getList = (limit: number): Observable<DuraformDraftDto[]> => {
@@ -25,5 +31,28 @@ export class DuraformDraftService {
     const url = `${environment.baseUrl}/DuraformDrafts/GetSmallList`;
 
     return this.http.get<DuraformDraftForSmallList[]>(url);
+  };
+
+  create = (draftDto: DuraformDraftDto) => {
+    return this.http
+      .post<DuraformDraftDto>(`${environment.baseUrl}/DuraformDrafts`, draftDto)
+      .pipe(
+        map((response) => {
+          return plainToClass(DuraformDraftDto, response);
+        })
+      );
+  };
+
+  update = (id: string, draftDto: DuraformDraftDto) => {
+    return this.http
+      .put<DuraformDraftDto>(
+        `${environment.baseUrl}/DuraformDrafts/${id}`,
+        draftDto
+      )
+      .pipe(
+        map((response) => {
+          return plainToClass(DuraformDraftDto, response);
+        })
+      );
   };
 }

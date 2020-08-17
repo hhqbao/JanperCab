@@ -1,0 +1,67 @@
+<div class="component-box">
+  <div class="title">End Panels</div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 50px;">qty</th>
+        <th style="width: 80px;">height</th>
+        <th style="width: 80px;">width</th>
+        <th style="width: 90px;">no. shields</th>
+        <th style="width: 80px;">rail size left</th>
+        <th style="width: 85px;">rail size center</th>
+        <th style="width: 80px;">rail size right</th>
+        <th style="width: 80px;">extra rail top</th>
+        <th style="width: 80px;">extra rail bottom</th>
+        <th style="text-align: center; width: 30px;">t</th>
+        <th style="text-align: center; width: 30px;">b</th>
+        <th style="text-align: center; width: 30px;">l</th>
+        <th style="text-align: center; width: 30px;">r</th>
+        <th style="padding-left: 10px; width: 345px;">option</th>
+        <th style="padding-left: 10px; width: 225px;">
+          edge profile
+        </th>
+        <th style="padding-left: 10px;">comments</th>
+        <th style="padding-left: 10px; width: 100px;">routed</th>
+        <th style="padding-left: 10px; width: 100px;">cleaned</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of endPanels">
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.height }}</td>
+        <td>{{ item.width }}</td>
+        <td>{{ item.numberOfShields }}</td>
+        <td>{{ item.railLeft }}</td>
+        <td>{{ item.railCenter }}</td>
+        <td>{{ item.railRight }}</td>
+        <td>{{ item.extraRailTop }}</td>
+        <td>{{ item.extraRailBottom }}</td>
+        <td style="text-align: center;">
+          {{ item.top ? "Y" : null }}
+        </td>
+        <td style="text-align: center;">
+          {{ item.bottom ? "Y" : null }}
+        </td>
+        <td style="text-align: center;">
+          {{ item.left ? "Y" : null }}
+        </td>
+        <td style="text-align: center;">
+          {{ item.right ? "Y" : null }}
+        </td>
+        <td style="padding-left: 10px;">
+          {{ item.duraformOption?.toString() }}
+        </td>
+        <td style="padding-left: 10px;">
+          {{ getEdgeProfile(item.duraformEdgeProfileId).name }}
+        </td>
+        <td style="padding-left: 10px;">{{ item.note }}</td>
+        <td style="padding-left: 10px;">
+          <div class="checkbox"></div>
+        </td>
+        <td style="padding-left: 10px;">
+          <div class="checkbox"></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

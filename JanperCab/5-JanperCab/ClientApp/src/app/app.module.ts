@@ -1,3 +1,10 @@
+import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
+import { DeliveryDocketDuraformDrawersComponent } from './components/delivery-docket-duraform-drawers/delivery-docket-duraform-drawers.component';
+import { DeliveryDocketEndPanelsComponent } from './components/delivery-docket-end-panels/delivery-docket-end-panels.component';
+import { DeliveryDocketPantryDoorsComponent } from './components/delivery-docket-pantry-doors/delivery-docket-pantry-doors.component';
+import { DeliveryDocketDuraformDoorsComponent } from './components/delivery-docket-duraform-doors/delivery-docket-duraform-doors.component';
+import { DeliveryDocketComponent } from './components/delivery-docket/delivery-docket.component';
+import { DuraformJobService } from './_services/duraform-job.service';
 import { FloatBoxComponent } from './components/float-box/float-box.component';
 import { CustomerService } from './_services/customer.service';
 import { CabinetMakerListPageComponent } from './pages/cabinet-maker-list-page/cabinet-maker-list-page.component';
@@ -109,6 +116,7 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
     SelectOnFocusDirective,
     OrderFormDirective,
     RemoveTagDirective,
+    PdfViewerComponent,
     BoxComponent,
     SimpleBoxComponent,
     LatestItemsComponent,
@@ -164,6 +172,11 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
     CabinetMakerListPageComponent,
     DuraformPageComponent,
     DuraformQuotePageComponent,
+    DeliveryDocketComponent,
+    DeliveryDocketDuraformDoorsComponent,
+    DeliveryDocketPantryDoorsComponent,
+    DeliveryDocketEndPanelsComponent,
+    DeliveryDocketDuraformDrawersComponent,
   ],
   imports: [
     BrowserModule,
@@ -197,6 +210,7 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
     DuraformEdgeProfileService,
     DuraformOrderService,
     DuraformDraftService,
+    DuraformJobService,
     DuraformArchService,
     PantryDoorChairRailTypeService,
     DuraformDrawerTypeService,

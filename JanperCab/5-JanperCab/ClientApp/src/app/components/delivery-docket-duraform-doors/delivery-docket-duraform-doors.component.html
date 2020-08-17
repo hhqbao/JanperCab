@@ -1,0 +1,59 @@
+<div class="component-box">
+  <div class="title">Doors</div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 50px;">qty</th>
+        <th style="width: 80px;">height</th>
+        <th style="width: 80px;">width</th>
+        <th style="text-align: center; width: 30px;">t</th>
+        <th style="text-align: center; width: 30px;">b</th>
+        <th style="text-align: center; width: 30px;">l</th>
+        <th style="text-align: center; width: 30px;">r</th>
+        <th style="padding-left: 10px; width: 345px;">option</th>
+        <th style="padding-left: 10px; width: 225px;">
+          edge profile
+        </th>
+        <th style="padding-left: 10px; width: 150px;">Hinge Hole</th>
+        <th style="padding-left: 10px;">comments</th>
+        <th style="padding-left: 10px; width: 100px;">routed</th>
+        <th style="padding-left: 10px; width: 100px;">cleaned</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let door of doors">
+        <td>{{ door.quantity }}</td>
+        <td>{{ door.height }}</td>
+        <td>{{ door.width }}</td>
+        <td style="text-align: center;">
+          {{ door.top ? "Y" : null }}
+        </td>
+        <td style="text-align: center;">
+          {{ door.bottom ? "Y" : null }}
+        </td>
+        <td style="text-align: center;">
+          {{ door.left ? "Y" : null }}
+        </td>
+        <td style="text-align: center;">
+          {{ door.right ? "Y" : null }}
+        </td>
+        <td style="padding-left: 10px;">
+          {{ door.duraformOption?.toString() }}
+        </td>
+        <td style="padding-left: 10px;">
+          {{ getEdgeProfile(door.duraformEdgeProfileId).name }}
+        </td>
+        <td style="padding-left: 10px;">
+          {{ door.hingeHoleOption?.toString() }}
+        </td>
+        <td style="padding-left: 10px;">{{ door.note }}</td>
+        <td style="padding-left: 10px;">
+          <div class="checkbox"></div>
+        </td>
+        <td style="padding-left: 10px;">
+          <div class="checkbox"></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

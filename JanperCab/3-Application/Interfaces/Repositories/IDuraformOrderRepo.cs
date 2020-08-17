@@ -20,5 +20,7 @@ namespace _3_Application.Interfaces.Repositories
         Task<int> CountFinalizedQuoteAsync(int customerId);
 
         Task<DuraformQuote> GetQuoteAsync(Guid quoteId, int customerId);
+
+        Task<DuraformOrder> GetOrderAsync(Guid orderId, Customer customer);
     }
 }

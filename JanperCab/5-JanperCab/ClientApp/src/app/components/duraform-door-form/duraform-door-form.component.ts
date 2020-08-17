@@ -32,7 +32,7 @@ export class DuraformDoorFormComponent implements OnInit {
       ],
       width: [
         null,
-        [Validators.required, Validators.min(50), Validators.max(1200)],
+        [Validators.required, Validators.min(50), Validators.max(2500)],
       ],
       duraformEdgeProfileId: [
         this.order.selectedEdgeProfile.id,

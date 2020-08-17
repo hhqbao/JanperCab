@@ -70,6 +70,10 @@ namespace _1_Domain
 
         public string DeliveryNote { get; set; }
 
+        public bool NotEditable { get; set; }
+
+        public decimal? TotalPrice { get; set; }
+
 
         public virtual Distributor Distributor { get; set; }
 

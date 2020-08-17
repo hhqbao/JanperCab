@@ -3,6 +3,7 @@ using _2_Persistent.Configs;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Options;
 
 namespace _2_Persistent
@@ -58,6 +59,7 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformFormConfig());
             builder.ApplyConfiguration(new DuraformDraftConfig());
             builder.ApplyConfiguration(new DuraformQuoteConfig());
+            builder.ApplyConfiguration(new DuraformOrderConfig());
 
             builder.ApplyConfiguration(new DuraformComponentConfig());
             builder.ApplyConfiguration(new DuraformDoorConfig());
@@ -71,6 +73,15 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new CabinetMakerConfig());
 
             base.OnModelCreating(builder);
+        }
+    }
+
+    public class DuraformOrderConfig : IEntityTypeConfiguration<DuraformOrder>
+    {
+        public void Configure(EntityTypeBuilder<DuraformOrder> builder)
+        {
+            builder.Property(x => x.OrderNumber)
+                .ValueGeneratedNever();
         }
     }
 }

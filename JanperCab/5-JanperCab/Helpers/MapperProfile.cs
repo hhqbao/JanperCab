@@ -6,6 +6,7 @@ using _3_Application.Dtos.DuraformDesign;
 using _3_Application.Dtos.DuraformDraft;
 using _3_Application.Dtos.DuraformDrawerType;
 using _3_Application.Dtos.DuraformEdgeProfile;
+using _3_Application.Dtos.DuraformForm;
 using _3_Application.Dtos.DuraformOption;
 using _3_Application.Dtos.DuraformOptionType;
 using _3_Application.Dtos.DuraformOrder;
@@ -142,14 +143,16 @@ namespace _5_JanperCab.Helpers
 
             CreateMap<DuraformForm, DuraformFormDto>()
                 .Include<DuraformDraft, DuraformDraftDto>()
-                .Include<DuraformQuote, DuraformQuoteDto>();
+                .Include<DuraformQuote, DuraformQuoteDto>()
+                .Include<DuraformOrder, DuraformOrderDto>();
             CreateMap<DuraformFormDto, DuraformForm>()
                 .ForMember(x => x.Id, opt => opt.Ignore())
                 .ForMember(x => x.OrderType, opt => opt.Ignore())
                 .ForMember(x => x.CreatedDate, opt => opt.Ignore())
                 .ForMember(x => x.LastUpdated, opt => opt.Ignore())
                 .Include<DuraformDraftDto, DuraformDraft>()
-                .Include<DuraformQuoteDto, DuraformQuote>();
+                .Include<DuraformQuoteDto, DuraformQuote>()
+                .Include<DuraformOrderDto, DuraformOrder>();
 
             CreateMap<DuraformDraft, DuraformDraftDto>();
             CreateMap<DuraformDraft, DuraformDraftForSmallList>()
@@ -158,6 +161,9 @@ namespace _5_JanperCab.Helpers
 
             CreateMap<DuraformQuote, DuraformQuoteDto>();
             CreateMap<DuraformQuoteDto, DuraformQuote>();
+
+            CreateMap<DuraformOrder, DuraformOrderDto>();
+            CreateMap<DuraformOrderDto, DuraformOrder>();
         }
     }
 }

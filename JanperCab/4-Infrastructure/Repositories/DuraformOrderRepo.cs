@@ -28,6 +28,17 @@ namespace _4_Infrastructure.Repositories
 
                     quote.QuoteNumber = latestQuote?.QuoteNumber + 1 ?? 1;
                     quote.QuoteStatus = QuoteStatus.Pending;
+                    quote.NotEditable = true;
+                    break;
+                case DuraformOrder order:
+                    var latestOrder = await _dbSet.OfType<DuraformOrder>()
+                        .Where(x => x.DistributorId == distributor.Id)
+                        .OrderByDescending(x => x.OrderNumber)
+                        .FirstOrDefaultAsync();
+
+                    order.OrderNumber = latestOrder?.OrderNumber + 1 ?? 1;
+                    order.OrderStatus = OrderStatus.Pending;
+                    order.NotEditable = true;
                     break;
                 default:
                     throw new NotImplementedException();
@@ -84,6 +95,25 @@ namespace _4_Infrastructure.Repositories
             throw new NotImplementedException();
             //return await _dbSet.OfType<DuraformQuote>()
             //    .FirstOrDefaultAsync(x => x.Id == quoteId && x.CustomerId == customerId);
+        }
+
+        public async Task<DuraformOrder> GetOrderAsync(Guid orderId, Customer customer)
+        {
+            var queryableOrders = _dbSet.OfType<DuraformOrder>();
+
+            switch (customer)
+            {
+                case CabinetMaker cabinetMaker:
+                    return await queryableOrders.SingleOrDefaultAsync(x =>
+                        x.Id.Equals(orderId) && x.CabinetMakerId.Equals(cabinetMaker.Id));
+                case Distributor distributor:
+                    return await queryableOrders.SingleOrDefaultAsync(x =>
+                        x.Id.Equals(orderId) && x.DistributorId.Equals(distributor.Id));
+                case Manufacturer manufacturer:
+                    return await queryableOrders.SingleOrDefaultAsync(x => x.Id.Equals(orderId));
+                default:
+                    throw new NotImplementedException();
+            }
         }
     }
 }

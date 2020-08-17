@@ -50,6 +50,8 @@
     <Compile Remove="Migrations\20200730105843_RemoveTable_Customers.Designer.cs" />
     <Compile Remove="Migrations\20200809224758_Foo.cs" />
     <Compile Remove="Migrations\20200809224758_Foo.Designer.cs" />
+    <Compile Remove="Migrations\20200812130304_CreateClass_DuraformOrder.cs" />
+    <Compile Remove="Migrations\20200812130304_CreateClass_DuraformOrder.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

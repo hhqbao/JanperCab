@@ -1,3 +1,5 @@
+import { DuraformDraftService } from './../../_services/duraform-draft.service';
+import { DuraformJobService } from './../../_services/duraform-job.service';
 import { DuraformComponentService } from './../../_services/duraform-component.service';
 import { DuraformWrapColorService } from './../../_services/duraform-wrap-color.service';
 import { DuraformWrapTypeService } from './../../_services/duraform-wrap-type.service';
@@ -35,6 +37,8 @@ export class DuraformPageComponent implements OnInit {
     private dialog: DialogService,
     private asset: DuraformAssetService,
     private order: DuraformOrderService,
+    private draftService: DuraformDraftService,
+    private jobService: DuraformJobService,
     private duraformSerieService: DuraformSerieService,
     private duraformDesignService: DuraformDesignService,
     private wrapTypeService: DuraformWrapTypeService,
@@ -98,15 +102,34 @@ export class DuraformPageComponent implements OnInit {
       if (type && id) {
         switch (type) {
           case DuraformOrderTypeKey.Draft:
-            this.order.loadDraft(id).subscribe((_) => {
-              this.layout.closeLoadingPanel();
-              this.isLoadingAsset = false;
-              this.displayedStep = DuraformProcessStep.StepThree;
-            });
+            this.draftService.get(id).subscribe(
+              (response) => {
+                this.order.form = response;
+                this.isLoadingAsset = false;
+                this.displayedStep = DuraformProcessStep.StepThree;
+                this.layout.closeLoadingPanel();
+              },
+              (error) => {
+                this.dialog.error(error);
+                this.dialog.error('Failed Loading Draft!');
+              }
+            );
             break;
           case DuraformOrderTypeKey.Quote:
             break;
           case DuraformOrderTypeKey.Order:
+            this.jobService.get(id).subscribe(
+              (response) => {
+                this.order.form = response;
+                this.isLoadingAsset = false;
+                this.displayedStep = DuraformProcessStep.StepThree;
+                this.layout.closeLoadingPanel();
+              },
+              (error) => {
+                this.dialog.error(error);
+                this.dialog.error('Failed Loading Order');
+              }
+            );
             break;
         }
       } else {

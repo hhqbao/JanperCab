@@ -5,6 +5,10 @@ namespace _1_Domain
 {
     public class Distributor : Customer
     {
+        public int QuoteNumberSeed { get; set; }
+
+        public int OrderNumberSeed { get; set; }
+
         public virtual ICollection<CabinetMaker> CabinetMakers { get; set; }
         public virtual ICollection<DuraformForm> DuraformForms { get; set; }
 

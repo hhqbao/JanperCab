@@ -596,8 +596,15 @@ namespace _2_Persistent.Migrations
                     b.Property<DateTime?>("LastUpdated")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("NotEditable")
+                        .HasColumnType("bit");
+
                     b.Property<int>("OrderType")
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("TotalPrice")
+                        .HasColumnName("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -841,6 +848,12 @@ namespace _2_Persistent.Migrations
                 {
                     b.HasBaseType("_1_Domain.Customer");
 
+                    b.Property<int>("OrderNumberSeed")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuoteNumberSeed")
+                        .HasColumnType("int");
+
                     b.HasDiscriminator().HasValue("Distributor");
                 });
 
@@ -892,6 +905,19 @@ namespace _2_Persistent.Migrations
                     b.HasDiscriminator().HasValue("DuraformDraft");
                 });
 
+            modelBuilder.Entity("_1_Domain.DuraformOrder", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformForm");
+
+                    b.Property<int>("OrderNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderStatus")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("DuraformOrder");
+                });
+
             modelBuilder.Entity("_1_Domain.DuraformQuote", b =>
                 {
                     b.HasBaseType("_1_Domain.DuraformForm");
@@ -901,9 +927,6 @@ namespace _2_Persistent.Migrations
 
                     b.Property<int>("QuoteStatus")
                         .HasColumnType("int");
-
-                    b.Property<decimal?>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
 
                     b.HasDiscriminator().HasValue("DuraformQuote");
                 });

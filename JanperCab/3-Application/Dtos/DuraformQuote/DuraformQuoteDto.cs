@@ -1,5 +1,5 @@
 ﻿using _1_Domain;
-using _3_Application.Dtos.DuraformOrder;
+using _3_Application.Dtos.DuraformForm;
 
 namespace _3_Application.Dtos.DuraformQuote
 {
@@ -8,7 +8,5 @@ namespace _3_Application.Dtos.DuraformQuote
         public int QuoteNumber { get; set; }
 
         public QuoteStatus QuoteStatus { get; set; }
-
-        public decimal? TotalPrice { get; set; }
     }
 }

@@ -1,3 +1,5 @@
+import { HingeHoleTypeDto } from './../_models/hinge-hole-type/HingeHoleTypeDto';
+import { DuraformOrderDto } from './../_models/duraform-order/DuraformOrderDto';
 import { CabinetMakerDto } from './../_models/customer/CabinetMakerDto';
 import { DuraformQuoteDto } from './../_models/duraform-order/DuraformQuoteDto';
 import { DuraformDraftService } from './duraform-draft.service';
@@ -35,20 +37,41 @@ export class DuraformOrderService {
   constructor(
     private http: HttpClient,
     private asset: DuraformAssetService,
-    private auth: AuthService,
-    private dashboard: DashboardService,
-    private draftService: DuraformDraftService,
-    private router: Router
+    private auth: AuthService
   ) {
     this.duraformForm = new DuraformDraftDto();
+  }
+
+  get form(): DuraformFormDto {
+    return this.duraformForm;
+  }
+
+  set form(value: DuraformFormDto) {
+    this.duraformForm = value;
   }
 
   get duraformId(): string {
     return this.duraformForm.id;
   }
 
+  get isEditable(): boolean {
+    return !this.duraformForm.notEditable;
+  }
+
   get isDraft(): boolean {
     return this.duraformForm instanceof DuraformDraftDto;
+  }
+
+  get isOrder(): boolean {
+    return this.duraformForm instanceof DuraformOrderDto;
+  }
+
+  get isQuote(): boolean {
+    return this.duraformForm instanceof DuraformQuoteDto;
+  }
+
+  get orderType(): DuraformOrderTypeKey {
+    return this.duraformForm.orderType;
   }
 
   get customerOrderNumber(): string {
@@ -186,6 +209,10 @@ export class DuraformOrderService {
 
   get selectedWrapColor(): DuraformWrapColorForSelection {
     return this.asset.getWrapColor(this.duraformForm.duraformWrapColorId);
+  }
+
+  get selectedHingeHoleType(): HingeHoleTypeDto {
+    return this.asset.getHingeType(this.duraformForm.hingeHoleTypeId);
   }
 
   get selectedEdgeProfile(): DuraformEdgeProfileForList {
@@ -334,45 +361,6 @@ export class DuraformOrderService {
     if (index >= 0) {
       this.duraformForm.duraformComponents.splice(index, 1);
     }
-  };
-
-  loadDraft = (id: string) => {
-    return this.draftService.get(id).pipe(
-      map((response) => {
-        this.duraformForm = plainToClass(DuraformDraftDto, response);
-      })
-    );
-  };
-
-  saveDraft = () => {
-    const url = `${environment.baseUrl}/DuraformDrafts`;
-    const { duraformForm } = this;
-
-    return this.http.post<DuraformDraftDto>(`${url}`, duraformForm).pipe(
-      map((response) => {
-        this.dashboard.numberOfDrafts += 1;
-
-        const draftDto = plainToClass(DuraformDraftDto, response);
-        this.router.navigate([`dashboard/duraform/1/${draftDto.id}`]);
-
-        return draftDto;
-      })
-    );
-  };
-
-  updateDraft = () => {
-    const url = `${environment.baseUrl}/DuraformDrafts`;
-    const { duraformForm } = this;
-
-    return this.http
-      .put<DuraformDraftDto>(`${url}/${duraformForm.id}`, duraformForm)
-      .pipe(
-        map((response) => {
-          this.duraformForm = plainToClass(DuraformDraftDto, response);
-
-          return this.duraformForm;
-        })
-      );
   };
 
   sendInQuote = () => {

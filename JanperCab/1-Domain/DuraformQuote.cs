@@ -13,8 +13,6 @@
 
         public QuoteStatus QuoteStatus { get; set; }
 
-        public decimal? TotalPrice { get; set; }
-
 
 
         public DuraformQuote()

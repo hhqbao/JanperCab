@@ -11,7 +11,12 @@
       (cancel)="showDeliveryForm = false"
     ></app-delivery-detail-form>
   </app-float-box>
-
+  <app-pdf-viewer
+    *ngIf="showDeliveryDocket"
+    (closePanel)="showDeliveryDocket = false"
+  >
+    <app-delivery-docket [data]="deliveryDocketData"></app-delivery-docket>
+  </app-pdf-viewer>
   <div class="component-box">
     <div class="shipping-details-box">
       <h1 class="customer-name" *ngIf="order.duraformId">
@@ -19,6 +24,7 @@
       </h1>
       <div
         class="form__group"
+        style="max-width: 50rem;"
         *ngIf="
           !order.duraformId &&
           auth.customer.customerType === customerType.Distributor
@@ -212,40 +218,57 @@
         [(ngModel)]="order.customerOrderNumber"
       />
     </app-simple-box>
-    <div class="option-box__action-center">
-      <button
-        class="action-btn"
-        [disabled]="!order.customerOrderNumber"
-        (click)="onSaveDraft()"
-      >
-        <i class="fa fa-file-text text-brown"></i>
-        <span *ngIf="!order.duraformId">Save as Draft</span>
-        <span *ngIf="order.duraformId">Update Draft</span>
-      </button>
-      <button
-        class="action-btn"
-        [disabled]="!order.customerOrderNumber"
-        (click)="onSendInQuote()"
-      >
-        <i class="fa fa-quora text-blue" aria-hidden="true"></i>
-        <span>Send in Quote</span>
-      </button>
-      <button class="action-btn" [disabled]="!order.customerOrderNumber">
-        <i class="fa fa-plug text-orange"></i>
-        <span>Send in Order</span>
-      </button>
-      <div style="display: contents;" *ngIf="order.duraformId">
-        <div class="action-divider"></div>
-        <button class="action-btn" [disabled]="!order.customerOrderNumber">
-          <i class="fa fa-truck" aria-hidden="true"></i>
-          <span>Docket Delivery</span>
+    <div style="margin-top: 1rem;">
+      <div class="option-box__action-center" *ngIf="!order.isOrder">
+        <button
+          class="action-btn"
+          *ngIf="order.isDraft"
+          [disabled]="!order.customerOrderNumber"
+          (click)="onSaveDraft()"
+        >
+          <i class="fa fa-file-text text-brown"></i>
+          <span>
+            {{ !order.duraformId ? "Save as Draft" : "Update Draft" }}
+          </span>
+        </button>
+        <button
+          class="action-btn"
+          *ngIf="order.isDraft"
+          [disabled]="!order.customerOrderNumber"
+          (click)="!order.duraformId ? onSendInQuote() : null"
+        >
+          <i class="fa fa-quora text-blue" aria-hidden="true"></i>
+          <span>
+            {{ !order.duraformId ? "Send in Quote" : "Convert to Quote" }}
+          </span>
+        </button>
+        <button
+          class="action-btn"
+          [disabled]="!order.customerOrderNumber"
+          (click)="!order.duraformId ? onSendInOrder() : null"
+        >
+          <i class="fa fa-plug text-orange"></i>
+          <span>
+            {{ !order.duraformId ? "Send in Order" : "Convert to Order" }}
+          </span>
         </button>
       </div>
-      <div class="action-divider"></div>
-      <button class="action-btn" (click)="onEditClick()">
-        <i class="fa fa-pencil"></i>
-        <span>Go Back & Edit</span>
-      </button>
+      <div class="option-box__action-center" *ngIf="order.duraformId">
+        <button
+          class="action-btn"
+          [disabled]="!order.customerOrderNumber"
+          (click)="onViewDeliveryDocket()"
+        >
+          <i class="fa fa-truck" aria-hidden="true"></i>
+          <span>View Delivery Docket</span>
+        </button>
+      </div>
+      <div class="option-box__action-center" *ngIf="order.isEditable">
+        <button class="action-btn" (click)="onEditClick()">
+          <i class="fa fa-pencil"></i>
+          <span>Go Back & Edit</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
