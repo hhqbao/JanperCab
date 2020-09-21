@@ -1,3 +1,4 @@
+import { DuraformOrderListPageComponent } from './pages/duraform-order-list-page/duraform-order-list-page.component';
 import { CabinetMakerListPageComponent } from './pages/cabinet-maker-list-page/cabinet-maker-list-page.component';
 import { DuraformQuotePageComponent } from './pages/duraform-quote-page/duraform-quote-page.component';
 import { AuthGuard } from './_guards/auth.guard';
@@ -20,6 +21,7 @@ export const routes: Routes = [
     runGuardsAndResolvers: 'always',
     children: [
       { path: 'customers', component: CabinetMakerListPageComponent },
+      { path: 'duraform/orders', component: DuraformOrderListPageComponent },
       { path: 'duraform/quote/:id', component: DuraformQuotePageComponent },
       { path: 'duraform/:type/:id', component: DuraformPageComponent },
       { path: 'duraform', component: DuraformPageComponent },

@@ -1,0 +1,178 @@
+<div class="duraform-order-list-page">
+  <app-simple-box [heading]="'Duraform Order List'" [height]="'100%'">
+    <div class="control-box">
+      <div class="row">
+        <div class="col-1-4">
+          <div class="form__inline-group">
+            <label class="form__label" style="width: 8rem">Customer</label>
+            <select
+              class="form__control"
+              [(ngModel)]="filterValues.customerId"
+              (change)="onFilterValueChange()"
+            >
+              <option [value]="0">All</option>
+              <option *ngFor="let customer of customers" [value]="+customer.id">
+                {{ customer.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-1-4">
+          <div class="form__inline-group">
+            <label
+              class="form__label"
+              style="width: 8rem; justify-content: flex-end"
+              >Status</label
+            >
+            <select
+              class="form__control"
+              [(ngModel)]="filterValues.status"
+              (change)="onFilterValueChange()"
+            >
+              <option [value]="null">All</option>
+              <option [value]="+orderStatus.Submitted">Submitted</option>
+              <option [value]="+orderStatus.DistributorDeclined">
+                Distributor Declined
+              </option>
+              <option [value]="+orderStatus.DistributorApproved">
+                Distributor Approved
+              </option>
+              <option [value]="+orderStatus.Finalized">Finalized</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-1-4">
+          <form (submit)="onFilterValueChange()">
+            <div class="form__inline-group">
+              <label class="form__label" style="width: 8rem">Search For</label>
+              <input
+                name="search"
+                type="text"
+                class="form__control"
+                [(ngModel)]="filterValues.search"
+              />
+              <button type="submit" style="display: none">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <table
+      class="table table--hovered table--left table--sortable"
+      *ngIf="itemList"
+    >
+      <thead>
+        <tr>
+          <th
+            style="width: 10rem"
+            [ngClass]="{
+              active: filterValues.sortBy === 'orderNumber',
+              asc: filterValues.direction === 'asc',
+              desc: filterValues.direction === 'desc'
+            }"
+            (click)="onSortColumn('orderNumber')"
+          >
+            Order No
+          </th>
+          <th
+            style="width: 15rem"
+            [ngClass]="{
+              active: filterValues.sortBy === 'customerOrderNumber',
+              asc: filterValues.direction === 'asc',
+              desc: filterValues.direction === 'desc'
+            }"
+            (click)="onSortColumn('customerOrderNumber')"
+          >
+            Ref
+          </th>
+          <th
+            style="width: 25rem"
+            [ngClass]="{
+              active: filterValues.sortBy === 'customer',
+              asc: filterValues.direction === 'asc',
+              desc: filterValues.direction === 'desc'
+            }"
+            (click)="onSortColumn('customer')"
+          >
+            Customer
+          </th>
+          <th style="width: 25rem">Cabinet Maker</th>
+          <th
+            [ngClass]="{
+              active: filterValues.sortBy === 'description',
+              asc: filterValues.direction === 'asc',
+              desc: filterValues.direction === 'desc'
+            }"
+            (click)="onSortColumn('description')"
+          >
+            Description
+          </th>
+          <th
+            style="width: 15rem"
+            [ngClass]="{
+              active: filterValues.sortBy === 'createdDate',
+              asc: filterValues.direction === 'asc',
+              desc: filterValues.direction === 'desc'
+            }"
+            (click)="onSortColumn('createdDate')"
+          >
+            Submitted Date
+          </th>
+          <th
+            style="width: 15rem"
+            [ngClass]="{
+              active: filterValues.sortBy === 'orderStatus',
+              asc: filterValues.direction === 'asc',
+              desc: filterValues.direction === 'desc'
+            }"
+            (click)="onSortColumn('orderStatus')"
+          >
+            Status
+          </th>
+          <th style="width: 15rem"></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!isLoading && itemList.items.length === 0">
+        <tr>
+          <td colspan="6">
+            <i>No Order Match</i>
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="itemList.items.length > 0">
+        <tr *ngFor="let order of itemList.items">
+          <td (click)="onSelectOrder(order.id)">
+            {{ order.orderNumber | leading: "0000000" }}
+          </td>
+          <td (click)="onSelectOrder(order.id)">
+            {{ order.customerOrderNumber }}
+          </td>
+          <td (click)="onSelectOrder(order.id)">
+            {{ order.distributorName }}
+          </td>
+          <td (click)="onSelectOrder(order.id)">
+            {{ order.cabinetMakerName }}
+          </td>
+          <td (click)="onSelectOrder(order.id)">{{ order.description }}</td>
+          <td (click)="onSelectOrder(order.id)">
+            {{ order.createdDate | date: "dd/MM/yyyy" }}
+          </td>
+          <td (click)="onSelectOrder(order.id)">
+            {{ orderStatus[order.orderStatus] }}
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="pagination-box" *ngIf="itemList">
+      <app-pagination
+        [page]="filterValues.page"
+        [pageSize]="filterValues.take"
+        [totalItemCount]="itemList.totalItemCount"
+        (pageChange)="onPageChange($event)"
+      ></app-pagination>
+    </div>
+  </app-simple-box>
+</div>

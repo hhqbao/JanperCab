@@ -14,9 +14,7 @@
           <div class="nav__item__icon text-blue">
             <i class="fa fa-home"></i>
           </div>
-          <div class="nav__item__text">
-            Dashboard
-          </div>
+          <div class="nav__item__text">Dashboard</div>
         </a>
       </li>
       <li class="nav__item">
@@ -24,9 +22,7 @@
           <div class="nav__item__icon text-brown">
             <i class="fa fa-envelope-o"></i>
           </div>
-          <div class="nav__item__text">
-            Email
-          </div>
+          <div class="nav__item__text">Email</div>
         </a>
       </li>
       <li class="nav__item" *ngIf="auth.isInRole(role.Distributor)">
@@ -34,12 +30,10 @@
           <div class="nav__item__icon text-purple">
             <i class="fa fa-address-book" aria-hidden="true"></i>
           </div>
-          <div class="nav__item__text">
-            Customers
-          </div>
+          <div class="nav__item__text">Customers</div>
         </a>
       </li>
-      <li class="nav__item">
+      <li class="nav__item" (click)="layoutService.toggleLeftNav(false)">
         <a [appClassToggle]="'active'">
           <div class="nav__item__icon text-orange">
             <i class="fa fa-table"></i>
@@ -47,22 +41,29 @@
           <div class="nav__item__text">
             Duraform Doors
             <ul class="nav__item__sub-menu">
-              <li>
+              <li *ngIf="auth.role !== role[role.Manufacturer]">
                 <a [routerLink]="['/dashboard/duraform']">
+                  <i
+                    class="fa fa-plus-circle text-green"
+                    aria-hidden="true"
+                  ></i>
                   Create New Order
                 </a>
               </li>
               <li>
                 <a>
-                  Drafts
-                  <span class="badge">{{ dashboard.numberOfDrafts }}</span>
+                  <i
+                    class="fa fa-quote-right text-orange"
+                    aria-hidden="true"
+                  ></i>
+                  Quote List
                 </a>
               </li>
               <li>
-                <a>Quotes</a>
-              </li>
-              <li>
-                <a>Orders</a>
+                <a [routerLink]="['/dashboard/duraform/orders']">
+                  <i class="fa fa-tasks text-purple" aria-hidden="true"></i>
+                  Order List
+                </a>
               </li>
             </ul>
           </div>

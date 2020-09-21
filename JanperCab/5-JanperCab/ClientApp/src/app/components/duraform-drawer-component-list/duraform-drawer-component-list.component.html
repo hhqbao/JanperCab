@@ -4,29 +4,29 @@
     <table class="table table--component-list">
       <thead>
         <tr>
-          <th rowspan="2" style="width: 4rem;">Qty</th>
-          <th rowspan="2" style="width: 6rem;">Height</th>
-          <th rowspan="2" style="width: 6rem;">Width</th>
-          <th rowspan="2" style="width: 22rem;">
-            Drawer Type
-          </th>
-          <th rowspan="2" style="width: 20rem;">
-            Edge Profile
-          </th>
+          <th rowspan="2" style="width: 4rem">Qty</th>
+          <th rowspan="2" style="width: 6rem">Height</th>
+          <th rowspan="2" style="width: 6rem">Width</th>
+          <th rowspan="2" style="width: 6rem">No Drawers</th>
+          <th rowspan="2" style="width: 22rem">Drawer Type</th>
           <th colspan="4">'X' For Square Edge</th>
+          <th rowspan="2" style="width: 8rem">
+            Drill <br />
+            Fronts
+          </th>
           <th colspan="5">Drawer Size</th>
           <th rowspan="2">Note</th>
         </tr>
         <tr>
-          <th style="width: 4rem;">T</th>
-          <th style="width: 4rem;">B</th>
-          <th style="width: 4rem;">L</th>
-          <th style="width: 4rem;">R</th>
-          <th style="width: 6rem;">1</th>
-          <th style="width: 6rem;">2</th>
-          <th style="width: 6rem;">3</th>
-          <th style="width: 6rem;">4</th>
-          <th style="width: 6rem;">5</th>
+          <th style="width: 4rem">T</th>
+          <th style="width: 4rem">B</th>
+          <th style="width: 4rem">L</th>
+          <th style="width: 4rem">R</th>
+          <th style="width: 6rem">1</th>
+          <th style="width: 6rem">2</th>
+          <th style="width: 6rem">3</th>
+          <th style="width: 6rem">4</th>
+          <th style="width: 6rem">5</th>
         </tr>
       </thead>
       <tbody>
@@ -34,16 +34,15 @@
           <td>{{ drawer.quantity }}</td>
           <td>{{ drawer.height }}</td>
           <td>{{ drawer.width }}</td>
+          <td>{{ drawer.numberOfDrawers }}</td>
           <td class="text-left">
             {{ asset.getDrawerType(drawer.duraformDrawerTypeId).name }}
-          </td>
-          <td class="text-left">
-            {{ asset.getEdgeProfile(drawer.duraformEdgeProfileId).name }}
           </td>
           <td>{{ drawer.top ? "Y" : null }}</td>
           <td>{{ drawer.bottom ? "Y" : null }}</td>
           <td>{{ drawer.left ? "Y" : null }}</td>
           <td>{{ drawer.right ? "Y" : null }}</td>
+          <td>{{ drawer.hasDrillFronts ? "YES" : "NO" }}</td>
           <td>{{ drawer.drawerOne }}</td>
           <td>{{ drawer.drawerTwo }}</td>
           <td>{{ drawer.drawerThree }}</td>

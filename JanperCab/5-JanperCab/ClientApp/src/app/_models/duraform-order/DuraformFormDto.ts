@@ -1,10 +1,12 @@
+import { DuraformFileDto } from './../application-file/DuraformFileDto';
 import { DuraformDrawerDto } from './../duraform-component/DuraformDrawerDto';
 import { DuraformEndPanelDto } from './../duraform-component/DuraformEndPanelDto';
 import { DuraformPantryDoorDto } from './../duraform-component/DuraformPantryDoorDto';
 import { DuraformOrderTypeKey } from './../../_enums/DuraformOrderTypeKey';
 import { DuraformDoorDto } from './../duraform-component/DuraformDoorDto';
-import { Type, plainToClass } from 'class-transformer';
+import { Type } from 'class-transformer';
 import { DuraformComponentDto } from '../duraform-component/DuraformComponentDto';
+import * as _ from 'lodash';
 
 export abstract class DuraformFormDto {
   id: string;
@@ -68,6 +70,7 @@ export abstract class DuraformFormDto {
     },
   })
   duraformComponents: DuraformComponentDto[] = [];
+  duraformFiles: DuraformFileDto[] = [];
 
   get discriminator(): string {
     return `${this.orderType}`;
@@ -78,7 +81,7 @@ export abstract class DuraformFormDto {
       (x) => x instanceof DuraformDoorDto
     );
 
-    return doors as DuraformDoorDto[];
+    return _.orderBy(doors as DuraformDoorDto[], ['sortNumber'], ['asc']);
   }
 
   get pantryDoors(): DuraformPantryDoorDto[] {
@@ -86,7 +89,11 @@ export abstract class DuraformFormDto {
       (x) => x instanceof DuraformPantryDoorDto
     );
 
-    return pantryDoors as DuraformPantryDoorDto[];
+    return _.orderBy(
+      pantryDoors as DuraformPantryDoorDto[],
+      ['sortNumber'],
+      ['asc']
+    );
   }
 
   get endPanels(): DuraformEndPanelDto[] {
@@ -94,7 +101,11 @@ export abstract class DuraformFormDto {
       (x) => x instanceof DuraformEndPanelDto
     );
 
-    return endPanels as DuraformEndPanelDto[];
+    return _.orderBy(
+      endPanels as DuraformEndPanelDto[],
+      ['sortNumber'],
+      ['asc']
+    );
   }
 
   get duraformDrawers(): DuraformDrawerDto[] {
@@ -102,7 +113,7 @@ export abstract class DuraformFormDto {
       (x) => x instanceof DuraformDrawerDto
     );
 
-    return drawers as DuraformDrawerDto[];
+    return _.orderBy(drawers as DuraformDrawerDto[], ['sortNumber'], ['asc']);
   }
 
   constructor() {}

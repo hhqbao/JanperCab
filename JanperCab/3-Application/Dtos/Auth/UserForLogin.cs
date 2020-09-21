@@ -9,7 +9,7 @@ namespace _3_Application.Dtos.Auth
         public string Email { get; set; }
 
         [Required]
-        [MinLength(6, ErrorMessage = "Password must have minimum 6 characters.")]
+        [MinLength(3, ErrorMessage = "Password must have minimum 3 characters.")]
 
         public string Password { get; set; }
     }

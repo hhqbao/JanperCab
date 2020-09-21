@@ -236,6 +236,37 @@ namespace _2_Persistent.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("_1_Domain.ApplicationFile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FileSize")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FileType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ApplicationFiles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationFile");
+                });
+
             modelBuilder.Entity("_1_Domain.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -324,12 +355,18 @@ namespace _2_Persistent.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
+                    b.Property<string>("Fax")
+                        .HasColumnType("varchar(255)");
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("varchar(MAX)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
@@ -396,6 +433,9 @@ namespace _2_Persistent.Migrations
 
                     b.Property<bool>("Right")
                         .HasColumnType("bit");
+
+                    b.Property<int>("SortNumber")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Top")
                         .HasColumnType("bit");
@@ -802,12 +842,30 @@ namespace _2_Persistent.Migrations
                     b.ToTable("PantryDoorChairRailTypes");
                 });
 
+            modelBuilder.Entity("_1_Domain.DuraformFile", b =>
+                {
+                    b.HasBaseType("_1_Domain.ApplicationFile");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("varchar(1000)");
+
+                    b.Property<Guid>("DuraformFormId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasIndex("DuraformFormId");
+
+                    b.HasDiscriminator().HasValue("DuraformFile");
+                });
+
             modelBuilder.Entity("_1_Domain.CabinetMaker", b =>
                 {
                     b.HasBaseType("_1_Domain.Customer");
 
                     b.Property<string>("DeliveryAddress")
                         .HasColumnType("varchar(255)");
+
+                    b.Property<decimal>("DeliveryFee")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("DeliveryPostcode")
                         .HasColumnType("varchar(255)");
@@ -839,6 +897,12 @@ namespace _2_Persistent.Migrations
                     b.Property<string>("InvoiceTo")
                         .HasColumnType("varchar(255)");
 
+                    b.Property<string>("SecondPhone")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("ThirdPhone")
+                        .HasColumnType("varchar(255)");
+
                     b.HasIndex("DistributorId");
 
                     b.HasDiscriminator().HasValue("CabinetMaker");
@@ -848,11 +912,25 @@ namespace _2_Persistent.Migrations
                 {
                     b.HasBaseType("_1_Domain.Customer");
 
-                    b.Property<int>("OrderNumberSeed")
-                        .HasColumnType("int");
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
-                    b.Property<int>("QuoteNumberSeed")
-                        .HasColumnType("int");
+                    b.Property<string>("ContactPerson")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Postcode")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Suburb")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.HasDiscriminator().HasValue("Distributor");
                 });
@@ -891,6 +969,12 @@ namespace _2_Persistent.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("DuraformDrawerTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("HasDrillFronts")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("NumberOfDrawers")
                         .HasColumnType("int");
 
                     b.HasIndex("DuraformDrawerTypeId");
@@ -1238,6 +1322,15 @@ namespace _2_Persistent.Migrations
                     b.HasOne("_1_Domain.DuraformWrapType", "DuraformWrapType")
                         .WithMany("NotAvailableDesignWrapTypes")
                         .HasForeignKey("DuraformWrapTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformFile", b =>
+                {
+                    b.HasOne("_1_Domain.DuraformForm", "DuraformForm")
+                        .WithMany("DuraformFiles")
+                        .HasForeignKey("DuraformFormId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

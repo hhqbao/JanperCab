@@ -15,15 +15,10 @@
     <td>{{ duraformDrawer.quantity }}</td>
     <td>{{ duraformDrawer.height }}</td>
     <td>{{ duraformDrawer.width }}</td>
-    <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
+    <td>{{ duraformDrawer.numberOfDrawers }}</td>
+    <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
       {{
         asset.getDrawerType(duraformDrawer.duraformDrawerTypeId).name
-          | uppercase
-      }}
-    </td>
-    <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
-      {{
-        asset.getEdgeProfile(duraformDrawer.duraformEdgeProfileId).name
           | uppercase
       }}
     </td>
@@ -31,19 +26,20 @@
     <td>{{ duraformDrawer.bottom ? "Y" : "" }}</td>
     <td>{{ duraformDrawer.left ? "Y" : "" }}</td>
     <td>{{ duraformDrawer.right ? "Y" : "" }}</td>
+    <td>{{ duraformDrawer.hasDrillFronts ? "YES" : "NO" }}</td>
     <td>{{ duraformDrawer.drawerOne }}</td>
     <td>{{ duraformDrawer.drawerTwo }}</td>
     <td>{{ duraformDrawer.drawerThree }}</td>
     <td>{{ duraformDrawer.drawerFour }}</td>
     <td>{{ duraformDrawer.drawerFive }}</td>
-    <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
+    <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
       {{ duraformDrawer.note }}
     </td>
-    <td style="width: 5rem;">
+    <td style="width: 5rem">
       <button
         type="button"
         class="btn btn--secondary"
-        style="padding: 0.5rem 1rem;"
+        style="padding: 0.5rem 1rem"
         (click)="onRemove()"
       >
         <i class="fa fa-trash"></i>

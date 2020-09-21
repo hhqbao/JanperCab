@@ -7,4 +7,6 @@ export abstract class CustomerDto {
   imageUrl: string;
   email: string;
   phone: string;
+  fax: string;
+  note: string;
 }

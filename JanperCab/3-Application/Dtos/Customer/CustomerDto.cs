@@ -23,5 +23,10 @@ namespace _3_Application.Dtos.Customer
         [Required]
         [StringLength(255)]
         public string Phone { get; set; }
+
+        [StringLength(255)]
+        public string Fax { get; set; }
+
+        public string Note { get; set; }
     }
 }

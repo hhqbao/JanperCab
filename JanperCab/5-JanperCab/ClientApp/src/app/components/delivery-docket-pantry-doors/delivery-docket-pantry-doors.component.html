@@ -3,24 +3,20 @@
   <table>
     <thead>
       <tr>
-        <th style="width: 50px;">qty</th>
-        <th style="width: 80px;">height</th>
-        <th style="width: 80px;">width</th>
-        <th style="width: 80px;">Chair Rail Height</th>
-        <th style="width: 80px;">Chair Rail Type</th>
-        <th style="width: 80px;">Extra Rail Bottom</th>
-        <th style="text-align: center; width: 30px;">t</th>
-        <th style="text-align: center; width: 30px;">b</th>
-        <th style="text-align: center; width: 30px;">l</th>
-        <th style="text-align: center; width: 30px;">r</th>
-        <th style="padding-left: 10px; width: 345px;">option</th>
-        <th style="padding-left: 10px; width: 225px;">
-          edge profile
-        </th>
-        <th style="padding-left: 10px; width: 150px;">Hinge Hole</th>
-        <th style="padding-left: 10px;">comments</th>
-        <th style="padding-left: 10px; width: 100px;">routed</th>
-        <th style="padding-left: 10px; width: 100px;">cleaned</th>
+        <th style="width: 70px">qty</th>
+        <th style="width: 110px">height</th>
+        <th style="width: 110px">width</th>
+        <th style="width: 140px">CR Height</th>
+        <th style="width: 120px">CR Type</th>
+        <th style="width: 150px">CR Bottom</th>
+        <th style="text-align: center; width: 35px">t</th>
+        <th style="text-align: center; width: 35px">b</th>
+        <th style="text-align: center; width: 35px">l</th>
+        <th style="text-align: center; width: 35px">r</th>
+        <th style="padding-left: 10px">option</th>
+        <th style="padding-left: 10px; width: 190px">Hinge Hole</th>
+        <th style="padding-left: 10px; width: 100px">routed</th>
+        <th style="padding-left: 10px; width: 100px">cleaned</th>
       </tr>
     </thead>
     <tbody>
@@ -31,32 +27,28 @@
         <td>{{ item.chairRailHeight }}</td>
         <td>{{ getChairRailType(item.chairRailTypeId).name }}</td>
         <td>{{ item.extraRailBottom }}</td>
-        <td style="text-align: center;">
+        <td style="text-align: center">
           {{ item.top ? "Y" : null }}
         </td>
-        <td style="text-align: center;">
+        <td style="text-align: center">
           {{ item.bottom ? "Y" : null }}
         </td>
-        <td style="text-align: center;">
+        <td style="text-align: center">
           {{ item.left ? "Y" : null }}
         </td>
-        <td style="text-align: center;">
+        <td style="text-align: center">
           {{ item.right ? "Y" : null }}
         </td>
-        <td style="padding-left: 10px;">
+        <td style="padding-left: 10px">
           {{ item.duraformOption?.toString() }}
         </td>
-        <td style="padding-left: 10px;">
-          {{ getEdgeProfile(item.duraformEdgeProfileId).name }}
-        </td>
-        <td style="padding-left: 10px;">
+        <td style="padding-left: 10px">
           {{ item.hingeHoleOption?.toString() }}
         </td>
-        <td style="padding-left: 10px;">{{ item.note }}</td>
-        <td style="padding-left: 10px;">
+        <td style="padding-left: 10px">
           <div class="checkbox"></div>
         </td>
-        <td style="padding-left: 10px;">
+        <td style="padding-left: 10px">
           <div class="checkbox"></div>
         </td>
       </tr>

@@ -6,6 +6,9 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class SimpleBoxComponent implements OnInit {
   @Input() heading: string;
+  @Input() isScrollable = false;
+  @Input() noHeading = false;
+  @Input() height: string;
 
   constructor() {}
 

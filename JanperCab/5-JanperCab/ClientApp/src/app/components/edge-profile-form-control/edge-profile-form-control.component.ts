@@ -9,6 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class EdgeProfileFormControlComponent implements OnInit {
   @Input() formGroup: FormGroup;
+  @Input() hideEdgeProfile = false;
 
   constructor(
     public asset: DuraformAssetService,

@@ -52,6 +52,39 @@
       }
     }
 
+    .arch-list {
+      list-style: none;
+      margin-top: 1.5rem;
+
+      .arch {
+        border-radius: 1rem;
+        cursor: pointer;
+        display: inline-flex;
+        height: 20rem;
+        flex-direction: column;
+
+        img {
+          flex: 1;
+          display: block;
+          height: 100%;
+        }
+
+        &__name {
+          display: block;
+          font-weight: bold;
+          text-align: center;
+        }
+
+        &:not(:first-child) {
+          margin-left: 2rem;
+        }
+
+        &:hover {
+          border: solid 2px $blue-primary;
+        }
+      }
+    }
+
     &__search-box {
       margin-bottom: 3.5rem;
 

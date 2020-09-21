@@ -52,6 +52,10 @@
     <Compile Remove="Migrations\20200809224758_Foo.Designer.cs" />
     <Compile Remove="Migrations\20200812130304_CreateClass_DuraformOrder.cs" />
     <Compile Remove="Migrations\20200812130304_CreateClass_DuraformOrder.Designer.cs" />
+    <Compile Remove="Migrations\20200919171523_EditTable_Customers_AddPhoneAndFax.cs" />
+    <Compile Remove="Migrations\20200919171523_EditTable_Customers_AddPhoneAndFax.Designer.cs" />
+    <Compile Remove="Migrations\20200921022727_EditTable_DuraformForms_RemoveIdentityInsert.cs" />
+    <Compile Remove="Migrations\20200921022727_EditTable_DuraformForms_RemoveIdentityInsert.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

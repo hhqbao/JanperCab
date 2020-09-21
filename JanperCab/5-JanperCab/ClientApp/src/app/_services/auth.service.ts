@@ -40,6 +40,10 @@ export class AuthService {
     return this.jwtHelper.decodeToken(this.userToken.token);
   }
 
+  get role(): string {
+    return this.decodedToken?.role;
+  }
+
   get isLoggedIn(): boolean {
     if (!this.token) {
       return false;

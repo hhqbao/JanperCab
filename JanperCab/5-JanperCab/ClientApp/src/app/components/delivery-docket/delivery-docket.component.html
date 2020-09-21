@@ -98,13 +98,11 @@
       <app-delivery-docket-pantry-doors
         [pantryDoors]="data.duraformForm.pantryDoors"
         [pantryDoorChairRailTypes]="data.pantryDoorChairRailTypes"
-        [edgeProfiles]="data.edgeProfiles"
       ></app-delivery-docket-pantry-doors>
     </div>
     <div class="component-box" *ngIf="data.duraformForm.endPanels.length > 0">
       <app-delivery-docket-end-panels
         [endPanels]="data.duraformForm.endPanels"
-        [edgeProfiles]="data.edgeProfiles"
       ></app-delivery-docket-end-panels>
     </div>
     <div
@@ -114,7 +112,6 @@
       <app-delivery-docket-duraform-drawers
         [drawers]="data.duraformForm.duraformDrawers"
         [drawerTypes]="data.duraformDrawerTypes"
-        [edgeProfiles]="data.edgeProfiles"
       ></app-delivery-docket-duraform-drawers>
     </div>
   </div>

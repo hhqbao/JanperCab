@@ -1,4 +1,5 @@
 ﻿using _1_Domain;
+using _3_Application.Dtos.ApplicationFile;
 using _3_Application.Dtos.DuraformComponent;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,8 @@ namespace _3_Application.Dtos.DuraformForm
         public int? HingeHoleTypeId { get; set; }
 
         public int? DuraformArchId { get; set; }
+
+        public string CreatedByUserId { get; set; }
 
         public DateTime CreatedDate { get; set; }
 
@@ -70,10 +73,12 @@ namespace _3_Application.Dtos.DuraformForm
 
 
         public ICollection<DuraformComponentDto> DuraformComponents { get; set; }
+        public ICollection<DuraformFileDto> DuraformFiles { get; set; }
 
         protected DuraformFormDto()
         {
             DuraformComponents = new Collection<DuraformComponentDto>();
+            DuraformFiles = new Collection<DuraformFileDto>();
         }
     }
 }

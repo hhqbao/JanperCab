@@ -28,7 +28,36 @@
             />
           </div>
         </div>
-        <div class="col-3-4" [formGroup]="filterFg">
+        <div class="col-3-4" *ngIf="!isSelectingColor">
+          <h1 class="heading heading--default">Choose Arch Profile</h1>
+          <ul class="arch-list">
+            <li class="arch" (click)="onSelectArch(null)">
+              <img
+                src="./../../../assets/images/Duraform/Arches/square.jpg"
+                alt="Arch"
+                class="arch__img"
+              />
+              <span class="arch__name">Square - No Arch</span>
+            </li>
+            <li
+              class="arch"
+              *ngFor="let arch of asset.arches"
+              (click)="onSelectArch(arch)"
+            >
+              <img
+                src="./../../../assets/images/Duraform/Arches/{{
+                  arch.imageUrl
+                }}"
+                alt="Arch"
+                class="arch__img"
+              />
+              <span class="arch__name">
+                {{ arch.name }}
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="col-3-4" [formGroup]="filterFg" *ngIf="isSelectingColor">
           <div class="door__search-box">
             <div class="form__icon-control right door__search-box__search">
               <input

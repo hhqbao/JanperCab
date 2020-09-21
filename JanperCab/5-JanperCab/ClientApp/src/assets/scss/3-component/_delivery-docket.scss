@@ -1,7 +1,7 @@
 .delivery-docket {
   background-color: white;
   color: black;
-  font-size: 23px;
+  font-size: 25px;
 
   .header {
     display: flex;
@@ -12,7 +12,7 @@
     }
 
     &__manufacturer-details {
-      font-size: 18px;
+      font-size: 20px;
 
       * {
         &:not(:first-child) {
@@ -30,7 +30,7 @@
 
     &__form-details {
       font-weight: bold;
-      font-size: 25px;
+      font-size: 30px;
       text-align: right;
 
       & > .barcode {
@@ -121,20 +121,15 @@
       }
 
       table {
-        font-size: 20px;
         text-align: left;
         text-transform: uppercase;
         width: 100%;
-
-        th,
-        td {
-          padding: 5px 0;
-        }
 
         thead {
           tr {
             th {
               font-weight: 300;
+              padding: 5px 0;
             }
           }
         }
@@ -145,6 +140,7 @@
           tr {
             td {
               min-height: 15px;
+              padding: 10px 0;
               vertical-align: top;
 
               .checkbox {
@@ -154,13 +150,13 @@
                 &::after {
                   content: "";
                   display: block;
-                  height: 15px;
+                  height: 24px;
                 }
 
                 &::before {
                   border: solid 1px black;
                   margin-right: 3px;
-                  width: 15px;
+                  width: 24px;
                 }
 
                 &::after {
@@ -176,7 +172,7 @@
   }
 
   .footer {
-    font-size: 20px;
+    font-size: 23px;
     margin-top: 50px;
 
     .note {

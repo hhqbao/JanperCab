@@ -24,15 +24,13 @@
       </h1>
       <div
         class="form__group"
-        style="max-width: 50rem;"
+        style="max-width: 50rem"
         *ngIf="
           !order.duraformId &&
           auth.customer.customerType === customerType.Distributor
         "
       >
-        <label class="form__label">
-          Select Customer
-        </label>
+        <label class="form__label"> Select Customer </label>
         <select
           class="form__control"
           *ngIf="!order.duraformId"
@@ -57,6 +55,7 @@
                 <button
                   type="button"
                   class="detail__edit-btn"
+                  *ngIf="order.isEditable"
                   (click)="showInvoiceForm = true"
                 >
                   <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -79,6 +78,7 @@
                 <button
                   type="button"
                   class="detail__edit-btn"
+                  *ngIf="order.isEditable"
                   (click)="showDeliveryForm = true"
                 >
                   <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -102,7 +102,8 @@
           <app-simple-box [heading]="'Delivery Note'">
             <textarea
               class="form__control"
-              style="font-size: 1.8rem;"
+              style="font-size: 1.8rem"
+              [disabled]="!order.isEditable"
               [(ngModel)]="order.deliveryNote"
             ></textarea>
           </app-simple-box>
@@ -135,14 +136,12 @@
               </span>
             </li>
             <li class="selection" *ngIf="order.hingeHoleTypeId">
-              <span class="selection__hinge-hole">
-                HINGE HOLE
-              </span>
+              <span class="selection__hinge-hole"> HINGE HOLE </span>
             </li>
           </ul>
         </div>
         <div class="col-1-3 middle">
-          <div class="row" style="width: 100%;">
+          <div class="row" style="width: 100%">
             <div class="col-1-3 middle"></div>
           </div>
         </div>
@@ -150,11 +149,11 @@
 
       <table
         class="table table--component-list"
-        style="max-width: 50rem; margin: 3rem 0;"
+        style="max-width: 50rem; margin: 3rem 0"
       >
         <thead>
           <tr>
-            <th style="width: 20rem;">Option & Accessories</th>
+            <th style="width: 20rem">Option & Accessories</th>
             <th>Description</th>
           </tr>
         </thead>
@@ -166,19 +165,97 @@
             <td>({{ order.componentsWithHingeHoleCount }}) Hinge Holes</td>
           </tr>
           <tr>
-            <td class="text-left">
-              Arch Profile
-            </td>
+            <td class="text-left">Arch Profile</td>
             <td>
               {{ order.selectedArch ? order.selectedArch.name : "SQUARE" }}
             </td>
           </tr>
-          <tr>
-            <td class="text-left">Board Colour</td>
-            <td>White (Fixed Value)</td>
-          </tr>
         </tbody>
       </table>
+
+      <div class="component-list">
+        <div class="panel" style="display: inline-block; width: 100rem">
+          <div class="panel__heading">Files</div>
+          <div class="panel__content">
+            <table class="table table--hovered">
+              <tbody *ngIf="order.duraformFiles.length > 0">
+                <tr *ngFor="let file of order.duraformFiles">
+                  <td class="text-center" style="width: 3rem">
+                    <i
+                      *ngIf="file.fileType.includes('image')"
+                      class="fa fa-file-image-o"
+                      aria-hidden="true"
+                    ></i>
+                    <i
+                      *ngIf="file.fileType.includes('pdf')"
+                      class="fa fa-file-pdf-o"
+                      aria-hidden="true"
+                    ></i>
+                  </td>
+                  <td class="text-left" style="width: 20rem">
+                    {{ file.fileName }}
+                  </td>
+                  <td class="text-left">
+                    {{ file.description }}
+                  </td>
+                  <td style="width: 15rem">
+                    <span class="text-green">Uploaded</span>
+                  </td>
+                  <td class="text-center" style="width: 10rem">
+                    {{ file.fileSize | fileSize }}
+                  </td>
+                  <td class="text-center" style="width: 5rem">
+                    <button
+                      type="button"
+                      class="btn btn--link"
+                      (click)="onViewUploadedFile(file.id)"
+                    >
+                      View
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="fileService.duraformFiles.length > 0">
+                <tr *ngFor="let file of fileService.duraformFiles">
+                  <td class="text-center" style="width: 3rem">
+                    <i
+                      *ngIf="file.fileType.includes('image')"
+                      class="fa fa-file-image-o"
+                      aria-hidden="true"
+                    ></i>
+                    <i
+                      *ngIf="file.fileType.includes('pdf')"
+                      class="fa fa-file-pdf-o"
+                      aria-hidden="true"
+                    ></i>
+                  </td>
+                  <td class="text-left" style="width: 20rem">
+                    {{ file.fileName }}
+                  </td>
+                  <td class="text-left">
+                    {{ file.description }}
+                  </td>
+                  <td style="width: 15rem">
+                    <span class="text-alert">Not Uploaded</span>
+                  </td>
+                  <td class="text-center" style="width: 10rem">
+                    {{ file.fileSize | fileSize }}
+                  </td>
+                  <td class="text-center" style="width: 5rem">
+                    <button
+                      type="button"
+                      class="btn btn--link"
+                      (click)="onViewNotUploadedFile(file)"
+                    >
+                      View
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
       <app-box
         [showHeading]="false"
@@ -209,16 +286,33 @@
     </div>
   </div>
   <div class="option-box" *ngIf="order.cabinetMakerId">
+    <div style="margin-bottom: 1rem" *ngIf="order.duraformId">
+      <app-simple-box [heading]="'Status'">
+        <div class="option-box__status" *ngIf="order.isDraft">Draft</div>
+        <div class="option-box__status" *ngIf="order.isOrder">
+          <span *ngIf="order.orderStatus === orderStatus.Submitted">
+            Submitted
+          </span>
+          <span *ngIf="order.orderStatus === orderStatus.DistributorDeclined">
+            Declined
+          </span>
+          <span *ngIf="order.orderStatus === orderStatus.DistributorApproved">
+            Approved
+          </span>
+        </div>
+      </app-simple-box>
+    </div>
     <app-simple-box [heading]="'Customer Order Number'">
       <input
         type="text"
         class="form__control text-center"
-        style="font-weight: bold; font-size: 2rem; padding: 1rem;"
+        style="font-weight: bold; font-size: 2rem; padding: 1rem"
         required
+        [disabled]="!order.isEditable"
         [(ngModel)]="order.customerOrderNumber"
       />
     </app-simple-box>
-    <div style="margin-top: 1rem;">
+    <div style="margin-top: 1rem">
       <div class="option-box__action-center" *ngIf="!order.isOrder">
         <button
           class="action-btn"
@@ -235,7 +329,7 @@
           class="action-btn"
           *ngIf="order.isDraft"
           [disabled]="!order.customerOrderNumber"
-          (click)="!order.duraformId ? onSendInQuote() : null"
+          (click)="onSendInQuote()"
         >
           <i class="fa fa-quora text-blue" aria-hidden="true"></i>
           <span>
@@ -245,7 +339,7 @@
         <button
           class="action-btn"
           [disabled]="!order.customerOrderNumber"
-          (click)="!order.duraformId ? onSendInOrder() : null"
+          (click)="onSendInOrder()"
         >
           <i class="fa fa-plug text-orange"></i>
           <span>
@@ -253,7 +347,27 @@
           </span>
         </button>
       </div>
-      <div class="option-box__action-center" *ngIf="order.duraformId">
+      <div
+        class="option-box__action-center"
+        *ngIf="
+          auth.isInRole(role[role.Distributor]) &&
+          order.isOrder &&
+          order.orderStatus === orderStatus.Submitted
+        "
+      >
+        <button class="action-btn" (click)="onApproveOrder()">
+          <i class="fa fa-check text-green" aria-hidden="true"></i>
+          <span>Approve Order</span>
+        </button>
+        <button class="action-btn" (click)="onDeclineOrder()">
+          <i class="fa fa-ban text-alert" aria-hidden="true"></i>
+          <span>Declide Order</span>
+        </button>
+      </div>
+      <div
+        class="option-box__action-center"
+        *ngIf="auth.isInRole(role[role.Manufacturer])"
+      >
         <button
           class="action-btn"
           [disabled]="!order.customerOrderNumber"
@@ -261,6 +375,14 @@
         >
           <i class="fa fa-truck" aria-hidden="true"></i>
           <span>View Delivery Docket</span>
+        </button>
+        <button
+          class="action-btn"
+          *ngIf="order.isOrder"
+          (click)="onExportCapProExcel()"
+        >
+          <i class="fa fa-database text-green" aria-hidden="true"></i>
+          <span>Export For CabPro</span>
         </button>
       </div>
       <div class="option-box__action-center" *ngIf="order.isEditable">

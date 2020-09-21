@@ -1,11 +1,11 @@
+import { DuraformDraftDto } from './../_models/duraform-order/DuraformDraftDto';
 import { plainToClass } from 'class-transformer';
 import { map } from 'rxjs/operators';
-import { DuraformDraftForSmallList } from './../_models/duraform-draft/DuraformDraftForSmallList';
+import { DuraformDraftForListDto } from '../_models/duraform-draft/DuraformDraftForListDto';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { DuraformDraftDto } from '../_models/duraform-order/DuraformDraftDto';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformDraftService {
@@ -27,10 +27,10 @@ export class DuraformDraftService {
     return this.http.get<DuraformDraftDto[]>(url);
   };
 
-  getSmallList = (): Observable<DuraformDraftForSmallList[]> => {
+  getDuraformDraftList = (): Observable<DuraformDraftForListDto[]> => {
     const url = `${environment.baseUrl}/DuraformDrafts/GetSmallList`;
 
-    return this.http.get<DuraformDraftForSmallList[]>(url);
+    return this.http.get<DuraformDraftForListDto[]>(url);
   };
 
   create = (draftDto: DuraformDraftDto) => {

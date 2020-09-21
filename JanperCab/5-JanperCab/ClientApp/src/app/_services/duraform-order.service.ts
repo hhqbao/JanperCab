@@ -1,10 +1,11 @@
+import { map } from 'rxjs/operators';
+import { DuraformFileDto } from './../_models/application-file/DuraformFileDto';
+import { UploadDuraformFileDto } from '../_models/files/UploadDuraformFileDto';
+import { OrderStatus } from './../_enums/OrderStatus';
 import { HingeHoleTypeDto } from './../_models/hinge-hole-type/HingeHoleTypeDto';
 import { DuraformOrderDto } from './../_models/duraform-order/DuraformOrderDto';
 import { CabinetMakerDto } from './../_models/customer/CabinetMakerDto';
 import { DuraformQuoteDto } from './../_models/duraform-order/DuraformQuoteDto';
-import { DuraformDraftService } from './duraform-draft.service';
-import { Router } from '@angular/router';
-import { DashboardService } from './dashboard.service';
 import { AuthService } from './auth.service';
 import { DuraformDrawerDto } from './../_models/duraform-component/DuraformDrawerDto';
 import { DuraformEndPanelDto } from './../_models/duraform-component/DuraformEndPanelDto';
@@ -16,7 +17,6 @@ import { DuraformSerieForList } from './../_models/duraform-serie/DuraformSerieF
 import { DuraformDesignForOrderMenu } from './../_models/duraform-design/DuraformDesignForOrderMenu';
 import { DuraformAssetService } from './duraform-asset.service';
 import { DuraformDraftDto } from './../_models/duraform-order/DuraformDraftDto';
-import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { DuraformArchForList } from './../_models/duraform-arch/DuraformArchForList';
@@ -24,7 +24,7 @@ import { DuraformEdgeProfileForList } from './../_models/duraform-edge-profile/D
 import { StepOneReturnValue } from '../_models/duraform-order/StepOneReturnValue';
 import { Injectable } from '@angular/core';
 import { DuraformFormDto } from '../_models/duraform-order/DuraformFormDto';
-import { plainToClass, classToClass, classToPlain } from 'class-transformer';
+import { plainToClass } from 'class-transformer';
 import { DuraformComponentWithOptionAndHingeHoleDto } from '../_models/duraform-component/DuraformComponentWithOptionAndHingeHoleDto';
 import { DuraformComponentDto } from '../_models/duraform-component/DuraformComponentDto';
 import { DuraformOrderTypeKey } from '../_enums/DuraformOrderTypeKey';
@@ -68,6 +68,18 @@ export class DuraformOrderService {
 
   get isQuote(): boolean {
     return this.duraformForm instanceof DuraformQuoteDto;
+  }
+
+  get orderStatus(): OrderStatus {
+    if (this.duraformForm.orderType === DuraformOrderTypeKey.Order) {
+      return (this.duraformForm as DuraformOrderDto).orderStatus;
+    } else {
+      return null;
+    }
+  }
+
+  set orderStatus(status: OrderStatus) {
+    (this.duraformForm as DuraformOrderDto).orderStatus = status;
   }
 
   get orderType(): DuraformOrderTypeKey {
@@ -331,6 +343,10 @@ export class DuraformOrderService {
     return [...this.duraformForm.duraformDrawers];
   }
 
+  get duraformFiles(): DuraformFileDto[] {
+    return this.duraformForm.duraformFiles;
+  }
+
   submitStepOne = (model: StepOneReturnValue) => {
     this.duraformForm.duraformDesignId = model.design.id;
     this.duraformForm.duraformEdgeProfileId = model.edgeProfile.id;
@@ -352,6 +368,13 @@ export class DuraformOrderService {
   };
 
   addComponent = (component: DuraformComponentDto) => {
+    if (this.duraformForm.duraformComponents[0]) {
+      component.sortNumber =
+        this.duraformForm.duraformComponents[0].sortNumber + 1;
+    } else {
+      component.sortNumber = 1;
+    }
+
     this.duraformForm.duraformComponents.unshift(component);
   };
 

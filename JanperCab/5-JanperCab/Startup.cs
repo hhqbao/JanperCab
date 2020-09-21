@@ -45,6 +45,7 @@ namespace _5_JanperCab
 
             services.AddDefaultIdentity<ApplicationUser>(options =>
                 {
+                    options.Password.RequiredLength = 3;
                     options.Password.RequireDigit = false;
                     options.Password.RequireLowercase = false;
                     options.Password.RequireUppercase = false;

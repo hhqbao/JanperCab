@@ -1,3 +1,6 @@
+import { DuraformOrderService } from './../../_services/duraform-order.service';
+import { DuraformArchForList } from './../../_models/duraform-arch/DuraformArchForList';
+import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DuraformDesignForOrderMenu } from '../../_models/duraform-design/DuraformDesignForOrderMenu';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DuraformWrapTypeForSelection } from './../../_models/duraform-wrap-type/DuraformWrapTypeForSelection';
@@ -33,17 +36,24 @@ export class DuraformColorSelectorComponent implements OnInit {
   wrapColors: DuraformWrapColorForSelection[] = [];
 
   filterFg: FormGroup;
+  isSelectingColor = false;
 
   constructor(
     private ef: ElementRef,
     private layout: LayoutService,
     private dialog: DialogService,
     private fb: FormBuilder,
+    public asset: DuraformAssetService,
+    private order: DuraformOrderService,
     private wrapTypeService: DuraformWrapTypeService,
     private wrapColorService: DuraformWrapColorService
   ) {}
 
   ngOnInit() {
+    if (this.design.hasNoArch) {
+      this.isSelectingColor = true;
+    }
+
     this.initialForm();
 
     this.layout.showLoadingPanel();
@@ -66,10 +76,6 @@ export class DuraformColorSelectorComponent implements OnInit {
       search: [''],
       type: [null],
     });
-
-    setTimeout(() => {
-      this.focusSearchBox();
-    }, 100);
   };
 
   private loadWrapTypes = () => {
@@ -133,5 +139,14 @@ export class DuraformColorSelectorComponent implements OnInit {
 
   onRoutingOnlyClick = () => {
     this.routingPick.emit();
+  };
+
+  onSelectArch = (arch: DuraformArchForList) => {
+    this.order.selectArch(arch);
+    this.isSelectingColor = true;
+
+    setTimeout(() => {
+      this.focusSearchBox();
+    }, 100);
   };
 }

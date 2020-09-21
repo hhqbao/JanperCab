@@ -20,29 +20,24 @@
       {{ asset.getChairRailType(pantryDoor.chairRailTypeId).name | uppercase }}
     </td>
     <td>{{ pantryDoor.extraRailBottom }}</td>
-    <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
-      {{
-        asset.getEdgeProfile(pantryDoor.duraformEdgeProfileId).name | uppercase
-      }}
-    </td>
     <td>{{ pantryDoor.top ? "Y" : "" }}</td>
     <td>{{ pantryDoor.bottom ? "Y" : "" }}</td>
     <td>{{ pantryDoor.left ? "Y" : "" }}</td>
     <td>{{ pantryDoor.right ? "Y" : "" }}</td>
-    <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
+    <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
       {{ pantryDoor.duraformOption?.toString() }}
     </td>
     <td>
       {{ pantryDoor.hingeHoleOption?.toString() }}
     </td>
-    <td class="text-left" style="padding-left: 1rem; padding-right: 1rem;">
+    <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
       {{ pantryDoor.note }}
     </td>
-    <td style="width: 5rem;">
+    <td style="width: 5rem">
       <button
         type="button"
         class="btn btn--secondary"
-        style="padding: 0.5rem 1rem;"
+        style="padding: 0.5rem 1rem"
         (click)="onRemove()"
       >
         <i class="fa fa-trash"></i>

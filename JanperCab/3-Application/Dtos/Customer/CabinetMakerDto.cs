@@ -26,6 +26,13 @@ namespace _3_Application.Dtos.Customer
 
         public string DeliveryPostcode { get; set; }
 
+        public string SecondPhone { get; set; }
+
+        public string ThirdPhone { get; set; }
+
+        public decimal DeliveryFee { get; set; }
+
+
         public CabinetMakerDto()
         {
             CustomerType = CustomerType.CabinetMaker;

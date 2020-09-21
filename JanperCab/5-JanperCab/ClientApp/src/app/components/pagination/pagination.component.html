@@ -1,0 +1,44 @@
+<div class="pagination">
+  <ul class="page-list">
+    <li
+      class="page"
+      [ngClass]="{ disabled: page <= 0 }"
+      (click)="page > 0 && onPageChange(0)"
+    >
+      <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+    </li>
+    <li
+      class="page"
+      [ngClass]="{ disabled: page <= 0 }"
+      (click)="page > 0 && onPageChange(page - 1)"
+    >
+      <i class="fa fa-angle-left" aria-hidden="true"></i>
+    </li>
+    <li class="page space" *ngIf="page - 5 > 0">...</li>
+    <ng-container *ngFor="let item of pageList">
+      <li
+        class="page"
+        *ngIf="item === page || (item >= page - 5 && item <= page + 5)"
+        (click)="item !== page && onPageChange(item)"
+        [ngClass]="{ active: item === page }"
+      >
+        {{ item + 1 }}
+      </li>
+    </ng-container>
+    <li class="page space" *ngIf="page + 5 < pageList.length - 1">...</li>
+    <li
+      class="page"
+      [ngClass]="{ disabled: page === pageList.length - 1 }"
+      (click)="page < pageList.length - 1 && onPageChange(page + 1)"
+    >
+      <i class="fa fa-angle-right" aria-hidden="true"></i>
+    </li>
+    <li
+      class="page page-last"
+      [ngClass]="{ disabled: page === pageList.length - 1 }"
+      (click)="page < pageList.length - 1 && onPageChange(pageList.length - 1)"
+    >
+      <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+    </li>
+  </ul>
+</div>

@@ -30,6 +30,9 @@ namespace _2_Persistent.Configs
                 .IsRequired()
                 .HasColumnType("varchar(255)");
 
+            builder.Property(x => x.Fax)
+                .HasColumnType("varchar(255)");
+
             builder.HasMany(x => x.ApplicationUsers)
                 .WithOne(y => y.Customer)
                 .IsRequired()

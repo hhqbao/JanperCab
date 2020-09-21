@@ -10,7 +10,6 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DeliveryDocketPantryDoorsComponent implements OnInit {
   @Input() pantryDoors: DuraformPantryDoorDto[] = [];
   @Input() pantryDoorChairRailTypes: PantryDoorChairRailTypeForList[] = [];
-  @Input() edgeProfiles: DuraformEdgeProfileForList[] = [];
 
   constructor() {}
 
@@ -18,9 +17,5 @@ export class DeliveryDocketPantryDoorsComponent implements OnInit {
 
   getChairRailType = (id: number) => {
     return this.pantryDoorChairRailTypes.find((x) => x.id === id);
-  };
-
-  getEdgeProfile = (id: number) => {
-    return this.edgeProfiles.find((x) => x.id === id);
   };
 }

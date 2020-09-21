@@ -18,7 +18,7 @@
           decimal: '',
           prefix: '',
           thousands: '',
-          max: 100
+          max: 2500
         }"
       />
     </td>
@@ -50,6 +50,7 @@
     <app-edge-profile-form-control
       appRemoveTag
       [formGroup]="formGroup"
+      [hideEdgeProfile]="true"
     ></app-edge-profile-form-control>
     <td>
       <app-duraform-option-selector
@@ -68,17 +69,17 @@
       <input
         type="text"
         class="form__control"
-        style="text-align: left; width: 99%;"
+        style="text-align: left; width: 99%"
         appSelectOnFocus
         formControlName="note"
       />
     </td>
-    <td style="width: 5rem;">
+    <td style="width: 5rem">
       <button
         [disabled]="formGroup.invalid"
         type="button"
         class="btn btn--primary"
-        style="padding: 0.5rem 1rem;"
+        style="padding: 0.5rem 1rem"
         (click)="onSubmit()"
       >
         <i class="fa fa-save"></i>

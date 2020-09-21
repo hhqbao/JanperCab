@@ -2,7 +2,11 @@
 {
     public class DuraformDrawer : DuraformComponent
     {
+        public int NumberOfDrawers { get; set; }
+
         public int DuraformDrawerTypeId { get; set; }
+
+        public bool HasDrillFronts { get; set; }
 
         public decimal? DrawerOne { get; set; }
 

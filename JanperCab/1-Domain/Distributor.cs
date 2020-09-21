@@ -5,9 +5,17 @@ namespace _1_Domain
 {
     public class Distributor : Customer
     {
-        public int QuoteNumberSeed { get; set; }
+        public string Address { get; set; }
 
-        public int OrderNumberSeed { get; set; }
+        public string Suburb { get; set; }
+
+        public string State { get; set; }
+
+        public string Postcode { get; set; }
+
+        public string ContactPerson { get; set; }
+
+
 
         public virtual ICollection<CabinetMaker> CabinetMakers { get; set; }
         public virtual ICollection<DuraformForm> DuraformForms { get; set; }

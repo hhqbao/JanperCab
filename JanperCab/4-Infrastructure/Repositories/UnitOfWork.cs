@@ -1,5 +1,6 @@
 ﻿using _2_Persistent;
 using _3_Application.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace _4_Infrastructure.Repositories
@@ -32,6 +33,7 @@ namespace _4_Infrastructure.Repositories
 
         public IDuraformOrderRepo DuraformOrders { get; }
 
+        public IApplicationFileRepo ApplicationFiles { get; }
 
 
         public UnitOfWork(ApplicationDbContext dbContext)
@@ -50,6 +52,12 @@ namespace _4_Infrastructure.Repositories
             DuraformOptionTypes = new DuraformOptionTypeRepo(_dbContext);
             HingeHoleTypes = new HingeHoleTypeRepo(_dbContext);
             DuraformOrders = new DuraformOrderRepo(_dbContext);
+            ApplicationFiles = new ApplicationFileRepo(_dbContext);
+        }
+
+        public async Task ExecuteCommandAsync(string command)
+        {
+            await this._dbContext.Database.ExecuteSqlRawAsync(command);
         }
 
         public async Task<int> CompleteAsync()

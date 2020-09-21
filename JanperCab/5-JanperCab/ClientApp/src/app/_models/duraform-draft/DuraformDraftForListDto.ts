@@ -1,4 +1,4 @@
-export class DuraformDraftForSmallList {
+export class DuraformDraftForListDto {
   id: string;
   createdDate: Date;
   description: string;

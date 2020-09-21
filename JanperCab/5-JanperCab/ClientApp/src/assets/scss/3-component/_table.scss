@@ -53,6 +53,44 @@
     }
   }
 
+  &--sortable {
+    thead {
+      th {
+        cursor: pointer;
+        position: relative;
+
+        &::after {
+          content: "";
+          display: none;
+          font-family: "FontAwesome";
+          margin-left: 1rem;
+        }
+
+        &.active {
+          &::after {
+            display: inline-block;
+          }
+
+          &.asc {
+            &::after {
+              content: "\f0d8";
+            }
+          }
+
+          &.desc {
+            &::after {
+              content: "\f0d7";
+            }
+          }
+        }
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
   &--left {
     th,
     td {

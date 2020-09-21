@@ -1,5 +1,9 @@
-<div class="simple-box">
-  <div class="heading">{{ heading }}</div>
+<div
+  class="simple-box"
+  [ngClass]="{ scrollable: isScrollable }"
+  style="height: {{ height ? height : 'auto' }};"
+>
+  <div class="heading" *ngIf="!noHeading">{{ heading }}</div>
   <div class="content">
     <ng-content></ng-content>
   </div>

@@ -10,7 +10,6 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DeliveryDocketDuraformDrawersComponent implements OnInit {
   @Input() drawers: DuraformDrawerDto[] = [];
   @Input() drawerTypes: DuraformDrawerTypeForList[] = [];
-  @Input() edgeProfiles: DuraformEdgeProfileForList[] = [];
 
   constructor() {}
 
@@ -18,9 +17,5 @@ export class DeliveryDocketDuraformDrawersComponent implements OnInit {
 
   getDrawerType = (id: number) => {
     return this.drawerTypes.find((x) => x.id === id);
-  };
-
-  getEdgeProfile = (id: number) => {
-    return this.edgeProfiles.find((x) => x.id === id);
   };
 }

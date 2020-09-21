@@ -1,4 +1,5 @@
 ﻿using _1_Domain;
+using _3_Application.Dtos.Common;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -22,5 +23,14 @@ namespace _3_Application.Interfaces.Repositories
         Task<DuraformQuote> GetQuoteAsync(Guid quoteId, int customerId);
 
         Task<DuraformOrder> GetOrderAsync(Guid orderId, Customer customer);
+
+        Task<ItemList<DuraformOrder>> GetCabinetMakerOrdersAsync(int cabinetMakerId, OrderStatus? status, string search, string sortBy = "orderNumber", string direction = "asc",
+            int page = 0, int take = 20);
+
+        Task<ItemList<DuraformOrder>> GetDistributorOrdersAsync(int distributorId, int cabinetMakerId, OrderStatus? status, string search, string sortBy = "orderNumber", string direction = "asc",
+            int page = 0, int take = 20);
+
+        Task<ItemList<DuraformOrder>> GetManufacturerOrdersAsync(int distributorId, OrderStatus? status, string search, string sortBy = "orderNumber", string direction = "asc",
+            int page = 0, int take = 20);
     }
 }

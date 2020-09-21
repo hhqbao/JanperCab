@@ -51,16 +51,6 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<DuraformDraft, DuraformDraftDto>(draftInDb));
         }
 
-        [HttpGet("Count")]
-        public async Task<IActionResult> Count()
-        {
-            var user = await _userManager.FindByEmailAsync(User.Identity.Name);
-
-            var count = await _unitOfWork.DuraformOrders.CountDraftAsync(user.Id);
-
-            return Ok(count);
-        }
-
         [HttpPost]
         public async Task<IActionResult> Create(DuraformDraftDto draftDto)
         {

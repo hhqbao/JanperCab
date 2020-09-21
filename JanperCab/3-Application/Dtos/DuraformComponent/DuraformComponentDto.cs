@@ -21,5 +21,7 @@
         public bool Right { get; set; }
 
         public string Note { get; set; }
+
+        public int SortNumber { get; set; }
     }
 }

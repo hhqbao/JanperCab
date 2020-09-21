@@ -19,7 +19,7 @@ import { PantryDoorChairRailTypeService } from 'src/app/_services/pantry-door-ch
 import { DuraformDrawerTypeService } from 'src/app/_services/duraform-drawer-type.service';
 import { DuraformOptionTypeService } from 'src/app/_services/duraform-option-type.service';
 import { HingeHoleTypeService } from 'src/app/_services/hinge-hole-type.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DuraformOrderTypeKey } from 'src/app/_enums/DuraformOrderTypeKey';
 
 @Component({
@@ -33,6 +33,7 @@ export class DuraformPageComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private layout: LayoutService,
     private dialog: DialogService,
     private asset: DuraformAssetService,
@@ -53,8 +54,10 @@ export class DuraformPageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.layout.toggleLeftNav(true);
     this.layout.showLoadingPanel();
+    setTimeout(() => {
+      this.layout.toggleLeftNav(true);
+    });
 
     forkJoin(
       forkJoin([
@@ -112,6 +115,7 @@ export class DuraformPageComponent implements OnInit {
               (error) => {
                 this.dialog.error(error);
                 this.dialog.error('Failed Loading Draft!');
+                this.router.navigate(['/dashboard']);
               }
             );
             break;
@@ -128,6 +132,7 @@ export class DuraformPageComponent implements OnInit {
               (error) => {
                 this.dialog.error(error);
                 this.dialog.error('Failed Loading Order');
+                this.router.navigate(['/dashboard/duraform/orders']);
               }
             );
             break;

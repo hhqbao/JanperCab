@@ -11,5 +11,7 @@ namespace _3_Application.Interfaces.Repositories
         Task<CabinetMaker> GetCabinetMakerAsync(int id);
 
         Task<List<CabinetMaker>> GetCabinetMakersAsync(int distributorId);
+
+        Task<List<Distributor>> GetDistributorsAsync();
     }
 }

@@ -37,6 +37,15 @@ namespace _2_Persistent.Configs
 
             builder.Property(x => x.DeliveryPostcode)
                 .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.SecondPhone)
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.ThirdPhone)
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.DeliveryFee)
+                .HasColumnType("decimal(18,2)");
         }
     }
 }

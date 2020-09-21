@@ -3,7 +3,6 @@ using _2_Persistent.Configs;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Options;
 
 namespace _2_Persistent
@@ -26,6 +25,7 @@ namespace _2_Persistent
         public DbSet<DuraformComponent> DuraformComponents { get; set; }
         public DbSet<HingeHoleOption> HingeHoleOptions { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<ApplicationFile> ApplicationFiles { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,
@@ -72,16 +72,10 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DistributorConfig());
             builder.ApplyConfiguration(new CabinetMakerConfig());
 
-            base.OnModelCreating(builder);
-        }
-    }
+            builder.ApplyConfiguration(new ApplicationFileConfig());
+            builder.ApplyConfiguration(new DuraformFileConfig());
 
-    public class DuraformOrderConfig : IEntityTypeConfiguration<DuraformOrder>
-    {
-        public void Configure(EntityTypeBuilder<DuraformOrder> builder)
-        {
-            builder.Property(x => x.OrderNumber)
-                .ValueGeneratedNever();
+            base.OnModelCreating(builder);
         }
     }
 }

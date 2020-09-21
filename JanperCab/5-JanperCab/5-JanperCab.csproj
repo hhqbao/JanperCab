@@ -11,6 +11,7 @@
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <RootNamespace>_5_JanperCab</RootNamespace>
+    <UserSecretsId>b2c89b6a-7cd4-4699-bc22-3bfd050639a6</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

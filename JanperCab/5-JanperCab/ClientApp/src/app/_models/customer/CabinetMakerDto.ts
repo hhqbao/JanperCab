@@ -16,6 +16,10 @@ export class CabinetMakerDto extends CustomerDto {
   deliveryState: string;
   deliveryPostcode: string;
 
+  secondPhone: string;
+  thirdPhone: string;
+  deliveryFee: number;
+
   constructor() {
     super();
     this.customerType = CustomerType.CabinetMaker;

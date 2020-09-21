@@ -14,6 +14,13 @@ export class DuraformDrawerFormComponent implements OnInit {
 
   formGroup: FormGroup;
 
+  numberDrawers = [
+    { id: 2, value: 2 },
+    { id: 3, value: 3 },
+    { id: 4, value: 4 },
+    { id: 5, value: 5 },
+  ];
+
   constructor(
     public asset: DuraformAssetService,
     public order: DuraformOrderService,
@@ -25,6 +32,10 @@ export class DuraformDrawerFormComponent implements OnInit {
       quantity: [
         1,
         [Validators.required, Validators.min(1), Validators.max(100)],
+      ],
+      numberOfDrawers: [
+        null,
+        [Validators.required, Validators.min(2), Validators.max(5)],
       ],
       duraformDrawerTypeId: [null, [Validators.required]],
       height: [
@@ -43,6 +54,7 @@ export class DuraformDrawerFormComponent implements OnInit {
       bottom: [false],
       left: [false],
       right: [false],
+      hasDrillFronts: [false],
       drawerOne: [null, [Validators.min(0), Validators.max(2500)]],
       drawerTwo: [null, [Validators.min(0), Validators.max(2500)]],
       drawerThree: [null, [Validators.min(0), Validators.max(2500)]],
@@ -55,6 +67,13 @@ export class DuraformDrawerFormComponent implements OnInit {
       this.formGroup.patchValue({ ...this.duraformDrawer });
     }
   }
+
+  onHeightChange = () => {
+    if (this.formGroup.get('height').invalid) {
+      this.formGroup.get('numberOfDrawers').patchValue(null);
+      this.formGroup.get('duraformDrawerTypeId').patchValue(null);
+    }
+  };
 
   onSubmit = () => {
     this.formSubmit.emit(this.formGroup);

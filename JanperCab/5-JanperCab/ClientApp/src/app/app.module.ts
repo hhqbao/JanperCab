@@ -1,3 +1,8 @@
+import { FileSizePipe } from './_pipes/fileSize.pipe';
+import { FileService } from './_services/file.service';
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { DuraformOrderListPageComponent } from './pages/duraform-order-list-page/duraform-order-list-page.component';
+import { CabProService } from './_services/cab-pro.service';
 import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
 import { DeliveryDocketDuraformDrawersComponent } from './components/delivery-docket-duraform-drawers/delivery-docket-duraform-drawers.component';
 import { DeliveryDocketEndPanelsComponent } from './components/delivery-docket-end-panels/delivery-docket-end-panels.component';
@@ -13,8 +18,8 @@ import { CabinetMakerFormComponent } from './components/cabinet-maker-form/cabin
 import { LeadingPipe } from './_pipes/leading.pipe';
 import { DuraformQuotePageComponent } from './pages/duraform-quote-page/duraform-quote-page.component';
 import { DuraformDraftService } from './_services/duraform-draft.service';
-import { DraftListSmallComponent } from './components/draft-list-small/draft-list-small.component';
-import { LatestItemsComponent } from './components/latest-items/latest-items.ccomponent';
+import { DuraformDraftListComponent } from './components/duraform-draft-list/duraform-draft-list.component.';
+import { LatestItemsComponent } from './components/latest-items/latest-items.component';
 import { SimpleBoxComponent } from './components/simple-box/simple-box.component';
 import { DashboardService } from './_services/dashboard.service';
 import { ClassToggleDirective } from './_directives/class-toggle.directive';
@@ -108,6 +113,7 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
   declarations: [
     AppComponent,
     LeadingPipe,
+    FileSizePipe,
     FloatBoxComponent,
     ClassToggleDirective,
     DropdownBtnDirective,
@@ -165,12 +171,14 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
     DuraformPantryDoorComponentListComponent,
     EndPanelComponentListComponent,
     DuraformDrawerComponentListComponent,
-    DraftListSmallComponent,
+    DuraformDraftListComponent,
     CabinetMakerFormComponent,
     LoginPageComponent,
     HomePageComponent,
     CabinetMakerListPageComponent,
     DuraformPageComponent,
+    DuraformOrderListPageComponent,
+    PaginationComponent,
     DuraformQuotePageComponent,
     DeliveryDocketComponent,
     DeliveryDocketDuraformDoorsComponent,
@@ -196,6 +204,8 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
   ],
   providers: [
     CommonAssetsService,
+    FileService,
+    CabProService,
     AuthService,
     DialogService,
     LayoutService,

@@ -10,6 +10,7 @@ export abstract class DuraformComponentDto {
   left: boolean;
   right: boolean;
   note: string;
+  sortNumber: number;
 
   protected update(formValue: any) {
     this.quantity = formValue.quantity;

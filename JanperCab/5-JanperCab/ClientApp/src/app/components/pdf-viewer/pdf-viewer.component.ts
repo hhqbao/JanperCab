@@ -1,3 +1,4 @@
+import { LayoutService } from './../../_services/layout.service';
 import {
   Component,
   OnInit,
@@ -24,7 +25,7 @@ export class PdfViewerComponent implements OnInit {
   margins = { vertical: 30, horizontal: 30 };
   ratio: number;
 
-  constructor() {}
+  constructor(private layout: LayoutService) {}
 
   ngOnInit() {
     setTimeout(() => {
@@ -53,6 +54,7 @@ export class PdfViewerComponent implements OnInit {
 
   private renderPdf = (saveToDisk = false) => {
     this.isLoading = true;
+    this.layout.showLoadingPanel();
 
     this.canvasElement.then((canvas) => {
       const imgData = canvas.toDataURL('image/png', 3);
@@ -72,6 +74,7 @@ export class PdfViewerComponent implements OnInit {
       }
 
       this.isLoading = false;
+      this.layout.closeLoadingPanel();
     });
   };
 }

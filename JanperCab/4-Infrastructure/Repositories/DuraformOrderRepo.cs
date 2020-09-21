@@ -1,5 +1,7 @@
 ﻿using _1_Domain;
+using _3_Application.Dtos.Common;
 using _3_Application.Interfaces.Repositories;
+using IdentityServer4.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,7 +24,6 @@ namespace _4_Infrastructure.Repositories
                     break;
                 case DuraformQuote quote:
                     var latestQuote = await _dbSet.OfType<DuraformQuote>()
-                        .Where(x => x.DistributorId == distributor.Id)
                         .OrderByDescending(x => x.QuoteNumber)
                         .FirstOrDefaultAsync();
 
@@ -32,12 +33,11 @@ namespace _4_Infrastructure.Repositories
                     break;
                 case DuraformOrder order:
                     var latestOrder = await _dbSet.OfType<DuraformOrder>()
-                        .Where(x => x.DistributorId == distributor.Id)
                         .OrderByDescending(x => x.OrderNumber)
                         .FirstOrDefaultAsync();
 
                     order.OrderNumber = latestOrder?.OrderNumber + 1 ?? 1;
-                    order.OrderStatus = OrderStatus.Pending;
+                    order.OrderStatus = OrderStatus.Submitted;
                     order.NotEditable = true;
                     break;
                 default:
@@ -114,6 +114,86 @@ namespace _4_Infrastructure.Repositories
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        public async Task<ItemList<DuraformOrder>> GetCabinetMakerOrdersAsync(int cabinetMakerId, OrderStatus? status, string search, string sortBy = "orderNumber", string direction = "asc", int page = 0, int take = 20)
+        {
+            var query = _dbSet.OfType<DuraformOrder>().Where(x => x.CabinetMakerId == cabinetMakerId);
+
+            return await GetSortedOrderListAsync(status, search, sortBy, direction, page, take, query);
+        }
+
+
+        public async Task<ItemList<DuraformOrder>> GetDistributorOrdersAsync(int distributorId, int cabinetMakerId, OrderStatus? status, string search, string sortBy = "orderNumber", string direction = "asc", int page = 0, int take = 20)
+        {
+            var query = _dbSet.OfType<DuraformOrder>().Where(x => x.DistributorId == distributorId);
+
+            if (cabinetMakerId != 0)
+                query = query.Where(x => x.CabinetMakerId == cabinetMakerId);
+
+            return await GetSortedOrderListAsync(status, search, sortBy, direction, page, take, query);
+        }
+
+
+        public async Task<ItemList<DuraformOrder>> GetManufacturerOrdersAsync(int distributorId, OrderStatus? status, string search, string sortBy = "orderNumber", string direction = "asc", int page = 0, int take = 20)
+        {
+            var query = _dbSet.OfType<DuraformOrder>();
+
+            if (distributorId != 0)
+                query = query.Where(x => x.DistributorId == distributorId);
+
+            return await GetSortedOrderListAsync(status, search, sortBy, direction, page, take, query);
+        }
+
+        private static async Task<ItemList<DuraformOrder>> GetSortedOrderListAsync(OrderStatus? status, string search, string sortBy, string direction, int page, int take,
+            IQueryable<DuraformOrder> query)
+        {
+            if (status != null)
+                query = query.Where(x => x.OrderStatus == status);
+
+            if (!search.IsNullOrEmpty())
+                query = query.Where(x => x.DuraformDesign.Name.Contains(search));
+
+            switch (sortBy)
+            {
+                case "orderStatus":
+                    query = direction.Equals("asc")
+                        ? query.OrderBy(x => x.OrderStatus)
+                        : query.OrderByDescending(x => x.OrderStatus);
+                    break;
+                case "customerOrderNumber":
+                    query = direction.Equals("asc")
+                        ? query.OrderBy(x => x.CustomerOrderNumber)
+                        : query.OrderByDescending(x => x.CustomerOrderNumber);
+                    break;
+                case "customer":
+                    query = direction.Equals("asc")
+                        ? query.OrderBy(x => x.CabinetMaker.Name)
+                        : query.OrderByDescending(x => x.CabinetMaker.Name);
+                    break;
+                case "description":
+                    query = direction.Equals("asc")
+                        ? query.OrderBy(x => x.DuraformDesign.Name)
+                        : query.OrderByDescending(x => x.DuraformDesign.Name);
+                    break;
+                case "createdDate":
+                    query = direction.Equals("asc")
+                        ? query.OrderBy(x => x.CreatedDate)
+                        : query.OrderByDescending(x => x.CreatedDate);
+                    break;
+                default:
+                    query = direction.Equals("asc")
+                        ? query.OrderBy(x => x.OrderNumber)
+                        : query.OrderByDescending(x => x.OrderNumber);
+                    break;
+            }
+
+            var totalCount = await query.CountAsync();
+            var orders = await query.Skip(page * take).Take(take).ToListAsync();
+
+            var itemList = new ItemList<DuraformOrder> { Items = orders, TotalItemCount = totalCount };
+
+            return itemList;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using _1_Domain;
+using _3_Application.Dtos.ApplicationFile;
 using _3_Application.Dtos.Customer;
 using _3_Application.Dtos.DuraformArch;
 using _3_Application.Dtos.DuraformComponent;
@@ -17,6 +18,7 @@ using _3_Application.Dtos.DuraformWrapType;
 using _3_Application.Dtos.HingeHoleOption;
 using _3_Application.Dtos.HingeHoleType;
 using _3_Application.Dtos.PantryDoorChairRailType;
+using _3_Application.Dtos.UploadFile;
 using _5_JanperCab.Helpers.Resolvers;
 using AutoMapper;
 using AutoMapper.EquivalencyExpression;
@@ -157,13 +159,36 @@ namespace _5_JanperCab.Helpers
             CreateMap<DuraformDraft, DuraformDraftDto>();
             CreateMap<DuraformDraft, DuraformDraftForSmallList>()
                 .ForMember(x => x.Description, opt => opt.MapFrom<DuraformDraftDescriptionResolver>());
+            CreateMap<DuraformDraft, DuraformOrder>()
+                .ForMember(x => x.Id, opt => opt.Ignore())
+                .ForMember(x => x.OrderType, opt => opt.Ignore())
+                .ForMember(x => x.CreatedDate, opt => opt.Ignore())
+                .ForMember(x => x.LastUpdated, opt => opt.Ignore());
+
             CreateMap<DuraformDraftDto, DuraformDraft>();
 
             CreateMap<DuraformQuote, DuraformQuoteDto>();
             CreateMap<DuraformQuoteDto, DuraformQuote>();
 
             CreateMap<DuraformOrder, DuraformOrderDto>();
+            CreateMap<DuraformOrder, DuraformOrderForListDto>()
+                .ForMember(x => x.Description, opt => opt.MapFrom<DuraformOrderDescriptionResolver>())
+                .ForMember(x => x.DistributorName, opt => opt.MapFrom<DuraformOrderDistributorNameResolver>())
+                .ForMember(x => x.CabinetMakerName, opt => opt.MapFrom<DuraformOrderCabinetMakerNameResolver>());
             CreateMap<DuraformOrderDto, DuraformOrder>();
+
+            CreateMap<UploadFileDto, ApplicationFile>()
+                .Include<UploadDuraformFileDto, DuraformFile>();
+
+            CreateMap<UploadDuraformFileDto, DuraformFile>();
+
+            CreateMap<ApplicationFile, ApplicationFileDto>()
+                .Include<DuraformFile, DuraformFileDto>();
+            CreateMap<ApplicationFileDto, ApplicationFile>()
+                .Include<DuraformFileDto, DuraformFile>();
+
+            CreateMap<DuraformFile, DuraformFileDto>();
+            CreateMap<DuraformFileDto, DuraformFile>();
         }
     }
 }

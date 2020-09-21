@@ -31,6 +31,7 @@
       thousands: '',
       max: 2500
     }"
+    (keyup)="heightKeyUp.emit()"
   />
 </td>
 <td>
@@ -48,5 +49,6 @@
       thousands: '',
       max: 2500
     }"
+    (input)="widthKeyUp.emit()"
   />
 </td>

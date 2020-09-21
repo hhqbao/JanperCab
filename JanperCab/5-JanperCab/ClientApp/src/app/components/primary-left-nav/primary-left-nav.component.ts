@@ -1,7 +1,6 @@
+import { LayoutService } from 'src/app/_services/layout.service';
 import { Role } from './../../_enums/Role';
-import { CustomerType } from './../../_enums/CustomerType';
 import { DialogService } from './../../_services/dialog.service';
-import { DashboardService } from './../../_services/dashboard.service';
 import { AuthService } from './../../_services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -14,22 +13,9 @@ export class PrimaryLeftNavComponent implements OnInit {
 
   constructor(
     public auth: AuthService,
-    public dashboard: DashboardService,
-    private dialog: DialogService
+    private dialog: DialogService,
+    public layoutService: LayoutService
   ) {}
 
-  ngOnInit() {
-    this.countDraft();
-  }
-
-  private countDraft = () => {
-    this.dashboard.countDraft().subscribe(
-      (response) => {
-        this.dashboard.numberOfDrafts = response;
-      },
-      (error) => {
-        this.dialog.error(error);
-      }
-    );
-  };
+  ngOnInit() {}
 }

@@ -1,0 +1,49 @@
+.pagination {
+  @include no-user-select;
+
+  .page-list {
+    font-size: 0;
+    list-style: none;
+
+    .page {
+      align-items: center;
+      border: solid 1px rgba(black, 0.2);
+      border-radius: 0.2rem;
+      cursor: pointer;
+      color: $red-primary;
+      display: inline-flex;
+      font-size: 1.6rem;
+      height: 3rem;
+      justify-content: center;
+      vertical-align: top;
+      transition: all 0.3s ease;
+      width: 3rem;
+
+      &:not(:first-child) {
+        margin-left: 0.5rem;
+      }
+
+      &.disabled {
+        cursor: not-allowed;
+        opacity: 0.3;
+      }
+
+      &.active {
+        background-color: $blue-primary;
+        color: white;
+      }
+
+      &.space {
+        border: none;
+        color: rgba(black, 0.6);
+      }
+
+      &:hover {
+        &:not(.active):not(.space):not(.disabled) {
+          background-color: $red-primary;
+          color: white;
+        }
+      }
+    }
+  }
+}

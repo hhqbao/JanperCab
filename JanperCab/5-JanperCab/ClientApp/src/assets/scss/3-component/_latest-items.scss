@@ -1,4 +1,10 @@
+app-latest-items {
+  display: contents;
+}
+
 .latest-items {
+  height: 50rem;
+
   .tab__pages {
     & > .page {
       padding: 1rem;

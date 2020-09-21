@@ -18,6 +18,13 @@ app-duraform-order-step-three {
 
     @include hide-scrollbar;
 
+    &__status {
+      font-weight: bold;
+      font-size: 3rem;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
     &__action-center {
       border: solid 1px rgba(black, 0.1);
       background-color: white;

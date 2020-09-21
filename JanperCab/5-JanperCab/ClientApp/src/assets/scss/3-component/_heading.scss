@@ -1,0 +1,10 @@
+.heading {
+  display: block;
+
+  &--default {
+    border-bottom: solid 2px rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 3rem;
+    padding-bottom: 0.5rem;
+  }
+}

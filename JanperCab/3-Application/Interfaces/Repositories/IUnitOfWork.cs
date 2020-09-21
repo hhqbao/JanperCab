@@ -29,6 +29,9 @@ namespace _3_Application.Interfaces.Repositories
 
         IDuraformOrderRepo DuraformOrders { get; }
 
+        IApplicationFileRepo ApplicationFiles { get; }
+
+        Task ExecuteCommandAsync(string command);
 
         Task<int> CompleteAsync();
     }

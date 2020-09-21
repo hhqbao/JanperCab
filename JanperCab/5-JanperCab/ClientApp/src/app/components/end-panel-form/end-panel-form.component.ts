@@ -39,7 +39,7 @@ export class EndPanelFormComponent implements OnInit {
       ],
       numberOfShields: [
         2,
-        [Validators.required, Validators.min(2), Validators.max(5)],
+        [Validators.required, Validators.min(1), Validators.max(5)],
       ],
       railLeft: [
         56,

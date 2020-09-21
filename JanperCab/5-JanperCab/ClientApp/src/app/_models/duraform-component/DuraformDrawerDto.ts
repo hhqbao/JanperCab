@@ -1,7 +1,9 @@
 import { DuraformComponentDto } from './DuraformComponentDto';
 
 export class DuraformDrawerDto extends DuraformComponentDto {
+  numberOfDrawers: 2 | 3 | 4 | 5;
   duraformDrawerTypeId: number;
+  hasDrillFronts: boolean;
   drawerOne: number;
   drawerTwo: number;
   drawerThree: number;
@@ -11,7 +13,9 @@ export class DuraformDrawerDto extends DuraformComponentDto {
   update(formValue: any) {
     super.update(formValue);
 
+    this.numberOfDrawers = formValue.numberOfDrawers;
     this.duraformDrawerTypeId = formValue.duraformDrawerTypeId;
+    this.hasDrillFronts = formValue.hasDrillFronts;
     this.drawerOne = formValue.drawerOne;
     this.drawerTwo = formValue.drawerTwo;
     this.drawerThree = formValue.drawerThree;

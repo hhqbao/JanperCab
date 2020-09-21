@@ -27,5 +27,10 @@ namespace _4_Infrastructure.Repositories
         {
             return await _dbSet.OfType<CabinetMaker>().Where(x => x.DistributorId == distributorId).ToListAsync();
         }
+
+        public async Task<List<Distributor>> GetDistributorsAsync()
+        {
+            return await _dbSet.OfType<Distributor>().ToListAsync();
+        }
     }
 }

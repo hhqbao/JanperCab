@@ -27,6 +27,12 @@ namespace _1_Domain
 
         public string DeliveryPostcode { get; set; }
 
+        public string SecondPhone { get; set; }
+
+        public string ThirdPhone { get; set; }
+
+        public decimal DeliveryFee { get; set; }
+
 
         public virtual Distributor Distributor { get; set; }
         public virtual ICollection<DuraformForm> DuraformForms { get; set; }

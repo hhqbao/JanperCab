@@ -98,6 +98,8 @@ namespace _1_Domain
 
         public virtual ICollection<DuraformComponent> DuraformComponents { get; set; }
 
+        public virtual ICollection<DuraformFile> DuraformFiles { get; set; }
+
 
 
         protected DuraformForm()
@@ -105,6 +107,7 @@ namespace _1_Domain
             Id = Guid.NewGuid();
             CreatedDate = DateTime.Now;
             DuraformComponents = new Collection<DuraformComponent>();
+            DuraformFiles = new Collection<DuraformFile>();
         }
     }
 }

@@ -44,7 +44,7 @@ export class PantryDoorFormComponent implements OnInit {
       ],
       chairRailHeight: [
         56,
-        [Validators.required, Validators.min(30), Validators.max(100)],
+        [Validators.required, Validators.min(30), Validators.max(2500)],
       ],
       chairRailTypeId: [
         this.asset.pantryDoorChairRailTypes[0]?.id,
