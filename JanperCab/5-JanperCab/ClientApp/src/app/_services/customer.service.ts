@@ -1,3 +1,4 @@
+import { CabinetMakerSearchFilterValues } from './../_models/commons/CabinetMakerSearchFilterValues';
 import { DistributorDto } from './../_models/customer/DistributorDto';
 import { plainToClass } from 'class-transformer';
 import { map } from 'rxjs/operators';
@@ -7,6 +8,7 @@ import { CabinetMakerDto } from './../_models/customer/CabinetMakerDto';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ItemList } from '../_models/commons/ItemList';
 
 @Injectable({ providedIn: 'root' })
 export class CustomerService {
@@ -46,14 +48,16 @@ export class CustomerService {
       );
   };
 
-  getCabinetMakerList = () => {
-    return this.http
-      .get<CabinetMakerDto[]>(`${environment.baseUrl}/Customers/CabinetMakers`)
-      .pipe(
-        map((response) => {
-          return plainToClass(CabinetMakerDto, response);
-        })
-      );
+  getCabinetMakerList = (
+    filter: CabinetMakerSearchFilterValues
+  ): Observable<ItemList<CabinetMakerDto>> => {
+    let url = `${environment.baseUrl}/Customers/CabinetMakers?sortBy=${filter.sortBy}&direction=${filter.direction}&page=${filter.page}&take=${filter.take}`;
+
+    if (filter.search.length > 0) {
+      url += `&search=${filter.search}`;
+    }
+
+    return this.http.get<ItemList<CabinetMakerDto>>(url);
   };
 
   createCabinetMaker = (cabinetMaker: CabinetMakerDto) => {

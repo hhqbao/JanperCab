@@ -1,0 +1,106 @@
+<div class="cabinet-maker-list">
+  <div style="margin-bottom: 2rem" *ngIf="allowAdd">
+    <button
+      type="button"
+      class="btn btn--primary"
+      (click)="onAddCabinetMaker()"
+    >
+      <i class="fa fa-plus"></i>
+      Add New Customer
+    </button>
+  </div>
+  <div *ngIf="itemList">
+    <table
+      class="table table--hovered table--left table--sortable"
+      style="margin-bottom: 2rem"
+    >
+      <thead>
+        <tr>
+          <th colspan="5">
+            <form (submit)="onSearch()">
+              <div class="form__inline-group">
+                <label class="form__label" style="width: 8rem"
+                  >Search For</label
+                >
+                <input
+                  name="search"
+                  type="text"
+                  class="form__control"
+                  [(ngModel)]="filterValues.search"
+                  style="flex: none; width: 35rem"
+                />
+                <button type="submit" style="display: none">Submit</button>
+              </div>
+            </form>
+          </th>
+        </tr>
+        <tr>
+          <th
+            [ngClass]="{
+              active: filterValues.sortBy === 'name',
+              asc: filterValues.direction === 'asc',
+              desc: filterValues.direction === 'desc'
+            }"
+            (click)="onSortColumn('name')"
+          >
+            Name
+          </th>
+          <th
+            [ngClass]="{
+              active: filterValues.sortBy === 'email',
+              asc: filterValues.direction === 'asc',
+              desc: filterValues.direction === 'desc'
+            }"
+            (click)="onSortColumn('email')"
+          >
+            Email
+          </th>
+          <th
+            [ngClass]="{
+              active: filterValues.sortBy === 'invoice',
+              asc: filterValues.direction === 'asc',
+              desc: filterValues.direction === 'desc'
+            }"
+            (click)="onSortColumn('invoice')"
+          >
+            Invoice Address
+          </th>
+          <th
+            [ngClass]="{
+              active: filterValues.sortBy === 'delivery',
+              asc: filterValues.direction === 'asc',
+              desc: filterValues.direction === 'desc'
+            }"
+            (click)="onSortColumn('delivery')"
+          >
+            Delivery Address
+          </th>
+          <th *ngIf="allowDelete"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let maker of itemList.items">
+          <td (click)="onSelectCabinetMaker(maker)">
+            {{ maker.name }}
+          </td>
+          <td (click)="onSelectCabinetMaker(maker)">
+            {{ maker.email }}
+          </td>
+          <td (click)="onSelectCabinetMaker(maker)">
+            {{ maker.invoiceDetails }}
+          </td>
+          <td (click)="onSelectCabinetMaker(maker)">
+            {{ maker.deliveryDetails }}
+          </td>
+          <td *ngIf="allowDelete"></td>
+        </tr>
+      </tbody>
+    </table>
+    <app-pagination
+      [page]="filterValues.page"
+      [pageSize]="filterValues.take"
+      [totalItemCount]="itemList.totalItemCount"
+      (pageChange)="onPageChange($event)"
+    ></app-pagination>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 ﻿using _1_Domain;
+using _3_Application.Dtos.Common;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,5 +14,8 @@ namespace _3_Application.Interfaces.Repositories
         Task<List<CabinetMaker>> GetCabinetMakersAsync(int distributorId);
 
         Task<List<Distributor>> GetDistributorsAsync();
+
+        Task<ItemList<CabinetMaker>> GetCabinetMakersAsync(int distributorId, string search, string sortBy, string direction,
+            int page = 0, int take = 20);
     }
 }

@@ -1,20 +1,54 @@
 <div class="duraform-order-list-page">
+  <app-float-box *ngIf="showCustomerPicker" [width]="150">
+    <div style="padding: 2rem; background-color: white">
+      <div class="row" style="margin-bottom: 1.5rem">
+        <div class="col-1-2">
+          <h1
+            class="heading heading--default"
+            style="padding-bottom: 0; border-bottom: none"
+          >
+            Select Customer
+          </h1>
+        </div>
+        <div class="col-1-2 text-right">
+          <button
+            type="button"
+            class="btn btn--primary"
+            style="margin-right: 1rem"
+            (click)="onAllCustomerClick()"
+          >
+            All Customers
+          </button>
+          <button
+            type="button"
+            class="btn btn--default"
+            (click)="showCustomerPicker = false"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+      <app-cabinet-maker-list
+        *ngIf="auth.customer.customerType === customerType.Distributor"
+        [allowAdd]="false"
+        (itemClick)="onSelectCustomer($event)"
+      ></app-cabinet-maker-list>
+    </div>
+  </app-float-box>
   <app-simple-box [heading]="'Duraform Order List'" [height]="'100%'">
     <div class="control-box">
       <div class="row">
         <div class="col-1-4">
           <div class="form__inline-group">
             <label class="form__label" style="width: 8rem">Customer</label>
-            <select
+            <input
+              #customerSelector
+              type="text"
               class="form__control"
-              [(ngModel)]="filterValues.customerId"
-              (change)="onFilterValueChange()"
-            >
-              <option [value]="0">All</option>
-              <option *ngFor="let customer of customers" [value]="+customer.id">
-                {{ customer.name }}
-              </option>
-            </select>
+              [readOnly]="true"
+              value="All"
+              (click)="showCustomerPicker = !showCustomerPicker"
+            />
           </div>
         </div>
         <div class="col-1-4">

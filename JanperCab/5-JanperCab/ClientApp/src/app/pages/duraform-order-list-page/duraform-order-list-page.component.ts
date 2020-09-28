@@ -1,3 +1,5 @@
+import { CustomerType } from './../../_enums/CustomerType';
+import { CabinetMakerDto } from './../../_models/customer/CabinetMakerDto';
 import { Role } from './../../_enums/Role';
 import { Router } from '@angular/router';
 import { DuraformOrderForListDto } from './../../_models/duraform-order/DuraformOrderForListDto';
@@ -9,8 +11,7 @@ import { DialogService } from './../../_services/dialog.service';
 import { CustomerService } from './../../_services/customer.service';
 import { AuthService } from './../../_services/auth.service';
 import { LayoutService } from './../../_services/layout.service';
-import { Component, OnInit } from '@angular/core';
-import { CustomerType } from 'src/app/_enums/CustomerType';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CustomerDto } from 'src/app/_models/customer/CustomerDto';
 
 @Component({
@@ -18,57 +19,27 @@ import { CustomerDto } from 'src/app/_models/customer/CustomerDto';
   templateUrl: 'duraform-order-list-page.component.html',
 })
 export class DuraformOrderListPageComponent implements OnInit {
-  customers: CustomerDto[] = [];
-  orderStatus = OrderStatus;
-  customerType = CustomerType;
+  @ViewChild('customerSelector') customerSelector: ElementRef;
+
+  itemList: ItemList<DuraformOrderForListDto> = null;
+  filterValues = new OrderSearchFilterValues();
 
   isLoading = true;
-  filterValues = new OrderSearchFilterValues();
-  itemList: ItemList<DuraformOrderForListDto> = null;
+  showCustomerPicker = false;
+
+  orderStatus = OrderStatus;
+  customerType = CustomerType;
 
   constructor(
     private layout: LayoutService,
     public auth: AuthService,
     private jobService: DuraformJobService,
     private router: Router,
-    private customerService: CustomerService,
     private dialog: DialogService
   ) {}
 
   ngOnInit() {
-    this.layout.showLoadingPanel();
-    const { customer } = this.auth;
-    const { getCabinetMakerList, getDistributorList } = this.customerService;
-
-    switch (customer.customerType) {
-      case CustomerType.Distributor:
-        getCabinetMakerList().subscribe(
-          (response) => {
-            this.customers = response;
-            this.loadDuraformOrderList();
-          },
-          (error) => {
-            this.dialog.error(error);
-            this.layout.closeLoadingPanel();
-          }
-        );
-        break;
-      case CustomerType.Manufacturer:
-        getDistributorList().subscribe(
-          (response) => {
-            this.customers = response;
-            this.loadDuraformOrderList();
-          },
-          (error) => {
-            this.dialog.error(error);
-            this.layout.closeLoadingPanel();
-          }
-        );
-        break;
-      default:
-        this.loadDuraformOrderList();
-        break;
-    }
+    this.loadDuraformOrderList();
 
     setTimeout(() => {
       this.layout.toggleLeftNav(true);
@@ -93,6 +64,9 @@ export class DuraformOrderListPageComponent implements OnInit {
         return;
     }
 
+    this.isLoading = true;
+    this.layout.showLoadingPanel();
+
     request.subscribe(
       (response) => {
         this.itemList = response;
@@ -102,15 +76,38 @@ export class DuraformOrderListPageComponent implements OnInit {
       (error) => {
         this.layout.closeLoadingPanel();
         this.isLoading = false;
+        this.dialog.error(error);
       }
     );
+  };
+
+  onAllCustomerClick = () => {
+    this.filterValues.customerId = 0;
+    (this.customerSelector.nativeElement as HTMLElement).setAttribute(
+      'value',
+      'All'
+    );
+
+    this.showCustomerPicker = false;
+
+    this.onFilterValueChange();
+  };
+
+  onSelectCustomer = (maker: CabinetMakerDto) => {
+    this.filterValues.customerId = maker.id;
+    (this.customerSelector.nativeElement as HTMLElement).setAttribute(
+      'value',
+      maker.name
+    );
+
+    this.showCustomerPicker = false;
+
+    this.onFilterValueChange();
   };
 
   onFilterValueChange = () => {
     this.filterValues.page = 0;
 
-    this.isLoading = true;
-    this.layout.showLoadingPanel();
     this.loadDuraformOrderList();
   };
 
@@ -133,26 +130,16 @@ export class DuraformOrderListPageComponent implements OnInit {
       filterValues.direction = 'asc';
     }
 
-    this.isLoading = true;
-    this.layout.showLoadingPanel();
     this.loadDuraformOrderList();
   };
 
   onPageChange = (page: number) => {
     this.filterValues.page = page;
 
-    this.isLoading = true;
-    this.layout.showLoadingPanel();
     this.loadDuraformOrderList();
   };
 
   onSelectOrder = (id: string) => {
     this.router.navigate([`dashboard/duraform/3/${id}`]);
-  };
-
-  getCustomer = (id: number) => {
-    const customer = this.customers.find((x) => x.id === id);
-
-    return customer;
   };
 }

@@ -89,17 +89,17 @@ export class DuraformOrderStepThreeComponent implements OnInit {
     if (customerType === CustomerType.Distributor) {
       this.layout.showLoadingPanel();
 
-      this.customerService.getCabinetMakerList().subscribe(
-        (response) => {
-          this.layout.closeLoadingPanel();
-          this.cabinetMakerList = response;
-        },
-        (error) => {
-          this.layout.closeLoadingPanel();
-          this.dialog.error(error);
-          this.dialog.error('Failed Loading Customer List');
-        }
-      );
+      // this.customerService.getCabinetMakerList().subscribe(
+      //   (response) => {
+      //     this.layout.closeLoadingPanel();
+      //     this.cabinetMakerList = response;
+      //   },
+      //   (error) => {
+      //     this.layout.closeLoadingPanel();
+      //     this.dialog.error(error);
+      //     this.dialog.error('Failed Loading Customer List');
+      //   }
+      // );
     }
   };
 

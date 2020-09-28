@@ -1,3 +1,6 @@
+import { DialogService } from './../../_services/dialog.service';
+import { LayoutService } from './../../_services/layout.service';
+import { CustomerService } from './../../_services/customer.service';
 import { plainToClass } from 'class-transformer';
 import { CommonAssetsService } from './../../_services/common-assets.service';
 import { CabinetMakerDto } from './../../_models/customer/CabinetMakerDto';
@@ -18,15 +21,20 @@ import {
 })
 export class CabinetMakerFormComponent implements OnInit {
   @Input() cabinetMaker: CabinetMakerDto;
-  @Output() submitForm = new EventEmitter();
+  @Output() submitForm = new EventEmitter<CabinetMakerDto>();
   @Output() closeForm = new EventEmitter();
 
-  formGroup: FormGroup;
   @ViewChild('cabinetMakerName') cabinetMakerName: ElementRef;
 
+  formGroup: FormGroup;
+  isLoading = false;
+
   constructor(
+    private layout: LayoutService,
+    private dialog: DialogService,
     private fb: FormBuilder,
-    public commonAssets: CommonAssetsService
+    public commonAssets: CommonAssetsService,
+    private customerService: CustomerService
   ) {}
 
   ngOnInit() {
@@ -70,9 +78,27 @@ export class CabinetMakerFormComponent implements OnInit {
   }
 
   onSubmit = () => {
-    const values = this.formGroup.value;
+    const model = plainToClass(CabinetMakerDto, this.formGroup.value);
+    const { createCabinetMaker, updateCabinetMaker } = this.customerService;
+    const request = this.cabinetMaker
+      ? updateCabinetMaker(this.cabinetMaker.id, model)
+      : createCabinetMaker(model);
 
-    this.submitForm.emit(plainToClass(CabinetMakerDto, values));
+    this.isLoading = true;
+    this.layout.showLoadingPanel();
+    request.subscribe(
+      (response) => {
+        this.isLoading = false;
+        this.layout.closeLoadingPanel();
+        this.submitForm.emit(plainToClass(CabinetMakerDto, response));
+      },
+      (error) => {
+        this.isLoading = false;
+        this.layout.closeLoadingPanel();
+        this.dialog.error(error);
+        this.dialog.error('Submit Form Failed');
+      }
+    );
   };
 
   onCloseForm = () => {

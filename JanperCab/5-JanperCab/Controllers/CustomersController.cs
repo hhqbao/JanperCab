@@ -1,4 +1,5 @@
 ﻿using _1_Domain;
+using _3_Application.Dtos.Common;
 using _3_Application.Dtos.Customer;
 using _3_Application.Interfaces.Repositories;
 using AutoMapper;
@@ -27,16 +28,22 @@ namespace _5_JanperCab.Controllers
         }
 
         [HttpGet("CabinetMakers")]
-        public async Task<IActionResult> GetCabinetMakers()
+        public async Task<IActionResult> GetCabinetMakers(string search, string sortBy, string direction, int page = 0, int take = 20)
         {
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
 
             if (currentUser.Customer.CustomerType != CustomerType.Distributor)
                 return BadRequest("Request Invalid! Only Distributors Allowed!");
 
-            var cabinetMakers = await _unitOfWork.Customers.GetCabinetMakersAsync(currentUser.CustomerId);
+            var itemList = await _unitOfWork.Customers.GetCabinetMakersAsync(currentUser.CustomerId, search, sortBy, direction, page, take);
 
-            return Ok(_mapper.Map<List<CabinetMaker>, List<CabinetMakerDto>>(cabinetMakers));
+            var itemListDto = new ItemList<CabinetMakerDto>
+            {
+                Items = _mapper.Map<List<CabinetMaker>, List<CabinetMakerDto>>(itemList.Items),
+                TotalItemCount = itemList.TotalItemCount,
+            };
+
+            return Ok(itemListDto);
         }
 
         [HttpGet("Distributors")]

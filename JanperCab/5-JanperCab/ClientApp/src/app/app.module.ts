@@ -1,3 +1,4 @@
+import { CabinetMakerListComponent } from './components/cabinet-maker-list/cabinet-maker-list.component';
 import { FileSizePipe } from './_pipes/fileSize.pipe';
 import { FileService } from './_services/file.service';
 import { PaginationComponent } from './components/pagination/pagination.component';
@@ -185,6 +186,7 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
     DeliveryDocketPantryDoorsComponent,
     DeliveryDocketEndPanelsComponent,
     DeliveryDocketDuraformDrawersComponent,
+    CabinetMakerListComponent,
   ],
   imports: [
     BrowserModule,
