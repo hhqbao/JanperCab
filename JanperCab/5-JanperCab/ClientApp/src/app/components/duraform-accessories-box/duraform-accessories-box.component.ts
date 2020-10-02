@@ -1,3 +1,4 @@
+import { DuraformEdgeProfileForList } from './../../_models/duraform-edge-profile/DuraformEdgeProfileForList';
 import { DialogService } from './../../_services/dialog.service';
 import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -15,7 +16,8 @@ export class DuraformAccessoriesBoxComponent implements OnInit {
   constructor(
     public asset: DuraformAssetService,
     public order: DuraformOrderService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private dialog: DialogService
   ) {}
 
   ngOnInit() {
@@ -30,5 +32,9 @@ export class DuraformAccessoriesBoxComponent implements OnInit {
 
   onSelectArch = (arch: DuraformArchForList) => {
     this.order.selectArch(arch);
+  };
+
+  onSelectProfile = (profile: DuraformEdgeProfileForList) => {
+    this.order.selectEdgeProfile(profile);
   };
 }

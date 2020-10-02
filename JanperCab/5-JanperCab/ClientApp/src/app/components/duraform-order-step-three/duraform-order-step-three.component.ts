@@ -34,20 +34,15 @@ export class DuraformOrderStepThreeComponent implements OnInit {
   role = Role;
   orderStatus = OrderStatus;
   customerType = CustomerType;
-  cabinetMakerList: CabinetMakerDto[] = [];
+
   showInvoiceForm = false;
   showDeliveryForm = false;
+  showCustomerSelector = false;
 
   deliveryDocketData: DeliveryDocketDto;
   showDeliveryDocket = false;
 
-  get customer(): CabinetMakerDto {
-    const customer = this.cabinetMakerList.find(
-      (x) => x.id === this.order.cabinetMakerId
-    );
-
-    return customer;
-  }
+  cabinetMaker: CabinetMakerDto;
 
   constructor(
     public asset: DuraformAssetService,
@@ -68,9 +63,7 @@ export class DuraformOrderStepThreeComponent implements OnInit {
       this.tryAutoFillShippingDetails();
     }
 
-    if (!this.order.cabinetMakerId) {
-      this.tryLoadCabinetMakerList();
-    } else {
+    if (this.order.cabinetMakerId) {
       this.loadCabinetMaker();
     }
   }
@@ -83,32 +76,12 @@ export class DuraformOrderStepThreeComponent implements OnInit {
     }
   };
 
-  private tryLoadCabinetMakerList = () => {
-    const { customerType } = this.auth.customer;
-
-    if (customerType === CustomerType.Distributor) {
-      this.layout.showLoadingPanel();
-
-      // this.customerService.getCabinetMakerList().subscribe(
-      //   (response) => {
-      //     this.layout.closeLoadingPanel();
-      //     this.cabinetMakerList = response;
-      //   },
-      //   (error) => {
-      //     this.layout.closeLoadingPanel();
-      //     this.dialog.error(error);
-      //     this.dialog.error('Failed Loading Customer List');
-      //   }
-      // );
-    }
-  };
-
   private loadCabinetMaker = () => {
     this.layout.showLoadingPanel();
     this.customerService.getCabinetMaker(this.order.cabinetMakerId).subscribe(
       (response) => {
         this.layout.closeLoadingPanel();
-        this.cabinetMakerList.push(response);
+        this.cabinetMaker = response;
       },
       (error) => {
         this.layout.closeLoadingPanel();
@@ -118,12 +91,10 @@ export class DuraformOrderStepThreeComponent implements OnInit {
     );
   };
 
-  onSelectCabinetMaker = () => {
-    const selectedCabinetMaker = this.cabinetMakerList.find(
-      (x) => x.id === this.order.cabinetMakerId
-    );
-
-    this.order.cabinetMaker = selectedCabinetMaker;
+  onSelectCabinetMaker = (maker: CabinetMakerDto) => {
+    this.order.cabinetMaker = maker;
+    this.cabinetMaker = maker;
+    this.showCustomerSelector = false;
   };
 
   onEditClick = () => {
@@ -318,39 +289,31 @@ export class DuraformOrderStepThreeComponent implements OnInit {
 
     const { order, asset } = this;
 
-    this.customerService.getDistributor(order.form.distributorId).subscribe(
-      (response) => {
-        const data = new CabProDuraformDto();
-        data.duraformOrder = order.form as DuraformOrderDto;
+    const data = new CabProDuraformDto();
+    data.duraformOrder = order.form as DuraformOrderDto;
 
-        data.distributor = response;
-        data.duraformDesign = order.selectedDesign.name;
-        data.duraformSerie = order.selectedSerie.name;
-        data.duraformWrapType = order.selectedWrapType?.name;
-        data.duraformWrapColor = order.selectedWrapColor?.name;
-        data.duraformEdgeProfile = order.selectedEdgeProfile.name;
-        data.hingeHoleType = order.selectedHingeHoleType?.name;
-        data.duraformArch = order.selectedArch?.name;
+    data.cabinetMaker = this.cabinetMaker;
+    data.duraformDesign = order.selectedDesign.name;
+    data.duraformSerie = order.selectedSerie.name;
+    data.duraformWrapType = order.selectedWrapType?.name;
+    data.duraformWrapColor = order.selectedWrapColor?.name;
+    data.duraformEdgeProfile = order.selectedEdgeProfile.name;
+    data.hingeHoleType = order.selectedHingeHoleType?.name;
+    data.duraformArch = order.selectedArch?.name;
 
-        data.edgeProfiles = asset.edgeProfiles;
-        data.pantryDoorChairRailTypes = asset.pantryDoorChairRailTypes;
-        data.duraformDrawerTypes = asset.duraformDrawerTypes;
+    data.edgeProfiles = asset.edgeProfiles;
+    data.pantryDoorChairRailTypes = asset.pantryDoorChairRailTypes;
+    data.duraformDrawerTypes = asset.duraformDrawerTypes;
 
-        const blobFile = this.cabPro.exportExcel(data);
-        saveAs(
-          blobFile,
-          `DF-${response.name
-            .substring(0, 9)
-            .toUpperCase()}-${order.customerOrderNumber.toUpperCase()}.xlsx`
-        );
-
-        this.layout.closeLoadingPanel();
-      },
-      (error) => {
-        this.dialog.error(error);
-        this.layout.closeLoadingPanel();
-      }
+    const blobFile = this.cabPro.exportExcel(data);
+    saveAs(
+      blobFile,
+      `DF-${this.cabinetMaker.name
+        .substring(0, 9)
+        .toUpperCase()}-${order.customerOrderNumber.toUpperCase()}.xlsx`
     );
+
+    this.layout.closeLoadingPanel();
   };
 
   onViewUploadedFile = (id: string) => {

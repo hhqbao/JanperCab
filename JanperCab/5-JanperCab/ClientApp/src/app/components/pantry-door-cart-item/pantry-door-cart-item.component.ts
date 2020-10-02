@@ -20,6 +20,8 @@ import {
 })
 export class PantryDoorCartItemComponent implements OnInit {
   @Input() pantryDoor: DuraformPantryDoorDto;
+  @Input() index: number;
+
   @Output() removePantryDoor = new EventEmitter<DuraformPantryDoorDto>();
 
   @ViewChild('pantryDoorForm') pantryDoorForm: PantryDoorFormComponent;

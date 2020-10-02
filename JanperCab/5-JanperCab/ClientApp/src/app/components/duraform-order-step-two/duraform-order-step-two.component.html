@@ -1,8 +1,6 @@
 <div class="duraform-order-step-two">
   <div class="section-one">
-    <app-duraform-info-box appRemoveTag></app-duraform-info-box>
-    <app-duraform-accessories-box appRemoveTag></app-duraform-accessories-box>
-    <app-box [showHeading]="false">
+    <app-duraform-info-box appRemoveTag>
       <button
         type="button"
         class="btn duraform-order-step-two__go-back-btn"
@@ -18,7 +16,8 @@
       >
         Next
       </button>
-    </app-box>
+    </app-duraform-info-box>
+    <app-duraform-accessories-box appRemoveTag></app-duraform-accessories-box>
   </div>
   <div class="section-two">
     <div class="tab scrollable" appTab>

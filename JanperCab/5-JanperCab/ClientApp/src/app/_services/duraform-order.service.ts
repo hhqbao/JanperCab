@@ -1,6 +1,4 @@
-import { map } from 'rxjs/operators';
 import { DuraformFileDto } from './../_models/application-file/DuraformFileDto';
-import { UploadDuraformFileDto } from '../_models/files/UploadDuraformFileDto';
 import { OrderStatus } from './../_enums/OrderStatus';
 import { HingeHoleTypeDto } from './../_models/hinge-hole-type/HingeHoleTypeDto';
 import { DuraformOrderDto } from './../_models/duraform-order/DuraformOrderDto';

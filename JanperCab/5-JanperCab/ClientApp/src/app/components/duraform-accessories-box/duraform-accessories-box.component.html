@@ -1,25 +1,41 @@
 <div class="options-box">
-  <app-box [headingText]="'Options & Accessories'">
-    <div class="form__group">
-      <label class="form__label">Hinge Hole Type</label>
-      <app-select-menu
-        [control]="formGroup.get('hingeHoleTypeId')"
-        [values]="asset.hingeHoleTypes"
-        [valueKey]="'id'"
-        [valueDisplay]="'name'"
-        [allowNull]="true"
-        [nullText]="'No Hinge Hole'"
-        [nullOnLabel]="true"
-        (afterSet)="onSelectHingeHoleType()"
-      ></app-select-menu>
-    </div>
-    <div class="form__group">
-      <label class="form__label">Arch Style</label>
-      <app-arch-selector
-        [canSelect]="!order.selectedDesign.hasNoArch"
-        [selectedArch]="order.selectedArch"
-        (selectArch)="onSelectArch($event)"
-      ></app-arch-selector>
+  <app-box [showHeading]="false">
+    <div class="row">
+      <div class="col-1-3">
+        <div class="form__group">
+          <label class="form__label">Edge Profile</label>
+          <app-edge-profile-selector
+            [selectedEdgeProfile]="order.selectedEdgeProfile"
+            [canSelect]="!order.hasFixedEdgeProfile"
+            (selectProfile)="onSelectProfile($event)"
+          ></app-edge-profile-selector>
+        </div>
+      </div>
+      <div class="col-1-3">
+        <div class="form__group">
+          <label class="form__label">Arch Style</label>
+          <app-arch-selector
+            [canSelect]="!order.selectedDesign.hasNoArch"
+            [selectedArch]="order.selectedArch"
+            (selectArch)="onSelectArch($event)"
+          ></app-arch-selector>
+        </div>
+      </div>
+      <div class="col-1-3">
+        <div class="form__group">
+          <label class="form__label">Hinge Hole Type</label>
+          <app-select-menu
+            [control]="formGroup.get('hingeHoleTypeId')"
+            [values]="asset.hingeHoleTypes"
+            [valueKey]="'id'"
+            [valueDisplay]="'name'"
+            [allowNull]="true"
+            [nullText]="'No Hinge Hole'"
+            [nullOnLabel]="true"
+            (afterSet)="onSelectHingeHoleType()"
+          ></app-select-menu>
+        </div>
+      </div>
     </div>
   </app-box>
 </div>

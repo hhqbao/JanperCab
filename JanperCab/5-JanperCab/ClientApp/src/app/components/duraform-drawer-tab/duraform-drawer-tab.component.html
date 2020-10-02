@@ -1,6 +1,7 @@
 <table class="table table--bordered">
   <thead>
     <tr>
+      <th rowspan="2" style="width: 3rem">#</th>
       <th rowspan="2" style="width: 5rem">Qty.</th>
       <th rowspan="2" style="width: 9rem">
         Height <br />
@@ -56,11 +57,16 @@
     <td></td>
     <td></td>
     <td></td>
+    <td></td>
   </tbody>
   <app-duraform-drawer-cart-item
     appRemoveTag
-    *ngFor="let drawer of order.duraformDrawers"
+    *ngFor="
+      let drawer of order.duraformDrawers.slice().reverse();
+      let i = index
+    "
     [duraformDrawer]="drawer"
+    [index]="order.duraformDrawers.length - i"
     (removeDrawer)="onRemoveDrawer($event)"
   ></app-duraform-drawer-cart-item>
 </table>

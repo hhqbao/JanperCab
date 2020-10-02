@@ -1,33 +1,30 @@
 <table class="table table--bordered">
   <thead>
     <tr>
-      <th rowspan="2" style="width: 5rem;">Qty.</th>
-      <th rowspan="2" style="width: 9rem;">
+      <th rowspan="2" style="width: 3rem">#</th>
+      <th rowspan="2" style="width: 5rem">Qty.</th>
+      <th rowspan="2" style="width: 9rem">
         Height <br />
         (mm)
       </th>
-      <th rowspan="2" style="width: 9rem;">
+      <th rowspan="2" style="width: 9rem">
         Width <br />
         (mm)
       </th>
-      <th rowspan="2" style="width: 20rem;">
-        Edge Profile
-      </th>
+      <th rowspan="2" style="width: 20rem">Edge Profile</th>
       <th colspan="4">'X' For Square Edge</th>
-      <th rowspan="2" style="width: 35rem;">
+      <th rowspan="2" style="width: 35rem">
         Option <br />
         (eg. No Face, Fold Back, ...)
       </th>
-      <th rowspan="2" style="width: 15rem;">
-        Hinge Hole
-      </th>
+      <th rowspan="2" style="width: 15rem">Hinge Hole</th>
       <th rowspan="2" colspan="2">Note</th>
     </tr>
     <tr>
-      <th style="width: 4rem;">T</th>
-      <th style="width: 4rem;">B</th>
-      <th style="width: 4rem;">L</th>
-      <th style="width: 4rem;">R</th>
+      <th style="width: 4rem">T</th>
+      <th style="width: 4rem">B</th>
+      <th style="width: 4rem">L</th>
+      <th style="width: 4rem">R</th>
     </tr>
   </thead>
   <app-duraform-door-form
@@ -48,12 +45,14 @@
       <td></td>
       <td></td>
       <td></td>
+      <td></td>
     </tr>
   </tbody>
   <app-duraform-door-cart-item
     appRemoveTag
-    *ngFor="let door of order.duraformDoors"
+    *ngFor="let door of order.duraformDoors.slice().reverse(); let i = index"
     [door]="door"
+    [index]="order.duraformDoors.length - i"
     (removeDoor)="onRemoveDoor($event)"
   ></app-duraform-door-cart-item>
 </table>

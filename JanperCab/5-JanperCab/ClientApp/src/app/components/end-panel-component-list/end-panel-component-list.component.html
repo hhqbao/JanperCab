@@ -4,6 +4,7 @@
     <table class="table table--component-list">
       <thead>
         <tr>
+          <th rowspan="2" style="width: 3rem">#</th>
           <th rowspan="2" style="width: 4rem">Qty</th>
           <th rowspan="2" style="width: 6rem">
             O/A <br />
@@ -36,7 +37,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let endPanel of endPanels">
+        <tr *ngFor="let endPanel of endPanels; let i = index">
+          <td class="line-number">{{ i + 1 }}</td>
           <td>{{ endPanel.quantity }}</td>
           <td>{{ endPanel.height }}</td>
           <td>{{ endPanel.width }}</td>

@@ -20,7 +20,10 @@ import {
 })
 export class EndPanelCartItemComponent implements OnInit {
   @ViewChild('endPanelForm') endPanelForm: EndPanelFormComponent;
+
   @Input() endPanel: DuraformEndPanelDto;
+  @Input() index: number;
+
   @Output() removeEndPanel = new EventEmitter<DuraformEndPanelDto>();
 
   hasAnimated = false;

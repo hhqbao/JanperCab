@@ -1,3 +1,4 @@
+import { CabinetMakerDto } from './../customer/CabinetMakerDto';
 import { DistributorDto } from './../customer/DistributorDto';
 import { DuraformOrderDto } from './../duraform-order/DuraformOrderDto';
 import { DuraformEdgeProfileForList } from '../duraform-edge-profile/DuraformEdgeProfileForList';
@@ -9,7 +10,8 @@ import { DuraformComponentDto } from '../duraform-component/DuraformComponentDto
 export class CabProDuraformDto {
   duraformOrder: DuraformOrderDto;
 
-  distributor: DistributorDto;
+  cabinetMaker: CabinetMakerDto;
+
   duraformDesign: string;
   duraformSerie: string;
   duraformWrapType: string;

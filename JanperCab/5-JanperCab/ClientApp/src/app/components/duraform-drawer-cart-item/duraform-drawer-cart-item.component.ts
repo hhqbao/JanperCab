@@ -23,6 +23,8 @@ export class DuraformDrawerCartItemComponent implements OnInit {
   duraformDrawerForm: DuraformDrawerFormComponent;
 
   @Input() duraformDrawer: DuraformDrawerDto;
+  @Input() index: number;
+
   @Output() removeDrawer = new EventEmitter<DuraformDrawerDto>();
 
   hasAnimated = false;

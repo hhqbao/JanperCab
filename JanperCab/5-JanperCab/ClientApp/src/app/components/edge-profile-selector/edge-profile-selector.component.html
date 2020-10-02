@@ -1,8 +1,6 @@
 <div class="edge-profile-selector" appDropdownBtn="show">
   <div class="profile-name" [ngClass]="{ disabled: !canSelect }">
-    <span *ngIf="!selectedEdgeProfile">
-      -- Select Edge Profile --
-    </span>
+    <span *ngIf="!selectedEdgeProfile"> -- Select Edge Profile -- </span>
     <span *ngIf="selectedEdgeProfile">
       {{ selectedEdgeProfile.name }}
     </span>

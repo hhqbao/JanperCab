@@ -1,6 +1,7 @@
 <table class="table table--bordered">
   <thead>
     <tr>
+      <th rowspan="2" style="width: 3rem">#</th>
       <th rowspan="2" style="width: 5rem">Qty.</th>
       <th rowspan="2" style="width: 9rem">
         O/A <br />
@@ -58,12 +59,14 @@
       <td></td>
       <td></td>
       <td></td>
+      <td></td>
     </tr>
   </tbody>
   <app-end-panel-cart-item
     appRemoveTag
-    *ngFor="let endPanel of order.endPanels"
+    *ngFor="let endPanel of order.endPanels.slice().reverse(); let i = index"
     [endPanel]="endPanel"
+    [index]="order.endPanels.length - i"
     (removeEndPanel)="onRemoveEndPanel($event)"
   ></app-end-panel-cart-item>
 </table>

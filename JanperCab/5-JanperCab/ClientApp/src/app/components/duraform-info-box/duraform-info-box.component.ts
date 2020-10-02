@@ -9,8 +9,6 @@ import { DuraformArchForList } from 'src/app/_models/duraform-arch/DuraformArchF
   templateUrl: 'duraform-info-box.component.html',
 })
 export class DuraformInfoBoxComponent implements OnInit {
-  isLoadingImg = true;
-
   constructor(public order: DuraformOrderService) {}
 
   ngOnInit() {}

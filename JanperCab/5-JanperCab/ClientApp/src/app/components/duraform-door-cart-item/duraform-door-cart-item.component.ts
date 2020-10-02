@@ -22,6 +22,8 @@ import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 })
 export class DuraformDoorCartItemComponent implements OnInit {
   @Input() door: DuraformDoorDto;
+  @Input() index: number;
+
   @Output() removeDoor = new EventEmitter<DuraformDoorDto>();
 
   @ViewChild('doorForm') doorForm: DuraformDoorFormComponent;

@@ -47,16 +47,22 @@ namespace _5_JanperCab.Controllers
         }
 
         [HttpGet("Distributors")]
-        public async Task<IActionResult> GetDistributors()
+        public async Task<IActionResult> GetDistributors(string search, string sortBy, string direction, int page = 0, int take = 2)
         {
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
 
             if (currentUser.Customer.CustomerType != CustomerType.Manufacturer)
                 return BadRequest("Request Invalid! Only Manufacturers Allowed");
 
-            var distributors = await _unitOfWork.Customers.GetDistributorsAsync();
+            var itemList = await _unitOfWork.Customers.GetDistributorsAsync(search, sortBy, direction, page, take);
 
-            return Ok(_mapper.Map<List<Distributor>, List<DistributorDto>>(distributors));
+            var itemListDto = new ItemList<DistributorDto>
+            {
+                Items = _mapper.Map<List<Distributor>, List<DistributorDto>>(itemList.Items),
+                TotalItemCount = itemList.TotalItemCount,
+            };
+
+            return Ok(itemListDto);
         }
 
         [HttpGet("CabinetMakers/{id}")]

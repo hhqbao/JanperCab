@@ -16,11 +16,11 @@ export class CabProService {
     sheetOne['!ref'] = 'A1:Z100';
     sheetTwo['!ref'] = 'A1:Z100';
 
-    sheetOne['C9'] = { v: data.distributor.name, t: 's' };
-    sheetOne['C10'] = { v: data.distributor.address, t: 's' };
-    sheetOne['C11'] = { v: data.distributor.suburb, t: 's' };
-    sheetOne['C12'] = { v: data.distributor.contactPerson, t: 's' };
-    sheetOne['C13'] = { v: data.distributor.phone, t: 's' };
+    sheetOne['C9'] = { v: data.cabinetMaker.name, t: 's' };
+    sheetOne['C10'] = { v: data.duraformOrder.deliveryAddress, t: 's' };
+    sheetOne['C11'] = { v: data.duraformOrder.deliverySuburb, t: 's' };
+    sheetOne['C12'] = { v: data.duraformOrder.deliveryTo, t: 's' };
+    sheetOne['C13'] = { v: data.cabinetMaker.phone, t: 's' };
     sheetOne['C14'] = { v: 'Fax', t: 's' };
 
     sheetOne['K11'] = { v: data.duraformOrder.customerOrderNumber, t: 's' };
@@ -36,12 +36,14 @@ export class CabProService {
     };
     sheetOne['K14'] = { v: data.duraformOrder.customerOrderNumber, t: 's' };
     sheetOne['A19'] = {
-      v: `${data.duraformDesign.toUpperCase()} ${data.duraformEdgeProfile.toUpperCase()}`,
+      v: `${data.duraformDesign.toUpperCase()}`,
       t: 's',
     };
     sheetOne['E19'] = { v: data.duraformArch, t: 's' };
     sheetOne['J19'] = {
-      v: `${data.duraformWrapColor.toUpperCase()} - ${data.duraformWrapType.toUpperCase()}`,
+      v: data.duraformOrder.isRoutingOnly
+        ? 'DSW'
+        : `${data.duraformWrapColor.toUpperCase()} - ${data.duraformWrapType.toUpperCase()}`,
       t: 's',
     };
     sheetOne['N19'] = {
@@ -49,9 +51,9 @@ export class CabProService {
       t: 's',
     };
 
-    sheetTwo['C9'] = { v: data.distributor.name, t: 's' };
-    sheetTwo['C10'] = { v: data.distributor.contactPerson, t: 's' };
-    sheetTwo['C11'] = { v: data.distributor.phone, t: 's' };
+    sheetTwo['C9'] = { v: data.cabinetMaker.name, t: 's' };
+    sheetTwo['C10'] = { v: data.duraformOrder.deliveryTo, t: 's' };
+    sheetTwo['C11'] = { v: data.cabinetMaker.phone, t: 's' };
     sheetTwo['R9'] = { v: data.duraformOrder.customerOrderNumber, t: 's' };
     sheetTwo['R10'] = {
       v: moment(data.duraformOrder.createdDate)

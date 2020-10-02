@@ -1,4 +1,31 @@
 <div class="duraform-order-step-three">
+  <app-float-box *ngIf="showCustomerSelector" [width]="150">
+    <div style="padding: 2rem; background-color: white">
+      <div class="row" style="margin-bottom: 1.5rem">
+        <div class="col-1-2">
+          <h1
+            class="heading heading--default"
+            style="padding-bottom: 0; border-bottom: none"
+          >
+            Select Customer
+          </h1>
+        </div>
+        <div class="col-1-2 text-right">
+          <button
+            type="button"
+            class="btn btn--default"
+            (click)="showCustomerSelector = false"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+      <app-cabinet-maker-list
+        [allowAdd]="false"
+        (itemClick)="onSelectCabinetMaker($event)"
+      ></app-cabinet-maker-list>
+    </div>
+  </app-float-box>
   <app-float-box *ngIf="showInvoiceForm">
     <app-invoice-detail-form
       (update)="onUpdateInvoiceDetails($event)"
@@ -19,34 +46,21 @@
   </app-pdf-viewer>
   <div class="component-box">
     <div class="shipping-details-box">
-      <h1 class="customer-name" *ngIf="order.duraformId">
-        {{ customer?.name }}
-      </h1>
-      <div
-        class="form__group"
-        style="max-width: 50rem"
+      <button
+        type="button"
+        class="btn btn--primary"
         *ngIf="
           !order.duraformId &&
           auth.customer.customerType === customerType.Distributor
         "
+        (click)="showCustomerSelector = true"
+        style="margin-bottom: 2rem"
       >
-        <label class="form__label"> Select Customer </label>
-        <select
-          class="form__control"
-          *ngIf="!order.duraformId"
-          [(ngModel)]="order.cabinetMakerId"
-          (change)="onSelectCabinetMaker()"
-        >
-          <option
-            [value]="undefined"
-            disabled
-            *ngIf="!order.cabinetMakerId"
-          ></option>
-          <option *ngFor="let maker of cabinetMakerList" [ngValue]="maker.id">
-            {{ maker.name }}
-          </option>
-        </select>
-      </div>
+        <span>{{ cabinetMaker ? "Change" : "Select" }}</span> Customer
+      </button>
+      <h1 class="customer-name" *ngIf="order.duraformId || cabinetMaker">
+        {{ cabinetMaker?.name }}
+      </h1>
       <div class="row" *ngIf="order.cabinetMakerId">
         <div class="col-1-2">
           <div class="row">
@@ -165,6 +179,12 @@
             <td>({{ order.componentsWithHingeHoleCount }}) Hinge Holes</td>
           </tr>
           <tr>
+            <td class="text-left">Edge Profile</td>
+            <td>
+              {{ order.selectedEdgeProfile?.name }}
+            </td>
+          </tr>
+          <tr>
             <td class="text-left">Arch Profile</td>
             <td>
               {{ order.selectedArch ? order.selectedArch.name : "SQUARE" }}
@@ -173,7 +193,12 @@
         </tbody>
       </table>
 
-      <div class="component-list">
+      <div
+        class="component-list"
+        *ngIf="
+          order.duraformFiles.length > 0 || fileService.duraformFiles.length > 0
+        "
+      >
         <div class="panel" style="display: inline-block; width: 100rem">
           <div class="panel__heading">Files</div>
           <div class="panel__content">
