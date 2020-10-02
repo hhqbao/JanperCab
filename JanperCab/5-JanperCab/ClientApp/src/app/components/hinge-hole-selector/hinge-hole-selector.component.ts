@@ -29,6 +29,7 @@ export class HingeHoleSelectorComponent implements OnInit {
   sideFormControl: FormControl;
   showOption = false;
   options = [
+    { text: 'Pair', value: 'Pair' },
     { text: 'Left', value: 'Left' },
     { text: 'Right', value: 'Right' },
   ];

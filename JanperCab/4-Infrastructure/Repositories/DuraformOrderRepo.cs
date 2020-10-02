@@ -152,7 +152,7 @@ namespace _4_Infrastructure.Repositories
                 query = query.Where(x => x.OrderStatus == status);
 
             if (!search.IsNullOrEmpty())
-                query = query.Where(x => x.DuraformDesign.Name.Contains(search));
+                query = query.Where(x => x.DuraformDesign.Name.Contains(search) || x.CustomerOrderNumber.Contains(search));
 
             switch (sortBy)
             {

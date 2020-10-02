@@ -62,7 +62,7 @@ export class SelectMenuComponent implements OnInit {
   @HostListener('keydown.ArrowUp', ['$event'])
   @HostListener('keydown.ArrowDown', ['$event'])
   onArrowKeyDown = (event) => {
-    if (!this.isFocused) {
+    if (!this.isFocused || this.isDisabled) {
       return;
     }
 
