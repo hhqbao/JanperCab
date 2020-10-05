@@ -40,7 +40,7 @@ export class DuraformDrawerFormComponent implements OnInit {
       duraformDrawerTypeId: [null, [Validators.required]],
       height: [
         null,
-        [Validators.required, Validators.min(50), Validators.max(2500)],
+        [Validators.required, Validators.min(30), Validators.max(2500)],
       ],
       width: [
         null,

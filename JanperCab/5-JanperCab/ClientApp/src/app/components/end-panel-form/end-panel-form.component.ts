@@ -31,11 +31,11 @@ export class EndPanelFormComponent implements OnInit {
       ],
       height: [
         null,
-        [Validators.required, Validators.min(50), Validators.max(2500)],
+        [Validators.required, Validators.min(30), Validators.max(2500)],
       ],
       width: [
         null,
-        [Validators.required, Validators.min(50), Validators.max(2500)],
+        [Validators.required, Validators.min(30), Validators.max(2500)],
       ],
       numberOfShields: [
         2,
