@@ -15,6 +15,7 @@ export class DuraformDrawerFormComponent implements OnInit {
   formGroup: FormGroup;
 
   numberDrawers = [
+    { id: 1, value: 1 },
     { id: 2, value: 2 },
     { id: 3, value: 3 },
     { id: 4, value: 4 },
@@ -35,7 +36,7 @@ export class DuraformDrawerFormComponent implements OnInit {
       ],
       numberOfDrawers: [
         null,
-        [Validators.required, Validators.min(2), Validators.max(5)],
+        [Validators.required, Validators.min(1), Validators.max(5)],
       ],
       duraformDrawerTypeId: [null, [Validators.required]],
       height: [

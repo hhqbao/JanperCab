@@ -36,7 +36,6 @@ export class HingeHoleSelectorComponent implements OnInit {
     { text: 'Pair', value: 'Pair' },
     { text: 'Left', value: 'Left' },
     { text: 'Right', value: 'Right' },
-    { text: 'Draw', value: 'Draw' },
   ];
   quantities = [
     { text: '2', value: 2 },
