@@ -24,18 +24,40 @@ export class HingeHoleSelectorComponent implements OnInit {
 
   @ViewChild('mainInput') mainInput: ElementRef;
   @ViewChild('topInput') topInput: ElementRef;
+  @ViewChild('topCenterInput') topCenterInput: ElementRef;
+  @ViewChild('bottomCenterInput') bottomCenterInput: ElementRef;
   @ViewChild('bottomInput') bottomInput: ElementRef;
 
   sideFormControl: FormControl;
+
   showOption = false;
+
   options = [
     { text: 'Pair', value: 'Pair' },
     { text: 'Left', value: 'Left' },
     { text: 'Right', value: 'Right' },
+    { text: 'Draw', value: 'Draw' },
   ];
+  quantities = [
+    { text: '2', value: 2 },
+    { text: '3', value: 3 },
+    { text: '4', value: 4 },
+  ];
+
+  get quantity(): AbstractControl {
+    return this.formGroup.get('hingeHole')?.get('quantity');
+  }
 
   get top(): AbstractControl {
     return this.formGroup.get('hingeHole')?.get('top');
+  }
+
+  get topCenter(): AbstractControl {
+    return this.formGroup.get('hingeHole')?.get('topCenter');
+  }
+
+  get bottomCenter(): AbstractControl {
+    return this.formGroup.get('hingeHole')?.get('bottomCenter');
   }
 
   get bottom(): AbstractControl {
@@ -66,36 +88,6 @@ export class HingeHoleSelectorComponent implements OnInit {
     }
   }
 
-  private initialForm = (side: string) => {
-    if (!this.formGroup.get('hingeHole')) {
-      this.formGroup.addControl(
-        'hingeHole',
-        this.fb.group({
-          side: [side, Validators.required],
-          top: [96, [Validators.required, Validators.min(50)]],
-          bottom: [96, [Validators.required, Validators.min(50)]],
-        })
-      );
-    } else {
-      this.formGroup.get('hingeHole').patchValue({
-        side,
-      });
-    }
-  };
-
-  private updateMainInput = () => {
-    if (this.formGroup.get('hingeHole')) {
-      const formValue = this.formGroup.get('hingeHole').value;
-
-      (this.mainInput.nativeElement as HTMLElement).setAttribute(
-        'value',
-        `${formValue.side} ${formValue.top}/${formValue.bottom}`
-      );
-    } else {
-      (this.mainInput.nativeElement as HTMLElement).setAttribute('value', '');
-    }
-  };
-
   onInputClick = () => {
     this.showOption = true;
   };
@@ -112,6 +104,26 @@ export class HingeHoleSelectorComponent implements OnInit {
 
   onTopTab = (event: KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === 'Tab') {
+      if (this.quantity.value === 2) {
+        (this.bottomInput.nativeElement as HTMLElement).focus();
+      } else {
+        (this.topCenterInput.nativeElement as HTMLElement).focus();
+      }
+    }
+  };
+
+  onTopCenterTab = (event: KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === 'Tab') {
+      if (this.quantity.value > 3) {
+        (this.bottomCenterInput.nativeElement as HTMLElement).focus();
+      } else {
+        (this.bottomInput.nativeElement as HTMLElement).focus();
+      }
+    }
+  };
+
+  onBottomCenterTab = (event: KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === 'Tab') {
       (this.bottomInput.nativeElement as HTMLElement).focus();
     }
   };
@@ -122,17 +134,9 @@ export class HingeHoleSelectorComponent implements OnInit {
     }
   };
 
-  onTopBlur = () => {
-    if (this.top.invalid) {
-      this.top.setValue(96);
-    }
-
-    this.updateMainInput();
-  };
-
-  onBottomBlur = () => {
-    if (this.bottom.invalid) {
-      this.bottom.setValue(96);
+  onSizeBlur = (control: AbstractControl) => {
+    if (control.invalid) {
+      control.setValue(96);
     }
 
     this.updateMainInput();
@@ -147,5 +151,91 @@ export class HingeHoleSelectorComponent implements OnInit {
 
     this.updateMainInput();
     (this.mainInput.nativeElement as HTMLElement).focus();
+  };
+
+  onSelectQuantity = () => {
+    const quantity = this.quantity.value;
+
+    switch (quantity) {
+      case 2:
+        this.topCenter.patchValue(null);
+        this.bottomCenter.patchValue(null);
+
+        this.topCenter.clearValidators();
+        this.bottomCenter.clearValidators();
+        break;
+      case 3:
+        this.topCenter.patchValue(96);
+        this.topCenter.setValidators([Validators.required, Validators.min(50)]);
+
+        this.bottomCenter.patchValue(null);
+        this.bottomCenter.clearValidators();
+        break;
+      case 4:
+        this.topCenter.patchValue(96);
+        this.bottomCenter.patchValue(96);
+
+        this.topCenter.setValidators([Validators.required, Validators.min(50)]);
+        this.bottomCenter.setValidators([
+          Validators.required,
+          Validators.min(50),
+        ]);
+        break;
+    }
+
+    this.updateMainInput();
+    (this.topInput.nativeElement as HTMLElement).focus();
+  };
+
+  private initialForm = (side: string) => {
+    if (!this.formGroup.get('hingeHole')) {
+      this.formGroup.addControl(
+        'hingeHole',
+        this.fb.group({
+          side: [side, Validators.required],
+          quantity: [
+            2,
+            [Validators.required, Validators.min(2), Validators.max(4)],
+          ],
+          top: [96, [Validators.required, Validators.min(50)]],
+          topCenter: [null, []],
+          bottomCenter: [null, []],
+          bottom: [96, [Validators.required, Validators.min(50)]],
+        })
+      );
+    } else {
+      this.formGroup.get('hingeHole').patchValue({
+        side,
+      });
+    }
+  };
+
+  private updateMainInput = () => {
+    if (this.formGroup.get('hingeHole')) {
+      const formValue = this.formGroup.get('hingeHole').value;
+      let valueString = '';
+
+      switch (formValue.quantity) {
+        case 2:
+          valueString = `${formValue.side} ${formValue.top}/${formValue.bottom}`;
+          break;
+        case 3:
+          valueString = `${formValue.side} ${formValue.top}/${formValue.topCenter}/${formValue.bottom}`;
+          break;
+        case 4:
+          valueString = `${formValue.side} ${formValue.top}/${formValue.topCenter}/${formValue.bottomCenter}/${formValue.bottom}`;
+          break;
+        default:
+          valueString = 'Unsupported Hinge Hole Quantity';
+          break;
+      }
+
+      (this.mainInput.nativeElement as HTMLElement).setAttribute(
+        'value',
+        valueString
+      );
+    } else {
+      (this.mainInput.nativeElement as HTMLElement).setAttribute('value', '');
+    }
   };
 }

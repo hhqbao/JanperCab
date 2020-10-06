@@ -56,6 +56,8 @@
     <Compile Remove="Migrations\20200919171523_EditTable_Customers_AddPhoneAndFax.Designer.cs" />
     <Compile Remove="Migrations\20200921022727_EditTable_DuraformForms_RemoveIdentityInsert.cs" />
     <Compile Remove="Migrations\20200921022727_EditTable_DuraformForms_RemoveIdentityInsert.Designer.cs" />
+    <Compile Remove="Migrations\20201006014843_EditTable_HingeHoleOption_AddColumns_Quantity_TopCenter_BottomCenter.cs" />
+    <Compile Remove="Migrations\20201006014843_EditTable_HingeHoleOption_AddColumns_Quantity_TopCenter_BottomCenter.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

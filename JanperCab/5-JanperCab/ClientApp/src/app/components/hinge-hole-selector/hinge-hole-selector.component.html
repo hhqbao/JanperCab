@@ -26,52 +26,120 @@
           (afterSet)="onSelectOption()"
         ></app-select-menu>
       </div>
-      <div
-        class="row"
-        *ngIf="formGroup.get('hingeHole')"
-        [formGroup]="formGroup.get('hingeHole')"
-      >
-        <div class="col-1-2">
-          <label class="form__label">Top</label>
-          <input
-            #topInput
-            type="text"
-            class="form__control tab-ignore"
-            currencyMask
-            appSelectOnFocus
-            formControlName="top"
-            [options]="{
-              align: 'center',
-              allowZero: false,
-              precision: '0',
-              decimal: '',
-              prefix: '',
-              thousands: ''
-            }"
-            (blur)="onTopBlur()"
-            (keydown)="onTopTab($event)"
-          />
+      <div class="form__group" *ngIf="formGroup.get('hingeHole')">
+        <div class="form__group">
+          <label class="form__label">Quantity</label>
+          <app-select-menu
+            [control]="quantity"
+            [values]="quantities"
+            [valueKey]="'value'"
+            [valueDisplay]="'text'"
+            (afterSet)="onSelectQuantity()"
+          ></app-select-menu>
         </div>
-        <div class="col-1-2">
-          <label class="form__label">Bottom</label>
-          <input
-            #bottomInput
-            type="text"
-            class="form__control tab-ignore"
-            currencyMask
-            appSelectOnFocus
-            formControlName="bottom"
-            [options]="{
-              align: 'center',
-              allowZero: false,
-              precision: '0',
-              decimal: '',
-              prefix: '',
-              thousands: ''
+        <div class="row" [formGroup]="formGroup.get('hingeHole')">
+          <div
+            [ngClass]="{
+              'col-1-2': quantity.value === 2,
+              'col-1-3': quantity.value === 3,
+              'col-1-4': quantity.value === 4
             }"
-            (blur)="onBottomBlur()"
-            (keydown)="onBottomTab($event)"
-          />
+          >
+            <label class="form__label">T</label>
+            <input
+              #topInput
+              type="text"
+              class="form__control tab-ignore"
+              currencyMask
+              appSelectOnFocus
+              formControlName="top"
+              [options]="{
+                align: 'center',
+                allowZero: false,
+                precision: '0',
+                decimal: '',
+                prefix: '',
+                thousands: ''
+              }"
+              (blur)="onSizeBlur(top)"
+              (keydown)="onTopTab($event)"
+            />
+          </div>
+          <div
+            *ngIf="quantity.value > 2"
+            [ngClass]="{
+              'col-1-3': quantity.value === 3,
+              'col-1-4': quantity.value === 4
+            }"
+          >
+            <label class="form__label">C1</label>
+            <input
+              #topCenterInput
+              type="text"
+              class="form__control tab-ignore"
+              currencyMask
+              appSelectOnFocus
+              formControlName="topCenter"
+              [options]="{
+                align: 'center',
+                allowZero: false,
+                precision: '0',
+                decimal: '',
+                prefix: '',
+                thousands: ''
+              }"
+              (blur)="onSizeBlur(topCenter)"
+              (keydown)="onTopCenterTab($event)"
+            />
+          </div>
+          <div *ngIf="quantity.value > 3" class="col-1-4">
+            <label class="form__label">C2</label>
+            <input
+              #bottomCenterInput
+              type="text"
+              class="form__control tab-ignore"
+              currencyMask
+              appSelectOnFocus
+              formControlName="bottomCenter"
+              [options]="{
+                align: 'center',
+                allowZero: false,
+                precision: '0',
+                decimal: '',
+                prefix: '',
+                thousands: ''
+              }"
+              (blur)="onSizeBlur(bottomCenter)"
+              (keydown)="onBottomCenterTab($event)"
+            />
+          </div>
+          <div
+            [ngClass]="{
+              'col-1-2': quantity.value === 2,
+              'col-1-3': quantity.value === 3,
+              'col-1-4': quantity.value === 4
+            }"
+          >
+            <label class="form__label">B</label>
+            <input
+              #bottomInput
+              type="text"
+              class="form__control tab-ignore"
+              currencyMask
+              appSelectOnFocus
+              formControlName="bottom"
+              [options]="{
+                align: 'center',
+                allowZero: false,
+                precision: '0',
+                decimal: '',
+                prefix: '',
+                thousands: ''
+              }"
+              (blur)="onSizeBlur(bottom)"
+              (keydown)="onBottomTab($event)"
+            />
+          </div>
         </div>
       </div>
     </div>
