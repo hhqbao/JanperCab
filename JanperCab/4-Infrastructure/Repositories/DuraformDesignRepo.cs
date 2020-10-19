@@ -2,6 +2,7 @@
 using _3_Application.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace _4_Infrastructure.Repositories
@@ -17,6 +18,7 @@ namespace _4_Infrastructure.Repositories
             return await _dbSet
                 .Include(x => x.FixedEdgeProfile)
                 .Include(x => x.DefaultEdgeProfile)
+                .OrderBy(x => x.Name)
                 .ToListAsync();
         }
     }

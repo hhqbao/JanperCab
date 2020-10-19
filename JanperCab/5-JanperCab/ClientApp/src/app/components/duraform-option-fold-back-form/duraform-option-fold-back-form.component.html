@@ -2,8 +2,8 @@
   class="duraform-option-fold-back-form option-form__form-wrapper"
   [formGroup]="formGroup.get('optionGroup')"
 >
-  <div class="form__group" style="display: flex;">
-    <label class="form__radio-btn" style="flex: 1;">
+  <div class="form__group" style="display: flex">
+    <label class="form__radio-btn" style="flex: 1">
       <input
         type="radio"
         formControlName="hasProfile"
@@ -12,7 +12,7 @@
       />
       <span>No Profile</span>
     </label>
-    <label class="form__radio-btn" style="flex: 1;">
+    <label class="form__radio-btn" style="flex: 1">
       <input
         type="radio"
         formControlName="hasProfile"
@@ -22,40 +22,88 @@
       <span>With Profile</span>
     </label>
   </div>
-  <div class="row">
-    <div class="col-1-2">
-      <div class="form__group">
-        <label class="form__label">Return Length</label>
-        <app-select-menu
-          [control]="formGroup.get('optionGroup').get('length')"
-          [values]="foldBackLengths"
-          [valueDisplay]="'text'"
-          [valueKey]="'value'"
-          (afterSet)="onValueChange()"
-        ></app-select-menu>
-      </div>
-    </div>
-    <div class="col-1-2">
-      <div class="form__group">
-        <label class="form__label">Thickness</label>
-        <app-select-menu
-          [control]="formGroup.get('optionGroup').get('thickness')"
-          [values]="thicknesses"
-          [valueDisplay]="'text'"
-          [valueKey]="'value'"
-          (afterSet)="onValueChange()"
-        ></app-select-menu>
-      </div>
-    </div>
-  </div>
   <div class="form__group">
-    <label class="form__label">Folding Type</label>
+    <label class="form__label">Thickness</label>
     <app-select-menu
-      [control]="formGroup.get('optionGroup').get('hasDoubleReturn')"
-      [values]="foldBackTypes"
+      [control]="formGroup.get('optionGroup').get('thickness')"
+      [values]="thicknesses"
       [valueDisplay]="'text'"
       [valueKey]="'value'"
       (afterSet)="onValueChange()"
     ></app-select-menu>
+  </div>
+  <div class="form__group">
+    <label class="form__label">Folding Type</label>
+    <app-select-menu
+      [control]="formGroup.get('optionGroup').get('foldingType')"
+      [values]="foldBackTypes"
+      [valueDisplay]="'text'"
+      [valueKey]="'value'"
+      (afterSet)="onSelectFoldingType()"
+    ></app-select-menu>
+  </div>
+  <div class="row">
+    <div
+      [ngClass]="{
+        'col-1-2': selectedFoldingType === foldingType.Double,
+        'col-1-1': selectedFoldingType !== foldingType.Double
+      }"
+      *ngIf="
+        selectedFoldingType === foldingType.Left ||
+        selectedFoldingType === foldingType.Double
+      "
+    >
+      <div class="form__group">
+        <label class="form__label">Left Length (mm)</label>
+        <input
+          class="form__control tab-ignore"
+          currencyMask
+          appSelectOnFocus
+          [formControl]="formGroup.get('optionGroup').get('leftLength')"
+          [options]="{
+            align: 'left',
+            allowZero: false,
+            precision: '0',
+            decimal: '',
+            prefix: '',
+            thousands: '',
+            max: 500
+          }"
+          (blur)="onReturnLengthBlur()"
+          (keydown)="onReturnLengthTab($event)"
+        />
+      </div>
+    </div>
+    <div
+      [ngClass]="{
+        'col-1-2': selectedFoldingType === foldingType.Double,
+        'col-1-1': selectedFoldingType !== foldingType.Double
+      }"
+      *ngIf="
+        selectedFoldingType === foldingType.Right ||
+        selectedFoldingType === foldingType.Double
+      "
+    >
+      <div class="form__group">
+        <label class="form__label">Right Length (mm)</label>
+        <input
+          class="form__control tab-ignore"
+          currencyMask
+          appSelectOnFocus
+          [formControl]="formGroup.get('optionGroup').get('rightLength')"
+          [options]="{
+            align: 'left',
+            allowZero: false,
+            precision: '0',
+            decimal: '',
+            prefix: '',
+            thousands: '',
+            max: 500
+          }"
+          (blur)="onReturnLengthBlur()"
+          (keydown)="onReturnLengthTab($event)"
+        />
+      </div>
+    </div>
   </div>
 </div>

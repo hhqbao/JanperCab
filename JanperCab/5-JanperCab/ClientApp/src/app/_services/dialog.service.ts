@@ -5,6 +5,14 @@ import * as alertify from 'alertifyjs';
 export class DialogService {
   constructor() {}
 
+  alert = (title: string, message: string, callBack: () => any) => {
+    alertify.alert(title, message, () => {
+      if (callBack) {
+        callBack();
+      }
+    });
+  };
+
   confirm = (title: string, message: string, callBack: () => any) => {
     alertify.confirm(
       title,

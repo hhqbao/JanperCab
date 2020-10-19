@@ -109,6 +109,7 @@ import { DuraformOrderStepThreeComponent } from './components/duraform-order-ste
 import { DuraformOptionDoubleSidedFormComponent } from './components/duraform-option-double-sided-form/duraform-option-double-sided.component';
 import { EndPanelComponentListComponent } from './components/end-panel-component-list/end-panel-component-list.component';
 import { DuraformDrawerComponentListComponent } from './components/duraform-drawer-component-list/duraform-drawer-component-list.component';
+import { DuraformOptionRollerShutterComponent } from './components/duraform-option-roller-shutter/duraform-option-roller-shutter.component';
 
 @NgModule({
   declarations: [
@@ -168,6 +169,7 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
     DuraformOptionDoubleSidedFormComponent,
     DuraformOptionFoldBackFormComponent,
     DuraformOptionPaneFrameFormComponent,
+    DuraformOptionRollerShutterComponent,
     DuraformDoorComponentListComponent,
     DuraformPantryDoorComponentListComponent,
     EndPanelComponentListComponent,

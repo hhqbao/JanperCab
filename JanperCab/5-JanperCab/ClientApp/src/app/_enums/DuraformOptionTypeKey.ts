@@ -3,4 +3,6 @@ export enum DuraformOptionTypeKey {
   DoubleSided = 2,
   FoldBack = 3,
   PaneFrame = 4,
+  RollerShutter = 5,
+  MicrowaveFrame = 6,
 }

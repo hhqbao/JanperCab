@@ -10,6 +10,8 @@ namespace _1_Domain
             DoubleSided = 2,
             FoldBack = 3,
             PaneFrame = 4,
+            RollerShutter = 5,
+            MicrowaveFrame = 6
         }
 
         public DuraformOptionTypeKey Id { get; set; }

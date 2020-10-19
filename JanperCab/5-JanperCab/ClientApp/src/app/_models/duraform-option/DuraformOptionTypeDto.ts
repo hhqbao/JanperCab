@@ -1,3 +1,5 @@
+import { DuraformOptionRollerShutterFrameDto } from './DuraformOptionRollerShutterFrameDto';
+import { DuraformOrderTypeKey } from 'src/app/_enums/DuraformOrderTypeKey';
 import { DuraformOptionDto } from 'src/app/_models/duraform-option/DuraformOptionDto';
 import { DuraformOptionPaneFrameDto } from './DuraformOptionPaneFrameDto';
 import { DuraformOptionFoldBackDto } from './DuraformOptionFoldBackDto';
@@ -30,9 +32,10 @@ export class DuraformOptionTypeDto {
         option = new DuraformOptionFoldBackDto();
         option.$type = optionType.type;
         option.hasProfile = optionValues.hasProfile;
-        option.length = optionValues.length;
         option.thickness = optionValues.thickness;
-        option.hasDoubleReturn = optionValues.hasDoubleReturn;
+        option.foldingType = optionValues.foldingType;
+        option.leftLength = optionValues.leftLength;
+        option.rightLength = optionValues.rightLength;
         break;
       case DuraformOptionTypeKey.PaneFrame:
         option = new DuraformOptionPaneFrameDto();
@@ -40,6 +43,15 @@ export class DuraformOptionTypeDto {
         option.columns = optionValues.columns;
         option.rows = optionValues.rows;
         break;
+      case DuraformOptionTypeKey.RollerShutter:
+        option = new DuraformOptionRollerShutterFrameDto();
+        option.$type = optionType.type;
+        option.topSize = optionValues.topSize;
+        option.leftSize = optionValues.leftSize;
+        option.rightSize = optionValues.rightSize;
+        break;
+      case DuraformOptionTypeKey.MicrowaveFrame:
+        throw new Error('Unsupported Option Type');
       default:
         throw new Error('Unsupported Option Type');
     }

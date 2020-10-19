@@ -1,5 +1,12 @@
+import { FoldingType } from './../../_enums/FoldingType';
+import { DialogService } from './../../_services/dialog.service';
 import { DuraformOptionTypeKey } from './../../_enums/DuraformOptionTypeKey';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -11,26 +18,33 @@ export class DuraformOptionFoldBackFormComponent implements OnInit {
   @Output() valueChange = new EventEmitter();
 
   readonly typeKeyEnum = DuraformOptionTypeKey;
-  foldBackLengths: any[];
+  readonly foldingType = FoldingType;
+
   thicknesses: any[];
   foldBackTypes: any[];
 
-  constructor(private fb: FormBuilder) {
-    this.foldBackLengths = [
-      { text: '100mm', value: 100 },
-      { text: '200mm', value: 200 },
-      { text: '300mm', value: 300 },
-      { text: '400mm', value: 400 },
-      { text: '500mm', value: 500 },
-    ];
+  constructor(private fb: FormBuilder, private dialog: DialogService) {
     this.thicknesses = [
       { text: '18mm', value: 18 },
       { text: '36mm', value: 36 },
     ];
     this.foldBackTypes = [
-      { text: 'Single Return', value: false },
-      { text: 'Double Return', value: true },
+      { text: 'Left Return', value: FoldingType.Left },
+      { text: 'Right Return', value: FoldingType.Right },
+      { text: 'Double Return', value: FoldingType.Double },
     ];
+  }
+
+  get leftLength(): AbstractControl {
+    return this.formGroup.get('optionGroup').get('leftLength');
+  }
+
+  get rightLength(): AbstractControl {
+    return this.formGroup.get('optionGroup').get('rightLength');
+  }
+
+  get selectedFoldingType(): FoldingType {
+    return this.formGroup.get('optionGroup').get('foldingType').value;
   }
 
   ngOnInit() {
@@ -40,9 +54,13 @@ export class DuraformOptionFoldBackFormComponent implements OnInit {
         this.fb.group({
           optionTypeId: [this.typeKeyEnum.FoldBack, [Validators.required]],
           hasProfile: [false],
-          length: [100, [Validators.required]],
           thickness: [18, [Validators.required]],
-          hasDoubleReturn: [false],
+          foldingType: [FoldingType.Left, [Validators.required]],
+          leftLength: [
+            100,
+            [Validators.required, Validators.min(100), Validators.max(500)],
+          ],
+          rightLength: [0, []],
         })
       );
 
@@ -52,5 +70,97 @@ export class DuraformOptionFoldBackFormComponent implements OnInit {
 
   onValueChange = () => {
     this.valueChange.emit();
+  };
+
+  onSelectFoldingType = () => {
+    switch (this.selectedFoldingType) {
+      case FoldingType.Left:
+        this.leftLength.setValidators([
+          Validators.required,
+          Validators.min(100),
+          Validators.max(500),
+        ]);
+        this.leftLength.setValue(100);
+
+        this.rightLength.setValue(0);
+        this.rightLength.clearValidators();
+        break;
+      case FoldingType.Right:
+        this.rightLength.setValidators([
+          Validators.required,
+          Validators.min(100),
+          Validators.max(500),
+        ]);
+        this.rightLength.setValue(100);
+
+        this.leftLength.setValue(0);
+        this.leftLength.clearValidators();
+        break;
+      case FoldingType.Double:
+        this.leftLength.setValidators([
+          Validators.required,
+          Validators.min(100),
+          Validators.max(500),
+        ]);
+        this.rightLength.setValidators([
+          Validators.required,
+          Validators.min(100),
+          Validators.max(500),
+        ]);
+
+        this.leftLength.setValue(100);
+        this.rightLength.setValue(100);
+        break;
+    }
+
+    this.leftLength.updateValueAndValidity();
+    this.rightLength.updateValueAndValidity();
+    this.onValueChange();
+  };
+
+  onReturnLengthTab = (event: KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === 'Tab') {
+      this.onReturnLengthBlur();
+    }
+  };
+
+  onReturnLengthBlur = () => {
+    const foldingType = this.formGroup.get('optionGroup').get('foldingType')
+      .value as FoldingType;
+
+    let lengthControls: AbstractControl[] = [];
+
+    switch (foldingType) {
+      case FoldingType.Left:
+        lengthControls = [this.formGroup.get('optionGroup').get('leftLength')];
+        break;
+      case FoldingType.Right:
+        lengthControls = [this.formGroup.get('optionGroup').get('rightLength')];
+        break;
+      case FoldingType.Double:
+        lengthControls.push(
+          this.formGroup.get('optionGroup').get('leftLength')
+        );
+        lengthControls.push(
+          this.formGroup.get('optionGroup').get('rightLength')
+        );
+        break;
+    }
+
+    lengthControls = lengthControls.filter((x) => x.invalid);
+
+    for (const control of lengthControls) {
+      control.setValue(100);
+    }
+
+    if (lengthControls.length > 0) {
+      this.dialog.alert(
+        'Invalid Return Length',
+        'Return length must be between 100mm and 500mm',
+        null
+      );
+    }
+
+    this.onValueChange();
   };
 }

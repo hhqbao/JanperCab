@@ -23,6 +23,10 @@ namespace _3_Application.Dtos.DuraformOptionType
                         return typeof(DuraformOptionFoldBackDto).AssemblyQualifiedName;
                     case _1_Domain.DuraformOptionType.DuraformOptionTypeKey.PaneFrame:
                         return typeof(DuraformOptionPaneFrameDto).AssemblyQualifiedName;
+                    case _1_Domain.DuraformOptionType.DuraformOptionTypeKey.RollerShutter:
+                        return typeof(DuraformOptionRollerShutterFrameDto).AssemblyQualifiedName;
+                    case _1_Domain.DuraformOptionType.DuraformOptionTypeKey.MicrowaveFrame:
+                        throw new NotImplementedException("MicrowaveFrame Not Implemented");
                     default:
                         throw new NotImplementedException("Duraform Option Type Not Recognized");
                 }

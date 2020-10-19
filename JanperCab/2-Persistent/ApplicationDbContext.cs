@@ -3,6 +3,7 @@ using _2_Persistent.Configs;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Options;
 
 namespace _2_Persistent
@@ -55,6 +56,7 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformOptionDoubleSidedConfig());
             builder.ApplyConfiguration(new DuraformOptionFoldBackConfig());
             builder.ApplyConfiguration(new DuraformOptionPaneFrameConfig());
+            builder.ApplyConfiguration(new DuraformOptionRollerShutterFrameConfig());
 
             builder.ApplyConfiguration(new DuraformFormConfig());
             builder.ApplyConfiguration(new DuraformDraftConfig());
@@ -76,6 +78,24 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformFileConfig());
 
             base.OnModelCreating(builder);
+        }
+    }
+
+    public class DuraformOptionRollerShutterFrameConfig : IEntityTypeConfiguration<DuraformOptionRollerShutterFrame>
+    {
+        public void Configure(EntityTypeBuilder<DuraformOptionRollerShutterFrame> builder)
+        {
+            builder.Property(x => x.TopSize)
+                .HasColumnName("TopSize")
+                .HasColumnType("decimal(18,2)");
+
+            builder.Property(x => x.LeftSize)
+                .HasColumnName("LeftSize")
+                .HasColumnType("decimal(18,2)");
+
+            builder.Property(x => x.RightSize)
+                .HasColumnName("RightSize")
+                .HasColumnType("decimal(18,2)");
         }
     }
 }

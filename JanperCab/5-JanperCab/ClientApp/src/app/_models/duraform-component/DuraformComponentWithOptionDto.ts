@@ -1,3 +1,4 @@
+import { DuraformOptionRollerShutterFrameDto } from './../duraform-option/DuraformOptionRollerShutterFrameDto';
 import { DuraformOptionTypeKey } from './../../_enums/DuraformOptionTypeKey';
 import { DuraformOptionPaneFrameDto } from './../duraform-option/DuraformOptionPaneFrameDto';
 import { DuraformOptionFoldBackDto } from './../duraform-option/DuraformOptionFoldBackDto';
@@ -33,6 +34,11 @@ export abstract class DuraformComponentWithOptionDto extends DuraformComponentDt
           value: DuraformOptionPaneFrameDto,
           name:
             '_3_Application.Dtos.DuraformOption.DuraformOptionPaneFrameDto, 3-Application',
+        },
+        {
+          value: DuraformOptionRollerShutterFrameDto,
+          name:
+            '_3_Application.Dtos.DuraformOption.DuraformOptionRollerShutterFrameDto, 3-Application',
         },
       ],
     },

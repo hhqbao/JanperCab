@@ -26,7 +26,7 @@ namespace _5_JanperCab.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var types = await _unitOfWork.DuraformWrapTypes.GetAllAsync();
+            var types = await _unitOfWork.DuraformWrapTypes.GetAllAsync(x => !x.IsDisabledFromDisplay);
 
             return Ok(_mapper.Map<List<DuraformWrapType>, List<DuraformWrapTypeForSelection>>(types));
         }

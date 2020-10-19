@@ -27,7 +27,7 @@ export class DuraformOptionSelectorComponent implements OnInit {
   showOptionForm = false;
   selectedType: DuraformOptionTypeDto = null;
 
-  get filtereddOptionTypes() {
+  get filteredOptionTypes() {
     return this.asset.duraformOptionTypes.filter(
       (x) => !this.hideOptionTypeKeys.includes(x.id)
     );

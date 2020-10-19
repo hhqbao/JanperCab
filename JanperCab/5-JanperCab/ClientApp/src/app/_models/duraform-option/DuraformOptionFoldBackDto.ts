@@ -1,13 +1,14 @@
-import { DuraformOptionTypeDto } from 'src/app/_models/duraform-option/DuraformOptionTypeDto';
+import { FoldingType } from './../../_enums/FoldingType';
 import { DuraformOptionDto } from './DuraformOptionDto';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Expose } from 'class-transformer';
 
 export class DuraformOptionFoldBackDto extends DuraformOptionDto {
   hasProfile: boolean;
-  length: number;
   thickness: number;
-  hasDoubleReturn: boolean;
+  foldingType: FoldingType;
+  leftLength: number;
+  rightLength: number;
 
   @Expose()
   toFormGroup(): FormGroup {
@@ -16,18 +17,75 @@ export class DuraformOptionFoldBackDto extends DuraformOptionDto {
         Validators.required,
       ]),
       hasProfile: new FormControl(this.hasProfile),
-      length: new FormControl(this.length, [Validators.required]),
       thickness: new FormControl(this.thickness, [Validators.required]),
-      hasDoubleReturn: new FormControl(this.hasDoubleReturn),
+      foldingType: new FormControl(this.foldingType, [Validators.required]),
+      leftLength: new FormControl(this.leftLength, []),
+      rightLength: new FormControl(this.rightLength, []),
     });
+
+    switch (this.foldingType) {
+      case FoldingType.Left:
+        formGroup
+          .get('rightLength')
+          .setValidators([Validators.min(100), Validators.max(500)]);
+        formGroup
+          .get('leftLength')
+          .setValidators([
+            Validators.required,
+            Validators.min(100),
+            Validators.max(500),
+          ]);
+        break;
+      case FoldingType.Right:
+        formGroup
+          .get('leftLength')
+          .setValidators([Validators.min(100), Validators.max(500)]);
+        formGroup
+          .get('rightLength')
+          .setValidators([
+            Validators.required,
+            Validators.min(100),
+            Validators.max(500),
+          ]);
+        break;
+      case FoldingType.Double:
+        formGroup
+          .get('leftLength')
+          .setValidators([
+            Validators.required,
+            Validators.min(100),
+            Validators.max(500),
+          ]);
+        formGroup
+          .get('rightLength')
+          .setValidators([
+            Validators.required,
+            Validators.min(100),
+            Validators.max(500),
+          ]);
+        break;
+    }
 
     return formGroup;
   }
 
   @Expose()
   toString(): string {
-    let value = `${this.length}x${this.thickness} `;
-    value += `${this.hasDoubleReturn ? 'Double' : 'Single'} Return`;
+    let value = '';
+
+    switch (this.foldingType) {
+      case FoldingType.Left:
+        value = `${this.leftLength}L`;
+        break;
+      case FoldingType.Right:
+        value = `${this.rightLength}R`;
+        break;
+      case FoldingType.Double:
+        value = `${this.leftLength}L x ${this.rightLength}R`;
+        break;
+    }
+
+    value += ` ${this.thickness}mm`;
     value += `${this.hasProfile ? '' : ' End Panel'}`;
 
     return value;

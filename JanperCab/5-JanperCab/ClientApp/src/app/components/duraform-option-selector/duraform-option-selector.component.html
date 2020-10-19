@@ -28,7 +28,7 @@
   <div class="container" [hidden]="!showTypeList || showOptionForm">
     <ul class="type-list">
       <li
-        *ngFor="let optionType of filtereddOptionTypes"
+        *ngFor="let optionType of filteredOptionTypes"
         (click)="onOptionTypeSelect(optionType)"
       >
         {{ optionType.name }}
@@ -64,6 +64,13 @@
         [formGroup]="formGroup"
         (valueChange)="onUpdateDisplayValue()"
       ></app-duraform-option-pane-frame-form>
+      <app-duraform-option-roller-shutter
+        appRemoveTag
+        *ngIf="selectedType.id === typeKeyEnum.RollerShutter"
+        [formGroup]="formGroup"
+        (valueChange)="onUpdateDisplayValue()"
+      >
+      </app-duraform-option-roller-shutter>
     </div>
   </div>
 </div>

@@ -11,7 +11,10 @@ namespace _2_Persistent.Configs
             builder.Property(x => x.HasProfile)
                 .HasColumnName("HasProfile");
 
-            builder.Property(x => x.Length)
+            builder.Property(x => x.LeftLength)
+                .HasColumnType("decimal(18,2)");
+
+            builder.Property(x => x.RightLength)
                 .HasColumnType("decimal(18,2)");
 
             builder.Property(x => x.Thickness)

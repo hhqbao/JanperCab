@@ -16,7 +16,7 @@ namespace _4_Infrastructure.Repositories
         public async Task<List<DuraformWrapType>> GetForDesignAsync(int designId)
         {
             var types = await _dbSet
-                .Where(x => x.NotAvailableDesignWrapTypes.All(y => y.DuraformDesignId != designId))
+                .Where(x => x.NotAvailableDesignWrapTypes.All(y => y.DuraformDesignId != designId) && !x.IsDisabledFromDisplay)
                 .ToListAsync();
 
             return types;

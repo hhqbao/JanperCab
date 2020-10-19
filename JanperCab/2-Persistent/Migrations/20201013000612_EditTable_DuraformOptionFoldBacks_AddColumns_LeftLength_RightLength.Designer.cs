@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _2_Persistent;
 
 namespace _2_Persistent.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201013000612_EditTable_DuraformOptionFoldBacks_AddColumns_LeftLength_RightLength")]
+    partial class EditTable_DuraformOptionFoldBacks_AddColumns_LeftLength_RightLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1052,6 +1054,9 @@ namespace _2_Persistent.Migrations
                     b.Property<decimal>("LeftLength")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal>("Length")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("RightLength")
                         .HasColumnType("decimal(18,2)");
 
@@ -1079,25 +1084,6 @@ namespace _2_Persistent.Migrations
                         .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("DuraformOptionPaneFrame");
-                });
-
-            modelBuilder.Entity("_1_Domain.DuraformOptionRollerShutterFrame", b =>
-                {
-                    b.HasBaseType("_1_Domain.DuraformOption");
-
-                    b.Property<decimal>("LeftSize")
-                        .HasColumnName("LeftSize")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("RightSize")
-                        .HasColumnName("RightSize")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("TopSize")
-                        .HasColumnName("TopSize")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasDiscriminator().HasValue("DuraformOptionRollerShutterFrame");
                 });
 
             modelBuilder.Entity("_1_Domain.DuraformComponentWithOptionAndHingeHole", b =>

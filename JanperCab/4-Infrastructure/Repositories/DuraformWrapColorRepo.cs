@@ -17,7 +17,7 @@ namespace _4_Infrastructure.Repositories
         {
             var colors = await _dbSet
                 .Include(x => x.DuraformWrapType)
-                .Where(x => x.DuraformWrapType.NotAvailableDesignWrapTypes.All(y => y.DuraformDesignId != designId))
+                .Where(x => x.DuraformWrapType.NotAvailableDesignWrapTypes.All(y => y.DuraformDesignId != designId) && !x.DuraformWrapType.IsDisabledFromDisplay)
                 .ToListAsync();
 
             return colors;

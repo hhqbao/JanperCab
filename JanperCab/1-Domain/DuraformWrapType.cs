@@ -9,6 +9,8 @@ namespace _1_Domain
 
         public string Name { get; set; }
 
+        public bool IsDisabledFromDisplay { get; set; }
+
 
         public virtual ICollection<DuraformWrapColor> DuraformWrapColors { get; set; }
 
