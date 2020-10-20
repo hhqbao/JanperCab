@@ -7,9 +7,14 @@
             <div class="door-detail">
               <div class="door-detail__name">{{ design.name }}</div>
               <div class="door-detail__profile-name">
-                {{
-                  design.fixedEdgeProfileName || design.defaultEdgeProfileName
-                }}
+                <span *ngIf="selectedEdgeProfile">
+                  {{ selectedEdgeProfile.name }}
+                </span>
+                <span *ngIf="!selectedEdgeProfile">
+                  {{
+                    design.fixedEdgeProfileName || design.defaultEdgeProfileName
+                  }}
+                </span>
               </div>
               <img
                 class="door-detail__profile-img"

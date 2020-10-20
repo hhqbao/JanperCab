@@ -17,6 +17,11 @@ export class DuraformOptionNoFaceDto extends DuraformOptionDto {
 
   @Expose()
   toString(): string {
-    return 'Panel No Face Route';
+    return 'PANEL NO FACE ROUT';
+  }
+
+  @Expose()
+  toCabProValue(): string {
+    return 'PANEL NO FACE ROUT';
   }
 }

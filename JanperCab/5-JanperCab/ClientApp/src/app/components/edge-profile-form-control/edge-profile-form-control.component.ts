@@ -1,3 +1,4 @@
+import { DuraformEdgeProfileForList } from './../../_models/duraform-edge-profile/DuraformEdgeProfileForList';
 import { FormGroup } from '@angular/forms';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
@@ -10,6 +11,24 @@ import { Component, OnInit, Input } from '@angular/core';
 export class EdgeProfileFormControlComponent implements OnInit {
   @Input() formGroup: FormGroup;
   @Input() hideEdgeProfile = false;
+
+  get allowedEdgeProfiles(): DuraformEdgeProfileForList[] {
+    const allowedList = this.asset.edgeProfiles.filter(
+      (x) => x.name === 'Square' || x.id === this.order.selectedEdgeProfile.id
+    );
+
+    const edgeId = +this.formGroup.get('duraformEdgeProfileId').value;
+
+    if (!allowedList.some((x) => x.id === edgeId)) {
+      this.formGroup
+        .get('duraformEdgeProfileId')
+        .setValue(this.order.selectedEdgeProfile.id);
+
+      this.onSelectEdgeProfile();
+    }
+
+    return allowedList;
+  }
 
   constructor(
     public asset: DuraformAssetService,

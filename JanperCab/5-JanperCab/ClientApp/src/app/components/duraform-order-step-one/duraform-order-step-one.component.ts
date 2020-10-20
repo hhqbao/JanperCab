@@ -21,31 +21,26 @@ export class DuraformOrderStepOneComponent implements OnInit {
   @Output() finish = new EventEmitter<StepOneReturnValue>();
 
   selectedDuraformDesign: DuraformDesignForOrderMenu = null;
+  selectedEdgeProfile: DuraformEdgeProfileForList = null;
+
+  showEdgeProfileMenu = false;
   showColorSelector = false;
 
   constructor(public asset: DuraformAssetService) {}
 
   ngOnInit() {}
 
-  private get selectedEdgeProfile(): DuraformEdgeProfileForList {
-    if (!this.selectedDuraformDesign) {
-      return null;
-    }
-    const {
-      fixedEdgeProfileId,
-      defaultEdgeProfileId,
-    } = this.selectedDuraformDesign;
-
-    const edgeProfileId = fixedEdgeProfileId
-      ? fixedEdgeProfileId
-      : defaultEdgeProfileId;
-
-    return this.asset.edgeProfiles.find((x) => x.id === edgeProfileId);
-  }
-
   onSelectDesign = (selectedDesign: DuraformDesignForOrderMenu) => {
     this.selectedDuraformDesign = selectedDesign;
-    this.showColorSelector = true;
+
+    if (selectedDesign.fixedEdgeProfileId) {
+      this.selectedEdgeProfile = this.asset.getEdgeProfile(
+        selectedDesign.fixedEdgeProfileId
+      );
+      this.showColorSelector = true;
+    } else {
+      this.showEdgeProfileMenu = true;
+    }
   };
 
   onPickColor = (color: DuraformWrapColorForSelection) => {

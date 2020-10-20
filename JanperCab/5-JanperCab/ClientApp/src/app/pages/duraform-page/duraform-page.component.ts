@@ -13,7 +13,7 @@ import { LayoutService } from 'src/app/_services/layout.service';
 import { DuraformSerieService } from 'src/app/_services/duraform-serie.service';
 import { DuraformDesignService } from 'src/app/_services/duraform-design.service';
 import { DuraformEdgeProfileService } from 'src/app/_services/duraform-edge-profile.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable, ObservableInput } from 'rxjs';
 import { DuraformArchService } from 'src/app/_services/duraform-arch.service';
 import { PantryDoorChairRailTypeService } from 'src/app/_services/pantry-door-chair-rail-type.service';
 import { DuraformDrawerTypeService } from 'src/app/_services/duraform-drawer-type.service';
@@ -59,35 +59,34 @@ export class DuraformPageComponent implements OnInit {
       this.layout.toggleLeftNav(true);
     });
 
-    forkJoin(
-      forkJoin([
-        this.loadSeries(),
-        this.loadDuraformDesigns(),
-        this.loadEdgeProfiles(),
-        this.loadArches(),
-        this.loadWrapTypes(),
-      ]),
-      forkJoin([
-        this.loadPantryDoorChairRailTypes(),
-        this.loadDuraformDrawerTypes(),
-        this.loadDuraformOptionTypes(),
-        this.loadHingeHoleTypes(),
-        this.loadWrapColors(),
-        this.loadComponentTypes(),
-      ])
-    ).subscribe(
+    const observables = forkJoin({
+      series: this.loadSeries(),
+      designs: this.loadDuraformDesigns(),
+      edgeProfiles: this.loadEdgeProfiles(),
+      arches: this.loadArches(),
+      wrapTypes: this.loadWrapTypes(),
+      railTypes: this.loadPantryDoorChairRailTypes(),
+      drawerTypes: this.loadDuraformDrawerTypes(),
+      optTypes: this.loadDuraformOptionTypes(),
+      hingeTypes: this.loadHingeHoleTypes(),
+      wrapColors: this.loadWrapColors(),
+      componentTypes: this.loadComponentTypes(),
+    });
+
+    observables.subscribe(
       (responses) => {
-        this.asset.duraformSeries = responses[0][0];
-        this.asset.duraformDesigns = responses[0][1];
-        this.asset.edgeProfiles = responses[0][2];
-        this.asset.arches = responses[0][3];
-        this.asset.duraformWrapTypes = responses[0][4];
-        this.asset.pantryDoorChairRailTypes = responses[1][0];
-        this.asset.duraformDrawerTypes = responses[1][1];
-        this.asset.duraformOptionTypes = responses[1][2];
-        this.asset.hingeHoleTypes = responses[1][3];
-        this.asset.duraformWrapColors = responses[1][4];
-        this.asset.componentTypes = responses[1][5];
+        this.asset.duraformSeries = responses.series;
+        this.asset.duraformDesigns = responses.designs;
+        this.asset.edgeProfiles = responses.edgeProfiles;
+        this.asset.arches = responses.arches;
+        this.asset.duraformWrapTypes = responses.wrapTypes;
+        this.asset.duraformWrapColors = responses.wrapColors;
+        this.asset.pantryDoorChairRailTypes = responses.railTypes;
+        this.asset.duraformDrawerTypes = responses.drawerTypes;
+        this.asset.duraformOptionTypes = responses.optTypes;
+        this.asset.hingeHoleTypes = responses.hingeTypes;
+        this.asset.componentTypes = responses.componentTypes;
+
         this.loadDuraformForm();
       },
       (error) => {

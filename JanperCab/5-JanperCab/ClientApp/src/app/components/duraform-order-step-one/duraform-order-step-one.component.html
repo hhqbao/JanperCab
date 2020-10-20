@@ -3,9 +3,19 @@
     *ngIf="asset.duraformDesigns.length > 0"
     (selectDesign)="onSelectDesign($event)"
   ></app-duraform-design-list>
+  <app-edge-profile-menu
+    *ngIf="showEdgeProfileMenu"
+    (selectProfile)="
+      selectedEdgeProfile = $event;
+      showEdgeProfileMenu = false;
+      showColorSelector = true
+    "
+    (closeMenu)="showEdgeProfileMenu = false"
+  ></app-edge-profile-menu>
   <app-duraform-color-selector
     *ngIf="showColorSelector"
     [design]="selectedDuraformDesign"
+    [selectedEdgeProfile]="selectedEdgeProfile"
     (cancel)="onCancelColorSelection()"
     (colorPick)="onPickColor($event)"
     (routingPick)="onRoutingPick()"

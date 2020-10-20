@@ -347,7 +347,6 @@ export class DuraformOrderService {
 
   submitStepOne = (model: StepOneReturnValue) => {
     this.duraformForm.duraformDesignId = model.design.id;
-    this.duraformForm.duraformEdgeProfileId = model.edgeProfile.id;
     this.duraformForm.duraformSerieId = model.serie.id;
     this.duraformForm.isRoutingOnly = model.isRoutingOnly;
     this.duraformForm.duraformWrapTypeId = model.wrapType?.id;
@@ -355,10 +354,16 @@ export class DuraformOrderService {
     this.duraformForm.duraformArchId = model.design.hasNoArch
       ? null
       : this.duraformForm.duraformArchId;
+
+    this.selectEdgeProfile(this.asset.getEdgeProfile(model.edgeProfile.id));
   };
 
   selectEdgeProfile = (model: DuraformEdgeProfileForList) => {
     this.duraformForm.duraformEdgeProfileId = model.id;
+
+    for (const component of this.duraformForm.duraformComponents) {
+      component.selectEdgeProfile(model);
+    }
   };
 
   selectArch = (model: DuraformArchForList) => {

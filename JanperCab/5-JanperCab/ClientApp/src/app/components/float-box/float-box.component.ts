@@ -6,6 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class FloatBoxComponent implements OnInit {
   @Input() width;
+  @Input() isFit = false;
 
   constructor() {}
 

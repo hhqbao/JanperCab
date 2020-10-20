@@ -29,7 +29,7 @@ namespace _4_Infrastructure.Repositories
             var queryable = _dbSet.OfType<Distributor>();
 
             if (!search.IsNullOrEmpty())
-                queryable = queryable.Where(x => x.Name.Contains(search));
+                queryable = queryable.Where(x => x.Name.Contains(search.Replace("@@@", "&")));
 
             switch (sortBy)
             {
@@ -59,7 +59,7 @@ namespace _4_Infrastructure.Repositories
                 .Where(x => x.DistributorId == distributorId);
 
             if (!search.IsNullOrEmpty())
-                queryable = queryable.Where(x => x.Name.Contains(search));
+                queryable = queryable.Where(x => x.Name.Contains(search.Replace("@@@", "&")));
 
             switch (sortBy)
             {

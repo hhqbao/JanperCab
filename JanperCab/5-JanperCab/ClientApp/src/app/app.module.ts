@@ -1,3 +1,4 @@
+import { EdgeProfileMenuComponent } from './components/edge-profile-menu/edge-profile-menu.component';
 import { CabinetMakerListComponent } from './components/cabinet-maker-list/cabinet-maker-list.component';
 import { FileSizePipe } from './_pipes/fileSize.pipe';
 import { FileService } from './_services/file.service';
@@ -189,6 +190,7 @@ import { DuraformOptionRollerShutterComponent } from './components/duraform-opti
     DeliveryDocketEndPanelsComponent,
     DeliveryDocketDuraformDrawersComponent,
     CabinetMakerListComponent,
+    EdgeProfileMenuComponent,
   ],
   imports: [
     BrowserModule,

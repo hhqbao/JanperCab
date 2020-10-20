@@ -1,0 +1,33 @@
+<app-float-box [isFit]="true">
+  <div class="edge-profile-menu">
+    <div class="row">
+      <div class="col-4-5">
+        <h1 class="heading heading--default">Choose Edge Profile</h1>
+      </div>
+      <div class="col-1-5 right">
+        <button class="btn btn--default" (click)="closeMenu.emit()">
+          <i class="fa fa-times-circle" aria-hidden="true"></i>
+          CLOSE
+        </button>
+      </div>
+    </div>
+    <ul class="list">
+      <li
+        class="edge-profile"
+        *ngFor="let profile of asset.edgeProfiles"
+        (click)="selectProfile.emit(profile)"
+      >
+        <img
+          src="./../../../assets/images/Duraform/EdgeProfiles/{{
+            profile.imageUrl
+          }}"
+          alt="Edge Profile"
+          class="edge-profile__img"
+        />
+        <div class="edge-profile__name">
+          {{ profile.name }}
+        </div>
+      </li>
+    </ul>
+  </div>
+</app-float-box>

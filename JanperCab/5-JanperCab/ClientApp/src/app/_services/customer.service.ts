@@ -54,7 +54,7 @@ export class CustomerService {
     let url = `${environment.baseUrl}/Customers/CabinetMakers?sortBy=${filter.sortBy}&direction=${filter.direction}&page=${filter.page}&take=${filter.take}`;
 
     if (filter.search.length > 0) {
-      url += `&search=${filter.search}`;
+      url += `&search=${filter.search.replace('&', '@@@')}`;
     }
 
     return this.http.get<ItemList<CabinetMakerDto>>(url);

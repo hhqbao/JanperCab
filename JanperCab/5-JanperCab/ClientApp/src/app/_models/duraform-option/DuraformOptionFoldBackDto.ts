@@ -71,17 +71,17 @@ export class DuraformOptionFoldBackDto extends DuraformOptionDto {
 
   @Expose()
   toString(): string {
-    let value = '';
+    let value = 'FOLD ';
 
     switch (this.foldingType) {
       case FoldingType.Left:
-        value = `${this.leftLength}L`;
+        value += `${this.leftLength}L`;
         break;
       case FoldingType.Right:
-        value = `${this.rightLength}R`;
+        value += `${this.rightLength}R`;
         break;
       case FoldingType.Double:
-        value = `${this.leftLength}L x ${this.rightLength}R`;
+        value += `${this.leftLength}L x ${this.rightLength}R`;
         break;
     }
 
@@ -89,5 +89,19 @@ export class DuraformOptionFoldBackDto extends DuraformOptionDto {
     value += `${this.hasProfile ? '' : ' End Panel'}`;
 
     return value;
+  }
+
+  @Expose()
+  toCabProValue(): string {
+    const highestValue =
+      this.leftLength >= this.rightLength ? this.leftLength : this.rightLength;
+
+    const roundValue = Math.ceil(highestValue / 100) * 100;
+
+    let stringValue = `${roundValue}mm`;
+    stringValue += this.foldingType === FoldingType.Double ? ' DOUBLE' : '';
+    stringValue += ' RETURN END PANEL';
+
+    return stringValue;
   }
 }

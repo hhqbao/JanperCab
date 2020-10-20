@@ -1,4 +1,5 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Expose } from 'class-transformer';
 import { DuraformOptionDto } from 'src/app/_models/duraform-option/DuraformOptionDto';
 
 export class DuraformOptionRollerShutterFrameDto extends DuraformOptionDto {
@@ -6,6 +7,7 @@ export class DuraformOptionRollerShutterFrameDto extends DuraformOptionDto {
   leftSize: number;
   rightSize: number;
 
+  @Expose()
   toFormGroup(): FormGroup {
     const formGroup = new FormGroup({
       optionTypeId: new FormControl(this.duraformOptionTypeId, [
@@ -27,9 +29,16 @@ export class DuraformOptionRollerShutterFrameDto extends DuraformOptionDto {
 
     return formGroup;
   }
+
+  @Expose()
   toString(): string {
     const { topSize, leftSize, rightSize } = this;
 
     return `Roller Shutter ${topSize}T x ${leftSize}L x ${rightSize}R`;
+  }
+
+  @Expose()
+  toCabProValue(): string {
+    return this.toString();
   }
 }

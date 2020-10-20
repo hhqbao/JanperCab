@@ -89,7 +89,7 @@ export class CabProService {
       sheetOne[`G${row}`] = { v: door.left ? 'x' : '', t: 's' };
       sheetOne[`H${row}`] = { v: door.right ? 'x' : '', t: 's' };
       sheetOne[`I${row}`] = {
-        v: door.duraformOption?.toString().toUpperCase(),
+        v: door.duraformOption?.toCabProValue().toUpperCase(),
         t: 's',
       };
       sheetOne[`L${row}`] = { v: noteForDoor, t: 's' };
@@ -108,7 +108,7 @@ export class CabProService {
       sheetTwo[`C${row}`] = { v: pantry.width, t: 'n' };
       sheetTwo[`D${row}`] = { v: pantry.chairRailHeight, t: 'n' };
       sheetTwo[`E${row}`] = {
-        v: data.getChairRailType(pantry.chairRailTypeId)?.name,
+        v: data.getChairRailType(pantry.chairRailTypeId)?.name.toUpperCase(),
         t: 's',
       };
       sheetTwo[`F${row}`] = { v: pantry.extraRailBottom ?? '', t: 'n' };

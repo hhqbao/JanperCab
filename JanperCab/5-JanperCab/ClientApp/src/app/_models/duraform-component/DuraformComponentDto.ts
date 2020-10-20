@@ -1,3 +1,5 @@
+import { Expose } from 'class-transformer';
+import { DuraformEdgeProfileForList } from './../duraform-edge-profile/DuraformEdgeProfileForList';
 export abstract class DuraformComponentDto {
   $type: string;
   id: number;
@@ -22,5 +24,20 @@ export abstract class DuraformComponentDto {
     this.left = formValue.left;
     this.right = formValue.right;
     this.note = formValue.note;
+  }
+
+  @Expose()
+  selectEdgeProfile(profile: DuraformEdgeProfileForList) {
+    this.duraformEdgeProfileId = profile.id;
+
+    if (
+      profile.forcedValuePerItem !== null &&
+      profile.forcedValuePerItem !== undefined
+    ) {
+      this.top = this.bottom = this.left = this.right =
+        profile.forcedValuePerItem;
+    } else {
+      this.top = this.bottom = this.left = this.right = false;
+    }
   }
 }

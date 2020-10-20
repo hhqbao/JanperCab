@@ -1,7 +1,7 @@
 <td *ngIf="!hideEdgeProfile">
   <app-select-menu
     [control]="formGroup.get('duraformEdgeProfileId')"
-    [values]="asset.edgeProfiles"
+    [values]="allowedEdgeProfiles"
     [valueDisplay]="'name'"
     [valueKey]="'id'"
     [isDisabled]="order.hasFixedEdgeProfile"

@@ -30,6 +30,26 @@ export class DuraformOptionPaneFrameDto extends DuraformOptionDto {
   toString(): string {
     const panes = this.columns * this.rows;
 
-    return `${panes} Pane Frame (${this.columns} x ${this.rows})`;
+    return panes === 1
+      ? 'SINGLE FRAME - 1 CUT OUT'
+      : `FRAME ${this.columns} x ${this.rows}`;
+  }
+
+  @Expose()
+  toCabProValue(): string {
+    const value = this.columns * this.rows;
+
+    switch (value) {
+      case 1:
+        return 'SINGLE FRAME';
+      case 4:
+        return 'COLONIAL FOUR PANE';
+      case 6:
+        return 'COLONIAL SIX PANE';
+      case 8:
+        return 'COLONIAL EIGHT PANE';
+      default:
+        return `${this.toString()} - Not Implemented`;
+    }
   }
 }

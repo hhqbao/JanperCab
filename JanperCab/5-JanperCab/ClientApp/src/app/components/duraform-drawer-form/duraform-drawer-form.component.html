@@ -20,6 +20,7 @@
         [valueKey]="'id'"
         [valueDisplay]="'value'"
         [isDisabled]="formGroup.get('height').invalid"
+        (afterSet)="onNumberOfDrawersChanged()"
       ></app-select-menu>
     </td>
     <td>
@@ -44,6 +45,7 @@
     </td>
     <td>
       <input
+        *ngIf="formGroup.get('numberOfDrawers').valid"
         class="form__control"
         currencyMask
         appSelectOnFocus
@@ -61,6 +63,7 @@
     </td>
     <td>
       <input
+        *ngIf="formGroup.get('numberOfDrawers').value >= 2"
         class="form__control"
         currencyMask
         appSelectOnFocus
@@ -78,6 +81,7 @@
     </td>
     <td>
       <input
+        *ngIf="formGroup.get('numberOfDrawers').value >= 3"
         class="form__control"
         currencyMask
         appSelectOnFocus
@@ -95,6 +99,7 @@
     </td>
     <td>
       <input
+        *ngIf="formGroup.get('numberOfDrawers').value >= 4"
         class="form__control"
         currencyMask
         appSelectOnFocus
@@ -112,6 +117,7 @@
     </td>
     <td>
       <input
+        *ngIf="formGroup.get('numberOfDrawers').value >= 5"
         class="form__control"
         currencyMask
         appSelectOnFocus

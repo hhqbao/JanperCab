@@ -1,3 +1,4 @@
+import { DuraformEdgeProfileForList } from './../../_models/duraform-edge-profile/DuraformEdgeProfileForList';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
 import { DuraformArchForList } from './../../_models/duraform-arch/DuraformArchForList';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
@@ -15,7 +16,6 @@ import {
   OnInit,
   Input,
   ElementRef,
-  HostListener,
   Output,
   EventEmitter,
 } from '@angular/core';
@@ -27,6 +27,7 @@ import { DuraformWrapColorForSelection } from 'src/app/_models/duraform-wrap-col
 })
 export class DuraformColorSelectorComponent implements OnInit {
   @Input() design: DuraformDesignForOrderMenu;
+  @Input() selectedEdgeProfile: DuraformEdgeProfileForList = null;
 
   @Output() colorPick = new EventEmitter<DuraformWrapColorForSelection>();
   @Output() routingPick = new EventEmitter<DuraformWrapColorForSelection>();

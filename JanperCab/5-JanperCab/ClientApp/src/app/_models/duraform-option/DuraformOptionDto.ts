@@ -13,4 +13,5 @@ export abstract class DuraformOptionDto {
 
   abstract toFormGroup(): FormGroup;
   abstract toString(): string;
+  abstract toCabProValue(): string;
 }

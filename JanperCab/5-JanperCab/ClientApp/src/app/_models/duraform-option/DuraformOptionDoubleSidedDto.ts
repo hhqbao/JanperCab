@@ -22,4 +22,9 @@ export class DuraformOptionDoubleSidedDto extends DuraformOptionDto {
   toString(): string {
     return `${this.hasProfile ? '' : 'Plain Panel'} Double Sided`;
   }
+
+  @Expose()
+  toCabProValue(): string {
+    return this.toString();
+  }
 }
