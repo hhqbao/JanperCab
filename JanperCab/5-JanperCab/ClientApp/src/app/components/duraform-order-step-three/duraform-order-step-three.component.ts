@@ -33,6 +33,7 @@ export class DuraformOrderStepThreeComponent implements OnInit {
 
   role = Role;
   orderStatus = OrderStatus;
+  orderType = DuraformOrderTypeKey;
   customerType = CustomerType;
 
   showInvoiceForm = false;
@@ -339,5 +340,19 @@ export class DuraformOrderStepThreeComponent implements OnInit {
     const blob = new Blob([file.file], { type: file.fileType });
     const url = window.URL.createObjectURL(blob);
     window.open(url);
+  };
+
+  onExportIcbFile = () => {
+    this.layout.showLoadingPanel();
+    this.job.exportIcb(this.order.duraformId).subscribe(
+      (_) => {
+        this.layout.closeLoadingPanel();
+        this.dialog.success('ICB file has been exported!');
+      },
+      (error) => {
+        this.layout.closeLoadingPanel();
+        this.dialog.error(error);
+      }
+    );
   };
 }

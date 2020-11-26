@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EPPlus" Version="5.4.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\1-Domain\1-Domain.csproj" />
     <ProjectReference Include="..\2-Persistent\2-Persistent.csproj" />
     <ProjectReference Include="..\3-Application\3-Application.csproj" />

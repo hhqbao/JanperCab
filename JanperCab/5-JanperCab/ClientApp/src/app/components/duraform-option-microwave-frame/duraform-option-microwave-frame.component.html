@@ -1,0 +1,101 @@
+<div
+  class="duraform-option-microwave-frame option-form__form-wrapper"
+  [formGroup]="formGroup.get('optionGroup')"
+>
+  <div class="form__group">
+    <label class="form__label">Top Size (mm)</label>
+    <input
+      class="form__control tab-ignore"
+      currencyMask
+      appSelectOnFocus
+      [formControl]="formGroup.get('optionGroup').get('topSize')"
+      [options]="{
+        align: 'left',
+        allowZero: false,
+        precision: '0',
+        decimal: '',
+        prefix: '',
+        thousands: ''
+      }"
+      (blur)="onBlur(formGroup.get('optionGroup').get('topSize'))"
+      (keydown)="
+        onTab({
+          event: $event,
+          control: formGroup.get('optionGroup').get('topSize')
+        })
+      "
+    />
+  </div>
+  <div class="form__group">
+    <label class="form__label">Bottom Size (mm)</label>
+    <input
+      class="form__control tab-ignore"
+      currencyMask
+      appSelectOnFocus
+      [formControl]="formGroup.get('optionGroup').get('bottomSize')"
+      [options]="{
+        align: 'left',
+        allowZero: false,
+        precision: '0',
+        decimal: '',
+        prefix: '',
+        thousands: ''
+      }"
+      (blur)="onBlur(formGroup.get('optionGroup').get('bottomSize'))"
+      (keydown)="
+        onTab({
+          event: $event,
+          control: formGroup.get('optionGroup').get('bottomSize')
+        })
+      "
+    />
+  </div>
+  <div class="form__group">
+    <label class="form__label">Left Size (mm)</label>
+    <input
+      class="form__control tab-ignore"
+      currencyMask
+      appSelectOnFocus
+      [formControl]="formGroup.get('optionGroup').get('leftSize')"
+      [options]="{
+        align: 'left',
+        allowZero: false,
+        precision: '0',
+        decimal: '',
+        prefix: '',
+        thousands: ''
+      }"
+      (blur)="onBlur(formGroup.get('optionGroup').get('leftSize'))"
+      (keydown)="
+        onTab({
+          event: $event,
+          control: formGroup.get('optionGroup').get('leftSize')
+        })
+      "
+    />
+  </div>
+  <div class="form__group">
+    <label class="form__label">Right Size (mm)</label>
+    <input
+      class="form__control tab-ignore"
+      currencyMask
+      appSelectOnFocus
+      [formControl]="formGroup.get('optionGroup').get('rightSize')"
+      [options]="{
+        align: 'left',
+        allowZero: false,
+        precision: '0',
+        decimal: '',
+        prefix: '',
+        thousands: ''
+      }"
+      (blur)="onBlur(formGroup.get('optionGroup').get('rightSize'))"
+      (keydown)="
+        onTab({
+          event: $event,
+          control: formGroup.get('optionGroup').get('rightSize')
+        })
+      "
+    />
+  </div>
+</div>

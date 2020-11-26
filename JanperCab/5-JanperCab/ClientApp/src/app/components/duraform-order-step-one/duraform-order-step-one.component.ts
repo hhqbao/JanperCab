@@ -1,17 +1,12 @@
+import { CabinetMakerDto } from './../../_models/customer/CabinetMakerDto';
+import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { DuraformEdgeProfileForList } from './../../_models/duraform-edge-profile/DuraformEdgeProfileForList';
-import { DuraformEdgeProfileService } from './../../_services/duraform-edge-profile.service';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
-import { DuraformDesignService } from './../../_services/duraform-design.service';
 import { DuraformDesignForOrderMenu } from '../../_models/duraform-design/DuraformDesignForOrderMenu';
 import { DuraformWrapTypeForSelection } from './../../_models/duraform-wrap-type/DuraformWrapTypeForSelection';
 import { StepOneReturnValue } from '../../_models/duraform-order/StepOneReturnValue';
 import { DuraformWrapColorForSelection } from './../../_models/duraform-wrap-color/DuraformWrapColorForSelection';
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { DuraformSerieForList } from 'src/app/_models/duraform-serie/DuraformSerieForList';
-import { LayoutService } from 'src/app/_services/layout.service';
-import { DuraformSerieService } from 'src/app/_services/duraform-serie.service';
-import { DialogService } from 'src/app/_services/dialog.service';
-import { forkJoin } from 'rxjs';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-duraform-order-step-one',

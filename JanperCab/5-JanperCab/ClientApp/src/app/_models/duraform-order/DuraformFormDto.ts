@@ -1,3 +1,4 @@
+import { DuraformMiscDto } from './../duraform-misc/DuraformMiscDto';
 import { DuraformFileDto } from './../application-file/DuraformFileDto';
 import { DuraformDrawerDto } from './../duraform-component/DuraformDrawerDto';
 import { DuraformEndPanelDto } from './../duraform-component/DuraformEndPanelDto';
@@ -70,6 +71,7 @@ export abstract class DuraformFormDto {
     },
   })
   duraformComponents: DuraformComponentDto[] = [];
+  duraformMiscs: DuraformMiscDto[] = [];
   duraformFiles: DuraformFileDto[] = [];
 
   get discriminator(): string {

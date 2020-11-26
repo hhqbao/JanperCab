@@ -1,3 +1,4 @@
+import { HingeHoleStyle } from './../../_enums/HingeHoleStyle';
 import {
   Component,
   OnInit,
@@ -13,7 +14,6 @@ import {
   FormControl,
   AbstractControl,
 } from '@angular/forms';
-import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 
 @Component({
   selector: 'app-hinge-hole-selector',
@@ -28,16 +28,18 @@ export class HingeHoleSelectorComponent implements OnInit {
   @ViewChild('bottomCenterInput') bottomCenterInput: ElementRef;
   @ViewChild('bottomInput') bottomInput: ElementRef;
 
-  sideFormControl: FormControl;
+  styleFormControl: FormControl;
 
   showOption = false;
 
   options = [
-    { text: 'Pair', value: 'Pair' },
-    { text: 'Left', value: 'Left' },
-    { text: 'Right', value: 'Right' },
+    { text: HingeHoleStyle[HingeHoleStyle.Pair], value: HingeHoleStyle.Pair },
+    { text: HingeHoleStyle[HingeHoleStyle.Left], value: HingeHoleStyle.Left },
+    { text: HingeHoleStyle[HingeHoleStyle.Right], value: HingeHoleStyle.Right },
+    { text: HingeHoleStyle[HingeHoleStyle.Draw], value: HingeHoleStyle.Draw },
   ];
   quantities = [
+    { text: '1', value: 1 },
     { text: '2', value: 2 },
     { text: '3', value: 3 },
     { text: '4', value: 4 },
@@ -73,14 +75,14 @@ export class HingeHoleSelectorComponent implements OnInit {
   };
 
   constructor(private fb: FormBuilder, private ef: ElementRef) {
-    this.sideFormControl = this.fb.control(null);
+    this.styleFormControl = this.fb.control(null);
   }
 
   ngOnInit() {
     if (this.formGroup.get('hingeHole')) {
       setTimeout(() => {
-        this.sideFormControl.setValue(
-          this.formGroup.get('hingeHole').value.side
+        this.styleFormControl.setValue(
+          this.formGroup.get('hingeHole').value.hingeHoleStyle
         );
         this.updateMainInput();
       });
@@ -142,10 +144,10 @@ export class HingeHoleSelectorComponent implements OnInit {
   };
 
   onSelectOption = () => {
-    if (!this.sideFormControl.value) {
+    if (!this.styleFormControl.value) {
       this.formGroup.removeControl('hingeHole');
     } else {
-      this.initialForm(this.sideFormControl.value);
+      this.initialForm(this.styleFormControl.value);
     }
 
     this.updateMainInput();
@@ -155,46 +157,49 @@ export class HingeHoleSelectorComponent implements OnInit {
   onSelectQuantity = () => {
     const quantity = this.quantity.value;
 
-    switch (quantity) {
-      case 2:
-        this.topCenter.patchValue(null);
-        this.bottomCenter.patchValue(null);
+    this.topCenter.patchValue(null);
+    this.bottomCenter.patchValue(null);
+    this.bottom.patchValue(null);
 
-        this.topCenter.clearValidators();
-        this.bottomCenter.clearValidators();
-        break;
-      case 3:
-        this.topCenter.patchValue(96);
-        this.topCenter.setValidators([Validators.required, Validators.min(50)]);
+    this.topCenter.clearValidators();
+    this.bottomCenter.clearValidators();
+    this.bottom.clearValidators();
 
-        this.bottomCenter.patchValue(null);
-        this.bottomCenter.clearValidators();
-        break;
-      case 4:
-        this.topCenter.patchValue(96);
-        this.bottomCenter.patchValue(96);
-
-        this.topCenter.setValidators([Validators.required, Validators.min(50)]);
-        this.bottomCenter.setValidators([
-          Validators.required,
-          Validators.min(50),
-        ]);
-        break;
+    if (quantity >= 2) {
+      this.bottom.patchValue(96);
+      this.bottom.setValidators([Validators.required, Validators.min(50)]);
     }
+
+    if (quantity >= 3) {
+      this.topCenter.patchValue(96);
+      this.topCenter.setValidators([Validators.required, Validators.min(50)]);
+    }
+
+    if (quantity >= 4) {
+      this.bottomCenter.patchValue(96);
+      this.bottomCenter.setValidators([
+        Validators.required,
+        Validators.min(50),
+      ]);
+    }
+
+    this.topCenter.updateValueAndValidity();
+    this.bottomCenter.updateValueAndValidity();
+    this.bottom.updateValueAndValidity();
 
     this.updateMainInput();
     (this.topInput.nativeElement as HTMLElement).focus();
   };
 
-  private initialForm = (side: string) => {
+  private initialForm = (hingeHoleStyle: HingeHoleStyle) => {
     if (!this.formGroup.get('hingeHole')) {
       this.formGroup.addControl(
         'hingeHole',
         this.fb.group({
-          side: [side, Validators.required],
+          hingeHoleStyle: [hingeHoleStyle, Validators.required],
           quantity: [
             2,
-            [Validators.required, Validators.min(2), Validators.max(4)],
+            [Validators.required, Validators.min(1), Validators.max(4)],
           ],
           top: [96, [Validators.required, Validators.min(50)]],
           topCenter: [null, []],
@@ -204,7 +209,7 @@ export class HingeHoleSelectorComponent implements OnInit {
       );
     } else {
       this.formGroup.get('hingeHole').patchValue({
-        side,
+        hingeHoleStyle,
       });
     }
   };
@@ -212,17 +217,22 @@ export class HingeHoleSelectorComponent implements OnInit {
   private updateMainInput = () => {
     if (this.formGroup.get('hingeHole')) {
       const formValue = this.formGroup.get('hingeHole').value;
+
+      const style = HingeHoleStyle[formValue.hingeHoleStyle];
       let valueString = '';
 
       switch (formValue.quantity) {
+        case 1:
+          valueString = `${style} ${formValue.top}`;
+          break;
         case 2:
-          valueString = `${formValue.side} ${formValue.top}/${formValue.bottom}`;
+          valueString = `${style} ${formValue.top}/${formValue.bottom}`;
           break;
         case 3:
-          valueString = `${formValue.side} ${formValue.top}/${formValue.topCenter}/${formValue.bottom}`;
+          valueString = `${style} ${formValue.top}/${formValue.topCenter}/${formValue.bottom}`;
           break;
         case 4:
-          valueString = `${formValue.side} ${formValue.top}/${formValue.topCenter}/${formValue.bottomCenter}/${formValue.bottom}`;
+          valueString = `${style} ${formValue.top}/${formValue.topCenter}/${formValue.bottomCenter}/${formValue.bottom}`;
           break;
         default:
           valueString = 'Unsupported Hinge Hole Quantity';

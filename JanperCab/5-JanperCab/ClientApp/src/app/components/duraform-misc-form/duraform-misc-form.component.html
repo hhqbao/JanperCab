@@ -1,0 +1,58 @@
+<tbody
+  class="form__order-form-group"
+  appOrderForm
+  [formGroup]="formGroup"
+  (submit)="onSubmit()"
+>
+  <tr>
+    <td style="color: #ec092b">
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </td>
+    <td>
+      <input
+        class="form__control"
+        currencyMask
+        appSelectOnFocus
+        [formControl]="quantity"
+        (blur)="quantity.invalid && quantity.setValue(1)"
+        [options]="{
+          align: 'center',
+          allowZero: false,
+          precision: '0',
+          decimal: '',
+          prefix: '',
+          thousands: '',
+          max: 100
+        }"
+      />
+    </td>
+    <td>
+      <app-select-menu
+        [control]="formGroup.get('miscItemId')"
+        [values]="asset.miscItems"
+        [valueKey]="'id'"
+        [valueDisplay]="'name'"
+      ></app-select-menu>
+    </td>
+    <td>
+      <input
+        type="text"
+        class="form__control"
+        style="text-align: left; width: 99%"
+        appSelectOnFocus
+        formControlName="note"
+      />
+    </td>
+    <td style="width: 5rem">
+      <button
+        [disabled]="formGroup.invalid"
+        type="button"
+        class="btn btn--primary"
+        style="padding: 0.5rem 1rem"
+        (click)="onSubmit()"
+      >
+        <i class="fa fa-save"></i>
+      </button>
+    </td>
+  </tr>
+</tbody>

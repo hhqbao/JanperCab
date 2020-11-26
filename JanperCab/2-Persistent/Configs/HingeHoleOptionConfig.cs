@@ -15,10 +15,6 @@ namespace _2_Persistent.Configs
             builder.Property(x => x.Id)
                 .ValueGeneratedNever();
 
-            builder.Property(x => x.Side)
-                .IsRequired()
-                .HasColumnType("varchar(255)");
-
             builder.Property(x => x.Top)
                 .HasColumnType("decimal(18,2)");
 

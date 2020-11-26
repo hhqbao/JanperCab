@@ -50,7 +50,7 @@
         type="button"
         class="btn btn--primary"
         *ngIf="
-          !order.duraformId &&
+          order.orderType === orderType.Draft &&
           auth.customer.customerType === customerType.Distributor
         "
         (click)="showCustomerSelector = true"
@@ -307,6 +307,11 @@
             [duraformDrawers]="order.duraformDrawers"
           ></app-duraform-drawer-component-list>
         </div>
+        <div class="component-list" *ngIf="order.duraformMiscs.length > 0">
+          <app-duraform-misc-component-list
+            [duraformMiscs]="order.duraformMiscs"
+          ></app-duraform-misc-component-list>
+        </div>
       </app-box>
     </div>
   </div>
@@ -408,6 +413,14 @@
         >
           <i class="fa fa-database text-green" aria-hidden="true"></i>
           <span>Export For CabPro</span>
+        </button>
+        <button
+          class="action-btn"
+          *ngIf="order.isOrder"
+          (click)="onExportIcbFile()"
+        >
+          <i class="fa fa-cogs" aria-hidden="true"></i>
+          <span>Export For ICB</span>
         </button>
       </div>
       <div class="option-box__action-center" *ngIf="order.isEditable">

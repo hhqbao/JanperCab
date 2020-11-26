@@ -34,8 +34,7 @@ export class DuraformDoorCartItemComponent implements OnInit {
   constructor(
     public asset: DuraformAssetService,
     public order: DuraformOrderService,
-    private ef: ElementRef,
-    private dialog: DialogService
+    private ef: ElementRef
   ) {}
 
   @HostListener('document:click', ['$event.target'])
@@ -46,7 +45,11 @@ export class DuraformDoorCartItemComponent implements OnInit {
       return;
     }
 
-    this.doorForm.onSubmit();
+    if (!this.doorForm.invalid) {
+      this.doorForm.onSubmit();
+    } else {
+      this.isSelected = false;
+    }
   };
 
   ngOnInit() {
@@ -57,13 +60,10 @@ export class DuraformDoorCartItemComponent implements OnInit {
 
   onEdit = (formGroup: FormGroup) => {
     if (formGroup.invalid) {
-      this.isSelected = false;
       return;
     }
 
-    const formValue = formGroup.value;
-    this.door.updateWithOption(formValue, this.asset.duraformOptionTypes);
-
+    this.door.updateWithOption(formGroup.value, this.asset.duraformOptionTypes);
     this.isSelected = false;
   };
 
@@ -72,8 +72,6 @@ export class DuraformDoorCartItemComponent implements OnInit {
   };
 
   onRemove = () => {
-    this.dialog.confirm('Remove Door', 'Are you sure?', () => {
-      this.removeDoor.emit(this.door);
-    });
+    this.removeDoor.emit(this.door);
   };
 }

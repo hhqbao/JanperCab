@@ -73,11 +73,13 @@ namespace _3_Application.Dtos.DuraformForm
 
 
         public ICollection<DuraformComponentDto> DuraformComponents { get; set; }
+        public ICollection<DuraformMiscDto> DuraformMiscs { get; set; }
         public ICollection<DuraformFileDto> DuraformFiles { get; set; }
 
         protected DuraformFormDto()
         {
             DuraformComponents = new Collection<DuraformComponentDto>();
+            DuraformMiscs = new Collection<DuraformMiscDto>();
             DuraformFiles = new Collection<DuraformFileDto>();
         }
     }

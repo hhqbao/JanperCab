@@ -35,6 +35,8 @@ namespace _4_Infrastructure.Repositories
 
         public IApplicationFileRepo ApplicationFiles { get; }
 
+        public IMiscItemRepo MiscItems { get; }
+
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {
@@ -53,6 +55,7 @@ namespace _4_Infrastructure.Repositories
             HingeHoleTypes = new HingeHoleTypeRepo(_dbContext);
             DuraformOrders = new DuraformOrderRepo(_dbContext);
             ApplicationFiles = new ApplicationFileRepo(_dbContext);
+            MiscItems = new MiscItemRepo(_dbContext);
         }
 
         public async Task ExecuteCommandAsync(string command)

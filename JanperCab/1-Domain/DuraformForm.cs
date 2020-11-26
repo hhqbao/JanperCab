@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -98,6 +99,8 @@ namespace _1_Domain
 
         public virtual ICollection<DuraformComponent> DuraformComponents { get; set; }
 
+        public virtual ICollection<DuraformMisc> DuraformMiscs { get; set; }
+
         public virtual ICollection<DuraformFile> DuraformFiles { get; set; }
 
 
@@ -107,6 +110,7 @@ namespace _1_Domain
             Id = Guid.NewGuid();
             CreatedDate = DateTime.Now;
             DuraformComponents = new Collection<DuraformComponent>();
+            DuraformMiscs = new Collection<DuraformMisc>();
             DuraformFiles = new Collection<DuraformFile>();
         }
     }

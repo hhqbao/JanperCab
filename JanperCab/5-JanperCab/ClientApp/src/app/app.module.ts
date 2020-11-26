@@ -1,3 +1,8 @@
+import { DuraformMiscComponentListComponent } from './components/duraform-misc-component-list/duraform-misc-component-list.component';
+import { MiscItemService } from './_services/misc-item.service';
+import { DuraformMiscCartItemComponent } from './components/duraform-misc-cart-item/duraform-misc-cart-item.component';
+import { DuraformMiscTabComponent } from './components/duraform-misc-tab/duraform-misc-tab.component';
+import { DuraformMiscFormComponent } from './components/duraform-misc-form/duraform-misc-form.component';
 import { EdgeProfileMenuComponent } from './components/edge-profile-menu/edge-profile-menu.component';
 import { CabinetMakerListComponent } from './components/cabinet-maker-list/cabinet-maker-list.component';
 import { FileSizePipe } from './_pipes/fileSize.pipe';
@@ -78,7 +83,6 @@ import { DuraformSerieService } from './_services/duraform-serie.service';
 import { DuraformFilterBoxComponent } from './components/duraform-filter-box/duraform-filter-box.component';
 import { DuraformDesignListComponent } from './components/duraform-design-list/duraform-design-list.component';
 import { DuraformDesignComponent } from './components/duraform-design/duraform-design.component';
-import { DuraformProcessComponent } from './components/duraform-process/duraform-process.component';
 import { LayoutService } from './_services/layout.service';
 import { FormInvalidFocusDirective } from './_directives/form-invalid-focus.directive';
 import { HomePageComponent } from './pages/home-page/home-page.component';
@@ -111,6 +115,7 @@ import { DuraformOptionDoubleSidedFormComponent } from './components/duraform-op
 import { EndPanelComponentListComponent } from './components/end-panel-component-list/end-panel-component-list.component';
 import { DuraformDrawerComponentListComponent } from './components/duraform-drawer-component-list/duraform-drawer-component-list.component';
 import { DuraformOptionRollerShutterComponent } from './components/duraform-option-roller-shutter/duraform-option-roller-shutter.component';
+import { DuraformOptionMicrowaveFrameComponent } from './components/duraform-option-microwave-frame/duraform-option-microwave-frame.component';
 
 @NgModule({
   declarations: [
@@ -137,7 +142,9 @@ import { DuraformOptionRollerShutterComponent } from './components/duraform-opti
     InvoiceDetailFormComponent,
     DeliveryDetailFormComponent,
     LoginFormComponent,
-    DuraformProcessComponent,
+    DuraformMiscFormComponent,
+    DuraformMiscTabComponent,
+    DuraformMiscCartItemComponent,
     DuraformOrderStepOneComponent,
     DuraformOrderStepTwoComponent,
     DuraformOrderStepThreeComponent,
@@ -171,6 +178,7 @@ import { DuraformOptionRollerShutterComponent } from './components/duraform-opti
     DuraformOptionFoldBackFormComponent,
     DuraformOptionPaneFrameFormComponent,
     DuraformOptionRollerShutterComponent,
+    DuraformOptionMicrowaveFrameComponent,
     DuraformDoorComponentListComponent,
     DuraformPantryDoorComponentListComponent,
     EndPanelComponentListComponent,
@@ -191,6 +199,7 @@ import { DuraformOptionRollerShutterComponent } from './components/duraform-opti
     DeliveryDocketDuraformDrawersComponent,
     CabinetMakerListComponent,
     EdgeProfileMenuComponent,
+    DuraformMiscComponentListComponent,
   ],
   imports: [
     BrowserModule,
@@ -232,6 +241,7 @@ import { DuraformOptionRollerShutterComponent } from './components/duraform-opti
     DuraformDrawerTypeService,
     DuraformOptionTypeService,
     HingeHoleTypeService,
+    MiscItemService,
     ErrorInterceptorProvider,
   ],
   bootstrap: [AppComponent],

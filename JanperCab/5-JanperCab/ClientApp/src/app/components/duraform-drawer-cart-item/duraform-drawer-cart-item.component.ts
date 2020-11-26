@@ -44,7 +44,11 @@ export class DuraformDrawerCartItemComponent implements OnInit {
       return;
     }
 
-    this.duraformDrawerForm.onSubmit();
+    if (!this.duraformDrawerForm.invalid) {
+      this.duraformDrawerForm.onSubmit();
+    } else {
+      this.isSelected = false;
+    }
   };
 
   ngOnInit() {

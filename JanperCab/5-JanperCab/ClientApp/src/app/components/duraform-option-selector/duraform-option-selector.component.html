@@ -71,6 +71,12 @@
         (valueChange)="onUpdateDisplayValue()"
       >
       </app-duraform-option-roller-shutter>
+      <app-duraform-option-microwave-frame
+        appRemoveTag
+        *ngIf="selectedType.id === typeKeyEnum.MicrowaveFrame"
+        [formGroup]="formGroup"
+        (valueChange)="onUpdateDisplayValue()"
+      ></app-duraform-option-microwave-frame>
     </div>
   </div>
 </div>

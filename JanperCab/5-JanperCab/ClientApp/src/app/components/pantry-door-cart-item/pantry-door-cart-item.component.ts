@@ -43,7 +43,11 @@ export class PantryDoorCartItemComponent implements OnInit {
       return;
     }
 
-    this.pantryDoorForm.onSubmit();
+    if (!this.pantryDoorForm.invalid) {
+      this.pantryDoorForm.onSubmit();
+    } else {
+      this.isSelected = false;
+    }
   };
 
   ngOnInit() {

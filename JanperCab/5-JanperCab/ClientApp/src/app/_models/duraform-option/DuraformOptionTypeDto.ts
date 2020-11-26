@@ -6,6 +6,7 @@ import { DuraformOptionFoldBackDto } from './DuraformOptionFoldBackDto';
 import { DuraformOptionNoFaceDto } from './DuraformOptionNoFaceDto';
 import { DuraformOptionTypeKey } from '../../_enums/DuraformOptionTypeKey';
 import { DuraformOptionDoubleSidedDto } from './DuraformOptionDoubleSidedDto';
+import { DuraformOptionMicrowaveFrameDto } from './DuraformOptionMicrowaveFrameDto';
 
 export class DuraformOptionTypeDto {
   id: DuraformOptionTypeKey;
@@ -51,7 +52,13 @@ export class DuraformOptionTypeDto {
         option.rightSize = optionValues.rightSize;
         break;
       case DuraformOptionTypeKey.MicrowaveFrame:
-        throw new Error('Unsupported Option Type');
+        option = new DuraformOptionMicrowaveFrameDto();
+        option.$type = optionType.type;
+        option.topSize = optionValues.topSize;
+        option.bottomSize = optionValues.bottomSize;
+        option.leftSize = optionValues.leftSize;
+        option.rightSize = optionValues.rightSize;
+        break;
       default:
         throw new Error('Unsupported Option Type');
     }

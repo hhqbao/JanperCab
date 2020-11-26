@@ -18,7 +18,7 @@ export abstract class DuraformComponentWithOptionAndHingeHoleDto extends Durafor
 
       this.hingeHoleOption = new HingeHoleOptionDto();
       this.hingeHoleOption.id = id;
-      this.hingeHoleOption.side = formValue.hingeHole.side;
+      this.hingeHoleOption.hingeHoleStyle = formValue.hingeHole.hingeHoleStyle;
       this.hingeHoleOption.quantity = formValue.hingeHole.quantity;
       this.hingeHoleOption.top = formValue.hingeHole.top;
       this.hingeHoleOption.topCenter = formValue.hingeHole.topCenter;

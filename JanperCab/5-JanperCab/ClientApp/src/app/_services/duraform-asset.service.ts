@@ -1,3 +1,4 @@
+import { MiscItemDto } from './../_models/duraform-misc/MiscItemDto';
 import { DuraformDrawerDto } from './../_models/duraform-component/DuraformDrawerDto';
 import { DuraformEndPanelDto } from './../_models/duraform-component/DuraformEndPanelDto';
 import { DuraformPantryDoorDto } from './../_models/duraform-component/DuraformPantryDoorDto';
@@ -21,6 +22,7 @@ import { DuraformComponentDto } from '../_models/duraform-component/DuraformComp
 export class DuraformAssetService {
   componentTypes: DuraformComponentTypeDto[] = [];
   arches: DuraformArchForList[] = [];
+  miscItems: MiscItemDto[] = [];
   duraformDrawerTypes: DuraformDrawerTypeForList[] = [];
   duraformOptionTypes: DuraformOptionTypeDto[] = [];
   duraformDesigns: DuraformDesignForOrderMenu[] = [];
@@ -71,6 +73,10 @@ export class DuraformAssetService {
 
   getHingeType = (id: number) => {
     return this.hingeHoleTypes.find((x) => x.id === id);
+  };
+
+  getMiscItem = (id: number) => {
+    return this.miscItems.find((x) => x.id === id);
   };
 
   generateDuraformDoor = (): DuraformDoorDto => {

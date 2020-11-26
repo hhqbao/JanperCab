@@ -58,6 +58,10 @@
     <Compile Remove="Migrations\20200921022727_EditTable_DuraformForms_RemoveIdentityInsert.Designer.cs" />
     <Compile Remove="Migrations\20201006014843_EditTable_HingeHoleOption_AddColumns_Quantity_TopCenter_BottomCenter.cs" />
     <Compile Remove="Migrations\20201006014843_EditTable_HingeHoleOption_AddColumns_Quantity_TopCenter_BottomCenter.Designer.cs" />
+    <Compile Remove="Migrations\20201106020010_CreateTable_DuraformOptionMicrowaveFrame.cs" />
+    <Compile Remove="Migrations\20201106020010_CreateTable_DuraformOptionMicrowaveFrame.Designer.cs" />
+    <Compile Remove="Migrations\20201124221447_CreateTable_DuraformMiscs.cs" />
+    <Compile Remove="Migrations\20201124221447_CreateTable_DuraformMiscs.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

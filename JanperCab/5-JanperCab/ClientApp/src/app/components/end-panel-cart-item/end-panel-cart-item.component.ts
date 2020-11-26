@@ -43,7 +43,11 @@ export class EndPanelCartItemComponent implements OnInit {
       return;
     }
 
-    this.endPanelForm.onSubmit();
+    if (!this.endPanelForm.invalid) {
+      this.endPanelForm.onSubmit();
+    } else {
+      this.isSelected = false;
+    }
   };
 
   ngOnInit() {

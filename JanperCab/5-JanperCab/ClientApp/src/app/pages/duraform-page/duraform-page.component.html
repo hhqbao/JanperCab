@@ -1,9 +1,4 @@
 <div class="duraform-page" *ngIf="!isLoadingAsset">
-  <app-duraform-process
-    appRemoveTag
-    [currentDisplayStep]="displayedStep"
-    (processClick)="onProcessClick($event)"
-  ></app-duraform-process>
   <app-duraform-order-step-one
     *ngIf="displayedStep === duraformProcessStep.StepOne"
     (finish)="onStepOneFinish($event)"

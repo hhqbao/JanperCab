@@ -31,6 +31,8 @@ namespace _3_Application.Interfaces.Repositories
 
         IApplicationFileRepo ApplicationFiles { get; }
 
+        IMiscItemRepo MiscItems { get; }
+
         Task ExecuteCommandAsync(string command);
 
         Task<int> CompleteAsync();

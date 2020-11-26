@@ -83,13 +83,15 @@ namespace _5_JanperCab.Helpers
                 .Include<DuraformOptionDoubleSided, DuraformOptionDoubleSidedDto>()
                 .Include<DuraformOptionFoldBack, DuraformOptionFoldBackDto>()
                 .Include<DuraformOptionPaneFrame, DuraformOptionPaneFrameDto>()
-                .Include<DuraformOptionRollerShutterFrame, DuraformOptionRollerShutterFrameDto>();
+                .Include<DuraformOptionRollerShutterFrame, DuraformOptionRollerShutterFrameDto>()
+                .Include<DuraformOptionMicrowaveFrame, DuraformOptionMicrowaveFrameDto>();
             CreateMap<DuraformOptionDto, DuraformOption>()
                 .Include<DuraformOptionNoFaceDto, DuraformOptionNoFace>()
                 .Include<DuraformOptionDoubleSidedDto, DuraformOptionDoubleSided>()
                 .Include<DuraformOptionFoldBackDto, DuraformOptionFoldBack>()
                 .Include<DuraformOptionPaneFrameDto, DuraformOptionPaneFrame>()
-                .Include<DuraformOptionRollerShutterFrameDto, DuraformOptionRollerShutterFrame>();
+                .Include<DuraformOptionRollerShutterFrameDto, DuraformOptionRollerShutterFrame>()
+                .Include<DuraformOptionMicrowaveFrameDto, DuraformOptionMicrowaveFrame>();
 
             CreateMap<DuraformOptionNoFace, DuraformOptionNoFaceDto>();
             CreateMap<DuraformOptionNoFaceDto, DuraformOptionNoFace>();
@@ -105,6 +107,9 @@ namespace _5_JanperCab.Helpers
 
             CreateMap<DuraformOptionRollerShutterFrame, DuraformOptionRollerShutterFrameDto>();
             CreateMap<DuraformOptionRollerShutterFrameDto, DuraformOptionRollerShutterFrame>();
+
+            CreateMap<DuraformOptionMicrowaveFrame, DuraformOptionMicrowaveFrameDto>();
+            CreateMap<DuraformOptionMicrowaveFrameDto, DuraformOptionMicrowaveFrame>();
 
             CreateMap<HingeHoleType, HingeHoleTypeDto>();
             CreateMap<HingeHoleTypeDto, HingeHoleType>();
@@ -194,6 +199,12 @@ namespace _5_JanperCab.Helpers
 
             CreateMap<DuraformFile, DuraformFileDto>();
             CreateMap<DuraformFileDto, DuraformFile>();
+
+            CreateMap<DuraformMisc, DuraformMiscDto>();
+            CreateMap<DuraformMiscDto, DuraformMisc>();
+
+            CreateMap<MiscItem, MiscItemDto>();
+            CreateMap<MiscItemDto, MiscItem>();
         }
     }
 }

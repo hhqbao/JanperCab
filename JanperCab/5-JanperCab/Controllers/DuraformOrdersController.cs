@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,13 +25,15 @@ namespace _5_JanperCab.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IConfiguration _config;
 
-        public DuraformOrdersController(IUnitOfWork unitOfWork, IMapper mapper, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostEnvironment)
+        public DuraformOrdersController(IUnitOfWork unitOfWork, IMapper mapper, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostEnvironment, IConfiguration config)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userManager = userManager;
             _hostEnvironment = hostEnvironment;
+            _config = config;
         }
 
         [HttpGet("{id}")]
@@ -134,10 +137,26 @@ namespace _5_JanperCab.Controllers
             if (order == null)
                 return BadRequest("Order Not Found!");
 
-            order.OrderStatus = OrderStatus.DistributorApproved;
+            await _unitOfWork.DuraformOrders.ApproveOrderAsync(order);
             await _unitOfWork.CompleteAsync();
 
             return Ok(order.OrderStatus);
+        }
+
+        [Authorize(Roles = "Manufacturer")]
+        [HttpPost("DistributorOrders/ExportIcb/{id}")]
+        public async Task<IActionResult> ExportIcb(Guid id)
+        {
+            var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
+
+            var order = await _unitOfWork.DuraformOrders.GetOrderAsync(id, currentUser.Customer);
+
+            if (order == null)
+                return BadRequest("Order Not Found!");
+
+            await _unitOfWork.DuraformOrders.ExportToICBAsync(order, _config.GetSection("AppSettings:IcbFileLocation").Value);
+
+            return Ok();
         }
 
         [HttpPut("DraftToOrder/{draftId}")]

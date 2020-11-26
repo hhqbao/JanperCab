@@ -26,7 +26,7 @@ namespace _3_Application.Dtos.DuraformOptionType
                     case _1_Domain.DuraformOptionType.DuraformOptionTypeKey.RollerShutter:
                         return typeof(DuraformOptionRollerShutterFrameDto).AssemblyQualifiedName;
                     case _1_Domain.DuraformOptionType.DuraformOptionTypeKey.MicrowaveFrame:
-                        throw new NotImplementedException("MicrowaveFrame Not Implemented");
+                        return typeof(DuraformOptionMicrowaveFrameDto).AssemblyQualifiedName;
                     default:
                         throw new NotImplementedException("Duraform Option Type Not Recognized");
                 }

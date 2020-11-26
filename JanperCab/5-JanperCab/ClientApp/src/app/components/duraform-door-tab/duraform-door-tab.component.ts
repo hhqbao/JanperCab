@@ -1,8 +1,9 @@
+import { DuraformDoorCartItemComponent } from './../duraform-door-cart-item/duraform-door-cart-item.component';
 import { DuraformDoorDto } from './../../_models/duraform-component/DuraformDoorDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, AbstractControl } from '@angular/forms';
 import { DialogService } from 'src/app/_services/dialog.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 
 @Component({
@@ -33,6 +34,8 @@ export class DuraformDoorTabComponent implements OnInit {
   };
 
   onRemoveDoor = (door: DuraformDoorDto) => {
-    this.order.removeComponent(door);
+    this.dialog.confirm('Remove Door', 'Are you sure?', () => {
+      this.order.removeComponent(door);
+    });
   };
 }

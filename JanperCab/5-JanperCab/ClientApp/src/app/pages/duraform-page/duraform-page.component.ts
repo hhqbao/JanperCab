@@ -1,3 +1,4 @@
+import { MiscItemService } from './../../_services/misc-item.service';
 import { DuraformDraftService } from './../../_services/duraform-draft.service';
 import { DuraformJobService } from './../../_services/duraform-job.service';
 import { DuraformComponentService } from './../../_services/duraform-component.service';
@@ -50,7 +51,8 @@ export class DuraformPageComponent implements OnInit {
     private drawerTypeService: DuraformDrawerTypeService,
     private optionTypeService: DuraformOptionTypeService,
     private hingeHoleTypeService: HingeHoleTypeService,
-    private componentService: DuraformComponentService
+    private componentService: DuraformComponentService,
+    private miscItemService: MiscItemService
   ) {}
 
   ngOnInit() {
@@ -71,6 +73,7 @@ export class DuraformPageComponent implements OnInit {
       hingeTypes: this.loadHingeHoleTypes(),
       wrapColors: this.loadWrapColors(),
       componentTypes: this.loadComponentTypes(),
+      miscItems: this.loadMiscItems(),
     });
 
     observables.subscribe(
@@ -86,6 +89,7 @@ export class DuraformPageComponent implements OnInit {
         this.asset.duraformOptionTypes = responses.optTypes;
         this.asset.hingeHoleTypes = responses.hingeTypes;
         this.asset.componentTypes = responses.componentTypes;
+        this.asset.miscItems = responses.miscItems;
 
         this.loadDuraformForm();
       },
@@ -186,6 +190,10 @@ export class DuraformPageComponent implements OnInit {
 
   private loadComponentTypes = () => {
     return this.componentService.getComponentTypes();
+  };
+
+  private loadMiscItems = () => {
+    return this.miscItemService.getAllActive();
   };
 
   onProcessClick = (step: DuraformProcessStep) => {
