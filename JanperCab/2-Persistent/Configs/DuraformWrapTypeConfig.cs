@@ -18,6 +18,9 @@ namespace _2_Persistent.Configs
             builder.Property(x => x.Name)
                 .IsRequired()
                 .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.ICB_EDGETHICK)
+                .HasColumnType("decimal(18,2)");
         }
     }
 }

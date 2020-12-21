@@ -1,4 +1,6 @@
-﻿using System;
+﻿using _1_Domain.Enum;
+using System;
+using System.Collections.Generic;
 
 namespace _1_Domain
 {
@@ -28,6 +30,9 @@ namespace _1_Domain
 
         public Guid DuraformFormId { get; set; }
 
+        public abstract ICB_TYPE_ENUM ICBTYPE { get; }
+
+        public abstract List<ICBLineStructure> ExportIcbLinesStructure();
 
         public virtual DuraformEdgeProfile DuraformEdgeProfile { get; set; }
 

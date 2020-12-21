@@ -1,10 +1,14 @@
-﻿namespace _1_Domain
+﻿using _1_Domain.Enum;
+
+namespace _1_Domain
 {
     public abstract class DuraformOption
     {
         public int Id { get; set; }
 
-        public DuraformOptionType.DuraformOptionTypeKey DuraformOptionTypeId { get; set; }
+        public DuraformOptionTypeKey DuraformOptionTypeId { get; set; }
+
+        public abstract void UpdateIcbLineStructure(DuraformComponent component, ICBLineStructure line);
 
 
 

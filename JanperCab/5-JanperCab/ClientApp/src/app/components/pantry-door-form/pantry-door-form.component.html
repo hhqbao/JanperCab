@@ -13,7 +13,6 @@
         currencyMask
         appSelectOnFocus
         formControlName="chairRailHeight"
-        (blur)="chairRailHeight.invalid && chairRailHeight.setValue(56)"
         [options]="{
           align: 'center',
           allowZero: false,
@@ -58,7 +57,12 @@
     <td>
       <app-duraform-option-selector
         appRemoveTag
-        [hideOptionTypeKeys]="[optionTypeKeyEnum.PaneFrame]"
+        [hideOptionTypeKeys]="[
+          optionTypeKeyEnum.NoFaceRoute,
+          optionTypeKeyEnum.PaneFrame,
+          optionTypeKeyEnum.MicrowaveFrame,
+          optionTypeKeyEnum.RollerShutter
+        ]"
         [formGroup]="formGroup"
       ></app-duraform-option-selector>
     </td>

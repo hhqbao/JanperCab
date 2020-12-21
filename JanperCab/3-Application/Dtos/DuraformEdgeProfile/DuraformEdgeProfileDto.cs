@@ -9,5 +9,7 @@
         public string ImageUrl { get; set; }
 
         public bool? ForcedValuePerItem { get; set; }
+
+        public string ICB_EDGE_TOOLING { get; set; }
     }
 }

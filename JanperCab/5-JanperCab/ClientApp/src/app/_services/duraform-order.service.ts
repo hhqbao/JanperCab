@@ -28,6 +28,8 @@ import { DuraformComponentWithOptionAndHingeHoleDto } from '../_models/duraform-
 import { DuraformComponentDto } from '../_models/duraform-component/DuraformComponentDto';
 import { DuraformOrderTypeKey } from '../_enums/DuraformOrderTypeKey';
 import { CustomerType } from '../_enums/CustomerType';
+import { DuraformComponentWithOptionDto } from '../_models/duraform-component/DuraformComponentWithOptionDto';
+import { DuraformOptionTypeKey } from '../_enums/DuraformOptionTypeKey';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformOrderService {
@@ -70,7 +72,7 @@ export class DuraformOrderService {
   }
 
   get orderStatus(): OrderStatus {
-    if (this.duraformForm.orderType === DuraformOrderTypeKey.Order) {
+    if (this.isOrder) {
       return (this.duraformForm as DuraformOrderDto).orderStatus;
     } else {
       return null;
@@ -79,6 +81,14 @@ export class DuraformOrderService {
 
   set orderStatus(status: OrderStatus) {
     (this.duraformForm as DuraformOrderDto).orderStatus = status;
+  }
+
+  get orderNumber(): number {
+    if (this.isOrder) {
+      return (this.duraformForm as DuraformOrderDto).orderNumber;
+    } else {
+      return null;
+    }
   }
 
   get orderType(): DuraformOrderTypeKey {
@@ -361,6 +371,22 @@ export class DuraformOrderService {
       : this.duraformForm.duraformArchId;
 
     this.selectEdgeProfile(this.asset.getEdgeProfile(model.edgeProfile.id));
+
+    if (
+      this.duraformForm.duraformComponents.length > 0 &&
+      this.duraformForm.isRoutingOnly
+    ) {
+      const doubleSidedComponents = this.duraformForm.duraformComponents.filter(
+        (x) =>
+          x instanceof DuraformComponentWithOptionDto &&
+          x.duraformOption?.duraformOptionTypeId ===
+            DuraformOptionTypeKey.DoubleSided
+      );
+
+      doubleSidedComponents.forEach(
+        (x) => ((x as DuraformComponentWithOptionDto).duraformOption = null)
+      );
+    }
   };
 
   selectEdgeProfile = (model: DuraformEdgeProfileForList) => {

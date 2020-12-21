@@ -1,4 +1,4 @@
-﻿using _1_Domain;
+﻿using _1_Domain.Enum;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace _2_Persistent.Migrations
@@ -13,7 +13,7 @@ namespace _2_Persistent.Migrations
                 type: "decimal(18,2)",
                 nullable: true);
 
-            migrationBuilder.Sql($"Insert DuraformOptionTypes(Id, Name) Values(${(int)DuraformOptionType.DuraformOptionTypeKey.MicrowaveFrame}, 'Microwave Frame')");
+            migrationBuilder.Sql($"Insert DuraformOptionTypes(Id, Name) Values(${(int)DuraformOptionTypeKey.MicrowaveFrame}, 'Microwave Frame')");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

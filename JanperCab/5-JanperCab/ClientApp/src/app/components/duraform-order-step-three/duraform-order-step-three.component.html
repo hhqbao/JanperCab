@@ -332,7 +332,12 @@
         </div>
       </app-simple-box>
     </div>
-    <app-simple-box [heading]="'Customer Order Number'">
+    <div style="margin-bottom: 1rem" *ngIf="order.isOrder">
+      <app-simple-box [heading]="'Order Number'">
+        <div class="option-box__status text-alert">{{ order.orderNumber }}</div>
+      </app-simple-box>
+    </div>
+    <app-simple-box [heading]="'Customer Referrence'">
       <input
         type="text"
         class="form__control text-center"

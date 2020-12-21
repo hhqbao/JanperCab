@@ -1,7 +1,25 @@
-﻿namespace _1_Domain
+﻿using _1_Domain.Enum;
+using System;
+
+namespace _1_Domain
 {
     public class DuraformOptionDoubleSided : DuraformOption
     {
         public bool HasProfile { get; set; }
+
+        public override void UpdateIcbLineStructure(DuraformComponent component, ICBLineStructure line)
+        {
+            switch (line.TYPE)
+            {
+                case ICB_TYPE_ENUM.DRAWER:
+                    throw new NotImplementedException();
+                default:
+                    if (!HasProfile)
+                        line.TOOLING_FILE = line.TOOLING_FILE2 = ICBLineStructure.NO_FACE_TOOLING;
+
+                    line.MATERIAL = $"RAW{line.DIMZ} MDF";
+                    break;
+            }
+        }
     }
 }

@@ -22,5 +22,7 @@ namespace _3_Application.Dtos.DuraformDesign
         public string FixedEdgeProfileName { get; set; }
 
         public string DefaultEdgeProfileName { get; set; }
+
+        public decimal Thickness { get; set; }
     }
 }

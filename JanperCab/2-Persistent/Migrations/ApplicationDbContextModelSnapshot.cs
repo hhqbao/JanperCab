@@ -461,8 +461,23 @@ namespace _2_Persistent.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("BB")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BL")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BR")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BT")
+                        .HasColumnType("int");
+
                     b.Property<int?>("DefaultEdgeProfileId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("DrawerBorderOffset")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("DuraformSerieId")
                         .HasColumnType("int");
@@ -470,8 +485,19 @@ namespace _2_Persistent.Migrations
                     b.Property<int?>("FixedEdgeProfileId")
                         .HasColumnType("int");
 
+                    b.Property<int>("H_SPLIT_THICKNESS")
+                        .HasColumnType("int");
+
                     b.Property<bool>("HasNoArch")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ICB_GLASS_TOOLING")
+                        .IsRequired()
+                        .HasColumnType("varchar(1000)");
+
+                    b.Property<string>("ICB_TOOLING")
+                        .IsRequired()
+                        .HasColumnType("varchar(1000)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("varchar(1000)");
@@ -482,6 +508,12 @@ namespace _2_Persistent.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
+
+                    b.Property<decimal>("Thickness")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("V_SPLIT_THICKNESS")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -525,6 +557,10 @@ namespace _2_Persistent.Migrations
 
                     b.Property<bool?>("ForcedValuePerItem")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ICB_EDGE_TOOLING")
+                        .IsRequired()
+                        .HasColumnType("varchar(1000)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -790,6 +826,9 @@ namespace _2_Persistent.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("ICB_EDGETHICK")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsDisabledFromDisplay")
                         .HasColumnType("bit");

@@ -1,3 +1,4 @@
+import { MachineFileService } from './_services/machine-file.service';
 import { DuraformMiscComponentListComponent } from './components/duraform-misc-component-list/duraform-misc-component-list.component';
 import { MiscItemService } from './_services/misc-item.service';
 import { DuraformMiscCartItemComponent } from './components/duraform-misc-cart-item/duraform-misc-cart-item.component';
@@ -242,6 +243,7 @@ import { DuraformOptionMicrowaveFrameComponent } from './components/duraform-opt
     DuraformOptionTypeService,
     HingeHoleTypeService,
     MiscItemService,
+    MachineFileService,
     ErrorInterceptorProvider,
   ],
   bootstrap: [AppComponent],

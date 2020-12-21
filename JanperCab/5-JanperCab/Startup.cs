@@ -84,6 +84,7 @@ namespace _5_JanperCab
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenGenerator, TokenGenerator>();
+            services.AddScoped<IMachineFileGenerator, MachineFileGenerator>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddSpaStaticFiles(configuration =>

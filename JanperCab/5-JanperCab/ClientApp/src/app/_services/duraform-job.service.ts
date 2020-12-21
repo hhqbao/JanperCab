@@ -125,13 +125,6 @@ export class DuraformJobService {
     );
   };
 
-  exportIcb = (id: string) => {
-    return this.http.post(
-      `${environment.baseUrl}/DuraformOrders/DistributorOrders/ExportIcb/${id}`,
-      null
-    );
-  };
-
   // update = (
   //   orderNumber: number,
   //   orderDto: DuraformOrderDto

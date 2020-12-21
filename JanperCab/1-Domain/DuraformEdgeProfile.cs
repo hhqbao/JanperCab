@@ -14,6 +14,8 @@ namespace _1_Domain
 
         public bool? ForcedValuePerItem { get; set; }
 
+        public string ICB_EDGE_TOOLING { get; set; }
+
 
         public virtual ICollection<DuraformDesign> DuraformDesignsWithFixed { get; set; }
 

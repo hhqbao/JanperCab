@@ -65,7 +65,7 @@ export class PantryDoorFormComponent implements OnInit {
         [Validators.required, Validators.min(30), Validators.max(2500)],
       ],
       chairRailHeight: [
-        56,
+        null,
         [Validators.required, Validators.min(30), Validators.max(2500)],
       ],
       chairRailTypeId: [
@@ -133,6 +133,22 @@ export class PantryDoorFormComponent implements OnInit {
         if (this.width.errors.min || this.width.errors.max) {
           return this.showErrorMsg(
             `Width must be between 30 and ${
+              this.order.isRoutingOnly ? 3600 : 2500
+            }`
+          );
+        }
+      }
+
+      if (this.chairRailHeight.errors) {
+        if (this.chairRailHeight.errors.required) {
+          return this.showErrorMsg('Rail Height cannot be empty');
+        }
+        if (
+          this.chairRailHeight.errors.min ||
+          this.chairRailHeight.errors.max
+        ) {
+          return this.showErrorMsg(
+            `Rail Height must be between 30 and ${
               this.order.isRoutingOnly ? 3600 : 2500
             }`
           );

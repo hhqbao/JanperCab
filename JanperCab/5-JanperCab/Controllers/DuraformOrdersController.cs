@@ -143,22 +143,6 @@ namespace _5_JanperCab.Controllers
             return Ok(order.OrderStatus);
         }
 
-        [Authorize(Roles = "Manufacturer")]
-        [HttpPost("DistributorOrders/ExportIcb/{id}")]
-        public async Task<IActionResult> ExportIcb(Guid id)
-        {
-            var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
-
-            var order = await _unitOfWork.DuraformOrders.GetOrderAsync(id, currentUser.Customer);
-
-            if (order == null)
-                return BadRequest("Order Not Found!");
-
-            await _unitOfWork.DuraformOrders.ExportToICBAsync(order, _config.GetSection("AppSettings:IcbFileLocation").Value);
-
-            return Ok();
-        }
-
         [HttpPut("DraftToOrder/{draftId}")]
         public async Task<IActionResult> DraftToOrder(Guid draftId, DuraformDraftDto draftDto)
         {

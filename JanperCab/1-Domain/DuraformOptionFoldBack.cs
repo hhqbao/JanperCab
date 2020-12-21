@@ -1,4 +1,7 @@
-﻿namespace _1_Domain
+﻿using _1_Domain.Enum;
+using System;
+
+namespace _1_Domain
 {
     public enum FoldingType
     {
@@ -18,5 +21,40 @@
         public decimal Thickness { get; set; }
 
         public FoldingType FoldingType { get; set; }
+
+        public decimal TotalExtraWidth
+        {
+            get
+            {
+                return FoldingType switch
+                {
+                    FoldingType.Left => LeftLength + Thickness,
+                    FoldingType.Right => RightLength + Thickness,
+                    FoldingType.Double => (LeftLength + RightLength) + 2 * Thickness,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
+        }
+
+        public override void UpdateIcbLineStructure(DuraformComponent component, ICBLineStructure line)
+        {
+            switch (line.TYPE)
+            {
+                case ICB_TYPE_ENUM.DRAWER:
+                    throw new NotImplementedException();
+                default:
+                    line.DIMY += (int)TotalExtraWidth;
+
+                    if (!HasProfile)
+                        line.TOOLING_FILE = line.TOOLING_FILE2 = ICBLineStructure.NO_FACE_TOOLING;
+
+                    if (FoldingType == FoldingType.Left || FoldingType == FoldingType.Double)
+                        line.BL += (int)(LeftLength + Thickness);
+
+                    if (FoldingType == FoldingType.Right || FoldingType == FoldingType.Double)
+                        line.BR += (int)(RightLength + Thickness);
+                    break;
+            }
+        }
     }
 }

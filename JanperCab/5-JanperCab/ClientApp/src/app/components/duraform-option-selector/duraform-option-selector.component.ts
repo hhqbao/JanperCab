@@ -1,3 +1,4 @@
+import { DuraformOrderService } from './../../_services/duraform-order.service';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DuraformOptionTypeKey } from './../../_enums/DuraformOptionTypeKey';
 import { FormGroup } from '@angular/forms';
@@ -33,9 +34,20 @@ export class DuraformOptionSelectorComponent implements OnInit {
     );
   }
 
-  constructor(public asset: DuraformAssetService, private ef: ElementRef) {}
+  constructor(
+    public asset: DuraformAssetService,
+    private ef: ElementRef,
+    public order: DuraformOrderService
+  ) {}
 
   ngOnInit() {
+    if (
+      !this.hideOptionTypeKeys.includes(DuraformOptionTypeKey.DoubleSided) &&
+      this.order.isRoutingOnly
+    ) {
+      this.hideOptionTypeKeys.push(DuraformOptionTypeKey.DoubleSided);
+    }
+
     if (this.formGroup.get('optionGroup')) {
       setTimeout(() => {
         const optionValues = this.formGroup.get('optionGroup').value;

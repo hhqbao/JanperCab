@@ -1,3 +1,4 @@
+import { MachineFileService } from './../../_services/machine-file.service';
 import { UploadDuraformFileDto } from './../../_models/files/UploadDuraformFileDto';
 import { DuraformFileDto } from './../../_models/application-file/DuraformFileDto';
 import { FileService } from './../../_services/file.service';
@@ -56,6 +57,7 @@ export class DuraformOrderStepThreeComponent implements OnInit {
     private layout: LayoutService,
     private dialog: DialogService,
     private cabPro: CabProService,
+    private machineFile: MachineFileService,
     public fileService: FileService
   ) {}
 
@@ -344,7 +346,7 @@ export class DuraformOrderStepThreeComponent implements OnInit {
 
   onExportIcbFile = () => {
     this.layout.showLoadingPanel();
-    this.job.exportIcb(this.order.duraformId).subscribe(
+    this.machineFile.exportIcb(this.order.duraformId).subscribe(
       (_) => {
         this.layout.closeLoadingPanel();
         this.dialog.success('ICB file has been exported!');

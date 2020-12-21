@@ -19,7 +19,7 @@ export class OrderSearchFilterValues {
     this.search = '';
     this.status = null;
     this.sortBy = 'orderNumber';
-    this.direction = 'asc';
+    this.direction = 'desc';
     this.page = 0;
     this.take = 20;
   }

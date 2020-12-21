@@ -1,19 +1,10 @@
 ﻿using System.Collections.Generic;
+using _1_Domain.Enum;
 
 namespace _1_Domain
 {
     public class DuraformOptionType
     {
-        public enum DuraformOptionTypeKey
-        {
-            NoFaceRoute = 1,
-            DoubleSided = 2,
-            FoldBack = 3,
-            PaneFrame = 4,
-            RollerShutter = 5,
-            MicrowaveFrame = 6
-        }
-
         public DuraformOptionTypeKey Id { get; set; }
 
         public string Name { get; set; }

@@ -1,3 +1,4 @@
+import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { FoldingType } from './../../_enums/FoldingType';
 import { DialogService } from './../../_services/dialog.service';
 import { DuraformOptionTypeKey } from './../../_enums/DuraformOptionTypeKey';
@@ -8,6 +9,7 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 
 @Component({
   selector: 'app-duraform-option-fold-back-form',
@@ -23,7 +25,12 @@ export class DuraformOptionFoldBackFormComponent implements OnInit {
   thicknesses: any[];
   foldBackTypes: any[];
 
-  constructor(private fb: FormBuilder, private dialog: DialogService) {
+  constructor(
+    private fb: FormBuilder,
+    private dialog: DialogService,
+    private asset: DuraformAssetService,
+    private order: DuraformOrderService
+  ) {
     this.thicknesses = [
       { text: '18mm', value: 18 },
       { text: '36mm', value: 36 },
@@ -63,6 +70,21 @@ export class DuraformOptionFoldBackFormComponent implements OnInit {
           rightLength: [0, []],
         })
       );
+
+      this.formGroup.get('top').setValue(true);
+      this.formGroup.get('bottom').setValue(true);
+      this.formGroup.get('left').setValue(true);
+      this.formGroup.get('right').setValue(true);
+
+      const edgeProfile = this.asset.edgeProfiles.filter(
+        (x) => x.forcedValuePerItem === true
+      )[0];
+
+      this.formGroup
+        .get('duraformEdgeProfileId')
+        .setValue(
+          edgeProfile ? edgeProfile.id : this.order.selectedEdgeProfile.id
+        );
 
       this.valueChange.emit();
     }

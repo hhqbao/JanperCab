@@ -12,8 +12,6 @@ namespace _3_Application.Interfaces.Repositories
 
         Task ApproveOrderAsync(DuraformOrder order);
 
-        Task ExportToICBAsync(DuraformOrder order, string savePath);
-
         Task<List<DuraformDraft>> GetDraftsAsync();
 
         Task<DuraformDraft> GetDraftAsync(Guid draftId);

@@ -5,7 +5,6 @@ using IdentityServer4.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -53,105 +52,6 @@ namespace _4_Infrastructure.Repositories
         public async Task ApproveOrderAsync(DuraformOrder order)
         {
             order.OrderStatus = OrderStatus.DistributorApproved;
-        }
-
-        public async Task ExportToICBAsync(DuraformOrder order, string savePath)
-        {
-            const string headers = "TYPE, SHAPE_FILE$, EXTERNAL_SHAPE_FILE$, DIMX,DIMY,DIMZ,BT,BB,BL,BR,ABB,AH,EDGE_TOP,EDGE_BOTTOM,EDGE_LEFT,EDGE_RIGHT,CORNER_RADIUS,TOOLING_FILE$,TOOLING_FILE2$,EDGE_TOOLING_FILE$,DRAWER_TOOLING_FILE$,OFFT,OFFB,OFFL,OFFR,EDGETHICK,USERVAR1,USERVAR2,USERVAR3,USERVAR4,USERVAR5,USERVAR6,USERVAR7,USERVAR8,BD_MATCHING,SHAPE_FILE2$,BDH,BDBT,BDH_ADDON,NOPN,PANDIV,VAR_DIV,VARDIVSTRING$,SPLIT_PANEL,V_SPLIT_Q,H_SPLIT_Q,V_SPLIT,H_SPLIT,SPLIT_PANEL_UPPER,V_SPLIT_Q_UPPER,H_SPLIT_Q_UPPER,V_SPLIT_UPPER,H_SPLIT_UPPER,SLICE_ON,DRAW_NUM,GAP,DRAWER_NUM,DRAWER1,DRAWER2,DRAWER3,DRAWER4,DRAWER5,DRAWER6,DRAWER7,DRAWER8,SLICE_WIDTH,JOBNUMBER,ACCOUNTNUMBER,JOBNUMBERCUST,DOORFINISH,DOORCOLOR,CNCCODE,MATERIAL,CNCTYPE,QUANTITY,DESCRIPTION";
-            const string content = "0,SQUARE,,940,634,18,56,56,56,56,0,0,0,0,0,0,G_CORNER_RADIUS,LATSQ,LATSQ,SQUARE,RADIUS,0,0,,0,0,0,0,0,0,0,0,0,0,0,SQUARE,0,,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2010986,Chance  Wayne,201104,ROUTER ONLY,DSW,DOOR,SS18 MDF,DOOR,1,TESTING";
-
-            var data = $"{headers}{Environment.NewLine}{content}";
-
-            await File.WriteAllTextAsync($"{savePath}\\2010986.csv", data);
-
-            //using var package = new ExcelPackage();
-            //var sheet = package.Workbook.Worksheets.Add(order.OrderNumber.ToString());
-
-            //var headers = new List<string[]>
-            //{
-            //    new[] {"TYPE", "SHAPE_FILE$", "EXTERNAL_SHAPE_FILE$", "DIMX","DIMY","DIMZ","BT","BB","BL","BR","ABB","AH","EDGE_TOP","EDGE_BOTTOM","EDGE_LEFT","EDGE_RIGHT","CORNER_RADIUS","TOOLING_FILE$","TOOLING_FILE2$","EDGE_TOOLING_FILE$","DRAWER_TOOLING_FILE$","OFFT","OFFB","OFFL","OFFR","EDGETHICK","USERVAR1","USERVAR2","USERVAR3","USERVAR4","USERVAR5","USERVAR6","USERVAR7","USERVAR8","BD_MATCHING","SHAPE_FILE2$","BDH","BDBT","BDH_ADDON","NOPN","PANDIV","VAR_DIV","VARDIVSTRING$","SPLIT_PANEL","V_SPLIT_Q","H_SPLIT_Q","V_SPLIT","H_SPLIT","SPLIT_PANEL_UPPER","V_SPLIT_Q_UPPER","H_SPLIT_Q_UPPER","V_SPLIT_UPPER","H_SPLIT_UPPER","SLICE_ON","DRAW_NUM","GAP","DRAWER_NUM","DRAWER1","DRAWER2","DRAWER3","DRAWER4","DRAWER5","DRAWER6","DRAWER7","DRAWER8","SLICE_WIDTH","JOBNUMBER","ACCOUNTNUMBER","JOBNUMBERCUST","DOORFINISH","DOORCOLOR","CNCCODE","MATERIAL","CNCTYPE","QUANTITY","DESCRIPTION"}
-            //};
-            //sheet.Cells["A1:BX1"].LoadFromArrays(headers);
-
-            //sheet.Cells["A2"].Value = 0;
-            //sheet.Cells["B2"].Value = "SQUARE";
-            //sheet.Cells["C2"].Value = null;
-            //sheet.Cells["D2"].Value = 940;
-            //sheet.Cells["E2"].Value = 634;
-            //sheet.Cells["F2"].Value = 18;
-            //sheet.Cells["G2"].Value = 56;
-            //sheet.Cells["H2"].Value = 56;
-            //sheet.Cells["I2"].Value = 56;
-            //sheet.Cells["J2"].Value = 56;
-            //sheet.Cells["K2"].Value = 0;
-            //sheet.Cells["L2"].Value = 0;
-            //sheet.Cells["M2"].Value = 0;
-            //sheet.Cells["N2"].Value = 0;
-            //sheet.Cells["O2"].Value = 0;
-            //sheet.Cells["P2"].Value = 0;
-            //sheet.Cells["Q2"].Value = "G_CORNER_RADIUS";
-            //sheet.Cells["R2"].Value = "LATSQ";
-            //sheet.Cells["S2"].Value = "LATSQ";
-            //sheet.Cells["T2"].Value = "SQUARE";
-            //sheet.Cells["U2"].Value = "RADIUS";
-            //sheet.Cells["V2"].Value = 0;
-            //sheet.Cells["W2"].Value = 0;
-            //sheet.Cells["X2"].Value = null;
-            //sheet.Cells["Y2"].Value = 0;
-            //sheet.Cells["Z2"].Value = 0;
-            //sheet.Cells["AA2"].Value = 0;
-            //sheet.Cells["AB2"].Value = 0;
-            //sheet.Cells["AC2"].Value = 0;
-            //sheet.Cells["AD2"].Value = 0;
-            //sheet.Cells["AE2"].Value = 0;
-            //sheet.Cells["AF2"].Value = 0;
-            //sheet.Cells["AG2"].Value = 0;
-            //sheet.Cells["AH2"].Value = 0;
-            //sheet.Cells["AI2"].Value = 0;
-            //sheet.Cells["AJ2"].Value = "SQUARE";
-            //sheet.Cells["AK2"].Value = 0;
-            //sheet.Cells["AL2"].Value = null;
-            //sheet.Cells["AM2"].Value = 0;
-            //sheet.Cells["AN2"].Value = 0;
-            //sheet.Cells["AO2"].Value = 0;
-            //sheet.Cells["AP2"].Value = 0;
-            //sheet.Cells["AQ2"].Value = null;
-            //sheet.Cells["AR2"].Value = 0;
-            //sheet.Cells["AS2"].Value = 0;
-            //sheet.Cells["AT2"].Value = 0;
-            //sheet.Cells["AU2"].Value = 0;
-            //sheet.Cells["AV2"].Value = 0;
-            //sheet.Cells["AW2"].Value = 0;
-            //sheet.Cells["AX2"].Value = 0;
-            //sheet.Cells["AY2"].Value = 0;
-            //sheet.Cells["AZ2"].Value = 0;
-            //sheet.Cells["BA2"].Value = 0;
-            //sheet.Cells["BB2"].Value = 0;
-            //sheet.Cells["BC2"].Value = 0;
-            //sheet.Cells["BD2"].Value = 0;
-            //sheet.Cells["BE2"].Value = 0;
-            //sheet.Cells["BF2"].Value = 0;
-            //sheet.Cells["BG2"].Value = 0;
-            //sheet.Cells["BH2"].Value = 0;
-            //sheet.Cells["BI2"].Value = 0;
-            //sheet.Cells["BJ2"].Value = 0;
-            //sheet.Cells["BK2"].Value = 0;
-            //sheet.Cells["BL2"].Value = 0;
-            //sheet.Cells["BM2"].Value = 0;
-            //sheet.Cells["BN2"].Value = 0;
-            //sheet.Cells["BO2"].Value = 2010986; //order.OrderNumber
-            //sheet.Cells["BP2"].Value = "Chance Wayne"; //Customer Name??
-            //sheet.Cells["BQ2"].Value = 201104; //Customer reference number
-            //sheet.Cells["BR2"].Value = "ROUTER ONLY";
-            //sheet.Cells["BS2"].Value = "DSW";
-            //sheet.Cells["BT2"].Value = "DOOR";
-            //sheet.Cells["BU2"].Value = "SS18 MDF";
-            //sheet.Cells["BV2"].Value = "DOOR";
-            //sheet.Cells["BW2"].Value = 1;
-            //sheet.Cells["BX2"].Value = "TESTING";
-
-            //var excelFile = new FileInfo($@"{savePath}\2010986.csv");
-            //await package.SaveAsAsync(excelFile);
         }
 
         public async Task<List<DuraformDraft>> GetDraftsAsync()

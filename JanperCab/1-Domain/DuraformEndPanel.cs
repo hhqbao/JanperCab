@@ -1,4 +1,7 @@
-﻿namespace _1_Domain
+﻿using _1_Domain.Enum;
+using System.Collections.Generic;
+
+namespace _1_Domain
 {
     public class DuraformEndPanel : DuraformComponentWithOption
     {
@@ -14,5 +17,26 @@
 
         public decimal? ExtraRailTop { get; set; }
 
+        public override ICB_TYPE_ENUM ICBTYPE => ICB_TYPE_ENUM.END_PANEL;
+
+
+        public override List<ICBLineStructure> ExportIcbLinesStructure()
+        {
+            var line = new ICBLineStructure(this)
+            {
+                BL = (int)RailLeft,
+                BR = (int)RailRight,
+                ABB = ExtraRailBottom.HasValue ? (int)ExtraRailBottom.Value : 0,
+                NOPN = NumberOfShields,
+                PANDIV = NumberOfShields > 1 ? (int)RailCenter : 0,
+                CNCTYPE = "IB"
+            };
+
+            line.BT += ExtraRailTop.HasValue ? (int)ExtraRailTop.Value : 0;
+
+            DuraformOption?.UpdateIcbLineStructure(this, line);
+
+            return new List<ICBLineStructure> { line };
+        }
     }
 }

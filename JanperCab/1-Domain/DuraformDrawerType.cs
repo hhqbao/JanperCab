@@ -1,15 +1,8 @@
 ﻿using System.Collections.Generic;
+using _1_Domain.Enum;
 
 namespace _1_Domain
 {
-    public enum DrawerDesign
-    {
-        Single = 1,
-        PotDrawers = 2,
-        IndividualEqualShields = 3,
-        IndividualEqualDrawers = 4
-    }
-
     public class DuraformDrawerType
     {
         public int Id { get; set; }

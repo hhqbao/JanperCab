@@ -9,4 +9,5 @@ export class DuraformDesignForOrderMenu {
   fixedEdgeProfileName: string;
   defaultEdgeProfileName: string;
   hasNoArch: boolean;
+  thickness: number;
 }

@@ -15,4 +15,8 @@
     <ProjectReference Include="..\3-Application\3-Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Objects\ICBFile\" />
+  </ItemGroup>
+
 </Project>

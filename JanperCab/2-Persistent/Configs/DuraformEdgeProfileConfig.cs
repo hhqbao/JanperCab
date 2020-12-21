@@ -22,6 +22,10 @@ namespace _2_Persistent.Configs
             builder.Property(x => x.ImageUrl)
                 .IsRequired()
                 .HasColumnType("varchar(1000)");
+
+            builder.Property(x => x.ICB_EDGE_TOOLING)
+                .IsRequired()
+                .HasColumnType("varchar(1000)");
         }
     }
 }

@@ -127,7 +127,12 @@
     <td>
       <app-duraform-option-selector
         [formGroup]="formGroup"
-        [hideOptionTypeKeys]="[duraformOptionTypeKey.PaneFrame]"
+        [hideOptionTypeKeys]="[
+          duraformOptionTypeKey.NoFaceRoute,
+          duraformOptionTypeKey.PaneFrame,
+          duraformOptionTypeKey.MicrowaveFrame,
+          duraformOptionTypeKey.RollerShutter
+        ]"
       ></app-duraform-option-selector>
     </td>
     <td>
