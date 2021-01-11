@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _2_Persistent;
 
 namespace _2_Persistent.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201222022427_EditTable_DuraformDesigns_AddCol_EXTERNAL_SHAPE_FILE")]
+    partial class EditTable_DuraformDesigns_AddCol_EXTERNAL_SHAPE_FILE
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -473,13 +475,16 @@ namespace _2_Persistent.Migrations
                     b.Property<int>("BT")
                         .HasColumnType("int");
 
-                    b.Property<int>("DefaultEdgeProfileId")
+                    b.Property<int?>("DefaultEdgeProfileId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("DrawerBorderOffset")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("DuraformSerieId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FixedEdgeProfileId")
                         .HasColumnType("int");
 
                     b.Property<int>("H_SPLIT_THICKNESS")
@@ -521,22 +526,9 @@ namespace _2_Persistent.Migrations
 
                     b.HasIndex("DuraformSerieId");
 
+                    b.HasIndex("FixedEdgeProfileId");
+
                     b.ToTable("DuraformDesigns");
-                });
-
-            modelBuilder.Entity("_1_Domain.DuraformDesignEdgeProfile", b =>
-                {
-                    b.Property<int>("DuraformDesignId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DuraformEdgeProfileId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DuraformDesignId", "DuraformEdgeProfileId");
-
-                    b.HasIndex("DuraformEdgeProfileId");
-
-                    b.ToTable("DuraformDesignEdgeProfiles");
                 });
 
             modelBuilder.Entity("_1_Domain.DuraformDrawerType", b =>
@@ -568,16 +560,7 @@ namespace _2_Persistent.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool?>("ForceBottom")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("ForceLeft")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("ForceRight")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("ForceTop")
+                    b.Property<bool?>("ForcedValuePerItem")
                         .HasColumnType("bit");
 
                     b.Property<string>("ICB_EDGE_TOOLING")
@@ -1372,29 +1355,18 @@ namespace _2_Persistent.Migrations
                     b.HasOne("_1_Domain.DuraformEdgeProfile", "DefaultEdgeProfile")
                         .WithMany("DuraformDesignsWithDefault")
                         .HasForeignKey("DefaultEdgeProfileId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("_1_Domain.DuraformSerie", "DuraformSerie")
                         .WithMany("DuraformDesigns")
                         .HasForeignKey("DuraformSerieId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("_1_Domain.DuraformDesignEdgeProfile", b =>
-                {
-                    b.HasOne("_1_Domain.DuraformDesign", "DuraformDesign")
-                        .WithMany("AllowedEdgeProfiles")
-                        .HasForeignKey("DuraformDesignId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("_1_Domain.DuraformEdgeProfile", "DuraformEdgeProfile")
-                        .WithMany("DuraformDesignEdgeProfiles")
-                        .HasForeignKey("DuraformEdgeProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("_1_Domain.DuraformEdgeProfile", "FixedEdgeProfile")
+                        .WithMany("DuraformDesignsWithFixed")
+                        .HasForeignKey("FixedEdgeProfileId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("_1_Domain.DuraformForm", b =>

@@ -21,10 +21,15 @@
       {{ asset.getChairRailType(pantryDoor.chairRailTypeId).name | uppercase }}
     </td>
     <td>{{ pantryDoor.extraRailBottom }}</td>
-    <td>{{ pantryDoor.top ? "Y" : "" }}</td>
-    <td>{{ pantryDoor.bottom ? "Y" : "" }}</td>
-    <td>{{ pantryDoor.left ? "Y" : "" }}</td>
-    <td>{{ pantryDoor.right ? "Y" : "" }}</td>
+    <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
+      {{
+        asset.getEdgeProfile(pantryDoor.duraformEdgeProfileId).name | uppercase
+      }}
+    </td>
+    <td>{{ pantryDoor.top ? "X" : "" }}</td>
+    <td>{{ pantryDoor.bottom ? "X" : "" }}</td>
+    <td>{{ pantryDoor.left ? "X" : "" }}</td>
+    <td>{{ pantryDoor.right ? "X" : "" }}</td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
       {{ pantryDoor.duraformOption?.toString() }}
     </td>

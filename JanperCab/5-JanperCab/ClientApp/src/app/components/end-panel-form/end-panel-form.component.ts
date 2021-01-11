@@ -2,14 +2,13 @@ import { DialogService } from './../../_services/dialog.service';
 import { DuraformEndPanelDto } from './../../_models/duraform-component/DuraformEndPanelDto';
 import { DuraformOptionTypeKey } from './../../_enums/DuraformOptionTypeKey';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
   Validators,
-  FormControl,
   AbstractControl,
 } from '@angular/forms';
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-end-panel-form',
@@ -21,6 +20,14 @@ export class EndPanelFormComponent implements OnInit {
 
   duraformOptionTypeKey = DuraformOptionTypeKey;
   formGroup: FormGroup;
+
+  shields = [
+    { id: 1, value: 1 },
+    { id: 2, value: 2 },
+    { id: 3, value: 3 },
+    { id: 4, value: 4 },
+    { id: 5, value: 5 },
+  ];
 
   constructor(
     public order: DuraformOrderService,
@@ -80,22 +87,19 @@ export class EndPanelFormComponent implements OnInit {
       ],
       railLeft: [
         56,
-        [Validators.required, Validators.min(30), Validators.max(100)],
+        [Validators.required, Validators.min(30), Validators.max(200)],
       ],
       railCenter: [
         56,
-        [Validators.required, Validators.min(30), Validators.max(100)],
+        [Validators.required, Validators.min(30), Validators.max(200)],
       ],
       railRight: [
         56,
-        [Validators.required, Validators.min(30), Validators.max(100)],
+        [Validators.required, Validators.min(30), Validators.max(200)],
       ],
       extraRailBottom: [null, [Validators.min(0), Validators.max(500)]],
       extraRailTop: [null, [Validators.min(0), Validators.max(500)]],
-      duraformEdgeProfileId: [
-        this.order.selectedEdgeProfile.id,
-        [Validators.required],
-      ],
+      duraformEdgeProfileId: [null, [Validators.required]],
       top: [false],
       bottom: [false],
       left: [false],
@@ -113,8 +117,37 @@ export class EndPanelFormComponent implements OnInit {
           this.endPanel.duraformOption.toFormGroup()
         );
       }
+
+      const railCenter = this.railCenter.value;
+
+      if (railCenter === 0) {
+        this.railCenter.setValidators([Validators.required]);
+        this.railCenter.updateValueAndValidity();
+      }
     }
   }
+
+  onNumberOfShieldsChanged = () => {
+    const numberOfShields = this.numberOfShields.value;
+
+    if (numberOfShields === 1) {
+      this.railCenter.setValidators([Validators.required]);
+      this.railCenter.patchValue(0);
+      this.railCenter.updateValueAndValidity();
+    } else {
+      const railCenter = this.railCenter.value;
+
+      if (railCenter === 0) {
+        this.railCenter.setValidators([
+          Validators.required,
+          Validators.min(30),
+          Validators.max(200),
+        ]);
+        this.railCenter.patchValue(56);
+        this.railCenter.updateValueAndValidity();
+      }
+    }
+  };
 
   onSubmit = () => {
     if (this.formGroup.invalid) {

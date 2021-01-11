@@ -14,7 +14,9 @@
     <ul class="list">
       <li
         class="edge-profile"
-        *ngFor="let profile of asset.edgeProfiles"
+        *ngFor="
+          let profile of asset.getAllowedEdgeProfiles(selectedDuraformDesign)
+        "
         (click)="selectProfile.emit(profile)"
       >
         <img

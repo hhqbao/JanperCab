@@ -42,13 +42,13 @@
           <td>{{ door.quantity }}</td>
           <td>{{ door.height }}</td>
           <td>{{ door.width }}</td>
-          <td>{{ door.top ? "Y" : null }}</td>
-          <td>{{ door.bottom ? "Y" : null }}</td>
-          <td>{{ door.left ? "Y" : null }}</td>
-          <td>{{ door.right ? "Y" : null }}</td>
+          <td>{{ door.top ? "X" : null }}</td>
+          <td>{{ door.bottom ? "X" : null }}</td>
+          <td>{{ door.left ? "X" : null }}</td>
+          <td>{{ door.right ? "X" : null }}</td>
           <td class="text-left">{{ door.duraformOption?.toString() }}</td>
           <td class="text-left">
-            {{ getEdgeProfile(door.duraformEdgeProfileId).name }}
+            {{ asset.getEdgeProfile(door.duraformEdgeProfileId).name }}
           </td>
           <td>
             {{ door.hingeHoleOption?.toString() }}

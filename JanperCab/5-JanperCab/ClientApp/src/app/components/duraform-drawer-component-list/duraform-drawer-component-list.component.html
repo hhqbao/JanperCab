@@ -10,6 +10,7 @@
           <th rowspan="2" style="width: 6rem">Width</th>
           <th rowspan="2" style="width: 6rem">No Drawers</th>
           <th rowspan="2" style="width: 22rem">Drawer Type</th>
+          <th rowspan="2" style="width: 20rem">Edge Profile</th>
           <th colspan="4">'X' For Square Edge</th>
           <th rowspan="2" style="width: 8rem">
             Drill <br />
@@ -39,6 +40,9 @@
           <td>{{ drawer.numberOfDrawers }}</td>
           <td class="text-left">
             {{ asset.getDrawerType(drawer.duraformDrawerTypeId).name }}
+          </td>
+          <td class="text-left">
+            {{ asset.getEdgeProfile(drawer.duraformEdgeProfileId).name }}
           </td>
           <td>{{ drawer.top ? "Y" : null }}</td>
           <td>{{ drawer.bottom ? "Y" : null }}</td>

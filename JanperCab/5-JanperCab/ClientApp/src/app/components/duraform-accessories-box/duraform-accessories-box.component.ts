@@ -16,8 +16,7 @@ export class DuraformAccessoriesBoxComponent implements OnInit {
   constructor(
     public asset: DuraformAssetService,
     public order: DuraformOrderService,
-    private fb: FormBuilder,
-    private dialog: DialogService
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {

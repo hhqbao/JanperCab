@@ -5,8 +5,8 @@
         <div class="form__group">
           <label class="form__label">Edge Profile</label>
           <app-edge-profile-selector
+            [selectedDuraformDesign]="order.selectedDesign"
             [selectedEdgeProfile]="order.selectedEdgeProfile"
-            [canSelect]="!order.hasFixedEdgeProfile"
             (selectProfile)="onSelectProfile($event)"
           ></app-edge-profile-selector>
         </div>

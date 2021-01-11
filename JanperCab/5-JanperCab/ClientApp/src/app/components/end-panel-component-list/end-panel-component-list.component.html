@@ -20,6 +20,7 @@
           </th>
           <th colspan="3">Rail Sizes</th>
           <th colspan="2">Extra Rail</th>
+          <th rowspan="2" style="width: 20rem">Edge Profile</th>
           <th colspan="4">'X' For Square Edge</th>
           <th rowspan="2" style="width: 26rem">Option</th>
           <th rowspan="2">Note</th>
@@ -48,10 +49,13 @@
           <td>{{ endPanel.railRight }}</td>
           <td>{{ endPanel.extraRailTop }}</td>
           <td>{{ endPanel.extraRailBottom }}</td>
-          <td>{{ endPanel.top ? "Y" : null }}</td>
-          <td>{{ endPanel.bottom ? "Y" : null }}</td>
-          <td>{{ endPanel.left ? "Y" : null }}</td>
-          <td>{{ endPanel.right ? "Y" : null }}</td>
+          <td class="text-left">
+            {{ asset.getEdgeProfile(endPanel.duraformEdgeProfileId).name }}
+          </td>
+          <td>{{ endPanel.top ? "X" : null }}</td>
+          <td>{{ endPanel.bottom ? "X" : null }}</td>
+          <td>{{ endPanel.left ? "X" : null }}</td>
+          <td>{{ endPanel.right ? "X" : null }}</td>
           <td class="text-left">
             {{ endPanel.duraformOption?.toString() }}
           </td>

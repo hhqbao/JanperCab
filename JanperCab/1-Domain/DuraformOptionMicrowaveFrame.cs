@@ -1,5 +1,4 @@
-﻿using _1_Domain.Enum;
-using System;
+﻿using System;
 
 namespace _1_Domain
 {
@@ -15,21 +14,15 @@ namespace _1_Domain
 
         public override void UpdateIcbLineStructure(DuraformComponent component, ICBLineStructure line)
         {
-            switch (line.TYPE)
+            switch (component)
             {
-                case ICB_TYPE_ENUM.DOOR:
+                case DuraformDoor door:
                     line.TOOLING_FILE = line.TOOLING_FILE2 = ICBLineStructure.MICROWAVE_TOOLING;
                     line.BT = (int)TopSize;
                     line.BB = (int)BottomSize;
                     line.BL = (int)LeftSize;
                     line.BR = (int)RightSize;
                     break;
-                case ICB_TYPE_ENUM.PANTRY:
-                    throw new NotImplementedException();
-                case ICB_TYPE_ENUM.END_PANEL:
-                    throw new NotImplementedException();
-                case ICB_TYPE_ENUM.DRAWER:
-                    throw new NotImplementedException();
                 default:
                     throw new ArgumentOutOfRangeException();
             }

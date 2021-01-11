@@ -16,7 +16,6 @@ namespace _4_Infrastructure.Repositories
         public async Task<List<DuraformDesign>> GetForOrderMenuAsync()
         {
             return await _dbSet
-                .Include(x => x.FixedEdgeProfile)
                 .Include(x => x.DefaultEdgeProfile)
                 .OrderBy(x => x.Name)
                 .ToListAsync();

@@ -28,9 +28,9 @@ export class DuraformOrderStepOneComponent implements OnInit {
   onSelectDesign = (selectedDesign: DuraformDesignForOrderMenu) => {
     this.selectedDuraformDesign = selectedDesign;
 
-    if (selectedDesign.fixedEdgeProfileId) {
+    if (this.selectedDuraformDesign.allowedEdgeProfiles.length === 1) {
       this.selectedEdgeProfile = this.asset.getEdgeProfile(
-        selectedDesign.fixedEdgeProfileId
+        this.selectedDuraformDesign.allowedEdgeProfiles[0].duraformEdgeProfileId
       );
       this.showColorSelector = true;
     } else {

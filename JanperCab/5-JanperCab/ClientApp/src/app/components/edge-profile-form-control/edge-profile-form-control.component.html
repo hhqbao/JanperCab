@@ -4,51 +4,111 @@
     [values]="allowedEdgeProfiles"
     [valueDisplay]="'name'"
     [valueKey]="'id'"
-    [isDisabled]="order.hasFixedEdgeProfile"
+    [isDisabled]="cannotSelect"
     (afterSet)="onSelectEdgeProfile()"
   ></app-select-menu>
 </td>
 <td>
-  <span [hidden]="order.canTickEdgeProfile">Y</span>
-  <label class="form__checkbox" *ngIf="order.canTickEdgeProfile">
-    <input
-      type="checkbox"
-      [formControl]="formGroup.get('top')"
-      (change)="onEdgeTickChange()"
-    />
-    <span></span>
-  </label>
+  <div *ngIf="selectedEdgeProfile">
+    <span
+      [hidden]="
+        selectedEdgeProfile.forceTop === null ||
+        selectedEdgeProfile.forceTop === undefined
+      "
+    >
+      {{ formGroup.get("top").value === true ? "X" : "-" }}
+    </span>
+    <label
+      class="form__checkbox"
+      *ngIf="
+        selectedEdgeProfile.forceTop === null ||
+        selectedEdgeProfile.forceTop === undefined
+      "
+    >
+      <input
+        type="checkbox"
+        [formControl]="formGroup.get('top')"
+        (change)="onEdgeTickChange()"
+      />
+      <span></span>
+    </label>
+  </div>
 </td>
 <td>
-  <span [hidden]="order.canTickEdgeProfile">Y</span>
-  <label class="form__checkbox" *ngIf="order.canTickEdgeProfile">
-    <input
-      type="checkbox"
-      [formControl]="formGroup.get('bottom')"
-      (change)="onEdgeTickChange()"
-    />
-    <span></span>
-  </label>
+  <div *ngIf="selectedEdgeProfile">
+    <span
+      [hidden]="
+        selectedEdgeProfile.forceBottom === null ||
+        selectedEdgeProfile.forceBottom === undefined
+      "
+    >
+      {{ formGroup.get("bottom").value === true ? "X" : "-" }}
+    </span>
+    <label
+      class="form__checkbox"
+      *ngIf="
+        selectedEdgeProfile.forceBottom === null ||
+        selectedEdgeProfile.forceBottom === undefined
+      "
+    >
+      <input
+        type="checkbox"
+        [formControl]="formGroup.get('bottom')"
+        (change)="onEdgeTickChange()"
+      />
+      <span></span>
+    </label>
+  </div>
 </td>
 <td>
-  <span [hidden]="order.canTickEdgeProfile">Y</span>
-  <label class="form__checkbox" *ngIf="order.canTickEdgeProfile">
-    <input
-      type="checkbox"
-      [formControl]="formGroup.get('left')"
-      (change)="onEdgeTickChange()"
-    />
-    <span></span>
-  </label>
+  <div *ngIf="selectedEdgeProfile">
+    <span
+      [hidden]="
+        selectedEdgeProfile.forceLeft === null ||
+        selectedEdgeProfile.forceLeft === undefined
+      "
+    >
+      {{ formGroup.get("left").value === true ? "X" : "-" }}
+    </span>
+    <label
+      class="form__checkbox"
+      *ngIf="
+        selectedEdgeProfile.forceLeft === null ||
+        selectedEdgeProfile.forceLeft === undefined
+      "
+    >
+      <input
+        type="checkbox"
+        [formControl]="formGroup.get('left')"
+        (change)="onEdgeTickChange()"
+      />
+      <span></span>
+    </label>
+  </div>
 </td>
 <td>
-  <span [hidden]="order.canTickEdgeProfile">Y</span>
-  <label class="form__checkbox" *ngIf="order.canTickEdgeProfile">
-    <input
-      type="checkbox"
-      [formControl]="formGroup.get('right')"
-      (change)="onEdgeTickChange()"
-    />
-    <span></span>
-  </label>
+  <div *ngIf="selectedEdgeProfile">
+    <span
+      [hidden]="
+        selectedEdgeProfile.forceRight === null ||
+        selectedEdgeProfile.forceRight === undefined
+      "
+    >
+      {{ formGroup.get("right").value === true ? "X" : "-" }}
+    </span>
+    <label
+      class="form__checkbox"
+      *ngIf="
+        selectedEdgeProfile.forceRight === null ||
+        selectedEdgeProfile.forceRight === undefined
+      "
+    >
+      <input
+        type="checkbox"
+        [formControl]="formGroup.get('right')"
+        (change)="onEdgeTickChange()"
+      />
+      <span></span>
+    </label>
+  </div>
 </td>

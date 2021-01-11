@@ -25,6 +25,9 @@ namespace _2_Persistent.Configs
             builder.Property(x => x.Thickness)
                 .HasColumnType("decimal(18,2)");
 
+            builder.Property(x => x.ICB_EXTERNAL_SHAPE_FILE)
+                .HasColumnType("varchar(1000)");
+
             builder.Property(x => x.ICB_TOOLING)
                 .IsRequired()
                 .HasColumnType("varchar(1000)");
@@ -42,14 +45,10 @@ namespace _2_Persistent.Configs
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
 
-            builder.HasOne(x => x.FixedEdgeProfile)
-                .WithMany(y => y.DuraformDesignsWithFixed)
-                .HasForeignKey(x => x.FixedEdgeProfileId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             builder.HasOne(x => x.DefaultEdgeProfile)
                 .WithMany(y => y.DuraformDesignsWithDefault)
                 .HasForeignKey(x => x.DefaultEdgeProfileId)
+                .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _2_Persistent;
 
 namespace _2_Persistent.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210110122944_EditTable_DuraformDesign_RemoveCol_FixedEdgeProfileId")]
+    partial class EditTable_DuraformDesign_RemoveCol_FixedEdgeProfileId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -473,7 +475,7 @@ namespace _2_Persistent.Migrations
                     b.Property<int>("BT")
                         .HasColumnType("int");
 
-                    b.Property<int>("DefaultEdgeProfileId")
+                    b.Property<int?>("DefaultEdgeProfileId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("DrawerBorderOffset")
@@ -1372,8 +1374,7 @@ namespace _2_Persistent.Migrations
                     b.HasOne("_1_Domain.DuraformEdgeProfile", "DefaultEdgeProfile")
                         .WithMany("DuraformDesignsWithDefault")
                         .HasForeignKey("DefaultEdgeProfileId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("_1_Domain.DuraformSerie", "DuraformSerie")
                         .WithMany("DuraformDesigns")

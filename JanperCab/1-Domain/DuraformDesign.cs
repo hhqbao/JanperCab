@@ -15,13 +15,13 @@ namespace _1_Domain
 
         public DuraformSerie.DuraformSerieKey DuraformSerieId { get; set; }
 
-        public int? FixedEdgeProfileId { get; set; }
-
-        public int? DefaultEdgeProfileId { get; set; }
+        public int DefaultEdgeProfileId { get; set; }
 
         public bool HasNoArch { get; set; }
 
         public decimal Thickness { get; set; }
+
+        public string ICB_EXTERNAL_SHAPE_FILE { get; set; }
 
         public string ICB_TOOLING { get; set; }
 
@@ -44,19 +44,20 @@ namespace _1_Domain
 
         public virtual DuraformSerie DuraformSerie { get; set; }
 
-        public virtual DuraformEdgeProfile FixedEdgeProfile { get; set; }
-
         public virtual DuraformEdgeProfile DefaultEdgeProfile { get; set; }
 
         public virtual ICollection<NotAvailableDesignWrapType> NotAvailableDesignWrapTypes { get; set; }
 
         public virtual ICollection<DuraformForm> DuraformForms { get; set; }
 
+        public virtual ICollection<DuraformDesignEdgeProfile> AllowedEdgeProfiles { get; set; }
+
 
         public DuraformDesign()
         {
             NotAvailableDesignWrapTypes = new Collection<NotAvailableDesignWrapType>();
             DuraformForms = new Collection<DuraformForm>();
+            AllowedEdgeProfiles = new Collection<DuraformDesignEdgeProfile>();
         }
     }
 }

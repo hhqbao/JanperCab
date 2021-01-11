@@ -12,12 +12,16 @@ namespace _1_Domain
 
         public string ImageUrl { get; set; }
 
-        public bool? ForcedValuePerItem { get; set; }
+        public bool? ForceTop { get; set; }
+
+        public bool? ForceBottom { get; set; }
+
+        public bool? ForceLeft { get; set; }
+
+        public bool? ForceRight { get; set; }
 
         public string ICB_EDGE_TOOLING { get; set; }
 
-
-        public virtual ICollection<DuraformDesign> DuraformDesignsWithFixed { get; set; }
 
         public virtual ICollection<DuraformDesign> DuraformDesignsWithDefault { get; set; }
 
@@ -25,12 +29,14 @@ namespace _1_Domain
 
         public virtual ICollection<DuraformComponent> DuraformComponents { get; set; }
 
+        public virtual ICollection<DuraformDesignEdgeProfile> DuraformDesignEdgeProfiles { get; set; }
+
         public DuraformEdgeProfile()
         {
-            DuraformDesignsWithFixed = new Collection<DuraformDesign>();
             DuraformDesignsWithDefault = new Collection<DuraformDesign>();
             DuraformForms = new Collection<DuraformForm>();
             DuraformComponents = new Collection<DuraformComponent>();
+            DuraformDesignEdgeProfiles = new Collection<DuraformDesignEdgeProfile>();
         }
     }
 }

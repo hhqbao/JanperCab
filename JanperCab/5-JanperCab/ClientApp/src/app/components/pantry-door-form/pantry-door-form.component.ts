@@ -73,10 +73,7 @@ export class PantryDoorFormComponent implements OnInit {
         [Validators.required],
       ],
       extraRailBottom: [null, [Validators.min(0), Validators.max(500)]],
-      duraformEdgeProfileId: [
-        this.order.selectedEdgeProfile.id,
-        [Validators.required],
-      ],
+      duraformEdgeProfileId: [null, [Validators.required]],
       top: [false],
       bottom: [false],
       left: [false],

@@ -30,14 +30,22 @@ export abstract class DuraformComponentDto {
   selectEdgeProfile(profile: DuraformEdgeProfileForList) {
     this.duraformEdgeProfileId = profile.id;
 
-    if (
-      profile.forcedValuePerItem !== null &&
-      profile.forcedValuePerItem !== undefined
-    ) {
-      this.top = this.bottom = this.left = this.right =
-        profile.forcedValuePerItem;
-    } else {
-      this.top = this.bottom = this.left = this.right = false;
+    const { forceTop, forceBottom, forceLeft, forceRight } = profile;
+
+    if (forceTop === true || forceTop === false) {
+      this.top = forceTop;
+    }
+
+    if (forceBottom === true || forceBottom === false) {
+      this.bottom = forceBottom;
+    }
+
+    if (forceLeft === true || forceLeft === false) {
+      this.left = forceLeft;
+    }
+
+    if (forceRight === true || forceRight === false) {
+      this.right = forceRight;
     }
   }
 }

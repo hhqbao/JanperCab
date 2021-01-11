@@ -11,7 +11,9 @@
       [ngClass]="{
         selected: selectedEdgeProfile && selectedEdgeProfile.id === profile.id
       }"
-      *ngFor="let profile of asset.edgeProfiles"
+      *ngFor="
+        let profile of asset.getAllowedEdgeProfiles(selectedDuraformDesign)
+      "
       (click)="onSelectProfile(profile)"
     >
       <img

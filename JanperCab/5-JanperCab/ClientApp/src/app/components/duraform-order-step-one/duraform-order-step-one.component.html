@@ -5,6 +5,7 @@
   ></app-duraform-design-list>
   <app-edge-profile-menu
     *ngIf="showEdgeProfileMenu"
+    [selectedDuraformDesign]="selectedDuraformDesign"
     (selectProfile)="
       selectedEdgeProfile = $event;
       showEdgeProfileMenu = false;

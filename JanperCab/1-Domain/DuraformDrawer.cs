@@ -96,6 +96,9 @@ namespace _1_Domain
                 QUANTITY = 1
             };
 
+            line.EDGE_TOP = drawerNumber == 1 ? line.EDGE_TOP : 0;
+            line.EDGE_BOTTOM = NumberOfDrawers == drawerNumber ? line.EDGE_BOTTOM : 0;
+
             switch (drawerNumber)
             {
                 case 1:

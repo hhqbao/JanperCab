@@ -52,10 +52,6 @@ namespace _5_JanperCab.Helpers
 
             CreateMap<DuraformDesign, DuraformDesignForOrderMenu>()
                 .ForMember(
-                    dest => dest.FixedEdgeProfileName,
-                    opt => opt.MapFrom(src => src.FixedEdgeProfile.Name)
-                )
-                .ForMember(
                     dest => dest.DefaultEdgeProfileName,
                     opt => opt.MapFrom(src => src.DefaultEdgeProfile.Name)
                 );
@@ -205,6 +201,9 @@ namespace _5_JanperCab.Helpers
 
             CreateMap<MiscItem, MiscItemDto>();
             CreateMap<MiscItemDto, MiscItem>();
+
+            CreateMap<DuraformDesignEdgeProfile, DuraformDesignEdgeProfileDto>();
+            CreateMap<DuraformDesignEdgeProfileDto, DuraformDesignEdgeProfile>();
         }
     }
 }

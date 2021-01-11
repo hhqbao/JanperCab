@@ -76,15 +76,15 @@ export class DuraformOptionFoldBackFormComponent implements OnInit {
       this.formGroup.get('left').setValue(true);
       this.formGroup.get('right').setValue(true);
 
-      const edgeProfile = this.asset.edgeProfiles.filter(
-        (x) => x.forcedValuePerItem === true
-      )[0];
+      const edgeProfile = this.asset
+        .getAllowedEdgeProfiles(this.order.selectedDesign)
+        .filter(
+          (x) => x.forceTop && x.forceBottom && x.forceLeft && x.forceRight
+        )[0];
 
       this.formGroup
         .get('duraformEdgeProfileId')
-        .setValue(
-          edgeProfile ? edgeProfile.id : this.order.selectedEdgeProfile.id
-        );
+        .setValue(edgeProfile ? edgeProfile.id : null);
 
       this.valueChange.emit();
     }

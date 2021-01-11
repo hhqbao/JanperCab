@@ -55,6 +55,14 @@ export class DuraformAssetService {
     return this.duraformDesigns.find((x) => x.id === id);
   };
 
+  getAllowedEdgeProfiles = (duraformDesign: DuraformDesignForOrderMenu) => {
+    return this.edgeProfiles.filter((x) =>
+      duraformDesign.allowedEdgeProfiles.some(
+        (y) => y.duraformEdgeProfileId === x.id
+      )
+    );
+  };
+
   getEdgeProfile = (id: number) => {
     return this.edgeProfiles.find((x) => x.id === id);
   };

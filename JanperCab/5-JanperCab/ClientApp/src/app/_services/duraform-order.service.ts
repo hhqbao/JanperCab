@@ -248,29 +248,6 @@ export class DuraformOrderService {
     return this.duraformForm.isRoutingOnly;
   }
 
-  get hasFixedEdgeProfile(): boolean {
-    if (!this.selectedDesign) {
-      throw new Error('Duraform Design Is Null');
-    } else {
-      return !!this.selectedDesign.fixedEdgeProfileId;
-    }
-  }
-
-  get canTickEdgeProfile(): boolean {
-    if (!this.selectedEdgeProfile) {
-      throw new Error('Duraform Edge Profile Is Null');
-    } else {
-      if (
-        this.hasFixedEdgeProfile &&
-        [true, false].includes(this.selectedEdgeProfile.forcedValuePerItem)
-      ) {
-        return false;
-      }
-
-      return true;
-    }
-  }
-
   get hingeHoleTypeId(): number {
     return this.duraformForm.hingeHoleTypeId;
   }

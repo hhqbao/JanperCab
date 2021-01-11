@@ -165,9 +165,11 @@ namespace _1_Domain
 
         public ICBLineStructure(DuraformComponent component)
         {
-            TYPE = component.ICBTYPE;
+            var design = component.DuraformForm.DuraformDesign;
+
+            TYPE = string.IsNullOrEmpty(design.ICB_EXTERNAL_SHAPE_FILE) ? component.ICBTYPE : ICB_TYPE_ENUM.EXTERNAL_SHAPE;
             SHAPE_FILE = "SQUARE";
-            EXTERNAL_SHAPE_FILE = string.Empty;
+            EXTERNAL_SHAPE_FILE = design.ICB_EXTERNAL_SHAPE_FILE;
             DIMX = (int)component.Height;
             DIMY = (int)component.Width;
             DIMZ = (int)component.DuraformForm.DuraformDesign.Thickness;

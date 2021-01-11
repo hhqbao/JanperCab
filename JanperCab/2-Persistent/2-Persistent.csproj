@@ -62,6 +62,12 @@
     <Compile Remove="Migrations\20201106020010_CreateTable_DuraformOptionMicrowaveFrame.Designer.cs" />
     <Compile Remove="Migrations\20201124221447_CreateTable_DuraformMiscs.cs" />
     <Compile Remove="Migrations\20201124221447_CreateTable_DuraformMiscs.Designer.cs" />
+    <Compile Remove="Migrations\20201223224015_EditTable_DuraformEdgeProfiles_RemoveCol_ForceValue.cs" />
+    <Compile Remove="Migrations\20201223224015_EditTable_DuraformEdgeProfiles_RemoveCol_ForceValue.Designer.cs" />
+    <Compile Remove="Migrations\20210110113355_EditTable_DuraformDesign_RemoveCol_FixedEdgeProfileId.cs" />
+    <Compile Remove="Migrations\20210110113355_EditTable_DuraformDesign_RemoveCol_FixedEdgeProfileId.Designer.cs" />
+    <Compile Remove="Migrations\20210110113852_EditTable_DuraformDesign_RemoveCol_FixedEdgeProfileId.cs" />
+    <Compile Remove="Migrations\20210110113852_EditTable_DuraformDesign_RemoveCol_FixedEdgeProfileId.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

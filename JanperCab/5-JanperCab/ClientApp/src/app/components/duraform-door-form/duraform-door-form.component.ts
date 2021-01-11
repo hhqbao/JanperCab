@@ -69,10 +69,7 @@ export class DuraformDoorFormComponent implements OnInit {
           Validators.max(this.order.isRoutingOnly ? 3600 : 2500),
         ],
       ],
-      duraformEdgeProfileId: [
-        this.order.selectedEdgeProfile.id,
-        [Validators.required],
-      ],
+      duraformEdgeProfileId: [null, [Validators.required]],
       top: [false],
       bottom: [false],
       left: [false],

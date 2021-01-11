@@ -8,6 +8,12 @@
 
         public string ImageUrl { get; set; }
 
-        public bool? ForcedValuePerItem { get; set; }
+        public bool? ForceTop { get; set; }
+
+        public bool? ForceBottom { get; set; }
+
+        public bool? ForceLeft { get; set; }
+
+        public bool? ForceRight { get; set; }
     }
 }

@@ -23,10 +23,16 @@
           | uppercase
       }}
     </td>
-    <td>{{ duraformDrawer.top ? "Y" : "" }}</td>
-    <td>{{ duraformDrawer.bottom ? "Y" : "" }}</td>
-    <td>{{ duraformDrawer.left ? "Y" : "" }}</td>
-    <td>{{ duraformDrawer.right ? "Y" : "" }}</td>
+    <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
+      {{
+        asset.getEdgeProfile(duraformDrawer.duraformEdgeProfileId).name
+          | uppercase
+      }}
+    </td>
+    <td>{{ duraformDrawer.top ? "X" : "" }}</td>
+    <td>{{ duraformDrawer.bottom ? "X" : "" }}</td>
+    <td>{{ duraformDrawer.left ? "X" : "" }}</td>
+    <td>{{ duraformDrawer.right ? "X" : "" }}</td>
     <td>{{ duraformDrawer.hasDrillFronts ? "YES" : "NO" }}</td>
     <td>{{ duraformDrawer.drawerOne }}</td>
     <td>{{ duraformDrawer.drawerTwo }}</td>

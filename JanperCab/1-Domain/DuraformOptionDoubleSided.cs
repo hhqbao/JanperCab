@@ -1,5 +1,4 @@
-﻿using _1_Domain.Enum;
-using System;
+﻿using System;
 
 namespace _1_Domain
 {
@@ -9,9 +8,9 @@ namespace _1_Domain
 
         public override void UpdateIcbLineStructure(DuraformComponent component, ICBLineStructure line)
         {
-            switch (line.TYPE)
+            switch (component)
             {
-                case ICB_TYPE_ENUM.DRAWER:
+                case DuraformDrawer drawer:
                     throw new NotImplementedException();
                 default:
                     if (!HasProfile)

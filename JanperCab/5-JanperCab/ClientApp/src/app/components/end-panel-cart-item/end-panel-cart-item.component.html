@@ -22,10 +22,15 @@
     <td>{{ endPanel.railRight }}</td>
     <td>{{ endPanel.extraRailTop }}</td>
     <td>{{ endPanel.extraRailBottom }}</td>
-    <td>{{ endPanel.top ? "Y" : "" }}</td>
-    <td>{{ endPanel.bottom ? "Y" : "" }}</td>
-    <td>{{ endPanel.left ? "Y" : "" }}</td>
-    <td>{{ endPanel.right ? "Y" : "" }}</td>
+    <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
+      {{
+        asset.getEdgeProfile(endPanel.duraformEdgeProfileId).name | uppercase
+      }}
+    </td>
+    <td>{{ endPanel.top ? "X" : "" }}</td>
+    <td>{{ endPanel.bottom ? "X" : "" }}</td>
+    <td>{{ endPanel.left ? "X" : "" }}</td>
+    <td>{{ endPanel.right ? "X" : "" }}</td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
       {{ endPanel.duraformOption?.toString() }}
     </td>
