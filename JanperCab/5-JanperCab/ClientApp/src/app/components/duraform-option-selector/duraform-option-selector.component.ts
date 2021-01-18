@@ -1,3 +1,4 @@
+import { DialogService } from './../../_services/dialog.service';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DuraformOptionTypeKey } from './../../_enums/DuraformOptionTypeKey';
@@ -12,6 +13,7 @@ import {
   ElementRef,
 } from '@angular/core';
 import { DuraformOptionDto } from 'src/app/_models/duraform-option/DuraformOptionDto';
+import { DuraformOptionBaseComponent } from '../duraform-option-base-component/duraform-option-base.component';
 
 @Component({
   selector: 'app-duraform-option-selector',
@@ -22,6 +24,7 @@ export class DuraformOptionSelectorComponent implements OnInit {
   @Input() hideOptionTypeKeys: DuraformOptionTypeKey[] = [];
 
   @ViewChild('typeInput') typeInput: ElementRef;
+  @ViewChild('optionForm') optionForm: DuraformOptionBaseComponent;
 
   readonly typeKeyEnum = DuraformOptionTypeKey;
   showTypeList = false;
@@ -37,7 +40,8 @@ export class DuraformOptionSelectorComponent implements OnInit {
   constructor(
     public asset: DuraformAssetService,
     private ef: ElementRef,
-    public order: DuraformOrderService
+    public order: DuraformOrderService,
+    private dialog: DialogService
   ) {}
 
   ngOnInit() {
@@ -104,6 +108,22 @@ export class DuraformOptionSelectorComponent implements OnInit {
   onOptionTypeSelect = (optionType: DuraformOptionTypeDto) => {
     if (this.selectedType === optionType) {
       return;
+    }
+
+    switch (optionType.id) {
+      case this.typeKeyEnum.AngledShelf:
+        if (
+          this.formGroup.get('height').invalid ||
+          this.formGroup.get('width').invalid
+        ) {
+          this.dialog.alert(
+            'Action Not Allowed',
+            'Height & Width are required for this option',
+            null
+          );
+          return;
+        }
+        break;
     }
 
     this.selectedType = optionType;

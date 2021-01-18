@@ -1,3 +1,4 @@
+import { DuraformOptionAngledShelfFormComponent } from './components/duraform-option-angled-shelf-form/duraform-option-angled-shelf-form.component';
 import { MachineFileService } from './_services/machine-file.service';
 import { DuraformMiscComponentListComponent } from './components/duraform-misc-component-list/duraform-misc-component-list.component';
 import { MiscItemService } from './_services/misc-item.service';
@@ -112,7 +113,7 @@ import { UserControlBoxComponent } from './components/user-control-box/user-cont
 import { customCurrencyMaskConfig } from './_helpers/CurrencyMaskInputOption';
 import { PantryDoorCartItemComponent } from './components/pantry-door-cart-item/pantry-door-cart-item.component';
 import { DuraformOrderStepThreeComponent } from './components/duraform-order-step-three/duraform-order-step-three.component';
-import { DuraformOptionDoubleSidedFormComponent } from './components/duraform-option-double-sided-form/duraform-option-double-sided.component';
+import { DuraformOptionDoubleSidedFormComponent } from './components/duraform-option-double-sided-form/duraform-option-double-sided-form.component';
 import { EndPanelComponentListComponent } from './components/end-panel-component-list/end-panel-component-list.component';
 import { DuraformDrawerComponentListComponent } from './components/duraform-drawer-component-list/duraform-drawer-component-list.component';
 import { DuraformOptionRollerShutterComponent } from './components/duraform-option-roller-shutter/duraform-option-roller-shutter.component';
@@ -180,6 +181,7 @@ import { DuraformOptionMicrowaveFrameComponent } from './components/duraform-opt
     DuraformOptionPaneFrameFormComponent,
     DuraformOptionRollerShutterComponent,
     DuraformOptionMicrowaveFrameComponent,
+    DuraformOptionAngledShelfFormComponent,
     DuraformDoorComponentListComponent,
     DuraformPantryDoorComponentListComponent,
     EndPanelComponentListComponent,

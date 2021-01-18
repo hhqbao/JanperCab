@@ -166,6 +166,7 @@ namespace _1_Domain
         public ICBLineStructure(DuraformComponent component)
         {
             var design = component.DuraformForm.DuraformDesign;
+            var edgeProfile = component.DuraformEdgeProfile;
 
             TYPE = string.IsNullOrEmpty(design.ICB_EXTERNAL_SHAPE_FILE) ? component.ICBTYPE : ICB_TYPE_ENUM.EXTERNAL_SHAPE;
             SHAPE_FILE = "SQUARE";
@@ -193,14 +194,14 @@ namespace _1_Domain
             OFFL = 0;
             OFFR = (int)(component.Width > 100 ? 0 : 100 - component.Width);
             EDGETHICK = component.DuraformForm.IsRoutingOnly ? 0 : component.DuraformForm.DuraformWrapType.ICB_EDGETHICK;
-            USERVAR1 = 0;
-            USERVAR2 = 0;
-            USERVAR3 = 0;
-            USERVAR4 = 0;
-            USERVAR5 = 0;
-            USERVAR6 = 0;
-            USERVAR7 = 0;
-            USERVAR8 = 0;
+            USERVAR1 = edgeProfile.UserVar1 ?? 0;
+            USERVAR2 = edgeProfile.UserVar2 ?? 0;
+            USERVAR3 = edgeProfile.UserVar3 ?? 0;
+            USERVAR4 = edgeProfile.UserVar4 ?? 0;
+            USERVAR5 = edgeProfile.UserVar5 ?? 0;
+            USERVAR6 = edgeProfile.UserVar6 ?? 0;
+            USERVAR7 = edgeProfile.UserVar7 ?? 0;
+            USERVAR8 = edgeProfile.UserVar8 ?? 0;
             BD_MATCHING = 0;
             SHAPE_FILE2 = "SQUARE";
             BDH = 0;

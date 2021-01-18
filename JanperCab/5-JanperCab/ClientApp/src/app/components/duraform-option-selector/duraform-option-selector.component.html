@@ -37,34 +37,40 @@
   </div>
   <div
     class="container"
-    *ngIf="selectedType && showOptionForm && !showTypeList"
+    *ngIf="selectedType"
+    [hidden]="!showOptionForm || showTypeList"
   >
     <div class="option-form">
       <app-duraform-option-no-face
+        #optionForm
         appRemoveTag
         *ngIf="selectedType.id === typeKeyEnum.NoFaceRoute"
         [formGroup]="formGroup"
         (valueChange)="onUpdateDisplayValue()"
       ></app-duraform-option-no-face>
       <app-duraform-option-double-sided-form
+        #optionForm
         appRemoveTag
         *ngIf="selectedType.id === typeKeyEnum.DoubleSided"
         [formGroup]="formGroup"
         (valueChange)="onUpdateDisplayValue()"
       ></app-duraform-option-double-sided-form>
       <app-duraform-option-fold-back-form
+        #optionForm
         appRemoveTag
         *ngIf="selectedType.id === typeKeyEnum.FoldBack"
         [formGroup]="formGroup"
         (valueChange)="onUpdateDisplayValue()"
       ></app-duraform-option-fold-back-form>
       <app-duraform-option-pane-frame-form
+        #optionForm
         appRemoveTag
         *ngIf="selectedType.id === typeKeyEnum.PaneFrame"
         [formGroup]="formGroup"
         (valueChange)="onUpdateDisplayValue()"
       ></app-duraform-option-pane-frame-form>
       <app-duraform-option-roller-shutter
+        #optionForm
         appRemoveTag
         *ngIf="selectedType.id === typeKeyEnum.RollerShutter"
         [formGroup]="formGroup"
@@ -72,11 +78,19 @@
       >
       </app-duraform-option-roller-shutter>
       <app-duraform-option-microwave-frame
+        #optionForm
         appRemoveTag
         *ngIf="selectedType.id === typeKeyEnum.MicrowaveFrame"
         [formGroup]="formGroup"
         (valueChange)="onUpdateDisplayValue()"
       ></app-duraform-option-microwave-frame>
+      <app-duraform-option-angled-shelf-form
+        #optionForm
+        appRemoveTag
+        *ngIf="selectedType.id === typeKeyEnum.AngledShelf"
+        [formGroup]="formGroup"
+        (valueChange)="onUpdateDisplayValue()"
+      ></app-duraform-option-angled-shelf-form>
     </div>
   </div>
 </div>

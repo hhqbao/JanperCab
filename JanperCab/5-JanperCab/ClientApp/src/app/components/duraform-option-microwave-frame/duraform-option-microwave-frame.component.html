@@ -1,6 +1,6 @@
 <div
   class="duraform-option-microwave-frame option-form__form-wrapper"
-  [formGroup]="formGroup.get('optionGroup')"
+  [formGroup]="optionGroup"
 >
   <div class="form__group">
     <label class="form__label">Top Size (mm)</label>
@@ -8,7 +8,7 @@
       class="form__control tab-ignore"
       currencyMask
       appSelectOnFocus
-      [formControl]="formGroup.get('optionGroup').get('topSize')"
+      [formControl]="optionGroup.get('topSize')"
       [options]="{
         align: 'left',
         allowZero: false,
@@ -17,11 +17,11 @@
         prefix: '',
         thousands: ''
       }"
-      (blur)="onBlur(formGroup.get('optionGroup').get('topSize'))"
+      (blur)="onBlur(optionGroup.get('topSize'))"
       (keydown)="
         onTab({
           event: $event,
-          control: formGroup.get('optionGroup').get('topSize')
+          control: optionGroup.get('topSize')
         })
       "
     />
@@ -32,7 +32,7 @@
       class="form__control tab-ignore"
       currencyMask
       appSelectOnFocus
-      [formControl]="formGroup.get('optionGroup').get('bottomSize')"
+      [formControl]="optionGroup.get('bottomSize')"
       [options]="{
         align: 'left',
         allowZero: false,
@@ -41,11 +41,11 @@
         prefix: '',
         thousands: ''
       }"
-      (blur)="onBlur(formGroup.get('optionGroup').get('bottomSize'))"
+      (blur)="onBlur(optionGroup.get('bottomSize'))"
       (keydown)="
         onTab({
           event: $event,
-          control: formGroup.get('optionGroup').get('bottomSize')
+          control: optionGroup.get('bottomSize')
         })
       "
     />
@@ -56,7 +56,7 @@
       class="form__control tab-ignore"
       currencyMask
       appSelectOnFocus
-      [formControl]="formGroup.get('optionGroup').get('leftSize')"
+      [formControl]="optionGroup.get('leftSize')"
       [options]="{
         align: 'left',
         allowZero: false,
@@ -65,11 +65,11 @@
         prefix: '',
         thousands: ''
       }"
-      (blur)="onBlur(formGroup.get('optionGroup').get('leftSize'))"
+      (blur)="onBlur(optionGroup.get('leftSize'))"
       (keydown)="
         onTab({
           event: $event,
-          control: formGroup.get('optionGroup').get('leftSize')
+          control: optionGroup.get('leftSize')
         })
       "
     />
@@ -80,7 +80,7 @@
       class="form__control tab-ignore"
       currencyMask
       appSelectOnFocus
-      [formControl]="formGroup.get('optionGroup').get('rightSize')"
+      [formControl]="optionGroup.get('rightSize')"
       [options]="{
         align: 'left',
         allowZero: false,
@@ -89,11 +89,11 @@
         prefix: '',
         thousands: ''
       }"
-      (blur)="onBlur(formGroup.get('optionGroup').get('rightSize'))"
+      (blur)="onBlur(optionGroup.get('rightSize'))"
       (keydown)="
         onTab({
           event: $event,
-          control: formGroup.get('optionGroup').get('rightSize')
+          control: optionGroup.get('rightSize')
         })
       "
     />

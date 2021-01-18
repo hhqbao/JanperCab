@@ -7,32 +7,35 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { DuraformOptionTypeKey } from 'src/app/_enums/DuraformOptionTypeKey';
+import { DuraformOptionBaseComponent } from '../duraform-option-base-component/duraform-option-base.component';
 
 @Component({
   selector: 'app-duraform-option-roller-shutter',
   templateUrl: 'duraform-option-roller-shutter.component.html',
 })
-export class DuraformOptionRollerShutterComponent implements OnInit {
-  @Input() formGroup: FormGroup;
-  @Output() valueChange = new EventEmitter();
-
-  readonly typeKeyEnum = DuraformOptionTypeKey;
-
-  constructor(private fb: FormBuilder) {}
+export class DuraformOptionRollerShutterComponent
+  extends DuraformOptionBaseComponent
+  implements OnInit {
+  constructor(private fb: FormBuilder) {
+    super();
+  }
 
   ngOnInit() {
-    if (!this.formGroup.get('optionGroup')) {
+    if (!this.optionGroup) {
       this.formGroup.addControl(
         'optionGroup',
         this.fb.group({
-          optionTypeId: [this.typeKeyEnum.RollerShutter, [Validators.required]],
+          optionTypeId: [
+            DuraformOptionTypeKey.RollerShutter,
+            [Validators.required],
+          ],
           topSize: [56, [Validators.required, Validators.min(20)]],
           leftSize: [56, [Validators.required, Validators.min(20)]],
           rightSize: [56, [Validators.required, Validators.min(20)]],
         })
       );
 
-      this.valueChange.emit();
+      this.onChange();
     }
   }
 
@@ -50,6 +53,14 @@ export class DuraformOptionRollerShutterComponent implements OnInit {
       control.setValue(56);
     }
 
+    this.onChange();
+  };
+
+  isValid = (): boolean => {
+    return this.optionGroup.valid;
+  };
+
+  onChange = (): void => {
     this.valueChange.emit();
   };
 }

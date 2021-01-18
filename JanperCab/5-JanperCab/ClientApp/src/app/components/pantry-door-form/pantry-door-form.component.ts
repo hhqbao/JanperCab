@@ -1,3 +1,4 @@
+import { ComponentType } from './../../_enums/ComponentType';
 import { DialogService } from './../../_services/dialog.service';
 import { DuraformPantryDoorDto } from './../../_models/duraform-component/DuraformPantryDoorDto';
 import { DuraformOptionTypeKey } from './../../_enums/DuraformOptionTypeKey';
@@ -22,6 +23,7 @@ export class PantryDoorFormComponent implements OnInit {
 
   formGroup: FormGroup;
   optionTypeKeyEnum = DuraformOptionTypeKey;
+  componentType: ComponentType = ComponentType.DuraformPantryDoor;
 
   constructor(
     public asset: DuraformAssetService,

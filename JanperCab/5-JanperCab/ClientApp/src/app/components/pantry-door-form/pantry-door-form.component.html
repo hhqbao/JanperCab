@@ -52,6 +52,7 @@
     <app-edge-profile-form-control
       appRemoveTag
       [formGroup]="formGroup"
+      [componentType]="componentType"
     ></app-edge-profile-form-control>
     <td>
       <app-duraform-option-selector
@@ -60,7 +61,8 @@
           optionTypeKeyEnum.NoFaceRoute,
           optionTypeKeyEnum.PaneFrame,
           optionTypeKeyEnum.MicrowaveFrame,
-          optionTypeKeyEnum.RollerShutter
+          optionTypeKeyEnum.RollerShutter,
+          optionTypeKeyEnum.AngledShelf
         ]"
         [formGroup]="formGroup"
       ></app-duraform-option-selector>

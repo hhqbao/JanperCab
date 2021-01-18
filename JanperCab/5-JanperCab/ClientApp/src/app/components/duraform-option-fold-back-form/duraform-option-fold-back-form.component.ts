@@ -10,16 +10,15 @@ import {
 } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
+import { DuraformOptionBaseComponent } from '../duraform-option-base-component/duraform-option-base.component';
 
 @Component({
   selector: 'app-duraform-option-fold-back-form',
   templateUrl: 'duraform-option-fold-back-form.component.html',
 })
-export class DuraformOptionFoldBackFormComponent implements OnInit {
-  @Input() formGroup: FormGroup;
-  @Output() valueChange = new EventEmitter();
-
-  readonly typeKeyEnum = DuraformOptionTypeKey;
+export class DuraformOptionFoldBackFormComponent
+  extends DuraformOptionBaseComponent
+  implements OnInit {
   readonly foldingType = FoldingType;
 
   thicknesses: any[];
@@ -31,6 +30,8 @@ export class DuraformOptionFoldBackFormComponent implements OnInit {
     private asset: DuraformAssetService,
     private order: DuraformOrderService
   ) {
+    super();
+
     this.thicknesses = [
       { text: '18mm', value: 18 },
       { text: '36mm', value: 36 },
@@ -43,23 +44,23 @@ export class DuraformOptionFoldBackFormComponent implements OnInit {
   }
 
   get leftLength(): AbstractControl {
-    return this.formGroup.get('optionGroup').get('leftLength');
+    return this.optionGroup.get('leftLength');
   }
 
   get rightLength(): AbstractControl {
-    return this.formGroup.get('optionGroup').get('rightLength');
+    return this.optionGroup.get('rightLength');
   }
 
   get selectedFoldingType(): FoldingType {
-    return this.formGroup.get('optionGroup').get('foldingType').value;
+    return this.optionGroup.get('foldingType').value;
   }
 
   ngOnInit() {
-    if (!this.formGroup.get('optionGroup')) {
+    if (!this.optionGroup) {
       this.formGroup.addControl(
         'optionGroup',
         this.fb.group({
-          optionTypeId: [this.typeKeyEnum.FoldBack, [Validators.required]],
+          optionTypeId: [DuraformOptionTypeKey.FoldBack, [Validators.required]],
           hasProfile: [false],
           thickness: [18, [Validators.required]],
           foldingType: [FoldingType.Left, [Validators.required]],
@@ -86,13 +87,9 @@ export class DuraformOptionFoldBackFormComponent implements OnInit {
         .get('duraformEdgeProfileId')
         .setValue(edgeProfile ? edgeProfile.id : null);
 
-      this.valueChange.emit();
+      this.onChange();
     }
   }
-
-  onValueChange = () => {
-    this.valueChange.emit();
-  };
 
   onSelectFoldingType = () => {
     switch (this.selectedFoldingType) {
@@ -137,7 +134,7 @@ export class DuraformOptionFoldBackFormComponent implements OnInit {
 
     this.leftLength.updateValueAndValidity();
     this.rightLength.updateValueAndValidity();
-    this.onValueChange();
+    this.onChange();
   };
 
   onReturnLengthTab = (event: KeyboardEvent) => {
@@ -147,25 +144,21 @@ export class DuraformOptionFoldBackFormComponent implements OnInit {
   };
 
   onReturnLengthBlur = () => {
-    const foldingType = this.formGroup.get('optionGroup').get('foldingType')
+    const foldingType = this.optionGroup.get('foldingType')
       .value as FoldingType;
 
     let lengthControls: AbstractControl[] = [];
 
     switch (foldingType) {
       case FoldingType.Left:
-        lengthControls = [this.formGroup.get('optionGroup').get('leftLength')];
+        lengthControls = [this.optionGroup.get('leftLength')];
         break;
       case FoldingType.Right:
-        lengthControls = [this.formGroup.get('optionGroup').get('rightLength')];
+        lengthControls = [this.optionGroup.get('rightLength')];
         break;
       case FoldingType.Double:
-        lengthControls.push(
-          this.formGroup.get('optionGroup').get('leftLength')
-        );
-        lengthControls.push(
-          this.formGroup.get('optionGroup').get('rightLength')
-        );
+        lengthControls.push(this.optionGroup.get('leftLength'));
+        lengthControls.push(this.optionGroup.get('rightLength'));
         break;
     }
 
@@ -183,6 +176,14 @@ export class DuraformOptionFoldBackFormComponent implements OnInit {
       );
     }
 
-    this.onValueChange();
+    this.onChange();
+  };
+
+  isValid = (): boolean => {
+    return this.optionGroup.valid;
+  };
+
+  onChange = (): void => {
+    this.valueChange.emit();
   };
 }

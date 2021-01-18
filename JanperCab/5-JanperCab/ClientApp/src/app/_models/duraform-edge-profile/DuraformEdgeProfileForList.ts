@@ -6,4 +6,8 @@ export class DuraformEdgeProfileForList {
   forceBottom: boolean;
   forceLeft: boolean;
   forceRight: boolean;
+  hideInDoor: boolean;
+  hideInPantry: boolean;
+  hideInPanel: boolean;
+  hideInDrawer: boolean;
 }

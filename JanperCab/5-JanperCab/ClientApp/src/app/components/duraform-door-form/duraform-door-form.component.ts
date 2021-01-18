@@ -1,3 +1,4 @@
+import { DuraformOptionSelectorComponent } from './../duraform-option-selector/duraform-option-selector.component';
 import { DialogService } from './../../_services/dialog.service';
 import { DuraformDoorDto } from './../../_models/duraform-component/DuraformDoorDto';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
@@ -8,7 +9,15 @@ import {
   Validators,
   AbstractControl,
 } from '@angular/forms';
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  ViewChild,
+} from '@angular/core';
+import { DuraformOptionTypeKey } from 'src/app/_enums/DuraformOptionTypeKey';
 
 @Component({
   selector: 'app-duraform-door-form',
@@ -17,6 +26,8 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 export class DuraformDoorFormComponent implements OnInit {
   @Input() door: DuraformDoorDto;
   @Output() formSubmit = new EventEmitter<FormGroup>();
+
+  @ViewChild('optionSelector') optionSelector: DuraformOptionSelectorComponent;
 
   formGroup: FormGroup;
 
@@ -38,6 +49,10 @@ export class DuraformDoorFormComponent implements OnInit {
 
   get duraformEdgeProfileId(): AbstractControl {
     return this.formGroup.get('duraformEdgeProfileId');
+  }
+
+  get optionGroup(): AbstractControl {
+    return this.formGroup.get('optionGroup');
   }
 
   constructor(
@@ -93,6 +108,21 @@ export class DuraformDoorFormComponent implements OnInit {
       }
     }
   }
+
+  onBasicInputBlur = () => {
+    if (this.optionSelector.optionForm) {
+      const { optionForm } = this.optionSelector;
+
+      if (!optionForm.isValid()) {
+        this.optionSelector.onClearOption();
+        this.dialog.alert(
+          'Duraform Option Invalid',
+          'Duraform Option Not Longer Valid! It Has Been Removed.',
+          null
+        );
+      }
+    }
+  };
 
   onSubmit = () => {
     if (this.formGroup.invalid) {

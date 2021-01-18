@@ -11,6 +11,8 @@
     <app-duraform-door-basic-input
       appRemoveTag
       [formGroup]="formGroup"
+      (heightBlur)="onBasicInputBlur()"
+      (widthBlur)="onBasicInputBlur()"
     ></app-duraform-door-basic-input>
     <app-edge-profile-form-control
       appRemoveTag
@@ -18,6 +20,7 @@
     ></app-edge-profile-form-control>
     <td>
       <app-duraform-option-selector
+        #optionSelector
         [formGroup]="formGroup"
       ></app-duraform-option-selector>
     </td>

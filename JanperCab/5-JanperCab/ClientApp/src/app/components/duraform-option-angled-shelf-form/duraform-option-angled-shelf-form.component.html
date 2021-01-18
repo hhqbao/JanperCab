@@ -1,0 +1,64 @@
+<div
+  class="duraform-option-angled-shelf-form option-form__form-wrapper"
+  [formGroup]="optionGroup"
+>
+  <div class="row">
+    <div class="col-1-3">
+      <div class="form__group">
+        <label class="form__label">Side One</label>
+        <input
+          class="form__control tab-ignore"
+          currencyMask
+          appSelectOnFocus
+          [formControl]="optionGroup.get('sideOne')"
+          [options]="{
+            align: 'left',
+            allowZero: false,
+            precision: '0',
+            decimal: '',
+            prefix: '',
+            thousands: ''
+          }"
+          (blur)="onSideLengthBlur()"
+          (keydown)="onSideLengthTab($event)"
+        />
+      </div>
+      <div class="form__group">
+        <label class="form__label">Side Two</label>
+        <input
+          class="form__control tab-ignore"
+          currencyMask
+          appSelectOnFocus
+          [formControl]="optionGroup.get('sideTwo')"
+          [options]="{
+            align: 'left',
+            allowZero: false,
+            precision: '0',
+            decimal: '',
+            prefix: '',
+            thousands: ''
+          }"
+          (blur)="onSideLengthBlur()"
+          (keydown)="onSideLengthTab($event)"
+        />
+      </div>
+      <div class="form__group">
+        <label class="form__label">Finishing Style</label>
+        <app-select-menu
+          [control]="optionGroup.get('isDoubleSided')"
+          [values]="finishStyles"
+          [valueKey]="'value'"
+          [valueDisplay]="'text'"
+          (afterSet)="onChange()"
+        ></app-select-menu>
+      </div>
+    </div>
+    <div class="col-2-3">
+      <div
+        class="drawing-box"
+        *ngIf="optionGroup.valid"
+        [ngStyle]="boxDrawing"
+      ></div>
+    </div>
+  </div>
+</div>

@@ -1,27 +1,27 @@
 <div
   class="duraform-option-pane-frame-form option-form__form-wrapper"
-  [formGroup]="formGroup.get('optionGroup')"
+  [formGroup]="optionGroup"
 >
   <div class="row">
     <div class="col-1-4">
       <div class="form__group">
         <label class="form__label">Columns</label>
         <app-select-menu
-          [control]="formGroup.get('optionGroup').get('columns')"
+          [control]="optionGroup.get('columns')"
           [values]="columns"
           [valueKey]="'value'"
           [valueDisplay]="'text'"
-          (afterSet)="onValueChange()"
+          (afterSet)="onChange()"
         ></app-select-menu>
       </div>
       <div class="form__group">
         <label class="form__label">Rows</label>
         <app-select-menu
-          [control]="formGroup.get('optionGroup').get('rows')"
+          [control]="optionGroup.get('rows')"
           [values]="rows"
           [valueKey]="'value'"
           [valueDisplay]="'text'"
-          (afterSet)="onValueChange()"
+          (afterSet)="onChange()"
         ></app-select-menu>
       </div>
     </div>

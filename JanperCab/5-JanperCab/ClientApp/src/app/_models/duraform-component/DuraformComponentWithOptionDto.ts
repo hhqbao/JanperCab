@@ -1,3 +1,4 @@
+import { DuraformOptionAngledShelfDto } from './../duraform-option/DuraformOptionAngledShelfDto';
 import { DuraformOptionMicrowaveFrameDto } from './../duraform-option/DuraformOptionMicrowaveFrameDto';
 import { DuraformOptionRollerShutterFrameDto } from './../duraform-option/DuraformOptionRollerShutterFrameDto';
 import { DuraformOptionTypeKey } from './../../_enums/DuraformOptionTypeKey';
@@ -45,6 +46,11 @@ export abstract class DuraformComponentWithOptionDto extends DuraformComponentDt
           value: DuraformOptionMicrowaveFrameDto,
           name:
             '_3_Application.Dtos.DuraformOption.DuraformOptionMicrowaveFrameDto, 3-Application',
+        },
+        {
+          value: DuraformOptionAngledShelfDto,
+          name:
+            '_3_Application.Dtos.DuraformOption.DuraformOptionAngledShelfDto, 3-Application',
         },
       ],
     },

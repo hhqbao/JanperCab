@@ -22,7 +22,7 @@
     position: absolute;
     top: calc(100% + 0.5rem);
     transform: translateX(-50%);
-    width: calc(100% + 2rem);
+    min-width: calc(100% + 2rem);
     z-index: 999;
   }
 

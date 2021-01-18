@@ -62,6 +62,7 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformOptionPaneFrameConfig());
             builder.ApplyConfiguration(new DuraformOptionRollerShutterFrameConfig());
             builder.ApplyConfiguration(new DuraformOptionMicrowaveFrameConfig());
+            builder.ApplyConfiguration(new DuraformOptionAngledShelfConfig());
 
             builder.ApplyConfiguration(new DuraformFormConfig());
             builder.ApplyConfiguration(new DuraformDraftConfig());

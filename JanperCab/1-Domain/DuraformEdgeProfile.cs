@@ -20,7 +20,31 @@ namespace _1_Domain
 
         public bool? ForceRight { get; set; }
 
+        public bool HideInDoor { get; set; }
+
+        public bool HideInPantry { get; set; }
+
+        public bool HideInPanel { get; set; }
+
+        public bool HideInDrawer { get; set; }
+
         public string ICB_EDGE_TOOLING { get; set; }
+
+        public int? UserVar1 { get; set; }
+
+        public int? UserVar2 { get; set; }
+
+        public int? UserVar3 { get; set; }
+
+        public int? UserVar4 { get; set; }
+
+        public int? UserVar5 { get; set; }
+
+        public int? UserVar6 { get; set; }
+
+        public int? UserVar7 { get; set; }
+
+        public int? UserVar8 { get; set; }
 
 
         public virtual ICollection<DuraformDesign> DuraformDesignsWithDefault { get; set; }

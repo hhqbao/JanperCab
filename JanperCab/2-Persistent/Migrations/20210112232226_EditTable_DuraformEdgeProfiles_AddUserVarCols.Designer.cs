@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _2_Persistent;
 
 namespace _2_Persistent.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210112232226_EditTable_DuraformEdgeProfiles_AddUserVarCols")]
+    partial class EditTable_DuraformEdgeProfiles_AddUserVarCols
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -578,18 +580,6 @@ namespace _2_Persistent.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool?>("ForceTop")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HideInDoor")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HideInDrawer")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HideInPanel")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HideInPantry")
                         .HasColumnType("bit");
 
                     b.Property<string>("ICB_EDGE_TOOLING")
@@ -1171,25 +1161,6 @@ namespace _2_Persistent.Migrations
                         .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("DuraformQuote");
-                });
-
-            modelBuilder.Entity("_1_Domain.DuraformOptionAngledShelf", b =>
-                {
-                    b.HasBaseType("_1_Domain.DuraformOption");
-
-                    b.Property<bool>("IsDoubleSided")
-                        .HasColumnName("IsDoubleSided")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("SideOne")
-                        .HasColumnName("SideOne")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("SideTwo")
-                        .HasColumnName("SideTwo")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasDiscriminator().HasValue("DuraformOptionAngledShelf");
                 });
 
             modelBuilder.Entity("_1_Domain.DuraformOptionDoubleSided", b =>

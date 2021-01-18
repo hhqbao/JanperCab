@@ -28,6 +28,8 @@ namespace _3_Application.Dtos.DuraformOptionType
                         return typeof(DuraformOptionRollerShutterFrameDto).AssemblyQualifiedName;
                     case DuraformOptionTypeKey.MicrowaveFrame:
                         return typeof(DuraformOptionMicrowaveFrameDto).AssemblyQualifiedName;
+                    case DuraformOptionTypeKey.AngledShelf:
+                        return typeof(DuraformOptionAngledShelfDto).AssemblyQualifiedName;
                     default:
                         throw new NotImplementedException("Duraform Option Type Not Recognized");
                 }

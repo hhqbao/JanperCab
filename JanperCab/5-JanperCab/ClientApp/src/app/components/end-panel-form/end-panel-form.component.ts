@@ -9,6 +9,7 @@ import {
   Validators,
   AbstractControl,
 } from '@angular/forms';
+import { ComponentType } from 'src/app/_enums/ComponentType';
 
 @Component({
   selector: 'app-end-panel-form',
@@ -20,6 +21,7 @@ export class EndPanelFormComponent implements OnInit {
 
   duraformOptionTypeKey = DuraformOptionTypeKey;
   formGroup: FormGroup;
+  componentType: ComponentType = ComponentType.DuraformEndPanel;
 
   shields = [
     { id: 1, value: 1 },

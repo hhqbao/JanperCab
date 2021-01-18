@@ -1,3 +1,4 @@
+import { ComponentType } from './../../_enums/ComponentType';
 import { DialogService } from './../../_services/dialog.service';
 import { DuraformEdgeProfileForList } from './../../_models/duraform-edge-profile/DuraformEdgeProfileForList';
 import { FormGroup } from '@angular/forms';
@@ -13,6 +14,7 @@ import { DuraformOptionTypeKey } from 'src/app/_enums/DuraformOptionTypeKey';
 export class EdgeProfileFormControlComponent implements OnInit {
   @Input() formGroup: FormGroup;
   @Input() hideEdgeProfile = false;
+  @Input() componentType: ComponentType = null;
 
   optionType = DuraformOptionTypeKey;
 
@@ -27,7 +29,18 @@ export class EdgeProfileFormControlComponent implements OnInit {
       this.order.selectedDesign
     );
 
-    return allowedList;
+    switch (this.componentType) {
+      case ComponentType.DuraformDoor:
+        return allowedList.filter((x) => !x.hideInDoor);
+      case ComponentType.DuraformPantryDoor:
+        return allowedList.filter((x) => !x.hideInPantry);
+      case ComponentType.DuraformEndPanel:
+        return allowedList.filter((x) => !x.hideInPanel);
+      case ComponentType.DuraformDrawer:
+        return allowedList.filter((x) => !x.hideInDrawer);
+      default:
+        return allowedList;
+    }
   }
 
   get selectedEdgeProfile(): DuraformEdgeProfileForList {
@@ -46,10 +59,11 @@ export class EdgeProfileFormControlComponent implements OnInit {
     if (this.allowedEdgeProfiles.length === 1) return true;
 
     const optionGroup = this.formGroup.get('optionGroup');
+    const { FoldBack, AngledShelf } = this.optionType;
 
     if (
       optionGroup &&
-      optionGroup.value.optionTypeId === this.optionType.FoldBack
+      [FoldBack, AngledShelf].includes(optionGroup.value.optionTypeId)
     )
       return true;
 
@@ -57,12 +71,18 @@ export class EdgeProfileFormControlComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.allowedEdgeProfiles.length === 1) {
-      this.formGroup
-        .get('duraformEdgeProfileId')
-        .patchValue(this.allowedEdgeProfiles[0].id);
+    const control = this.formGroup.get('duraformEdgeProfileId');
 
-      this.onSelectEdgeProfile();
+    if (control.value === null || control.value === undefined) {
+      const edgeProfile = this.allowedEdgeProfiles.find(
+        (x) => x.id === this.order.selectedEdgeProfile.id
+      );
+
+      if (edgeProfile) {
+        this.formGroup.get('duraformEdgeProfileId').patchValue(edgeProfile.id);
+
+        this.onSelectEdgeProfile();
+      }
     }
   }
 

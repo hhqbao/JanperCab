@@ -1,6 +1,6 @@
 <div
   class="duraform-option-fold-back-form option-form__form-wrapper"
-  [formGroup]="formGroup.get('optionGroup')"
+  [formGroup]="optionGroup"
 >
   <div class="form__group" style="display: flex">
     <label class="form__radio-btn" style="flex: 1">
@@ -8,7 +8,7 @@
         type="radio"
         formControlName="hasProfile"
         [value]="false"
-        (change)="onValueChange()"
+        (change)="onChange()"
       />
       <span>No Profile</span>
     </label>
@@ -17,7 +17,7 @@
         type="radio"
         formControlName="hasProfile"
         [value]="true"
-        (change)="onValueChange()"
+        (change)="onChange()"
       />
       <span>With Profile</span>
     </label>
@@ -25,17 +25,17 @@
   <div class="form__group">
     <label class="form__label">Thickness</label>
     <app-select-menu
-      [control]="formGroup.get('optionGroup').get('thickness')"
+      [control]="optionGroup.get('thickness')"
       [values]="thicknesses"
       [valueDisplay]="'text'"
       [valueKey]="'value'"
-      (afterSet)="onValueChange()"
+      (afterSet)="onChange()"
     ></app-select-menu>
   </div>
   <div class="form__group">
     <label class="form__label">Folding Type</label>
     <app-select-menu
-      [control]="formGroup.get('optionGroup').get('foldingType')"
+      [control]="optionGroup.get('foldingType')"
       [values]="foldBackTypes"
       [valueDisplay]="'text'"
       [valueKey]="'value'"
@@ -59,7 +59,7 @@
           class="form__control tab-ignore"
           currencyMask
           appSelectOnFocus
-          [formControl]="formGroup.get('optionGroup').get('leftLength')"
+          [formControl]="optionGroup.get('leftLength')"
           [options]="{
             align: 'left',
             allowZero: false,
@@ -90,7 +90,7 @@
           class="form__control tab-ignore"
           currencyMask
           appSelectOnFocus
-          [formControl]="formGroup.get('optionGroup').get('rightLength')"
+          [formControl]="optionGroup.get('rightLength')"
           [options]="{
             align: 'left',
             allowZero: false,

@@ -7,6 +7,7 @@
         FoldBack = 3,
         PaneFrame = 4,
         RollerShutter = 5,
-        MicrowaveFrame = 6
+        MicrowaveFrame = 6,
+        AngledShelf = 7
     }
 }

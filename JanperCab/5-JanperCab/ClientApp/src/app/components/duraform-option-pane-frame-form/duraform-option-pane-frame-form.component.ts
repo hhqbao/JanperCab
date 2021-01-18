@@ -1,20 +1,20 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DuraformOptionTypeKey } from 'src/app/_enums/DuraformOptionTypeKey';
+import { DuraformOptionBaseComponent } from '../duraform-option-base-component/duraform-option-base.component';
 
 @Component({
   selector: 'app-duraform-option-pane-frame-form',
   templateUrl: 'duraform-option-pane-frame-form.component.html',
 })
-export class DuraformOptionPaneFrameFormComponent implements OnInit {
-  @Input() formGroup: FormGroup;
-  @Output() valueChange = new EventEmitter();
-
-  readonly typeKeyEnum = DuraformOptionTypeKey;
+export class DuraformOptionPaneFrameFormComponent
+  extends DuraformOptionBaseComponent
+  implements OnInit {
   columns: any[];
   rows: any[];
 
   constructor(private fb: FormBuilder) {
+    super();
     this.columns = [
       { text: '1', value: 1 },
       { text: '2', value: 2 },
@@ -30,34 +30,41 @@ export class DuraformOptionPaneFrameFormComponent implements OnInit {
     ];
   }
 
-  ngOnInit() {
-    if (!this.formGroup.get('optionGroup')) {
-      this.formGroup.addControl(
-        'optionGroup',
-        this.fb.group({
-          optionTypeId: [this.typeKeyEnum.PaneFrame, [Validators.required]],
-          columns: [1, [Validators.required, Validators.min(1)]],
-          rows: [1, [Validators.required, Validators.min(1)]],
-        })
-      );
-
-      this.valueChange.emit();
-    }
-  }
-
   get columnArray(): number[] {
-    const columns = this.formGroup.get('optionGroup').get('columns').value;
+    const columns = this.optionGroup.get('columns').value;
 
     return [...Array(columns).keys()];
   }
 
   get rowArray(): number[] {
-    const rows = this.formGroup.get('optionGroup').get('rows').value;
+    const rows = this.optionGroup.get('rows').value;
 
     return [...Array(rows).keys()];
   }
 
-  onValueChange = () => {
+  ngOnInit() {
+    if (!this.optionGroup) {
+      this.formGroup.addControl(
+        'optionGroup',
+        this.fb.group({
+          optionTypeId: [
+            DuraformOptionTypeKey.PaneFrame,
+            [Validators.required],
+          ],
+          columns: [1, [Validators.required, Validators.min(1)]],
+          rows: [1, [Validators.required, Validators.min(1)]],
+        })
+      );
+
+      this.onChange();
+    }
+  }
+
+  isValid = (): boolean => {
+    return this.optionGroup.valid;
+  };
+
+  onChange = () => {
     this.valueChange.emit();
   };
 }

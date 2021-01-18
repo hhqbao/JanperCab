@@ -7,7 +7,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class DuraformDoorBasicInputComponent implements OnInit {
   @Output() heightKeyUp = new EventEmitter();
+  @Output() heightBlur = new EventEmitter();
+
   @Output() widthKeyUp = new EventEmitter();
+  @Output() widthBlur = new EventEmitter();
 
   @Input() formGroup: FormGroup;
 

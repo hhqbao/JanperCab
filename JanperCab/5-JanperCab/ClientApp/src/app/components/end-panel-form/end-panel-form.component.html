@@ -116,6 +116,7 @@
     <app-edge-profile-form-control
       appRemoveTag
       [formGroup]="formGroup"
+      [componentType]="componentType"
     ></app-edge-profile-form-control>
     <td>
       <app-duraform-option-selector
@@ -124,7 +125,8 @@
           duraformOptionTypeKey.NoFaceRoute,
           duraformOptionTypeKey.PaneFrame,
           duraformOptionTypeKey.MicrowaveFrame,
-          duraformOptionTypeKey.RollerShutter
+          duraformOptionTypeKey.RollerShutter,
+          duraformOptionTypeKey.AngledShelf
         ]"
       ></app-duraform-option-selector>
     </td>

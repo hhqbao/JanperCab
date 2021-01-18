@@ -1,13 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { DuraformOptionTypeKey } from '../../_enums/DuraformOptionTypeKey';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DuraformOptionTypeKey } from 'src/app/_enums/DuraformOptionTypeKey';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DuraformOptionBaseComponent } from '../duraform-option-base-component/duraform-option-base.component';
 
 @Component({
-  selector: 'app-duraform-option-no-face',
-  templateUrl: 'duraform-option-no-face.component.html',
+  selector: 'app-duraform-option-double-sided-form',
+  templateUrl: 'duraform-option-double-sided-form.component.html',
 })
-export class DuraformOptionNoFaceComponent
+export class DuraformOptionDoubleSidedFormComponent
   extends DuraformOptionBaseComponent
   implements OnInit {
   constructor(private fb: FormBuilder) {
@@ -20,9 +20,10 @@ export class DuraformOptionNoFaceComponent
         'optionGroup',
         this.fb.group({
           optionTypeId: [
-            DuraformOptionTypeKey.NoFaceRoute,
+            DuraformOptionTypeKey.DoubleSided,
             [Validators.required],
           ],
+          hasProfile: [false],
         })
       );
 

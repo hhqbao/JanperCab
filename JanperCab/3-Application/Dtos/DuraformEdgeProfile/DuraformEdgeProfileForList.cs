@@ -15,5 +15,13 @@
         public bool? ForceLeft { get; set; }
 
         public bool? ForceRight { get; set; }
+
+        public bool HideInDoor { get; set; }
+
+        public bool HideInPantry { get; set; }
+
+        public bool HideInPanel { get; set; }
+
+        public bool HideInDrawer { get; set; }
     }
 }

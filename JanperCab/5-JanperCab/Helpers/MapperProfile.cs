@@ -80,14 +80,16 @@ namespace _5_JanperCab.Helpers
                 .Include<DuraformOptionFoldBack, DuraformOptionFoldBackDto>()
                 .Include<DuraformOptionPaneFrame, DuraformOptionPaneFrameDto>()
                 .Include<DuraformOptionRollerShutterFrame, DuraformOptionRollerShutterFrameDto>()
-                .Include<DuraformOptionMicrowaveFrame, DuraformOptionMicrowaveFrameDto>();
+                .Include<DuraformOptionMicrowaveFrame, DuraformOptionMicrowaveFrameDto>()
+                .Include<DuraformOptionAngledShelf, DuraformOptionAngledShelfDto>();
             CreateMap<DuraformOptionDto, DuraformOption>()
                 .Include<DuraformOptionNoFaceDto, DuraformOptionNoFace>()
                 .Include<DuraformOptionDoubleSidedDto, DuraformOptionDoubleSided>()
                 .Include<DuraformOptionFoldBackDto, DuraformOptionFoldBack>()
                 .Include<DuraformOptionPaneFrameDto, DuraformOptionPaneFrame>()
                 .Include<DuraformOptionRollerShutterFrameDto, DuraformOptionRollerShutterFrame>()
-                .Include<DuraformOptionMicrowaveFrameDto, DuraformOptionMicrowaveFrame>();
+                .Include<DuraformOptionMicrowaveFrameDto, DuraformOptionMicrowaveFrame>()
+                .Include<DuraformOptionAngledShelfDto, DuraformOptionAngledShelf>();
 
             CreateMap<DuraformOptionNoFace, DuraformOptionNoFaceDto>();
             CreateMap<DuraformOptionNoFaceDto, DuraformOptionNoFace>();
@@ -106,6 +108,9 @@ namespace _5_JanperCab.Helpers
 
             CreateMap<DuraformOptionMicrowaveFrame, DuraformOptionMicrowaveFrameDto>();
             CreateMap<DuraformOptionMicrowaveFrameDto, DuraformOptionMicrowaveFrame>();
+
+            CreateMap<DuraformOptionAngledShelf, DuraformOptionAngledShelfDto>();
+            CreateMap<DuraformOptionAngledShelfDto, DuraformOptionAngledShelf>();
 
             CreateMap<HingeHoleType, HingeHoleTypeDto>();
             CreateMap<HingeHoleTypeDto, HingeHoleType>();

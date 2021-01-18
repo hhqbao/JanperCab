@@ -9,6 +9,7 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { ComponentType } from 'src/app/_enums/ComponentType';
 
 @Component({
   selector: 'app-duraform-drawer-form',
@@ -19,6 +20,7 @@ export class DuraformDrawerFormComponent implements OnInit {
   @Output() formSubmit = new EventEmitter<FormGroup>();
 
   formGroup: FormGroup;
+  componentType: ComponentType = ComponentType.DuraformEndPanel;
 
   numberDrawers = [
     { id: 1, value: 1 },

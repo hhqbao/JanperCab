@@ -30,6 +30,7 @@
       prefix: '',
       thousands: ''
     }"
+    (blur)="heightBlur.emit()"
     (keyup)="heightKeyUp.emit()"
   />
 </td>
@@ -47,6 +48,7 @@
       prefix: '',
       thousands: ''
     }"
+    (blur)="widthBlur.emit()"
     (input)="widthKeyUp.emit()"
   />
 </td>

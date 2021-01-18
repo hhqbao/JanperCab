@@ -16,6 +16,14 @@
 
         public bool? ForceRight { get; set; }
 
+        public bool HideInDoor { get; set; }
+
+        public bool HideInPantry { get; set; }
+
+        public bool HideInPanel { get; set; }
+
+        public bool HideInDrawer { get; set; }
+
         public string ICB_EDGE_TOOLING { get; set; }
     }
 }

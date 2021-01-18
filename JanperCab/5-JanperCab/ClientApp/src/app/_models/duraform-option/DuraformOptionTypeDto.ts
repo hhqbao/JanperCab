@@ -1,3 +1,4 @@
+import { DuraformOptionAngledShelfDto } from './DuraformOptionAngledShelfDto';
 import { DuraformOptionRollerShutterFrameDto } from './DuraformOptionRollerShutterFrameDto';
 import { DuraformOrderTypeKey } from 'src/app/_enums/DuraformOrderTypeKey';
 import { DuraformOptionDto } from 'src/app/_models/duraform-option/DuraformOptionDto';
@@ -58,6 +59,13 @@ export class DuraformOptionTypeDto {
         option.bottomSize = optionValues.bottomSize;
         option.leftSize = optionValues.leftSize;
         option.rightSize = optionValues.rightSize;
+        break;
+      case DuraformOptionTypeKey.AngledShelf:
+        option = new DuraformOptionAngledShelfDto();
+        option.$type = optionType.type;
+        option.sideOne = optionValues.sideOne;
+        option.sideTwo = optionValues.sideTwo;
+        option.isDoubleSided = optionValues.isDoubleSided;
         break;
       default:
         throw new Error('Unsupported Option Type');
