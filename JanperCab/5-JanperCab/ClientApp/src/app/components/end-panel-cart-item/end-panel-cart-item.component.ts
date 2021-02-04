@@ -1,3 +1,4 @@
+import { DuraformComponentService } from './../../_services/duraform-component.service';
 import { DuraformEndPanelDto } from './../../_models/duraform-component/DuraformEndPanelDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { EndPanelFormComponent } from '../end-panel-form/end-panel-form.component';
@@ -32,7 +33,8 @@ export class EndPanelCartItemComponent implements OnInit {
   constructor(
     public asset: DuraformAssetService,
     private ef: ElementRef,
-    private dialog: DialogService
+    private dialog: DialogService,
+    private componentService: DuraformComponentService
   ) {}
 
   @HostListener('document:click', ['$event.target'])
@@ -62,10 +64,7 @@ export class EndPanelCartItemComponent implements OnInit {
       return;
     }
 
-    this.endPanel.updateWithOption(
-      formGroup.value,
-      this.asset.duraformOptionTypes
-    );
+    this.componentService.updateComponent(this.endPanel, formGroup.value);
 
     this.isSelected = false;
   };

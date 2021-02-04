@@ -10,6 +10,10 @@ export class DuraformOptionFoldBackDto extends DuraformOptionDto {
   leftLength: number;
   rightLength: number;
 
+  get hasNoProfile(): boolean {
+    return !this.hasProfile;
+  }
+
   @Expose()
   toFormGroup(): FormGroup {
     const formGroup = new FormGroup({
@@ -25,9 +29,7 @@ export class DuraformOptionFoldBackDto extends DuraformOptionDto {
 
     switch (this.foldingType) {
       case FoldingType.Left:
-        formGroup
-          .get('rightLength')
-          .setValidators([Validators.min(100), Validators.max(500)]);
+        formGroup.get('rightLength').clearValidators();
         formGroup
           .get('leftLength')
           .setValidators([
@@ -37,9 +39,7 @@ export class DuraformOptionFoldBackDto extends DuraformOptionDto {
           ]);
         break;
       case FoldingType.Right:
-        formGroup
-          .get('leftLength')
-          .setValidators([Validators.min(100), Validators.max(500)]);
+        formGroup.get('leftLength').clearValidators();
         formGroup
           .get('rightLength')
           .setValidators([
@@ -103,5 +103,22 @@ export class DuraformOptionFoldBackDto extends DuraformOptionDto {
     stringValue += ' RETURN END PANEL';
 
     return stringValue;
+  }
+
+  @Expose()
+  getExtraWidth(): number {
+    return this.leftLength + this.rightLength + this.thickness;
+  }
+
+  @Expose()
+  getExtraCharge(basePrice: number): number {
+    let extraPrice = (basePrice * 5) / 100;
+
+    const perFold = 20;
+
+    extraPrice +=
+      this.foldingType === FoldingType.Double ? perFold * 2 : perFold;
+
+    return extraPrice;
   }
 }

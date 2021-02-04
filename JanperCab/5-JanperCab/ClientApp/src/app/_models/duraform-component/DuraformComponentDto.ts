@@ -13,8 +13,9 @@ export abstract class DuraformComponentDto {
   right: boolean;
   note: string;
   sortNumber: number;
+  price: number;
 
-  protected update(formValue: any) {
+  update(formValue: any) {
     this.quantity = formValue.quantity;
     this.height = formValue.height;
     this.width = formValue.width;
@@ -48,4 +49,8 @@ export abstract class DuraformComponentDto {
       this.right = forceRight;
     }
   }
+
+  abstract get totalHeight(): number;
+  abstract get totalWidth(): number;
+  abstract getPriceForOne(serieId: number): number;
 }

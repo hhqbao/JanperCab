@@ -13,7 +13,7 @@ namespace _1_Domain
 
         public bool IsPopular { get; set; }
 
-        public DuraformSerie.DuraformSerieKey DuraformSerieId { get; set; }
+        public int DuraformSerieId { get; set; }
 
         public int DefaultEdgeProfileId { get; set; }
 

@@ -29,6 +29,7 @@ namespace _2_Persistent
         public DbSet<MiscItem> MiscItems { get; set; }
         public DbSet<DuraformMisc> DuraformMiscs { get; set; }
         public DbSet<DuraformDesignEdgeProfile> DuraformDesignEdgeProfiles { get; set; }
+        public DbSet<DuraformPriceGrid> DuraformPriceGrids { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,
@@ -83,6 +84,8 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new ApplicationFileConfig());
             builder.ApplyConfiguration(new DuraformFileConfig());
             builder.ApplyConfiguration(new DuraformDesignEdgeProfileConfig());
+
+            builder.ApplyConfiguration(new DuraformPriceGridConfig());
 
             base.OnModelCreating(builder);
         }

@@ -7,6 +7,10 @@ export class DuraformOptionAngledShelfDto extends DuraformOptionDto {
   sideTwo: number;
   isDoubleSided: boolean;
 
+  get hasNoProfile(): boolean {
+    return true;
+  }
+
   @Expose()
   toFormGroup(): FormGroup {
     const formGroup = new FormGroup({
@@ -31,5 +35,19 @@ export class DuraformOptionAngledShelfDto extends DuraformOptionDto {
   @Expose()
   toCabProValue(): string {
     return 'No Longer Use This Function!';
+  }
+
+  @Expose()
+  getExtraWidth(): number {
+    return 0;
+  }
+
+  @Expose()
+  getExtraCharge(basePrice: number): number {
+    if (!this.isDoubleSided) return 10;
+
+    let extraPrice = (basePrice * 50) / 100;
+
+    return extraPrice + 10;
   }
 }

@@ -34,6 +34,8 @@ export class OrderFormDirective implements OnInit {
   }
 
   private onSubmit = () => {
+    if (!this.formGroup) return;
+
     if (this.formGroup.valid) {
       this.controls[0].focus();
     } else {
@@ -47,7 +49,8 @@ export class OrderFormDirective implements OnInit {
 
       this.dialog.error('Please provide all the required fields.');
     }
-    this.submit.emit();
+
+    if (this.submit) this.submit.emit();
   };
 
   @HostListener('keydown.Enter', ['$event'])

@@ -68,7 +68,7 @@ namespace _1_Domain
 
                     list.Add(line);
                     break;
-                default:
+                case DrawerDesign.Individual:
                     var index = 1;
                     while (index <= NumberOfDrawers)
                     {
@@ -77,6 +77,8 @@ namespace _1_Domain
                         index++;
                     }
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             return list;
@@ -99,27 +101,15 @@ namespace _1_Domain
             line.EDGE_TOP = drawerNumber == 1 ? line.EDGE_TOP : 0;
             line.EDGE_BOTTOM = NumberOfDrawers == drawerNumber ? line.EDGE_BOTTOM : 0;
 
-            switch (drawerNumber)
+            line.DIMX = drawerNumber switch
             {
-                case 1:
-                    line.DIMX = (int)(DrawerOne ?? 0);
-                    break;
-                case 2:
-                    line.DIMX = (int)(DrawerTwo ?? 0);
-                    break;
-                case 3:
-                    line.DIMX = (int)(DrawerThree ?? 0);
-                    break;
-                case 4:
-                    line.DIMX = (int)(DrawerFour ?? 0);
-                    break;
-                case 5:
-                    line.DIMX = (int)(DrawerFive ?? 0);
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-
+                1 => (int)(DrawerOne ?? 0),
+                2 => (int)(DrawerTwo ?? 0),
+                3 => (int)(DrawerThree ?? 0),
+                4 => (int)(DrawerFour ?? 0),
+                5 => (int)(DrawerFive ?? 0),
+                _ => throw new NotImplementedException(),
+            };
             return line;
         }
     }

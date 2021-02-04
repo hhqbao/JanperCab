@@ -33,6 +33,8 @@ namespace _3_Application.Interfaces.Repositories
 
         IMiscItemRepo MiscItems { get; }
 
+        IDuraformPriceRepo DuraformPrices { get; }
+
         Task ExecuteCommandAsync(string command);
 
         Task<int> CompleteAsync();

@@ -1,3 +1,4 @@
+import { DuraformPriceService } from './../../_services/duraform-price.service';
 import { UploadDuraformFileDto } from './../../_models/files/UploadDuraformFileDto';
 import { FileService } from './../../_services/file.service';
 import { DuraformFileDto } from './../../_models/application-file/DuraformFileDto';
@@ -33,10 +34,36 @@ export class DuraformOrderStepTwoComponent implements OnInit {
     public order: DuraformOrderService,
     private dialog: DialogService,
     public fileService: FileService,
-    private layout: LayoutService
+    private layout: LayoutService,
+    private asset: DuraformAssetService,
+    private priceService: DuraformPriceService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.layout.showLoadingPanel();
+    const observables = forkJoin({
+      serieOnePrices: this.priceService.getPriceGrid(
+        this.order.selectedWrapType.id,
+        1
+      ),
+      selectedSeriePrices: this.priceService.getPriceGrid(
+        this.order.selectedWrapType.id,
+        this.order.selectedSerie.id
+      ),
+    });
+
+    observables.subscribe(
+      (responses) => {
+        this.asset.priceGrids = responses.serieOnePrices.concat(
+          responses.selectedSeriePrices
+        );
+        this.layout.closeLoadingPanel();
+      },
+      (error) => {
+        this.dialog.error(error);
+      }
+    );
+  }
 
   onRepickClick = () => {
     this.goBack.emit();

@@ -1,17 +1,10 @@
-﻿
+﻿using _1_Domain.Enum;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace _1_Domain
 {
-    public enum DuraformOrderType
-    {
-        Draft = 1,
-        Quote = 2,
-        Order = 3,
-    }
-
     public abstract class DuraformForm
     {
         public Guid Id { get; set; }
@@ -22,7 +15,7 @@ namespace _1_Domain
 
         public int DuraformDesignId { get; set; }
 
-        public DuraformSerie.DuraformSerieKey DuraformSerieId { get; set; }
+        public int DuraformSerieId { get; set; }
 
         public bool IsRoutingOnly { get; set; }
 

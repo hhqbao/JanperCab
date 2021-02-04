@@ -72,16 +72,18 @@
       <li class="nav__item">
         <a [appClassToggle]="'active'">
           <div class="nav__item__icon">
-            <i class="fa fa-map-o"></i>
+            <i class="fa fa-cogs"></i>
           </div>
           <div class="nav__item__text">
-            Maps
+            Settings
             <ul class="nav__item__sub-menu">
               <li>
-                <a>Google Map</a>
+                <a [routerLink]="['/dashboard/settings/duraform-prices']">
+                  Duraform Prices
+                </a>
               </li>
               <li>
-                <a>Vector Map</a>
+                <a>Duraform Colours</a>
               </li>
             </ul>
           </div>

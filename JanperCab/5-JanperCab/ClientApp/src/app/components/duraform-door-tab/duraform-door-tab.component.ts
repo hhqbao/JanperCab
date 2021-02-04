@@ -1,3 +1,5 @@
+import { DuraformComponentService } from './../../_services/duraform-component.service';
+import { ComponentType } from './../../_enums/ComponentType';
 import { DuraformDoorCartItemComponent } from './../duraform-door-cart-item/duraform-door-cart-item.component';
 import { DuraformDoorDto } from './../../_models/duraform-component/DuraformDoorDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
@@ -14,7 +16,8 @@ export class DuraformDoorTabComponent implements OnInit {
   constructor(
     public asset: DuraformAssetService,
     public order: DuraformOrderService,
-    private dialog: DialogService
+    private dialog: DialogService,
+    private componentService: DuraformComponentService
   ) {}
 
   ngOnInit() {}
@@ -24,9 +27,10 @@ export class DuraformDoorTabComponent implements OnInit {
       return;
     }
 
-    const formValue = formGroup.value;
-    const door = this.asset.generateDuraformDoor();
-    door.updateWithOption(formValue, this.asset.duraformOptionTypes);
+    const door = this.componentService.generateComponent(
+      ComponentType.DuraformDoor
+    );
+    this.componentService.updateComponent(door, formGroup.value);
 
     this.order.addComponent(door);
 

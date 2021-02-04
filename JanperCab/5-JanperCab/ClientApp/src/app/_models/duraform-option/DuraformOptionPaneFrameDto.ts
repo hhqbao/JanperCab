@@ -7,6 +7,10 @@ export class DuraformOptionPaneFrameDto extends DuraformOptionDto {
   columns: number;
   rows: number;
 
+  get hasNoProfile(): boolean {
+    return false;
+  }
+
   @Expose()
   toFormGroup(): FormGroup {
     const formGroup = new FormGroup({
@@ -51,5 +55,15 @@ export class DuraformOptionPaneFrameDto extends DuraformOptionDto {
       default:
         return `${this.toString()} - Not Implemented`;
     }
+  }
+
+  @Expose()
+  getExtraWidth(): number {
+    return 0;
+  }
+
+  @Expose()
+  getExtraCharge(basePrice: number): number {
+    return this.columns * this.rows * 7;
   }
 }

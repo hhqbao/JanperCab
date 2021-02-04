@@ -1,11 +1,13 @@
 import { DuraformComponentWithOptionAndHingeHoleDto } from './DuraformComponentWithOptionAndHingeHoleDto';
 import { DuraformOptionTypeDto } from '../duraform-option/DuraformOptionTypeDto';
+import { Expose } from 'class-transformer';
 
 export class DuraformPantryDoorDto extends DuraformComponentWithOptionAndHingeHoleDto {
   chairRailHeight: number;
   chairRailTypeId: number;
   extraRailBottom: number;
 
+  @Expose()
   updateWithOption(
     formValue: any,
     duraformOptionTypes: DuraformOptionTypeDto[]

@@ -37,6 +37,8 @@ namespace _4_Infrastructure.Repositories
 
         public IMiscItemRepo MiscItems { get; }
 
+        public IDuraformPriceRepo DuraformPrices { get; }
+
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {
@@ -56,6 +58,7 @@ namespace _4_Infrastructure.Repositories
             DuraformOrders = new DuraformOrderRepo(_dbContext);
             ApplicationFiles = new ApplicationFileRepo(_dbContext);
             MiscItems = new MiscItemRepo(_dbContext);
+            DuraformPrices = new DuraformPriceRepo(_dbContext);
         }
 
         public async Task ExecuteCommandAsync(string command)

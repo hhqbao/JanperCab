@@ -8,6 +8,7 @@ import { DuraformPageComponent } from './pages/duraform-page/duraform-page.compo
 import { PrimaryLayoutComponent } from './components/primary-layout/primary-layout.component';
 
 import { Routes } from '@angular/router';
+import { DuraformPriceGridPageComponent } from './pages/duraform-price-grid-page/duraform-price-grid-page.component';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,10 @@ export const routes: Routes = [
       { path: 'duraform/quote/:id', component: DuraformQuotePageComponent },
       { path: 'duraform/:type/:id', component: DuraformPageComponent },
       { path: 'duraform', component: DuraformPageComponent },
+      {
+        path: 'settings/duraform-prices',
+        component: DuraformPriceGridPageComponent,
+      },
       { path: '', component: HomePageComponent, pathMatch: 'full' },
     ],
   },

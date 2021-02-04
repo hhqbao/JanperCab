@@ -1,3 +1,4 @@
+import { DuraformPriceGridDto } from './../duraform-price/DuraformPriceGridDto';
 import { HingeHoleOptionDto } from './../hinge-hole-option/HingeHoleOptionDto';
 import { DuraformComponentWithOptionDto } from './DuraformComponentWithOptionDto';
 import { DuraformOptionTypeDto } from '../duraform-option/DuraformOptionTypeDto';

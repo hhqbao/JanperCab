@@ -1,7 +1,7 @@
+import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 import { DuraformOptionAngledShelfDto } from './../duraform-option/DuraformOptionAngledShelfDto';
 import { DuraformOptionMicrowaveFrameDto } from './../duraform-option/DuraformOptionMicrowaveFrameDto';
 import { DuraformOptionRollerShutterFrameDto } from './../duraform-option/DuraformOptionRollerShutterFrameDto';
-import { DuraformOptionTypeKey } from './../../_enums/DuraformOptionTypeKey';
 import { DuraformOptionPaneFrameDto } from './../duraform-option/DuraformOptionPaneFrameDto';
 import { DuraformOptionFoldBackDto } from './../duraform-option/DuraformOptionFoldBackDto';
 import { DuraformOptionDoubleSidedDto } from './../duraform-option/DuraformOptionDoubleSidedDto';
@@ -9,7 +9,8 @@ import { DuraformOptionNoFaceDto } from './../duraform-option/DuraformOptionNoFa
 import { DuraformOptionDto } from 'src/app/_models/duraform-option/DuraformOptionDto';
 import { DuraformComponentDto } from './DuraformComponentDto';
 import { DuraformOptionTypeDto } from '../duraform-option/DuraformOptionTypeDto';
-import { Type } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import * as _ from 'lodash';
 
 export abstract class DuraformComponentWithOptionDto extends DuraformComponentDto {
   @Type(() => DuraformOptionDto, {
@@ -57,11 +58,22 @@ export abstract class DuraformComponentWithOptionDto extends DuraformComponentDt
   })
   duraformOption: DuraformOptionDto;
 
+  get totalHeight(): number {
+    return this.height;
+  }
+
+  get totalWidth(): number {
+    if (!this.duraformOption) return this.width;
+
+    return this.width + this.duraformOption.getExtraWidth();
+  }
+
+  @Expose()
   updateWithOption(
     formValue: any,
     duraformOptionTypes: DuraformOptionTypeDto[]
   ) {
-    this.update(formValue);
+    super.update(formValue);
 
     if (formValue.optionGroup) {
       const optionType = duraformOptionTypes.find(
@@ -81,5 +93,20 @@ export abstract class DuraformComponentWithOptionDto extends DuraformComponentDt
     } else {
       this.duraformOption = null;
     }
+  }
+
+  @Expose()
+  getPriceForOne(serieId: number): number {
+    let basePrice = DuraformAssetService.instance.getBasePrice(
+      serieId,
+      this.totalHeight,
+      this.totalWidth
+    );
+
+    if (this.duraformOption) {
+      basePrice += this.duraformOption.getExtraCharge(basePrice);
+    }
+
+    return _.round(basePrice, 2);
   }
 }

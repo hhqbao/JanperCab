@@ -1,5 +1,4 @@
-﻿
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace _3_Application.Dtos.DuraformDesign
 {
@@ -13,7 +12,7 @@ namespace _3_Application.Dtos.DuraformDesign
 
         public bool IsPopular { get; set; }
 
-        public _1_Domain.DuraformSerie.DuraformSerieKey DuraformSerieId { get; set; }
+        public int DuraformSerieId { get; set; }
 
         public int DefaultEdgeProfileId { get; set; }
 

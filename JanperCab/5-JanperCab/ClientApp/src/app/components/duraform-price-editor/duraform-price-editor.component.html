@@ -1,0 +1,23 @@
+<div class="duraform-price-editor">
+  <i
+    class="fa fa-pencil"
+    aria-hidden="true"
+    *ngIf="priceGrid.price !== priceGrid.tempPrice"
+  ></i>
+  <input
+    class="form__control"
+    currencyMask
+    appSelectOnFocus
+    [formControl]="formControl"
+    (blur)="onBlur()"
+    [options]="{
+      align: 'right',
+      allowZero: false,
+      precision: '2',
+      decimal: '.',
+      prefix: '$ ',
+      thousands: '',
+      min: 0
+    }"
+  />
+</div>

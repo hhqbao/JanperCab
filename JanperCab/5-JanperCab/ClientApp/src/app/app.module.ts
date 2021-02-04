@@ -1,3 +1,5 @@
+import { DuraformPriceBulkActionComponent } from './components/duraform-price-bulk-action/duraform-price-bulk-action.component';
+import { DuraformPriceEditorComponent } from './components/duraform-price-editor/duraform-price-editor.component';
 import { DuraformOptionAngledShelfFormComponent } from './components/duraform-option-angled-shelf-form/duraform-option-angled-shelf-form.component';
 import { MachineFileService } from './_services/machine-file.service';
 import { DuraformMiscComponentListComponent } from './components/duraform-misc-component-list/duraform-misc-component-list.component';
@@ -118,6 +120,7 @@ import { EndPanelComponentListComponent } from './components/end-panel-component
 import { DuraformDrawerComponentListComponent } from './components/duraform-drawer-component-list/duraform-drawer-component-list.component';
 import { DuraformOptionRollerShutterComponent } from './components/duraform-option-roller-shutter/duraform-option-roller-shutter.component';
 import { DuraformOptionMicrowaveFrameComponent } from './components/duraform-option-microwave-frame/duraform-option-microwave-frame.component';
+import { DuraformPriceGridPageComponent } from './pages/duraform-price-grid-page/duraform-price-grid-page.component';
 
 @NgModule({
   declarations: [
@@ -195,6 +198,7 @@ import { DuraformOptionMicrowaveFrameComponent } from './components/duraform-opt
     DuraformOrderListPageComponent,
     PaginationComponent,
     DuraformQuotePageComponent,
+    DuraformPriceGridPageComponent,
     DeliveryDocketComponent,
     DeliveryDocketDuraformDoorsComponent,
     DeliveryDocketPantryDoorsComponent,
@@ -203,6 +207,8 @@ import { DuraformOptionMicrowaveFrameComponent } from './components/duraform-opt
     CabinetMakerListComponent,
     EdgeProfileMenuComponent,
     DuraformMiscComponentListComponent,
+    DuraformPriceEditorComponent,
+    DuraformPriceBulkActionComponent,
   ],
   imports: [
     BrowserModule,

@@ -44,11 +44,13 @@
 @import "./3-component/heading";
 @import "./3-component/cabinet-maker-list";
 @import "./3-component/edge-profile-menu";
+@import "./3-component/duraform-price-editor";
 @import "./4-layout/grid";
 @import "./4-layout/primary-layout";
 @import "./5-page/duraform-page";
 @import "./5-page/login-page";
 @import "./5-page/duraform-quote-page";
+@import "./5-page/duraform-price-page";
 
 @import "./../../../node_modules/alertifyjs/build/css/alertify.min.css";
 .ajs-message {

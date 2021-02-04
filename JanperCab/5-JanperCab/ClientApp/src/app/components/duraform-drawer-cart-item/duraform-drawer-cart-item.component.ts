@@ -1,3 +1,4 @@
+import { DuraformComponentService } from './../../_services/duraform-component.service';
 import { DuraformDrawerDto } from './../../_models/duraform-component/DuraformDrawerDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DuraformDrawerFormComponent } from '../duraform-drawer-form/duraform-drawer-form.component';
@@ -33,7 +34,8 @@ export class DuraformDrawerCartItemComponent implements OnInit {
   constructor(
     public asset: DuraformAssetService,
     private ef: ElementRef,
-    private dialog: DialogService
+    private dialog: DialogService,
+    private componentService: DuraformComponentService
   ) {}
 
   @HostListener('document:click', ['$event.target'])
@@ -63,8 +65,7 @@ export class DuraformDrawerCartItemComponent implements OnInit {
       return;
     }
 
-    const formValue = formGroup.value;
-    this.duraformDrawer.update(formValue);
+    this.componentService.updateComponent(this.duraformDrawer, formGroup.value);
 
     this.isSelected = false;
   };

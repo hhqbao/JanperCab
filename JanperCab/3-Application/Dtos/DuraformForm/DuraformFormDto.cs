@@ -1,4 +1,4 @@
-﻿using _1_Domain;
+﻿using _1_Domain.Enum;
 using _3_Application.Dtos.ApplicationFile;
 using _3_Application.Dtos.DuraformComponent;
 using System;
@@ -19,7 +19,7 @@ namespace _3_Application.Dtos.DuraformForm
 
         public int DuraformDesignId { get; set; }
 
-        public _1_Domain.DuraformSerie.DuraformSerieKey DuraformSerieId { get; set; }
+        public int DuraformSerieId { get; set; }
 
         public bool IsRoutingOnly { get; set; }
 

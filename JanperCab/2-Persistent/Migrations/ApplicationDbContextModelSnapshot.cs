@@ -833,10 +833,49 @@ namespace _2_Persistent.Migrations
                     b.ToTable("DuraformOptionTypes");
                 });
 
+            modelBuilder.Entity("_1_Domain.DuraformPriceGrid", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DuraformSerieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DuraformWrapTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("MaxHeight")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MaxWidth")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MinHeight")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MinWidth")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DuraformSerieId");
+
+                    b.HasIndex("DuraformWrapTypeId");
+
+                    b.ToTable("DuraformPriceGrids");
+                });
+
             modelBuilder.Entity("_1_Domain.DuraformSerie", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1537,6 +1576,21 @@ namespace _2_Persistent.Migrations
                     b.HasOne("_1_Domain.DuraformComponentWithOption", "DuraformComponentWithOption")
                         .WithOne("DuraformOption")
                         .HasForeignKey("_1_Domain.DuraformOption", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformPriceGrid", b =>
+                {
+                    b.HasOne("_1_Domain.DuraformSerie", "DuraformSerie")
+                        .WithMany("DuraformPriceGrids")
+                        .HasForeignKey("DuraformSerieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("_1_Domain.DuraformWrapType", "DuraformWrapType")
+                        .WithMany("DuraformPriceGrids")
+                        .HasForeignKey("DuraformWrapTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

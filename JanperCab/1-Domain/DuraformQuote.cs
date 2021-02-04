@@ -1,4 +1,6 @@
-﻿namespace _1_Domain
+﻿using _1_Domain.Enum;
+
+namespace _1_Domain
 {
     public enum QuoteStatus
     {
@@ -12,8 +14,6 @@
         public int QuoteNumber { get; set; }
 
         public QuoteStatus QuoteStatus { get; set; }
-
-
 
         public DuraformQuote()
         {

@@ -1,8 +1,7 @@
+import { DialogService } from './dialog.service';
+import { DuraformPriceGridDto } from './../_models/duraform-price/DuraformPriceGridDto';
 import { MiscItemDto } from './../_models/duraform-misc/MiscItemDto';
-import { DuraformDrawerDto } from './../_models/duraform-component/DuraformDrawerDto';
-import { DuraformEndPanelDto } from './../_models/duraform-component/DuraformEndPanelDto';
-import { DuraformPantryDoorDto } from './../_models/duraform-component/DuraformPantryDoorDto';
-import { DuraformDoorDto } from './../_models/duraform-component/DuraformDoorDto';
+
 import { ComponentType } from './../_enums/ComponentType';
 import { DuraformComponentTypeDto } from './../_models/duraform-component/DuraformComponentType';
 import { DuraformWrapColorForSelection } from './../_models/duraform-wrap-color/DuraformWrapColorForSelection';
@@ -16,10 +15,11 @@ import { PantryDoorChairRailTypeForList } from '../_models/pantry-door-chair-rai
 import { DuraformDrawerTypeForList } from '../_models/duraform-drawer-type/DuraformDrawerTypeForList';
 import { DuraformOptionTypeDto } from '../_models/duraform-option/DuraformOptionTypeDto';
 import { HingeHoleTypeDto } from '../_models/hinge-hole-type/HingeHoleTypeDto';
-import { DuraformComponentDto } from '../_models/duraform-component/DuraformComponentDto';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformAssetService {
+  static instance: DuraformAssetService;
+
   componentTypes: DuraformComponentTypeDto[] = [];
   arches: DuraformArchForList[] = [];
   miscItems: MiscItemDto[] = [];
@@ -32,8 +32,11 @@ export class DuraformAssetService {
   edgeProfiles: DuraformEdgeProfileForList[] = [];
   pantryDoorChairRailTypes: PantryDoorChairRailTypeForList[] = [];
   hingeHoleTypes: HingeHoleTypeDto[] = [];
+  priceGrids: DuraformPriceGridDto[] = [];
 
-  constructor() {}
+  constructor(private dialog: DialogService) {
+    DuraformAssetService.instance = this;
+  }
 
   getComponentType = (id: ComponentType): DuraformComponentTypeDto => {
     return this.componentTypes.find((x) => x.id === id);
@@ -87,35 +90,33 @@ export class DuraformAssetService {
     return this.miscItems.find((x) => x.id === id);
   };
 
-  generateDuraformDoor = (): DuraformDoorDto => {
-    const component = new DuraformDoorDto();
-    component.$type = this.getComponentType(ComponentType.DuraformDoor).type;
+  getBasePrice = (serieId: number, totalHeight: number, totalWidth: number) => {
+    let priceGrid =
+      this.priceGrids.find(
+        (x) =>
+          x.duraformSerieId === serieId &&
+          x.minHeight <= totalHeight &&
+          x.maxHeight >= totalHeight &&
+          x.minWidth <= totalWidth &&
+          x.maxWidth >= totalWidth
+      ) ??
+      this.priceGrids.find(
+        (x) =>
+          x.duraformSerieId === serieId &&
+          x.minHeight <= totalWidth &&
+          x.maxHeight >= totalWidth &&
+          x.minWidth <= totalHeight &&
+          x.maxWidth >= totalHeight
+      );
 
-    return component;
-  };
+    if (priceGrid) return priceGrid.price;
 
-  generatePantryDoor = (): DuraformPantryDoorDto => {
-    const component = new DuraformPantryDoorDto();
-    component.$type = this.getComponentType(
-      ComponentType.DuraformPantryDoor
-    ).type;
+    this.dialog.alert(
+      'Price Out Of Range',
+      `${totalHeight} x ${totalWidth} size is out of price range! Please supply price data for this range!`,
+      null
+    );
 
-    return component;
-  };
-
-  generateEndPanel = (): DuraformEndPanelDto => {
-    const component = new DuraformEndPanelDto();
-    component.$type = this.getComponentType(
-      ComponentType.DuraformEndPanel
-    ).type;
-
-    return component;
-  };
-
-  generateDuraformDrawer = (): DuraformDrawerDto => {
-    const component = new DuraformDrawerDto();
-    component.$type = this.getComponentType(ComponentType.DuraformDrawer).type;
-
-    return component;
+    return 0;
   };
 }

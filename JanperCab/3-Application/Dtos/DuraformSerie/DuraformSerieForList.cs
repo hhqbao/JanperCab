@@ -2,7 +2,7 @@
 {
     public class DuraformSerieForList
     {
-        public _1_Domain.DuraformSerie.DuraformSerieKey Id { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
     }

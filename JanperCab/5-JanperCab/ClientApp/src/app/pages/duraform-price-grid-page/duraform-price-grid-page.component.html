@@ -1,0 +1,108 @@
+<div class="duraform-price-page">
+  <app-float-box *ngIf="showBulkActionControl">
+    <app-duraform-price-bulk-action
+      (apply)="onBulkActionApply($event)"
+      (cancel)="showBulkActionControl = false"
+    ></app-duraform-price-bulk-action>
+  </app-float-box>
+
+  <div class="duraform-price-page__control-section">
+    <div class="row">
+      <div class="col-1-4 middle">
+        <div class="form__label">Finish:</div>
+      </div>
+      <div class="col-3-4">
+        <select
+          class="form__control"
+          [(ngModel)]="selectedFinishId"
+          (change)="onSelectionChange()"
+        >
+          <option disabled [value]="null">-- Select Finish --</option>
+          <option *ngFor="let finish of finishList" [value]="finish.id">
+            {{ finish.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-1-4 middle">
+        <div class="form__label">Serie:</div>
+      </div>
+      <div class="col-3-4">
+        <select
+          class="form__control"
+          [(ngModel)]="selectedSerieId"
+          (change)="onSelectionChange()"
+        >
+          <option disabled [value]="null">-- Select Serie --</option>
+          <option *ngFor="let serie of serieList" [value]="serie.id">
+            {{ serie.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="duraform-price-page__price-grid-section" *ngIf="priceGrids">
+    <table
+      class="table table--bordered table--hovered duraform-price-page__price-table"
+    >
+      <thead>
+        <tr>
+          <th style="width: 12rem">
+            <div class="dropdown" appDropdownBtn>
+              <button type="button" class="btn btn--primary">
+                Actions
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <ul class="dropdown__list">
+                <li>
+                  <a (click)="onReset()">
+                    <i class="fa fa-repeat text-brown" aria-hidden="true"></i>
+                    Reset
+                  </a>
+                </li>
+                <li>
+                  <a (click)="showBulkActionControl = true">
+                    <i
+                      class="fa fa-line-chart text-purple"
+                      aria-hidden="true"
+                    ></i>
+                    Bulk Change
+                  </a>
+                </li>
+                <li class="dropdown__divider"></li>
+                <li>
+                  <a (click)="onSave()">
+                    <i class="fa fa-floppy-o text-green" aria-hidden="true"></i>
+                    Save Data
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </th>
+          <th *ngFor="let widthHeader of widthHeaders" style="width: 10rem">
+            <b>{{ widthHeader.minWidth }}</b> -
+            <b>{{ widthHeader.maxWidth }}</b>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let heightHeader of heightHeaders" appOrderForm>
+          <td class="text-left">
+            <b>{{ heightHeader.minHeight }}</b> -
+            <b>{{ heightHeader.maxHeight }}</b>
+          </td>
+          <td *ngFor="let widthHeader of widthHeaders">
+            <span *ngIf="showBulkActionControl || isReseting">
+              {{ getPrice(heightHeader, widthHeader).tempPrice | currency }}
+            </span>
+            <app-duraform-price-editor
+              *ngIf="!showBulkActionControl && !isReseting"
+              [priceGrid]="getPrice(heightHeader, widthHeader)"
+            ></app-duraform-price-editor>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

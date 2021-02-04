@@ -6,10 +6,10 @@ export abstract class DuraformOptionDto {
   id: number;
   duraformOptionTypeId: DuraformOptionTypeKey;
 
-  // constructor(optionType: DuraformOptionTypeDto) {
-  //   this.$type = optionType.type;
-  //   this.duraformOptionTypeId = optionType.id;
-  // }
+  abstract get hasNoProfile(): boolean;
+
+  abstract getExtraWidth(): number;
+  abstract getExtraCharge(basePrice: number): number;
 
   abstract toFormGroup(): FormGroup;
   abstract toString(): string;

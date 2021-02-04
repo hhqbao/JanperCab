@@ -1,0 +1,11 @@
+.duraform-price-editor {
+  position: relative;
+
+  i {
+    color: $blue-primary;
+    left: 1.5rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

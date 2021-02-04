@@ -4,6 +4,10 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Expose } from 'class-transformer';
 
 export class DuraformOptionNoFaceDto extends DuraformOptionDto {
+  get hasNoProfile(): boolean {
+    return true;
+  }
+
   @Expose()
   toFormGroup(): FormGroup {
     const formGroup = new FormGroup({
@@ -23,5 +27,15 @@ export class DuraformOptionNoFaceDto extends DuraformOptionDto {
   @Expose()
   toCabProValue(): string {
     return 'PANEL NO FACE ROUT';
+  }
+
+  @Expose()
+  getExtraWidth(): number {
+    return 0;
+  }
+
+  @Expose()
+  getExtraCharge(basePrice: number): number {
+    return 0;
   }
 }

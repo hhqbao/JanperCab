@@ -1,3 +1,4 @@
+import { DuraformComponentService } from './../../_services/duraform-component.service';
 import { DuraformDoorDto } from './../../_models/duraform-component/DuraformDoorDto';
 import { DuraformDoorFormComponent } from '../duraform-door-form/duraform-door-form.component';
 import { DialogService } from './../../_services/dialog.service';
@@ -34,7 +35,8 @@ export class DuraformDoorCartItemComponent implements OnInit {
   constructor(
     public asset: DuraformAssetService,
     public order: DuraformOrderService,
-    private ef: ElementRef
+    private ef: ElementRef,
+    private componentService: DuraformComponentService
   ) {}
 
   @HostListener('document:click', ['$event.target'])
@@ -63,7 +65,8 @@ export class DuraformDoorCartItemComponent implements OnInit {
       return;
     }
 
-    this.door.updateWithOption(formGroup.value, this.asset.duraformOptionTypes);
+    this.componentService.updateComponent(this.door, formGroup.value);
+
     this.isSelected = false;
   };
 

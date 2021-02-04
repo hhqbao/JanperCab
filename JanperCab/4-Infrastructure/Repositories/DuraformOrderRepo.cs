@@ -1,4 +1,5 @@
 ﻿using _1_Domain;
+using _1_Domain.Enum;
 using _3_Application.Dtos.Common;
 using _3_Application.Interfaces.Repositories;
 using IdentityServer4.Extensions;

@@ -11,6 +11,7 @@ using _3_Application.Dtos.DuraformForm;
 using _3_Application.Dtos.DuraformOption;
 using _3_Application.Dtos.DuraformOptionType;
 using _3_Application.Dtos.DuraformOrder;
+using _3_Application.Dtos.DuraformPriceGrid;
 using _3_Application.Dtos.DuraformQuote;
 using _3_Application.Dtos.DuraformSerie;
 using _3_Application.Dtos.DuraformWrapColor;
@@ -209,6 +210,9 @@ namespace _5_JanperCab.Helpers
 
             CreateMap<DuraformDesignEdgeProfile, DuraformDesignEdgeProfileDto>();
             CreateMap<DuraformDesignEdgeProfileDto, DuraformDesignEdgeProfile>();
+
+            CreateMap<DuraformPriceGrid, DuraformPriceGridDto>();
+            CreateMap<DuraformPriceGridDto, DuraformPriceGrid>();
         }
     }
 }

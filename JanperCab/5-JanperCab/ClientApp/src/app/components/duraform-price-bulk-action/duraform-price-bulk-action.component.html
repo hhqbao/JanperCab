@@ -1,0 +1,56 @@
+<div class="duraform-price-bulk-action">
+  <app-simple-box [heading]="'Bulk Action'">
+    <div class="row">
+      <div class="col-1-3">
+        <label class="form__label">Operator</label>
+        <app-select-menu
+          [control]="operatorControl"
+          [values]="operators"
+          [valueKey]="'id'"
+          [valueDisplay]="'text'"
+        ></app-select-menu>
+      </div>
+      <div class="col-1-3">
+        <label class="form__label">Value</label>
+        <input
+          class="form__control"
+          currencyMask
+          appSelectOnFocus
+          [formControl]="valueControl"
+          [options]="{
+            align: 'right',
+            precision: '2',
+            decimal: '.',
+            prefix: unitControl.value === '$' ? '$ ' : '% ',
+            thousands: ''
+          }"
+        />
+      </div>
+      <div class="col-1-3">
+        <label class="form__label">Unit</label>
+        <app-select-menu
+          [control]="unitControl"
+          [values]="units"
+          [valueKey]="'id'"
+          [valueDisplay]="'text'"
+        ></app-select-menu>
+      </div>
+    </div>
+    <div class="row">
+      <button
+        class="btn btn--primary"
+        [disabled]="formGroup.invalid"
+        (click)="onApply()"
+      >
+        Apply
+      </button>
+      <button
+        class="btn btn--default"
+        style="margin-left: 1.5rem"
+        (click)="onCancel()"
+      >
+        Cancel
+      </button>
+    </div>
+  </app-simple-box>
+</div>

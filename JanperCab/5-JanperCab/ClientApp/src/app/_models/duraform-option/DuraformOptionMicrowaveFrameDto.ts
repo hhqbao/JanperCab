@@ -8,6 +8,10 @@ export class DuraformOptionMicrowaveFrameDto extends DuraformOptionDto {
   leftSize: number;
   rightSize: number;
 
+  get hasNoProfile(): boolean {
+    return true;
+  }
+
   @Expose()
   toFormGroup(): FormGroup {
     const formGroup = new FormGroup({
@@ -45,5 +49,15 @@ export class DuraformOptionMicrowaveFrameDto extends DuraformOptionDto {
   @Expose()
   toCabProValue(): string {
     return this.toString();
+  }
+
+  @Expose()
+  getExtraWidth(): number {
+    return 0;
+  }
+
+  @Expose()
+  getExtraCharge(basePrice: number): number {
+    return 11;
   }
 }

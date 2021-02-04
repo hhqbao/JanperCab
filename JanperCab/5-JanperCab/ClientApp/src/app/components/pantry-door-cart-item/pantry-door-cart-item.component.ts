@@ -1,3 +1,4 @@
+import { DuraformComponentService } from './../../_services/duraform-component.service';
 import { DuraformPantryDoorDto } from './../../_models/duraform-component/DuraformPantryDoorDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { PantryDoorFormComponent } from '../pantry-door-form/pantry-door-form.component';
@@ -32,7 +33,8 @@ export class PantryDoorCartItemComponent implements OnInit {
   constructor(
     public asset: DuraformAssetService,
     private ef: ElementRef,
-    private dialog: DialogService
+    private dialog: DialogService,
+    private componentService: DuraformComponentService
   ) {}
 
   @HostListener('document:click', ['$event.target'])
@@ -62,10 +64,7 @@ export class PantryDoorCartItemComponent implements OnInit {
       return;
     }
 
-    this.pantryDoor.updateWithOption(
-      formGroup.value,
-      this.asset.duraformOptionTypes
-    );
+    this.componentService.updateComponent(this.pantryDoor, formGroup.value);
 
     this.isSelected = false;
   };

@@ -1,9 +1,11 @@
+import { DuraformComponentService } from './../../_services/duraform-component.service';
 import { DuraformEndPanelDto } from './../../_models/duraform-component/DuraformEndPanelDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { FormGroup } from '@angular/forms';
 import { DialogService } from './../../_services/dialog.service';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
 import { Component, OnInit, Input } from '@angular/core';
+import { ComponentType } from 'src/app/_enums/ComponentType';
 
 @Component({
   selector: 'app-end-panel-tab',
@@ -13,7 +15,8 @@ export class EndPanelTabComponent implements OnInit {
   constructor(
     public asset: DuraformAssetService,
     public order: DuraformOrderService,
-    private dialog: DialogService
+    private dialog: DialogService,
+    private componentService: DuraformComponentService
   ) {}
 
   ngOnInit() {}
@@ -23,8 +26,10 @@ export class EndPanelTabComponent implements OnInit {
       return;
     }
 
-    const endPanel = this.asset.generateEndPanel();
-    endPanel.updateWithOption(formGroup.value, this.asset.duraformOptionTypes);
+    const endPanel = this.componentService.generateComponent(
+      ComponentType.DuraformEndPanel
+    );
+    this.componentService.updateComponent(endPanel, formGroup.value);
 
     this.order.addComponent(endPanel);
 

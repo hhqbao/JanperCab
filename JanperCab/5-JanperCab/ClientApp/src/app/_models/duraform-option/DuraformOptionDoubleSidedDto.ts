@@ -1,10 +1,13 @@
-import { DuraformOptionTypeDto } from './DuraformOptionTypeDto';
 import { DuraformOptionDto } from './DuraformOptionDto';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Expose } from 'class-transformer';
 
 export class DuraformOptionDoubleSidedDto extends DuraformOptionDto {
   hasProfile: boolean;
+
+  get hasNoProfile(): boolean {
+    return !this.hasProfile;
+  }
 
   @Expose()
   toFormGroup(): FormGroup {
@@ -26,5 +29,15 @@ export class DuraformOptionDoubleSidedDto extends DuraformOptionDto {
   @Expose()
   toCabProValue(): string {
     return this.toString();
+  }
+
+  @Expose()
+  getExtraWidth(): number {
+    return 0;
+  }
+
+  @Expose()
+  getExtraCharge(basePrice: number): number {
+    return (basePrice * 50) / 100;
   }
 }

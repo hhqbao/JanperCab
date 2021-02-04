@@ -1,0 +1,28 @@
+.duraform-price-page {
+  &__control-section {
+    width: 30rem;
+  }
+
+  &__price-grid-section {
+    margin-top: 3rem;
+  }
+
+  &__price-table {
+    tbody {
+      td {
+        padding: 1rem;
+      }
+    }
+
+    .dropdown {
+      &__list {
+        color: $text-default;
+        left: 0;
+        right: unset;
+        text-align: left;
+        top: 125%;
+        width: calc(100% + 10rem);
+      }
+    }
+  }
+}
