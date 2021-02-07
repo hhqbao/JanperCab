@@ -71,51 +71,61 @@ export class DuraformPriceGridPageComponent implements OnInit {
   }
 
   onSelectionChange = () => {
-    if (this.selectedFinishId && this.selectedSerieId) {
+    if (
+      ![null, undefined].includes(this.selectedFinishId) &&
+      ![null, undefined].includes(this.selectedSerieId)
+    ) {
       this.heightHeaders = [];
       this.widthHeaders = [];
 
       this.isLoading = true;
       this.layout.showLoadingPanel();
-      this.priceService
-        .getPriceGrid(this.selectedFinishId, this.selectedSerieId)
-        .subscribe(
-          (response) => {
-            this.priceGrids = response;
 
-            this.priceGrids.forEach((priceGrid) => {
-              const { minHeight, maxHeight, minWidth, maxWidth } = priceGrid;
+      const request =
+        this.selectedFinishId === 0
+          ? this.priceService.getRouteOnlyPriceGrid(this.selectedSerieId)
+          : this.priceService.getPressPriceGrid(
+              this.selectedFinishId,
+              this.selectedSerieId
+            );
 
-              if (
-                !this.widthHeaders.some(
-                  (x) => x.minWidth === minWidth && x.maxWidth === maxWidth
-                )
+      request.subscribe(
+        (response) => {
+          this.priceGrids = response;
+
+          this.priceGrids.forEach((priceGrid) => {
+            const { minHeight, maxHeight, minWidth, maxWidth } = priceGrid;
+
+            if (
+              !this.widthHeaders.some(
+                (x) => x.minWidth === minWidth && x.maxWidth === maxWidth
               )
-                this.widthHeaders.push({
-                  minWidth,
-                  maxWidth,
-                });
+            )
+              this.widthHeaders.push({
+                minWidth,
+                maxWidth,
+              });
 
-              if (
-                !this.heightHeaders.some(
-                  (x) => x.minHeight === minHeight && x.maxHeight === maxHeight
-                )
+            if (
+              !this.heightHeaders.some(
+                (x) => x.minHeight === minHeight && x.maxHeight === maxHeight
               )
-                this.heightHeaders.push({
-                  minHeight,
-                  maxHeight,
-                });
-            });
+            )
+              this.heightHeaders.push({
+                minHeight,
+                maxHeight,
+              });
+          });
 
-            this.isLoading = false;
-            this.layout.closeLoadingPanel();
-          },
-          (error) => {
-            this.isLoading = false;
-            this.layout.closeLoadingPanel();
-            this.dialog.error(error);
-          }
-        );
+          this.isLoading = false;
+          this.layout.closeLoadingPanel();
+        },
+        (error) => {
+          this.isLoading = false;
+          this.layout.closeLoadingPanel();
+          this.dialog.error(error);
+        }
+      );
     }
   };
 

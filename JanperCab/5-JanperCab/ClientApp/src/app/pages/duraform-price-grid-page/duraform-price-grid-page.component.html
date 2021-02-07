@@ -18,7 +18,8 @@
           (change)="onSelectionChange()"
         >
           <option disabled [value]="null">-- Select Finish --</option>
-          <option *ngFor="let finish of finishList" [value]="finish.id">
+          <option [ngValue]="0">Route Only</option>
+          <option *ngFor="let finish of finishList" [ngValue]="finish.id">
             {{ finish.name }}
           </option>
         </select>

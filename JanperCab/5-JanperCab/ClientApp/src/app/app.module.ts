@@ -1,3 +1,4 @@
+import { ArraySumPipe } from './_pipes/arraySum.pipe';
 import { DuraformPriceBulkActionComponent } from './components/duraform-price-bulk-action/duraform-price-bulk-action.component';
 import { DuraformPriceEditorComponent } from './components/duraform-price-editor/duraform-price-editor.component';
 import { DuraformOptionAngledShelfFormComponent } from './components/duraform-option-angled-shelf-form/duraform-option-angled-shelf-form.component';
@@ -127,6 +128,7 @@ import { DuraformPriceGridPageComponent } from './pages/duraform-price-grid-page
     AppComponent,
     LeadingPipe,
     FileSizePipe,
+    ArraySumPipe,
     FloatBoxComponent,
     ClassToggleDirective,
     DropdownBtnDirective,

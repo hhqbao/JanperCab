@@ -41,22 +41,38 @@ export class DuraformOrderStepTwoComponent implements OnInit {
 
   ngOnInit() {
     this.layout.showLoadingPanel();
-    const observables = forkJoin({
-      serieOnePrices: this.priceService.getPriceGrid(
-        this.order.selectedWrapType.id,
-        1
-      ),
-      selectedSeriePrices: this.priceService.getPriceGrid(
-        this.order.selectedWrapType.id,
-        this.order.selectedSerie.id
-      ),
-    });
+
+    const serieOneRequest = this.order.isRoutingOnly
+      ? this.priceService.getRouteOnlyPriceGrid(1)
+      : this.priceService.getPressPriceGrid(this.order.selectedWrapType.id, 1);
+
+    const selectedSerieRequest = this.order.isRoutingOnly
+      ? this.priceService.getRouteOnlyPriceGrid(this.order.selectedSerie.id)
+      : this.priceService.getPressPriceGrid(
+          this.order.selectedWrapType.id,
+          this.order.selectedSerie.id
+        );
+
+    const observables =
+      this.order.selectedSerie.id === 1
+        ? forkJoin({
+            serieOnePrices: serieOneRequest,
+          })
+        : forkJoin({
+            serieOnePrices: serieOneRequest,
+            selectedSeriePrices: selectedSerieRequest,
+          });
 
     observables.subscribe(
       (responses) => {
-        this.asset.priceGrids = responses.serieOnePrices.concat(
-          responses.selectedSeriePrices
-        );
+        this.asset.priceGrids = responses.serieOnePrices;
+
+        if (responses['selectedSeriePrices']) {
+          this.asset.priceGrids = this.asset.priceGrids.concat(
+            responses['selectedSeriePrices']
+          );
+        }
+
         this.layout.closeLoadingPanel();
       },
       (error) => {

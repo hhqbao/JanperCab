@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _2_Persistent;
 
 namespace _2_Persistent.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210204092002_EditTable_DuraformPriceGrid_MakeAbstract")]
+    partial class EditTable_DuraformPriceGrid_MakeAbstract
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -427,9 +429,6 @@ namespace _2_Persistent.Migrations
 
                     b.Property<string>("Note")
                         .HasColumnType("varchar(1000)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -847,9 +846,6 @@ namespace _2_Persistent.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DuraformSerieId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("MaxHeight")
                         .HasColumnType("decimal(18,2)");
 
@@ -866,8 +862,6 @@ namespace _2_Persistent.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DuraformSerieId");
 
                     b.ToTable("DuraformPriceGrids");
 
@@ -1331,19 +1325,17 @@ namespace _2_Persistent.Migrations
                     b.HasDiscriminator().HasValue("DuraformOptionRollerShutterFrame");
                 });
 
-            modelBuilder.Entity("_1_Domain.DuraformRouteOnlyPriceGrid", b =>
-                {
-                    b.HasBaseType("_1_Domain.DuraformPriceGrid");
-
-                    b.HasDiscriminator().HasValue("DuraformRouteOnlyPriceGrid");
-                });
-
             modelBuilder.Entity("_1_Domain.DuraformWrapPriceGrid", b =>
                 {
                     b.HasBaseType("_1_Domain.DuraformPriceGrid");
 
+                    b.Property<int>("DuraformSerieId")
+                        .HasColumnType("int");
+
                     b.Property<int>("DuraformWrapTypeId")
                         .HasColumnType("int");
+
+                    b.HasIndex("DuraformSerieId");
 
                     b.HasIndex("DuraformWrapTypeId");
 
@@ -1603,15 +1595,6 @@ namespace _2_Persistent.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("_1_Domain.DuraformPriceGrid", b =>
-                {
-                    b.HasOne("_1_Domain.DuraformSerie", "DuraformSerie")
-                        .WithMany("DuraformPriceGrids")
-                        .HasForeignKey("DuraformSerieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("_1_Domain.DuraformWrapColor", b =>
                 {
                     b.HasOne("_1_Domain.DuraformWrapType", "DuraformWrapType")
@@ -1674,6 +1657,12 @@ namespace _2_Persistent.Migrations
 
             modelBuilder.Entity("_1_Domain.DuraformWrapPriceGrid", b =>
                 {
+                    b.HasOne("_1_Domain.DuraformSerie", "DuraformSerie")
+                        .WithMany("DuraformWrapPriceGrids")
+                        .HasForeignKey("DuraformSerieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("_1_Domain.DuraformWrapType", "DuraformWrapType")
                         .WithMany("DuraformWrapPriceGrids")
                         .HasForeignKey("DuraformWrapTypeId")

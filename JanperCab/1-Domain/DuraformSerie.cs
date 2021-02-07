@@ -16,6 +16,7 @@ namespace _1_Domain
 
         public virtual ICollection<DuraformPriceGrid> DuraformPriceGrids { get; set; }
 
+
         public DuraformSerie()
         {
             DuraformDesigns = new Collection<DuraformDesign>();

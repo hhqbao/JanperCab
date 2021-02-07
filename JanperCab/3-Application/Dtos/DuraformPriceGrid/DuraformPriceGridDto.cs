@@ -1,12 +1,8 @@
 ﻿namespace _3_Application.Dtos.DuraformPriceGrid
 {
-    public class DuraformPriceGridDto
+    public abstract class DuraformPriceGridDto
     {
         public int Id { get; set; }
-
-        public int DuraformSerieId { get; set; }
-
-        public int DuraformWrapTypeId { get; set; }
 
         public decimal MinHeight { get; set; }
 
@@ -19,5 +15,7 @@
         public decimal Price { get; set; }
 
         public decimal TempPrice => Price;
+
+        public int DuraformSerieId { get; set; }
     }
 }

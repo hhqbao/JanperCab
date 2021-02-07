@@ -1,3 +1,4 @@
+import { DuraformComponentService } from './../../_services/duraform-component.service';
 import { DuraformEdgeProfileForList } from './../../_models/duraform-edge-profile/DuraformEdgeProfileForList';
 import { Observable } from 'rxjs';
 import { DuraformDoorDto } from './../../_models/duraform-component/DuraformDoorDto';
@@ -20,8 +21,17 @@ export class DuraformDoorComponentListComponent implements OnInit {
 
   constructor(
     public asset: DuraformAssetService,
+    public componentService: DuraformComponentService,
     private edgeProfileSerive: DuraformEdgeProfileService
   ) {}
+
+  get totalQuantity(): number {
+    let total = 0;
+
+    this.duraformDoors.forEach((x) => (total += x.quantity));
+
+    return total;
+  }
 
   ngOnInit() {
     this.edgeProfileSerive.getAll().subscribe(

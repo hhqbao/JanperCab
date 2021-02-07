@@ -337,6 +337,14 @@ export class DuraformOrderService {
     return this.duraformForm.duraformFiles;
   }
 
+  get totalPrice(): number {
+    let total = 0;
+
+    this.duraformForm.duraformComponents.forEach((x) => (total += x.price));
+
+    return total;
+  }
+
   submitStepOne = (model: StepOneReturnValue) => {
     this.duraformForm.duraformDesignId = model.design.id;
     this.duraformForm.duraformSerieId = model.serie.id;

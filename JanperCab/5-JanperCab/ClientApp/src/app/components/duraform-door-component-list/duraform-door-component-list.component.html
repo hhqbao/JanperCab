@@ -13,6 +13,7 @@
           <th rowspan="2" style="width: 20rem">Edge Profile</th>
           <th rowspan="2" style="width: 20rem">Hinge Hole</th>
           <th rowspan="2">Note</th>
+          <th rowspan="2" style="width: 8rem">Price</th>
         </tr>
         <tr>
           <th style="width: 4rem">T</th>
@@ -23,7 +24,7 @@
       </thead>
       <tbody *ngIf="isLoading">
         <tr>
-          <td colspan="11" class="text-center">
+          <td colspan="12" class="text-center">
             <i>Loading... </i>
             <i class="fa fa-spinner fa-spin"></i>
           </td>
@@ -31,7 +32,7 @@
       </tbody>
       <tbody *ngIf="!isLoading && hasError">
         <tr>
-          <td colspan="11" class="text-center text-alert">
+          <td colspan="12" class="text-center text-alert">
             {{ errorMessage }}
           </td>
         </tr>
@@ -54,6 +55,24 @@
             {{ door.hingeHoleOption?.toString() }}
           </td>
           <td class="text-left">{{ door.note }}</td>
+          <td class="text-right">{{ door.price | currency }}</td>
+        </tr>
+      </tbody>
+      <tbody class="subtotal">
+        <tr>
+          <td colspan="13" class="subtotal__header">
+            <b>Subtotal</b>
+          </td>
+        </tr>
+        <tr>
+          <td class="line-number">
+            <i class="fa fa-calculator" aria-hidden="true"></i>
+          </td>
+          <td>{{ totalQuantity }}</td>
+          <td colspan="10"></td>
+          <td class="subtotal__price">
+            {{ duraformDoors | arraySum: "price" | currency }}
+          </td>
         </tr>
       </tbody>
     </table>

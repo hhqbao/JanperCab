@@ -20,14 +20,14 @@ namespace _1_Domain
 
         public virtual ICollection<DuraformForm> DuraformForms { get; set; }
 
-        public virtual ICollection<DuraformPriceGrid> DuraformPriceGrids { get; set; }
+        public virtual ICollection<DuraformWrapPriceGrid> DuraformWrapPriceGrids { get; set; }
 
         public DuraformWrapType()
         {
             DuraformWrapColors = new Collection<DuraformWrapColor>();
             NotAvailableDesignWrapTypes = new Collection<NotAvailableDesignWrapType>();
             DuraformForms = new Collection<DuraformForm>();
-            DuraformPriceGrids = new Collection<DuraformPriceGrid>();
+            DuraformWrapPriceGrids = new Collection<DuraformWrapPriceGrid>();
         }
     }
 }

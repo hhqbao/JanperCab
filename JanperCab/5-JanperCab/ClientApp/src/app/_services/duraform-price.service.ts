@@ -1,26 +1,42 @@
+import { DuraformPriceGridDto } from 'src/app/_models/duraform-price/DuraformPriceGridDto';
+import { DuraformWrapPriceGridDto } from './../_models/duraform-price/DuraformWrapPriceGridDto';
 import { plainToClass } from 'class-transformer';
 import { map } from 'rxjs/operators';
-import { DuraformPriceGridDto } from './../_models/duraform-price/DuraformPriceGridDto';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { DuraformRouteOnlyPriceGridDto } from '../_models/duraform-price/DuraformRouteOnlyPriceGridDto';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformPriceService {
   constructor(private http: HttpClient) {}
 
-  getPriceGrid = (
+  getPressPriceGrid = (
     finishId: number,
     serieId: number
-  ): Observable<DuraformPriceGridDto[]> => {
+  ): Observable<DuraformWrapPriceGridDto[]> => {
     return this.http
-      .get<DuraformPriceGridDto[]>(
+      .get<DuraformWrapPriceGridDto[]>(
         `${environment.baseUrl}/DuraformPrices/${finishId}/${serieId}`
       )
       .pipe(
         map((response) => {
-          return plainToClass(DuraformPriceGridDto, response);
+          return plainToClass(DuraformWrapPriceGridDto, response);
+        })
+      );
+  };
+
+  getRouteOnlyPriceGrid = (
+    serieId: number
+  ): Observable<DuraformRouteOnlyPriceGridDto[]> => {
+    return this.http
+      .get<DuraformRouteOnlyPriceGridDto[]>(
+        `${environment.baseUrl}/DuraformPrices/${serieId}`
+      )
+      .pipe(
+        map((response) => {
+          return plainToClass(DuraformRouteOnlyPriceGridDto, response);
         })
       );
   };
@@ -35,7 +51,7 @@ export class DuraformPriceService {
       )
       .pipe(
         map((response) => {
-          return plainToClass(DuraformPriceGridDto, response);
+          return plainToClass(DuraformPriceGridDto as any, response);
         })
       );
   };

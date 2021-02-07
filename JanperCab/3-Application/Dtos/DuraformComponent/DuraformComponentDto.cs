@@ -22,6 +22,8 @@
 
         public string Note { get; set; }
 
+        public decimal Price { get; set; }
+
         public int SortNumber { get; set; }
     }
 }

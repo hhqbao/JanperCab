@@ -35,12 +35,6 @@ namespace _2_Persistent.Configs
                 .HasForeignKey(x => x.DuraformSerieId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasOne(x => x.DuraformWrapType)
-                .WithMany(y => y.DuraformPriceGrids)
-                .HasForeignKey(x => x.DuraformWrapTypeId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

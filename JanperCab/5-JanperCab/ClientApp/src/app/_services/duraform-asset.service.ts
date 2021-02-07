@@ -15,6 +15,7 @@ import { PantryDoorChairRailTypeForList } from '../_models/pantry-door-chair-rai
 import { DuraformDrawerTypeForList } from '../_models/duraform-drawer-type/DuraformDrawerTypeForList';
 import { DuraformOptionTypeDto } from '../_models/duraform-option/DuraformOptionTypeDto';
 import { HingeHoleTypeDto } from '../_models/hinge-hole-type/HingeHoleTypeDto';
+import { DuraformWrapPriceGridDto } from '../_models/duraform-price/DuraformWrapPriceGridDto';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformAssetService {

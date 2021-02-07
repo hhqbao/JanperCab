@@ -24,6 +24,9 @@ namespace _2_Persistent.Configs
             builder.Property(x => x.Note)
                 .HasColumnType("varchar(1000)");
 
+            builder.Property(x => x.Price)
+                .HasColumnType("decimal(18,2)");
+
             builder.HasOne(x => x.DuraformEdgeProfile)
                 .WithMany(y => y.DuraformComponents)
                 .IsRequired()

@@ -25,7 +25,7 @@ namespace _5_JanperCab.Controllers
         }
 
         [HttpGet("{finishId}/{serieId}")]
-        public async Task<IActionResult> Get(int finishId, int serieId)
+        public async Task<IActionResult> GetPressPrice(int finishId, int serieId)
         {
             if (!await _unitOfWork.DuraformWrapTypes.AnyAsync(x => x.Id == finishId))
                 return BadRequest("Duraform Finish Not Found! Invalid Finish Id");
@@ -33,9 +33,20 @@ namespace _5_JanperCab.Controllers
             if (!await _unitOfWork.DuraformSeries.AnyAsync(x => x.Id == serieId))
                 return BadRequest("Duraform Serie Not Found! Invalid Serie Id");
 
-            var prices = await _unitOfWork.DuraformPrices.GetByFinishAndSerieAsync(finishId, serieId);
+            var prices = await _unitOfWork.DuraformPrices.GetPressPriceGridAsync(finishId, serieId);
 
-            return Ok(_mapper.Map<List<DuraformPriceGrid>, List<DuraformPriceGridDto>>(prices));
+            return Ok(_mapper.Map<List<DuraformWrapPriceGrid>, List<DuraformWrapPriceGridDto>>(prices));
+        }
+
+        [HttpGet("{serieId}")]
+        public async Task<IActionResult> GetRouteOnlyPrice(int serieId)
+        {
+            if (!await _unitOfWork.DuraformSeries.AnyAsync(x => x.Id == serieId))
+                return BadRequest("Duraform Serie Not Found! Invalid Serie Id");
+
+            var prices = await _unitOfWork.DuraformPrices.GetRouteOnlyPriceGridAsync(serieId);
+
+            return Ok(_mapper.Map<List<DuraformRouteOnlyPriceGrid>, List<DuraformRouteOnlyPriceGridDto>>(prices));
         }
 
         [HttpPost("SavePriceGrids")]

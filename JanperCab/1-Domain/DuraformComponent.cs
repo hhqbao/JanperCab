@@ -26,6 +26,8 @@ namespace _1_Domain
 
         public string Note { get; set; }
 
+        public decimal Price { get; set; }
+
         public int SortNumber { get; set; }
 
         public Guid DuraformFormId { get; set; }

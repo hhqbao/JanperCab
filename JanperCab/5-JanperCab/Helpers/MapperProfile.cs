@@ -211,8 +211,18 @@ namespace _5_JanperCab.Helpers
             CreateMap<DuraformDesignEdgeProfile, DuraformDesignEdgeProfileDto>();
             CreateMap<DuraformDesignEdgeProfileDto, DuraformDesignEdgeProfile>();
 
-            CreateMap<DuraformPriceGrid, DuraformPriceGridDto>();
-            CreateMap<DuraformPriceGridDto, DuraformPriceGrid>();
+            CreateMap<DuraformPriceGrid, DuraformPriceGridDto>()
+                .Include<DuraformWrapPriceGrid, DuraformWrapPriceGridDto>()
+                .Include<DuraformRouteOnlyPriceGrid, DuraformRouteOnlyPriceGridDto>();
+            CreateMap<DuraformPriceGridDto, DuraformPriceGrid>()
+                .Include<DuraformWrapPriceGridDto, DuraformWrapPriceGrid>()
+                .Include<DuraformRouteOnlyPriceGridDto, DuraformRouteOnlyPriceGrid>();
+
+            CreateMap<DuraformWrapPriceGrid, DuraformWrapPriceGridDto>();
+            CreateMap<DuraformWrapPriceGridDto, DuraformWrapPriceGrid>();
+
+            CreateMap<DuraformRouteOnlyPriceGrid, DuraformRouteOnlyPriceGridDto>();
+            CreateMap<DuraformRouteOnlyPriceGridDto, DuraformRouteOnlyPriceGrid>();
         }
     }
 }

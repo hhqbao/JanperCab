@@ -24,6 +24,7 @@
           <th colspan="4">'X' For Square Edge</th>
           <th rowspan="2" style="width: 26rem">Option</th>
           <th rowspan="2">Note</th>
+          <th rowspan="2" style="width: 8rem">Price</th>
         </tr>
         <tr>
           <th style="width: 6rem">Left</th>
@@ -60,6 +61,24 @@
             {{ endPanel.duraformOption?.toString() }}
           </td>
           <td class="text-left">{{ endPanel.note }}</td>
+          <td class="text-right">{{ endPanel.price | currency }}</td>
+        </tr>
+      </tbody>
+      <tbody class="subtotal">
+        <tr>
+          <td colspan="18" class="subtotal__header">
+            <b>Subtotal</b>
+          </td>
+        </tr>
+        <tr>
+          <td class="line-number">
+            <i class="fa fa-calculator" aria-hidden="true"></i>
+          </td>
+          <td>{{ totalQuantity }}</td>
+          <td colspan="15"></td>
+          <td class="subtotal__price">
+            {{ endPanels | arraySum: "price" | currency }}
+          </td>
         </tr>
       </tbody>
     </table>

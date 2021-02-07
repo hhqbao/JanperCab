@@ -348,6 +348,43 @@
       />
     </app-simple-box>
     <div style="margin-top: 1rem">
+      <app-simple-box [heading]="'Order Summary'">
+        <ul class="summary-box">
+          <li>
+            <span class="summary-box__title">Doors</span>
+            <span class="summary-box__subtotal">{{
+              order.duraformDoors | arraySum: "price" | currency
+            }}</span>
+          </li>
+          <li>
+            <span class="summary-box__title">Pantry Doors</span>
+            <span class="summary-box__subtotal">{{
+              order.pantryDoors | arraySum: "price" | currency
+            }}</span>
+          </li>
+          <li>
+            <span class="summary-box__title">IB Backs</span>
+            <span class="summary-box__subtotal">{{
+              order.endPanels | arraySum: "price" | currency
+            }}</span>
+          </li>
+          <li>
+            <span class="summary-box__title">Drawers</span>
+            <span class="summary-box__subtotal">{{
+              order.duraformDrawers | arraySum: "price" | currency
+            }}</span>
+          </li>
+          <li class="summary-box__divider"></li>
+          <li class="summary-box__total-line">
+            <span class="summary-box__title">Total</span>
+            <span class="summary-box__total">{{
+              order.totalPrice | currency
+            }}</span>
+          </li>
+        </ul>
+      </app-simple-box>
+    </div>
+    <div style="margin-top: 1rem">
       <div class="option-box__action-center" *ngIf="!order.isOrder">
         <button
           class="action-btn"

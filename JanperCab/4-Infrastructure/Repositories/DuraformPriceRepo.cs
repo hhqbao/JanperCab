@@ -13,9 +13,17 @@ namespace _4_Infrastructure.Repositories
         {
         }
 
-        public async Task<List<DuraformPriceGrid>> GetByFinishAndSerieAsync(int finishId, int serieId)
+        public async Task<List<DuraformWrapPriceGrid>> GetPressPriceGridAsync(int finishId, int serieId)
         {
-            var prices = await GetAllAsync(x => x.DuraformWrapTypeId == finishId && x.DuraformSerieId == serieId);
+            var prices = await _dbSet.OfType<DuraformWrapPriceGrid>().Where(x => x.DuraformWrapTypeId == finishId && x.DuraformSerieId == serieId).ToListAsync();
+
+            return prices.OrderBy(x => x.MinHeight).ThenBy(x => x.MinWidth).ToList();
+        }
+
+        public async Task<List<DuraformRouteOnlyPriceGrid>> GetRouteOnlyPriceGridAsync(int serieId)
+        {
+            var prices = await _dbSet.OfType<DuraformRouteOnlyPriceGrid>().Where(x => x.DuraformSerieId == serieId)
+                .ToListAsync();
 
             return prices.OrderBy(x => x.MinHeight).ThenBy(x => x.MinWidth).ToList();
         }

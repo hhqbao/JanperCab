@@ -86,6 +86,8 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformDesignEdgeProfileConfig());
 
             builder.ApplyConfiguration(new DuraformPriceGridConfig());
+            builder.ApplyConfiguration(new DuraformWrapPriceGridConfig());
+            builder.ApplyConfiguration(new DuraformRouteOnlyPriceGridConfig());
 
             base.OnModelCreating(builder);
         }
