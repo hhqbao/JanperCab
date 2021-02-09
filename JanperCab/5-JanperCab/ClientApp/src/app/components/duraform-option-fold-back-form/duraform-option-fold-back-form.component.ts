@@ -180,8 +180,24 @@ export class DuraformOptionFoldBackFormComponent
   };
 
   isValid = (): boolean => {
-    return this.optionGroup.valid;
+    const heightControl = this.formGroup.get('height');
+    const widthControl = this.formGroup.get('width');
+
+    if (heightControl.invalid || widthControl.invalid) return false;
+
+    const maxAllowedSize = this.order.isRoutingOnly ? 3600 : 2500;
+    const widthSize = widthControl.value;
+    const leftSize = this.leftLength.value;
+    const rightSize = this.rightLength.value;
+
+    if (widthSize + leftSize + rightSize > maxAllowedSize) return false;
+
+    return true;
   };
+
+  updateRequirements(): void {
+    throw new Error('Method not implemented.');
+  }
 
   onChange = (): void => {
     this.valueChange.emit();

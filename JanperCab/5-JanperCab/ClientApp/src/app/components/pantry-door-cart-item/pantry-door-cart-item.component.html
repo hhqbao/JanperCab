@@ -1,8 +1,8 @@
 <app-pantry-door-form
-  #pantryDoorForm
+  #componentForm
   appRemoveTag
   *ngIf="isSelected"
-  [pantryDoor]="pantryDoor"
+  [component]="component"
   (formSubmit)="onEdit($event)"
 ></app-pantry-door-form>
 <tbody
@@ -13,34 +13,34 @@
 >
   <tr>
     <td class="line-number">{{ index }}</td>
-    <td>{{ pantryDoor.quantity }}</td>
-    <td>{{ pantryDoor.height }}</td>
-    <td>{{ pantryDoor.width }}</td>
-    <td>{{ pantryDoor.chairRailHeight }}</td>
+    <td>{{ component.quantity }}</td>
+    <td>{{ component.height }}</td>
+    <td>{{ component.width }}</td>
+    <td>{{ component.chairRailHeight }}</td>
     <td>
-      {{ asset.getChairRailType(pantryDoor.chairRailTypeId).name | uppercase }}
+      {{ asset.getChairRailType(component.chairRailTypeId).name | uppercase }}
     </td>
-    <td>{{ pantryDoor.extraRailBottom }}</td>
+    <td>{{ component.extraRailBottom }}</td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
       {{
-        asset.getEdgeProfile(pantryDoor.duraformEdgeProfileId).name | uppercase
+        asset.getEdgeProfile(component.duraformEdgeProfileId).name | uppercase
       }}
     </td>
-    <td>{{ pantryDoor.top ? "X" : "" }}</td>
-    <td>{{ pantryDoor.bottom ? "X" : "" }}</td>
-    <td>{{ pantryDoor.left ? "X" : "" }}</td>
-    <td>{{ pantryDoor.right ? "X" : "" }}</td>
+    <td>{{ component.top ? "X" : "" }}</td>
+    <td>{{ component.bottom ? "X" : "" }}</td>
+    <td>{{ component.left ? "X" : "" }}</td>
+    <td>{{ component.right ? "X" : "" }}</td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
-      {{ pantryDoor.duraformOption?.toString() }}
+      {{ component.duraformOption?.toString() }}
     </td>
     <td>
-      {{ pantryDoor.hingeHoleOption?.toString() }}
+      {{ component.hingeHoleOption?.toString() }}
     </td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
-      {{ pantryDoor.note }}
+      {{ component.note }}
     </td>
     <td>
-      {{ pantryDoor.price | currency }}
+      {{ component.price | currency }}
     </td>
     <td style="width: 5rem">
       <button

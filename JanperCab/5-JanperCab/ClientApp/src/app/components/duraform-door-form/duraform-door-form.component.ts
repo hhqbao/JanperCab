@@ -3,49 +3,18 @@ import { DialogService } from './../../_services/dialog.service';
 import { DuraformDoorDto } from './../../_models/duraform-component/DuraformDoorDto';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  AbstractControl,
-} from '@angular/forms';
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  Input,
-  ViewChild,
-} from '@angular/core';
-import { DuraformOptionTypeKey } from 'src/app/_enums/DuraformOptionTypeKey';
+import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { DuraformComponentFormComponent } from '../duraform-component-form/duraform-component-form.component';
 
 @Component({
   selector: 'app-duraform-door-form',
   templateUrl: 'duraform-door-form.component.html',
 })
-export class DuraformDoorFormComponent implements OnInit {
-  @Input() door: DuraformDoorDto;
-  @Output() formSubmit = new EventEmitter<FormGroup>();
-
+export class DuraformDoorFormComponent
+  extends DuraformComponentFormComponent<DuraformDoorDto>
+  implements OnInit {
   @ViewChild('optionSelector') optionSelector: DuraformOptionSelectorComponent;
-
-  formGroup: FormGroup;
-
-  get invalid(): boolean {
-    return this.formGroup.invalid;
-  }
-
-  get quantity(): AbstractControl {
-    return this.formGroup.get('quantity');
-  }
-
-  get height(): AbstractControl {
-    return this.formGroup.get('height');
-  }
-
-  get width(): AbstractControl {
-    return this.formGroup.get('width');
-  }
 
   get duraformEdgeProfileId(): AbstractControl {
     return this.formGroup.get('duraformEdgeProfileId');
@@ -58,9 +27,12 @@ export class DuraformDoorFormComponent implements OnInit {
   constructor(
     public asset: DuraformAssetService,
     public order: DuraformOrderService,
-    private fb: FormBuilder,
-    private dialog: DialogService
-  ) {}
+    public fb: FormBuilder,
+    ef: ElementRef,
+    dialog: DialogService
+  ) {
+    super(ef, dialog);
+  }
 
   ngOnInit() {
     this.formGroup = this.fb.group({
@@ -92,18 +64,18 @@ export class DuraformDoorFormComponent implements OnInit {
       note: [''],
     });
 
-    if (this.door) {
-      this.formGroup.patchValue({ ...this.door });
-      if (this.door.duraformOption) {
+    if (this.component) {
+      this.formGroup.patchValue({ ...this.component });
+      if (this.component.duraformOption) {
         this.formGroup.addControl(
           'optionGroup',
-          this.door.duraformOption.toFormGroup()
+          this.component.duraformOption.toFormGroup()
         );
       }
-      if (this.door.hingeHoleOption) {
+      if (this.component.hingeHoleOption) {
         this.formGroup.addControl(
           'hingeHole',
-          this.door.hingeHoleOption.toFormGroup()
+          this.component.hingeHoleOption.toFormGroup()
         );
       }
     }
@@ -113,19 +85,12 @@ export class DuraformDoorFormComponent implements OnInit {
     if (this.optionSelector.optionForm) {
       const { optionForm } = this.optionSelector;
 
-      if (!optionForm.isValid()) {
-        this.optionSelector.onClearOption();
-        this.dialog.alert(
-          'Duraform Option Invalid',
-          'Duraform Option Not Longer Valid! It Has Been Removed.',
-          null
-        );
-      }
+      optionForm.updateRequirements();
     }
   };
 
   onSubmit = () => {
-    if (this.formGroup.invalid) {
+    if (this.invalid) {
       if (this.quantity.errors) {
         if (this.quantity.errors.required) {
           return this.showErrorMsg('Quantity cannot be empty');
@@ -161,6 +126,16 @@ export class DuraformDoorFormComponent implements OnInit {
         }
       }
 
+      if (this.optionGroup && this.optionGroup.invalid) {
+        setTimeout(() => {
+          (this.optionSelector.typeInput.nativeElement as HTMLElement).focus();
+          return this.showErrorMsg(
+            'Duraform Option Invalid! Adjust to continue.'
+          );
+        });
+        return;
+      }
+
       return this.showErrorMsg('Unexpected Errors');
     }
 
@@ -170,8 +145,4 @@ export class DuraformDoorFormComponent implements OnInit {
 
     this.formSubmit.emit(this.formGroup);
   };
-
-  private showErrorMsg(msg: string) {
-    this.dialog.alert('Invalid Inputs', msg, null);
-  }
 }

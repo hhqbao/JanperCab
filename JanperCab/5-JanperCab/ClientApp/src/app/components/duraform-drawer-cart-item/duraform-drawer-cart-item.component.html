@@ -1,8 +1,8 @@
 <app-duraform-drawer-form
   appRemoveTag
-  #duraformDrawerForm
+  #componentForm
   *ngIf="isSelected"
-  [duraformDrawer]="duraformDrawer"
+  [component]="component"
   (formSubmit)="onEdit($event)"
 ></app-duraform-drawer-form>
 <tbody
@@ -13,36 +13,32 @@
 >
   <tr>
     <td class="line-number">{{ index }}</td>
-    <td>{{ duraformDrawer.quantity }}</td>
-    <td>{{ duraformDrawer.height }}</td>
-    <td>{{ duraformDrawer.width }}</td>
-    <td>{{ duraformDrawer.numberOfDrawers }}</td>
+    <td>{{ component.quantity }}</td>
+    <td>{{ component.height }}</td>
+    <td>{{ component.width }}</td>
+    <td>{{ component.numberOfDrawers }}</td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
-      {{
-        asset.getDrawerType(duraformDrawer.duraformDrawerTypeId).name
-          | uppercase
-      }}
+      {{ asset.getDrawerType(component.duraformDrawerTypeId).name | uppercase }}
     </td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
       {{
-        asset.getEdgeProfile(duraformDrawer.duraformEdgeProfileId).name
-          | uppercase
+        asset.getEdgeProfile(component.duraformEdgeProfileId).name | uppercase
       }}
     </td>
-    <td>{{ duraformDrawer.top ? "X" : "" }}</td>
-    <td>{{ duraformDrawer.bottom ? "X" : "" }}</td>
-    <td>{{ duraformDrawer.left ? "X" : "" }}</td>
-    <td>{{ duraformDrawer.right ? "X" : "" }}</td>
-    <td>{{ duraformDrawer.hasDrillFronts ? "YES" : "NO" }}</td>
-    <td>{{ duraformDrawer.drawerOne }}</td>
-    <td>{{ duraformDrawer.drawerTwo }}</td>
-    <td>{{ duraformDrawer.drawerThree }}</td>
-    <td>{{ duraformDrawer.drawerFour }}</td>
-    <td>{{ duraformDrawer.drawerFive }}</td>
+    <td>{{ component.top ? "X" : "" }}</td>
+    <td>{{ component.bottom ? "X" : "" }}</td>
+    <td>{{ component.left ? "X" : "" }}</td>
+    <td>{{ component.right ? "X" : "" }}</td>
+    <td>{{ component.hasDrillFronts ? "YES" : "NO" }}</td>
+    <td>{{ component.drawerOne }}</td>
+    <td>{{ component.drawerTwo }}</td>
+    <td>{{ component.drawerThree }}</td>
+    <td>{{ component.drawerFour }}</td>
+    <td>{{ component.drawerFive }}</td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
-      {{ duraformDrawer.note }}
+      {{ component.note }}
     </td>
-    <td>{{ duraformDrawer.price | currency }}</td>
+    <td>{{ component.price | currency }}</td>
     <td style="width: 5rem">
       <button
         type="button"

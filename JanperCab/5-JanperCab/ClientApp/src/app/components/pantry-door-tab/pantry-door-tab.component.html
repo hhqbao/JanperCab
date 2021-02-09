@@ -42,7 +42,7 @@
   </thead>
   <app-pantry-door-form
     appRemoveTag
-    (formSubmit)="onAddPantryDoor($event)"
+    (formSubmit)="onAddComponent($event)"
   ></app-pantry-door-form>
   <tbody class="table__spacer" *ngIf="order.pantryDoors.length > 0">
     <tr>
@@ -71,8 +71,11 @@
       let pantryDoor of order.pantryDoors.slice().reverse();
       let i = index
     "
-    [pantryDoor]="pantryDoor"
+    [component]="pantryDoor"
     [index]="order.pantryDoors.length - i"
-    (removePantryDoor)="onRemovePantryDoor($event)"
+    [canSelect]="canSelectCartItem"
+    (selectComponent)="canSelectCartItem = false"
+    (unselectComponent)="canSelectCartItem = true"
+    (removeComponent)="onRemoveComponent($event)"
   ></app-pantry-door-cart-item>
 </table>

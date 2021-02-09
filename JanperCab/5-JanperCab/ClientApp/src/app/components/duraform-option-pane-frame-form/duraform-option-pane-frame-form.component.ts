@@ -64,6 +64,10 @@ export class DuraformOptionPaneFrameFormComponent
     return this.optionGroup.valid;
   };
 
+  updateRequirements(): void {
+    return;
+  }
+
   onChange = () => {
     this.valueChange.emit();
   };

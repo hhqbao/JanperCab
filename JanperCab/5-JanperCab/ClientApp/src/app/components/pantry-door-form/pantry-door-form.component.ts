@@ -10,18 +10,27 @@ import {
   Validators,
   AbstractControl,
 } from '@angular/forms';
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
+import { DuraformOptionSelectorComponent } from '../duraform-option-selector/duraform-option-selector.component';
+import { DuraformComponentFormComponent } from '../duraform-component-form/duraform-component-form.component';
 
 @Component({
   selector: 'app-pantry-door-form',
   templateUrl: 'pantry-door-form.component.html',
 })
-export class PantryDoorFormComponent implements OnInit {
-  @Input() pantryDoor: DuraformPantryDoorDto;
+export class PantryDoorFormComponent
+  extends DuraformComponentFormComponent<DuraformPantryDoorDto>
+  implements OnInit {
+  @ViewChild('optionSelector') optionSelector: DuraformOptionSelectorComponent;
 
-  @Output() formSubmit = new EventEmitter<FormGroup>();
-
-  formGroup: FormGroup;
   optionTypeKeyEnum = DuraformOptionTypeKey;
   componentType: ComponentType = ComponentType.DuraformPantryDoor;
 
@@ -29,27 +38,18 @@ export class PantryDoorFormComponent implements OnInit {
     public asset: DuraformAssetService,
     public order: DuraformOrderService,
     private fb: FormBuilder,
-    private dialog: DialogService
-  ) {}
-
-  get invalid(): boolean {
-    return this.formGroup.invalid;
-  }
-
-  get quantity(): AbstractControl {
-    return this.formGroup.get('quantity');
-  }
-
-  get height(): AbstractControl {
-    return this.formGroup.get('height');
-  }
-
-  get width(): AbstractControl {
-    return this.formGroup.get('width');
+    ef: ElementRef,
+    dialog: DialogService
+  ) {
+    super(ef, dialog);
   }
 
   get chairRailHeight(): AbstractControl {
     return this.formGroup.get('chairRailHeight');
+  }
+
+  get optionGroup(): AbstractControl {
+    return this.formGroup.get('optionGroup');
   }
 
   ngOnInit() {
@@ -83,26 +83,30 @@ export class PantryDoorFormComponent implements OnInit {
       note: [''],
     });
 
-    if (this.pantryDoor) {
-      this.formGroup.patchValue({ ...this.pantryDoor });
+    if (this.component) {
+      this.formGroup.patchValue({ ...this.component });
 
-      if (this.pantryDoor.duraformOption) {
+      if (this.component.duraformOption) {
         this.formGroup.addControl(
           'optionGroup',
-          this.pantryDoor.duraformOption.toFormGroup()
+          this.component.duraformOption.toFormGroup()
         );
       }
-      if (this.pantryDoor.hingeHoleOption) {
+      if (this.component.hingeHoleOption) {
         this.formGroup.addControl(
           'hingeHole',
-          this.pantryDoor.hingeHoleOption.toFormGroup()
+          this.component.hingeHoleOption.toFormGroup()
         );
       }
     }
   }
 
+  onBasicInputBlur(): void {
+    throw new Error('Method not implemented.');
+  }
+
   onSubmit = () => {
-    if (this.formGroup.invalid) {
+    if (this.invalid) {
       if (this.quantity.errors) {
         if (this.quantity.errors.required) {
           return this.showErrorMsg('Quantity cannot be empty');
@@ -154,6 +158,16 @@ export class PantryDoorFormComponent implements OnInit {
         }
       }
 
+      if (this.optionGroup && this.optionGroup.invalid) {
+        setTimeout(() => {
+          (this.optionSelector.typeInput.nativeElement as HTMLElement).focus();
+          return this.showErrorMsg(
+            'Duraform Option Invalid! Adjust to continue.'
+          );
+        });
+        return;
+      }
+
       return this.showErrorMsg('Unexpected Errors');
     }
 
@@ -168,9 +182,5 @@ export class PantryDoorFormComponent implements OnInit {
     }
 
     this.formSubmit.emit(this.formGroup);
-  };
-
-  showErrorMsg = (msg: string) => {
-    this.dialog.alert('Invalid Inputs', msg, null);
   };
 }

@@ -16,65 +16,19 @@ import {
 } from '@angular/core';
 import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
+import { DuraformCartItemComponent } from '../duraform-cart-item/duraform-cart-item.component';
 
 @Component({
   selector: 'app-duraform-door-cart-item',
   templateUrl: 'duraform-door-cart-item.component.html',
 })
-export class DuraformDoorCartItemComponent implements OnInit {
-  @Input() door: DuraformDoorDto;
-  @Input() index: number;
-
-  @Output() removeDoor = new EventEmitter<DuraformDoorDto>();
-
-  @ViewChild('doorForm') doorForm: DuraformDoorFormComponent;
-
-  hasAnimated = false;
-  isSelected = false;
-
+export class DuraformDoorCartItemComponent extends DuraformCartItemComponent<DuraformDoorDto> {
   constructor(
     public asset: DuraformAssetService,
     public order: DuraformOrderService,
-    private ef: ElementRef,
-    private componentService: DuraformComponentService
-  ) {}
-
-  @HostListener('document:click', ['$event.target'])
-  onFocusOut = (target: Element) => {
-    const self = this.ef.nativeElement as Element;
-
-    if (self === target || self.contains(target) || !this.isSelected) {
-      return;
-    }
-
-    if (!this.doorForm.invalid) {
-      this.doorForm.onSubmit();
-    } else {
-      this.isSelected = false;
-    }
-  };
-
-  ngOnInit() {
-    setTimeout(() => {
-      this.hasAnimated = true;
-    }, 1000);
+    public ef: ElementRef,
+    public componentService: DuraformComponentService
+  ) {
+    super(componentService, ef);
   }
-
-  onEdit = (formGroup: FormGroup) => {
-    if (formGroup.invalid) {
-      return;
-    }
-
-    this.componentService.updateComponent(this.door, formGroup.value);
-
-    this.isSelected = false;
-  };
-
-  onSelect = () => {
-    this.isSelected = true;
-  };
-
-  onRemove = () => {
-    this.removeDoor.emit(this.door);
-  };
 }

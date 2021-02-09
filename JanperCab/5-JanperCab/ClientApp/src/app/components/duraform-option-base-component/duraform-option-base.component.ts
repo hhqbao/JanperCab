@@ -12,5 +12,6 @@ export abstract class DuraformOptionBaseComponent {
   constructor() {}
 
   abstract isValid(): boolean;
+  abstract updateRequirements(): void;
   abstract onChange(): void;
 }

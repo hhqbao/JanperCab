@@ -2,24 +2,18 @@ import { DialogService } from './../../_services/dialog.service';
 import { DuraformDrawerDto } from './../../_models/duraform-component/DuraformDrawerDto';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  AbstractControl,
-} from '@angular/forms';
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { ComponentType } from 'src/app/_enums/ComponentType';
+import { DuraformComponentFormComponent } from '../duraform-component-form/duraform-component-form.component';
 
 @Component({
   selector: 'app-duraform-drawer-form',
   templateUrl: 'duraform-drawer-form.component.html',
 })
-export class DuraformDrawerFormComponent implements OnInit {
-  @Input() duraformDrawer: DuraformDrawerDto;
-  @Output() formSubmit = new EventEmitter<FormGroup>();
-
-  formGroup: FormGroup;
+export class DuraformDrawerFormComponent
+  extends DuraformComponentFormComponent<DuraformDrawerDto>
+  implements OnInit {
   componentType: ComponentType = ComponentType.DuraformEndPanel;
 
   numberDrawers = [
@@ -33,24 +27,11 @@ export class DuraformDrawerFormComponent implements OnInit {
   constructor(
     public asset: DuraformAssetService,
     public order: DuraformOrderService,
+    public ef: ElementRef,
     private fb: FormBuilder,
-    private dialog: DialogService
-  ) {}
-
-  get invalid(): boolean {
-    return this.formGroup.invalid;
-  }
-
-  get quantity(): AbstractControl {
-    return this.formGroup.get('quantity');
-  }
-
-  get height(): AbstractControl {
-    return this.formGroup.get('height');
-  }
-
-  get width(): AbstractControl {
-    return this.formGroup.get('width');
+    public dialog: DialogService
+  ) {
+    super(ef, dialog);
   }
 
   get drawerOne(): AbstractControl {
@@ -106,9 +87,14 @@ export class DuraformDrawerFormComponent implements OnInit {
       note: [''],
     });
 
-    if (this.duraformDrawer) {
-      this.formGroup.patchValue({ ...this.duraformDrawer });
+    if (this.component) {
+      this.formGroup.patchValue({ ...this.component });
+      this.onNumberOfDrawersChanged();
     }
+  }
+
+  onBasicInputBlur(): void {
+    throw new Error('Method not implemented.');
   }
 
   onHeightChange = () => {
@@ -241,8 +227,4 @@ export class DuraformDrawerFormComponent implements OnInit {
 
     this.formSubmit.emit(this.formGroup);
   };
-
-  private showErrorMsg(msg: string) {
-    this.dialog.alert('Invalid Inputs', msg, null);
-  }
 }

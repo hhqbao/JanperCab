@@ -1,8 +1,8 @@
 <app-end-panel-form
-  #endPanelForm
-  *ngIf="isSelected"
   appRemoveTag
-  [endPanel]="endPanel"
+  #componentForm
+  *ngIf="isSelected"
+  [component]="component"
   (formSubmit)="onEdit($event)"
 ></app-end-panel-form>
 <tbody
@@ -13,32 +13,32 @@
 >
   <tr>
     <td class="line-number">{{ index }}</td>
-    <td>{{ endPanel.quantity }}</td>
-    <td>{{ endPanel.height }}</td>
-    <td>{{ endPanel.width }}</td>
-    <td>{{ endPanel.numberOfShields }}</td>
-    <td>{{ endPanel.railLeft }}</td>
-    <td>{{ endPanel.railCenter }}</td>
-    <td>{{ endPanel.railRight }}</td>
-    <td>{{ endPanel.extraRailTop }}</td>
-    <td>{{ endPanel.extraRailBottom }}</td>
+    <td>{{ component.quantity }}</td>
+    <td>{{ component.height }}</td>
+    <td>{{ component.width }}</td>
+    <td>{{ component.numberOfShields }}</td>
+    <td>{{ component.railLeft }}</td>
+    <td>{{ component.railCenter }}</td>
+    <td>{{ component.railRight }}</td>
+    <td>{{ component.extraRailTop }}</td>
+    <td>{{ component.extraRailBottom }}</td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
       {{
-        asset.getEdgeProfile(endPanel.duraformEdgeProfileId).name | uppercase
+        asset.getEdgeProfile(component.duraformEdgeProfileId).name | uppercase
       }}
     </td>
-    <td>{{ endPanel.top ? "X" : "" }}</td>
-    <td>{{ endPanel.bottom ? "X" : "" }}</td>
-    <td>{{ endPanel.left ? "X" : "" }}</td>
-    <td>{{ endPanel.right ? "X" : "" }}</td>
+    <td>{{ component.top ? "X" : "" }}</td>
+    <td>{{ component.bottom ? "X" : "" }}</td>
+    <td>{{ component.left ? "X" : "" }}</td>
+    <td>{{ component.right ? "X" : "" }}</td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
-      {{ endPanel.duraformOption?.toString() }}
+      {{ component.duraformOption?.toString() }}
     </td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
-      {{ endPanel.note }}
+      {{ component.note }}
     </td>
     <td>
-      {{ endPanel.price | currency }}
+      {{ component.price | currency }}
     </td>
     <td style="width: 5rem">
       <button

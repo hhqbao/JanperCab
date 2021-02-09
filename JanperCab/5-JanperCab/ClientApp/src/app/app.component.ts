@@ -1,5 +1,3 @@
-import { CustomerDto } from './_models/customer/CustomerDto';
-import { plainToClass } from 'class-transformer';
 import { AuthService } from './_services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControlName } from '@angular/forms';

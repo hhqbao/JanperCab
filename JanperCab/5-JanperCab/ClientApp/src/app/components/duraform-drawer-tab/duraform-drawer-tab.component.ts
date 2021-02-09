@@ -6,26 +6,26 @@ import { DialogService } from './../../_services/dialog.service';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { Component, OnInit } from '@angular/core';
 import { ComponentType } from 'src/app/_enums/ComponentType';
+import { DuraformTabComponent } from '../duraform-tab/duraform-tab.component';
 
 @Component({
   selector: 'app-duraform-drawer-tab',
   templateUrl: 'duraform-drawer-tab.component.html',
 })
-export class DuraformDrawerTabComponent implements OnInit {
+export class DuraformDrawerTabComponent
+  extends DuraformTabComponent
+  implements OnInit {
   constructor(
-    private asset: DuraformAssetService,
     public order: DuraformOrderService,
-    private dialog: DialogService,
+    public dialog: DialogService,
     private componentService: DuraformComponentService
-  ) {}
+  ) {
+    super(dialog, order);
+  }
 
   ngOnInit() {}
 
-  onAddDrawer = (formGroup: FormGroup) => {
-    if (formGroup.invalid) {
-      return;
-    }
-
+  onAddComponent(formGroup: FormGroup): void {
     const drawer = this.componentService.generateComponent(
       ComponentType.DuraformDrawer
     );
@@ -34,9 +34,5 @@ export class DuraformDrawerTabComponent implements OnInit {
     this.order.addComponent(drawer);
 
     this.dialog.success('New Drawer Added.');
-  };
-
-  onRemoveDrawer = (drawer: DuraformDrawerDto) => {
-    this.order.removeComponent(drawer);
-  };
+  }
 }

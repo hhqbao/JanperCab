@@ -164,6 +164,29 @@ export class DuraformOptionAngledShelfFormComponent
     return true;
   };
 
+  updateRequirements(): void {
+    const heightControl = this.formGroup.get('height');
+    const widthControl = this.formGroup.get('width');
+
+    this.optionGroup
+      .get('sideOne')
+      .setValidators([
+        Validators.required,
+        Validators.min(30),
+        Validators.max(heightControl.value),
+      ]);
+    this.optionGroup
+      .get('sideTwo')
+      .setValidators([
+        Validators.required,
+        Validators.min(30),
+        Validators.max(widthControl.value),
+      ]);
+
+    this.optionGroup.get('sideOne').updateValueAndValidity();
+    this.optionGroup.get('sideTwo').updateValueAndValidity();
+  }
+
   onChange = () => {
     this.valueChange.emit();
   };

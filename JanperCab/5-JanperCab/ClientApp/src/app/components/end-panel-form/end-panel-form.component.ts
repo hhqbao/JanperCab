@@ -1,26 +1,23 @@
+import { DuraformOptionSelectorComponent } from './../duraform-option-selector/duraform-option-selector.component';
 import { DialogService } from './../../_services/dialog.service';
 import { DuraformEndPanelDto } from './../../_models/duraform-component/DuraformEndPanelDto';
 import { DuraformOptionTypeKey } from './../../_enums/DuraformOptionTypeKey';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  AbstractControl,
-} from '@angular/forms';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ComponentType } from 'src/app/_enums/ComponentType';
+import { DuraformComponentFormComponent } from '../duraform-component-form/duraform-component-form.component';
 
 @Component({
   selector: 'app-end-panel-form',
   templateUrl: 'end-panel-form.component.html',
 })
-export class EndPanelFormComponent implements OnInit {
-  @Input() endPanel: DuraformEndPanelDto;
-  @Output() formSubmit = new EventEmitter<FormGroup>();
+export class EndPanelFormComponent
+  extends DuraformComponentFormComponent<DuraformEndPanelDto>
+  implements OnInit {
+  @ViewChild('optionSelector') optionSelector: DuraformOptionSelectorComponent;
 
   duraformOptionTypeKey = DuraformOptionTypeKey;
-  formGroup: FormGroup;
   componentType: ComponentType = ComponentType.DuraformEndPanel;
 
   shields = [
@@ -33,24 +30,11 @@ export class EndPanelFormComponent implements OnInit {
 
   constructor(
     public order: DuraformOrderService,
+    public ef: ElementRef,
     private fb: FormBuilder,
-    private dialog: DialogService
-  ) {}
-
-  get invalid(): boolean {
-    return this.formGroup.invalid;
-  }
-
-  get quantity(): AbstractControl {
-    return this.formGroup.get('quantity');
-  }
-
-  get height(): AbstractControl {
-    return this.formGroup.get('height');
-  }
-
-  get width(): AbstractControl {
-    return this.formGroup.get('width');
+    public dialog: DialogService
+  ) {
+    super(ef, dialog);
   }
 
   get numberOfShields(): AbstractControl {
@@ -67,6 +51,14 @@ export class EndPanelFormComponent implements OnInit {
 
   get railRight(): AbstractControl {
     return this.formGroup.get('railRight');
+  }
+
+  get optionGroup(): AbstractControl {
+    return this.formGroup.get('optionGroup');
+  }
+
+  onBasicInputBlur(): void {
+    throw new Error('Method not implemented.');
   }
 
   ngOnInit() {
@@ -109,14 +101,14 @@ export class EndPanelFormComponent implements OnInit {
       note: [''],
     });
 
-    if (this.endPanel) {
+    if (this.component) {
       this.formGroup.patchValue({
-        ...this.endPanel,
+        ...this.component,
       });
-      if (this.endPanel.duraformOption) {
+      if (this.component.duraformOption) {
         this.formGroup.addControl(
           'optionGroup',
-          this.endPanel.duraformOption.toFormGroup()
+          this.component.duraformOption.toFormGroup()
         );
       }
 
@@ -188,13 +180,19 @@ export class EndPanelFormComponent implements OnInit {
         }
       }
 
+      if (this.optionGroup && this.optionGroup.invalid) {
+        setTimeout(() => {
+          (this.optionSelector.typeInput.nativeElement as HTMLElement).focus();
+          return this.showErrorMsg(
+            'Duraform Option Invalid! Adjust to continue.'
+          );
+        });
+        return;
+      }
+
       return this.showErrorMsg('Unexpected Errors');
     }
 
     this.formSubmit.emit(this.formGroup);
   };
-
-  private showErrorMsg(msg: string) {
-    this.dialog.alert('Invalid Inputs', msg, null);
-  }
 }

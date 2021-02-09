@@ -40,7 +40,7 @@
   </thead>
   <app-duraform-drawer-form
     appRemoveTag
-    (formSubmit)="onAddDrawer($event)"
+    (formSubmit)="onAddComponent($event)"
   ></app-duraform-drawer-form>
   <tbody class="table__spacer" *ngIf="order.duraformDrawers.length > 0">
     <td></td>
@@ -69,8 +69,11 @@
       let drawer of order.duraformDrawers.slice().reverse();
       let i = index
     "
-    [duraformDrawer]="drawer"
+    [component]="drawer"
+    [canSelect]="canSelectCartItem"
     [index]="order.duraformDrawers.length - i"
-    (removeDrawer)="onRemoveDrawer($event)"
+    (selectComponent)="canSelectCartItem = false"
+    (unselectComponent)="canSelectCartItem = true"
+    (removeComponent)="onRemoveComponent($event)"
   ></app-duraform-drawer-cart-item>
 </table>

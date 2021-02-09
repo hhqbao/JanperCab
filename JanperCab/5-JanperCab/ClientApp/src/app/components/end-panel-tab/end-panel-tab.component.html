@@ -40,7 +40,7 @@
   </thead>
   <app-end-panel-form
     appRemoveTag
-    (formSubmit)="onAddEndPanel($event)"
+    (formSubmit)="onAddComponent($event)"
   ></app-end-panel-form>
 
   <tbody class="table__spacer" *ngIf="order.endPanels.length > 0">
@@ -69,8 +69,11 @@
   <app-end-panel-cart-item
     appRemoveTag
     *ngFor="let endPanel of order.endPanels.slice().reverse(); let i = index"
-    [endPanel]="endPanel"
+    [component]="endPanel"
     [index]="order.endPanels.length - i"
-    (removeEndPanel)="onRemoveEndPanel($event)"
+    [canSelect]="canSelectCartItem"
+    (selectComponent)="canSelectCartItem = false"
+    (unselectComponent)="canSelectCartItem = true"
+    (removeComponent)="onRemoveComponent($event)"
   ></app-end-panel-cart-item>
 </table>

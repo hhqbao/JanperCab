@@ -1,8 +1,8 @@
 <app-duraform-door-form
-  #doorForm
+  #componentForm
   appRemoveTag
   *ngIf="isSelected"
-  [door]="door"
+  [component]="component"
   (formSubmit)="onEdit($event)"
 ></app-duraform-door-form>
 <tbody
@@ -16,28 +16,30 @@
       {{ index }}
     </td>
     <td>
-      {{ door.quantity }}
+      {{ component.quantity }}
     </td>
-    <td>{{ door.height }}</td>
-    <td>{{ door.width }}</td>
+    <td>{{ component.height }}</td>
+    <td>{{ component.width }}</td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
-      {{ asset.getEdgeProfile(door.duraformEdgeProfileId).name | uppercase }}
+      {{
+        asset.getEdgeProfile(component.duraformEdgeProfileId).name | uppercase
+      }}
     </td>
-    <td>{{ door.top ? "X" : "" }}</td>
-    <td>{{ door.bottom ? "X" : "" }}</td>
-    <td>{{ door.left ? "X" : "" }}</td>
-    <td>{{ door.right ? "X" : "" }}</td>
+    <td>{{ component.top ? "X" : "" }}</td>
+    <td>{{ component.bottom ? "X" : "" }}</td>
+    <td>{{ component.left ? "X" : "" }}</td>
+    <td>{{ component.right ? "X" : "" }}</td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
-      {{ door.duraformOption?.toString() | uppercase }}
+      {{ component.duraformOption?.toString() | uppercase }}
     </td>
     <td>
-      {{ door.hingeHoleOption?.toString() }}
+      {{ component.hingeHoleOption?.toString() }}
     </td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
-      {{ door.note }}
+      {{ component.note }}
     </td>
     <td>
-      {{ door.price | currency }}
+      {{ component.price | currency }}
     </td>
     <td style="width: 5rem">
       <button

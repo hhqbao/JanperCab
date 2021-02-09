@@ -34,6 +34,10 @@ export class DuraformOptionNoFaceComponent
     return this.optionGroup.valid;
   };
 
+  updateRequirements(): void {
+    return;
+  }
+
   onChange = (): void => {
     this.valueChange.emit();
   };

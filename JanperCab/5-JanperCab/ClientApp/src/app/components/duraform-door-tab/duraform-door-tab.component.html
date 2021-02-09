@@ -30,7 +30,7 @@
   </thead>
   <app-duraform-door-form
     appRemoveTag
-    (formSubmit)="onAddDoor($event)"
+    (formSubmit)="onAddComponent($event)"
   ></app-duraform-door-form>
   <tbody class="table__spacer" *ngIf="order.duraformDoors.length > 0">
     <tr>
@@ -53,8 +53,11 @@
   <app-duraform-door-cart-item
     appRemoveTag
     *ngFor="let door of order.duraformDoors.slice().reverse(); let i = index"
-    [door]="door"
+    [canSelect]="canSelectCartItem"
+    [component]="door"
     [index]="order.duraformDoors.length - i"
-    (removeDoor)="onRemoveDoor($event)"
+    (selectComponent)="canSelectCartItem = false"
+    (unselectComponent)="canSelectCartItem = true"
+    (removeComponent)="onRemoveComponent($event)"
   ></app-duraform-door-cart-item>
 </table>
