@@ -770,37 +770,6 @@ namespace _2_Persistent.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("DuraformForm");
                 });
 
-            modelBuilder.Entity("_1_Domain.DuraformMisc", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<Guid>("DuraformFormId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("MiscItemId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("varchar(500)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SortNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DuraformFormId");
-
-                    b.HasIndex("MiscItemId");
-
-                    b.ToTable("DuraformMiscs");
-                });
-
             modelBuilder.Entity("_1_Domain.DuraformOption", b =>
                 {
                     b.Property<int>("Id")
@@ -968,7 +937,29 @@ namespace _2_Persistent.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("HingeHoleStyle");
+
                     b.ToTable("HingeHoleOptions");
+                });
+
+            modelBuilder.Entity("_1_Domain.HingeHoleStyle", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("DoorPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<decimal>("PantryPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HingeHoleStyles");
                 });
 
             modelBuilder.Entity("_1_Domain.HingeHoleType", b =>
@@ -988,25 +979,6 @@ namespace _2_Persistent.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("HingeHoleTypes");
-                });
-
-            modelBuilder.Entity("_1_Domain.MiscItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("IsDisabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MiscItems");
                 });
 
             modelBuilder.Entity("_1_Domain.NotAvailableDesignWrapType", b =>
@@ -1573,21 +1545,6 @@ namespace _2_Persistent.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("_1_Domain.DuraformMisc", b =>
-                {
-                    b.HasOne("_1_Domain.DuraformForm", "DuraformForm")
-                        .WithMany("DuraformMiscs")
-                        .HasForeignKey("DuraformFormId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("_1_Domain.MiscItem", "MiscItem")
-                        .WithMany("DuraformMiscs")
-                        .HasForeignKey("MiscItemId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("_1_Domain.DuraformOption", b =>
                 {
                     b.HasOne("_1_Domain.DuraformOptionType", "DuraformOptionType")
@@ -1623,6 +1580,12 @@ namespace _2_Persistent.Migrations
 
             modelBuilder.Entity("_1_Domain.HingeHoleOption", b =>
                 {
+                    b.HasOne("_1_Domain.HingeHoleStyle", "HingeStyle")
+                        .WithMany("HingeHoleOptions")
+                        .HasForeignKey("HingeHoleStyle")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("_1_Domain.DuraformComponentWithOptionAndHingeHole", "DuraformComponentWithOptionAndHingeHole")
                         .WithOne("HingeHoleOption")
                         .HasForeignKey("_1_Domain.HingeHoleOption", "Id")

@@ -21,8 +21,11 @@ import { DuraformPriceGridDto } from 'src/app/_models/duraform-price/DuraformPri
 export class DuraformPriceGridPageComponent implements OnInit {
   isLoading = true;
   isReseting = false;
+
+  showAllPriceList = false;
   showBulkActionControl = false;
 
+  allPriceGrids: DuraformPriceGridDto[] = [];
   finishList: DuraformWrapTypeForSelection[] = [];
   serieList: DuraformSerieForList[] = [];
 
@@ -127,6 +130,21 @@ export class DuraformPriceGridPageComponent implements OnInit {
         }
       );
     }
+  };
+
+  onViewAll = () => {
+    this.layout.showLoadingPanel();
+    this.priceService.getAllPrices().subscribe(
+      (response) => {
+        this.allPriceGrids = response.prices;
+        this.layout.closeLoadingPanel();
+        this.showAllPriceList = true;
+      },
+      (error) => {
+        this.layout.closeLoadingPanel();
+        this.dialog.error(error);
+      }
+    );
   };
 
   getPrice = (

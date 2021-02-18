@@ -16,9 +16,9 @@
         <label class="form__label">Hinge Hole</label>
         <app-select-menu
           [control]="styleFormControl"
-          [values]="options"
-          [valueKey]="'value'"
-          [valueDisplay]="'text'"
+          [values]="asset.hingeHoleStyles"
+          [valueKey]="'id'"
+          [valueDisplay]="'name'"
           [allowNull]="true"
           [nullText]="'No Hinge Hole'"
           [nullOnLabel]="true"

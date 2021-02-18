@@ -1,4 +1,4 @@
-﻿using _1_Domain;
+﻿using _1_Domain.Enum;
 
 namespace _3_Application.Dtos.HingeHoleOption
 {
@@ -6,7 +6,7 @@ namespace _3_Application.Dtos.HingeHoleOption
     {
         public int Id { get; set; }
 
-        public HingeHoleStyle HingeHoleStyle { get; set; }
+        public HingeHoleStyleEnum HingeHoleStyle { get; set; }
 
         public int Quantity { get; set; }
 

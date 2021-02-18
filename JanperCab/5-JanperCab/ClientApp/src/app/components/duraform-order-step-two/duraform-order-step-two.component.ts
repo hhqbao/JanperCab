@@ -2,12 +2,7 @@ import { DuraformPriceService } from './../../_services/duraform-price.service';
 import { UploadDuraformFileDto } from './../../_models/files/UploadDuraformFileDto';
 import { FileService } from './../../_services/file.service';
 import { DuraformFileDto } from './../../_models/application-file/DuraformFileDto';
-import { HingeHoleTypeService } from './../../_services/hinge-hole-type.service';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
-import { DuraformOptionTypeService } from './../../_services/duraform-option-type.service';
-import { DuraformDrawerTypeService } from './../../_services/duraform-drawer-type.service';
-import { PantryDoorChairRailTypeService } from './../../_services/pantry-door-chair-rail-type.service';
-import { DuraformArchService } from './../../_services/duraform-arch.service';
 import { forkJoin } from 'rxjs';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
 import { LayoutService } from './../../_services/layout.service';
@@ -123,7 +118,7 @@ export class DuraformOrderStepTwoComponent implements OnInit {
       () => {
         this.layout.showLoadingPanel();
         this.fileService.deleteDuraformFile(file.id).subscribe(
-          (response) => {
+          () => {
             const index = this.order.duraformFiles.indexOf(file);
 
             this.order.duraformFiles.splice(index, 1);

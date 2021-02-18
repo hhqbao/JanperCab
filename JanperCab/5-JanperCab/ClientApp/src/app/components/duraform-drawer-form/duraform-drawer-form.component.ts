@@ -67,11 +67,19 @@ export class DuraformDrawerFormComponent
       duraformDrawerTypeId: [null, [Validators.required]],
       height: [
         null,
-        [Validators.required, Validators.min(30), Validators.max(2500)],
+        [
+          Validators.required,
+          Validators.min(30),
+          Validators.max(this.order.maxBoardSize),
+        ],
       ],
       width: [
         null,
-        [Validators.required, Validators.min(150), Validators.max(2500)],
+        [
+          Validators.required,
+          Validators.min(150),
+          Validators.max(this.order.maxBoardSize),
+        ],
       ],
       duraformEdgeProfileId: [null, [Validators.required]],
       top: [false],
@@ -182,9 +190,7 @@ export class DuraformDrawerFormComponent
         }
         if (this.height.errors.min || this.height.errors.max) {
           return this.showErrorMsg(
-            `Height must be between 30 and ${
-              this.order.isRoutingOnly ? 3600 : 2500
-            }`
+            `Height must be between 30 and ${this.order.maxBoardSize}`
           );
         }
       }
@@ -195,9 +201,7 @@ export class DuraformDrawerFormComponent
         }
         if (this.width.errors.min || this.width.errors.max) {
           return this.showErrorMsg(
-            `Width must be between 30 and ${
-              this.order.isRoutingOnly ? 3600 : 2500
-            }`
+            `Width must be between 30 and ${this.order.maxBoardSize}`
           );
         }
       }

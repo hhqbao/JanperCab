@@ -131,39 +131,6 @@ export class DuraformOptionAngledShelfFormComponent
     this.onChange();
   };
 
-  isValid = (): boolean => {
-    const heightControl = this.formGroup.get('height');
-    const widthControl = this.formGroup.get('width');
-
-    if (heightControl.invalid || widthControl.invalid) return false;
-
-    this.optionGroup
-      .get('sideOne')
-      .setValidators([
-        Validators.required,
-        Validators.min(30),
-        Validators.max(heightControl.value),
-      ]);
-    this.optionGroup
-      .get('sideTwo')
-      .setValidators([
-        Validators.required,
-        Validators.min(30),
-        Validators.max(widthControl.value),
-      ]);
-
-    if (this.sideOneControl.invalid || this.sideTwoControl.invalid)
-      return false;
-
-    const height = heightControl.value;
-    const width = widthControl.value;
-
-    if (height < this.sideOneControl.value || width < this.sideTwoControl.value)
-      return false;
-
-    return true;
-  };
-
   updateRequirements(): void {
     const heightControl = this.formGroup.get('height');
     const widthControl = this.formGroup.get('width');

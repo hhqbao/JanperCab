@@ -56,10 +56,6 @@ export class DuraformOptionRollerShutterComponent
     this.onChange();
   };
 
-  isValid = (): boolean => {
-    return this.optionGroup.valid;
-  };
-
   updateRequirements(): void {
     return;
   }

@@ -119,6 +119,9 @@ namespace _5_JanperCab.Helpers
             CreateMap<HingeHoleOption, HingeHoleOptionDto>();
             CreateMap<HingeHoleOptionDto, HingeHoleOption>();
 
+            CreateMap<HingeHoleStyle, HingeHoleStyleDto>();
+            CreateMap<HingeHoleStyleDto, HingeHoleStyle>();
+
             CreateMap<DuraformComponent, DuraformComponentDto>()
                 .Include<DuraformComponentWithOption, DuraformComponentWithOptionDto>()
                 .Include<DuraformDrawer, DuraformDrawerDto>();
@@ -201,12 +204,6 @@ namespace _5_JanperCab.Helpers
 
             CreateMap<DuraformFile, DuraformFileDto>();
             CreateMap<DuraformFileDto, DuraformFile>();
-
-            CreateMap<DuraformMisc, DuraformMiscDto>();
-            CreateMap<DuraformMiscDto, DuraformMisc>();
-
-            CreateMap<MiscItem, MiscItemDto>();
-            CreateMap<MiscItemDto, MiscItem>();
 
             CreateMap<DuraformDesignEdgeProfile, DuraformDesignEdgeProfileDto>();
             CreateMap<DuraformDesignEdgeProfileDto, DuraformDesignEdgeProfile>();

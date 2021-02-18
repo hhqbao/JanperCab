@@ -1,10 +1,9 @@
-import { DuraformOptionSelectorComponent } from './../duraform-option-selector/duraform-option-selector.component';
 import { DialogService } from './../../_services/dialog.service';
 import { DuraformDoorDto } from './../../_models/duraform-component/DuraformDoorDto';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { DuraformComponentFormComponent } from '../duraform-component-form/duraform-component-form.component';
 
 @Component({
@@ -14,14 +13,16 @@ import { DuraformComponentFormComponent } from '../duraform-component-form/duraf
 export class DuraformDoorFormComponent
   extends DuraformComponentFormComponent<DuraformDoorDto>
   implements OnInit {
-  @ViewChild('optionSelector') optionSelector: DuraformOptionSelectorComponent;
-
   get duraformEdgeProfileId(): AbstractControl {
     return this.formGroup.get('duraformEdgeProfileId');
   }
 
   get optionGroup(): AbstractControl {
     return this.formGroup.get('optionGroup');
+  }
+
+  get hingeHoleGroup(): AbstractControl {
+    return this.formGroup.get('hingeHole');
   }
 
   constructor(
@@ -45,7 +46,7 @@ export class DuraformDoorFormComponent
         [
           Validators.required,
           Validators.min(30),
-          Validators.max(this.order.isRoutingOnly ? 3600 : 2500),
+          Validators.max(this.order.maxBoardSize),
         ],
       ],
       width: [
@@ -53,7 +54,7 @@ export class DuraformDoorFormComponent
         [
           Validators.required,
           Validators.min(30),
-          Validators.max(this.order.isRoutingOnly ? 3600 : 2500),
+          Validators.max(this.order.maxBoardSize),
         ],
       ],
       duraformEdgeProfileId: [null, [Validators.required]],
@@ -106,9 +107,7 @@ export class DuraformDoorFormComponent
         }
         if (this.height.errors.min || this.height.errors.max) {
           return this.showErrorMsg(
-            `Height must be between 30 and ${
-              this.order.isRoutingOnly ? 3600 : 2500
-            }`
+            `Height must be between 30 and ${this.order.maxBoardSize}`
           );
         }
       }
@@ -119,9 +118,7 @@ export class DuraformDoorFormComponent
         }
         if (this.width.errors.min || this.width.errors.max) {
           return this.showErrorMsg(
-            `Width must be between 30 and ${
-              this.order.isRoutingOnly ? 3600 : 2500
-            }`
+            `Width must be between 30 and ${this.order.maxBoardSize}`
           );
         }
       }
@@ -132,6 +129,15 @@ export class DuraformDoorFormComponent
           return this.showErrorMsg(
             'Duraform Option Invalid! Adjust to continue.'
           );
+        });
+        return;
+      }
+
+      if (this.hingeHoleGroup && this.hingeHoleGroup.invalid) {
+        setTimeout(() => {
+          (this.hingeHoleSelector.mainInput
+            .nativeElement as HTMLElement).focus();
+          return this.showErrorMsg('Hinge Hole Invalid! Adjust to continue');
         });
         return;
       }

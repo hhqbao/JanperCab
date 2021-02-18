@@ -29,8 +29,6 @@ import { DuraformComponentFormComponent } from '../duraform-component-form/duraf
 export class PantryDoorFormComponent
   extends DuraformComponentFormComponent<DuraformPantryDoorDto>
   implements OnInit {
-  @ViewChild('optionSelector') optionSelector: DuraformOptionSelectorComponent;
-
   optionTypeKeyEnum = DuraformOptionTypeKey;
   componentType: ComponentType = ComponentType.DuraformPantryDoor;
 
@@ -52,6 +50,10 @@ export class PantryDoorFormComponent
     return this.formGroup.get('optionGroup');
   }
 
+  get hingeHoleGroup(): AbstractControl {
+    return this.formGroup.get('hingeHole');
+  }
+
   ngOnInit() {
     this.formGroup = this.fb.group({
       quantity: [
@@ -60,15 +62,27 @@ export class PantryDoorFormComponent
       ],
       height: [
         null,
-        [Validators.required, Validators.min(30), Validators.max(2500)],
+        [
+          Validators.required,
+          Validators.min(30),
+          Validators.max(this.order.maxBoardSize),
+        ],
       ],
       width: [
         null,
-        [Validators.required, Validators.min(30), Validators.max(2500)],
+        [
+          Validators.required,
+          Validators.min(30),
+          Validators.max(this.order.maxBoardSize),
+        ],
       ],
       chairRailHeight: [
         null,
-        [Validators.required, Validators.min(30), Validators.max(2500)],
+        [
+          Validators.required,
+          Validators.min(30),
+          Validators.max(this.order.maxBoardSize),
+        ],
       ],
       chairRailTypeId: [
         this.asset.pantryDoorChairRailTypes[0]?.id,
@@ -122,9 +136,7 @@ export class PantryDoorFormComponent
         }
         if (this.height.errors.min || this.height.errors.max) {
           return this.showErrorMsg(
-            `Height must be between 30 and ${
-              this.order.isRoutingOnly ? 3600 : 2500
-            }`
+            `Height must be between 30 and ${this.order.maxBoardSize}`
           );
         }
       }
@@ -135,9 +147,7 @@ export class PantryDoorFormComponent
         }
         if (this.width.errors.min || this.width.errors.max) {
           return this.showErrorMsg(
-            `Width must be between 30 and ${
-              this.order.isRoutingOnly ? 3600 : 2500
-            }`
+            `Width must be between 30 and ${this.order.maxBoardSize}`
           );
         }
       }
@@ -151,9 +161,7 @@ export class PantryDoorFormComponent
           this.chairRailHeight.errors.max
         ) {
           return this.showErrorMsg(
-            `Rail Height must be between 30 and ${
-              this.order.isRoutingOnly ? 3600 : 2500
-            }`
+            `Rail Height must be between 30 and ${this.order.maxBoardSize}`
           );
         }
       }
@@ -164,6 +172,15 @@ export class PantryDoorFormComponent
           return this.showErrorMsg(
             'Duraform Option Invalid! Adjust to continue.'
           );
+        });
+        return;
+      }
+
+      if (this.hingeHoleGroup && this.hingeHoleGroup.invalid) {
+        setTimeout(() => {
+          (this.hingeHoleSelector.mainInput
+            .nativeElement as HTMLElement).focus();
+          return this.showErrorMsg('Hinge Hole Invalid! Adjust to continue');
         });
         return;
       }

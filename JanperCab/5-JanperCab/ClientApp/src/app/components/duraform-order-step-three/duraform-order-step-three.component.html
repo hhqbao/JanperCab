@@ -40,6 +40,7 @@
   </app-float-box>
   <app-pdf-viewer
     *ngIf="showDeliveryDocket"
+    [documentName]="'Delivery-Docket'"
     (closePanel)="showDeliveryDocket = false"
   >
     <app-delivery-docket [data]="deliveryDocketData"></app-delivery-docket>
@@ -306,11 +307,6 @@
           <app-duraform-drawer-component-list
             [duraformDrawers]="order.duraformDrawers"
           ></app-duraform-drawer-component-list>
-        </div>
-        <div class="component-list" *ngIf="order.duraformMiscs.length > 0">
-          <app-duraform-misc-component-list
-            [duraformMiscs]="order.duraformMiscs"
-          ></app-duraform-misc-component-list>
         </div>
       </app-box>
     </div>

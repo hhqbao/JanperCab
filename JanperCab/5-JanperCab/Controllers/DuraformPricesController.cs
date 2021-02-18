@@ -24,6 +24,16 @@ namespace _5_JanperCab.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            var prices = await _unitOfWork.DuraformPrices.GetAllAsync();
+
+            var model = new DuraformAllPriceModel { Prices = _mapper.Map<List<DuraformPriceGrid>, List<DuraformPriceGridDto>>(prices) };
+
+            return Ok(model);
+        }
+
         [HttpGet("{finishId}/{serieId}")]
         public async Task<IActionResult> GetPressPrice(int finishId, int serieId)
         {

@@ -15,8 +15,6 @@ import { DuraformComponentFormComponent } from '../duraform-component-form/duraf
 export class EndPanelFormComponent
   extends DuraformComponentFormComponent<DuraformEndPanelDto>
   implements OnInit {
-  @ViewChild('optionSelector') optionSelector: DuraformOptionSelectorComponent;
-
   duraformOptionTypeKey = DuraformOptionTypeKey;
   componentType: ComponentType = ComponentType.DuraformEndPanel;
 
@@ -69,11 +67,19 @@ export class EndPanelFormComponent
       ],
       height: [
         null,
-        [Validators.required, Validators.min(30), Validators.max(2500)],
+        [
+          Validators.required,
+          Validators.min(30),
+          Validators.max(this.order.maxBoardSize),
+        ],
       ],
       width: [
         null,
-        [Validators.required, Validators.min(30), Validators.max(2500)],
+        [
+          Validators.required,
+          Validators.min(30),
+          Validators.max(this.order.maxBoardSize),
+        ],
       ],
       numberOfShields: [
         2,
@@ -160,9 +166,7 @@ export class EndPanelFormComponent
         }
         if (this.height.errors.min || this.height.errors.max) {
           return this.showErrorMsg(
-            `Height must be between 30 and ${
-              this.order.isRoutingOnly ? 3600 : 2500
-            }`
+            `Height must be between 30 and ${this.order.maxBoardSize}`
           );
         }
       }
@@ -173,9 +177,7 @@ export class EndPanelFormComponent
         }
         if (this.width.errors.min || this.width.errors.max) {
           return this.showErrorMsg(
-            `Width must be between 30 and ${
-              this.order.isRoutingOnly ? 3600 : 2500
-            }`
+            `Width must be between 30 and ${this.order.maxBoardSize}`
           );
         }
       }

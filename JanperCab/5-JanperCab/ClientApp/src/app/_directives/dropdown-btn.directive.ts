@@ -3,10 +3,11 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 @Directive({ selector: '[appDropdownBtn]' })
 export class DropdownBtnDirective {
   @Input('appDropdownBtn') toggleClass: string;
+
   target: Element;
 
   constructor(private elementRef: ElementRef) {
-    this.target = elementRef.nativeElement;
+    this.target = this.elementRef.nativeElement;
   }
 
   @HostListener('click')

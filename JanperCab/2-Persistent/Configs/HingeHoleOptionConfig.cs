@@ -31,6 +31,12 @@ namespace _2_Persistent.Configs
                 .WithOne(y => y.HingeHoleOption)
                 .HasForeignKey<HingeHoleOption>(x => x.Id)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(x => x.HingeStyle)
+                .WithMany(y => y.HingeHoleOptions)
+                .HasForeignKey(x => x.HingeHoleStyle)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -1,0 +1,63 @@
+.duraform-price-list-pdf {
+  font-size: 1.8rem;
+
+  .price-list {
+    &:not(:first-child) {
+      margin-top: 10rem;
+
+      @media print {
+        margin-top: 5rem;
+      }
+    }
+
+    &__price-table {
+      border-bottom: solid 2px $red-primary;
+      page-break-inside: avoid;
+
+      &:not(:first-child) {
+        margin-top: 3rem;
+      }
+
+      &.empty {
+        display: none;
+      }
+
+      @media print {
+        border-bottom: solid 1px $red-primary;
+      }
+    }
+
+    &__title {
+      margin-bottom: 1rem;
+
+      @media print {
+        margin-bottom: 0.7rem;
+      }
+
+      * {
+        display: inline-block;
+      }
+
+      &--finish {
+        color: $red-primary;
+        font-weight: bold;
+        font-size: 5rem;
+        margin-right: 3rem;
+
+        @media print {
+          font-size: 3rem;
+          margin-right: 2rem;
+        }
+      }
+
+      &--serie {
+        font-size: 2.5rem;
+        font-weight: bold;
+
+        @media print {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+}

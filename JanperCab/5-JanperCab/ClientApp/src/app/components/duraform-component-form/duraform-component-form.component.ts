@@ -1,12 +1,19 @@
+import { HingeHoleSelectorComponent } from './../hinge-hole-selector/hinge-hole-selector.component';
 import { DuraformEndPanelDto } from 'src/app/_models/duraform-component/DuraformEndPanelDto';
 import { DuraformPantryDoorDto } from 'src/app/_models/duraform-component/DuraformPantryDoorDto';
 import { DuraformDrawerDto } from './../../_models/duraform-component/DuraformDrawerDto';
 import { DuraformDoorDto } from './../../_models/duraform-component/DuraformDoorDto';
 import { DialogService } from './../../_services/dialog.service';
-import { EventEmitter, Input, Output, ElementRef } from '@angular/core';
+import {
+  EventEmitter,
+  Input,
+  Output,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 
-import { DuraformComponentDto } from 'src/app/_models/duraform-component/DuraformComponentDto';
+import { DuraformOptionSelectorComponent } from '../duraform-option-selector/duraform-option-selector.component';
 
 export abstract class DuraformComponentFormComponent<
   T extends
@@ -18,6 +25,9 @@ export abstract class DuraformComponentFormComponent<
   @Input() component: T;
 
   @Output() formSubmit = new EventEmitter<FormGroup>();
+
+  @ViewChild('optionSelector') optionSelector: DuraformOptionSelectorComponent;
+  @ViewChild('hingeHoleSelector') hingeHoleSelector: HingeHoleSelectorComponent;
 
   formGroup: FormGroup;
 

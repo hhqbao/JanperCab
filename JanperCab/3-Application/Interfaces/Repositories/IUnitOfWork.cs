@@ -18,7 +18,6 @@ namespace _3_Application.Interfaces.Repositories
 
         IDuraformArchRepo DuraformArches { get; }
 
-
         IPantryDoorChairRailTypeRepo PantryDoorChairRailTypes { get; }
 
         IDuraformDrawerTypeRepo DuraformDrawerTypes { get; }
@@ -27,11 +26,11 @@ namespace _3_Application.Interfaces.Repositories
 
         IHingeHoleTypeRepo HingeHoleTypes { get; }
 
+        IHingeHoleStyleRepo HingeHoleStyles { get; }
+
         IDuraformOrderRepo DuraformOrders { get; }
 
         IApplicationFileRepo ApplicationFiles { get; }
-
-        IMiscItemRepo MiscItems { get; }
 
         IDuraformPriceRepo DuraformPrices { get; }
 

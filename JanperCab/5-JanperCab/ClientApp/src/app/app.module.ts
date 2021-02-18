@@ -1,13 +1,11 @@
+import { DuraformPriceDisplayTableComponent } from './components/duraform-price-display-table/duraform-price-display-table.component';
+import { DuraformPriceListPdfComponent } from './components/duraform-price-list-pdf/duraform-price-list-pdf.component';
 import { ArraySumPipe } from './_pipes/arraySum.pipe';
 import { DuraformPriceBulkActionComponent } from './components/duraform-price-bulk-action/duraform-price-bulk-action.component';
 import { DuraformPriceEditorComponent } from './components/duraform-price-editor/duraform-price-editor.component';
 import { DuraformOptionAngledShelfFormComponent } from './components/duraform-option-angled-shelf-form/duraform-option-angled-shelf-form.component';
 import { MachineFileService } from './_services/machine-file.service';
-import { DuraformMiscComponentListComponent } from './components/duraform-misc-component-list/duraform-misc-component-list.component';
 import { MiscItemService } from './_services/misc-item.service';
-import { DuraformMiscCartItemComponent } from './components/duraform-misc-cart-item/duraform-misc-cart-item.component';
-import { DuraformMiscTabComponent } from './components/duraform-misc-tab/duraform-misc-tab.component';
-import { DuraformMiscFormComponent } from './components/duraform-misc-form/duraform-misc-form.component';
 import { EdgeProfileMenuComponent } from './components/edge-profile-menu/edge-profile-menu.component';
 import { CabinetMakerListComponent } from './components/cabinet-maker-list/cabinet-maker-list.component';
 import { FileSizePipe } from './_pipes/fileSize.pipe';
@@ -38,7 +36,7 @@ import { ClassToggleDirective } from './_directives/class-toggle.directive';
 import { DuraformComponentService } from './_services/duraform-component.service';
 import { HingeHoleSelectorComponent } from './components/hinge-hole-selector/hinge-hole-selector.component';
 import { DuraformAccessoriesBoxComponent } from './components/duraform-accessories-box/duraform-accessories-box.component';
-import { HingeHoleTypeService } from './_services/hinge-hole-type.service';
+import { HingeHoleService } from './_services/hinge-hole.service';
 import { DeliveryDetailFormComponent } from './components/delivery-detail-form/delivery-detail-form.component';
 import { InvoiceDetailFormComponent } from './components/invoice-detail-form/invoice-detail-form.component';
 import { DuraformPantryDoorComponentListComponent } from './components/duraform-pantry-door-component-list/duraform-pantry-door-component-list.component';
@@ -149,9 +147,6 @@ import { DuraformPriceGridPageComponent } from './pages/duraform-price-grid-page
     InvoiceDetailFormComponent,
     DeliveryDetailFormComponent,
     LoginFormComponent,
-    DuraformMiscFormComponent,
-    DuraformMiscTabComponent,
-    DuraformMiscCartItemComponent,
     DuraformOrderStepOneComponent,
     DuraformOrderStepTwoComponent,
     DuraformOrderStepThreeComponent,
@@ -208,9 +203,10 @@ import { DuraformPriceGridPageComponent } from './pages/duraform-price-grid-page
     DeliveryDocketDuraformDrawersComponent,
     CabinetMakerListComponent,
     EdgeProfileMenuComponent,
-    DuraformMiscComponentListComponent,
     DuraformPriceEditorComponent,
     DuraformPriceBulkActionComponent,
+    DuraformPriceListPdfComponent,
+    DuraformPriceDisplayTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -251,7 +247,7 @@ import { DuraformPriceGridPageComponent } from './pages/duraform-price-grid-page
     PantryDoorChairRailTypeService,
     DuraformDrawerTypeService,
     DuraformOptionTypeService,
-    HingeHoleTypeService,
+    HingeHoleService,
     MiscItemService,
     MachineFileService,
     ErrorInterceptorProvider,

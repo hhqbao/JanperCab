@@ -1,4 +1,3 @@
-import { DuraformMiscDto } from 'src/app/_models/duraform-misc/DuraformMiscDto';
 import { CabinetMakerDto } from 'src/app/_models/customer/CabinetMakerDto';
 import { DuraformFileDto } from './../_models/application-file/DuraformFileDto';
 import { OrderStatus } from './../_enums/OrderStatus';
@@ -248,6 +247,10 @@ export class DuraformOrderService {
     return this.duraformForm.isRoutingOnly;
   }
 
+  get maxBoardSize(): number {
+    return this.isRoutingOnly ? 3600 : 2500;
+  }
+
   get hingeHoleTypeId(): number {
     return this.duraformForm.hingeHoleTypeId;
   }
@@ -329,10 +332,6 @@ export class DuraformOrderService {
     return [...this.duraformForm.duraformDrawers];
   }
 
-  get duraformMiscs(): DuraformMiscDto[] {
-    return [...this.duraformForm.duraformMiscs];
-  }
-
   get duraformFiles(): DuraformFileDto[] {
     return this.duraformForm.duraformFiles;
   }
@@ -395,24 +394,6 @@ export class DuraformOrderService {
     }
 
     this.duraformForm.duraformComponents.unshift(component);
-  };
-
-  addMisc = (misc: DuraformMiscDto) => {
-    if (this.duraformForm.duraformMiscs[0]) {
-      misc.sortNumber = this.duraformForm.duraformMiscs[0].sortNumber + 1;
-    } else {
-      misc.sortNumber = 1;
-    }
-
-    this.duraformForm.duraformMiscs.unshift(misc);
-  };
-
-  removeMisc = (misc: DuraformMiscDto) => {
-    const index = this.duraformForm.duraformMiscs.indexOf(misc);
-
-    if (index >= 0) {
-      this.duraformForm.duraformMiscs.splice(index, 1);
-    }
   };
 
   removeComponent = (component: DuraformComponentDto) => {

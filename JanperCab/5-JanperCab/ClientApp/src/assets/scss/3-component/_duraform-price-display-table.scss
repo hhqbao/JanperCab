@@ -1,0 +1,62 @@
+.duraform-price-display-table {
+  border-collapse: collapse;
+  color: black;
+  font-size: 2rem;
+  text-align: center;
+  width: 100%;
+
+  thead {
+    tr {
+      background-color: rgba(black, 0.2);
+
+      th {
+        color: $red-primary;
+        font-weight: bold;
+        padding: 1.5rem;
+        width: 12rem;
+
+        &:first-child {
+          color: black;
+          border-right: solid 5px white;
+        }
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      &:nth-child(even) {
+        background-color: rgba(black, 0.1);
+      }
+
+      td {
+        padding: 0.5rem;
+
+        &:first-child {
+          border-right: solid 5px white;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  @media print {
+    font-size: 1.2rem;
+
+    thead {
+      tr {
+        th {
+          padding: 0.5rem;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          padding: 0.3rem;
+        }
+      }
+    }
+  }
+}

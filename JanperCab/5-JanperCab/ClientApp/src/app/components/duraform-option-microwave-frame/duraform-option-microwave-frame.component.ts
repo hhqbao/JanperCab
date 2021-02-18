@@ -56,10 +56,6 @@ export class DuraformOptionMicrowaveFrameComponent
     this.onChange();
   };
 
-  isValid = (): boolean => {
-    return this.optionGroup.valid;
-  };
-
   updateRequirements(): void {
     return;
   }

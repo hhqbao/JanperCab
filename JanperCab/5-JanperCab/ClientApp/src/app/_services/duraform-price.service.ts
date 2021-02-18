@@ -1,3 +1,4 @@
+import { DuraformAllPriceModel } from './../_models/duraform-price/DuraformAllPriceModel';
 import { DuraformPriceGridDto } from 'src/app/_models/duraform-price/DuraformPriceGridDto';
 import { DuraformWrapPriceGridDto } from './../_models/duraform-price/DuraformWrapPriceGridDto';
 import { plainToClass } from 'class-transformer';
@@ -11,6 +12,18 @@ import { DuraformRouteOnlyPriceGridDto } from '../_models/duraform-price/Durafor
 @Injectable({ providedIn: 'root' })
 export class DuraformPriceService {
   constructor(private http: HttpClient) {}
+
+  getAllPrices = () => {
+    return this.http
+      .get<DuraformAllPriceModel>(
+        `${environment.baseUrl}/DuraformPrices/GetAll`
+      )
+      .pipe(
+        map((response) => {
+          return plainToClass(DuraformAllPriceModel, response);
+        })
+      );
+  };
 
   getPressPriceGrid = (
     finishId: number,

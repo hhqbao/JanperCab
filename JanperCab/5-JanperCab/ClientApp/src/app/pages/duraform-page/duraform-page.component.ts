@@ -14,12 +14,12 @@ import { LayoutService } from 'src/app/_services/layout.service';
 import { DuraformSerieService } from 'src/app/_services/duraform-serie.service';
 import { DuraformDesignService } from 'src/app/_services/duraform-design.service';
 import { DuraformEdgeProfileService } from 'src/app/_services/duraform-edge-profile.service';
-import { forkJoin, Observable, ObservableInput } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { DuraformArchService } from 'src/app/_services/duraform-arch.service';
 import { PantryDoorChairRailTypeService } from 'src/app/_services/pantry-door-chair-rail-type.service';
 import { DuraformDrawerTypeService } from 'src/app/_services/duraform-drawer-type.service';
 import { DuraformOptionTypeService } from 'src/app/_services/duraform-option-type.service';
-import { HingeHoleTypeService } from 'src/app/_services/hinge-hole-type.service';
+import { HingeHoleService } from 'src/app/_services/hinge-hole.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DuraformOrderTypeKey } from 'src/app/_enums/DuraformOrderTypeKey';
 
@@ -41,18 +41,17 @@ export class DuraformPageComponent implements OnInit {
     private order: DuraformOrderService,
     private draftService: DuraformDraftService,
     private jobService: DuraformJobService,
-    private duraformSerieService: DuraformSerieService,
-    private duraformDesignService: DuraformDesignService,
+    private serieService: DuraformSerieService,
+    private designService: DuraformDesignService,
     private wrapTypeService: DuraformWrapTypeService,
     private wrapColorService: DuraformWrapColorService,
     private edgeProfileService: DuraformEdgeProfileService,
     private archService: DuraformArchService,
-    private pantryDoorRailTypeService: PantryDoorChairRailTypeService,
+    private pantryRailService: PantryDoorChairRailTypeService,
     private drawerTypeService: DuraformDrawerTypeService,
     private optionTypeService: DuraformOptionTypeService,
-    private hingeHoleTypeService: HingeHoleTypeService,
-    private componentService: DuraformComponentService,
-    private miscItemService: MiscItemService
+    private hingeService: HingeHoleService,
+    private componentService: DuraformComponentService
   ) {}
 
   ngOnInit() {
@@ -62,18 +61,18 @@ export class DuraformPageComponent implements OnInit {
     });
 
     const observables = forkJoin({
-      series: this.loadSeries(),
-      designs: this.loadDuraformDesigns(),
-      edgeProfiles: this.loadEdgeProfiles(),
-      arches: this.loadArches(),
-      wrapTypes: this.loadWrapTypes(),
-      railTypes: this.loadPantryDoorChairRailTypes(),
-      drawerTypes: this.loadDuraformDrawerTypes(),
-      optTypes: this.loadDuraformOptionTypes(),
-      hingeTypes: this.loadHingeHoleTypes(),
-      wrapColors: this.loadWrapColors(),
-      componentTypes: this.loadComponentTypes(),
-      miscItems: this.loadMiscItems(),
+      series: this.serieService.getAll(),
+      designs: this.designService.getForOrderMenu(),
+      edgeProfiles: this.edgeProfileService.getAll(),
+      arches: this.archService.getAll(),
+      wrapTypes: this.wrapTypeService.getAll(),
+      railTypes: this.pantryRailService.getAllActive(),
+      drawerTypes: this.drawerTypeService.getAllActive(),
+      optTypes: this.optionTypeService.getAll(),
+      hingeTypes: this.hingeService.getActiveTypes(),
+      hingeStyles: this.hingeService.getActiveStyles(),
+      wrapColors: this.wrapColorService.getAll(),
+      componentTypes: this.componentService.getComponentTypes(),
     });
 
     observables.subscribe(
@@ -88,8 +87,8 @@ export class DuraformPageComponent implements OnInit {
         this.asset.duraformDrawerTypes = responses.drawerTypes;
         this.asset.duraformOptionTypes = responses.optTypes;
         this.asset.hingeHoleTypes = responses.hingeTypes;
+        this.asset.hingeHoleStyles = responses.hingeStyles;
         this.asset.componentTypes = responses.componentTypes;
-        this.asset.miscItems = responses.miscItems;
 
         this.loadDuraformForm();
       },
@@ -146,54 +145,6 @@ export class DuraformPageComponent implements OnInit {
         this.isLoadingAsset = false;
       }
     });
-  };
-
-  private loadSeries = () => {
-    return this.duraformSerieService.getAll();
-  };
-
-  private loadDuraformDesigns = () => {
-    return this.duraformDesignService.getForOrderMenu();
-  };
-
-  private loadWrapTypes = () => {
-    return this.wrapTypeService.getAll();
-  };
-
-  private loadWrapColors = () => {
-    return this.wrapColorService.getAll();
-  };
-
-  private loadEdgeProfiles = () => {
-    return this.edgeProfileService.getAll();
-  };
-
-  private loadArches = () => {
-    return this.archService.getAll();
-  };
-
-  private loadPantryDoorChairRailTypes = () => {
-    return this.pantryDoorRailTypeService.getAllActive();
-  };
-
-  private loadDuraformDrawerTypes = () => {
-    return this.drawerTypeService.getAllActive();
-  };
-
-  private loadDuraformOptionTypes = () => {
-    return this.optionTypeService.getAll();
-  };
-
-  private loadHingeHoleTypes = () => {
-    return this.hingeHoleTypeService.getAllActive();
-  };
-
-  private loadComponentTypes = () => {
-    return this.componentService.getComponentTypes();
-  };
-
-  private loadMiscItems = () => {
-    return this.miscItemService.getAllActive();
   };
 
   onProcessClick = (step: DuraformProcessStep) => {

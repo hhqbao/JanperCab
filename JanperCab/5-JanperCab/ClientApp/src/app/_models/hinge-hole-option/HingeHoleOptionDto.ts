@@ -1,10 +1,13 @@
-import { HingeHoleStyle } from './../../_enums/HingeHoleStyle';
+import { DuraformDoorDto } from 'src/app/_models/duraform-component/DuraformDoorDto';
+import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
+import { HingeHoleStyleEnum } from '../../_enums/HingeHoleStyleEnum';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Expose } from 'class-transformer';
+import { DuraformComponentWithOptionAndHingeHoleDto } from '../duraform-component/DuraformComponentWithOptionAndHingeHoleDto';
 
 export class HingeHoleOptionDto {
   id: number;
-  hingeHoleStyle: HingeHoleStyle;
+  hingeHoleStyle: HingeHoleStyleEnum;
   quantity: 1 | 2 | 3 | 4;
   top: number;
   topCenter: number;
@@ -56,7 +59,7 @@ export class HingeHoleOptionDto {
 
   @Expose()
   toString(): string {
-    const style = HingeHoleStyle[this.hingeHoleStyle];
+    const style = HingeHoleStyleEnum[this.hingeHoleStyle];
 
     switch (this.quantity) {
       case 1:

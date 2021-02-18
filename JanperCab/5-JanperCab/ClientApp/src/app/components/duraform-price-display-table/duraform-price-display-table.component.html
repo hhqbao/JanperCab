@@ -1,0 +1,16 @@
+<table class="duraform-price-display-table">
+  <thead>
+    <tr>
+      <th>H/W</th>
+      <th *ngFor="let width of widthHeaders">TO {{ width.maxWidth }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let height of heightHeaders">
+      <td>TO {{ height.maxHeight }}</td>
+      <td *ngFor="let width of widthHeaders">
+        {{ getPrice(height, width) | currency }}
+      </td>
+    </tr>
+  </tbody>
+</table>

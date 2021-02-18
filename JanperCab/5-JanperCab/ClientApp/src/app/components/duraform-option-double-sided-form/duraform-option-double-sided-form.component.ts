@@ -31,10 +31,6 @@ export class DuraformOptionDoubleSidedFormComponent
     }
   }
 
-  isValid = (): boolean => {
-    return this.optionGroup.valid;
-  };
-
   updateRequirements(): void {
     return;
   }

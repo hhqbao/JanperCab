@@ -1,4 +1,5 @@
-import { HingeHoleStyle } from './../../_enums/HingeHoleStyle';
+import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
+import { HingeHoleStyleEnum } from '../../_enums/HingeHoleStyleEnum';
 import {
   Component,
   OnInit,
@@ -32,12 +33,6 @@ export class HingeHoleSelectorComponent implements OnInit {
 
   showOption = false;
 
-  options = [
-    { text: HingeHoleStyle[HingeHoleStyle.Pair], value: HingeHoleStyle.Pair },
-    { text: HingeHoleStyle[HingeHoleStyle.Left], value: HingeHoleStyle.Left },
-    { text: HingeHoleStyle[HingeHoleStyle.Right], value: HingeHoleStyle.Right },
-    { text: HingeHoleStyle[HingeHoleStyle.Draw], value: HingeHoleStyle.Draw },
-  ];
   quantities = [
     { text: '1', value: 1 },
     { text: '2', value: 2 },
@@ -74,7 +69,11 @@ export class HingeHoleSelectorComponent implements OnInit {
     }
   };
 
-  constructor(private fb: FormBuilder, private ef: ElementRef) {
+  constructor(
+    private fb: FormBuilder,
+    private ef: ElementRef,
+    public asset: DuraformAssetService
+  ) {
     this.styleFormControl = this.fb.control(null);
   }
 
@@ -191,7 +190,7 @@ export class HingeHoleSelectorComponent implements OnInit {
     (this.topInput.nativeElement as HTMLElement).focus();
   };
 
-  private initialForm = (hingeHoleStyle: HingeHoleStyle) => {
+  private initialForm = (hingeHoleStyle: HingeHoleStyleEnum) => {
     if (!this.formGroup.get('hingeHole')) {
       this.formGroup.addControl(
         'hingeHole',
@@ -218,7 +217,7 @@ export class HingeHoleSelectorComponent implements OnInit {
     if (this.formGroup.get('hingeHole')) {
       const formValue = this.formGroup.get('hingeHole').value;
 
-      const style = HingeHoleStyle[formValue.hingeHoleStyle];
+      const style = HingeHoleStyleEnum[formValue.hingeHoleStyle];
       let valueString = '';
 
       switch (formValue.quantity) {

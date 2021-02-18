@@ -43,4 +43,22 @@
       top: -55%;
     }
   }
+
+  @media print {
+    & {
+      align-items: unset;
+      height: unset;
+      justify-content: unset;
+      padding: unset;
+      position: unset;
+
+      .menu {
+        display: none;
+      }
+
+      .printable-form {
+        padding: unset;
+      }
+    }
+  }
 }

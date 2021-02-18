@@ -1,13 +1,14 @@
-import { DuraformPriceGridDto } from './../duraform-price/DuraformPriceGridDto';
 import { HingeHoleOptionDto } from './../hinge-hole-option/HingeHoleOptionDto';
 import { DuraformComponentWithOptionDto } from './DuraformComponentWithOptionDto';
 import { DuraformOptionTypeDto } from '../duraform-option/DuraformOptionTypeDto';
-import { Type } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import * as _ from 'lodash';
 
 export abstract class DuraformComponentWithOptionAndHingeHoleDto extends DuraformComponentWithOptionDto {
   @Type(() => HingeHoleOptionDto)
   hingeHoleOption: HingeHoleOptionDto;
 
+  @Expose()
   updateWithOption(
     formValue: any,
     duraformOptionTypes: DuraformOptionTypeDto[]

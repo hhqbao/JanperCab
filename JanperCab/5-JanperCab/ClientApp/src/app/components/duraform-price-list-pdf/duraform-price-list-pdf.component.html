@@ -1,0 +1,38 @@
+<div class="duraform-price-list-pdf">
+  <div class="main-container">
+    <div class="price-list" *ngFor="let finish of finishList">
+      <div
+        class="price-list__price-table"
+        *ngFor="let serie of serieList"
+        [ngClass]="{
+          empty: getWrapPriceTable(finish.id, serie.id).length === 0
+        }"
+      >
+        <div class="price-list__title">
+          <span class="price-list__title--finish">{{ finish.name }}</span>
+          <span class="price-list__title--serie">{{ serie.name }}</span>
+        </div>
+        <app-duraform-price-display-table
+          [priceList]="getWrapPriceTable(finish.id, serie.id)"
+        ></app-duraform-price-display-table>
+      </div>
+    </div>
+    <div class="price-list">
+      <div
+        class="price-list__price-table"
+        *ngFor="let serie of serieList"
+        [ngClass]="{
+          empty: getRouteOnlyPriceTable(serie.id).length === 0
+        }"
+      >
+        <div class="price-list__title">
+          <span class="price-list__title--finish">Router Only</span>
+          <span class="price-list__title--serie">{{ serie.name }}</span>
+        </div>
+        <app-duraform-price-display-table
+          [priceList]="getRouteOnlyPriceTable(serie.id)"
+        ></app-duraform-price-display-table>
+      </div>
+    </div>
+  </div>
+</div>

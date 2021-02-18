@@ -19,15 +19,14 @@ namespace _2_Persistent
         public DbSet<PantryDoorChairRailType> PantryDoorChairRailTypes { get; set; }
         public DbSet<DuraformDrawerType> DuraformDrawerTypes { get; set; }
         public DbSet<DuraformOptionType> DuraformOptionTypes { get; set; }
-        public DbSet<HingeHoleType> HingeHoleTypes { get; set; }
         public DbSet<DuraformOption> DuraformOptions { get; set; }
         public DbSet<DuraformForm> DuraformForms { get; set; }
         public DbSet<DuraformComponent> DuraformComponents { get; set; }
+        public DbSet<HingeHoleType> HingeHoleTypes { get; set; }
         public DbSet<HingeHoleOption> HingeHoleOptions { get; set; }
+        public DbSet<HingeHoleStyle> HingeHoleStyle { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<ApplicationFile> ApplicationFiles { get; set; }
-        public DbSet<MiscItem> MiscItems { get; set; }
-        public DbSet<DuraformMisc> DuraformMiscs { get; set; }
         public DbSet<DuraformDesignEdgeProfile> DuraformDesignEdgeProfiles { get; set; }
         public DbSet<DuraformPriceGrid> DuraformPriceGrids { get; set; }
 
@@ -50,11 +49,10 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new PantryDoorChairRailTypeConfig());
             builder.ApplyConfiguration(new DuraformDrawerTypeConfig());
             builder.ApplyConfiguration(new DuraformOptionTypeConfig());
-            builder.ApplyConfiguration(new MiscItemConfig());
-            builder.ApplyConfiguration(new DuraformMiscConfig());
 
             builder.ApplyConfiguration(new HingeHoleTypeConfig());
             builder.ApplyConfiguration(new HingeHoleOptionConfig());
+            builder.ApplyConfiguration(new HingeHoleStyleConfig());
 
             builder.ApplyConfiguration(new DuraformOptionConfig());
             builder.ApplyConfiguration(new DuraformOptionNoFaceConfig());

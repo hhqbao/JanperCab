@@ -60,10 +60,6 @@ export class DuraformOptionPaneFrameFormComponent
     }
   }
 
-  isValid = (): boolean => {
-    return this.optionGroup.valid;
-  };
-
   updateRequirements(): void {
     return;
   }

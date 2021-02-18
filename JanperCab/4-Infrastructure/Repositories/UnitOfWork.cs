@@ -31,11 +31,11 @@ namespace _4_Infrastructure.Repositories
 
         public IHingeHoleTypeRepo HingeHoleTypes { get; }
 
+        public IHingeHoleStyleRepo HingeHoleStyles { get; }
+
         public IDuraformOrderRepo DuraformOrders { get; }
 
         public IApplicationFileRepo ApplicationFiles { get; }
-
-        public IMiscItemRepo MiscItems { get; }
 
         public IDuraformPriceRepo DuraformPrices { get; }
 
@@ -55,9 +55,9 @@ namespace _4_Infrastructure.Repositories
             DuraformDrawerTypes = new DuraformDrawerTypeRepo(_dbContext);
             DuraformOptionTypes = new DuraformOptionTypeRepo(_dbContext);
             HingeHoleTypes = new HingeHoleTypeRepo(_dbContext);
+            HingeHoleStyles = new HingeHoleStyleRepo(_dbContext);
             DuraformOrders = new DuraformOrderRepo(_dbContext);
             ApplicationFiles = new ApplicationFileRepo(_dbContext);
-            MiscItems = new MiscItemRepo(_dbContext);
             DuraformPrices = new DuraformPriceRepo(_dbContext);
         }
 

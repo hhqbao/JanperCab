@@ -1,6 +1,7 @@
+import { HingeHoleStyleEnum } from './../_enums/HingeHoleStyleEnum';
+import { HingeHoleStyleDto } from './../_models/hinge-hole-option/HingeHoleStyleDto';
 import { DialogService } from './dialog.service';
 import { DuraformPriceGridDto } from './../_models/duraform-price/DuraformPriceGridDto';
-import { MiscItemDto } from './../_models/duraform-misc/MiscItemDto';
 
 import { ComponentType } from './../_enums/ComponentType';
 import { DuraformComponentTypeDto } from './../_models/duraform-component/DuraformComponentType';
@@ -15,7 +16,6 @@ import { PantryDoorChairRailTypeForList } from '../_models/pantry-door-chair-rai
 import { DuraformDrawerTypeForList } from '../_models/duraform-drawer-type/DuraformDrawerTypeForList';
 import { DuraformOptionTypeDto } from '../_models/duraform-option/DuraformOptionTypeDto';
 import { HingeHoleTypeDto } from '../_models/hinge-hole-type/HingeHoleTypeDto';
-import { DuraformWrapPriceGridDto } from '../_models/duraform-price/DuraformWrapPriceGridDto';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformAssetService {
@@ -23,7 +23,6 @@ export class DuraformAssetService {
 
   componentTypes: DuraformComponentTypeDto[] = [];
   arches: DuraformArchForList[] = [];
-  miscItems: MiscItemDto[] = [];
   duraformDrawerTypes: DuraformDrawerTypeForList[] = [];
   duraformOptionTypes: DuraformOptionTypeDto[] = [];
   duraformDesigns: DuraformDesignForOrderMenu[] = [];
@@ -33,6 +32,7 @@ export class DuraformAssetService {
   edgeProfiles: DuraformEdgeProfileForList[] = [];
   pantryDoorChairRailTypes: PantryDoorChairRailTypeForList[] = [];
   hingeHoleTypes: HingeHoleTypeDto[] = [];
+  hingeHoleStyles: HingeHoleStyleDto[] = [];
   priceGrids: DuraformPriceGridDto[] = [];
 
   constructor(private dialog: DialogService) {
@@ -87,8 +87,8 @@ export class DuraformAssetService {
     return this.hingeHoleTypes.find((x) => x.id === id);
   };
 
-  getMiscItem = (id: number) => {
-    return this.miscItems.find((x) => x.id === id);
+  getHingeStyle = (id: HingeHoleStyleEnum) => {
+    return this.hingeHoleStyles.find((x) => x.id === id);
   };
 
   getBasePrice = (serieId: number, totalHeight: number, totalWidth: number) => {

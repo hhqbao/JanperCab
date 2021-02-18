@@ -1,14 +1,8 @@
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { FoldingType } from './../../_enums/FoldingType';
-import { DialogService } from './../../_services/dialog.service';
 import { DuraformOptionTypeKey } from './../../_enums/DuraformOptionTypeKey';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  AbstractControl,
-} from '@angular/forms';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 import { DuraformOptionBaseComponent } from '../duraform-option-base-component/duraform-option-base.component';
 
@@ -26,7 +20,6 @@ export class DuraformOptionFoldBackFormComponent
 
   constructor(
     private fb: FormBuilder,
-    private dialog: DialogService,
     private asset: DuraformAssetService,
     private order: DuraformOrderService
   ) {
@@ -41,6 +34,12 @@ export class DuraformOptionFoldBackFormComponent
       { text: 'Right Return', value: FoldingType.Right },
       { text: 'Double Return', value: FoldingType.Double },
     ];
+  }
+
+  get allowedSize(): number {
+    const width = this.formGroup.get('width').value;
+
+    return this.order.maxBoardSize - width;
   }
 
   get leftLength(): AbstractControl {
@@ -64,10 +63,7 @@ export class DuraformOptionFoldBackFormComponent
           hasProfile: [false],
           thickness: [18, [Validators.required]],
           foldingType: [FoldingType.Left, [Validators.required]],
-          leftLength: [
-            100,
-            [Validators.required, Validators.min(100), Validators.max(500)],
-          ],
+          leftLength: [0, []],
           rightLength: [0, []],
         })
       );
@@ -87,48 +83,34 @@ export class DuraformOptionFoldBackFormComponent
         .get('duraformEdgeProfileId')
         .setValue(edgeProfile ? edgeProfile.id : null);
 
-      this.onChange();
+      this.onSelectFoldingType();
     }
   }
 
   onSelectFoldingType = () => {
+    this.leftLength.setValue(0);
+    this.rightLength.setValue(0);
+
+    this.leftLength.setValidators([
+      Validators.required,
+      Validators.min(100),
+      Validators.max(this.allowedSize),
+    ]);
+
+    this.rightLength.setValidators([
+      Validators.required,
+      Validators.min(100),
+      Validators.max(this.allowedSize),
+    ]);
+
     switch (this.selectedFoldingType) {
       case FoldingType.Left:
-        this.leftLength.setValidators([
-          Validators.required,
-          Validators.min(100),
-          Validators.max(500),
-        ]);
-        this.leftLength.setValue(100);
-
-        this.rightLength.setValue(0);
         this.rightLength.clearValidators();
         break;
       case FoldingType.Right:
-        this.rightLength.setValidators([
-          Validators.required,
-          Validators.min(100),
-          Validators.max(500),
-        ]);
-        this.rightLength.setValue(100);
-
-        this.leftLength.setValue(0);
         this.leftLength.clearValidators();
         break;
       case FoldingType.Double:
-        this.leftLength.setValidators([
-          Validators.required,
-          Validators.min(100),
-          Validators.max(500),
-        ]);
-        this.rightLength.setValidators([
-          Validators.required,
-          Validators.min(100),
-          Validators.max(500),
-        ]);
-
-        this.leftLength.setValue(100);
-        this.rightLength.setValue(100);
         break;
     }
 
@@ -144,59 +126,62 @@ export class DuraformOptionFoldBackFormComponent
   };
 
   onReturnLengthBlur = () => {
-    const foldingType = this.optionGroup.get('foldingType')
-      .value as FoldingType;
-
-    let lengthControls: AbstractControl[] = [];
-
-    switch (foldingType) {
-      case FoldingType.Left:
-        lengthControls = [this.optionGroup.get('leftLength')];
-        break;
-      case FoldingType.Right:
-        lengthControls = [this.optionGroup.get('rightLength')];
-        break;
+    switch (this.selectedFoldingType) {
       case FoldingType.Double:
-        lengthControls.push(this.optionGroup.get('leftLength'));
-        lengthControls.push(this.optionGroup.get('rightLength'));
+        this.leftLength.setValidators([
+          Validators.required,
+          Validators.min(100),
+          Validators.max(this.allowedSize - this.rightLength.value),
+        ]);
+        this.rightLength.setValidators([
+          Validators.required,
+          Validators.min(100),
+          Validators.max(this.allowedSize - this.leftLength.value),
+        ]);
         break;
     }
 
-    lengthControls = lengthControls.filter((x) => x.invalid);
+    this.leftLength.updateValueAndValidity();
+    this.rightLength.updateValueAndValidity();
 
-    for (const control of lengthControls) {
-      control.setValue(100);
+    if (this.optionGroup.valid) {
+      this.onChange();
     }
-
-    if (lengthControls.length > 0) {
-      this.dialog.alert(
-        'Invalid Return Length',
-        'Return length must be between 100mm and 500mm',
-        null
-      );
-    }
-
-    this.onChange();
-  };
-
-  isValid = (): boolean => {
-    const heightControl = this.formGroup.get('height');
-    const widthControl = this.formGroup.get('width');
-
-    if (heightControl.invalid || widthControl.invalid) return false;
-
-    const maxAllowedSize = this.order.isRoutingOnly ? 3600 : 2500;
-    const widthSize = widthControl.value;
-    const leftSize = this.leftLength.value;
-    const rightSize = this.rightLength.value;
-
-    if (widthSize + leftSize + rightSize > maxAllowedSize) return false;
-
-    return true;
   };
 
   updateRequirements(): void {
-    throw new Error('Method not implemented.');
+    const leftSize = this.leftLength.value;
+    const rightSize = this.rightLength.value;
+
+    if (leftSize + rightSize > this.allowedSize) {
+      this.leftLength.patchValue(0);
+      this.rightLength.patchValue(0);
+
+      this.leftLength.setValidators([
+        Validators.required,
+        Validators.min(100),
+        Validators.max(this.allowedSize),
+      ]);
+      this.rightLength.setValidators([
+        Validators.required,
+        Validators.min(100),
+        Validators.max(this.allowedSize),
+      ]);
+
+      switch (this.selectedFoldingType) {
+        case FoldingType.Double:
+          break;
+        case FoldingType.Left:
+          this.rightLength.clearValidators();
+          break;
+        case FoldingType.Right:
+          this.leftLength.clearValidators();
+          break;
+      }
+
+      this.leftLength.updateValueAndValidity();
+      this.rightLength.updateValueAndValidity();
+    }
   }
 
   onChange = (): void => {

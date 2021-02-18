@@ -110,15 +110,28 @@ export class DuraformOptionSelectorComponent implements OnInit {
       return;
     }
 
+    if (
+      this.formGroup.get('height').invalid ||
+      this.formGroup.get('width').invalid
+    ) {
+      this.dialog.alert(
+        'Action Not Allowed',
+        'Height & Width are required for this option',
+        null
+      );
+      return;
+    }
+
     switch (optionType.id) {
-      case this.typeKeyEnum.AngledShelf:
-        if (
-          this.formGroup.get('height').invalid ||
-          this.formGroup.get('width').invalid
-        ) {
+      case DuraformOptionTypeKey.FoldBack:
+        const maxAllowedSize = this.order.isRoutingOnly ? 3600 : 2500;
+        const width = this.formGroup.get('width').value;
+        const allowedSize = maxAllowedSize - width;
+
+        if (allowedSize < 100) {
           this.dialog.alert(
-            'Action Not Allowed',
-            'Height & Width are required for this option',
+            'Foldback Length Invalid',
+            'Folback option is not available for this board size. Reduce board width to use this option.',
             null
           );
           return;
