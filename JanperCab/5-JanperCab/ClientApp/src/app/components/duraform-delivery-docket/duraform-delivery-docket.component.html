@@ -1,0 +1,109 @@
+<div class="delivery-docket">
+  <div class="header">
+    <div class="header__manufacturer-details">
+      <div class="name">Janper Pty Ltd</div>
+      <div class="address">19 Newcastle Road, Bayswater VIC 3153</div>
+      <div class="abn-tel">ABN 45 004 772 034 - Tel 03 9720 0533</div>
+    </div>
+    <div class="header__form-details">
+      <div class="barcode">
+        <ngx-barcode
+          [bc-value]="duraformEnquiry.id | leading: '0000000'"
+          [bc-height]="'50px'"
+        ></ngx-barcode>
+      </div>
+      <div class="title">Delivery Docket</div>
+      <div class="order-number">
+        {{ duraformEnquiry.id | leading: "0000000" }}
+      </div>
+      <div class="created-date">
+        Date {{ duraformEnquiry.createdDate | date: "dd/MM/yyyy" }}
+      </div>
+    </div>
+  </div>
+  <div class="packaging-box">
+    <div class="box">
+      <div class="title">Invoice To</div>
+      <div class="name">{{ duraformEnquiry.invoiceTo }}</div>
+      <div class="address-1">{{ duraformEnquiry.invoiceAddress }}</div>
+      <div class="address-2">
+        {{ duraformEnquiry.invoiceSuburb }}
+        {{ duraformEnquiry.invoiceState | uppercase }}
+        {{ duraformEnquiry.invoicePostcode }}
+      </div>
+    </div>
+    <div class="box">
+      <div class="title">Delivery To</div>
+      <div class="name">{{ duraformEnquiry.deliveryTo }}</div>
+      <div class="address-1">{{ duraformEnquiry.deliveryAddress }}</div>
+      <div class="address-2">
+        {{ duraformEnquiry.deliverySuburb }}
+        {{ duraformEnquiry.deliveryState | uppercase }}
+        {{ duraformEnquiry.deliveryPostcode }}
+      </div>
+    </div>
+    <div class="box">
+      <div class="title">Delivery Note</div>
+      <div class="description">
+        {{ duraformEnquiry.deliveryNote }}
+      </div>
+    </div>
+  </div>
+  <div class="job-details-box">
+    <div class="title">Customer Order No</div>
+    <div class="customer-order-number">
+      {{ duraformEnquiry.customerReference }}
+    </div>
+    <div class="job-details">
+      Job No: {{ duraformEnquiry.id | leading: "0000000" }} |
+      {{ duraformEnquiry.duraformDesign.name }} |
+      {{ duraformEnquiry.duraformWrapColor.name }}
+      {{ duraformEnquiry.duraformWrapType.name }} |
+      {{ duraformEnquiry.duraformSerie.name }}
+      {{
+        duraformEnquiry.hingeHoleTypeId
+          ? "| " + duraformEnquiry.hingeHoleType.name
+          : null
+      }}
+    </div>
+  </div>
+  <div class="components-section">
+    <div
+      class="component-table"
+      *ngIf="duraformEnquiry.duraformDoors.length > 0"
+    >
+      <app-delivery-docket-duraform-doors
+        [doors]="duraformEnquiry.duraformDoors"
+      ></app-delivery-docket-duraform-doors>
+    </div>
+    <div class="component-table" *ngIf="duraformEnquiry.pantryDoors.length > 0">
+      <app-delivery-docket-pantry-doors
+        [pantryDoors]="duraformEnquiry.pantryDoors"
+      ></app-delivery-docket-pantry-doors>
+    </div>
+    <div class="component-table" *ngIf="duraformEnquiry.endPanels.length > 0">
+      <app-delivery-docket-end-panels
+        [endPanels]="duraformEnquiry.endPanels"
+      ></app-delivery-docket-end-panels>
+    </div>
+    <div
+      class="component-table"
+      *ngIf="duraformEnquiry.duraformDrawers.length > 0"
+    >
+      <app-delivery-docket-duraform-drawers
+        [drawers]="duraformEnquiry.duraformDrawers"
+      ></app-delivery-docket-duraform-drawers>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="note">
+      Please note: All goods remain the property of Janper Pty Ltd until pay for
+      in full.
+    </div>
+    <div class="note">
+      NOTE: For all series 4 and series 5 orders with a Natural, Matt or Satin
+      finish we will waranty the integrity of the product but not the quality of
+      the finish.
+    </div>
+  </div>
+</div>

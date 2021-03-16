@@ -15,7 +15,7 @@ export class OrderFormDirective implements OnInit {
   @Input() formGroup: FormGroup;
 
   // tslint:disable-next-line: no-output-native
-  @Output() submit = new EventEmitter();
+  @Output() submit = new EventEmitter<any>();
 
   self: HTMLElement;
 
@@ -34,7 +34,9 @@ export class OrderFormDirective implements OnInit {
   }
 
   private onSubmit = () => {
-    if (!this.formGroup) return;
+    if (!this.formGroup) {
+      return;
+    }
 
     if (this.formGroup.valid) {
       this.controls[0].focus();
@@ -50,7 +52,9 @@ export class OrderFormDirective implements OnInit {
       this.dialog.error('Please provide all the required fields.');
     }
 
-    if (this.submit) this.submit.emit();
+    if (this.submit) {
+      this.submit.emit();
+    }
   };
 
   @HostListener('keydown.Enter', ['$event'])
@@ -66,7 +70,9 @@ export class OrderFormDirective implements OnInit {
 
     const currentIndex = this.controls.indexOf(target);
     if (currentIndex + 1 === this.controls.length) {
-      this.onSubmit();
+      if (this.onSubmit) {
+        this.onSubmit();
+      }
     } else {
       this.controls[currentIndex + 1].focus();
     }
@@ -83,6 +89,8 @@ export class OrderFormDirective implements OnInit {
 
   @HostListener('keydown.Control')
   onCtrlDown = () => {
-    this.onSubmit();
+    if (this.onSubmit) {
+      this.onSubmit();
+    }
   };
 }

@@ -1,10 +1,5 @@
 import { CommonAssetsService } from './../../_services/common-assets.service';
-import {
-  FormControl,
-  FormBuilder,
-  Validators,
-  FormGroup,
-} from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
@@ -25,12 +20,14 @@ export class InvoiceDetailFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    const { duraformEnquiry } = this.order;
+
     this.formGroup = this.fb.group({
-      invoiceTo: [this.order.invoiceTo, [Validators.required]],
-      invoiceAddress: [this.order.invoiceAddress, [Validators.required]],
-      invoiceSuburb: [this.order.invoiceSuburb, [Validators.required]],
-      invoiceState: [this.order.invoiceState, [Validators.required]],
-      invoicePostcode: [this.order.invoicePostcode, [Validators.required]],
+      invoiceTo: [duraformEnquiry.invoiceTo, [Validators.required]],
+      invoiceAddress: [duraformEnquiry.invoiceAddress, [Validators.required]],
+      invoiceSuburb: [duraformEnquiry.invoiceSuburb, [Validators.required]],
+      invoiceState: [duraformEnquiry.invoiceState, [Validators.required]],
+      invoicePostcode: [duraformEnquiry.invoicePostcode, [Validators.required]],
     });
   }
 

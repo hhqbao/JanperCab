@@ -1,0 +1,36 @@
+<div class="option-form__form-wrapper" [formGroup]="formGroup">
+  <div class="form__group" style="display: flex">
+    <label class="form__radio-btn" style="flex: 1">
+      <input
+        type="radio"
+        formControlName="isRaw"
+        [value]="true"
+        (change)="onChange()"
+      />
+      <span>Raw</span>
+    </label>
+    <label
+      class="form__radio-btn"
+      style="flex: 1"
+      *ngIf="!order.duraformEnquiry.isRoutingOnly"
+    >
+      <input
+        type="radio"
+        formControlName="isRaw"
+        [value]="false"
+        (change)="onChange()"
+      />
+      <span>Pressed</span>
+    </label>
+  </div>
+  <div class="form__group">
+    <label class="form__label">Cap Mould Size</label>
+    <app-select-menu
+      [control]="size"
+      [values]="mouldSizes"
+      [valueDisplay]="'text'"
+      [valueKey]="'value'"
+      (afterSet)="onChange()"
+    ></app-select-menu>
+  </div>
+</div>

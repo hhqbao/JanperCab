@@ -1,7 +1,7 @@
 import { DuraformComponentService } from './../../_services/duraform-component.service';
 import { DuraformEndPanelDto } from './../../_models/duraform-component/DuraformEndPanelDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { DuraformCartItemComponent } from '../duraform-cart-item/duraform-cart-item.component';
 
 @Component({

@@ -44,6 +44,8 @@ export class ErrorInterceptor implements HttpInterceptor {
             }
 
             return throwError(response.error);
+          case 404:
+            return throwError('Unauthorized Action');
           default:
             return throwError('Unknown Server Error');
         }

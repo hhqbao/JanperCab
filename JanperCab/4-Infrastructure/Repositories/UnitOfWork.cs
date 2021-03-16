@@ -33,11 +33,13 @@ namespace _4_Infrastructure.Repositories
 
         public IHingeHoleStyleRepo HingeHoleStyles { get; }
 
-        public IDuraformOrderRepo DuraformOrders { get; }
+        public IEnquiryRepo Enquiries { get; }
 
         public IApplicationFileRepo ApplicationFiles { get; }
 
         public IDuraformPriceRepo DuraformPrices { get; }
+
+        public IDuraformMiscPriceRepo DuraformMiscPrices { get; }
 
 
         public UnitOfWork(ApplicationDbContext dbContext)
@@ -56,9 +58,10 @@ namespace _4_Infrastructure.Repositories
             DuraformOptionTypes = new DuraformOptionTypeRepo(_dbContext);
             HingeHoleTypes = new HingeHoleTypeRepo(_dbContext);
             HingeHoleStyles = new HingeHoleStyleRepo(_dbContext);
-            DuraformOrders = new DuraformOrderRepo(_dbContext);
+            Enquiries = new EnquiryRepo(_dbContext);
             ApplicationFiles = new ApplicationFileRepo(_dbContext);
             DuraformPrices = new DuraformPriceRepo(_dbContext);
+            DuraformMiscPrices = new DuraformMiscPriceRepo(_dbContext);
         }
 
         public async Task ExecuteCommandAsync(string command)

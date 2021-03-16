@@ -1,8 +1,8 @@
+import { DuraformEnquiryListDto } from './../../_models/enquiry/DuraformEnquiryListDto';
+import { LayoutService } from './../../_services/layout.service';
+import { EnquiryService } from './../../_services/enquiry.service';
 import { Router } from '@angular/router';
-import { DuraformDraftForListDto } from '../../_models/duraform-draft/DuraformDraftForListDto';
-import { plainToClass } from 'class-transformer';
 import { DialogService } from '../../_services/dialog.service';
-import { DuraformDraftService } from '../../_services/duraform-draft.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -12,27 +12,32 @@ import { Component, OnInit } from '@angular/core';
 export class DuraformDraftListComponent implements OnInit {
   isInitializing = true;
 
-  drafts: DuraformDraftForListDto[] = [];
+  drafts: DuraformEnquiryListDto[] = [];
 
   constructor(
-    private draftService: DuraformDraftService,
     private dialog: DialogService,
-    private router: Router
+    private router: Router,
+    private enquiryService: EnquiryService,
+    private layout: LayoutService
   ) {}
 
   ngOnInit() {
-    this.draftService.getDuraformDraftList().subscribe(
+    this.layout.showLoadingPanel();
+
+    this.enquiryService.getDuraformDrafts().subscribe(
       (response) => {
-        this.drafts = plainToClass(DuraformDraftForListDto, response);
+        this.drafts = response;
         this.isInitializing = false;
+        this.layout.closeLoadingPanel();
       },
       (error) => {
         this.dialog.error(error);
+        this.layout.closeLoadingPanel();
       }
     );
   }
 
-  onItemClick = (item: DuraformDraftForListDto) => {
-    this.router.navigate([`dashboard/duraform/1/${item.id}`]);
+  onItemClick = (item: DuraformEnquiryListDto) => {
+    this.router.navigate([`dashboard/duraform/${item.id}`]);
   };
 }

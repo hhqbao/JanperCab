@@ -2,13 +2,13 @@
 
 namespace _3_Application.Dtos.DuraformPriceGrid
 {
-    public class DuraformAllPriceModel
+    public class DuraformAllPriceModel<T>
     {
-        public List<DuraformPriceGridDto> Prices { get; set; }
+        public List<T> Prices { get; set; }
 
         public DuraformAllPriceModel()
         {
-            Prices = new List<DuraformPriceGridDto>();
+            Prices = new List<T>();
         }
     }
 }

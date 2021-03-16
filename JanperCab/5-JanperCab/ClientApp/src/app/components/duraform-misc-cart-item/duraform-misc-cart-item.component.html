@@ -1,0 +1,36 @@
+<app-duraform-misc-form
+  #miscForm
+  appRemoveTag
+  *ngIf="isSelected"
+  [miscComponent]="miscComponent"
+  (afterSubmit)="onAfterSubmit()"
+></app-duraform-misc-form>
+<tbody
+  class="duraform-order-step-two__cart-list-item"
+  [ngClass]="{ animated: !hasAnimated }"
+  [hidden]="isSelected"
+  (click)="onSelect()"
+>
+  <tr>
+    <td class="line-number">
+      {{ index }}
+    </td>
+    <td>
+      {{ miscComponent.quantity }}
+    </td>
+    <td class="text-left">{{ miscComponent.toString() }}</td>
+    <td style="width: 12rem">
+      {{ miscComponent.price | currency }}
+    </td>
+    <td style="width: 5rem">
+      <button
+        type="button"
+        class="btn btn--secondary"
+        style="padding: 0.5rem 1rem"
+        (click)="onRemove()"
+      >
+        <i class="fa fa-trash"></i>
+      </button>
+    </td>
+  </tr>
+</tbody>

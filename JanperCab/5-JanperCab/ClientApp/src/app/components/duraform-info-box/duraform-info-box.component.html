@@ -3,24 +3,24 @@
     <div class="col-1-3 middle">
       <div>
         <div class="info-box__door-name" style="padding-top: 3px">
-          {{ order.selectedDesign.name }}
+          {{ duraformEnquiry.duraformDesign.name }}
         </div>
         <div class="info-box__profile-name">
-          {{ order.selectedEdgeProfile.name }}
+          {{ duraformEnquiry.duraformEdgeProfile.name }}
         </div>
       </div>
     </div>
     <div class="col-1-3 middle">
       <div>
-        <div class="info-box__route-only" *ngIf="order.isRoutingOnly">
+        <div class="info-box__route-only" *ngIf="duraformEnquiry.isRoutingOnly">
           ROUTE ONLY
         </div>
-        <div class="info-box__wrapping" *ngIf="!order.isRoutingOnly">
+        <div class="info-box__wrapping" *ngIf="!duraformEnquiry.isRoutingOnly">
           <div class="wrap-type">
-            {{ order.selectedWrapType.name }}
+            {{ duraformEnquiry.duraformWrapType.name }}
           </div>
           <div class="wrap-color">
-            {{ order.selectedWrapColor.name }}
+            {{ duraformEnquiry.duraformWrapColor.name }}
           </div>
         </div>
       </div>

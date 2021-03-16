@@ -16,7 +16,7 @@ namespace _1_Domain
             switch (line.TYPE)
             {
                 case ICB_TYPE_ENUM.DOOR:
-                    line.TOOLING_FILE = line.TOOLING_FILE2 = component.DuraformForm.DuraformDesign.ICB_GLASS_TOOLING;
+                    line.TOOLING_FILE = line.TOOLING_FILE2 = component.DuraformEnquiry.DuraformDesign.ICB_GLASS_TOOLING;
                     line.V_SPLIT_Q = Columns - 1;
                     line.H_SPLIT_Q = Rows - 1;
                     break;

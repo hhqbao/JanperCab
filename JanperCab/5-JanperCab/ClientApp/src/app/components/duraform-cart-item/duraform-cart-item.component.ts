@@ -2,11 +2,11 @@ import { DuraformComponentService } from './../../_services/duraform-component.s
 import {
   EventEmitter,
   Input,
-  OnInit,
   Output,
   ViewChild,
   HostListener,
   ElementRef,
+  Directive,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DuraformComponentDto } from 'src/app/_models/duraform-component/DuraformComponentDto';
@@ -15,7 +15,9 @@ import { DuraformDoorDto } from 'src/app/_models/duraform-component/DuraformDoor
 import { DuraformDrawerDto } from 'src/app/_models/duraform-component/DuraformDrawerDto';
 import { DuraformEndPanelDto } from 'src/app/_models/duraform-component/DuraformEndPanelDto';
 import { DuraformPantryDoorDto } from 'src/app/_models/duraform-component/DuraformPantryDoorDto';
+import { Injectable, OnInit } from '@angular/core';
 
+@Directive()
 export abstract class DuraformCartItemComponent<
   T extends
     | DuraformDoorDto
@@ -25,7 +27,7 @@ export abstract class DuraformCartItemComponent<
 > implements OnInit {
   @Input() component: T;
   @Input() index: number;
-  @Input() canSelect: boolean = true;
+  @Input() canSelect = true;
 
   @Output() selectComponent = new EventEmitter();
   @Output() unselectComponent = new EventEmitter();
@@ -59,7 +61,9 @@ export abstract class DuraformCartItemComponent<
   };
 
   onSelect = () => {
-    if (!this.canSelect) return;
+    if (!this.canSelect) {
+      return;
+    }
 
     this.isSelected = true;
     this.selectComponent.emit();

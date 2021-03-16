@@ -88,10 +88,10 @@
     <Compile Remove="Migrations\20210207070231_AddTable_DuraformRouteOnlyPriceGrid.Designer.cs" />
     <Compile Remove="Migrations\20210207070318_AddTable_DuraformRouteOnlyPriceGrid.cs" />
     <Compile Remove="Migrations\20210207070318_AddTable_DuraformRouteOnlyPriceGrid.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="ValueGenerators\QuoteNumberGenerator.cs~RF33cb614e.TMP" />
+    <Compile Remove="Migrations\20210223014629_EditTable_Enquiries_AddCol_ApproverId.cs" />
+    <Compile Remove="Migrations\20210223014629_EditTable_Enquiries_AddCol_ApproverId.Designer.cs" />
+    <Compile Remove="Migrations\20210224233833_CreateTable_DuraformMiscComponents.cs" />
+    <Compile Remove="Migrations\20210224233833_CreateTable_DuraformMiscComponents.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

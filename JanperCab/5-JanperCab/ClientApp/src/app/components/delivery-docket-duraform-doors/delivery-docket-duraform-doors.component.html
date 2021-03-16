@@ -1,52 +1,52 @@
-<div class="component-box">
+<div class="component-table">
   <div class="title">Doors</div>
   <table>
     <thead>
       <tr>
-        <th style="width: 70px">qty</th>
-        <th style="width: 110px">height</th>
-        <th style="width: 110px">width</th>
-        <th style="text-align: center; width: 35px">t</th>
-        <th style="text-align: center; width: 35px">b</th>
-        <th style="text-align: center; width: 35px">l</th>
-        <th style="text-align: center; width: 35px">r</th>
-        <th style="padding-left: 10px">option</th>
-        <th style="padding-left: 10px; width: 295px">edge profile</th>
-        <th style="padding-left: 10px; width: 190px">Hinge Hole</th>
-        <th style="padding-left: 10px; width: 100px">routed</th>
-        <th style="padding-left: 10px; width: 100px">cleaned</th>
+        <th class="qty">qty</th>
+        <th class="height">height</th>
+        <th class="width">width</th>
+        <th class="side">t</th>
+        <th class="side">b</th>
+        <th class="side">l</th>
+        <th class="side">r</th>
+        <th class="option">option</th>
+        <th class="edge">edge profile</th>
+        <th class="hingeHole">Hinge Hole</th>
+        <th class="checkbox">routed</th>
+        <th class="checkbox">cleaned</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let door of doors">
-        <td>{{ door.quantity }}</td>
-        <td>{{ door.height }}</td>
-        <td>{{ door.width }}</td>
-        <td style="text-align: center">
+        <td class="qty">{{ door.quantity }}</td>
+        <td class="height">{{ door.height }}</td>
+        <td class="width">{{ door.width }}</td>
+        <td class="side">
           {{ door.top ? "Y" : null }}
         </td>
-        <td style="text-align: center">
+        <td class="side">
           {{ door.bottom ? "Y" : null }}
         </td>
-        <td style="text-align: center">
+        <td class="side">
           {{ door.left ? "Y" : null }}
         </td>
-        <td style="text-align: center">
+        <td class="side">
           {{ door.right ? "Y" : null }}
         </td>
-        <td style="padding-left: 10px">
+        <td class="option">
           {{ door.duraformOption?.toString() }}
         </td>
-        <td style="padding-left: 10px">
-          {{ getEdgeProfile(door.duraformEdgeProfileId).name }}
+        <td class="edge">
+          {{ door.duraformEdgeProfile.name }}
         </td>
-        <td style="padding-left: 10px">
+        <td class="hingeHole">
           {{ door.hingeHoleOption?.toString() }}
         </td>
-        <td style="padding-left: 10px">
+        <td class="checkbox">
           <div class="checkbox"></div>
         </td>
-        <td style="padding-left: 10px">
+        <td class="checkbox">
           <div class="checkbox"></div>
         </td>
       </tr>

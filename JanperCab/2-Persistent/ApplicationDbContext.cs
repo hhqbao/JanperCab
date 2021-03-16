@@ -20,15 +20,21 @@ namespace _2_Persistent
         public DbSet<DuraformDrawerType> DuraformDrawerTypes { get; set; }
         public DbSet<DuraformOptionType> DuraformOptionTypes { get; set; }
         public DbSet<DuraformOption> DuraformOptions { get; set; }
-        public DbSet<DuraformForm> DuraformForms { get; set; }
-        public DbSet<DuraformComponent> DuraformComponents { get; set; }
         public DbSet<HingeHoleType> HingeHoleTypes { get; set; }
         public DbSet<HingeHoleOption> HingeHoleOptions { get; set; }
         public DbSet<HingeHoleStyle> HingeHoleStyle { get; set; }
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<ApplicationFile> ApplicationFiles { get; set; }
         public DbSet<DuraformDesignEdgeProfile> DuraformDesignEdgeProfiles { get; set; }
         public DbSet<DuraformPriceGrid> DuraformPriceGrids { get; set; }
+
+        public DbSet<Enquiry> Enquiries { get; set; }
+        public DbSet<DuraformProcess> DuraformProcesses { get; set; }
+
+        public DbSet<DuraformComponent> DuraformComponents { get; set; }
+        public DbSet<DuraformMiscComponent> DuraformMiscComponents { get; set; }
+        public DbSet<ApplicationFile> ApplicationFiles { get; set; }
+
+        public DbSet<DuraformMiscPrice> DuraformMiscPrices { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,
@@ -63,10 +69,18 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformOptionMicrowaveFrameConfig());
             builder.ApplyConfiguration(new DuraformOptionAngledShelfConfig());
 
-            builder.ApplyConfiguration(new DuraformFormConfig());
-            builder.ApplyConfiguration(new DuraformDraftConfig());
-            builder.ApplyConfiguration(new DuraformQuoteConfig());
-            builder.ApplyConfiguration(new DuraformOrderConfig());
+            builder.ApplyConfiguration(new CustomerConfig());
+            builder.ApplyConfiguration(new ManufacturerConfig());
+            builder.ApplyConfiguration(new DistributorConfig());
+            builder.ApplyConfiguration(new CabinetMakerConfig());
+
+            builder.ApplyConfiguration(new DuraformDesignEdgeProfileConfig());
+            builder.ApplyConfiguration(new DuraformPriceGridConfig());
+            builder.ApplyConfiguration(new DuraformWrapPriceGridConfig());
+            builder.ApplyConfiguration(new DuraformRouteOnlyPriceGridConfig());
+
+            builder.ApplyConfiguration(new EnquiryConfig());
+            builder.ApplyConfiguration(new DuraformEnquiryConfig());
 
             builder.ApplyConfiguration(new DuraformComponentConfig());
             builder.ApplyConfiguration(new DuraformDoorConfig());
@@ -74,18 +88,22 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformEndPanelConfig());
             builder.ApplyConfiguration(new DuraformDrawerConfig());
 
-            builder.ApplyConfiguration(new CustomerConfig());
-            builder.ApplyConfiguration(new ManufacturerConfig());
-            builder.ApplyConfiguration(new DistributorConfig());
-            builder.ApplyConfiguration(new CabinetMakerConfig());
+            builder.ApplyConfiguration(new DuraformMiscComponentConfig());
+            builder.ApplyConfiguration(new DuraformMiscLooseFoilConfig());
+            builder.ApplyConfiguration(new DuraformMiscFingerPullConfig());
+            builder.ApplyConfiguration(new DuraformMiscCapMouldConfig());
+            builder.ApplyConfiguration(new DuraformMiscHeatStripConfig());
 
             builder.ApplyConfiguration(new ApplicationFileConfig());
             builder.ApplyConfiguration(new DuraformFileConfig());
-            builder.ApplyConfiguration(new DuraformDesignEdgeProfileConfig());
 
-            builder.ApplyConfiguration(new DuraformPriceGridConfig());
-            builder.ApplyConfiguration(new DuraformWrapPriceGridConfig());
-            builder.ApplyConfiguration(new DuraformRouteOnlyPriceGridConfig());
+            builder.ApplyConfiguration(new DuraformMiscPriceConfig());
+            builder.ApplyConfiguration(new DuraformMiscPriceLooseFoilConfig());
+            builder.ApplyConfiguration(new DuraformMiscPriceCapMouldConfig());
+            builder.ApplyConfiguration(new DuraformMiscPriceFingerPullConfig());
+            builder.ApplyConfiguration(new DuraformMiscPriceHeatStripConfig());
+
+            builder.ApplyConfiguration(new DuraformProcessConfig());
 
             base.OnModelCreating(builder);
         }

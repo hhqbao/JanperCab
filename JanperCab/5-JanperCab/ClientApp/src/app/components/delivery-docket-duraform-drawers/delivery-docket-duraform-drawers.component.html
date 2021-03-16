@@ -1,4 +1,4 @@
-<div class="component-box">
+<div class="component-table">
   <div class="title">Drawers</div>
   <table>
     <thead>
@@ -28,7 +28,7 @@
         <td>{{ drawer.height }}</td>
         <td>{{ drawer.width }}</td>
         <td>{{ drawer.numberOfDrawers }}</td>
-        <td>{{ getDrawerType(drawer.duraformDrawerTypeId).name }}</td>
+        <td>{{ drawer.duraformDrawerType.name }}</td>
         <td style="text-align: center">
           {{ drawer.top ? "Y" : null }}
         </td>

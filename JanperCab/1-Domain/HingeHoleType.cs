@@ -11,11 +11,11 @@ namespace _1_Domain
 
         public bool IsDisabled { get; set; }
 
-        public virtual ICollection<DuraformForm> DuraformForms { get; set; }
+        public virtual ICollection<DuraformEnquiry> DuraformEnquiries { get; set; }
 
         public HingeHoleType()
         {
-            DuraformForms = new Collection<DuraformForm>();
+            DuraformEnquiries = new Collection<DuraformEnquiry>();
         }
     }
 }

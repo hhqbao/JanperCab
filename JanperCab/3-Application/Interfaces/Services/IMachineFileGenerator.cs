@@ -5,6 +5,6 @@ namespace _3_Application.Interfaces.Services
 {
     public interface IMachineFileGenerator
     {
-        Task ExportICBFileAsync(DuraformOrder order, string savePath);
+        Task ExportICBFileAsync(DuraformEnquiry order, string savePath);
     }
 }

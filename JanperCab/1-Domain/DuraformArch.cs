@@ -11,11 +11,11 @@ namespace _1_Domain
 
         public string ImageUrl { get; set; }
 
-        public virtual ICollection<DuraformForm> DuraformForms { get; set; }
+        public virtual ICollection<DuraformEnquiry> DuraformEnquiries { get; set; }
 
         public DuraformArch()
         {
-            DuraformForms = new Collection<DuraformForm>();
+            DuraformEnquiries = new Collection<DuraformEnquiry>();
         }
     }
 }

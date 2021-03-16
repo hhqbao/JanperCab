@@ -1,15 +1,10 @@
+import { EnquiryTypeEnum } from './../../_enums/EnquiryTypeEnum';
+import { EnquiryService } from './../../_services/enquiry.service';
+import { DuraformEnquiryDto } from './../../_models/enquiry/DuraformEnquiryDto';
 import { MachineFileService } from './../../_services/machine-file.service';
 import { UploadDuraformFileDto } from './../../_models/files/UploadDuraformFileDto';
-import { DuraformFileDto } from './../../_models/application-file/DuraformFileDto';
 import { FileService } from './../../_services/file.service';
-import { OrderStatus } from './../../_enums/OrderStatus';
 import { Role } from './../../_enums/Role';
-import { CabProService } from './../../_services/cab-pro.service';
-import { DuraformDraftDto } from './../../_models/duraform-order/DuraformDraftDto';
-import { DuraformOrderDto } from './../../_models/duraform-order/DuraformOrderDto';
-import { DuraformDraftService } from './../../_services/duraform-draft.service';
-import { DuraformOrderTypeKey } from './../../_enums/DuraformOrderTypeKey';
-import { DuraformJobService } from './../../_services/duraform-job.service';
 import { CabinetMakerDto } from './../../_models/customer/CabinetMakerDto';
 import { AuthService } from './../../_services/auth.service';
 import { CustomerService } from './../../_services/customer.service';
@@ -21,9 +16,6 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { DuraformProcessStep } from 'src/app/_enums/DuraformProcessStep';
 import { CustomerType } from 'src/app/_enums/CustomerType';
-import { DeliveryDocketDto } from 'src/app/_models/pdf-form-model/DeliveryDocketDto';
-import { CabProDuraformDto } from 'src/app/_models/cab-pro/CabProDuraformDto';
-import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-duraform-order-step-three',
@@ -32,16 +24,15 @@ import { saveAs } from 'file-saver';
 export class DuraformOrderStepThreeComponent implements OnInit {
   @Output() processClick = new EventEmitter<DuraformProcessStep>();
 
+  duraformEnquiry: DuraformEnquiryDto;
   role = Role;
-  orderStatus = OrderStatus;
-  orderType = DuraformOrderTypeKey;
+
+  enquiryType = EnquiryTypeEnum;
   customerType = CustomerType;
 
   showInvoiceForm = false;
   showDeliveryForm = false;
   showCustomerSelector = false;
-
-  deliveryDocketData: DeliveryDocketDto;
   showDeliveryDocket = false;
 
   cabinetMaker: CabinetMakerDto;
@@ -49,24 +40,24 @@ export class DuraformOrderStepThreeComponent implements OnInit {
   constructor(
     public asset: DuraformAssetService,
     public order: DuraformOrderService,
-    private draftService: DuraformDraftService,
-    private job: DuraformJobService,
+    private enquiryService: EnquiryService,
     private router: Router,
     public auth: AuthService,
     private customerService: CustomerService,
     private layout: LayoutService,
     private dialog: DialogService,
-    private cabPro: CabProService,
     private machineFile: MachineFileService,
     public fileService: FileService
   ) {}
 
   ngOnInit() {
-    if (!this.order.duraformId) {
+    this.duraformEnquiry = this.order.duraformEnquiry;
+
+    if (!this.duraformEnquiry.id) {
       this.tryAutoFillShippingDetails();
     }
 
-    if (this.order.cabinetMakerId) {
+    if (this.duraformEnquiry.cabinetMakerId) {
       this.loadCabinetMaker();
     }
   }
@@ -75,27 +66,29 @@ export class DuraformOrderStepThreeComponent implements OnInit {
     const { customerType } = this.auth.customer;
 
     if (customerType === CustomerType.CabinetMaker) {
-      this.order.cabinetMaker = this.auth.customer as CabinetMakerDto;
+      this.order.setCabinetMaker(this.auth.customer as CabinetMakerDto);
     }
   };
 
   private loadCabinetMaker = () => {
     this.layout.showLoadingPanel();
-    this.customerService.getCabinetMaker(this.order.cabinetMakerId).subscribe(
-      (response) => {
-        this.layout.closeLoadingPanel();
-        this.cabinetMaker = response;
-      },
-      (error) => {
-        this.layout.closeLoadingPanel();
-        this.dialog.error(error);
-        this.dialog.error('Failed Loading Customer');
-      }
-    );
+    this.customerService
+      .getCabinetMaker(this.duraformEnquiry.cabinetMakerId)
+      .subscribe(
+        (response) => {
+          this.layout.closeLoadingPanel();
+          this.cabinetMaker = response;
+        },
+        (error) => {
+          this.layout.closeLoadingPanel();
+          this.dialog.error(error);
+          this.dialog.error('Failed Loading Customer');
+        }
+      );
   };
 
   onSelectCabinetMaker = (maker: CabinetMakerDto) => {
-    this.order.cabinetMaker = maker;
+    this.order.setCabinetMaker(maker);
     this.cabinetMaker = maker;
     this.showCustomerSelector = false;
   };
@@ -105,45 +98,65 @@ export class DuraformOrderStepThreeComponent implements OnInit {
   };
 
   onUpdateInvoiceDetails = (values: any) => {
-    this.order.invoiceTo = values.invoiceTo;
-    this.order.invoiceAddress = values.invoiceAddress;
-    this.order.invoiceSuburb = values.invoiceSuburb;
-    this.order.invoiceState = values.invoiceState;
-    this.order.invoicePostcode = values.invoicePostcode;
+    this.duraformEnquiry.invoiceTo = values.invoiceTo;
+    this.duraformEnquiry.invoiceAddress = values.invoiceAddress;
+    this.duraformEnquiry.invoiceSuburb = values.invoiceSuburb;
+    this.duraformEnquiry.invoiceState = values.invoiceState;
+    this.duraformEnquiry.invoicePostcode = values.invoicePostcode;
 
     this.showInvoiceForm = false;
   };
 
   onUpdateDeliveryDetails = (values: any) => {
-    this.order.deliveryTo = values.deliveryTo;
-    this.order.deliveryAddress = values.deliveryAddress;
-    this.order.deliverySuburb = values.deliverySuburb;
-    this.order.deliveryState = values.deliveryState;
-    this.order.deliveryPostcode = values.deliveryPostcode;
+    this.duraformEnquiry.deliveryTo = values.deliveryTo;
+    this.duraformEnquiry.deliveryAddress = values.deliveryAddress;
+    this.duraformEnquiry.deliverySuburb = values.deliverySuburb;
+    this.duraformEnquiry.deliveryState = values.deliveryState;
+    this.duraformEnquiry.deliveryPostcode = values.deliveryPostcode;
 
     this.showDeliveryForm = false;
   };
 
   onSaveDraft = () => {
+    this.saveDuraformEnquiry('Duraform Draft Saved');
+  };
+
+  onSendInOrder = () => {
+    this.dialog.confirm(
+      'Action Confirmation',
+      'Sending in Order! This order will locked for editting. </br></br>Are you sure?',
+      () => {
+        this.duraformEnquiry.enquiryType = EnquiryTypeEnum.Order;
+        this.duraformEnquiry.orderedDate = new Date();
+        this.duraformEnquiry.notEditable = true;
+
+        this.saveDuraformEnquiry('Duraform Order Saved');
+      }
+    );
+  };
+
+  private saveDuraformEnquiry = (successMsg: string) => {
     this.layout.showLoadingPanel();
+    const { id } = this.duraformEnquiry;
 
-    const { create, update } = this.draftService;
-    const { duraformId, form } = this.order;
+    const { createEnquiry, updateEnquiry } = this.enquiryService;
 
-    const request = duraformId ? update(duraformId, form) : create(form);
+    const request = id
+      ? updateEnquiry(id, this.duraformEnquiry)
+      : createEnquiry(this.duraformEnquiry);
 
     request.subscribe(
       (response) => {
         if (this.fileService.duraformFiles.length > 0) {
           this.fileService.uploadDuraformFiles(response.id).subscribe(
             (_) => {
-              this.router
-                .navigateByUrl('/', { skipLocationChange: true })
-                .then(() =>
-                  this.router.navigate([`dashboard/duraform/1/${response.id}`])
-                );
-              this.dialog.success('Draft has been saved!');
-              this.layout.closeLoadingPanel();
+              this.dialog.success(successMsg);
+
+              if (id) {
+                window.location.reload();
+              } else {
+                this.router.navigate([`/dashboard/duraform/${response.id}`]);
+              }
             },
             (error) => {
               this.layout.closeLoadingPanel();
@@ -151,80 +164,17 @@ export class DuraformOrderStepThreeComponent implements OnInit {
             }
           );
         } else {
-          this.router.navigate([`dashboard/duraform/1/${response.id}`]);
-          this.dialog.success('Draft has been saved!');
-          this.layout.closeLoadingPanel();
+          if (id) {
+            window.location.reload();
+          } else {
+            this.router.navigate([`/dashboard/duraform/${response.id}`]);
+          }
+          this.dialog.success(successMsg);
         }
       },
       (error) => {
-        this.layout.closeLoadingPanel();
-        this.dialog.error(error);
-      }
-    );
-  };
-
-  onSendInQuote = () => {
-    this.layout.showLoadingPanel();
-
-    const { duraformId, sendInQuote } = this.order;
-
-    const request = !duraformId ? sendInQuote : null;
-
-    request().subscribe(
-      (quoteDto) => {
-        this.router.navigate([`dashboard/duraform/quote/${quoteDto.id}`]);
-        this.dialog.success('Quote has been sent!');
-        this.layout.closeLoadingPanel();
-      },
-      (error) => {
         this.dialog.error(error);
         this.layout.closeLoadingPanel();
-      }
-    );
-  };
-
-  onSendInOrder = () => {
-    this.dialog.confirm(
-      'Action Confirmation',
-      'Sending in Order! Are you sure?',
-      () => {
-        this.layout.showLoadingPanel();
-
-        const { duraformId, form } = this.order;
-        const { create, draftToOrder } = this.job;
-
-        const request = !duraformId
-          ? create(form as DuraformOrderDto)
-          : draftToOrder(duraformId, form as DuraformDraftDto);
-
-        request.subscribe(
-          (orderDto) => {
-            if (this.fileService.duraformFiles.length > 0) {
-              this.fileService.uploadDuraformFiles(orderDto.id).subscribe(
-                (_) => {
-                  this.router.navigate([
-                    `dashboard/duraform/${DuraformOrderTypeKey.Order}/${orderDto.id}`,
-                  ]);
-                  this.dialog.success('Order has been submitted!');
-                },
-                (error) => {
-                  this.layout.closeLoadingPanel();
-                  this.dialog.error(error);
-                }
-              );
-            } else {
-              this.router.navigate([
-                `dashboard/duraform/${DuraformOrderTypeKey.Order}/${orderDto.id}`,
-              ]);
-              this.dialog.success('Order has been submitted!');
-            }
-          },
-          (error) => {
-            this.dialog.error(error);
-            this.dialog.error('Failed Creating Order');
-            this.layout.closeLoadingPanel();
-          }
-        );
       }
     );
   };
@@ -235,17 +185,18 @@ export class DuraformOrderStepThreeComponent implements OnInit {
       'Approving Order! Are you sure?',
       () => {
         this.layout.showLoadingPanel();
-        this.job.distributorApprove(this.order.duraformId).subscribe(
-          (response) => {
-            this.dialog.success('Order has been approved!');
-            this.layout.closeLoadingPanel();
-            this.order.orderStatus = response;
-          },
-          (error) => {
-            this.layout.closeLoadingPanel();
-            this.dialog.error(error);
-          }
-        );
+        this.enquiryService
+          .approveEnquiry(this.order.duraformEnquiry.id)
+          .subscribe(
+            (_) => {
+              this.dialog.success('Order has been approved!');
+              window.location.reload();
+            },
+            (error) => {
+              this.layout.closeLoadingPanel();
+              this.dialog.error(error);
+            }
+          );
       }
     );
   };
@@ -261,62 +212,7 @@ export class DuraformOrderStepThreeComponent implements OnInit {
   };
 
   onViewDeliveryDocket = () => {
-    const { order } = this;
-
-    this.deliveryDocketData = new DeliveryDocketDto();
-
-    this.deliveryDocketData.duraformForm = order.form;
-    this.deliveryDocketData.duraformDesign = order.selectedDesign.name;
-    this.deliveryDocketData.duraformSerie = order.selectedSerie.name;
-    this.deliveryDocketData.duraformWrapType = order.selectedWrapType?.name;
-    this.deliveryDocketData.duraformWrapColor = order.selectedWrapColor?.name;
-    this.deliveryDocketData.duraformEdgeProfile =
-      order.selectedEdgeProfile.name;
-    this.deliveryDocketData.hingeHoleType = order.selectedHingeHoleType?.name;
-    this.deliveryDocketData.duraformArch = order.selectedArch?.name;
-
-    this.deliveryDocketData.edgeProfiles = this.asset.edgeProfiles;
-    this.deliveryDocketData.pantryDoorChairRailTypes = this.asset.pantryDoorChairRailTypes;
-    this.deliveryDocketData.duraformDrawerTypes = this.asset.duraformDrawerTypes;
-
     this.showDeliveryDocket = true;
-  };
-
-  onExportCapProExcel = () => {
-    if (!this.order.isOrder) {
-      this.dialog.warning('Only Order Allowed');
-      return;
-    }
-
-    this.layout.showLoadingPanel();
-
-    const { order, asset } = this;
-
-    const data = new CabProDuraformDto();
-    data.duraformOrder = order.form as DuraformOrderDto;
-
-    data.cabinetMaker = this.cabinetMaker;
-    data.duraformDesign = order.selectedDesign.name;
-    data.duraformSerie = order.selectedSerie.name;
-    data.duraformWrapType = order.selectedWrapType?.name;
-    data.duraformWrapColor = order.selectedWrapColor?.name;
-    data.duraformEdgeProfile = order.selectedEdgeProfile.name;
-    data.hingeHoleType = order.selectedHingeHoleType?.name;
-    data.duraformArch = order.selectedArch?.name;
-
-    data.edgeProfiles = asset.edgeProfiles;
-    data.pantryDoorChairRailTypes = asset.pantryDoorChairRailTypes;
-    data.duraformDrawerTypes = asset.duraformDrawerTypes;
-
-    const blobFile = this.cabPro.exportExcel(data);
-    saveAs(
-      blobFile,
-      `DF-${this.cabinetMaker.name
-        .substring(0, 9)
-        .toUpperCase()}-${order.customerOrderNumber.toUpperCase()}.xlsx`
-    );
-
-    this.layout.closeLoadingPanel();
   };
 
   onViewUploadedFile = (id: string) => {
@@ -344,12 +240,12 @@ export class DuraformOrderStepThreeComponent implements OnInit {
     window.open(url);
   };
 
-  onExportIcbFile = () => {
+  onExportDuraformIcb = () => {
     this.layout.showLoadingPanel();
-    this.machineFile.exportIcb(this.order.duraformId).subscribe(
+    this.machineFile.exportDuraformIcb(this.duraformEnquiry.id).subscribe(
       (_) => {
         this.layout.closeLoadingPanel();
-        this.dialog.success('ICB file has been exported!');
+        this.dialog.success('ICB File Exported Successfully');
       },
       (error) => {
         this.layout.closeLoadingPanel();

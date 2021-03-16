@@ -43,7 +43,9 @@
     [documentName]="'Delivery-Docket'"
     (closePanel)="showDeliveryDocket = false"
   >
-    <app-delivery-docket [data]="deliveryDocketData"></app-delivery-docket>
+    <app-duraform-delivery-docket
+      [duraformEnquiry]="duraformEnquiry"
+    ></app-duraform-delivery-docket>
   </app-pdf-viewer>
   <div class="component-box">
     <div class="shipping-details-box">
@@ -51,18 +53,66 @@
         type="button"
         class="btn btn--primary"
         *ngIf="
-          order.orderType === orderType.Draft &&
-          auth.customer.customerType === customerType.Distributor
+          duraformEnquiry.enquiryType === enquiryType.Draft &&
+          auth.customer.customerType !== customerType.CabinetMaker &&
+          !cabinetMaker
         "
         (click)="showCustomerSelector = true"
         style="margin-bottom: 2rem"
       >
         <span>{{ cabinetMaker ? "Change" : "Select" }}</span> Customer
       </button>
-      <h1 class="customer-name" *ngIf="order.duraformId || cabinetMaker">
-        {{ cabinetMaker?.name }}
-      </h1>
-      <div class="row" *ngIf="order.cabinetMakerId">
+      <div class="row">
+        <div class="col-1-2 middle">
+          <h1 class="customer-name" *ngIf="duraformEnquiry.id || cabinetMaker">
+            {{ cabinetMaker?.name }}
+            <button
+              type="button"
+              class="btn btn--link"
+              style="font-size: inherit; margin-left: 2rem"
+              *ngIf="
+                duraformEnquiry.enquiryType === enquiryType.Draft &&
+                auth.customer.customerType !== customerType.CabinetMaker
+              "
+              (click)="showCustomerSelector = true"
+            >
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </button>
+          </h1>
+        </div>
+        <div class="col-1-2">
+          <div class="status-box" *ngIf="duraformEnquiry.id">
+            <div class="status-box__status">
+              <app-simple-box [heading]="'Status'">
+                <div
+                  class="option-box__status"
+                  *ngIf="duraformEnquiry.enquiryType === enquiryType.Draft"
+                >
+                  Draft
+                </div>
+                <div
+                  class="option-box__status text-blue"
+                  *ngIf="duraformEnquiry.enquiryType === enquiryType.Order"
+                >
+                  {{
+                    !duraformEnquiry.status
+                      ? "ORDERED"
+                      : duraformEnquiry.statusDescription
+                  }}
+                </div>
+              </app-simple-box>
+            </div>
+            <div class="status-box__status">
+              <app-simple-box [heading]="'Order Number'">
+                <div class="option-box__status text-alert">
+                  {{ duraformEnquiry.id }}
+                </div>
+              </app-simple-box>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="duraformEnquiry.cabinetMakerId">
         <div class="col-1-2">
           <div class="row">
             <div class="col-1-2">
@@ -70,20 +120,23 @@
                 <button
                   type="button"
                   class="detail__edit-btn"
-                  *ngIf="order.isEditable"
+                  *ngIf="!duraformEnquiry.notEditable"
                   (click)="showInvoiceForm = true"
                 >
                   <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </button>
                 <div class="detail__title">Invoice To</div>
                 <div class="detail__body">
-                  <div class="detail__name">{{ order.invoiceTo }}</div>
+                  <div class="detail__name">
+                    {{ duraformEnquiry.invoiceTo }}
+                  </div>
                   <div class="detail__address-main">
-                    {{ order.invoiceAddress }}
+                    {{ duraformEnquiry.invoiceAddress }}
                   </div>
                   <div class="detail__address-sub">
-                    {{ order.invoiceSuburb }}, {{ order.invoiceState }}
-                    {{ order.invoicePostcode }}
+                    {{ duraformEnquiry.invoiceSuburb }},
+                    {{ duraformEnquiry.invoiceState }}
+                    {{ duraformEnquiry.invoicePostcode }}
                   </div>
                 </div>
               </div>
@@ -93,20 +146,23 @@
                 <button
                   type="button"
                   class="detail__edit-btn"
-                  *ngIf="order.isEditable"
+                  *ngIf="!duraformEnquiry.notEditable"
                   (click)="showDeliveryForm = true"
                 >
                   <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </button>
                 <div class="detail__title">Delivery To</div>
                 <div class="detail__body">
-                  <div class="detail__name">{{ order.deliveryTo }}</div>
+                  <div class="detail__name">
+                    {{ duraformEnquiry.deliveryTo }}
+                  </div>
                   <div class="detail__address-main">
-                    {{ order.deliveryAddress }}
+                    {{ duraformEnquiry.deliveryAddress }}
                   </div>
                   <div class="detail__address-sub">
-                    {{ order.deliverySuburb }}, {{ order.deliveryState }}
-                    {{ order.deliveryPostcode }}
+                    {{ duraformEnquiry.deliverySuburb }},
+                    {{ duraformEnquiry.deliveryState }}
+                    {{ duraformEnquiry.deliveryPostcode }}
                   </div>
                 </div>
               </div>
@@ -117,40 +173,39 @@
           <app-simple-box [heading]="'Delivery Note'">
             <textarea
               class="form__control"
-              style="font-size: 1.8rem"
-              [disabled]="!order.isEditable"
-              [(ngModel)]="order.deliveryNote"
+              [disabled]="duraformEnquiry.notEditable"
+              [(ngModel)]="duraformEnquiry.deliveryNote"
             ></textarea>
           </app-simple-box>
         </div>
       </div>
     </div>
-    <div *ngIf="order.cabinetMakerId">
+    <div *ngIf="duraformEnquiry.cabinetMakerId">
       <div class="row">
         <div class="col-2-3">
           <ul class="selection-list">
             <li class="selection">
               <span class="selection__door-design">
-                {{ order.selectedDesign.name }}
+                {{ duraformEnquiry.duraformDesign.name }}
               </span>
             </li>
-            <li class="selection" *ngIf="order.isRoutingOnly">
+            <li class="selection" *ngIf="duraformEnquiry.isRoutingOnly">
               <div class="selection__route-only">ROUTE ONLY</div>
             </li>
-            <li class="selection" *ngIf="!order.isRoutingOnly">
+            <li class="selection" *ngIf="!duraformEnquiry.isRoutingOnly">
               <span class="selection__wrap-type">
-                {{ order.selectedWrapType?.name }}
+                {{ duraformEnquiry.duraformWrapType.name }}
               </span>
               <span class="selection__wrap-color">
-                {{ order.selectedWrapColor?.name }}
+                {{ duraformEnquiry.duraformWrapColor.name }}
               </span>
             </li>
             <li class="selection">
               <span class="selection__door-serie">
-                {{ order.selectedSerie.name }}
+                {{ duraformEnquiry.duraformSerie.name }}
               </span>
             </li>
-            <li class="selection" *ngIf="order.hingeHoleTypeId">
+            <li class="selection" *ngIf="duraformEnquiry.hingeHoleTypeId">
               <span class="selection__hinge-hole"> HINGE HOLE </span>
             </li>
           </ul>
@@ -161,51 +216,60 @@
           </div>
         </div>
       </div>
-
-      <table
-        class="table table--component-list"
-        style="max-width: 50rem; margin: 3rem 0"
-      >
-        <thead>
-          <tr>
-            <th style="width: 20rem">Option & Accessories</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngIf="order.hingeHoleTypeId">
-            <td class="text-left">
-              {{ asset.getHingeType(order.hingeHoleTypeId).name }}
-            </td>
-            <td>({{ order.componentsWithHingeHoleCount }}) Hinge Holes</td>
-          </tr>
-          <tr>
-            <td class="text-left">Edge Profile</td>
-            <td>
-              {{ order.selectedEdgeProfile?.name }}
-            </td>
-          </tr>
-          <tr>
-            <td class="text-left">Arch Profile</td>
-            <td>
-              {{ order.selectedArch ? order.selectedArch.name : "SQUARE" }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="row" style="margin-bottom: 3rem">
+        <div class="col-1-3">
+          <table class="table table--component-list">
+            <thead>
+              <tr>
+                <th style="width: 20rem">Option & Accessories</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="duraformEnquiry.hingeHoleTypeId">
+                <td class="text-left">
+                  {{ duraformEnquiry.hingeHoleType.name }}
+                </td>
+                <td>
+                  ({{ duraformEnquiry.componentsWithHingeHole.length }}) Hinge
+                  Holes
+                </td>
+              </tr>
+              <tr>
+                <td class="text-left">Edge Profile</td>
+                <td>
+                  {{ duraformEnquiry.duraformEdgeProfile.name }}
+                </td>
+              </tr>
+              <tr>
+                <td class="text-left">Arch Profile</td>
+                <td>
+                  {{
+                    duraformEnquiry.duraformArch
+                      ? duraformEnquiry.duraformArch.name
+                      : "SQUARE"
+                  }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-2-3"></div>
+      </div>
 
       <div
         class="component-list"
         *ngIf="
-          order.duraformFiles.length > 0 || fileService.duraformFiles.length > 0
+          duraformEnquiry.duraformFiles.length > 0 ||
+          fileService.duraformFiles.length > 0
         "
       >
         <div class="panel" style="display: inline-block; width: 100rem">
           <div class="panel__heading">Files</div>
           <div class="panel__content">
             <table class="table table--hovered">
-              <tbody *ngIf="order.duraformFiles.length > 0">
-                <tr *ngFor="let file of order.duraformFiles">
+              <tbody *ngIf="duraformEnquiry.duraformFiles.length > 0">
+                <tr *ngFor="let file of duraformEnquiry.duraformFiles">
                   <td class="text-center" style="width: 3rem">
                     <i
                       *ngIf="file.fileType.includes('image')"
@@ -288,59 +352,58 @@
         [isScrollable]="true"
         [isTransparent]="true"
       >
-        <div class="component-list" *ngIf="order.duraformDoors.length > 0">
+        <div
+          class="component-list"
+          *ngIf="duraformEnquiry.duraformDoors.length > 0"
+        >
           <app-duraform-door-component-list
-            [duraformDoors]="order.duraformDoors"
+            [duraformDoors]="duraformEnquiry.duraformDoors"
           ></app-duraform-door-component-list>
         </div>
-        <div class="component-list" *ngIf="order.pantryDoors.length > 0">
+        <div
+          class="component-list"
+          *ngIf="duraformEnquiry.pantryDoors.length > 0"
+        >
           <app-duraform-pantry-door-component-list
-            [pantryDoors]="order.pantryDoors"
+            [pantryDoors]="duraformEnquiry.pantryDoors"
           ></app-duraform-pantry-door-component-list>
         </div>
-        <div class="component-list" *ngIf="order.endPanels.length > 0">
+        <div
+          class="component-list"
+          *ngIf="duraformEnquiry.endPanels.length > 0"
+        >
           <app-end-panel-component-list
-            [endPanels]="order.endPanels"
+            [endPanels]="duraformEnquiry.endPanels"
           ></app-end-panel-component-list>
         </div>
-        <div class="component-list" *ngIf="order.duraformDrawers.length > 0">
+        <div
+          class="component-list"
+          *ngIf="duraformEnquiry.duraformDrawers.length > 0"
+        >
           <app-duraform-drawer-component-list
-            [duraformDrawers]="order.duraformDrawers"
+            [duraformDrawers]="duraformEnquiry.duraformDrawers"
           ></app-duraform-drawer-component-list>
+        </div>
+        <div
+          class="component-list"
+          *ngIf="duraformEnquiry.miscComponents.length > 0"
+        >
+          <app-duraform-misc-component-list
+            [miscComponents]="duraformEnquiry.miscComponents"
+          ></app-duraform-misc-component-list>
         </div>
       </app-box>
     </div>
   </div>
-  <div class="option-box" *ngIf="order.cabinetMakerId">
-    <div style="margin-bottom: 1rem" *ngIf="order.duraformId">
-      <app-simple-box [heading]="'Status'">
-        <div class="option-box__status" *ngIf="order.isDraft">Draft</div>
-        <div class="option-box__status" *ngIf="order.isOrder">
-          <span *ngIf="order.orderStatus === orderStatus.Submitted">
-            Submitted
-          </span>
-          <span *ngIf="order.orderStatus === orderStatus.DistributorDeclined">
-            Declined
-          </span>
-          <span *ngIf="order.orderStatus === orderStatus.DistributorApproved">
-            Approved
-          </span>
-        </div>
-      </app-simple-box>
-    </div>
-    <div style="margin-bottom: 1rem" *ngIf="order.isOrder">
-      <app-simple-box [heading]="'Order Number'">
-        <div class="option-box__status text-alert">{{ order.orderNumber }}</div>
-      </app-simple-box>
-    </div>
+  <div class="option-box" *ngIf="duraformEnquiry.cabinetMakerId">
     <app-simple-box [heading]="'Customer Referrence'">
       <input
         type="text"
         class="form__control text-center"
         style="font-weight: bold; font-size: 2rem; padding: 1rem"
         required
-        [disabled]="!order.isEditable"
-        [(ngModel)]="order.customerOrderNumber"
+        [disabled]="duraformEnquiry.notEditable"
+        [(ngModel)]="duraformEnquiry.customerReference"
       />
     </app-simple-box>
     <div style="margin-top: 1rem">
@@ -349,78 +412,87 @@
           <li>
             <span class="summary-box__title">Doors</span>
             <span class="summary-box__subtotal">{{
-              order.duraformDoors | arraySum: "price" | currency
+              duraformEnquiry.duraformDoors | arraySum: "price" | currency
             }}</span>
           </li>
           <li>
             <span class="summary-box__title">Pantry Doors</span>
             <span class="summary-box__subtotal">{{
-              order.pantryDoors | arraySum: "price" | currency
+              duraformEnquiry.pantryDoors | arraySum: "price" | currency
             }}</span>
           </li>
           <li>
             <span class="summary-box__title">IB Backs</span>
             <span class="summary-box__subtotal">{{
-              order.endPanels | arraySum: "price" | currency
+              duraformEnquiry.endPanels | arraySum: "price" | currency
             }}</span>
           </li>
           <li>
             <span class="summary-box__title">Drawers</span>
             <span class="summary-box__subtotal">{{
-              order.duraformDrawers | arraySum: "price" | currency
+              duraformEnquiry.duraformDrawers | arraySum: "price" | currency
+            }}</span>
+          </li>
+          <li>
+            <span class="summary-box__title">Miscellaneous</span>
+            <span class="summary-box__subtotal">{{
+              duraformEnquiry.miscComponents | arraySum: "price" | currency
+            }}</span>
+          </li>
+          <li class="summary-box__divider"></li>
+          <li>
+            <span class="summary-box__title"><b>Subtotal</b></span>
+            <span class="summary-box__subtotal">{{
+              order.duraformEnquiry.subTotal | currency
+            }}</span>
+          </li>
+          <li>
+            <span class="summary-box__title"><b>GST</b></span>
+            <span class="summary-box__subtotal">{{
+              order.duraformEnquiry.gst | currency
             }}</span>
           </li>
           <li class="summary-box__divider"></li>
           <li class="summary-box__total-line">
-            <span class="summary-box__title">Total</span>
+            <span class="summary-box__title"><b>Total</b></span>
             <span class="summary-box__total">{{
-              order.totalPrice | currency
+              order.duraformEnquiry.totalPrice | currency
             }}</span>
           </li>
         </ul>
       </app-simple-box>
     </div>
     <div style="margin-top: 1rem">
-      <div class="option-box__action-center" *ngIf="!order.isOrder">
+      <div
+        class="option-box__action-center"
+        *ngIf="duraformEnquiry.enquiryType !== enquiryType.Order"
+      >
         <button
           class="action-btn"
-          *ngIf="order.isDraft"
-          [disabled]="!order.customerOrderNumber"
+          [disabled]="!duraformEnquiry.customerReference"
           (click)="onSaveDraft()"
         >
           <i class="fa fa-file-text text-brown"></i>
           <span>
-            {{ !order.duraformId ? "Save as Draft" : "Update Draft" }}
+            {{ !duraformEnquiry.id ? "Save Draft" : "Update Draft" }}
           </span>
         </button>
         <button
           class="action-btn"
-          *ngIf="order.isDraft"
-          [disabled]="!order.customerOrderNumber"
-          (click)="onSendInQuote()"
-        >
-          <i class="fa fa-quora text-blue" aria-hidden="true"></i>
-          <span>
-            {{ !order.duraformId ? "Send in Quote" : "Convert to Quote" }}
-          </span>
-        </button>
-        <button
-          class="action-btn"
-          [disabled]="!order.customerOrderNumber"
+          [disabled]="!duraformEnquiry.customerReference"
           (click)="onSendInOrder()"
         >
           <i class="fa fa-plug text-orange"></i>
-          <span>
-            {{ !order.duraformId ? "Send in Order" : "Convert to Order" }}
-          </span>
+          <span>Send In Order</span>
         </button>
       </div>
       <div
         class="option-box__action-center"
         *ngIf="
-          auth.isInRole(role[role.Distributor]) &&
-          order.isOrder &&
-          order.orderStatus === orderStatus.Submitted
+          auth.isInRole(role[role.Manufacturer]) &&
+          duraformEnquiry.id &&
+          !duraformEnquiry.approvedDate &&
+          duraformEnquiry.enquiryType === enquiryType.Order
         "
       >
         <button class="action-btn" (click)="onApproveOrder()">
@@ -434,11 +506,13 @@
       </div>
       <div
         class="option-box__action-center"
-        *ngIf="auth.isInRole(role[role.Manufacturer])"
+        *ngIf="
+          auth.isInRole(role[role.Manufacturer]) && duraformEnquiry.approvedDate
+        "
       >
         <button
           class="action-btn"
-          [disabled]="!order.customerOrderNumber"
+          [disabled]="!duraformEnquiry.customerReference"
           (click)="onViewDeliveryDocket()"
         >
           <i class="fa fa-truck" aria-hidden="true"></i>
@@ -446,22 +520,20 @@
         </button>
         <button
           class="action-btn"
-          *ngIf="order.isOrder"
-          (click)="onExportCapProExcel()"
-        >
-          <i class="fa fa-database text-green" aria-hidden="true"></i>
-          <span>Export For CabPro</span>
-        </button>
-        <button
-          class="action-btn"
-          *ngIf="order.isOrder"
-          (click)="onExportIcbFile()"
+          *ngIf="
+            duraformEnquiry.id &&
+            duraformEnquiry.enquiryType === enquiryType.Order
+          "
+          (click)="onExportDuraformIcb()"
         >
           <i class="fa fa-cogs" aria-hidden="true"></i>
           <span>Export For ICB</span>
         </button>
       </div>
-      <div class="option-box__action-center" *ngIf="order.isEditable">
+      <div
+        class="option-box__action-center"
+        *ngIf="!duraformEnquiry.notEditable"
+      >
         <button class="action-btn" (click)="onEditClick()">
           <i class="fa fa-pencil"></i>
           <span>Go Back & Edit</span>

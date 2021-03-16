@@ -72,7 +72,7 @@ app-duraform-order-step-three {
 
         &.summary-box__divider {
           border-top: dotted 1px rgba($color: black, $alpha: 0.3);
-          margin: 1rem 0;
+          margin: 0.5rem 0;
         }
 
         &.summary-box__total-line {
@@ -93,6 +93,10 @@ app-duraform-order-step-three {
         font-weight: bold;
       }
     }
+
+    @media print {
+      display: none;
+    }
   }
 
   .component-box {
@@ -107,6 +111,23 @@ app-duraform-order-step-three {
       &:not(:first-child) {
         .box {
           margin-top: 2rem;
+        }
+      }
+    }
+
+    .status-box {
+      &::after {
+        content: "";
+        clear: both;
+        display: block;
+      }
+
+      &__status {
+        float: right;
+        min-width: 25rem;
+
+        &:not(:first-child) {
+          margin-right: 1rem;
         }
       }
     }
@@ -154,6 +175,10 @@ app-duraform-order-step-three {
           }
         }
       }
+    }
+
+    @media print {
+      display: none;
     }
   }
 

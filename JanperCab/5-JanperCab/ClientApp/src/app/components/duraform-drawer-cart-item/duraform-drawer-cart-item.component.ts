@@ -8,9 +8,7 @@ import { DuraformCartItemComponent } from '../duraform-cart-item/duraform-cart-i
   selector: 'app-duraform-drawer-cart-item',
   templateUrl: 'duraform-drawer-cart-item.component.html',
 })
-export class DuraformDrawerCartItemComponent
-  extends DuraformCartItemComponent<DuraformDrawerDto>
-  implements OnInit {
+export class DuraformDrawerCartItemComponent extends DuraformCartItemComponent<DuraformDrawerDto> {
   constructor(
     public asset: DuraformAssetService,
     public ef: ElementRef,

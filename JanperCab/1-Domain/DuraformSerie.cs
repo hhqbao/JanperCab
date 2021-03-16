@@ -12,16 +12,16 @@ namespace _1_Domain
 
         public virtual ICollection<DuraformDesign> DuraformDesigns { get; set; }
 
-        public virtual ICollection<DuraformForm> DuraformForms { get; set; }
-
         public virtual ICollection<DuraformPriceGrid> DuraformPriceGrids { get; set; }
+
+        public virtual ICollection<DuraformEnquiry> DuraformEnquiries { get; set; }
 
 
         public DuraformSerie()
         {
             DuraformDesigns = new Collection<DuraformDesign>();
-            DuraformForms = new Collection<DuraformForm>();
             DuraformPriceGrids = new Collection<DuraformPriceGrid>();
+            DuraformEnquiries = new Collection<DuraformEnquiry>();
         }
     }
 }

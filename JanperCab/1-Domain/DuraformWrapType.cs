@@ -18,16 +18,25 @@ namespace _1_Domain
 
         public virtual ICollection<NotAvailableDesignWrapType> NotAvailableDesignWrapTypes { get; set; }
 
-        public virtual ICollection<DuraformForm> DuraformForms { get; set; }
-
         public virtual ICollection<DuraformWrapPriceGrid> DuraformWrapPriceGrids { get; set; }
+
+        public virtual ICollection<DuraformEnquiry> DuraformEnquiries { get; set; }
+
+        public virtual ICollection<DuraformMiscPriceLooseFoil> DuraformMiscPriceLooseFoils { get; set; }
+
+        public virtual ICollection<DuraformMiscPriceCapMould> DuraformMiscPriceCapMoulds { get; set; }
+
+        public virtual ICollection<DuraformMiscPriceFingerPull> DuraformMiscPriceFingerPulls { get; set; }
 
         public DuraformWrapType()
         {
             DuraformWrapColors = new Collection<DuraformWrapColor>();
             NotAvailableDesignWrapTypes = new Collection<NotAvailableDesignWrapType>();
-            DuraformForms = new Collection<DuraformForm>();
             DuraformWrapPriceGrids = new Collection<DuraformWrapPriceGrid>();
+            DuraformEnquiries = new Collection<DuraformEnquiry>();
+            DuraformMiscPriceLooseFoils = new Collection<DuraformMiscPriceLooseFoil>();
+            DuraformMiscPriceCapMoulds = new Collection<DuraformMiscPriceCapMould>();
+            DuraformMiscPriceFingerPulls = new Collection<DuraformMiscPriceFingerPull>();
         }
     }
 }

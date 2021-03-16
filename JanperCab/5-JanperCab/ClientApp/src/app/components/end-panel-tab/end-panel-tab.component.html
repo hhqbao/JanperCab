@@ -43,7 +43,7 @@
     (formSubmit)="onAddComponent($event)"
   ></app-end-panel-form>
 
-  <tbody class="table__spacer" *ngIf="order.endPanels.length > 0">
+  <tbody class="table__spacer" *ngIf="duraformEnquiry.endPanels.length > 0">
     <tr>
       <td></td>
       <td></td>
@@ -68,9 +68,12 @@
   </tbody>
   <app-end-panel-cart-item
     appRemoveTag
-    *ngFor="let endPanel of order.endPanels.slice().reverse(); let i = index"
+    *ngFor="
+      let endPanel of duraformEnquiry.endPanels.slice().reverse();
+      let i = index
+    "
     [component]="endPanel"
-    [index]="order.endPanels.length - i"
+    [index]="duraformEnquiry.endPanels.length - i"
     [canSelect]="canSelectCartItem"
     (selectComponent)="canSelectCartItem = false"
     (unselectComponent)="canSelectCartItem = true"

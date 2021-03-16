@@ -1,11 +1,9 @@
 import { DuraformComponentService } from './../../_services/duraform-component.service';
 import { ComponentType } from './../../_enums/ComponentType';
-import { DuraformDoorCartItemComponent } from './../duraform-door-cart-item/duraform-door-cart-item.component';
-import { DuraformDoorDto } from './../../_models/duraform-component/DuraformDoorDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
-import { FormGroup, AbstractControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { DialogService } from 'src/app/_services/dialog.service';
-import { Component, OnInit, QueryList, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { DuraformTabComponent } from '../duraform-tab/duraform-tab.component';
 

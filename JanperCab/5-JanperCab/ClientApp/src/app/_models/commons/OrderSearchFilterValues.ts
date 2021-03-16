@@ -1,25 +1,24 @@
-import { OrderStatus } from './../../_enums/OrderStatus';
 export class OrderSearchFilterValues {
   customerId: number | string;
   search: string;
-  status: OrderStatus;
+  status: string;
   sortBy:
     | 'orderNumber'
-    | 'customerOrderNumber'
-    | 'orderStatus'
+    | 'customerReference'
+    | 'type'
     | 'customer'
     | 'description'
-    | 'createdDate';
+    | 'orderedDate';
   direction: 'asc' | 'desc';
   page: number;
   take: 10 | 20 | 50 | 100;
 
   constructor() {
-    this.customerId = '0';
+    this.customerId = null;
     this.search = '';
     this.status = null;
-    this.sortBy = 'orderNumber';
-    this.direction = 'desc';
+    this.sortBy = 'orderedDate';
+    this.direction = 'asc';
     this.page = 0;
     this.take = 20;
   }

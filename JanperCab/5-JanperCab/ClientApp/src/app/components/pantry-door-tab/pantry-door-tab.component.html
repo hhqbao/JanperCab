@@ -44,7 +44,7 @@
     appRemoveTag
     (formSubmit)="onAddComponent($event)"
   ></app-pantry-door-form>
-  <tbody class="table__spacer" *ngIf="order.pantryDoors.length > 0">
+  <tbody class="table__spacer" *ngIf="duraformEnquiry.pantryDoors.length > 0">
     <tr>
       <td></td>
       <td></td>
@@ -68,11 +68,11 @@
   <app-pantry-door-cart-item
     appRemoveTag
     *ngFor="
-      let pantryDoor of order.pantryDoors.slice().reverse();
+      let pantryDoor of duraformEnquiry.pantryDoors.slice().reverse();
       let i = index
     "
     [component]="pantryDoor"
-    [index]="order.pantryDoors.length - i"
+    [index]="duraformEnquiry.pantryDoors.length - i"
     [canSelect]="canSelectCartItem"
     (selectComponent)="canSelectCartItem = false"
     (unselectComponent)="canSelectCartItem = true"

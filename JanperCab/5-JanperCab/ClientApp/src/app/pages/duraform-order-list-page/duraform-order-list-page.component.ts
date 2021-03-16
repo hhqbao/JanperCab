@@ -1,18 +1,16 @@
+import { DuraformProcessEnum } from './../../_enums/DuraformProcessEnum';
+import { plainToClass } from 'class-transformer';
+import { DialogService } from 'src/app/_services/dialog.service';
+import { EnquiryService } from './../../_services/enquiry.service';
+import { ItemList } from './../../_models/commons/ItemList';
+import { DuraformEnquiryListDto } from './../../_models/enquiry/DuraformEnquiryListDto';
 import { CustomerType } from './../../_enums/CustomerType';
 import { CabinetMakerDto } from './../../_models/customer/CabinetMakerDto';
-import { Role } from './../../_enums/Role';
 import { Router } from '@angular/router';
-import { DuraformOrderForListDto } from './../../_models/duraform-order/DuraformOrderForListDto';
-import { ItemList } from './../../_models/commons/ItemList';
-import { DuraformJobService } from './../../_services/duraform-job.service';
 import { OrderSearchFilterValues } from './../../_models/commons/OrderSearchFilterValues';
-import { OrderStatus } from './../../_enums/OrderStatus';
-import { DialogService } from './../../_services/dialog.service';
-import { CustomerService } from './../../_services/customer.service';
 import { AuthService } from './../../_services/auth.service';
 import { LayoutService } from './../../_services/layout.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { CustomerDto } from 'src/app/_models/customer/CustomerDto';
 
 @Component({
   selector: 'app-duraform-order-list-page',
@@ -21,20 +19,19 @@ import { CustomerDto } from 'src/app/_models/customer/CustomerDto';
 export class DuraformOrderListPageComponent implements OnInit {
   @ViewChild('customerSelector') customerSelector: ElementRef;
 
-  itemList: ItemList<DuraformOrderForListDto> = null;
+  itemList: ItemList<DuraformEnquiryListDto>;
   filterValues = new OrderSearchFilterValues();
+  statusEnums = DuraformProcessEnum;
 
   isLoading = true;
   showCustomerPicker = false;
-
-  orderStatus = OrderStatus;
   customerType = CustomerType;
 
   constructor(
     private layout: LayoutService,
     public auth: AuthService,
-    private jobService: DuraformJobService,
     private router: Router,
+    private enquiryService: EnquiryService,
     private dialog: DialogService
   ) {}
 
@@ -47,31 +44,19 @@ export class DuraformOrderListPageComponent implements OnInit {
   }
 
   loadDuraformOrderList = () => {
-    const { getDistributorOrders, getManufacturerOrders } = this.jobService;
-    let request;
-
-    switch (this.auth.role) {
-      case Role[Role.CabinetMaker]:
-        break;
-      case Role[Role.Distributor]:
-        request = getDistributorOrders(this.filterValues);
-        break;
-      case Role[Role.Manufacturer]:
-        request = getManufacturerOrders(this.filterValues);
-        break;
-      default:
-        this.dialog.error('Role Not Found');
-        return;
-    }
-
     this.isLoading = true;
     this.layout.showLoadingPanel();
-
-    request.subscribe(
+    this.enquiryService.getDuraformOrders(this.filterValues).subscribe(
       (response) => {
-        this.itemList = response;
-        this.layout.closeLoadingPanel();
+        this.itemList = new ItemList<DuraformEnquiryListDto>();
+        this.itemList.items = plainToClass(
+          DuraformEnquiryListDto,
+          response.items
+        );
+        this.itemList.totalItemCount = response.totalItemCount;
+
         this.isLoading = false;
+        this.layout.closeLoadingPanel();
       },
       (error) => {
         this.layout.closeLoadingPanel();
@@ -82,7 +67,7 @@ export class DuraformOrderListPageComponent implements OnInit {
   };
 
   onAllCustomerClick = () => {
-    this.filterValues.customerId = 0;
+    this.filterValues.customerId = null;
     (this.customerSelector.nativeElement as HTMLElement).setAttribute(
       'value',
       'All'
@@ -114,11 +99,11 @@ export class DuraformOrderListPageComponent implements OnInit {
   onSortColumn = (
     sortBy:
       | 'orderNumber'
-      | 'customerOrderNumber'
-      | 'orderStatus'
+      | 'customerReference'
+      | 'type'
       | 'customer'
       | 'description'
-      | 'createdDate'
+      | 'orderedDate'
   ) => {
     const { filterValues } = this;
 
@@ -140,6 +125,6 @@ export class DuraformOrderListPageComponent implements OnInit {
   };
 
   onSelectOrder = (id: string) => {
-    this.router.navigate([`dashboard/duraform/3/${id}`]);
+    this.router.navigate([`dashboard/duraform/${id}`]);
   };
 }

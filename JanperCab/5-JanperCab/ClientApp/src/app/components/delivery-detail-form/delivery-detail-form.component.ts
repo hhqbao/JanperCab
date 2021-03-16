@@ -25,12 +25,17 @@ export class DeliveryDetailFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    const { duraformEnquiry } = this.order;
+
     this.formGroup = this.fb.group({
-      deliveryTo: [this.order.deliveryTo, [Validators.required]],
-      deliveryAddress: [this.order.deliveryAddress, [Validators.required]],
-      deliverySuburb: [this.order.deliverySuburb, [Validators.required]],
-      deliveryState: [this.order.deliveryState, [Validators.required]],
-      deliveryPostcode: [this.order.deliveryPostcode, [Validators.required]],
+      deliveryTo: [duraformEnquiry.deliveryTo, [Validators.required]],
+      deliveryAddress: [duraformEnquiry.deliveryAddress, [Validators.required]],
+      deliverySuburb: [duraformEnquiry.deliverySuburb, [Validators.required]],
+      deliveryState: [duraformEnquiry.deliveryState, [Validators.required]],
+      deliveryPostcode: [
+        duraformEnquiry.deliveryPostcode,
+        [Validators.required],
+      ],
     });
   }
 

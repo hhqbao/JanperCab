@@ -4,6 +4,7 @@ using _3_Application.Interfaces.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -20,28 +21,31 @@ namespace _5_JanperCab.Controllers
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public FilesController(IWebHostEnvironment hostEnvironment, IUnitOfWork unitOfWork, IMapper mapper)
+        public FilesController(IWebHostEnvironment hostEnvironment, IUnitOfWork unitOfWork, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             _hostEnvironment = hostEnvironment;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
-        [HttpPost("DuraformFiles/Upload/{duraformFormId}")]
-        public async Task<IActionResult> UploadDuraformFiles(Guid duraformFormId, [FromForm] List<UploadDuraformFileDto> uploadFiles)
+        [HttpPost("DuraformFiles/Upload/{id}")]
+        public async Task<IActionResult> UploadDuraformFiles(int id, [FromForm] List<UploadDuraformFileDto> uploadFiles)
         {
             if (uploadFiles.Count == 0)
                 return Ok();
 
-            var duraformForm = await _unitOfWork.DuraformOrders.GetAsync(duraformFormId);
+            var creator = await _userManager.FindByEmailAsync(User.Identity.Name);
+            var enquiry = await _unitOfWork.Enquiries.GetEnquiryAsync(id, creator.Customer);
 
-            if (duraformForm == null)
-                return BadRequest("Duraform Form Not Found!");
+            if (!(enquiry is DuraformEnquiry))
+                return BadRequest("Duraform Enquiry Not Found");
 
             var root = _hostEnvironment.WebRootPath;
-            var path = Path.Combine(root, "Files", "DuraformForm");
-            var fileFolder = Path.Combine(path, duraformFormId.ToString());
+            var path = Path.Combine(root, "Files", "Duraform");
+            var fileFolder = Path.Combine(path, enquiry.Id.ToString());
 
             Directory.CreateDirectory(fileFolder);
 
@@ -50,7 +54,7 @@ namespace _5_JanperCab.Controllers
                 if (file.File.Length <= 0) continue;
 
                 var duraformFile = _mapper.Map<UploadDuraformFileDto, DuraformFile>(file);
-                duraformFile.DuraformFormId = duraformFormId;
+                duraformFile.DuraformEnquiryId = enquiry.Id;
 
                 _unitOfWork.ApplicationFiles.Add(duraformFile);
                 await _unitOfWork.CompleteAsync();
@@ -74,7 +78,7 @@ namespace _5_JanperCab.Controllers
 
             var fileExtension = Path.GetExtension(file.FileName);
             var root = _hostEnvironment.WebRootPath;
-            var filePath = Path.Combine(root, "Files", "DuraformForm", file.DuraformFormId.ToString(), $"{file.Id}{fileExtension}");
+            var filePath = Path.Combine(root, "Files", "Duraform", file.DuraformEnquiryId.ToString(), $"{file.Id}{fileExtension}");
 
             if (!System.IO.File.Exists(filePath))
                 return BadRequest("Physical File Not Found");
@@ -95,8 +99,6 @@ namespace _5_JanperCab.Controllers
             {
                 return BadRequest(e);
             }
-
-
         }
 
         [HttpDelete("DuraformFiles/Delete/{id}")]
@@ -112,12 +114,10 @@ namespace _5_JanperCab.Controllers
 
             var fileExtension = Path.GetExtension(file.FileName);
             var root = _hostEnvironment.WebRootPath;
-            var filePath = Path.Combine(root, "Files", "DuraformForm", file.DuraformFormId.ToString(), $"{file.Id}{fileExtension}");
+            var filePath = Path.Combine(root, "Files", "Duraform", file.DuraformEnquiryId.ToString(), $"{file.Id}{fileExtension}");
 
             if (System.IO.File.Exists(filePath))
-            {
                 System.IO.File.Delete(filePath);
-            }
 
             return Ok();
         }

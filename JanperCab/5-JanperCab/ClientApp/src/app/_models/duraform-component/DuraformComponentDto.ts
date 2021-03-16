@@ -1,3 +1,4 @@
+import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { Expose } from 'class-transformer';
 import { DuraformEdgeProfileForList } from './../duraform-edge-profile/DuraformEdgeProfileForList';
 export abstract class DuraformComponentDto {
@@ -15,6 +16,12 @@ export abstract class DuraformComponentDto {
   sortNumber: number;
   price: number;
 
+  get duraformEdgeProfile(): DuraformEdgeProfileForList {
+    return DuraformAssetService.instance.getEdgeProfile(
+      this.duraformEdgeProfileId
+    );
+  }
+
   update(formValue: any) {
     this.quantity = formValue.quantity;
     this.height = formValue.height;
@@ -28,7 +35,7 @@ export abstract class DuraformComponentDto {
   }
 
   @Expose()
-  selectEdgeProfile(profile: DuraformEdgeProfileForList) {
+  setEdgeProfile(profile: DuraformEdgeProfileForList) {
     this.duraformEdgeProfileId = profile.id;
 
     const { forceTop, forceBottom, forceLeft, forceRight } = profile;

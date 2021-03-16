@@ -19,7 +19,7 @@ namespace _4_Infrastructure.Repositories
             _dbSet = dbContext.Set<T>();
         }
 
-        public async Task<bool> AnyAsync(Expression<Func<T, bool>> condition = null)
+        public virtual async Task<bool> AnyAsync(Expression<Func<T, bool>> condition = null)
         {
             if (condition != null)
                 return await _dbSet.AnyAsync(condition);
@@ -27,12 +27,12 @@ namespace _4_Infrastructure.Repositories
             return await _dbSet.AnyAsync();
         }
 
-        public async Task<T> GetAsync(object key)
+        public virtual async Task<T> GetAsync(object key)
         {
             return await _dbSet.FindAsync(key);
         }
 
-        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> condition = null)
+        public virtual async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> condition = null)
         {
             if (condition != null)
                 return await _dbSet.Where(condition).ToListAsync();
@@ -40,22 +40,22 @@ namespace _4_Infrastructure.Repositories
             return await _dbSet.ToListAsync();
         }
 
-        public void Add(T entity)
+        public virtual void Add(T entity)
         {
             _dbSet.Add(entity);
         }
 
-        public void AddRange(List<T> entities)
+        public virtual void AddRange(List<T> entities)
         {
             _dbSet.AddRange(entities);
         }
 
-        public void Remove(T entity)
+        public virtual void Remove(T entity)
         {
             _dbSet.Remove(entity);
         }
 
-        public void RemoveRange(List<T> entities)
+        public virtual void RemoveRange(List<T> entities)
         {
             _dbSet.RemoveRange(entities);
         }

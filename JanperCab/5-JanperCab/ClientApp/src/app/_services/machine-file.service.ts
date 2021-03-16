@@ -6,9 +6,9 @@ import { environment } from 'src/environments/environment';
 export class MachineFileService {
   constructor(private http: HttpClient) {}
 
-  exportIcb = (id: string) => {
+  exportDuraformIcb = (enquiryId: number) => {
     return this.http.post(
-      `${environment.baseUrl}/Machine/ExportIcb/${id}`,
+      `${environment.baseUrl}/machine/icb/duraform/${enquiryId}`,
       null
     );
   };

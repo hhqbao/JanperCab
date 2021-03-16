@@ -1,3 +1,11 @@
+import { DuraformMiscComponentListComponent } from './components/duraform-misc-component-list/duraform-misc-component-list.component';
+import { DuraformMiscCartItemComponent } from './components/duraform-misc-cart-item/duraform-misc-cart-item.component';
+import { DuraformMiscHeatStripEdittorComponent } from './components/duraform-misc-heat-strip-edittor/duraform-misc-heat-strip-edittor.component';
+import { DuraformMiscFingerPullEdittorComponent } from './components/duraform-misc-finger-pull-edittor/duraform-misc-finger-pull-edittor.component';
+import { DuraformMiscLooseFoilEdittorComponent } from './components/duraform-misc-loose-foil-edittor/duraform-misc-loose-foil-edittor.component';
+import { DuraformMiscEdittorComponent } from './components/duraform-misc-edittor/duraform-misc-edittor.component';
+import { DuraformMiscFormComponent } from './components/duraform-misc-form/duraform-misc-form.component';
+import { DuraformMiscTabComponent } from './components/duraform-misc-tab/duraform-misc-tab.component';
 import { DuraformPriceDisplayTableComponent } from './components/duraform-price-display-table/duraform-price-display-table.component';
 import { DuraformPriceListPdfComponent } from './components/duraform-price-list-pdf/duraform-price-list-pdf.component';
 import { ArraySumPipe } from './_pipes/arraySum.pipe';
@@ -18,8 +26,7 @@ import { DeliveryDocketDuraformDrawersComponent } from './components/delivery-do
 import { DeliveryDocketEndPanelsComponent } from './components/delivery-docket-end-panels/delivery-docket-end-panels.component';
 import { DeliveryDocketPantryDoorsComponent } from './components/delivery-docket-pantry-doors/delivery-docket-pantry-doors.component';
 import { DeliveryDocketDuraformDoorsComponent } from './components/delivery-docket-duraform-doors/delivery-docket-duraform-doors.component';
-import { DeliveryDocketComponent } from './components/delivery-docket/delivery-docket.component';
-import { DuraformJobService } from './_services/duraform-job.service';
+import { DuraformDeliveryDocketComponent } from './components/duraform-delivery-docket/duraform-delivery-docket.component';
 import { FloatBoxComponent } from './components/float-box/float-box.component';
 import { CustomerService } from './_services/customer.service';
 import { CabinetMakerListPageComponent } from './pages/cabinet-maker-list-page/cabinet-maker-list-page.component';
@@ -27,7 +34,6 @@ import { CommonAssetsService } from './_services/common-assets.service';
 import { CabinetMakerFormComponent } from './components/cabinet-maker-form/cabinet-maker-form.component';
 import { LeadingPipe } from './_pipes/leading.pipe';
 import { DuraformQuotePageComponent } from './pages/duraform-quote-page/duraform-quote-page.component';
-import { DuraformDraftService } from './_services/duraform-draft.service';
 import { DuraformDraftListComponent } from './components/duraform-draft-list/duraform-draft-list.component.';
 import { LatestItemsComponent } from './components/latest-items/latest-items.component';
 import { SimpleBoxComponent } from './components/simple-box/simple-box.component';
@@ -120,6 +126,8 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
 import { DuraformOptionRollerShutterComponent } from './components/duraform-option-roller-shutter/duraform-option-roller-shutter.component';
 import { DuraformOptionMicrowaveFrameComponent } from './components/duraform-option-microwave-frame/duraform-option-microwave-frame.component';
 import { DuraformPriceGridPageComponent } from './pages/duraform-price-grid-page/duraform-price-grid-page.component';
+import { DuraformCartItemComponent } from './components/duraform-cart-item/duraform-cart-item.component';
+import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc-cap-mould-edittor/duraform-misc-cap-mould-edittor.component';
 
 @NgModule({
   declarations: [
@@ -196,7 +204,7 @@ import { DuraformPriceGridPageComponent } from './pages/duraform-price-grid-page
     PaginationComponent,
     DuraformQuotePageComponent,
     DuraformPriceGridPageComponent,
-    DeliveryDocketComponent,
+    DuraformDeliveryDocketComponent,
     DeliveryDocketDuraformDoorsComponent,
     DeliveryDocketPantryDoorsComponent,
     DeliveryDocketEndPanelsComponent,
@@ -207,6 +215,15 @@ import { DuraformPriceGridPageComponent } from './pages/duraform-price-grid-page
     DuraformPriceBulkActionComponent,
     DuraformPriceListPdfComponent,
     DuraformPriceDisplayTableComponent,
+    DuraformMiscTabComponent,
+    DuraformMiscFormComponent,
+    DuraformMiscEdittorComponent,
+    DuraformMiscLooseFoilEdittorComponent,
+    DuraformMiscFingerPullEdittorComponent,
+    DuraformMiscCapMouldEdittorComponent,
+    DuraformMiscHeatStripEdittorComponent,
+    DuraformMiscCartItemComponent,
+    DuraformMiscComponentListComponent,
   ],
   imports: [
     BrowserModule,
@@ -241,8 +258,6 @@ import { DuraformPriceGridPageComponent } from './pages/duraform-price-grid-page
     DuraformWrapColorService,
     DuraformEdgeProfileService,
     DuraformOrderService,
-    DuraformDraftService,
-    DuraformJobService,
     DuraformArchService,
     PantryDoorChairRailTypeService,
     DuraformDrawerTypeService,

@@ -12,6 +12,7 @@ import { Injectable } from '@angular/core';
 import { DuraformComponentDto } from '../_models/duraform-component/DuraformComponentDto';
 import { DuraformComponentWithOptionDto } from '../_models/duraform-component/DuraformComponentWithOptionDto';
 import { ComponentType } from '../_enums/ComponentType';
+import { DuraformMiscComponentDto } from '../_models/duraform-misc-component/DuraformMiscComponentDto';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformComponentService {
@@ -68,11 +69,12 @@ export class DuraformComponentService {
   };
 
   calculateComponentPrice = (component: DuraformComponentDto) => {
-    let serieId = this.order.selectedSerie.id;
+    let serieId = this.order.duraformEnquiry.duraformSerie.id;
 
     if (component instanceof DuraformComponentWithOptionDto) {
-      if (component.duraformOption && component.duraformOption.hasNoProfile)
+      if (component.duraformOption && component.duraformOption.hasNoProfile) {
         serieId = 1;
+      }
     }
 
     component.price = component.quantity * component.getPriceForOne(serieId);

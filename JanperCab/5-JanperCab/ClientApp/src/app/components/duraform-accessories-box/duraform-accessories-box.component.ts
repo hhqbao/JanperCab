@@ -1,3 +1,4 @@
+import { DuraformEnquiryDto } from './../../_models/enquiry/DuraformEnquiryDto';
 import { DuraformEdgeProfileForList } from './../../_models/duraform-edge-profile/DuraformEdgeProfileForList';
 import { DialogService } from './../../_services/dialog.service';
 import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
@@ -12,6 +13,7 @@ import { DuraformArchForList } from 'src/app/_models/duraform-arch/DuraformArchF
 })
 export class DuraformAccessoriesBoxComponent implements OnInit {
   formGroup: FormGroup;
+  duraformEnquiry: DuraformEnquiryDto;
 
   constructor(
     public asset: DuraformAssetService,
@@ -20,20 +22,29 @@ export class DuraformAccessoriesBoxComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.duraformEnquiry = this.order.duraformEnquiry;
+
     this.formGroup = this.fb.group({
-      hingeHoleTypeId: [this.order.hingeHoleTypeId],
+      hingeHoleTypeId: [this.duraformEnquiry.hingeHoleTypeId],
     });
   }
 
   onSelectHingeHoleType = () => {
-    this.order.hingeHoleTypeId = this.formGroup.value.hingeHoleTypeId;
+    this.duraformEnquiry.hingeHoleTypeId = this.formGroup.value.hingeHoleTypeId;
+
+    if (!this.duraformEnquiry.hingeHoleTypeId) {
+      const componentsWithHingeHole = this.duraformEnquiry
+        .componentsWithHingeHole;
+
+      componentsWithHingeHole.forEach((x) => (x.hingeHoleOption = null));
+    }
   };
 
   onSelectArch = (arch: DuraformArchForList) => {
-    this.order.selectArch(arch);
+    this.order.setArch(arch);
   };
 
   onSelectProfile = (profile: DuraformEdgeProfileForList) => {
-    this.order.selectEdgeProfile(profile);
+    this.order.setEdgeProfile(profile);
   };
 }

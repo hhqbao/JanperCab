@@ -26,7 +26,7 @@ export class EdgeProfileFormControlComponent implements OnInit {
 
   get allowedEdgeProfiles(): DuraformEdgeProfileForList[] {
     const allowedList = this.asset.getAllowedEdgeProfiles(
-      this.order.selectedDesign
+      this.order.duraformEnquiry.duraformDesign
     );
 
     switch (this.componentType) {
@@ -56,7 +56,9 @@ export class EdgeProfileFormControlComponent implements OnInit {
   }
 
   get cannotSelect(): boolean {
-    if (this.allowedEdgeProfiles.length === 1) return true;
+    if (this.allowedEdgeProfiles.length === 1) {
+      return true;
+    }
 
     const optionGroup = this.formGroup.get('optionGroup');
     const { FoldBack, AngledShelf } = this.optionType;
@@ -64,8 +66,9 @@ export class EdgeProfileFormControlComponent implements OnInit {
     if (
       optionGroup &&
       [FoldBack, AngledShelf].includes(optionGroup.value.optionTypeId)
-    )
+    ) {
       return true;
+    }
 
     return false;
   }
@@ -75,7 +78,7 @@ export class EdgeProfileFormControlComponent implements OnInit {
 
     if (control.value === null || control.value === undefined) {
       const edgeProfile = this.allowedEdgeProfiles.find(
-        (x) => x.id === this.order.selectedEdgeProfile.id
+        (x) => x.id === this.order.duraformEnquiry.duraformEdgeProfile.id
       );
 
       if (edgeProfile) {

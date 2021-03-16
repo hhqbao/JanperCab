@@ -1,6 +1,4 @@
-import { MiscItemService } from './../../_services/misc-item.service';
-import { DuraformDraftService } from './../../_services/duraform-draft.service';
-import { DuraformJobService } from './../../_services/duraform-job.service';
+import { EnquiryService } from './../../_services/enquiry.service';
 import { DuraformComponentService } from './../../_services/duraform-component.service';
 import { DuraformWrapColorService } from './../../_services/duraform-wrap-color.service';
 import { DuraformWrapTypeService } from './../../_services/duraform-wrap-type.service';
@@ -21,7 +19,6 @@ import { DuraformDrawerTypeService } from 'src/app/_services/duraform-drawer-typ
 import { DuraformOptionTypeService } from 'src/app/_services/duraform-option-type.service';
 import { HingeHoleService } from 'src/app/_services/hinge-hole.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DuraformOrderTypeKey } from 'src/app/_enums/DuraformOrderTypeKey';
 
 @Component({
   selector: 'app-duraform-page',
@@ -39,8 +36,7 @@ export class DuraformPageComponent implements OnInit {
     private dialog: DialogService,
     private asset: DuraformAssetService,
     private order: DuraformOrderService,
-    private draftService: DuraformDraftService,
-    private jobService: DuraformJobService,
+    private enquiryService: EnquiryService,
     private serieService: DuraformSerieService,
     private designService: DuraformDesignService,
     private wrapTypeService: DuraformWrapTypeService,
@@ -101,44 +97,21 @@ export class DuraformPageComponent implements OnInit {
 
   private loadDuraformForm = () => {
     this.route.params.subscribe((params) => {
-      const type = +params.type;
       const id = params.id;
 
-      if (type && id) {
-        switch (type) {
-          case DuraformOrderTypeKey.Draft:
-            this.draftService.get(id).subscribe(
-              (response) => {
-                this.order.form = response;
-                this.isLoadingAsset = false;
-                this.displayedStep = DuraformProcessStep.StepThree;
-                this.layout.closeLoadingPanel();
-              },
-              (error) => {
-                this.dialog.error(error);
-                this.dialog.error('Failed Loading Draft!');
-                this.router.navigate(['/dashboard']);
-              }
-            );
-            break;
-          case DuraformOrderTypeKey.Quote:
-            break;
-          case DuraformOrderTypeKey.Order:
-            this.jobService.get(id).subscribe(
-              (response) => {
-                this.order.form = response;
-                this.isLoadingAsset = false;
-                this.displayedStep = DuraformProcessStep.StepThree;
-                this.layout.closeLoadingPanel();
-              },
-              (error) => {
-                this.dialog.error(error);
-                this.dialog.error('Failed Loading Order');
-                this.router.navigate(['/dashboard/duraform/orders']);
-              }
-            );
-            break;
-        }
+      if (id) {
+        this.enquiryService.getDuraformEnquiry(id).subscribe(
+          (response) => {
+            this.order.duraformEnquiry = response;
+            this.isLoadingAsset = false;
+            this.displayedStep = this.duraformProcessStep.StepThree;
+            this.layout.closeLoadingPanel();
+          },
+          (error) => {
+            this.dialog.error(error);
+            this.router.navigate(['/dashboard/duraform/orders']);
+          }
+        );
       } else {
         this.order.loadNewDraft();
         this.layout.closeLoadingPanel();

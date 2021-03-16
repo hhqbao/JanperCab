@@ -1,4 +1,4 @@
-<div class="component-box">
+<div class="component-table">
   <div class="title">Pantry Doors</div>
   <table>
     <thead>
@@ -25,7 +25,7 @@
         <td>{{ item.height }}</td>
         <td>{{ item.width }}</td>
         <td>{{ item.chairRailHeight }}</td>
-        <td>{{ getChairRailType(item.chairRailTypeId).name }}</td>
+        <td>{{ item.chairRailType.name }}</td>
         <td>{{ item.extraRailBottom }}</td>
         <td style="text-align: center">
           {{ item.top ? "Y" : null }}

@@ -47,7 +47,7 @@ export class DuraformOptionSelectorComponent implements OnInit {
   ngOnInit() {
     if (
       !this.hideOptionTypeKeys.includes(DuraformOptionTypeKey.DoubleSided) &&
-      this.order.isRoutingOnly
+      this.order.duraformEnquiry.isRoutingOnly
     ) {
       this.hideOptionTypeKeys.push(DuraformOptionTypeKey.DoubleSided);
     }
@@ -124,7 +124,7 @@ export class DuraformOptionSelectorComponent implements OnInit {
 
     switch (optionType.id) {
       case DuraformOptionTypeKey.FoldBack:
-        const maxAllowedSize = this.order.isRoutingOnly ? 3600 : 2500;
+        const maxAllowedSize = this.order.maxBoardSize;
         const width = this.formGroup.get('width').value;
         const allowedSize = maxAllowedSize - width;
 

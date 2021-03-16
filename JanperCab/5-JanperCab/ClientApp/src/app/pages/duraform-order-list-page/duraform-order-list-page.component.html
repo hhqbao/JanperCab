@@ -64,14 +64,15 @@
               (change)="onFilterValueChange()"
             >
               <option [value]="null">All</option>
-              <option [value]="+orderStatus.Submitted">Submitted</option>
-              <option [value]="+orderStatus.DistributorDeclined">
-                Distributor Declined
-              </option>
-              <option [value]="+orderStatus.DistributorApproved">
-                Distributor Approved
-              </option>
-              <option [value]="+orderStatus.Finalized">Finalized</option>
+              <option [value]="statusEnums.PreRoute">Pre Route</option>
+              <option [value]="statusEnums.Routing">Routing</option>
+              <option [value]="statusEnums.Routed">Routed</option>
+              <option [value]="statusEnums.Pressing">Pressing</option>
+              <option [value]="statusEnums.Pressed">Pressed</option>
+              <option [value]="statusEnums.Cleaned">Cleaned</option>
+              <option [value]="statusEnums.Packed">Packed</option>
+              <option [value]="statusEnums.PickedUp">Picked Up</option>
+              <option [value]="statusEnums.Delivered">Delivered</option>
             </select>
           </div>
         </div>
@@ -111,15 +112,26 @@
             Order No
           </th>
           <th
-            style="width: 15rem"
+            style="width: 22rem"
             [ngClass]="{
-              active: filterValues.sortBy === 'customerOrderNumber',
+              active: filterValues.sortBy === 'customerReference',
               asc: filterValues.direction === 'asc',
               desc: filterValues.direction === 'desc'
             }"
-            (click)="onSortColumn('customerOrderNumber')"
+            (click)="onSortColumn('customerReference')"
           >
             Ref
+          </th>
+          <th
+            style="width: 10rem"
+            [ngClass]="{
+              active: filterValues.sortBy === 'type',
+              asc: filterValues.direction === 'asc',
+              desc: filterValues.direction === 'desc'
+            }"
+            (click)="onSortColumn('type')"
+          >
+            Type
           </th>
           <th
             style="width: 25rem"
@@ -144,27 +156,17 @@
             Description
           </th>
           <th
-            style="width: 15rem"
+            style="width: 10rem"
             [ngClass]="{
-              active: filterValues.sortBy === 'createdDate',
+              active: filterValues.sortBy === 'orderedDate',
               asc: filterValues.direction === 'asc',
               desc: filterValues.direction === 'desc'
             }"
-            (click)="onSortColumn('createdDate')"
+            (click)="onSortColumn('orderedDate')"
           >
-            Submitted Date
+            Duration
           </th>
-          <th
-            style="width: 15rem"
-            [ngClass]="{
-              active: filterValues.sortBy === 'orderStatus',
-              asc: filterValues.direction === 'asc',
-              desc: filterValues.direction === 'desc'
-            }"
-            (click)="onSortColumn('orderStatus')"
-          >
-            Status
-          </th>
+          <th style="width: 10rem">Status</th>
           <th style="width: 15rem"></th>
         </tr>
       </thead>
@@ -178,23 +180,26 @@
       <tbody *ngIf="itemList.items.length > 0">
         <tr *ngFor="let order of itemList.items">
           <td (click)="onSelectOrder(order.id)">
-            {{ order.orderNumber | leading: "0000000" }}
+            {{ order.id | leading: "0000000" }}
           </td>
           <td (click)="onSelectOrder(order.id)">
-            {{ order.customerOrderNumber }}
+            {{ order.customerReference }}
           </td>
           <td (click)="onSelectOrder(order.id)">
-            {{ order.distributorName }}
+            {{ order.isRoutingOnly ? "DSW" : "DF" }}
           </td>
           <td (click)="onSelectOrder(order.id)">
-            {{ order.cabinetMakerName }}
-          </td>
-          <td (click)="onSelectOrder(order.id)">{{ order.description }}</td>
-          <td (click)="onSelectOrder(order.id)">
-            {{ order.createdDate | date: "dd/MM/yyyy" }}
+            {{ order.distributor.name }}
           </td>
           <td (click)="onSelectOrder(order.id)">
-            {{ orderStatus[order.orderStatus] }}
+            {{ order.cabinetMaker.name }}
+          </td>
+          <td (click)="onSelectOrder(order.id)">{{ order.deliveryNote }}</td>
+          <td (click)="onSelectOrder(order.id)">
+            {{ order.timeInSystem }}
+          </td>
+          <td (click)="onSelectOrder(order.id)">
+            {{ order.statusDescription }}
           </td>
           <td></td>
         </tr>

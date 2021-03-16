@@ -24,7 +24,7 @@ export const routes: Routes = [
       { path: 'customers', component: CabinetMakerListPageComponent },
       { path: 'duraform/orders', component: DuraformOrderListPageComponent },
       { path: 'duraform/quote/:id', component: DuraformQuotePageComponent },
-      { path: 'duraform/:type/:id', component: DuraformPageComponent },
+      { path: 'duraform/:id', component: DuraformPageComponent },
       { path: 'duraform', component: DuraformPageComponent },
       {
         path: 'settings/duraform-prices',

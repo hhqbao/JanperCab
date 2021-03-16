@@ -21,8 +21,8 @@ namespace _1_Domain
             {
                 ABB = ExtraRailBottom.HasValue ? (int)ExtraRailBottom : 0,
                 BDH = (int)ChairRailHeight,
-                BDBT = DuraformForm.DuraformDesign.BB,
-                BDH_ADDON = ChairRailType.Name.Equals("Single") ? 0 : DuraformForm.DuraformDesign.BB
+                BDBT = DuraformEnquiry.DuraformDesign.BB,
+                BDH_ADDON = ChairRailType.Name.Equals("Single") ? 0 : DuraformEnquiry.DuraformDesign.BB
             };
 
             DuraformOption?.UpdateIcbLineStructure(this, line);

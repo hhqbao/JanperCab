@@ -24,7 +24,7 @@ export class FileService {
       );
   };
 
-  uploadDuraformFiles = (duraformFormId: string) => {
+  uploadDuraformFiles = (duraformEnquiryId: number) => {
     const formData = new FormData();
 
     for (let i = 0; i < this.duraformFiles.length; i++) {
@@ -37,7 +37,7 @@ export class FileService {
 
     return this.http
       .post(
-        `${environment.baseUrl}/Files/DuraformFiles/Upload/${duraformFormId}`,
+        `${environment.baseUrl}/Files/DuraformFiles/Upload/${duraformEnquiryId}`,
         formData
       )
       .pipe(

@@ -28,11 +28,13 @@ namespace _3_Application.Interfaces.Repositories
 
         IHingeHoleStyleRepo HingeHoleStyles { get; }
 
-        IDuraformOrderRepo DuraformOrders { get; }
+        IEnquiryRepo Enquiries { get; }
 
         IApplicationFileRepo ApplicationFiles { get; }
 
         IDuraformPriceRepo DuraformPrices { get; }
+
+        IDuraformMiscPriceRepo DuraformMiscPrices { get; }
 
         Task ExecuteCommandAsync(string command);
 

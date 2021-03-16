@@ -8,13 +8,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DeliveryDocketDuraformDoorsComponent implements OnInit {
   @Input() doors: DuraformDoorDto[] = [];
-  @Input() edgeProfiles: DuraformEdgeProfileForList[] = [];
 
   constructor() {}
 
   ngOnInit() {}
-
-  getEdgeProfile = (id: number) => {
-    return this.edgeProfiles.find((x) => x.id === id);
-  };
 }

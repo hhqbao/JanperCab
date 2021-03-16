@@ -143,7 +143,7 @@ export class DuraformColorSelectorComponent implements OnInit {
   };
 
   onSelectArch = (arch: DuraformArchForList) => {
-    this.order.selectArch(arch);
+    this.order.setArch(arch);
     this.isSelectingColor = true;
 
     setTimeout(() => {

@@ -1,5 +1,4 @@
 ﻿using _1_Domain.Enum;
-using System;
 using System.Collections.Generic;
 
 namespace _1_Domain
@@ -30,7 +29,7 @@ namespace _1_Domain
 
         public int SortNumber { get; set; }
 
-        public Guid DuraformFormId { get; set; }
+        public int DuraformEnquiryId { get; set; }
 
         public abstract ICB_TYPE_ENUM ICBTYPE { get; }
 
@@ -38,6 +37,6 @@ namespace _1_Domain
 
         public virtual DuraformEdgeProfile DuraformEdgeProfile { get; set; }
 
-        public virtual DuraformForm DuraformForm { get; set; }
+        public virtual DuraformEnquiry DuraformEnquiry { get; set; }
     }
 }

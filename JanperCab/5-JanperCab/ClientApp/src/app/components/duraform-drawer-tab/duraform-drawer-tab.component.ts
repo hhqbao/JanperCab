@@ -1,6 +1,4 @@
 import { DuraformComponentService } from './../../_services/duraform-component.service';
-import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
-import { DuraformDrawerDto } from './../../_models/duraform-component/DuraformDrawerDto';
 import { FormGroup } from '@angular/forms';
 import { DialogService } from './../../_services/dialog.service';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';

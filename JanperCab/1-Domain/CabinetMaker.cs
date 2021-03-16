@@ -35,12 +35,14 @@ namespace _1_Domain
 
 
         public virtual Distributor Distributor { get; set; }
-        public virtual ICollection<DuraformForm> DuraformForms { get; set; }
+
+        public virtual ICollection<Enquiry> Enquiries { get; set; }
 
         public CabinetMaker()
         {
             CustomerType = CustomerType.CabinetMaker;
-            DuraformForms = new Collection<DuraformForm>();
+
+            Enquiries = new Collection<Enquiry>();
         }
     }
 }

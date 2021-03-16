@@ -1,0 +1,68 @@
+<div class="duraform-option-selector">
+  <button
+    type="button"
+    class="btn btn--primary edit-btn"
+    style="padding: 0.5rem 1rem"
+    *ngIf="cloneMisc"
+    (click)="onEditBtnClick()"
+  >
+    <i class="fa fa-edit"></i>
+  </button>
+  <input
+    #typeInput
+    type="text"
+    class="form__control input-for-display"
+    readonly
+    (click)="onFocus()"
+    (focus)="onFocus()"
+  />
+  <div class="container" [hidden]="!showTypeList || showMiscForm">
+    <ul class="type-list">
+      <li
+        *ngIf="!order.duraformEnquiry.isRoutingOnly"
+        (click)="onMiscTypeSelect(miscTypeList.LooseFoil)"
+      >
+        Loose Foil
+      </li>
+      <li (click)="onMiscTypeSelect(miscTypeList.CapMould)">Cap Mould</li>
+      <li (click)="onMiscTypeSelect(miscTypeList.FingerPull)">Finger Pull</li>
+      <li (click)="onMiscTypeSelect(miscTypeList.HeatStrip)">Heat Strip</li>
+    </ul>
+  </div>
+  <div
+    class="container"
+    *ngIf="cloneMisc"
+    [hidden]="!showMiscForm || showTypeList"
+  >
+    <div class="option-form">
+      <app-duraform-misc-loose-foil-edittor
+        appRemoveTag
+        *ngIf="cloneMisc.miscType === miscTypeList.LooseFoil"
+        [formGroup]="formGroup"
+        [cloneMisc]="cloneMisc"
+        (updateInput)="onUpdateDisplayValue()"
+      ></app-duraform-misc-loose-foil-edittor>
+      <app-duraform-misc-cap-mould-edittor
+        appRemoveTag
+        *ngIf="cloneMisc.miscType === miscTypeList.CapMould"
+        [formGroup]="formGroup"
+        [cloneMisc]="cloneMisc"
+        (updateInput)="onUpdateDisplayValue()"
+      ></app-duraform-misc-cap-mould-edittor>
+      <app-duraform-misc-finger-pull-edittor
+        appRemoveTag
+        *ngIf="cloneMisc.miscType === miscTypeList.FingerPull"
+        [formGroup]="formGroup"
+        [cloneMisc]="cloneMisc"
+        (updateInput)="onUpdateDisplayValue()"
+      ></app-duraform-misc-finger-pull-edittor>
+      <app-duraform-misc-heat-strip-edittor
+        appRemoveTag
+        *ngIf="cloneMisc.miscType === miscTypeList.HeatStrip"
+        [formGroup]="formGroup"
+        [cloneMisc]="cloneMisc"
+        (updateInput)="onUpdateDisplayValue()"
+      ></app-duraform-misc-heat-strip-edittor>
+    </div>
+  </div>
+</div>

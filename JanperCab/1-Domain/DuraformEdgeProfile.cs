@@ -49,18 +49,18 @@ namespace _1_Domain
 
         public virtual ICollection<DuraformDesign> DuraformDesignsWithDefault { get; set; }
 
-        public virtual ICollection<DuraformForm> DuraformForms { get; set; }
-
         public virtual ICollection<DuraformComponent> DuraformComponents { get; set; }
 
         public virtual ICollection<DuraformDesignEdgeProfile> DuraformDesignEdgeProfiles { get; set; }
 
+        public virtual ICollection<DuraformEnquiry> DuraformEnquiries { get; set; }
+
         public DuraformEdgeProfile()
         {
             DuraformDesignsWithDefault = new Collection<DuraformDesign>();
-            DuraformForms = new Collection<DuraformForm>();
             DuraformComponents = new Collection<DuraformComponent>();
             DuraformDesignEdgeProfiles = new Collection<DuraformDesignEdgeProfile>();
+            DuraformEnquiries = new Collection<DuraformEnquiry>();
         }
     }
 }

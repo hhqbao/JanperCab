@@ -10,11 +10,12 @@ namespace _1_Domain
 
         public virtual Customer Customer { get; set; }
 
-        public virtual ICollection<DuraformForm> DuraformForms { get; set; }
+        public virtual ICollection<Enquiry> Enquiries { get; set; }
+
 
         public ApplicationUser()
         {
-            DuraformForms = new Collection<DuraformForm>();
+            Enquiries = new Collection<Enquiry>();
         }
     }
 }

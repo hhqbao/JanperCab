@@ -1,14 +1,8 @@
-﻿using System;
+﻿using _1_Domain.Enum;
+using System;
 
 namespace _1_Domain
 {
-    public enum EnquiryTypeEnum
-    {
-        Draft = 1,
-        Quote = 2,
-        Order = 3
-    }
-
     public abstract class Enquiry
     {
         public int Id { get; set; }
@@ -20,6 +14,10 @@ namespace _1_Domain
         public DateTime CreatedDate { get; set; }
 
         public DateTime? LastEditted { get; set; }
+
+        public DateTime? OrderedDate { get; set; }
+
+        public DateTime? ApprovedDate { get; set; }
 
         public string CreatorId { get; set; }
 
@@ -55,29 +53,16 @@ namespace _1_Domain
         public decimal? TotalPrice { get; set; }
 
 
+        public virtual ApplicationUser Creator { get; set; }
+
+        public virtual Distributor Distributor { get; set; }
+
+        public virtual CabinetMaker CabinetMaker { get; set; }
+
         protected Enquiry()
         {
             EnquiryType = EnquiryTypeEnum.Draft;
             CreatedDate = DateTime.Now;
         }
-    }
-
-    public class DuraformEnquiry : Enquiry
-    {
-        public int DuraformDesignId { get; set; }
-
-        public int DuraformSerieId { get; set; }
-
-        public bool IsRoutingOnly { get; set; }
-
-        public int? DuraformWrapTypeId { get; set; }
-
-        public int? DuraformWrapColorId { get; set; }
-
-        public int DuraformEdgeProfileId { get; set; }
-
-        public int? HingeHoleTypeId { get; set; }
-
-        public int? DuraformArchId { get; set; }
     }
 }

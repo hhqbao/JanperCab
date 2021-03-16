@@ -30,4 +30,10 @@
       }
     }
   }
+
+  @media print {
+    display: block;
+    height: unset;
+    max-height: unset;
+  }
 }

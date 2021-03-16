@@ -1,0 +1,40 @@
+<div class="panel">
+  <div class="panel__heading">Miscellaneous</div>
+  <div class="panel__content">
+    <table class="table table--component-list">
+      <thead>
+        <tr>
+          <th style="width: 3rem">#</th>
+          <th style="width: 4rem">Qty</th>
+          <th class="text-left">Description</th>
+          <th style="width: 8rem">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let miscItem of miscComponents; let i = index">
+          <td class="line-number">{{ i + 1 }}</td>
+          <td>{{ miscItem.quantity }}</td>
+          <td class="text-left">{{ miscItem.toString() }}</td>
+          <td class="text-right">{{ miscItem.price | currency }}</td>
+        </tr>
+      </tbody>
+      <tbody class="subtotal">
+        <tr>
+          <td colspan="4" class="subtotal__header">
+            <b>Subtotal</b>
+          </td>
+        </tr>
+        <tr>
+          <td class="line-number">
+            <i class="fa fa-calculator" aria-hidden="true"></i>
+          </td>
+          <td>{{ totalQuantity }}</td>
+          <td></td>
+          <td class="subtotal__price">
+            {{ miscComponents | arraySum: "price" | currency }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

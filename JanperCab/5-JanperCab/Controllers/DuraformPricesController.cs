@@ -1,4 +1,5 @@
 ﻿using _1_Domain;
+using _3_Application.Dtos.DuraformMiscPrice;
 using _3_Application.Dtos.DuraformPriceGrid;
 using _3_Application.Interfaces.Repositories;
 using AutoMapper;
@@ -24,17 +25,27 @@ namespace _5_JanperCab.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("Grids")]
+        public async Task<IActionResult> GetAllGrids()
         {
             var prices = await _unitOfWork.DuraformPrices.GetAllAsync();
 
-            var model = new DuraformAllPriceModel { Prices = _mapper.Map<List<DuraformPriceGrid>, List<DuraformPriceGridDto>>(prices) };
+            var model = new DuraformAllPriceModel<DuraformPriceGridDto> { Prices = _mapper.Map<List<DuraformPriceGrid>, List<DuraformPriceGridDto>>(prices) };
 
             return Ok(model);
         }
 
-        [HttpGet("{finishId}/{serieId}")]
+        [HttpGet("Miscs")]
+        public async Task<IActionResult> GetAllMiscs()
+        {
+            var prices = await _unitOfWork.DuraformMiscPrices.GetAllAsync();
+
+            var model = new DuraformAllPriceModel<DuraformMiscPriceDto> { Prices = _mapper.Map<List<DuraformMiscPrice>, List<DuraformMiscPriceDto>>(prices) };
+
+            return Ok(model);
+        }
+
+        [HttpGet("Grids/{finishId}/{serieId}")]
         public async Task<IActionResult> GetPressPrice(int finishId, int serieId)
         {
             if (!await _unitOfWork.DuraformWrapTypes.AnyAsync(x => x.Id == finishId))
@@ -48,7 +59,7 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<List<DuraformWrapPriceGrid>, List<DuraformWrapPriceGridDto>>(prices));
         }
 
-        [HttpGet("{serieId}")]
+        [HttpGet("Grids/{serieId}")]
         public async Task<IActionResult> GetRouteOnlyPrice(int serieId)
         {
             if (!await _unitOfWork.DuraformSeries.AnyAsync(x => x.Id == serieId))
@@ -59,7 +70,7 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<List<DuraformRouteOnlyPriceGrid>, List<DuraformRouteOnlyPriceGridDto>>(prices));
         }
 
-        [HttpPost("SavePriceGrids")]
+        [HttpPost("Grids")]
         public async Task<IActionResult> SavePriceGrids(List<DuraformPriceGridDto> priceGridDtos)
         {
             try

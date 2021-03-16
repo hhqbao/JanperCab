@@ -36,31 +36,38 @@ export class DuraformOrderStepTwoComponent implements OnInit {
 
   ngOnInit() {
     this.layout.showLoadingPanel();
+    const { duraformEnquiry } = this.order;
 
-    const serieOneRequest = this.order.isRoutingOnly
+    const serieOneRequest = duraformEnquiry.isRoutingOnly
       ? this.priceService.getRouteOnlyPriceGrid(1)
-      : this.priceService.getPressPriceGrid(this.order.selectedWrapType.id, 1);
-
-    const selectedSerieRequest = this.order.isRoutingOnly
-      ? this.priceService.getRouteOnlyPriceGrid(this.order.selectedSerie.id)
       : this.priceService.getPressPriceGrid(
-          this.order.selectedWrapType.id,
-          this.order.selectedSerie.id
+          duraformEnquiry.duraformWrapTypeId,
+          1
+        );
+
+    const selectedSerieRequest = duraformEnquiry.isRoutingOnly
+      ? this.priceService.getRouteOnlyPriceGrid(duraformEnquiry.duraformSerieId)
+      : this.priceService.getPressPriceGrid(
+          duraformEnquiry.duraformWrapTypeId,
+          duraformEnquiry.duraformSerieId
         );
 
     const observables =
-      this.order.selectedSerie.id === 1
+      duraformEnquiry.duraformSerieId === 1
         ? forkJoin({
             serieOnePrices: serieOneRequest,
+            miscPrices: this.priceService.getAllMiscPrices(),
           })
         : forkJoin({
             serieOnePrices: serieOneRequest,
+            miscPrices: this.priceService.getAllMiscPrices(),
             selectedSeriePrices: selectedSerieRequest,
           });
 
     observables.subscribe(
       (responses) => {
         this.asset.priceGrids = responses.serieOnePrices;
+        this.asset.miscPrices = responses.miscPrices.prices;
 
         if (responses['selectedSeriePrices']) {
           this.asset.priceGrids = this.asset.priceGrids.concat(
@@ -81,6 +88,7 @@ export class DuraformOrderStepTwoComponent implements OnInit {
   };
 
   onPreviewOrderClick = () => {
+    this.order.duraformEnquiry.calculatePrice();
     this.finish.emit();
   };
 
@@ -119,9 +127,11 @@ export class DuraformOrderStepTwoComponent implements OnInit {
         this.layout.showLoadingPanel();
         this.fileService.deleteDuraformFile(file.id).subscribe(
           () => {
-            const index = this.order.duraformFiles.indexOf(file);
+            const index = this.order.duraformEnquiry.duraformFiles.indexOf(
+              file
+            );
 
-            this.order.duraformFiles.splice(index, 1);
+            this.order.duraformEnquiry.duraformFiles.splice(index, 1);
             this.layout.closeLoadingPanel();
             this.dialog.success('File has been deleted.');
           },

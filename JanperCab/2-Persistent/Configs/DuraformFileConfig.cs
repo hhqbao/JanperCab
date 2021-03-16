@@ -11,10 +11,10 @@ namespace _2_Persistent.Configs
             builder.Property(x => x.Description)
                 .HasColumnType("varchar(1000)");
 
-            builder.HasOne(x => x.DuraformForm)
+            builder.HasOne(x => x.DuraformEnquiry)
                 .WithMany(y => y.DuraformFiles)
+                .HasForeignKey(x => x.DuraformEnquiryId)
                 .IsRequired()
-                .HasForeignKey(x => x.DuraformFormId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

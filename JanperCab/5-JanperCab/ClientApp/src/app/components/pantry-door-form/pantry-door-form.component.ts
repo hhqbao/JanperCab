@@ -4,22 +4,8 @@ import { DuraformPantryDoorDto } from './../../_models/duraform-component/Durafo
 import { DuraformOptionTypeKey } from './../../_enums/DuraformOptionTypeKey';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  AbstractControl,
-} from '@angular/forms';
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  Input,
-  ElementRef,
-  ViewChild,
-} from '@angular/core';
-import { DuraformOptionSelectorComponent } from '../duraform-option-selector/duraform-option-selector.component';
+import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { DuraformComponentFormComponent } from '../duraform-component-form/duraform-component-form.component';
 
 @Component({
@@ -194,7 +180,7 @@ export class PantryDoorFormComponent
       this.formGroup.patchValue({ extraRailBottom: null });
     }
 
-    if (!this.order.hingeHoleTypeId) {
+    if (!this.order.duraformEnquiry.hingeHoleTypeId) {
       this.formGroup.removeControl('hingeHole');
     }
 

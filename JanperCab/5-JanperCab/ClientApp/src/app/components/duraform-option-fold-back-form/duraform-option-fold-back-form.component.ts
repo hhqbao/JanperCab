@@ -74,7 +74,7 @@ export class DuraformOptionFoldBackFormComponent
       this.formGroup.get('right').setValue(true);
 
       const edgeProfile = this.asset
-        .getAllowedEdgeProfiles(this.order.selectedDesign)
+        .getAllowedEdgeProfiles(this.order.duraformEnquiry.duraformDesign)
         .filter(
           (x) => x.forceTop && x.forceBottom && x.forceLeft && x.forceRight
         )[0];

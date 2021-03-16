@@ -10,11 +10,13 @@ import {
   Output,
   ElementRef,
   ViewChild,
+  Directive,
 } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 
 import { DuraformOptionSelectorComponent } from '../duraform-option-selector/duraform-option-selector.component';
 
+@Directive()
 export abstract class DuraformComponentFormComponent<
   T extends
     | DuraformDoorDto

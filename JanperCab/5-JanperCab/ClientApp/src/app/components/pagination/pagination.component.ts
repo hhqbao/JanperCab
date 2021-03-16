@@ -14,6 +14,10 @@ export class PaginationComponent implements OnInit {
   constructor() {}
 
   get pageList(): number[] {
+    if (!this.totalItemCount) {
+      return [];
+    }
+
     const pageCount = Math.ceil(this.totalItemCount / this.pageSize);
 
     return Array.from(Array(pageCount).keys());

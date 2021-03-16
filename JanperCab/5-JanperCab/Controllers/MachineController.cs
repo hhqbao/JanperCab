@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Threading.Tasks;
 
 namespace _5_JanperCab.Controllers
@@ -28,17 +27,17 @@ namespace _5_JanperCab.Controllers
         }
 
         [Authorize(Roles = "Manufacturer")]
-        [HttpPost("ExportIcb/{id}")]
-        public async Task<IActionResult> ExportIcb(Guid id)
+        [HttpPost("icb/duraform/{id}")]
+        public async Task<IActionResult> ExportDuraformIcb(int id)
         {
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
 
-            var order = await _unitOfWork.DuraformOrders.GetOrderAsync(id, currentUser.Customer);
+            var enquiry = await _unitOfWork.Enquiries.GetEnquiryAsync(id, currentUser.Customer);
 
-            if (order == null)
-                return BadRequest("Order Not Found!");
+            if (!(enquiry is DuraformEnquiry duraformEnquiry))
+                return BadRequest("Duraform Order Not Found");
 
-            await _fileGenerator.ExportICBFileAsync(order, _config.GetSection("AppSettings:IcbFileLocation").Value);
+            await _fileGenerator.ExportICBFileAsync(duraformEnquiry, _config.GetSection("AppSettings:IcbFileLocation").Value);
 
             return Ok();
         }

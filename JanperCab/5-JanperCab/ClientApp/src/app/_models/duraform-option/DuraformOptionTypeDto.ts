@@ -1,6 +1,5 @@
 import { DuraformOptionAngledShelfDto } from './DuraformOptionAngledShelfDto';
 import { DuraformOptionRollerShutterFrameDto } from './DuraformOptionRollerShutterFrameDto';
-import { DuraformOrderTypeKey } from 'src/app/_enums/DuraformOrderTypeKey';
 import { DuraformOptionDto } from 'src/app/_models/duraform-option/DuraformOptionDto';
 import { DuraformOptionPaneFrameDto } from './DuraformOptionPaneFrameDto';
 import { DuraformOptionFoldBackDto } from './DuraformOptionFoldBackDto';

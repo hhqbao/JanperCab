@@ -5,8 +5,8 @@
         <div class="form__group">
           <label class="form__label">Edge Profile</label>
           <app-edge-profile-selector
-            [selectedDuraformDesign]="order.selectedDesign"
-            [selectedEdgeProfile]="order.selectedEdgeProfile"
+            [selectedDuraformDesign]="duraformEnquiry.duraformDesign"
+            [selectedEdgeProfile]="duraformEnquiry.duraformEdgeProfile"
             (selectProfile)="onSelectProfile($event)"
           ></app-edge-profile-selector>
         </div>
@@ -15,8 +15,8 @@
         <div class="form__group">
           <label class="form__label">Arch Style</label>
           <app-arch-selector
-            [canSelect]="!order.selectedDesign.hasNoArch"
-            [selectedArch]="order.selectedArch"
+            [canSelect]="!duraformEnquiry.duraformDesign.hasNoArch"
+            [selectedArch]="duraformEnquiry.duraformArch"
             (selectArch)="onSelectArch($event)"
           ></app-arch-selector>
         </div>

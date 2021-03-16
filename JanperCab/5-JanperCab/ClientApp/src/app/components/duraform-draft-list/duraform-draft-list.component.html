@@ -2,10 +2,10 @@
   <table class="table table--left table--hovered">
     <thead>
       <tr>
-        <th style="width: 15rem;">Created At</th>
+        <th style="width: 15rem">Created At</th>
         <th>Description</th>
-        <th style="width: 15rem;">Last Updated</th>
-        <th style="width: 1rem;"></th>
+        <th style="width: 15rem">Last Updated</th>
+        <th style="width: 1rem"></th>
       </tr>
     </thead>
     <tbody>
@@ -14,9 +14,9 @@
         <td>{{ item.description }}</td>
         <td>
           {{
-            item.lastUpdated == null
+            item.lastEditted == null
               ? "--"
-              : (item.lastUpdated | date: "dd/MM/yyyy HH:mm")
+              : (item.lastEditted | date: "dd/MM/yyyy HH:mm")
           }}
         </td>
         <td class="text-center">

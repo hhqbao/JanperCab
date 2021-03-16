@@ -103,21 +103,23 @@ export class DuraformPriceGridPageComponent implements OnInit {
               !this.widthHeaders.some(
                 (x) => x.minWidth === minWidth && x.maxWidth === maxWidth
               )
-            )
+            ) {
               this.widthHeaders.push({
                 minWidth,
                 maxWidth,
               });
+            }
 
             if (
               !this.heightHeaders.some(
                 (x) => x.minHeight === minHeight && x.maxHeight === maxHeight
               )
-            )
+            ) {
               this.heightHeaders.push({
                 minHeight,
                 maxHeight,
               });
+            }
           });
 
           this.isLoading = false;
@@ -134,7 +136,7 @@ export class DuraformPriceGridPageComponent implements OnInit {
 
   onViewAll = () => {
     this.layout.showLoadingPanel();
-    this.priceService.getAllPrices().subscribe(
+    this.priceService.getAllGriPrices().subscribe(
       (response) => {
         this.allPriceGrids = response.prices;
         this.layout.closeLoadingPanel();
@@ -166,7 +168,9 @@ export class DuraformPriceGridPageComponent implements OnInit {
   };
 
   onReset = () => {
-    if (this.changes === 0) return;
+    if (this.changes === 0) {
+      return;
+    }
 
     this.isReseting = true;
 

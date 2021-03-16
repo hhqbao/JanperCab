@@ -9,13 +9,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DeliveryDocketPantryDoorsComponent implements OnInit {
   @Input() pantryDoors: DuraformPantryDoorDto[] = [];
-  @Input() pantryDoorChairRailTypes: PantryDoorChairRailTypeForList[] = [];
 
   constructor() {}
 
   ngOnInit() {}
-
-  getChairRailType = (id: number) => {
-    return this.pantryDoorChairRailTypes.find((x) => x.id === id);
-  };
 }

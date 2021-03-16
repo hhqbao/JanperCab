@@ -4,18 +4,17 @@ using _3_Application.Dtos.Customer;
 using _3_Application.Dtos.DuraformArch;
 using _3_Application.Dtos.DuraformComponent;
 using _3_Application.Dtos.DuraformDesign;
-using _3_Application.Dtos.DuraformDraft;
 using _3_Application.Dtos.DuraformDrawerType;
 using _3_Application.Dtos.DuraformEdgeProfile;
-using _3_Application.Dtos.DuraformForm;
+using _3_Application.Dtos.DuraformMiscComponent;
+using _3_Application.Dtos.DuraformMiscPrice;
 using _3_Application.Dtos.DuraformOption;
 using _3_Application.Dtos.DuraformOptionType;
-using _3_Application.Dtos.DuraformOrder;
 using _3_Application.Dtos.DuraformPriceGrid;
-using _3_Application.Dtos.DuraformQuote;
 using _3_Application.Dtos.DuraformSerie;
 using _3_Application.Dtos.DuraformWrapColor;
 using _3_Application.Dtos.DuraformWrapType;
+using _3_Application.Dtos.Enquiry;
 using _3_Application.Dtos.HingeHoleOption;
 using _3_Application.Dtos.HingeHoleType;
 using _3_Application.Dtos.PantryDoorChairRailType;
@@ -158,39 +157,42 @@ namespace _5_JanperCab.Helpers
             CreateMap<DuraformDrawer, DuraformDrawerDto>();
             CreateMap<DuraformDrawerDto, DuraformDrawer>();
 
-            CreateMap<DuraformForm, DuraformFormDto>()
-                .Include<DuraformDraft, DuraformDraftDto>()
-                .Include<DuraformQuote, DuraformQuoteDto>()
-                .Include<DuraformOrder, DuraformOrderDto>();
-            CreateMap<DuraformFormDto, DuraformForm>()
-                .ForMember(x => x.Id, opt => opt.Ignore())
-                .ForMember(x => x.OrderType, opt => opt.Ignore())
-                .ForMember(x => x.CreatedDate, opt => opt.Ignore())
-                .ForMember(x => x.LastUpdated, opt => opt.Ignore())
-                .Include<DuraformDraftDto, DuraformDraft>()
-                .Include<DuraformQuoteDto, DuraformQuote>()
-                .Include<DuraformOrderDto, DuraformOrder>();
+            CreateMap<DuraformMiscComponent, DuraformMiscComponentDto>()
+                .Include<DuraformMiscLooseFoil, DuraformMiscLooseFoilDto>()
+                .Include<DuraformMiscCapMould, DuraformMiscCapMouldDto>()
+                .Include<DuraformMiscFingerPull, DuraformMiscFingerPullDto>()
+                .Include<DuraformMiscHeatStrip, DuraformMiscHeatStripDto>();
+            CreateMap<DuraformMiscComponentDto, DuraformMiscComponent>()
+                .Include<DuraformMiscLooseFoilDto, DuraformMiscLooseFoil>()
+                .Include<DuraformMiscCapMouldDto, DuraformMiscCapMould>()
+                .Include<DuraformMiscFingerPullDto, DuraformMiscFingerPull>()
+                .Include<DuraformMiscHeatStripDto, DuraformMiscHeatStrip>()
+                .EqualityComparison((dto, x) => dto.Id == x.Id);
 
-            CreateMap<DuraformDraft, DuraformDraftDto>();
-            CreateMap<DuraformDraft, DuraformDraftForSmallList>()
-                .ForMember(x => x.Description, opt => opt.MapFrom<DuraformDraftDescriptionResolver>());
-            CreateMap<DuraformDraft, DuraformOrder>()
-                .ForMember(x => x.Id, opt => opt.Ignore())
-                .ForMember(x => x.OrderType, opt => opt.Ignore())
-                .ForMember(x => x.CreatedDate, opt => opt.Ignore())
-                .ForMember(x => x.LastUpdated, opt => opt.Ignore());
+            CreateMap<DuraformMiscLooseFoil, DuraformMiscLooseFoilDto>();
+            CreateMap<DuraformMiscLooseFoilDto, DuraformMiscLooseFoil>();
 
-            CreateMap<DuraformDraftDto, DuraformDraft>();
+            CreateMap<DuraformMiscCapMould, DuraformMiscCapMouldDto>();
+            CreateMap<DuraformMiscCapMouldDto, DuraformMiscCapMould>();
 
-            CreateMap<DuraformQuote, DuraformQuoteDto>();
-            CreateMap<DuraformQuoteDto, DuraformQuote>();
+            CreateMap<DuraformMiscFingerPull, DuraformMiscFingerPullDto>();
+            CreateMap<DuraformMiscFingerPullDto, DuraformMiscFingerPull>();
 
-            CreateMap<DuraformOrder, DuraformOrderDto>();
-            CreateMap<DuraformOrder, DuraformOrderForListDto>()
-                .ForMember(x => x.Description, opt => opt.MapFrom<DuraformOrderDescriptionResolver>())
-                .ForMember(x => x.DistributorName, opt => opt.MapFrom<DuraformOrderDistributorNameResolver>())
-                .ForMember(x => x.CabinetMakerName, opt => opt.MapFrom<DuraformOrderCabinetMakerNameResolver>());
-            CreateMap<DuraformOrderDto, DuraformOrder>();
+            CreateMap<DuraformMiscHeatStrip, DuraformMiscHeatStripDto>();
+            CreateMap<DuraformMiscHeatStripDto, DuraformMiscHeatStrip>();
+
+            CreateMap<DuraformProcess, DuraformProcessDto>();
+            CreateMap<DuraformProcessDto, DuraformProcess>();
+
+            CreateMap<Enquiry, EnquiryDto>()
+                .Include<DuraformEnquiry, DuraformEnquiryDto>();
+            CreateMap<EnquiryDto, Enquiry>()
+                .Include<DuraformEnquiryDto, DuraformEnquiry>()
+                .ForMember(x => x.CreatedDate, opt => opt.Ignore());
+
+            CreateMap<DuraformEnquiry, DuraformEnquiryDto>();
+            CreateMap<DuraformEnquiry, DuraformEnquiryListDto>();
+            CreateMap<DuraformEnquiryDto, DuraformEnquiry>();
 
             CreateMap<UploadFileDto, ApplicationFile>()
                 .Include<UploadDuraformFileDto, DuraformFile>();
@@ -220,6 +222,29 @@ namespace _5_JanperCab.Helpers
 
             CreateMap<DuraformRouteOnlyPriceGrid, DuraformRouteOnlyPriceGridDto>();
             CreateMap<DuraformRouteOnlyPriceGridDto, DuraformRouteOnlyPriceGrid>();
+
+            CreateMap<DuraformMiscPrice, DuraformMiscPriceDto>()
+                .Include<DuraformMiscPriceLooseFoil, DuraformMiscPriceLooseFoilDto>()
+                .Include<DuraformMiscPriceCapMould, DuraformMiscPriceCapMouldDto>()
+                .Include<DuraformMiscPriceFingerPull, DuraformMiscPriceFingerPullDto>()
+                .Include<DuraformMiscPriceHeatStrip, DuraformMiscPriceHeatStripDto>();
+            CreateMap<DuraformMiscPriceDto, DuraformMiscPrice>()
+                .Include<DuraformMiscPriceLooseFoilDto, DuraformMiscPriceLooseFoil>()
+                .Include<DuraformMiscPriceCapMouldDto, DuraformMiscPriceCapMould>()
+                .Include<DuraformMiscPriceFingerPullDto, DuraformMiscPriceFingerPull>()
+                .Include<DuraformMiscPriceHeatStripDto, DuraformMiscPriceHeatStrip>();
+
+            CreateMap<DuraformMiscPriceLooseFoil, DuraformMiscPriceLooseFoilDto>();
+            CreateMap<DuraformMiscPriceLooseFoilDto, DuraformMiscPriceLooseFoil>();
+
+            CreateMap<DuraformMiscPriceFingerPull, DuraformMiscPriceFingerPullDto>();
+            CreateMap<DuraformMiscPriceFingerPullDto, DuraformMiscPriceFingerPull>();
+
+            CreateMap<DuraformMiscPriceCapMould, DuraformMiscPriceCapMouldDto>();
+            CreateMap<DuraformMiscPriceCapMouldDto, DuraformMiscPriceCapMould>();
+
+            CreateMap<DuraformMiscPriceHeatStrip, DuraformMiscPriceHeatStripDto>();
+            CreateMap<DuraformMiscPriceHeatStripDto, DuraformMiscPriceHeatStrip>();
         }
     }
 }

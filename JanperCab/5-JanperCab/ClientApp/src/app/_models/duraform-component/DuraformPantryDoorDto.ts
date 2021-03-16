@@ -1,13 +1,18 @@
+import { DuraformAssetService } from './../../_services/duraform-asset.service';
+import { PantryDoorChairRailTypeForList } from './../pantry-door-chair-rail-type/PantryDoorChairRailTypeForList';
 import { DuraformComponentWithOptionAndHingeHoleDto } from './DuraformComponentWithOptionAndHingeHoleDto';
 import { DuraformOptionTypeDto } from '../duraform-option/DuraformOptionTypeDto';
 import { Expose } from 'class-transformer';
 import * as _ from 'lodash';
-import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 
 export class DuraformPantryDoorDto extends DuraformComponentWithOptionAndHingeHoleDto {
   chairRailHeight: number;
   chairRailTypeId: number;
   extraRailBottom: number;
+
+  get chairRailType(): PantryDoorChairRailTypeForList {
+    return DuraformAssetService.instance.getChairRailType(this.chairRailTypeId);
+  }
 
   @Expose()
   updateWithOption(

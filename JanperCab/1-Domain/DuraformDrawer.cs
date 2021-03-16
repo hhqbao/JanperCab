@@ -86,7 +86,7 @@ namespace _1_Domain
 
         private ICBLineStructure ExportIndividualDrawerLine(int drawerNumber)
         {
-            var design = DuraformForm.DuraformDesign;
+            var design = DuraformEnquiry.DuraformDesign;
             var topOffset = (int)(design.BT / 2 - design.DrawerBorderOffset);
             var bottomOffset = (int)(design.BB / 2 - design.DrawerBorderOffset);
 

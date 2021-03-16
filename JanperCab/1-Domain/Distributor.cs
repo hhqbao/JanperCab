@@ -18,13 +18,16 @@ namespace _1_Domain
 
 
         public virtual ICollection<CabinetMaker> CabinetMakers { get; set; }
-        public virtual ICollection<DuraformForm> DuraformForms { get; set; }
+
+        public virtual ICollection<Enquiry> Enquiries { get; set; }
 
         public Distributor()
         {
             CustomerType = CustomerType.Distributor;
+
             CabinetMakers = new Collection<CabinetMaker>();
-            DuraformForms = new Collection<DuraformForm>();
+
+            Enquiries = new Collection<Enquiry>();
         }
     }
 }

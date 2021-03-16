@@ -8,19 +8,31 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { DuraformRouteOnlyPriceGridDto } from '../_models/duraform-price/DuraformRouteOnlyPriceGridDto';
+import { DuraformMiscPriceDto } from '../_models/duraform-misc-price/DuraformMiscPriceDto';
+import { DuraformMiscPriceModel } from '../_models/duraform-price/DuraformMiscPriceModel';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformPriceService {
   constructor(private http: HttpClient) {}
 
-  getAllPrices = () => {
+  getAllGriPrices = (): Observable<DuraformAllPriceModel> => {
     return this.http
-      .get<DuraformAllPriceModel>(
-        `${environment.baseUrl}/DuraformPrices/GetAll`
-      )
+      .get<DuraformAllPriceModel>(`${environment.baseUrl}/DuraformPrices/Grids`)
       .pipe(
         map((response) => {
           return plainToClass(DuraformAllPriceModel, response);
+        })
+      );
+  };
+
+  getAllMiscPrices = (): Observable<DuraformMiscPriceModel> => {
+    return this.http
+      .get<DuraformMiscPriceModel>(
+        `${environment.baseUrl}/DuraformPrices/Miscs`
+      )
+      .pipe(
+        map((response) => {
+          return plainToClass(DuraformMiscPriceModel, response);
         })
       );
   };
@@ -31,7 +43,7 @@ export class DuraformPriceService {
   ): Observable<DuraformWrapPriceGridDto[]> => {
     return this.http
       .get<DuraformWrapPriceGridDto[]>(
-        `${environment.baseUrl}/DuraformPrices/${finishId}/${serieId}`
+        `${environment.baseUrl}/DuraformPrices/Grids/${finishId}/${serieId}`
       )
       .pipe(
         map((response) => {
@@ -45,7 +57,7 @@ export class DuraformPriceService {
   ): Observable<DuraformRouteOnlyPriceGridDto[]> => {
     return this.http
       .get<DuraformRouteOnlyPriceGridDto[]>(
-        `${environment.baseUrl}/DuraformPrices/${serieId}`
+        `${environment.baseUrl}/DuraformPrices/Grids/${serieId}`
       )
       .pipe(
         map((response) => {
@@ -59,7 +71,7 @@ export class DuraformPriceService {
   ): Observable<DuraformPriceGridDto[]> => {
     return this.http
       .post<DuraformPriceGridDto[]>(
-        `${environment.baseUrl}/DuraformPrices/SavePriceGrids`,
+        `${environment.baseUrl}/DuraformPrices/Grids`,
         priceGrids
       )
       .pipe(

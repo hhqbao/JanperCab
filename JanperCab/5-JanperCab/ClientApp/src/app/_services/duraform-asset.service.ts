@@ -16,6 +16,7 @@ import { PantryDoorChairRailTypeForList } from '../_models/pantry-door-chair-rai
 import { DuraformDrawerTypeForList } from '../_models/duraform-drawer-type/DuraformDrawerTypeForList';
 import { DuraformOptionTypeDto } from '../_models/duraform-option/DuraformOptionTypeDto';
 import { HingeHoleTypeDto } from '../_models/hinge-hole-type/HingeHoleTypeDto';
+import { DuraformMiscPriceDto } from '../_models/duraform-misc-price/DuraformMiscPriceDto';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformAssetService {
@@ -34,6 +35,7 @@ export class DuraformAssetService {
   hingeHoleTypes: HingeHoleTypeDto[] = [];
   hingeHoleStyles: HingeHoleStyleDto[] = [];
   priceGrids: DuraformPriceGridDto[] = [];
+  miscPrices: DuraformMiscPriceDto[] = [];
 
   constructor(private dialog: DialogService) {
     DuraformAssetService.instance = this;

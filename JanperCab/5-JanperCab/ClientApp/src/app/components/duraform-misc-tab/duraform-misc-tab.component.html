@@ -1,0 +1,36 @@
+<table class="table table--bordered">
+  <thead>
+    <tr>
+      <th style="width: 3rem">#</th>
+      <th style="width: 5rem">Qty.</th>
+      <th class="text-left">Description</th>
+      <th style="width: 12rem" colSpan="2">Price</th>
+    </tr>
+  </thead>
+  <app-duraform-misc-form appRemoveTag></app-duraform-misc-form>
+  <tbody
+    class="table__spacer"
+    *ngIf="order.duraformEnquiry.miscComponents.length > 0"
+  >
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+  <app-duraform-misc-cart-item
+    appRemoveTag
+    *ngFor="
+      let miscComponent of duraformEnquiry.miscComponents.slice().reverse();
+      let i = index
+    "
+    [canSelect]="canSelectCartItem"
+    [miscComponent]="miscComponent"
+    [index]="duraformEnquiry.miscComponents.length - i"
+    (selectComponent)="canSelectCartItem = false"
+    (unselectComponent)="canSelectCartItem = true"
+    (removeMiscComponent)="onRemoveMiscComponent($event)"
+  ></app-duraform-misc-cart-item>
+</table>

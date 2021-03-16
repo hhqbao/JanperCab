@@ -1,5 +1,6 @@
+import { DuraformDrawerTypeForList } from './../duraform-drawer-type/DuraformDrawerTypeForList';
+import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DrawerDesign } from 'src/app/_enums/DrawerDesign';
-import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 import { DuraformComponentDto } from './DuraformComponentDto';
 import * as _ from 'lodash';
 import { Expose } from 'class-transformer';
@@ -13,6 +14,12 @@ export class DuraformDrawerDto extends DuraformComponentDto {
   drawerThree: number;
   drawerFour: number;
   drawerFive: number;
+
+  get duraformDrawerType(): DuraformDrawerTypeForList {
+    return DuraformAssetService.instance.getDrawerType(
+      this.duraformDrawerTypeId
+    );
+  }
 
   get totalHeight(): number {
     return (
@@ -50,11 +57,7 @@ export class DuraformDrawerDto extends DuraformComponentDto {
       this.totalWidth
     );
 
-    const drawerType = DuraformAssetService.instance.getDrawerType(
-      this.duraformDrawerTypeId
-    );
-
-    switch (drawerType.drawerDesign) {
+    switch (this.duraformDrawerType.drawerDesign) {
       case DrawerDesign.Single:
         basePrice += (basePrice * 50) / 100;
         break;

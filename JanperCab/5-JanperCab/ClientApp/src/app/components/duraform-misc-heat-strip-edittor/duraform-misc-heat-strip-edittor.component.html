@@ -1,0 +1,22 @@
+<div class="option-form__form-wrapper" [formGroup]="formGroup">
+  <div class="form__group">
+    <label class="form__label">Heat Strip Type</label>
+    <app-select-menu
+      [control]="type"
+      [values]="types"
+      [valueDisplay]="'text'"
+      [valueKey]="'value'"
+      (afterSet)="onChange()"
+    ></app-select-menu>
+  </div>
+  <div class="form__group">
+    <label class="form__label">Heat Strip Size</label>
+    <app-select-menu
+      [control]="size"
+      [values]="sizes"
+      [valueDisplay]="'text'"
+      [valueKey]="'value'"
+      (afterSet)="onChange()"
+    ></app-select-menu>
+  </div>
+</div>

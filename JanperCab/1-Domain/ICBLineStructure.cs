@@ -165,7 +165,7 @@ namespace _1_Domain
 
         public ICBLineStructure(DuraformComponent component)
         {
-            var design = component.DuraformForm.DuraformDesign;
+            var design = component.DuraformEnquiry.DuraformDesign;
             var edgeProfile = component.DuraformEdgeProfile;
 
             TYPE = string.IsNullOrEmpty(design.ICB_EXTERNAL_SHAPE_FILE) ? component.ICBTYPE : ICB_TYPE_ENUM.EXTERNAL_SHAPE;
@@ -173,11 +173,11 @@ namespace _1_Domain
             EXTERNAL_SHAPE_FILE = design.ICB_EXTERNAL_SHAPE_FILE;
             DIMX = (int)component.Height;
             DIMY = (int)component.Width;
-            DIMZ = (int)component.DuraformForm.DuraformDesign.Thickness;
-            BT = component.DuraformForm.DuraformDesign.BT;
-            BB = component.DuraformForm.DuraformDesign.BB;
-            BL = component.DuraformForm.DuraformDesign.BL;
-            BR = component.DuraformForm.DuraformDesign.BR;
+            DIMZ = (int)component.DuraformEnquiry.DuraformDesign.Thickness;
+            BT = component.DuraformEnquiry.DuraformDesign.BT;
+            BB = component.DuraformEnquiry.DuraformDesign.BB;
+            BL = component.DuraformEnquiry.DuraformDesign.BL;
+            BR = component.DuraformEnquiry.DuraformDesign.BR;
             ABB = 0;
             AH = 0;
             EDGE_TOP = component.Top ? 0 : 1;
@@ -185,15 +185,15 @@ namespace _1_Domain
             EDGE_LEFT = component.Left ? 0 : 1;
             EDGE_RIGHT = component.Right ? 0 : 1;
             CORNER_RADIUS = CORNER_RADIUS_VALUE;
-            TOOLING_FILE = component.DuraformForm.DuraformDesign.ICB_TOOLING;
-            TOOLING_FILE2 = component.DuraformForm.DuraformDesign.ICB_TOOLING;
+            TOOLING_FILE = component.DuraformEnquiry.DuraformDesign.ICB_TOOLING;
+            TOOLING_FILE2 = component.DuraformEnquiry.DuraformDesign.ICB_TOOLING;
             EDGE_TOOLING_FILE = component.DuraformEdgeProfile.ICB_EDGE_TOOLING;
             DRAWER_TOOLING_FILE = DRAWER_TOOLING_FILE_VALUE;
             OFFT = (int)(component.Height > 100 ? 0 : 100 - component.Height);
             OFFB = 0;
             OFFL = 0;
             OFFR = (int)(component.Width > 100 ? 0 : 100 - component.Width);
-            EDGETHICK = component.DuraformForm.IsRoutingOnly ? 0 : component.DuraformForm.DuraformWrapType.ICB_EDGETHICK;
+            EDGETHICK = component.DuraformEnquiry.IsRoutingOnly ? 0 : component.DuraformEnquiry.DuraformWrapType.ICB_EDGETHICK;
             USERVAR1 = edgeProfile.UserVar1 ?? 0;
             USERVAR2 = edgeProfile.UserVar2 ?? 0;
             USERVAR3 = edgeProfile.UserVar3 ?? 0;
@@ -214,8 +214,8 @@ namespace _1_Domain
             SPLIT_PANEL = 0;
             V_SPLIT_Q = 0;
             H_SPLIT_Q = 0;
-            V_SPLIT = component.DuraformForm.DuraformDesign.V_SPLIT_THICKNESS;
-            H_SPLIT = component.DuraformForm.DuraformDesign.H_SPLIT_THICKNESS;
+            V_SPLIT = component.DuraformEnquiry.DuraformDesign.V_SPLIT_THICKNESS;
+            H_SPLIT = component.DuraformEnquiry.DuraformDesign.H_SPLIT_THICKNESS;
             SPLIT_PANEL_UPPER = 0;
             V_SPLIT_Q_UPPER = 0;
             H_SPLIT_Q_UPPER = 0;
@@ -234,13 +234,13 @@ namespace _1_Domain
             DRAWER7 = 0;
             DRAWER8 = 0;
             SLICE_WIDTH = 0;
-            JOBNUMBER = ((DuraformOrder)component.DuraformForm).OrderNumber;
-            ACCOUNTNUMBER = component.DuraformForm.CabinetMaker.Name.Replace(",", "_").Replace(" ", "_").ToUpper();
-            JOBNUMBERCUST = component.DuraformForm.CustomerOrderNumber;
-            DOORFINISH = component.DuraformForm.IsRoutingOnly ? ROUTER_ONLY : component.DuraformForm.DuraformWrapType.Name.ToUpper();
-            DOORCOLOR = component.DuraformForm.IsRoutingOnly ? DWS : $"{component.DuraformForm.DuraformWrapColor.Name.ToUpper()} {component.DuraformForm.DuraformWrapType.Name.ToUpper()}";
+            JOBNUMBER = component.DuraformEnquiry.Id;
+            ACCOUNTNUMBER = component.DuraformEnquiry.CabinetMaker.Name.Replace(",", "_").Replace(" ", "_").ToUpper();
+            JOBNUMBERCUST = component.DuraformEnquiry.CustomerReference;
+            DOORFINISH = component.DuraformEnquiry.IsRoutingOnly ? ROUTER_ONLY : component.DuraformEnquiry.DuraformWrapType.Name.ToUpper();
+            DOORCOLOR = component.DuraformEnquiry.IsRoutingOnly ? DWS : $"{component.DuraformEnquiry.DuraformWrapColor.Name.ToUpper()} {component.DuraformEnquiry.DuraformWrapType.Name.ToUpper()}";
             CNCCODE = "DOOR";
-            MATERIAL = component.DuraformForm.IsRoutingOnly ? $"DSW{DIMZ} MDF" : $"SS{DIMZ} MDF";
+            MATERIAL = component.DuraformEnquiry.IsRoutingOnly ? $"DSW{DIMZ} MDF" : $"SS{DIMZ} MDF";
             CNCTYPE = "DOOR";
             QUANTITY = component.Quantity;
             DESCRIPTION = component.Note.ToUpper();

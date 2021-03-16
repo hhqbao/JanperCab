@@ -8,7 +8,7 @@ namespace _4_Infrastructure.Services
 {
     public class MachineFileGenerator : IMachineFileGenerator
     {
-        public async Task ExportICBFileAsync(DuraformOrder order, string savePath)
+        public async Task ExportICBFileAsync(DuraformEnquiry order, string savePath)
         {
             var icbFile = new ICBFileStructure();
 
@@ -17,7 +17,7 @@ namespace _4_Infrastructure.Services
                 icbFile.IcbRows.AddRange(component.ExportIcbLinesStructure());
             }
 
-            await File.WriteAllTextAsync($"{savePath}\\{order.OrderNumber}.csv", icbFile.ExportCSVString());
+            await File.WriteAllTextAsync($"{savePath}\\{order.Id}.csv", icbFile.ExportCSVString());
         }
     }
 }

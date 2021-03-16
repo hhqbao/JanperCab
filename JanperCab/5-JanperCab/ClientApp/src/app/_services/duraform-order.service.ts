@@ -1,445 +1,194 @@
+import { DuraformMiscFingerPullDto } from './../_models/duraform-misc-component/DuraformMiscFingerPullDto';
+import { DuraformMiscCapMouldDto } from 'src/app/_models/duraform-misc-component/DuraformMiscCapMouldDto';
+import { DuraformMiscLooseFoilDto } from 'src/app/_models/duraform-misc-component/DuraformMiscLooseFoilDto';
+import { DuraformMiscComponentDto } from 'src/app/_models/duraform-misc-component/DuraformMiscComponentDto';
+import { DuraformEnquiryDto } from './../_models/enquiry/DuraformEnquiryDto';
 import { CabinetMakerDto } from 'src/app/_models/customer/CabinetMakerDto';
-import { DuraformFileDto } from './../_models/application-file/DuraformFileDto';
-import { OrderStatus } from './../_enums/OrderStatus';
-import { HingeHoleTypeDto } from './../_models/hinge-hole-type/HingeHoleTypeDto';
-import { DuraformOrderDto } from './../_models/duraform-order/DuraformOrderDto';
-import { DuraformQuoteDto } from './../_models/duraform-order/DuraformQuoteDto';
 import { AuthService } from './auth.service';
-import { DuraformDrawerDto } from './../_models/duraform-component/DuraformDrawerDto';
-import { DuraformEndPanelDto } from './../_models/duraform-component/DuraformEndPanelDto';
-import { DuraformPantryDoorDto } from './../_models/duraform-component/DuraformPantryDoorDto';
-import { DuraformDoorDto } from './../_models/duraform-component/DuraformDoorDto';
-import { DuraformWrapColorForSelection } from './../_models/duraform-wrap-color/DuraformWrapColorForSelection';
-import { DuraformWrapTypeForSelection } from './../_models/duraform-wrap-type/DuraformWrapTypeForSelection';
-import { DuraformSerieForList } from './../_models/duraform-serie/DuraformSerieForList';
-import { DuraformDesignForOrderMenu } from './../_models/duraform-design/DuraformDesignForOrderMenu';
 import { DuraformAssetService } from './duraform-asset.service';
-import { DuraformDraftDto } from './../_models/duraform-order/DuraformDraftDto';
-import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { DuraformArchForList } from './../_models/duraform-arch/DuraformArchForList';
 import { DuraformEdgeProfileForList } from './../_models/duraform-edge-profile/DuraformEdgeProfileForList';
 import { StepOneReturnValue } from '../_models/duraform-order/StepOneReturnValue';
 import { Injectable } from '@angular/core';
-import { DuraformFormDto } from '../_models/duraform-order/DuraformFormDto';
-import { plainToClass } from 'class-transformer';
-import { DuraformComponentWithOptionAndHingeHoleDto } from '../_models/duraform-component/DuraformComponentWithOptionAndHingeHoleDto';
 import { DuraformComponentDto } from '../_models/duraform-component/DuraformComponentDto';
-import { DuraformOrderTypeKey } from '../_enums/DuraformOrderTypeKey';
 import { CustomerType } from '../_enums/CustomerType';
 import { DuraformComponentWithOptionDto } from '../_models/duraform-component/DuraformComponentWithOptionDto';
-import { DuraformOptionTypeKey } from '../_enums/DuraformOptionTypeKey';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformOrderService {
-  private duraformForm: DuraformFormDto;
+  duraformEnquiry: DuraformEnquiryDto;
 
-  constructor(
-    private http: HttpClient,
-    private asset: DuraformAssetService,
-    private auth: AuthService
-  ) {
-    this.duraformForm = new DuraformDraftDto();
-  }
-
-  get form(): DuraformFormDto {
-    return this.duraformForm;
-  }
-
-  set form(value: DuraformFormDto) {
-    this.duraformForm = value;
-  }
-
-  get duraformId(): string {
-    return this.duraformForm.id;
-  }
-
-  get isEditable(): boolean {
-    return !this.duraformForm.notEditable;
-  }
-
-  get isDraft(): boolean {
-    return this.duraformForm instanceof DuraformDraftDto;
-  }
-
-  get isOrder(): boolean {
-    return this.duraformForm instanceof DuraformOrderDto;
-  }
-
-  get isQuote(): boolean {
-    return this.duraformForm instanceof DuraformQuoteDto;
-  }
-
-  get orderStatus(): OrderStatus {
-    if (this.isOrder) {
-      return (this.duraformForm as DuraformOrderDto).orderStatus;
-    } else {
-      return null;
-    }
-  }
-
-  set orderStatus(status: OrderStatus) {
-    (this.duraformForm as DuraformOrderDto).orderStatus = status;
-  }
-
-  get orderNumber(): number {
-    if (this.isOrder) {
-      return (this.duraformForm as DuraformOrderDto).orderNumber;
-    } else {
-      return null;
-    }
-  }
-
-  get orderType(): DuraformOrderTypeKey {
-    return this.duraformForm.orderType;
-  }
-
-  get customerOrderNumber(): string {
-    return this.duraformForm.customerOrderNumber;
-  }
-
-  set customerOrderNumber(orderNumber: string) {
-    this.duraformForm.customerOrderNumber = orderNumber;
-  }
-
-  set cabinetMaker(value: CabinetMakerDto) {
-    this.duraformForm.cabinetMakerId = value.id;
-    this.duraformForm.distributorId = value.distributorId;
-
-    this.invoiceTo = value.invoiceTo;
-    this.invoiceAddress = value.invoiceAddress;
-    this.invoiceSuburb = value.invoiceSuburb;
-    this.invoiceState = value.invoiceState;
-    this.invoicePostcode = value.invoicePostcode;
-
-    this.deliveryTo = value.deliveryTo;
-    this.deliveryAddress = value.deliveryAddress;
-    this.deliverySuburb = value.deliverySuburb;
-    this.deliveryState = value.deliveryState;
-    this.deliveryPostcode = value.deliveryPostcode;
-  }
-
-  get cabinetMakerId(): number {
-    return this.duraformForm.cabinetMakerId;
-  }
-
-  set cabinetMakerId(value: number) {
-    this.duraformForm.cabinetMakerId = value;
-  }
-
-  get invoiceTo(): string {
-    return this.duraformForm.invoiceTo;
-  }
-
-  set invoiceTo(value: string) {
-    this.duraformForm.invoiceTo = value;
-  }
-
-  get invoiceAddress(): string {
-    return this.duraformForm.invoiceAddress;
-  }
-
-  set invoiceAddress(value: string) {
-    this.duraformForm.invoiceAddress = value;
-  }
-
-  get invoiceSuburb(): string {
-    return this.duraformForm.invoiceSuburb;
-  }
-
-  set invoiceSuburb(value: string) {
-    this.duraformForm.invoiceSuburb = value;
-  }
-
-  get invoiceState(): string {
-    return this.duraformForm.invoiceState;
-  }
-
-  set invoiceState(value: string) {
-    this.duraformForm.invoiceState = value;
-  }
-
-  get invoicePostcode(): string {
-    return this.duraformForm.invoicePostcode;
-  }
-
-  set invoicePostcode(value: string) {
-    this.duraformForm.invoicePostcode = value;
-  }
-
-  get deliveryTo(): string {
-    return this.duraformForm.deliveryTo;
-  }
-
-  set deliveryTo(value: string) {
-    this.duraformForm.deliveryTo = value;
-  }
-
-  get deliveryAddress(): string {
-    return this.duraformForm.deliveryAddress;
-  }
-
-  set deliveryAddress(value: string) {
-    this.duraformForm.deliveryAddress = value;
-  }
-
-  get deliverySuburb(): string {
-    return this.duraformForm.deliverySuburb;
-  }
-
-  set deliverySuburb(value: string) {
-    this.duraformForm.deliverySuburb = value;
-  }
-
-  get deliveryState(): string {
-    return this.duraformForm.deliveryState;
-  }
-
-  set deliveryState(value: string) {
-    this.duraformForm.deliveryState = value;
-  }
-
-  get deliveryPostcode(): string {
-    return this.duraformForm.deliveryPostcode;
-  }
-
-  set deliveryPostcode(value: string) {
-    this.duraformForm.deliveryPostcode = value;
-  }
-
-  get deliveryNote(): string {
-    return this.duraformForm.deliveryNote;
-  }
-
-  set deliveryNote(value: string) {
-    this.duraformForm.deliveryNote = value;
-  }
-
-  get selectedDesign(): DuraformDesignForOrderMenu {
-    return this.asset.getDesign(this.duraformForm.duraformDesignId);
-  }
-
-  get selectedSerie(): DuraformSerieForList {
-    return this.asset.getDoorSerie(this.duraformForm.duraformSerieId);
-  }
-
-  get selectedWrapType(): DuraformWrapTypeForSelection {
-    return this.asset.getWrapType(this.duraformForm.duraformWrapTypeId);
-  }
-
-  get selectedWrapColor(): DuraformWrapColorForSelection {
-    return this.asset.getWrapColor(this.duraformForm.duraformWrapColorId);
-  }
-
-  get selectedHingeHoleType(): HingeHoleTypeDto {
-    return this.asset.getHingeType(this.duraformForm.hingeHoleTypeId);
-  }
-
-  get selectedEdgeProfile(): DuraformEdgeProfileForList {
-    return this.asset.getEdgeProfile(this.duraformForm.duraformEdgeProfileId);
-  }
-
-  get selectedArch(): DuraformArchForList {
-    return this.asset.getArch(this.duraformForm.duraformArchId);
-  }
-
-  get isRoutingOnly(): boolean {
-    return this.duraformForm.isRoutingOnly;
+  constructor(private asset: DuraformAssetService, private auth: AuthService) {
+    this.duraformEnquiry = new DuraformEnquiryDto();
   }
 
   get maxBoardSize(): number {
-    return this.isRoutingOnly ? 3600 : 2500;
-  }
-
-  get hingeHoleTypeId(): number {
-    return this.duraformForm.hingeHoleTypeId;
-  }
-
-  set hingeHoleTypeId(typeId: number) {
-    this.duraformForm.hingeHoleTypeId = typeId;
-
-    if (!this.duraformForm.hingeHoleTypeId) {
-      this.duraformForm.duraformComponents.forEach((x) => {
-        if (x instanceof DuraformComponentWithOptionAndHingeHoleDto) {
-          (x as DuraformComponentWithOptionAndHingeHoleDto).hingeHoleOption = null;
-        }
-      });
-    }
-  }
-
-  get hasComponent(): boolean {
-    const {
-      duraformDoors,
-      pantryDoors,
-      endPanels,
-      duraformDrawers,
-    } = this.duraformForm;
-
-    return (
-      duraformDoors.length > 0 ||
-      pantryDoors.length > 0 ||
-      endPanels.length > 0 ||
-      duraformDrawers.length > 0
-    );
-  }
-
-  get componentsWithHingeHoleCount(): number {
-    if (!this.hingeHoleTypeId) {
-      return 0;
-    }
-
-    const doors = this.duraformForm.duraformDoors.filter(
-      (x) => x.hingeHoleOption
-    );
-
-    const pantryDoors = this.duraformForm.pantryDoors.filter(
-      (x) => x.hingeHoleOption
-    );
-
-    let count = 0;
-    doors.forEach((x) => {
-      count += x.quantity;
-    });
-
-    pantryDoors.forEach((x) => {
-      count += x.quantity;
-    });
-
-    return count;
+    return this.duraformEnquiry.isRoutingOnly ? 3600 : 2500;
   }
 
   get description(): string {
-    const finish = this.isRoutingOnly
+    const {
+      isRoutingOnly,
+      duraformWrapType,
+      duraformWrapColor,
+      duraformDesign,
+      duraformSerie,
+    } = this.duraformEnquiry;
+
+    const finish = isRoutingOnly
       ? 'ROUTE ONLY'
-      : `${this.selectedWrapType?.name} ${this.selectedWrapColor?.name}`;
+      : `${duraformWrapType?.name} ${duraformWrapColor?.name}`;
 
-    return `${this.selectedDesign?.name} - ${finish} - ${this.selectedSerie?.name}`;
-  }
-
-  get duraformDoors(): DuraformDoorDto[] {
-    return [...this.duraformForm.duraformDoors];
-  }
-
-  get pantryDoors(): DuraformPantryDoorDto[] {
-    return [...this.duraformForm.pantryDoors];
-  }
-
-  get endPanels(): DuraformEndPanelDto[] {
-    return [...this.duraformForm.endPanels];
-  }
-
-  get duraformDrawers(): DuraformDrawerDto[] {
-    return [...this.duraformForm.duraformDrawers];
-  }
-
-  get duraformFiles(): DuraformFileDto[] {
-    return this.duraformForm.duraformFiles;
-  }
-
-  get totalPrice(): number {
-    let total = 0;
-
-    this.duraformForm.duraformComponents.forEach((x) => (total += x.price));
-
-    return total;
+    return `${duraformDesign?.name} - ${finish} - ${duraformSerie?.name}`;
   }
 
   submitStepOne = (model: StepOneReturnValue) => {
-    this.duraformForm.duraformDesignId = model.design.id;
-    this.duraformForm.duraformSerieId = model.serie.id;
-    this.duraformForm.isRoutingOnly = model.isRoutingOnly;
-    this.duraformForm.duraformWrapTypeId = model.wrapType?.id;
-    this.duraformForm.duraformWrapColorId = model.wrapColor?.id;
-    this.duraformForm.duraformArchId = model.design.hasNoArch
+    this.duraformEnquiry.duraformDesignId = model.design.id;
+    this.duraformEnquiry.duraformSerieId = model.serie.id;
+    this.duraformEnquiry.isRoutingOnly = model.isRoutingOnly;
+    this.duraformEnquiry.duraformWrapTypeId = model.wrapType?.id;
+    this.duraformEnquiry.duraformWrapColorId = model.wrapColor?.id;
+    this.duraformEnquiry.duraformArchId = model.design.hasNoArch
       ? null
-      : this.duraformForm.duraformArchId;
+      : this.duraformEnquiry.duraformArchId;
 
-    this.selectEdgeProfile(this.asset.getEdgeProfile(model.edgeProfile.id));
+    this.setEdgeProfile(this.asset.getEdgeProfile(model.edgeProfile.id));
 
-    if (
-      this.duraformForm.duraformComponents.length > 0 &&
-      this.duraformForm.isRoutingOnly
-    ) {
-      const doubleSidedComponents = this.duraformForm.duraformComponents.filter(
-        (x) =>
-          x instanceof DuraformComponentWithOptionDto &&
-          x.duraformOption?.duraformOptionTypeId ===
-            DuraformOptionTypeKey.DoubleSided
-      );
+    if (this.duraformEnquiry.hasComponent) {
+      if (this.duraformEnquiry.isRoutingOnly) {
+        const doubleSidedComponents = this.duraformEnquiry
+          .componentsWithDoubleSidedOption;
 
-      doubleSidedComponents.forEach(
-        (x) => ((x as DuraformComponentWithOptionDto).duraformOption = null)
-      );
+        doubleSidedComponents.forEach(
+          (x) => ((x as DuraformComponentWithOptionDto).duraformOption = null)
+        );
+
+        this.duraformEnquiry.miscComponents = this.duraformEnquiry.miscComponents.filter(
+          (x) => !(x instanceof DuraformMiscLooseFoilDto)
+        );
+
+        this.duraformEnquiry.miscComponents.forEach((misc) => {
+          if (
+            misc instanceof DuraformMiscCapMouldDto ||
+            misc instanceof DuraformMiscFingerPullDto
+          ) {
+            misc.isRaw = true;
+          }
+        });
+      }
+
+      this.duraformEnquiry.duraformComponents.forEach((component) => {
+        let serieId = this.duraformEnquiry.duraformSerie.id;
+
+        if (component instanceof DuraformComponentWithOptionDto) {
+          if (
+            component.duraformOption &&
+            component.duraformOption.hasNoProfile
+          ) {
+            serieId = 1;
+          }
+        }
+
+        component.price =
+          component.quantity * component.getPriceForOne(serieId);
+      });
+
+      this.duraformEnquiry.miscComponents.forEach((misc) => {
+        misc.calculatePrice(this.duraformEnquiry);
+      });
     }
   };
 
-  selectEdgeProfile = (model: DuraformEdgeProfileForList) => {
-    this.duraformForm.duraformEdgeProfileId = model.id;
+  setCabinetMaker = (cabinetMaker: CabinetMakerDto) => {
+    this.duraformEnquiry.distributorId = cabinetMaker.distributorId;
+    this.duraformEnquiry.cabinetMakerId = cabinetMaker.id;
 
-    for (const component of this.duraformForm.duraformComponents) {
-      component.selectEdgeProfile(model);
+    this.duraformEnquiry.invoiceTo = cabinetMaker.invoiceTo;
+    this.duraformEnquiry.invoiceAddress = cabinetMaker.invoiceAddress;
+    this.duraformEnquiry.invoiceSuburb = cabinetMaker.invoiceSuburb;
+    this.duraformEnquiry.invoiceState = cabinetMaker.invoiceState;
+    this.duraformEnquiry.invoicePostcode = cabinetMaker.invoicePostcode;
+
+    this.duraformEnquiry.deliveryTo = cabinetMaker.deliveryTo;
+    this.duraformEnquiry.deliveryAddress = cabinetMaker.deliveryAddress;
+    this.duraformEnquiry.deliverySuburb = cabinetMaker.deliverySuburb;
+    this.duraformEnquiry.deliveryState = cabinetMaker.deliveryState;
+    this.duraformEnquiry.deliveryPostcode = cabinetMaker.deliveryPostcode;
+  };
+
+  setEdgeProfile = (model: DuraformEdgeProfileForList) => {
+    this.duraformEnquiry.duraformEdgeProfileId = model.id;
+    this.duraformEnquiry.duraformComponents.forEach((x) => {
+      x.setEdgeProfile(model);
+    });
+  };
+
+  setArch = (model: DuraformArchForList) => {
+    this.duraformEnquiry.duraformArchId = model ? model.id : null;
+  };
+
+  addComponent = (
+    component: DuraformComponentDto | DuraformMiscComponentDto
+  ) => {
+    if (component instanceof DuraformComponentDto) {
+      if (this.duraformEnquiry.duraformComponents[0]) {
+        component.sortNumber =
+          this.duraformEnquiry.duraformComponents[0].sortNumber + 1;
+      } else {
+        component.sortNumber = 1;
+      }
+
+      this.duraformEnquiry.duraformComponents.unshift(component);
+      return;
+    }
+
+    if (component instanceof DuraformMiscComponentDto) {
+      this.duraformEnquiry.miscComponents.unshift(component);
     }
   };
 
-  selectArch = (model: DuraformArchForList) => {
-    this.duraformForm.duraformArchId = model ? model.id : null;
-  };
+  removeComponent = (
+    component: DuraformComponentDto | DuraformMiscComponentDto
+  ) => {
+    if (component instanceof DuraformComponentDto) {
+      const index = this.duraformEnquiry.duraformComponents.indexOf(component);
 
-  addComponent = (component: DuraformComponentDto) => {
-    if (this.duraformForm.duraformComponents[0]) {
-      component.sortNumber =
-        this.duraformForm.duraformComponents[0].sortNumber + 1;
-    } else {
-      component.sortNumber = 1;
+      if (index >= 0) {
+        this.duraformEnquiry.duraformComponents.splice(index, 1);
+      }
     }
 
-    this.duraformForm.duraformComponents.unshift(component);
-  };
+    if (component instanceof DuraformMiscComponentDto) {
+      const index = this.duraformEnquiry.miscComponents.indexOf(component);
 
-  removeComponent = (component: DuraformComponentDto) => {
-    const index = this.duraformForm.duraformComponents.indexOf(component);
-
-    if (index >= 0) {
-      this.duraformForm.duraformComponents.splice(index, 1);
+      if (index >= 0) {
+        this.duraformEnquiry.miscComponents.splice(index, 1);
+      }
     }
   };
 
-  sendInQuote = () => {
-    const url = `${environment.baseUrl}/DuraformQuotes`;
-    const { duraformForm } = this;
+  // sendInQuote = () => {
+  //   const url = `${environment.baseUrl}/DuraformQuotes`;
+  //   const { duraformEnquiry } = this;
 
-    const quote = plainToClass(
-      DuraformQuoteDto,
-      JSON.parse(JSON.stringify(duraformForm))
-    );
-    quote.orderType = DuraformOrderTypeKey.Quote;
+  //   const quote = plainToClass(
+  //     DuraformQuoteDto,
+  //     JSON.parse(JSON.stringify(duraformEnquiry))
+  //   );
+  //   quote.orderType = DuraformOrderTypeKey.Quote;
 
-    return this.http.post<DuraformQuoteDto>(url, quote);
-  };
+  //   return this.http.post<DuraformQuoteDto>(url, quote);
+  // };
 
   loadNewDraft = () => {
-    this.duraformForm = new DuraformDraftDto();
+    this.duraformEnquiry = new DuraformEnquiryDto();
 
     switch (this.auth.customer.customerType) {
       case CustomerType.Distributor:
-        this.duraformForm.distributorId = this.auth.customer.id;
+        this.duraformEnquiry.distributorId = this.auth.customer.id;
         break;
       case CustomerType.CabinetMaker:
-        const cabinetMaker = this.auth.customer as CabinetMakerDto;
-
-        this.duraformForm.distributorId = cabinetMaker.distributorId;
-        this.duraformForm.cabinetMakerId = cabinetMaker.id;
-
-        this.duraformForm.invoiceTo = cabinetMaker.invoiceTo;
-        this.duraformForm.invoiceAddress = cabinetMaker.invoiceAddress;
-        this.duraformForm.invoiceSuburb = cabinetMaker.invoiceSuburb;
-        this.duraformForm.invoiceState = cabinetMaker.invoiceState;
-        this.duraformForm.invoicePostcode = cabinetMaker.invoicePostcode;
-        this.duraformForm.deliveryTo = cabinetMaker.deliveryTo;
-        this.duraformForm.deliveryAddress = cabinetMaker.deliveryAddress;
-        this.duraformForm.deliverySuburb = cabinetMaker.deliverySuburb;
-        this.duraformForm.deliveryState = cabinetMaker.deliveryState;
-        this.duraformForm.deliveryPostcode = cabinetMaker.deliveryPostcode;
+        this.setCabinetMaker(this.auth.customer as CabinetMakerDto);
         break;
       default:
         throw new Error('Invalid Customer Type! Contact IT Support.');

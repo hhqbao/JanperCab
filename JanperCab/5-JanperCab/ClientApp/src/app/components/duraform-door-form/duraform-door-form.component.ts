@@ -145,7 +145,7 @@ export class DuraformDoorFormComponent
       return this.showErrorMsg('Unexpected Errors');
     }
 
-    if (!this.order.hingeHoleTypeId) {
+    if (!this.order.duraformEnquiry.hingeHoleTypeId) {
       this.formGroup.removeControl('hingeHole');
     }
 
