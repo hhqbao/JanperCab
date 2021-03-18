@@ -1,3 +1,4 @@
+import { MachineListPageComponent } from './pages/machine-list-page/machine-list-page.component';
 import { DuraformOrderListPageComponent } from './pages/duraform-order-list-page/duraform-order-list-page.component';
 import { CabinetMakerListPageComponent } from './pages/cabinet-maker-list-page/cabinet-maker-list-page.component';
 import { DuraformQuotePageComponent } from './pages/duraform-quote-page/duraform-quote-page.component';
@@ -32,5 +33,12 @@ export const routes: Routes = [
       },
       { path: '', component: HomePageComponent, pathMatch: 'full' },
     ],
+  },
+  {
+    path: 'production',
+    component: PrimaryLayoutComponent,
+    canActivate: [AuthGuard],
+    runGuardsAndResolvers: 'always',
+    children: [{ path: 'machines', component: MachineListPageComponent }],
   },
 ];

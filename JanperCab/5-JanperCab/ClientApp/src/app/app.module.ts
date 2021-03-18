@@ -1,3 +1,5 @@
+import { MachineListPageComponent } from './pages/machine-list-page/machine-list-page.component';
+import { DuraformProcessViewerComponent } from './components/duraform-process-viewer/duraform-process-viewer.component';
 import { DuraformMiscComponentListComponent } from './components/duraform-misc-component-list/duraform-misc-component-list.component';
 import { DuraformMiscCartItemComponent } from './components/duraform-misc-cart-item/duraform-misc-cart-item.component';
 import { DuraformMiscHeatStripEdittorComponent } from './components/duraform-misc-heat-strip-edittor/duraform-misc-heat-strip-edittor.component';
@@ -224,6 +226,8 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     DuraformMiscHeatStripEdittorComponent,
     DuraformMiscCartItemComponent,
     DuraformMiscComponentListComponent,
+    DuraformProcessViewerComponent,
+    MachineListPageComponent,
   ],
   imports: [
     BrowserModule,

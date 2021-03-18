@@ -11,6 +11,8 @@ import { OrderSearchFilterValues } from './../../_models/commons/OrderSearchFilt
 import { AuthService } from './../../_services/auth.service';
 import { LayoutService } from './../../_services/layout.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import * as scanner from 'onscan.js';
+import { Role } from 'src/app/_enums/Role';
 
 @Component({
   selector: 'app-duraform-order-list-page',
@@ -26,8 +28,10 @@ export class DuraformOrderListPageComponent implements OnInit {
   isLoading = true;
   showCustomerPicker = false;
   customerType = CustomerType;
+  roles = Role;
 
   constructor(
+    private ef: ElementRef,
     private layout: LayoutService,
     public auth: AuthService,
     private router: Router,
@@ -40,6 +44,16 @@ export class DuraformOrderListPageComponent implements OnInit {
 
     setTimeout(() => {
       this.layout.toggleLeftNav(true);
+
+      const selfDOM = this.ef.nativeElement as HTMLElement;
+
+      scanner.attachTo(selfDOM, {
+        onScan: (sCode: any, iQty: any) => {
+          console.log('Scanned: ' + iQty + 'x ' + sCode);
+        },
+      });
+
+      scanner.simulate(selfDOM, '1234567890123');
     });
   }
 

@@ -26,19 +26,15 @@ namespace _2_Persistent.Migrations
             migrationBuilder.Sql(
                 $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.Routing}, 'Routing', {(int)DuraformProcessEnum.Routing})");
             migrationBuilder.Sql(
-                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.Routed}, 'Routed', {(int)DuraformProcessEnum.Routed})");
-            migrationBuilder.Sql(
                 $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.Pressing}, 'Pressing', {(int)DuraformProcessEnum.Pressing})");
             migrationBuilder.Sql(
-                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.Pressed}, 'Pressed', {(int)DuraformProcessEnum.Pressed})");
+                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.Cleaning}, 'Cleaned', {(int)DuraformProcessEnum.Cleaning})");
             migrationBuilder.Sql(
-                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.Cleaned}, 'Cleaned', {(int)DuraformProcessEnum.Cleaned})");
+                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.Packing}, 'Packed', {(int)DuraformProcessEnum.Packing})");
             migrationBuilder.Sql(
-                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.Packed}, 'Packed', {(int)DuraformProcessEnum.Packed})");
+                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.PickingUp}, 'PickedUp', {(int)DuraformProcessEnum.PickingUp})");
             migrationBuilder.Sql(
-                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.PickedUp}, 'PickedUp', {(int)DuraformProcessEnum.PickedUp})");
-            migrationBuilder.Sql(
-                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.Delivered}, 'Delivered', {(int)DuraformProcessEnum.Delivered})");
+                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.Delivering}, 'Delivered', {(int)DuraformProcessEnum.Delivering})");
 
         }
 

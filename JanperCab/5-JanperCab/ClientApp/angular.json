@@ -25,7 +25,7 @@
             "aot": true,
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/assets/scss/main.scss"],
-            "scripts": []
+            "scripts": ["node_modules/onscan.js/onscan.min.js"]
           },
           "configurations": {
             "production": {

@@ -11,12 +11,14 @@ using _3_Application.Dtos.DuraformMiscPrice;
 using _3_Application.Dtos.DuraformOption;
 using _3_Application.Dtos.DuraformOptionType;
 using _3_Application.Dtos.DuraformPriceGrid;
+using _3_Application.Dtos.DuraformProcess;
 using _3_Application.Dtos.DuraformSerie;
 using _3_Application.Dtos.DuraformWrapColor;
 using _3_Application.Dtos.DuraformWrapType;
 using _3_Application.Dtos.Enquiry;
 using _3_Application.Dtos.HingeHoleOption;
 using _3_Application.Dtos.HingeHoleType;
+using _3_Application.Dtos.Machine;
 using _3_Application.Dtos.PantryDoorChairRailType;
 using _3_Application.Dtos.UploadFile;
 using _5_JanperCab.Helpers.Resolvers;
@@ -181,8 +183,46 @@ namespace _5_JanperCab.Helpers
             CreateMap<DuraformMiscHeatStrip, DuraformMiscHeatStripDto>();
             CreateMap<DuraformMiscHeatStripDto, DuraformMiscHeatStrip>();
 
-            CreateMap<DuraformProcess, DuraformProcessDto>();
-            CreateMap<DuraformProcessDto, DuraformProcess>();
+            CreateMap<Machine, MachineDto>();
+            CreateMap<MachineDto, Machine>();
+
+            CreateMap<DuraformProcess, DuraformProcessDto>()
+                .Include<DuraformProcessPreRoute, DuraformProcessPreRouteDto>()
+                .Include<DuraformProcessRouting, DuraformProcessRoutingDto>()
+                .Include<DuraformProcessPressing, DuraformProcessPressingDto>()
+                .Include<DuraformProcessCleaning, DuraformProcessCleaningDto>()
+                .Include<DuraformProcessPacking, DuraformProcessPackingDto>()
+                .Include<DuraformProcessPickingUp, DuraformProcessPickingUpDto>()
+                .Include<DuraformProcessDelivering, DuraformProcessDeliveringDto>();
+            CreateMap<DuraformProcessDto, DuraformProcess>()
+                .Include<DuraformProcessPreRouteDto, DuraformProcessPreRoute>()
+                .Include<DuraformProcessRoutingDto, DuraformProcessRouting>()
+                .Include<DuraformProcessPressingDto, DuraformProcessPressing>()
+                .Include<DuraformProcessCleaningDto, DuraformProcessCleaning>()
+                .Include<DuraformProcessPackingDto, DuraformProcessPacking>()
+                .Include<DuraformProcessPickingUpDto, DuraformProcessPickingUp>()
+                .Include<DuraformProcessDeliveringDto, DuraformProcessDelivering>();
+
+            CreateMap<DuraformProcessPreRoute, DuraformProcessPreRouteDto>();
+            CreateMap<DuraformProcessPreRouteDto, DuraformProcessPreRoute>();
+
+            CreateMap<DuraformProcessRouting, DuraformProcessRoutingDto>();
+            CreateMap<DuraformProcessRoutingDto, DuraformProcessRouting>();
+
+            CreateMap<DuraformProcessPressing, DuraformProcessPressingDto>();
+            CreateMap<DuraformProcessPressingDto, DuraformProcessPressing>();
+
+            CreateMap<DuraformProcessCleaning, DuraformProcessCleaningDto>();
+            CreateMap<DuraformProcessCleaningDto, DuraformProcessCleaning>();
+
+            CreateMap<DuraformProcessPacking, DuraformProcessPackingDto>();
+            CreateMap<DuraformProcessPackingDto, DuraformProcessPacking>();
+
+            CreateMap<DuraformProcessPickingUp, DuraformProcessPickingUpDto>();
+            CreateMap<DuraformProcessPickingUpDto, DuraformProcessPickingUp>();
+
+            CreateMap<DuraformProcessDelivering, DuraformProcessDeliveringDto>();
+            CreateMap<DuraformProcessDeliveringDto, DuraformProcessDelivering>();
 
             CreateMap<Enquiry, EnquiryDto>()
                 .Include<DuraformEnquiry, DuraformEnquiryDto>();

@@ -1,5 +1,12 @@
+import { DuraformProcessDeliveringDto } from '../DuraformProcess/DuraformProcessDeliveringDto';
+import { DuraformProcessPickingUpDto } from '../DuraformProcess/DuraformProcessPickingUpDto';
+import { DuraformProcessPackingDto } from '../DuraformProcess/DuraformProcessPackingDto';
+import { DuraformProcessCleaningDto } from '../DuraformProcess/DuraformProcessCleaningDto';
+import { DuraformProcessPressingDto } from '../DuraformProcess/DuraformProcessPressingDto';
+import { DuraformProcessRoutingDto } from '../DuraformProcess/DuraformProcessRoutingDto';
+import { DuraformProcessPreRouteDto } from '../DuraformProcess/DuraformProcessPreRouteDto';
 import { DuraformProcessEnum } from 'src/app/_enums/DuraformProcessEnum';
-import { DuraformProcessDto } from './DuraformProcessDto';
+import { DuraformProcessDto } from '../DuraformProcess/DuraformProcessDto';
 import { DuraformMiscHeatStripDto } from './../duraform-misc-component/DuraformMiscHeatStripDto';
 import { DuraformMiscFingerPullDto } from './../duraform-misc-component/DuraformMiscFingerPullDto';
 import { DuraformMiscCapMouldDto } from './../duraform-misc-component/DuraformMiscCapMouldDto';
@@ -7,6 +14,7 @@ import { DuraformMiscLooseFoilDto } from './../duraform-misc-component/DuraformM
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { Type } from 'class-transformer';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 import { DuraformFileDto } from '../application-file/DuraformFileDto';
 import { DuraformComponentDto } from '../duraform-component/DuraformComponentDto';
@@ -97,6 +105,50 @@ export class DuraformEnquiryDto extends EnquiryDto {
   })
   miscComponents: DuraformMiscComponentDto[] = [];
   duraformFiles: DuraformFileDto[] = [];
+
+  @Type(() => DuraformProcessDto, {
+    keepDiscriminatorProperty: true,
+    discriminator: {
+      property: '$type',
+      subTypes: [
+        {
+          value: DuraformProcessPreRouteDto,
+          name:
+            '_3_Application.Dtos.DuraformProcess.DuraformProcessPreRouteDto, 3-Application',
+        },
+        {
+          value: DuraformProcessRoutingDto,
+          name:
+            '_3_Application.Dtos.DuraformProcess.DuraformProcessRoutingDto, 3-Application',
+        },
+        {
+          value: DuraformProcessPressingDto,
+          name:
+            '_3_Application.Dtos.DuraformProcess.DuraformProcessPressingDto, 3-Application',
+        },
+        {
+          value: DuraformProcessCleaningDto,
+          name:
+            '_3_Application.Dtos.DuraformProcess.DuraformProcessCleaningDto, 3-Application',
+        },
+        {
+          value: DuraformProcessPackingDto,
+          name:
+            '_3_Application.Dtos.DuraformProcess.DuraformProcessPackingDto, 3-Application',
+        },
+        {
+          value: DuraformProcessPickingUpDto,
+          name:
+            '_3_Application.Dtos.DuraformProcess.DuraformProcessPickingUpDto, 3-Application',
+        },
+        {
+          value: DuraformProcessDeliveringDto,
+          name:
+            '_3_Application.Dtos.DuraformProcess.DuraformProcessDeliveringDto, 3-Application',
+        },
+      ],
+    },
+  })
   duraformProcesses: DuraformProcessDto[] = [];
 
   constructor() {
@@ -252,37 +304,24 @@ export class DuraformEnquiryDto extends EnquiryDto {
     return _.round(this.subTotal / 10, 2);
   }
 
-  get status(): DuraformProcessEnum {
-    const status = this.duraformProcesses.find((x) => x.completedDate);
+  get timeInSystem(): string {
+    const offset = moment().diff(moment(this.orderedDate), 'days');
 
-    return status ? status.process : DuraformProcessEnum.Ordered;
+    return `${offset} day${offset > 1 ? 's' : ''}`;
+  }
+
+  get currentStatus(): DuraformProcessDto {
+    const status = this.duraformProcesses.find((x) => x.isCurrent);
+
+    return status;
   }
 
   get statusDescription(): string {
-    switch (this.status) {
-      case DuraformProcessEnum.Ordered:
-        return 'Ordered';
-      case DuraformProcessEnum.PreRoute:
-        return 'Pre Route';
-      case DuraformProcessEnum.Routing:
-        return 'Routing';
-      case DuraformProcessEnum.Routed:
-        return 'Routed';
-      case DuraformProcessEnum.Pressing:
-        return 'Pressing';
-      case DuraformProcessEnum.Pressed:
-        return 'Pressed';
-      case DuraformProcessEnum.Cleaned:
-        return 'Cleaned';
-      case DuraformProcessEnum.Packed:
-        return 'Packed';
-      case DuraformProcessEnum.PickedUp:
-        return 'Picked Up';
-      case DuraformProcessEnum.Delivered:
-        return 'Delivered';
-      default:
-        return 'Unknown';
+    if (!this.currentStatus) {
+      return 'Ordered';
     }
+
+    return this.currentStatus.getStatus();
   }
 
   calculatePrice = (): void => {

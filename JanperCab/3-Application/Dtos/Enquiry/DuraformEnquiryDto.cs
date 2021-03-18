@@ -3,6 +3,7 @@ using _3_Application.Dtos.DuraformComponent;
 using _3_Application.Dtos.DuraformMiscComponent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using _3_Application.Dtos.DuraformProcess;
 
 namespace _3_Application.Dtos.Enquiry
 {

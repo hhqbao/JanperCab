@@ -26,6 +26,7 @@ namespace _2_Persistent
         public DbSet<Customer> Customers { get; set; }
         public DbSet<DuraformDesignEdgeProfile> DuraformDesignEdgeProfiles { get; set; }
         public DbSet<DuraformPriceGrid> DuraformPriceGrids { get; set; }
+        public DbSet<Machine> Machines { get; set; }
 
         public DbSet<Enquiry> Enquiries { get; set; }
         public DbSet<DuraformProcess> DuraformProcesses { get; set; }
@@ -55,6 +56,7 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new PantryDoorChairRailTypeConfig());
             builder.ApplyConfiguration(new DuraformDrawerTypeConfig());
             builder.ApplyConfiguration(new DuraformOptionTypeConfig());
+            builder.ApplyConfiguration(new MachineConfig());
 
             builder.ApplyConfiguration(new HingeHoleTypeConfig());
             builder.ApplyConfiguration(new HingeHoleOptionConfig());
@@ -104,6 +106,13 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformMiscPriceHeatStripConfig());
 
             builder.ApplyConfiguration(new DuraformProcessConfig());
+            builder.ApplyConfiguration(new DuraformProcessPreRouteConfig());
+            builder.ApplyConfiguration(new DuraformProcessRoutingConfig());
+            builder.ApplyConfiguration(new DuraformProcessPressingConfig());
+            builder.ApplyConfiguration(new DuraformProcessCleaningConfig());
+            builder.ApplyConfiguration(new DuraformProcessPackingConfig());
+            builder.ApplyConfiguration(new DuraformProcessPickingUpConfig());
+            builder.ApplyConfiguration(new DuraformProcessDeliveringConfig());
 
             base.OnModelCreating(builder);
         }

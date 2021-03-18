@@ -1,4 +1,4 @@
-import { DuraformProcessDto } from './../_models/enquiry/DuraformProcessDto';
+import { DuraformProcessDto } from '../_models/DuraformProcess/DuraformProcessDto';
 import { DuraformEnquiryListDto } from './../_models/enquiry/DuraformEnquiryListDto';
 import { DuraformEnquiryDto } from './../_models/enquiry/DuraformEnquiryDto';
 import { plainToClass } from 'class-transformer';
@@ -90,16 +90,10 @@ export class EnquiryService {
       );
   };
 
-  approveEnquiry = (id: number): Observable<DuraformProcessDto> => {
-    return this.http
-      .put<DuraformProcessDto>(
-        `${environment.baseUrl}/enquiries/approve/${id}`,
-        null
-      )
-      .pipe(
-        map((response) => {
-          return plainToClass(DuraformProcessDto, response);
-        })
-      );
+  approveEnquiry = (id: number): Observable<any> => {
+    return this.http.put(
+      `${environment.baseUrl}/enquiries/approve/${id}`,
+      null
+    );
   };
 }

@@ -1,4 +1,10 @@
 <div class="duraform-order-step-three">
+  <app-float-box *ngIf="showProcessViewer" [width]="75">
+    <app-duraform-process-viewer
+      [duraformEnquiry]="duraformEnquiry"
+      (closeBtnClick)="showProcessViewer = false"
+    ></app-duraform-process-viewer>
+  </app-float-box>
   <app-float-box *ngIf="showCustomerSelector" [width]="150">
     <div style="padding: 2rem; background-color: white">
       <div class="row" style="margin-bottom: 1.5rem">
@@ -92,13 +98,10 @@
                 </div>
                 <div
                   class="option-box__status text-blue"
+                  style="text-transform: uppercase"
                   *ngIf="duraformEnquiry.enquiryType === enquiryType.Order"
                 >
-                  {{
-                    !duraformEnquiry.status
-                      ? "ORDERED"
-                      : duraformEnquiry.statusDescription
-                  }}
+                  {{ duraformEnquiry.statusDescription }}
                 </div>
               </app-simple-box>
             </div>
@@ -510,24 +513,17 @@
           auth.isInRole(role[role.Manufacturer]) && duraformEnquiry.approvedDate
         "
       >
-        <button
-          class="action-btn"
-          [disabled]="!duraformEnquiry.customerReference"
-          (click)="onViewDeliveryDocket()"
-        >
+        <button class="action-btn" (click)="onViewDeliveryDocket()">
           <i class="fa fa-truck" aria-hidden="true"></i>
           <span>View Delivery Docket</span>
         </button>
-        <button
-          class="action-btn"
-          *ngIf="
-            duraformEnquiry.id &&
-            duraformEnquiry.enquiryType === enquiryType.Order
-          "
-          (click)="onExportDuraformIcb()"
-        >
+        <button class="action-btn" (click)="onExportDuraformIcb()">
           <i class="fa fa-cogs" aria-hidden="true"></i>
           <span>Export For ICB</span>
+        </button>
+        <button class="action-btn" (click)="showProcessViewer = true">
+          <i class="fa fa-tasks" aria-hidden="true"></i>
+          <span>Show Order Tracking</span>
         </button>
       </div>
       <div

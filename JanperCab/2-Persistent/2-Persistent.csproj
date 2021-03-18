@@ -92,6 +92,8 @@
     <Compile Remove="Migrations\20210223014629_EditTable_Enquiries_AddCol_ApproverId.Designer.cs" />
     <Compile Remove="Migrations\20210224233833_CreateTable_DuraformMiscComponents.cs" />
     <Compile Remove="Migrations\20210224233833_CreateTable_DuraformMiscComponents.Designer.cs" />
+    <Compile Remove="Migrations\20210317001237_EditTable_DuraformProcessRoutings_MachineIdNullable.cs" />
+    <Compile Remove="Migrations\20210317001237_EditTable_DuraformProcessRoutings_MachineIdNullable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

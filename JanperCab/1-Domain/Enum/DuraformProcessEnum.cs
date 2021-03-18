@@ -8,9 +8,13 @@
         Routed = 3,
         Pressing = 4,
         Pressed = 5,
-        Cleaned = 6,
-        Packed = 7,
-        PickedUp = 8,
-        Delivered = 9,
+        Cleaning = 6,
+        Cleaned = 7,
+        Packing = 8,
+        Packed = 9,
+        PickingUp = 10,
+        PickedUp = 11,
+        Delivering = 12,
+        Delivered = 13
     }
 }

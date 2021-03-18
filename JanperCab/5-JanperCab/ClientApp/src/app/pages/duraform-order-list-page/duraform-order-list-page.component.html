@@ -37,7 +37,7 @@
   </app-float-box>
   <app-simple-box [heading]="'Duraform Order List'" [height]="'100%'">
     <div class="control-box">
-      <div class="row">
+      <div class="row" *ngIf="auth.isInRole(roles[roles.Distributor])">
         <div class="col-1-4">
           <div class="form__inline-group">
             <label class="form__label" style="width: 8rem">Customer</label>
@@ -49,31 +49,6 @@
               value="All"
               (click)="showCustomerPicker = !showCustomerPicker"
             />
-          </div>
-        </div>
-        <div class="col-1-4">
-          <div class="form__inline-group">
-            <label
-              class="form__label"
-              style="width: 8rem; justify-content: flex-end"
-              >Status</label
-            >
-            <select
-              class="form__control"
-              [(ngModel)]="filterValues.status"
-              (change)="onFilterValueChange()"
-            >
-              <option [value]="null">All</option>
-              <option [value]="statusEnums.PreRoute">Pre Route</option>
-              <option [value]="statusEnums.Routing">Routing</option>
-              <option [value]="statusEnums.Routed">Routed</option>
-              <option [value]="statusEnums.Pressing">Pressing</option>
-              <option [value]="statusEnums.Pressed">Pressed</option>
-              <option [value]="statusEnums.Cleaned">Cleaned</option>
-              <option [value]="statusEnums.Packed">Packed</option>
-              <option [value]="statusEnums.PickedUp">Picked Up</option>
-              <option [value]="statusEnums.Delivered">Delivered</option>
-            </select>
           </div>
         </div>
       </div>
@@ -91,6 +66,36 @@
               <button type="submit" style="display: none">Submit</button>
             </div>
           </form>
+        </div>
+        <div class="col-1-4">
+          <div class="form__inline-group">
+            <label
+              class="form__label"
+              style="width: 8rem; justify-content: flex-end"
+              >Status</label
+            >
+            <select
+              class="form__control"
+              [(ngModel)]="filterValues.status"
+              (change)="onFilterValueChange()"
+            >
+              <option [value]="null">All</option>
+              <option [value]="statusEnums.Ordered">Ordered</option>
+              <option [value]="statusEnums.PreRoute">Pre Route</option>
+              <option [value]="statusEnums.Routing">Routing</option>
+              <option [value]="statusEnums.Routed">Routed</option>
+              <option [value]="statusEnums.Pressing">Pressing</option>
+              <option [value]="statusEnums.Pressed">Pressed</option>
+              <option [value]="statusEnums.Cleaning">Cleaning</option>
+              <option [value]="statusEnums.Cleaned">Cleaned</option>
+              <option [value]="statusEnums.Packing">Packing</option>
+              <option [value]="statusEnums.Packed">Packed</option>
+              <option [value]="statusEnums.PickingUp">Picking Up</option>
+              <option [value]="statusEnums.PickedUp">Picked Up</option>
+              <option [value]="statusEnums.Delivering">Delivering</option>
+              <option [value]="statusEnums.Delivered">Delivered</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>

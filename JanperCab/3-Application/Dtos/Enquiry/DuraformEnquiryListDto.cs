@@ -1,25 +1,14 @@
-﻿using _1_Domain.Enum;
-using _3_Application.Dtos.Customer;
+﻿using _3_Application.Dtos.Customer;
+using _3_Application.Dtos.DuraformProcess;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace _3_Application.Dtos.Enquiry
 {
     public class DuraformEnquiryListDto
     {
         public int Id { get; set; }
-
-        public DuraformProcessEnum Status
-        {
-            get
-            {
-                var status = DuraformProcesses.OrderByDescending(x => x.Process).FirstOrDefault(x => x.CompletedDate.HasValue);
-
-                return status?.Process ?? DuraformProcessEnum.Ordered;
-            }
-        }
 
         public DateTime CreatedDate { get; set; }
 
@@ -38,6 +27,8 @@ namespace _3_Application.Dtos.Enquiry
         public DistributorDto Distributor { get; set; }
 
         public string DeliveryNote { get; set; }
+
+
 
         public ICollection<DuraformProcessDto> DuraformProcesses { get; set; }
 

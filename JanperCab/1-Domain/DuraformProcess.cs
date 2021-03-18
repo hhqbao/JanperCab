@@ -3,7 +3,7 @@ using System;
 
 namespace _1_Domain
 {
-    public class DuraformProcess
+    public abstract class DuraformProcess
     {
         public int Id { get; set; }
 
@@ -11,20 +11,13 @@ namespace _1_Domain
 
         public DuraformProcessEnum Process { get; set; }
 
-        public DateTime? CompletedDate { get; set; }
+        public DateTime? StartTime { get; set; }
+
+        public DateTime? EndTime { get; set; }
+
+        public bool IsCurrent { get; set; }
 
 
         public virtual DuraformEnquiry DuraformEnquiry { get; set; }
-
-        public DuraformProcess()
-        {
-
-        }
-
-        public DuraformProcess(DuraformProcessEnum process, DateTime? completedDate)
-        {
-            Process = process;
-            CompletedDate = completedDate;
-        }
     }
 }

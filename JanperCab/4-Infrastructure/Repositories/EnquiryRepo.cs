@@ -49,9 +49,38 @@ namespace _4_Infrastructure.Repositories
             if (cabinetMakerId.HasValue)
                 query = query.Where(x => x.CabinetMakerId == cabinetMakerId);
 
-            if (status.HasValue)
-                query = query.Where(x =>
-                    x.DuraformProcesses.Any(y => y.CompletedDate.HasValue && y.Process == status));
+            switch (status)
+            {
+                case null:
+                    break;
+                case DuraformProcessEnum.Ordered:
+                    query = query.Where(x => !x.ApprovedDate.HasValue);
+                    break;
+                case DuraformProcessEnum.PreRoute:
+                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.Process == DuraformProcessEnum.PreRoute));
+                    break;
+                case DuraformProcessEnum.Routed:
+                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.Process == DuraformProcessEnum.Routing));
+                    break;
+                case DuraformProcessEnum.Pressed:
+                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.Process == DuraformProcessEnum.Pressing));
+                    break;
+                case DuraformProcessEnum.Cleaned:
+                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.Process == DuraformProcessEnum.Cleaning));
+                    break;
+                case DuraformProcessEnum.Packed:
+                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.Process == DuraformProcessEnum.Packing));
+                    break;
+                case DuraformProcessEnum.PickedUp:
+                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.Process == DuraformProcessEnum.PickingUp));
+                    break;
+                case DuraformProcessEnum.Delivered:
+                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.Process == DuraformProcessEnum.Delivering));
+                    break;
+                default:
+                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && !y.EndTime.HasValue && y.Process == status));
+                    break;
+            }
 
             return await GetSortedDuraformEnquiryListAsync(search, sortBy, direction, page, take, query);
         }
@@ -61,20 +90,18 @@ namespace _4_Infrastructure.Repositories
             enquiry.ApprovedDate = DateTime.Now;
             enquiry.DuraformProcesses.Clear();
 
-            enquiry.DuraformProcesses.Add(new DuraformProcess(DuraformProcessEnum.PreRoute, DateTime.Now));
-            enquiry.DuraformProcesses.Add(new DuraformProcess(DuraformProcessEnum.Routing, null));
-            enquiry.DuraformProcesses.Add(new DuraformProcess(DuraformProcessEnum.Routed, null));
+            enquiry.DuraformProcesses.Add(new DuraformProcessPreRoute { StartTime = DateTime.Now, IsCurrent = true });
+            enquiry.DuraformProcesses.Add(new DuraformProcessRouting());
 
             if (enquiry.IsRoutingOnly)
             {
-                enquiry.DuraformProcesses.Add(new DuraformProcess(DuraformProcessEnum.Packed, null));
+                enquiry.DuraformProcesses.Add(new DuraformProcessPacking());
             }
             else
             {
-                enquiry.DuraformProcesses.Add(new DuraformProcess(DuraformProcessEnum.Pressing, null));
-                enquiry.DuraformProcesses.Add(new DuraformProcess(DuraformProcessEnum.Pressed, null));
-                enquiry.DuraformProcesses.Add(new DuraformProcess(DuraformProcessEnum.Cleaned, null));
-                enquiry.DuraformProcesses.Add(new DuraformProcess(DuraformProcessEnum.Packed, null));
+                enquiry.DuraformProcesses.Add(new DuraformProcessPressing());
+                enquiry.DuraformProcesses.Add(new DuraformProcessCleaning());
+                enquiry.DuraformProcesses.Add(new DuraformProcessPacking());
             }
         }
 

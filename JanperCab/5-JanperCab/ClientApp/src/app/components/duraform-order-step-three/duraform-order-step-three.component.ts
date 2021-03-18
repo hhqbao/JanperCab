@@ -34,6 +34,7 @@ export class DuraformOrderStepThreeComponent implements OnInit {
   showDeliveryForm = false;
   showCustomerSelector = false;
   showDeliveryDocket = false;
+  showProcessViewer = false;
 
   cabinetMaker: CabinetMakerDto;
 
