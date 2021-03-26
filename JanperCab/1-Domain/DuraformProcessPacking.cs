@@ -6,7 +6,7 @@ namespace _1_Domain
     {
         public DuraformProcessPacking()
         {
-            Process = DuraformProcessEnum.Packing;
+            DuraformProcessType = DuraformProcessEnum.Packing;
         }
     }
 }

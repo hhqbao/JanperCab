@@ -1,0 +1,49 @@
+<div class="mrc">
+  <app-simple-box [heading]="'ROUTER - ' + machine.name">
+    <div class="mrc__process-box">
+      <table class="table table--hovered table--sortable table--left">
+        <thead>
+          <tr>
+            <th style="width: 10rem">Order Id</th>
+            <th class="text-center" style="width: 14rem">Duration</th>
+            <th>Description</th>
+            <th class="text-right" style="width: 10rem">Parts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let process of machine.currentProcesses">
+            <td>
+              <a
+                [routerLink]="[
+                  '/dashboard/duraform/',
+                  { id: process.enquiryId }
+                ]"
+                target="_blank"
+              >
+                [{{ process.enquiryId | leading: "000000" }}]
+              </a>
+            </td>
+            <td class="text-center">
+              <app-simple-timer
+                [startPoint]="process.startTime"
+              ></app-simple-timer>
+            </td>
+            <td>
+              {{ process.description }}
+            </td>
+            <td class="text-right">
+              {{ process.numberOfParts }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mrc__footer">
+      <input type="text" [(ngModel)]="testEnquiryId" />
+      <button class="btn btn--primary" (click)="onTest()">Test</button>
+      <button class="btn btn--default" (click)="closeBtnClick.emit()">
+        Close
+      </button>
+    </div>
+  </app-simple-box>
+</div>

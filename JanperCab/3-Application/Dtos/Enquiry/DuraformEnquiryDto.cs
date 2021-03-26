@@ -1,9 +1,9 @@
 ﻿using _3_Application.Dtos.ApplicationFile;
 using _3_Application.Dtos.DuraformComponent;
 using _3_Application.Dtos.DuraformMiscComponent;
+using _3_Application.Dtos.Process;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using _3_Application.Dtos.DuraformProcess;
 
 namespace _3_Application.Dtos.Enquiry
 {

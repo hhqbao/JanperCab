@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using _1_Domain.Enum;
 
 namespace _1_Domain
 {
-    public class Machine
+    public abstract class Machine
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public MachineTypeEnum MachineType { get; set; }
 
-        public virtual ICollection<DuraformProcessRouting> DuraformProcessRoutings { get; set; }
+        public string Name { get; set; }
     }
 }

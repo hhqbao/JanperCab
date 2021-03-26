@@ -759,41 +759,6 @@ namespace _2_Persistent.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("DuraformPriceGrid");
                 });
 
-            modelBuilder.Entity("_1_Domain.DuraformProcess", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DuraformEnquiryId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("EndTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsCurrent")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Process")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("StartTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DuraformEnquiryId");
-
-                    b.ToTable("DuraformProcesses");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("DuraformProcess");
-                });
-
             modelBuilder.Entity("_1_Domain.DuraformSerie", b =>
                 {
                     b.Property<int>("Id")
@@ -1042,6 +1007,13 @@ namespace _2_Persistent.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MachineType")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
@@ -1049,6 +1021,8 @@ namespace _2_Persistent.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Machines");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Machine");
                 });
 
             modelBuilder.Entity("_1_Domain.NotAvailableDesignWrapType", b =>
@@ -1083,6 +1057,36 @@ namespace _2_Persistent.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PantryDoorChairRailTypes");
+                });
+
+            modelBuilder.Entity("_1_Domain.Process", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EnquiryId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsCurrent")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Processes");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Process");
                 });
 
             modelBuilder.Entity("_1_Domain.DuraformFile", b =>
@@ -1463,60 +1467,6 @@ namespace _2_Persistent.Migrations
                     b.HasDiscriminator().HasValue("DuraformWrapPriceGrid");
                 });
 
-            modelBuilder.Entity("_1_Domain.DuraformProcessCleaning", b =>
-                {
-                    b.HasBaseType("_1_Domain.DuraformProcess");
-
-                    b.HasDiscriminator().HasValue("DuraformProcessCleaning");
-                });
-
-            modelBuilder.Entity("_1_Domain.DuraformProcessDelivering", b =>
-                {
-                    b.HasBaseType("_1_Domain.DuraformProcess");
-
-                    b.HasDiscriminator().HasValue("DuraformProcessDelivering");
-                });
-
-            modelBuilder.Entity("_1_Domain.DuraformProcessPacking", b =>
-                {
-                    b.HasBaseType("_1_Domain.DuraformProcess");
-
-                    b.HasDiscriminator().HasValue("DuraformProcessPacking");
-                });
-
-            modelBuilder.Entity("_1_Domain.DuraformProcessPickingUp", b =>
-                {
-                    b.HasBaseType("_1_Domain.DuraformProcess");
-
-                    b.HasDiscriminator().HasValue("DuraformProcessPickingUp");
-                });
-
-            modelBuilder.Entity("_1_Domain.DuraformProcessPreRoute", b =>
-                {
-                    b.HasBaseType("_1_Domain.DuraformProcess");
-
-                    b.HasDiscriminator().HasValue("DuraformProcessPreRoute");
-                });
-
-            modelBuilder.Entity("_1_Domain.DuraformProcessPressing", b =>
-                {
-                    b.HasBaseType("_1_Domain.DuraformProcess");
-
-                    b.HasDiscriminator().HasValue("DuraformProcessPressing");
-                });
-
-            modelBuilder.Entity("_1_Domain.DuraformProcessRouting", b =>
-                {
-                    b.HasBaseType("_1_Domain.DuraformProcess");
-
-                    b.Property<int?>("MachineId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("MachineId");
-
-                    b.HasDiscriminator().HasValue("DuraformProcessRouting");
-                });
-
             modelBuilder.Entity("_1_Domain.DuraformEnquiry", b =>
                 {
                     b.HasBaseType("_1_Domain.Enquiry");
@@ -1562,6 +1512,32 @@ namespace _2_Persistent.Migrations
                     b.HasDiscriminator().HasValue("DuraformEnquiry");
                 });
 
+            modelBuilder.Entity("_1_Domain.MachinePresser", b =>
+                {
+                    b.HasBaseType("_1_Domain.Machine");
+
+                    b.HasDiscriminator().HasValue("MachinePresser");
+                });
+
+            modelBuilder.Entity("_1_Domain.MachineRouter", b =>
+                {
+                    b.HasBaseType("_1_Domain.Machine");
+
+                    b.HasDiscriminator().HasValue("MachineRouter");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformProcess", b =>
+                {
+                    b.HasBaseType("_1_Domain.Process");
+
+                    b.Property<int>("DuraformProcessType")
+                        .HasColumnType("int");
+
+                    b.HasIndex("EnquiryId");
+
+                    b.HasDiscriminator().HasValue("DuraformProcess");
+                });
+
             modelBuilder.Entity("_1_Domain.DuraformComponentWithOptionAndHingeHole", b =>
                 {
                     b.HasBaseType("_1_Domain.DuraformComponentWithOption");
@@ -1593,6 +1569,68 @@ namespace _2_Persistent.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasDiscriminator().HasValue("DuraformEndPanel");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformProcessCleaning", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformProcess");
+
+                    b.HasDiscriminator().HasValue("DuraformProcessCleaning");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformProcessDelivering", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformProcess");
+
+                    b.HasDiscriminator().HasValue("DuraformProcessDelivering");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformProcessPacking", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformProcess");
+
+                    b.HasDiscriminator().HasValue("DuraformProcessPacking");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformProcessPickingUp", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformProcess");
+
+                    b.HasDiscriminator().HasValue("DuraformProcessPickingUp");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformProcessPreRoute", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformProcess");
+
+                    b.HasDiscriminator().HasValue("DuraformProcessPreRoute");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformProcessPressing", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformProcess");
+
+                    b.Property<int?>("MachineId")
+                        .HasColumnName("MachineId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("MachineId");
+
+                    b.HasDiscriminator().HasValue("DuraformProcessPressing");
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformProcessRouting", b =>
+                {
+                    b.HasBaseType("_1_Domain.DuraformProcess");
+
+                    b.Property<int?>("MachineId")
+                        .HasColumnName("MachineId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("MachineId")
+                        .HasName("IX_Processes_MachineId1");
+
+                    b.HasDiscriminator().HasValue("DuraformProcessRouting");
                 });
 
             modelBuilder.Entity("_1_Domain.DuraformDoor", b =>
@@ -1759,15 +1797,6 @@ namespace _2_Persistent.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("_1_Domain.DuraformProcess", b =>
-                {
-                    b.HasOne("_1_Domain.DuraformEnquiry", "DuraformEnquiry")
-                        .WithMany("DuraformProcesses")
-                        .HasForeignKey("DuraformEnquiryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("_1_Domain.DuraformWrapColor", b =>
                 {
                     b.HasOne("_1_Domain.DuraformWrapType", "DuraformWrapType")
@@ -1890,14 +1919,6 @@ namespace _2_Persistent.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("_1_Domain.DuraformProcessRouting", b =>
-                {
-                    b.HasOne("_1_Domain.Machine", "Machine")
-                        .WithMany("DuraformProcessRoutings")
-                        .HasForeignKey("MachineId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
             modelBuilder.Entity("_1_Domain.DuraformEnquiry", b =>
                 {
                     b.HasOne("_1_Domain.DuraformArch", "DuraformArch")
@@ -1936,6 +1957,32 @@ namespace _2_Persistent.Migrations
                     b.HasOne("_1_Domain.HingeHoleType", "HingeHoleType")
                         .WithMany("DuraformEnquiries")
                         .HasForeignKey("HingeHoleTypeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformProcess", b =>
+                {
+                    b.HasOne("_1_Domain.DuraformEnquiry", "DuraformEnquiry")
+                        .WithMany("DuraformProcesses")
+                        .HasForeignKey("EnquiryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformProcessPressing", b =>
+                {
+                    b.HasOne("_1_Domain.MachinePresser", "MachinePresser")
+                        .WithMany("DuraformProcessPressings")
+                        .HasForeignKey("MachineId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("_1_Domain.DuraformProcessRouting", b =>
+                {
+                    b.HasOne("_1_Domain.MachineRouter", "MachineRouter")
+                        .WithMany("DuraformProcessRoutings")
+                        .HasForeignKey("MachineId")
+                        .HasConstraintName("FK_Processes_Machines_MachineId1")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

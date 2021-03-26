@@ -1,5 +1,5 @@
 ﻿using _3_Application.Dtos.Customer;
-using _3_Application.Dtos.DuraformProcess;
+using _3_Application.Dtos.Process;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

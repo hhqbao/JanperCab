@@ -64,5 +64,7 @@ namespace _1_Domain
             EnquiryType = EnquiryTypeEnum.Draft;
             CreatedDate = DateTime.Now;
         }
+
+        public abstract string GetDescription();
     }
 }

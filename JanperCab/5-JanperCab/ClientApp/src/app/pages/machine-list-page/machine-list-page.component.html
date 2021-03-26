@@ -1,16 +1,60 @@
 <div class="mlp">
+  <app-float-box *ngIf="selectedMachine" [width]="85">
+    <app-machine-router-controller
+      *ngIf="selectedMachine.machineType === machineTypeEnum.Router"
+      [machine]="selectedMachine"
+      (closeBtnClick)="selectedMachine = null"
+    ></app-machine-router-controller>
+    <app-machine-presser-controller
+      *ngIf="selectedMachine.machineType === machineTypeEnum.Presser"
+      [machine]="selectedMachine"
+      (closeBtnClick)="selectedMachine = null"
+    ></app-machine-presser-controller>
+  </app-float-box>
   <app-simple-box [heading]="'Machine List'" [height]="'100%'">
     <table class="table table--hovered table--sortable">
       <thead>
         <tr>
           <th style="width: 5rem">ID</th>
-          <th style="text-align: left; width: 15rem">Machine Name</th>
-          <th style="width: 10rem">Status</th>
-          <th style="text-align: left">Description</th>
+          <th style="width: 10rem">Type</th>
+          <th style="text-align: left">Machine Name</th>
+          <th style="text-align: left; width: 10rem">Status</th>
+          <th style="width: 8rem">Orders</th>
+          <th style="width: 8rem">Parts</th>
           <th style="width: 10rem"></th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        <tr *ngFor="let machine of machines" (click)="onSelectMachine(machine)">
+          <td>{{ machine.id }}</td>
+          <td>{{ machineTypeEnum[machine.machineType] }}</td>
+          <td class="text-left">{{ machine.name }}</td>
+          <td class="text-left">
+            <b>
+              <span>
+                <i
+                  class="fa"
+                  aria-hidden="true"
+                  [ngClass]="{
+                    'fa-cog fa-spin text-green':
+                      machine.currentProcesses.length > 0,
+                    'fa-pause-circle text-alert':
+                      machine.currentProcesses.length === 0
+                  }"
+                ></i>
+                {{ machine.currentProcesses.length > 0 ? "Running" : "Idle" }}
+              </span>
+            </b>
+          </td>
+          <td>
+            {{ machine.currentProcesses.length }}
+          </td>
+          <td>
+            {{ getNumberOfParts(machine.currentProcesses) }}
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
     </table>
   </app-simple-box>
 </div>

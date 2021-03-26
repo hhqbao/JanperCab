@@ -1,3 +1,7 @@
+import { MachinePresserControllerComponent } from './components/machine-presser-controller/machine-presser-controller.component';
+import { MachineRouterControllerComponent } from './components/machine-router-controller/machine-router-controller.component';
+import { SimpleTimerComponent } from './components/simple-timer/simple-timer.component';
+import { MachineService } from './_services/machine.service';
 import { MachineListPageComponent } from './pages/machine-list-page/machine-list-page.component';
 import { DuraformProcessViewerComponent } from './components/duraform-process-viewer/duraform-process-viewer.component';
 import { DuraformMiscComponentListComponent } from './components/duraform-misc-component-list/duraform-misc-component-list.component';
@@ -228,6 +232,9 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     DuraformMiscComponentListComponent,
     DuraformProcessViewerComponent,
     MachineListPageComponent,
+    SimpleTimerComponent,
+    MachineRouterControllerComponent,
+    MachinePresserControllerComponent,
   ],
   imports: [
     BrowserModule,
@@ -247,6 +254,7 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
   ],
   providers: [
     CommonAssetsService,
+    LeadingPipe,
     FileService,
     CabProService,
     AuthService,
@@ -269,6 +277,7 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     HingeHoleService,
     MiscItemService,
     MachineFileService,
+    MachineService,
     ErrorInterceptorProvider,
   ],
   bootstrap: [AppComponent],

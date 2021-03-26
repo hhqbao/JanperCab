@@ -8,16 +8,9 @@ namespace _2_Persistent.Configs
     {
         public void Configure(EntityTypeBuilder<DuraformProcess> builder)
         {
-            builder.ToTable("DuraformProcesses");
-
-            builder.HasKey(x => x.Id);
-
-            builder.Property(x => x.Id)
-                .ValueGeneratedOnAdd();
-
             builder.HasOne(x => x.DuraformEnquiry)
                 .WithMany(y => y.DuraformProcesses)
-                .HasForeignKey(x => x.DuraformEnquiryId)
+                .HasForeignKey(x => x.EnquiryId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         }

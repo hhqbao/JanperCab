@@ -8,7 +8,10 @@ namespace _2_Persistent.Configs
     {
         public void Configure(EntityTypeBuilder<DuraformProcessRouting> builder)
         {
-            builder.HasOne(x => x.Machine)
+            builder.Property(x => x.MachineId)
+                .HasColumnName("MachineId");
+
+            builder.HasOne(x => x.MachineRouter)
                 .WithMany(y => y.DuraformProcessRoutings)
                 .HasForeignKey(x => x.MachineId)
                 .OnDelete(DeleteBehavior.Restrict);

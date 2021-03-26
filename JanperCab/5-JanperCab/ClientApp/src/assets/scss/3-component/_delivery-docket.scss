@@ -191,6 +191,30 @@
                 }
               }
 
+              &.cr-height {
+                width: 140px;
+
+                @media print {
+                  width: 80px;
+                }
+              }
+
+              &.cr-type {
+                width: 120px;
+
+                @media print {
+                  width: 70px;
+                }
+              }
+
+              &.cr-bottom {
+                width: 150px;
+
+                @media print {
+                  width: 85px;
+                }
+              }
+
               &.option {
                 padding-left: 10px;
               }
@@ -204,7 +228,7 @@
                 }
               }
 
-              &.hingeHole {
+              &.hinge-hole {
                 padding-left: 10px;
                 width: 190px;
 

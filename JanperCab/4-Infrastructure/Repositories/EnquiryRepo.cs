@@ -57,28 +57,28 @@ namespace _4_Infrastructure.Repositories
                     query = query.Where(x => !x.ApprovedDate.HasValue);
                     break;
                 case DuraformProcessEnum.PreRoute:
-                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.Process == DuraformProcessEnum.PreRoute));
+                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.DuraformProcessType == DuraformProcessEnum.PreRoute));
                     break;
                 case DuraformProcessEnum.Routed:
-                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.Process == DuraformProcessEnum.Routing));
+                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.DuraformProcessType == DuraformProcessEnum.Routing));
                     break;
                 case DuraformProcessEnum.Pressed:
-                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.Process == DuraformProcessEnum.Pressing));
+                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.DuraformProcessType == DuraformProcessEnum.Pressing));
                     break;
                 case DuraformProcessEnum.Cleaned:
-                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.Process == DuraformProcessEnum.Cleaning));
+                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.DuraformProcessType == DuraformProcessEnum.Cleaning));
                     break;
                 case DuraformProcessEnum.Packed:
-                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.Process == DuraformProcessEnum.Packing));
+                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.DuraformProcessType == DuraformProcessEnum.Packing));
                     break;
                 case DuraformProcessEnum.PickedUp:
-                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.Process == DuraformProcessEnum.PickingUp));
+                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.DuraformProcessType == DuraformProcessEnum.PickingUp));
                     break;
                 case DuraformProcessEnum.Delivered:
-                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.Process == DuraformProcessEnum.Delivering));
+                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.DuraformProcessType == DuraformProcessEnum.Delivering));
                     break;
                 default:
-                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && !y.EndTime.HasValue && y.Process == status));
+                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && !y.EndTime.HasValue && y.DuraformProcessType == status));
                     break;
             }
 
@@ -103,6 +103,8 @@ namespace _4_Infrastructure.Repositories
                 enquiry.DuraformProcesses.Add(new DuraformProcessCleaning());
                 enquiry.DuraformProcesses.Add(new DuraformProcessPacking());
             }
+
+            enquiry.DuraformProcesses.Add(new DuraformProcessDelivering());
         }
 
         private static async Task<ItemList<DuraformEnquiry>> GetSortedDuraformEnquiryListAsync(string search, string sortBy, string direction, int page, int take,

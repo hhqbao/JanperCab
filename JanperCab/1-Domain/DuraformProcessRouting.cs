@@ -7,11 +7,11 @@ namespace _1_Domain
         public int? MachineId { get; set; }
 
 
-        public virtual Machine Machine { get; set; }
+        public virtual MachineRouter MachineRouter { get; set; }
 
         public DuraformProcessRouting()
         {
-            Process = DuraformProcessEnum.Routing;
+            DuraformProcessType = DuraformProcessEnum.Routing;
         }
     }
 }

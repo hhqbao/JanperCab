@@ -23,4 +23,36 @@ body {
     font-family: inherit;
     font-size: inherit;
   }
+  .alertify {
+    .ajs-dimmer {
+      opacity: 0.95;
+      z-index: 999999;
+    }
+
+    .ajs-modal {
+      z-index: 999999;
+    }
+
+    .ajs-dialog {
+      border: solid 1px black;
+      box-shadow: 2px 2px 1rem black;
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+      overflow: hidden;
+
+      .ajs-commands {
+        margin: -10px 24px 0 0;
+      }
+
+      .ajs-header {
+        background-color: #b4c5ff;
+        font-size: 2rem;
+        font-weight: bold;
+      }
+    }
+
+    .ajs-body {
+      font-size: 1.8rem;
+    }
+  }
 }

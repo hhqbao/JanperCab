@@ -1,16 +1,16 @@
-import { MachineDto } from '../machine/MachineDto';
+import { MachineRouterDto } from './../machine/MachineRouterDto';
 import { DuraformProcessDto } from './DuraformProcessDto';
 
 export class DuraformProcessRoutingDto extends DuraformProcessDto {
   machineId: number;
 
-  machine: MachineDto;
+  machineRouter: MachineRouterDto;
 
   getStatus(): string {
     status = this.startTime && this.endTime ? 'Routed' : 'Routing';
 
-    if (this.machine) {
-      status += ` - ${this.machine.name}`;
+    if (this.machineRouter) {
+      status += ` - ${this.machineRouter.name}`;
     }
 
     return status;

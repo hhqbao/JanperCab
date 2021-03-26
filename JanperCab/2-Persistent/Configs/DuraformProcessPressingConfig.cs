@@ -8,7 +8,13 @@ namespace _2_Persistent.Configs
     {
         public void Configure(EntityTypeBuilder<DuraformProcessPressing> builder)
         {
+            builder.Property(x => x.MachineId)
+                .HasColumnName("MachineId");
 
+            builder.HasOne(x => x.MachinePresser)
+                .WithMany(y => y.DuraformProcessPressings)
+                .HasForeignKey(x => x.MachineId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

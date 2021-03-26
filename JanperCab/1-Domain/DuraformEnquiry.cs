@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace _1_Domain
 {
@@ -52,6 +53,14 @@ namespace _1_Domain
             MiscComponents = new Collection<DuraformMiscComponent>();
             DuraformFiles = new Collection<DuraformFile>();
             DuraformProcesses = new Collection<DuraformProcess>();
+        }
+
+        public override string GetDescription()
+        {
+            var type = IsRoutingOnly ? "DSW" : "DF";
+            var numberOfPieces = DuraformComponents.Sum(x => x.Quantity);
+
+            return $"{type} - {CabinetMaker.Name} | {numberOfPieces} parts | ${TotalPrice}";
         }
     }
 }

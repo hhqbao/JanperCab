@@ -70,7 +70,15 @@
           <div class="col-1-3">
             <span class="dpv__process__time-title">Duration:</span>
             <span class="dpv__process__time-value">
-              {{ process.getDuration() }}
+              <span>
+                <app-simple-timer
+                  *ngIf="process.startTime && !process.endTime"
+                  [startPoint]="process.startTime"
+                ></app-simple-timer>
+              </span>
+              <span *ngIf="process.startTime && process.endTime">
+                {{ process.getDuration() }}
+              </span>
             </span>
           </div>
         </div>

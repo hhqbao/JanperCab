@@ -11,7 +11,6 @@ using _3_Application.Dtos.DuraformMiscPrice;
 using _3_Application.Dtos.DuraformOption;
 using _3_Application.Dtos.DuraformOptionType;
 using _3_Application.Dtos.DuraformPriceGrid;
-using _3_Application.Dtos.DuraformProcess;
 using _3_Application.Dtos.DuraformSerie;
 using _3_Application.Dtos.DuraformWrapColor;
 using _3_Application.Dtos.DuraformWrapType;
@@ -20,6 +19,7 @@ using _3_Application.Dtos.HingeHoleOption;
 using _3_Application.Dtos.HingeHoleType;
 using _3_Application.Dtos.Machine;
 using _3_Application.Dtos.PantryDoorChairRailType;
+using _3_Application.Dtos.Process;
 using _3_Application.Dtos.UploadFile;
 using _5_JanperCab.Helpers.Resolvers;
 using AutoMapper;
@@ -183,8 +183,30 @@ namespace _5_JanperCab.Helpers
             CreateMap<DuraformMiscHeatStrip, DuraformMiscHeatStripDto>();
             CreateMap<DuraformMiscHeatStripDto, DuraformMiscHeatStrip>();
 
-            CreateMap<Machine, MachineDto>();
-            CreateMap<MachineDto, Machine>();
+            CreateMap<Machine, MachineDto>()
+                .Include<MachineRouter, MachineRouterDto>()
+                .Include<MachinePresser, MachinePresserDto>()
+                .Include<MachineCutter, MachineCutterDto>();
+            CreateMap<Machine, MachineProductionListDto>()
+                .ForMember(x => x.CurrentProcesses, opt => opt.MapFrom<MachineProductionListCurrentProcessesResolver>());
+            CreateMap<MachineDto, Machine>()
+                .Include<MachineRouterDto, MachineRouter>()
+                .Include<MachinePresserDto, MachinePresser>()
+                .Include<MachineCutterDto, MachineCutter>();
+
+            CreateMap<MachineRouter, MachineRouterDto>();
+            CreateMap<MachineRouterDto, MachineRouter>();
+
+            CreateMap<MachinePresser, MachinePresserDto>();
+            CreateMap<MachinePresserDto, MachinePresser>();
+
+            CreateMap<MachineCutter, MachineCutterDto>();
+            CreateMap<MachineCutterDto, MachineCutter>();
+
+            CreateMap<Process, ProcessDto>()
+                .Include<DuraformProcess, DuraformProcessDto>();
+            CreateMap<ProcessDto, Process>()
+                .Include<DuraformProcessDto, DuraformProcess>();
 
             CreateMap<DuraformProcess, DuraformProcessDto>()
                 .Include<DuraformProcessPreRoute, DuraformProcessPreRouteDto>()

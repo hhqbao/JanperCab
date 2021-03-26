@@ -36,6 +36,8 @@ namespace _3_Application.Interfaces.Repositories
 
         IDuraformMiscPriceRepo DuraformMiscPrices { get; }
 
+        IMachineRepo Machines { get; }
+
         Task ExecuteCommandAsync(string command);
 
         Task<int> CompleteAsync();

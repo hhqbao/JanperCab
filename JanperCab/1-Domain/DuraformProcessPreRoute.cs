@@ -6,7 +6,7 @@ namespace _1_Domain
     {
         public DuraformProcessPreRoute()
         {
-            Process = DuraformProcessEnum.PreRoute;
+            DuraformProcessType = DuraformProcessEnum.PreRoute;
         }
     }
 }

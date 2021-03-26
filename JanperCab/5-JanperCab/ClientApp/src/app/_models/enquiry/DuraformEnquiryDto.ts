@@ -114,37 +114,37 @@ export class DuraformEnquiryDto extends EnquiryDto {
         {
           value: DuraformProcessPreRouteDto,
           name:
-            '_3_Application.Dtos.DuraformProcess.DuraformProcessPreRouteDto, 3-Application',
+            '_3_Application.Dtos.Process.DuraformProcessPreRouteDto, 3-Application',
         },
         {
           value: DuraformProcessRoutingDto,
           name:
-            '_3_Application.Dtos.DuraformProcess.DuraformProcessRoutingDto, 3-Application',
+            '_3_Application.Dtos.Process.DuraformProcessRoutingDto, 3-Application',
         },
         {
           value: DuraformProcessPressingDto,
           name:
-            '_3_Application.Dtos.DuraformProcess.DuraformProcessPressingDto, 3-Application',
+            '_3_Application.Dtos.Process.DuraformProcessPressingDto, 3-Application',
         },
         {
           value: DuraformProcessCleaningDto,
           name:
-            '_3_Application.Dtos.DuraformProcess.DuraformProcessCleaningDto, 3-Application',
+            '_3_Application.Dtos.Process.DuraformProcessCleaningDto, 3-Application',
         },
         {
           value: DuraformProcessPackingDto,
           name:
-            '_3_Application.Dtos.DuraformProcess.DuraformProcessPackingDto, 3-Application',
+            '_3_Application.Dtos.Process.DuraformProcessPackingDto, 3-Application',
         },
         {
           value: DuraformProcessPickingUpDto,
           name:
-            '_3_Application.Dtos.DuraformProcess.DuraformProcessPickingUpDto, 3-Application',
+            '_3_Application.Dtos.Process.DuraformProcessPickingUpDto, 3-Application',
         },
         {
           value: DuraformProcessDeliveringDto,
           name:
-            '_3_Application.Dtos.DuraformProcess.DuraformProcessDeliveringDto, 3-Application',
+            '_3_Application.Dtos.Process.DuraformProcessDeliveringDto, 3-Application',
         },
       ],
     },

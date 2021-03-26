@@ -94,6 +94,8 @@
     <Compile Remove="Migrations\20210224233833_CreateTable_DuraformMiscComponents.Designer.cs" />
     <Compile Remove="Migrations\20210317001237_EditTable_DuraformProcessRoutings_MachineIdNullable.cs" />
     <Compile Remove="Migrations\20210317001237_EditTable_DuraformProcessRoutings_MachineIdNullable.Designer.cs" />
+    <Compile Remove="Migrations\20210319002744_foo.cs" />
+    <Compile Remove="Migrations\20210319002744_foo.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
