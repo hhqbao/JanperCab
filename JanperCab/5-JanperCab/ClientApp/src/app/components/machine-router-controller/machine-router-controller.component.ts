@@ -61,8 +61,4 @@ export class MachineRouterControllerComponent extends MachineProcessControllerDi
       }
     );
   };
-
-  onTest = () => {
-    scanner.simulate(document, this.testEnquiryId);
-  };
 }

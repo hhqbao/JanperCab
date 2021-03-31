@@ -61,8 +61,4 @@ export class MachinePackingControllerComponent extends MachineProcessControllerD
       }
     );
   };
-
-  onTest = () => {
-    scanner.simulate(document, this.testEnquiryId);
-  };
 }

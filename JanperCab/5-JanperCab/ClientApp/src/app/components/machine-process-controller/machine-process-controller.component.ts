@@ -19,7 +19,6 @@ export abstract class MachineProcessControllerDirective
 
   isLoading = false;
   isScannerBusy = false;
-  testEnquiryId: string;
 
   ngOnInit(): void {
     scanner.attachTo(document, {

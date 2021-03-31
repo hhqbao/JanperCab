@@ -61,8 +61,4 @@ export class MachineCleaningControllerComponent extends MachineProcessController
       }
     );
   };
-
-  onTest = () => {
-    scanner.simulate(document, this.testEnquiryId);
-  };
 }

@@ -61,8 +61,4 @@ export class MachinePresserControllerComponent extends MachineProcessControllerD
       }
     );
   };
-
-  onTest = () => {
-    scanner.simulate(document, this.testEnquiryId);
-  };
 }
