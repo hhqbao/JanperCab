@@ -78,7 +78,77 @@ namespace _4_Infrastructure.Repositories
                     pressing.EndTime = DateTime.Now;
                     return pressing;
                 default:
-                    throw new Exception("Order not valid for ROUTING");
+                    throw new Exception("Order not valid for PRESSING");
+            }
+        }
+
+        public DuraformProcessCleaning ProcessCleaning(MachineCleaning cleaner, DuraformEnquiry duraformEnquiry)
+        {
+            var currentStatus = duraformEnquiry.DuraformProcesses.FirstOrDefault(x => x.IsCurrent);
+
+            switch (currentStatus)
+            {
+                case DuraformProcessPressing pressing:
+                    if (!pressing.EndTime.HasValue)
+                        throw new Exception($"Order is currently being pressed on Presser {pressing.MachinePresser.Name}");
+
+                    pressing.IsCurrent = false;
+
+                    var cleanProcess = duraformEnquiry.DuraformProcesses
+                        .OfType<DuraformProcessCleaning>()
+                        .First();
+
+                    cleanProcess.StartTime = DateTime.Now;
+                    cleanProcess.MachineId = cleaner.Id;
+                    cleanProcess.IsCurrent = true;
+
+                    return cleanProcess;
+                case DuraformProcessCleaning cleaning:
+                    if (cleaning.EndTime.HasValue)
+                        throw new Exception("Order has already been CLEANED");
+
+                    if (cleaning.MachineId != cleaner.Id)
+                        throw new Exception($"Order is currently on Cleaning Machine {cleaning.MachineCleaning.Name}");
+
+                    cleaning.EndTime = DateTime.Now;
+                    return cleaning;
+                default:
+                    throw new Exception("Order not valid for CLEANING");
+            }
+        }
+
+        public DuraformProcessPacking ProcessPacking(MachinePacking packer, DuraformEnquiry duraformEnquiry)
+        {
+            var currentStatus = duraformEnquiry.DuraformProcesses.FirstOrDefault(x => x.IsCurrent);
+
+            switch (currentStatus)
+            {
+                case DuraformProcessCleaning cleaning:
+                    if (!cleaning.EndTime.HasValue)
+                        throw new Exception($"Order is currently being cleaned on Cleaning Machine {cleaning.MachineCleaning.Name}");
+
+                    cleaning.IsCurrent = false;
+
+                    var packingProcess = duraformEnquiry.DuraformProcesses
+                        .OfType<DuraformProcessPacking>()
+                        .First();
+
+                    packingProcess.StartTime = DateTime.Now;
+                    packingProcess.MachineId = packer.Id;
+                    packingProcess.IsCurrent = true;
+
+                    return packingProcess;
+                case DuraformProcessPacking packing:
+                    if (packing.EndTime.HasValue)
+                        throw new Exception("Order has already been PACKED");
+
+                    if (packing.MachineId != packer.Id)
+                        throw new Exception($"Order is currently on Packing Machine {packing.MachinePacking.Name}");
+
+                    packing.EndTime = DateTime.Now;
+                    return packing;
+                default:
+                    throw new Exception("Order not valid for PACKING");
             }
         }
     }

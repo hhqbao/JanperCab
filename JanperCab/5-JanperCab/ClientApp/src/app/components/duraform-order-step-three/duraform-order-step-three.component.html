@@ -101,6 +101,10 @@
                   style="text-transform: uppercase"
                   *ngIf="duraformEnquiry.enquiryType === enquiryType.Order"
                 >
+                  <app-duraform-status-updator
+                    *ngIf="duraformEnquiry.approvedDate"
+                    [duraformEnquiry]="duraformEnquiry"
+                  ></app-duraform-status-updator>
                   {{ duraformEnquiry.statusDescription }}
                 </div>
               </app-simple-box>
@@ -414,53 +418,63 @@
         <ul class="summary-box">
           <li>
             <span class="summary-box__title">Doors</span>
-            <span class="summary-box__subtotal">{{
-              duraformEnquiry.duraformDoors | arraySum: "price" | currency
-            }}</span>
+            <span class="summary-box__subtotal">
+              {{ duraformEnquiry.duraformDoors | arraySum: "price" | currency }}
+            </span>
           </li>
           <li>
             <span class="summary-box__title">Pantry Doors</span>
-            <span class="summary-box__subtotal">{{
-              duraformEnquiry.pantryDoors | arraySum: "price" | currency
-            }}</span>
+            <span class="summary-box__subtotal">
+              {{ duraformEnquiry.pantryDoors | arraySum: "price" | currency }}
+            </span>
           </li>
           <li>
             <span class="summary-box__title">IB Backs</span>
-            <span class="summary-box__subtotal">{{
-              duraformEnquiry.endPanels | arraySum: "price" | currency
-            }}</span>
+            <span class="summary-box__subtotal">
+              {{ duraformEnquiry.endPanels | arraySum: "price" | currency }}
+            </span>
           </li>
           <li>
             <span class="summary-box__title">Drawers</span>
-            <span class="summary-box__subtotal">{{
-              duraformEnquiry.duraformDrawers | arraySum: "price" | currency
-            }}</span>
+            <span class="summary-box__subtotal">
+              {{
+                duraformEnquiry.duraformDrawers | arraySum: "price" | currency
+              }}
+            </span>
           </li>
           <li>
             <span class="summary-box__title">Miscellaneous</span>
-            <span class="summary-box__subtotal">{{
-              duraformEnquiry.miscComponents | arraySum: "price" | currency
-            }}</span>
+            <span class="summary-box__subtotal">
+              {{
+                duraformEnquiry.miscComponents | arraySum: "price" | currency
+              }}
+            </span>
+          </li>
+          <li>
+            <span class="summary-box__title">Delivery</span>
+            <span class="summary-box__subtotal">
+              {{ order.duraformEnquiry.deliveryFee | currency }}
+            </span>
           </li>
           <li class="summary-box__divider"></li>
           <li>
             <span class="summary-box__title"><b>Subtotal</b></span>
-            <span class="summary-box__subtotal">{{
-              order.duraformEnquiry.subTotal | currency
-            }}</span>
+            <span class="summary-box__subtotal">
+              {{ order.duraformEnquiry.subTotal | currency }}
+            </span>
           </li>
           <li>
             <span class="summary-box__title"><b>GST</b></span>
-            <span class="summary-box__subtotal">{{
-              order.duraformEnquiry.gst | currency
-            }}</span>
+            <span class="summary-box__subtotal">
+              {{ order.duraformEnquiry.gst | currency }}
+            </span>
           </li>
           <li class="summary-box__divider"></li>
           <li class="summary-box__total-line">
             <span class="summary-box__title"><b>Total</b></span>
-            <span class="summary-box__total">{{
-              order.duraformEnquiry.totalPrice | currency
-            }}</span>
+            <span class="summary-box__total">
+              {{ order.duraformEnquiry.totalPrice | currency }}
+            </span>
           </li>
         </ul>
       </app-simple-box>

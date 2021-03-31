@@ -296,6 +296,7 @@ export class DuraformEnquiryDto extends EnquiryDto {
 
     this.duraformComponents.forEach((x) => (total += x.price));
     this.miscComponents.forEach((x) => (total += x.price));
+    total += this.deliveryFee;
 
     return total;
   }

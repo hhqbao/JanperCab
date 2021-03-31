@@ -96,6 +96,10 @@
     <Compile Remove="Migrations\20210317001237_EditTable_DuraformProcessRoutings_MachineIdNullable.Designer.cs" />
     <Compile Remove="Migrations\20210319002744_foo.cs" />
     <Compile Remove="Migrations\20210319002744_foo.Designer.cs" />
+    <Compile Remove="Migrations\20210330222640_Foo.cs" />
+    <Compile Remove="Migrations\20210330222640_Foo.Designer.cs" />
+    <Compile Remove="Migrations\20210331221218_Edit-Enquiries-AddCol-DeliveryFee.cs" />
+    <Compile Remove="Migrations\20210331221218_Edit-Enquiries-AddCol-DeliveryFee.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

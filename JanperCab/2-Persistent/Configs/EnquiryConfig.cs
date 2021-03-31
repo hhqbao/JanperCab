@@ -62,6 +62,10 @@ namespace _2_Persistent.Configs
             builder.Property(x => x.DeliveryNote)
                 .HasColumnType("varchar(2000)");
 
+            builder.Property(x => x.DeliveryFee)
+                .HasColumnName("DeliveryFee")
+                .HasColumnType("decimal(18,2)");
+
             builder.Property(x => x.TotalPrice)
                 .HasColumnName("TotalPrice")
                 .HasColumnType("decimal(18,2)");

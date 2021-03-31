@@ -1,3 +1,6 @@
+import { MachinePackingControllerComponent } from './components/machine-packing-controller/machine-packing-controller.component';
+import { MachineCleaningControllerComponent } from './components/machine-cleaning-controller/machine-cleaning-controller.component';
+import { DuraformStatusUpdatorComponent } from './components/duraform-status-updator/duraform-status-updator.component';
 import { MachinePresserControllerComponent } from './components/machine-presser-controller/machine-presser-controller.component';
 import { MachineRouterControllerComponent } from './components/machine-router-controller/machine-router-controller.component';
 import { SimpleTimerComponent } from './components/simple-timer/simple-timer.component';
@@ -233,8 +236,11 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     DuraformProcessViewerComponent,
     MachineListPageComponent,
     SimpleTimerComponent,
+    DuraformStatusUpdatorComponent,
     MachineRouterControllerComponent,
     MachinePresserControllerComponent,
+    MachineCleaningControllerComponent,
+    MachinePackingControllerComponent,
   ],
   imports: [
     BrowserModule,

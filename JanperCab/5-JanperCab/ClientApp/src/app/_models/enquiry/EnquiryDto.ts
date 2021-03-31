@@ -28,9 +28,11 @@ export abstract class EnquiryDto {
   deliveryPostcode: string;
 
   deliveryNote: string;
-  notEditable: boolean;
+  deliveryFee: number;
 
   totalPrice: number;
+
+  notEditable: boolean;
 
   get discriminator(): string {
     return `${this.enquiryType}`;
@@ -39,6 +41,7 @@ export abstract class EnquiryDto {
   constructor() {
     this.$type = '_3_Application.Dtos.Enquiry.EnquiryDto, 3-Application';
     this.enquiryType = EnquiryTypeEnum.Draft;
+    this.deliveryFee = 30;
   }
 
   abstract calculatePrice(): void;

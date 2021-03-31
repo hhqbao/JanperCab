@@ -10,6 +10,16 @@
       [machine]="selectedMachine"
       (closeBtnClick)="selectedMachine = null"
     ></app-machine-presser-controller>
+    <app-machine-cleaning-controller
+      *ngIf="selectedMachine.machineType === machineTypeEnum.Cleaning"
+      [machine]="selectedMachine"
+      (closeBtnClick)="selectedMachine = null"
+    ></app-machine-cleaning-controller>
+    <app-machine-packing-controller
+      *ngIf="selectedMachine.machineType === machineTypeEnum.Packing"
+      [machine]="selectedMachine"
+      (closeBtnClick)="selectedMachine = null"
+    ></app-machine-packing-controller>
   </app-float-box>
   <app-simple-box [heading]="'Machine List'" [height]="'100%'">
     <table class="table table--hovered table--sortable">

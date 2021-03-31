@@ -28,6 +28,18 @@ namespace _5_JanperCab.Helpers.Resolvers
                     break;
                 case MachineCutter cutter:
                     return null;
+                case MachineCleaning cleaning:
+                    var currentCleaningProcess = cleaning.DuraformProcessCleanings
+                        .Where(x => x.IsCurrent && !x.EndTime.HasValue).ToList();
+
+                    machines.AddRange(currentCleaningProcess.Select(x => new MachineProdutionCurrentProcessDto(x)));
+                    break;
+                case MachinePacking packing:
+                    var currentPackingProcess = packing.DuraformProcessPackings
+                        .Where(x => x.IsCurrent && !x.EndTime.HasValue).ToList();
+
+                    machines.AddRange(currentPackingProcess.Select(x => new MachineProdutionCurrentProcessDto(x)));
+                    break;
                 default:
                     throw new NotImplementedException();
             }

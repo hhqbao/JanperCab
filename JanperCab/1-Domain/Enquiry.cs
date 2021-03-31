@@ -48,9 +48,11 @@ namespace _1_Domain
 
         public string DeliveryNote { get; set; }
 
-        public bool NotEditable { get; set; }
+        public decimal DeliveryFee { get; set; }
 
         public decimal? TotalPrice { get; set; }
+
+        public bool NotEditable { get; set; }
 
 
         public virtual ApplicationUser Creator { get; set; }

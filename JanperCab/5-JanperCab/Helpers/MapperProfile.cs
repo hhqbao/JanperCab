@@ -186,13 +186,17 @@ namespace _5_JanperCab.Helpers
             CreateMap<Machine, MachineDto>()
                 .Include<MachineRouter, MachineRouterDto>()
                 .Include<MachinePresser, MachinePresserDto>()
-                .Include<MachineCutter, MachineCutterDto>();
+                .Include<MachineCutter, MachineCutterDto>()
+                .Include<MachineCleaning, MachineCleaningDto>()
+                .Include<MachinePacking, MachinePackingDto>();
             CreateMap<Machine, MachineProductionListDto>()
                 .ForMember(x => x.CurrentProcesses, opt => opt.MapFrom<MachineProductionListCurrentProcessesResolver>());
             CreateMap<MachineDto, Machine>()
                 .Include<MachineRouterDto, MachineRouter>()
                 .Include<MachinePresserDto, MachinePresser>()
-                .Include<MachineCutterDto, MachineCutter>();
+                .Include<MachineCutterDto, MachineCutter>()
+                .Include<MachineCleaningDto, MachineCleaning>()
+                .Include<MachinePackingDto, MachinePacking>();
 
             CreateMap<MachineRouter, MachineRouterDto>();
             CreateMap<MachineRouterDto, MachineRouter>();
@@ -202,6 +206,12 @@ namespace _5_JanperCab.Helpers
 
             CreateMap<MachineCutter, MachineCutterDto>();
             CreateMap<MachineCutterDto, MachineCutter>();
+
+            CreateMap<MachineCleaning, MachineCleaningDto>();
+            CreateMap<MachineCleaningDto, MachineCleaning>();
+
+            CreateMap<MachinePacking, MachinePackingDto>();
+            CreateMap<MachinePackingDto, MachinePacking>();
 
             CreateMap<Process, ProcessDto>()
                 .Include<DuraformProcess, DuraformProcessDto>();

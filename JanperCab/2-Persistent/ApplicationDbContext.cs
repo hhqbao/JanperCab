@@ -3,7 +3,6 @@ using _2_Persistent.Configs;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Options;
 
 namespace _2_Persistent
@@ -61,6 +60,8 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new MachineRouterConfig());
             builder.ApplyConfiguration(new MachinePresserConfig());
             builder.ApplyConfiguration(new MachineCutterConfig());
+            builder.ApplyConfiguration(new MachineCleaningConfig());
+            builder.ApplyConfiguration(new MachinePackingConfig());
 
             builder.ApplyConfiguration(new HingeHoleTypeConfig());
             builder.ApplyConfiguration(new HingeHoleOptionConfig());
@@ -120,30 +121,6 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformProcessDeliveringConfig());
 
             base.OnModelCreating(builder);
-        }
-    }
-
-    public class MachineRouterConfig : IEntityTypeConfiguration<MachineRouter>
-    {
-        public void Configure(EntityTypeBuilder<MachineRouter> builder)
-        {
-
-        }
-    }
-
-    public class MachinePresserConfig : IEntityTypeConfiguration<MachinePresser>
-    {
-        public void Configure(EntityTypeBuilder<MachinePresser> builder)
-        {
-
-        }
-    }
-
-    public class MachineCutterConfig : IEntityTypeConfiguration<MachineCutter>
-    {
-        public void Configure(EntityTypeBuilder<MachineCutter> builder)
-        {
-
         }
     }
 }

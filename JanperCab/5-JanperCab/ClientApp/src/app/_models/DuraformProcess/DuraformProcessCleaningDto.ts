@@ -1,11 +1,18 @@
+import { MachineCleaningDto } from './../machine/MachineCleaningDto';
 import { DuraformProcessDto } from './DuraformProcessDto';
 
 export class DuraformProcessCleaningDto extends DuraformProcessDto {
+  machineId: number;
+
+  machineCleaning: MachineCleaningDto;
+
   getStatus(): string {
-    if (this.startTime && this.endTime) {
-      return 'Cleaned';
+    let status = this.startTime && this.endTime ? 'Cleaned' : 'Cleaning';
+
+    if (this.machineCleaning) {
+      status += ` - ${this.machineCleaning.name}`;
     }
 
-    return 'Cleaning';
+    return status;
   }
 }

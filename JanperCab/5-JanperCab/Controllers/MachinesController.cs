@@ -83,5 +83,57 @@ namespace _5_JanperCab.Controllers
 
             return Ok(new MachineProdutionCurrentProcessDto(currentProcess));
         }
+
+        [Authorize(Roles = "Manufacturer")]
+        [HttpPut("process-cleaning/{cleanerId}/{enquiryId}")]
+        public async Task<IActionResult> ProcessCleaning(int cleanerId, int enquiryId)
+        {
+            var machine = await _unitOfWork.Machines.GetAsync(cleanerId);
+
+            if (!(machine is MachineCleaning cleaner))
+                return BadRequest("Cleaning Machine Not Found");
+
+            var enquiry = await _unitOfWork.Enquiries.GetAsync(enquiryId);
+
+            if (!(enquiry is DuraformEnquiry duraformEnquiry))
+                return BadRequest("Duraform Order Not Found");
+
+            if (!duraformEnquiry.ApprovedDate.HasValue)
+                return BadRequest("Order needs to be APPROVED");
+
+            if (!duraformEnquiry.DuraformProcesses.OfType<DuraformProcessCleaning>().Any())
+                return BadRequest("Order not for CLEANING");
+
+            var currentProcess = _unitOfWork.Machines.ProcessCleaning(cleaner, duraformEnquiry);
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(new MachineProdutionCurrentProcessDto(currentProcess));
+        }
+
+        [Authorize(Roles = "Manufacturer")]
+        [HttpPut("process-packing/{packerId}/{enquiryId}")]
+        public async Task<IActionResult> ProcessPacking(int packerId, int enquiryId)
+        {
+            var machine = await _unitOfWork.Machines.GetAsync(packerId);
+
+            if (!(machine is MachinePacking packer))
+                return BadRequest("Packing Machine Not Found");
+
+            var enquiry = await _unitOfWork.Enquiries.GetAsync(enquiryId);
+
+            if (!(enquiry is DuraformEnquiry duraformEnquiry))
+                return BadRequest("Duraform Order Not Found");
+
+            if (!duraformEnquiry.ApprovedDate.HasValue)
+                return BadRequest("Order needs to be APPROVED");
+
+            if (!duraformEnquiry.DuraformProcesses.OfType<DuraformProcessPacking>().Any())
+                return BadRequest("Order not for PACKING");
+
+            var currentProcess = _unitOfWork.Machines.ProcessPacking(packer, duraformEnquiry);
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(new MachineProdutionCurrentProcessDto(currentProcess));
+        }
     }
 }

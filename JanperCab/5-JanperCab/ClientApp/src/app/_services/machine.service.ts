@@ -34,12 +34,44 @@ export class MachineService {
   };
 
   processPressing = (
-    routerId: number,
+    presserId: number,
     enquiryId: number
   ): Observable<MachineProdutionCurrentProcessDto> => {
     return this.http
       .put<MachineProdutionCurrentProcessDto>(
-        `${environment.baseUrl}/Machines/Process-Pressing/${routerId}/${enquiryId}`,
+        `${environment.baseUrl}/Machines/Process-Pressing/${presserId}/${enquiryId}`,
+        null
+      )
+      .pipe(
+        map((response) => {
+          return plainToClass(MachineProdutionCurrentProcessDto, response);
+        })
+      );
+  };
+
+  processCleaning = (
+    cleanerId: number,
+    enquiryId: number
+  ): Observable<MachineProdutionCurrentProcessDto> => {
+    return this.http
+      .put<MachineProdutionCurrentProcessDto>(
+        `${environment.baseUrl}/Machines/Process-Cleaning/${cleanerId}/${enquiryId}`,
+        null
+      )
+      .pipe(
+        map((response) => {
+          return plainToClass(MachineProdutionCurrentProcessDto, response);
+        })
+      );
+  };
+
+  processPacking = (
+    packerId: number,
+    enquiryId: number
+  ): Observable<MachineProdutionCurrentProcessDto> => {
+    return this.http
+      .put<MachineProdutionCurrentProcessDto>(
+        `${environment.baseUrl}/Machines/Process-Packing/${packerId}/${enquiryId}`,
         null
       )
       .pipe(

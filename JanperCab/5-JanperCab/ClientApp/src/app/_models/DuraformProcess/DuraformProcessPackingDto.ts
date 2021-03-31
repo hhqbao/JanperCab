@@ -1,11 +1,18 @@
+import { MachinePackingDto } from '../machine/MachinePackingDto';
 import { DuraformProcessDto } from './DuraformProcessDto';
 
 export class DuraformProcessPackingDto extends DuraformProcessDto {
+  machineId: number;
+
+  machinePacking: MachinePackingDto;
+
   getStatus(): string {
-    if (this.startTime && this.endTime) {
-      return 'Packed';
+    let status = this.startTime && this.endTime ? 'Packed' : 'Packing';
+
+    if (this.machinePacking) {
+      status += ` - ${this.machinePacking.name}`;
     }
 
-    return 'Packing';
+    return status;
   }
 }
