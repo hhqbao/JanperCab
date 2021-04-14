@@ -1,0 +1,11 @@
+.delivery-page {
+  &__content {
+    @media print {
+      display: none;
+    }
+  }
+
+  &__header {
+    margin-bottom: 1.5rem;
+  }
+}

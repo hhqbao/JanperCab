@@ -1,6 +1,8 @@
 ﻿using _1_Domain;
 using _3_Application.Dtos.ApplicationFile;
 using _3_Application.Dtos.Customer;
+using _3_Application.Dtos.DeliveryRunSheet;
+using _3_Application.Dtos.Driver;
 using _3_Application.Dtos.DuraformArch;
 using _3_Application.Dtos.DuraformComponent;
 using _3_Application.Dtos.DuraformDesign;
@@ -317,6 +319,15 @@ namespace _5_JanperCab.Helpers
 
             CreateMap<DuraformMiscPriceHeatStrip, DuraformMiscPriceHeatStripDto>();
             CreateMap<DuraformMiscPriceHeatStripDto, DuraformMiscPriceHeatStrip>();
+
+            CreateMap<Driver, DriverDto>();
+            CreateMap<DriverDto, Driver>();
+
+            CreateMap<DeliveryRunSheet, DeliveryRunSheetDto>();
+            CreateMap<DeliveryRunSheetDto, DeliveryRunSheet>();
+
+            CreateMap<DeliveryRunSheet, DeliveryRunSheetForListDto>()
+                .ForMember(x => x.EnquiriesForRunSheet, opt => opt.MapFrom<EnquiriesForRunSheetResolver>());
         }
     }
 }

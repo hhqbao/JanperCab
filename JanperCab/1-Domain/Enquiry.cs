@@ -54,12 +54,36 @@ namespace _1_Domain
 
         public bool NotEditable { get; set; }
 
+        public int? DeliveryRunSheetId { get; set; }
 
         public virtual ApplicationUser Creator { get; set; }
 
         public virtual Distributor Distributor { get; set; }
 
         public virtual CabinetMaker CabinetMaker { get; set; }
+
+        public virtual DeliveryRunSheet DeliveryRunSheet { get; set; }
+
+
+        public abstract string DoorType { get; }
+
+        public abstract string DoorColor { get; }
+
+        public abstract Process CurrentProcess { get; }
+
+        public abstract int PartCount { get; }
+
+        public abstract void ProcessRouting(MachineRouter router);
+
+        public abstract void ProcessPressing(MachinePresser presser);
+
+        public abstract void ProcessCleaning(MachineCleaning cleaningMachine);
+
+        public abstract void ProcessPacking(MachinePacking packingMachine);
+
+        public abstract void ProcessDelivering(DeliveryRunSheet runSheet);
+
+        public abstract void UndoDelivering();
 
         protected Enquiry()
         {

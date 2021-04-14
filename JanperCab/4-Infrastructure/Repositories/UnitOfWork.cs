@@ -43,6 +43,10 @@ namespace _4_Infrastructure.Repositories
 
         public IMachineRepo Machines { get; }
 
+        public IDriverRepo Drivers { get; }
+
+        public IDeliveryRunSheetRepo DeliveryRunSheets { get; }
+
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {
@@ -65,6 +69,8 @@ namespace _4_Infrastructure.Repositories
             DuraformPrices = new DuraformPriceRepo(_dbContext);
             DuraformMiscPrices = new DuraformMiscPriceRepo(_dbContext);
             Machines = new MachineRepo(_dbContext);
+            Drivers = new DriverRepo(_dbContext);
+            DeliveryRunSheets = new DeliveryRunSheetRepo(_dbContext);
         }
 
         public async Task ExecuteCommandAsync(string command)

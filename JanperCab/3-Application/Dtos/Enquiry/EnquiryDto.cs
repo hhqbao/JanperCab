@@ -53,5 +53,7 @@ namespace _3_Application.Dtos.Enquiry
         public decimal? TotalPrice { get; set; }
 
         public bool NotEditable { get; set; }
+
+        public int? DeliveryRunSheetId { get; set; }
     }
 }

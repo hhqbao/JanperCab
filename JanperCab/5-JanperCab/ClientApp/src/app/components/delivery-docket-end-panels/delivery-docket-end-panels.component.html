@@ -3,22 +3,22 @@
   <table>
     <thead>
       <tr>
-        <th style="width: 50px">qty</th>
-        <th style="width: 80px">height</th>
-        <th style="width: 80px">width</th>
-        <th style="width: 90px">no. shields</th>
-        <th style="width: 60px">rail left</th>
-        <th style="width: 95px">rail center</th>
-        <th style="width: 75px">rail right</th>
-        <th style="width: 80px">extra rail top</th>
-        <th style="width: 80px">extra rail bottom</th>
-        <th style="text-align: center; width: 30px">t</th>
-        <th style="text-align: center; width: 30px">b</th>
-        <th style="text-align: center; width: 30px">l</th>
-        <th style="text-align: center; width: 30px">r</th>
-        <th style="padding-left: 10px; width: 355px">option</th>
-        <th style="padding-left: 10px; width: 100px">routed</th>
-        <th style="padding-left: 10px; width: 100px">cleaned</th>
+        <th class="qty">qty</th>
+        <th class="height">height</th>
+        <th class="width">width</th>
+        <th class="shields">no. shields</th>
+        <th class="rail-size">rail left</th>
+        <th class="rail-size">rail center</th>
+        <th class="rail-size">rail right</th>
+        <th class="extra-rail">extra rail top</th>
+        <th class="extra-rail">extra rail bottom</th>
+        <th class="side">t</th>
+        <th class="side">b</th>
+        <th class="side">l</th>
+        <th class="side">r</th>
+        <th class="option">option</th>
+        <th class="checkbox">routed</th>
+        <th class="checkbox">cleaned</th>
       </tr>
     </thead>
     <tbody>
@@ -32,25 +32,25 @@
         <td>{{ item.railRight }}</td>
         <td>{{ item.extraRailTop }}</td>
         <td>{{ item.extraRailBottom }}</td>
-        <td style="text-align: center">
+        <td class="side">
           {{ item.top ? "Y" : null }}
         </td>
-        <td style="text-align: center">
+        <td class="side">
           {{ item.bottom ? "Y" : null }}
         </td>
-        <td style="text-align: center">
+        <td class="side">
           {{ item.left ? "Y" : null }}
         </td>
-        <td style="text-align: center">
+        <td class="side">
           {{ item.right ? "Y" : null }}
         </td>
-        <td style="padding-left: 10px">
+        <td class="option">
           {{ item.duraformOption?.toString() }}
         </td>
-        <td style="padding-left: 10px">
+        <td class="checkbox">
           <div class="checkbox"></div>
         </td>
-        <td style="padding-left: 10px">
+        <td class="checkbox">
           <div class="checkbox"></div>
         </td>
       </tr>

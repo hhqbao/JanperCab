@@ -69,7 +69,11 @@
           </div>
         </a>
       </li>
-      <li class="nav__item" (click)="layoutService.toggleLeftNav(false)">
+      <li
+        class="nav__item"
+        *ngIf="auth.isInRole(role[role.Manufacturer])"
+        (click)="layoutService.toggleLeftNav(false)"
+      >
         <a [appClassToggle]="'active'">
           <div class="nav__item__icon text-green">
             <i class="fa fa-cog fa-spin"></i>
@@ -83,11 +87,21 @@
                   Machines
                 </a>
               </li>
+              <li>
+                <a [routerLink]="['/production/delivery']">
+                  <i class="fa fa-truck text-blue" aria-hidden="true"></i>
+                  Delivery
+                </a>
+              </li>
             </ul>
           </div>
         </a>
       </li>
-      <li class="nav__item" (click)="layoutService.toggleLeftNav(false)">
+      <li
+        class="nav__item"
+        *ngIf="auth.isInRole(role[role.Manufacturer])"
+        (click)="layoutService.toggleLeftNav(false)"
+      >
         <a [appClassToggle]="'active'">
           <div class="nav__item__icon">
             <i class="fa fa-database" aria-hidden="true"></i>

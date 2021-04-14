@@ -1,0 +1,166 @@
+.rs-pdf {
+  background-color: white;
+  color: black;
+  font-size: 25px;
+
+  @media print {
+    font-size: 18px;
+    min-height: 100vh;
+  }
+
+  &__header {
+    .janper-name {
+      font-size: 50px;
+      font-weight: bold;
+      font-style: italic;
+      text-transform: uppercase;
+
+      @media print {
+        font-size: 30px;
+      }
+    }
+
+    .janper-info {
+      font-size: 18px;
+      font-weight: 400;
+
+      &:not(:first-child) {
+        margin-top: 5px;
+      }
+
+      @media print {
+        font-size: 13px;
+
+        &:not(:first-child) {
+          margin-top: 3px;
+        }
+      }
+    }
+
+    .barcode-box {
+      text-align: right;
+    }
+
+    .run-sheet-number {
+      font-weight: bold;
+      margin-bottom: 15px;
+      text-align: right;
+
+      @media print {
+        margin-bottom: 8px;
+      }
+    }
+
+    .run-sheet-date {
+      font-size: 20px;
+      text-align: right;
+
+      @media print {
+        font-size: 16px;
+      }
+    }
+  }
+
+  &__sub-header {
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 50px;
+
+    @media print {
+      margin-top: 10px;
+      margin-bottom: 25px;
+    }
+  }
+
+  &__body {
+    .patch {
+      &__cabinet-maker {
+        font-weight: bold;
+        font-size: 30px;
+        margin-bottom: 5px;
+
+        @media print {
+          font-size: 20px;
+        }
+      }
+
+      &__address {
+        font-size: 20px;
+
+        @media print {
+          font-size: 13px;
+        }
+      }
+
+      &__detail-table {
+        margin-top: 10px;
+
+        table {
+          text-align: left;
+          width: 100%;
+
+          thead {
+            font-size: 20px;
+            opacity: 0.4;
+
+            .col {
+              &__enquiry-id {
+                width: 95px;
+
+                @media print {
+                  width: 70px;
+                }
+              }
+
+              &__customer-ref {
+                width: 200px;
+
+                @media print {
+                  width: 140px;
+                }
+              }
+
+              &__door-type {
+                width: 185px;
+
+                @media print {
+                  width: 120px;
+                }
+              }
+
+              &__door-colour {
+                width: 365px;
+
+                @media print {
+                  width: 220px;
+                }
+              }
+            }
+
+            @media print {
+              font-size: 16px;
+            }
+          }
+
+          tbody {
+            font-size: 17px;
+
+            @media print {
+              font-size: 13px;
+
+              tr {
+                td {
+                  padding: 3px 0;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &:not(:first-child) {
+        margin-top: 30px;
+      }
+    }
+  }
+}

@@ -3,23 +3,23 @@
   <table>
     <thead>
       <tr>
-        <th style="width: 50px">qty</th>
-        <th style="width: 80px">height</th>
-        <th style="width: 80px">width</th>
-        <th style="width: 80px">no drawers</th>
-        <th style="width: 285px">drawer type</th>
-        <th style="text-align: center; width: 30px">t</th>
-        <th style="text-align: center; width: 30px">b</th>
-        <th style="text-align: center; width: 30px">l</th>
-        <th style="text-align: center; width: 30px">r</th>
-        <th style="text-align: center; width: 80px">drill fronts</th>
-        <th style="padding-left: 10px; width: 80px">d1</th>
-        <th style="padding-left: 10px; width: 80px">d2</th>
-        <th style="padding-left: 10px; width: 80px">d3</th>
-        <th style="padding-left: 10px; width: 80px">d4</th>
-        <th style="padding-left: 10px; width: 80px">d5</th>
-        <th style="padding-left: 10px; width: 100px">routed</th>
-        <th style="padding-left: 10px; width: 100px">cleaned</th>
+        <th class="qty">qty</th>
+        <th class="height">height</th>
+        <th class="width">width</th>
+        <th class="drawers">no drawers</th>
+        <th class="drawer-type">drawer type</th>
+        <th class="side">t</th>
+        <th class="side">b</th>
+        <th class="side">l</th>
+        <th class="side">r</th>
+        <th class="drill-front">drill fronts</th>
+        <th class="draw-size">d1</th>
+        <th class="draw-size">d2</th>
+        <th class="draw-size">d3</th>
+        <th class="draw-size">d4</th>
+        <th class="draw-size">d5</th>
+        <th class="checkbox">routed</th>
+        <th class="checkbox">cleaned</th>
       </tr>
     </thead>
     <tbody>
@@ -29,16 +29,16 @@
         <td>{{ drawer.width }}</td>
         <td>{{ drawer.numberOfDrawers }}</td>
         <td>{{ drawer.duraformDrawerType.name }}</td>
-        <td style="text-align: center">
+        <td class="side">
           {{ drawer.top ? "Y" : null }}
         </td>
-        <td style="text-align: center">
+        <td class="side">
           {{ drawer.bottom ? "Y" : null }}
         </td>
-        <td style="text-align: center">
+        <td class="side">
           {{ drawer.left ? "Y" : null }}
         </td>
-        <td style="text-align: center">
+        <td class="side">
           {{ drawer.right ? "Y" : null }}
         </td>
         <td style="text-align: center">
@@ -49,10 +49,10 @@
         <td style="padding-left: 10px">{{ drawer.drawerThree }}</td>
         <td style="padding-left: 10px">{{ drawer.drawerFour }}</td>
         <td style="padding-left: 10px">{{ drawer.drawerFive }}</td>
-        <td style="padding-left: 10px">
+        <td class="checkbox">
           <div class="checkbox"></div>
         </td>
-        <td style="padding-left: 10px">
+        <td class="checkbox">
           <div class="checkbox"></div>
         </td>
       </tr>

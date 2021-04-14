@@ -1,0 +1,66 @@
+<div class="rsf">
+  <div class="rsf__header">Delivery Run Sheet</div>
+  <div class="rsf__body">
+    <div class="rsf__driver-form">
+      <label class="form__label">Driver</label>
+      <app-select-menu
+        *ngIf="drivers.length > 0"
+        [control]="driverIdControl"
+        [values]="drivers"
+        [valueKey]="'id'"
+        [valueDisplay]="'fullName'"
+        (afterSet)="onSelectDriver()"
+      ></app-select-menu>
+    </div>
+    <table class="table table--left table--mini">
+      <thead>
+        <tr>
+          <th style="width: 7rem">Order No.</th>
+          <th class="text-center" style="width: 7rem">Parts</th>
+          <th>Address</th>
+          <th class="text-center" style="width: 8rem">Postcode</th>
+          <th class="text-right" style="width: 6rem"></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="selectedSheet">
+        <tr *ngFor="let item of selectedSheet.enquiriesForRunSheet">
+          <td>
+            <a
+              target="_blank"
+              [routerLink]="['/dashboard/duraform/', { id: item.enquiryId }]"
+            >
+              {{ item.enquiryId | leading: "000000" }}
+            </a>
+          </td>
+          <td class="text-center">{{ item.partCount }}</td>
+          <td>{{ item.address }}, {{ item.suburb }} {{ item.state }}</td>
+          <td class="text-center">{{ item.postcode }}</td>
+          <td class="text-right">
+            <button class="btn btn--link" (click)="onUndoDelivering(item)">
+              Remove
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="rsf__footer">
+    <div class="row">
+      <div class="col-1-2">
+        <button
+          class="btn btn--primary"
+          *ngIf="selectedSheet"
+          (click)="onPrint()"
+        >
+          <i class="fa fa-print" aria-hidden="true"></i>
+          Print
+        </button>
+      </div>
+      <div class="col-1-2 right">
+        <button class="btn btn--default" (click)="closeBtnClick.emit()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

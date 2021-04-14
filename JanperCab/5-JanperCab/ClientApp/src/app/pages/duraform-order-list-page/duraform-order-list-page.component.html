@@ -185,7 +185,7 @@
       <tbody *ngIf="itemList.items.length > 0">
         <tr *ngFor="let order of itemList.items">
           <td (click)="onSelectOrder(order.id)">
-            {{ order.id | leading: "0000000" }}
+            {{ order.id | leading }}
           </td>
           <td (click)="onSelectOrder(order.id)">
             {{ order.customerReference }}

@@ -8,13 +8,13 @@
     <div class="header__form-details">
       <div class="barcode">
         <ngx-barcode
-          [bc-value]="duraformEnquiry.id | leading: '0000000'"
+          [bc-value]="duraformEnquiry.id | leading"
           [bc-height]="'50px'"
         ></ngx-barcode>
       </div>
       <div class="title">Delivery Docket</div>
       <div class="order-number">
-        {{ duraformEnquiry.id | leading: "0000000" }}
+        {{ duraformEnquiry.id | leading }}
       </div>
       <div class="created-date">
         Date {{ duraformEnquiry.createdDate | date: "dd/MM/yyyy" }}
@@ -55,7 +55,7 @@
       {{ duraformEnquiry.customerReference }}
     </div>
     <div class="job-details">
-      Job No: {{ duraformEnquiry.id | leading: "0000000" }} |
+      Job No: {{ duraformEnquiry.id | leading }} |
       {{ duraformEnquiry.duraformDesign.name }} |
       {{ duraformEnquiry.duraformWrapColor.name }}
       {{ duraformEnquiry.duraformWrapType.name }} |

@@ -49,12 +49,15 @@
 @import "./3-component/duraform-price-display-table";
 @import "./3-component/duraform-process-viewer";
 @import "./3-component/machine-router-controller";
+@import "./3-component/run-sheet-form";
+@import "./3-component/run-sheet-pdf";
 @import "./4-layout/grid";
 @import "./4-layout/primary-layout";
 @import "./5-page/duraform-page";
 @import "./5-page/login-page";
 @import "./5-page/duraform-quote-page";
 @import "./5-page/duraform-price-page";
+@import "./5-page/delivery-page";
 
 @import "./../../../node_modules/alertifyjs/build/css/alertify.min.css";
 .ajs-message {

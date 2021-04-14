@@ -1,3 +1,4 @@
+import { EnquiryForRunSheetDto } from './../_models/enquiry/EnquiryForRunSheetDto';
 import { plainToClass } from 'class-transformer';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -11,6 +12,13 @@ import { MachineProdutionCurrentProcessDto } from '../_models/machine/MachinePro
 export class MachineService {
   constructor(private http: HttpClient) {}
 
+  exportDuraformIcb = (enquiryId: number) => {
+    return this.http.post(
+      `${environment.baseUrl}/Machines/Icb-Export/Duraform/${enquiryId}`,
+      null
+    );
+  };
+
   getMachinesForProductionList = (): Observable<MachineProductionListDto[]> => {
     return this.http.get<MachineProductionListDto[]>(
       `${environment.baseUrl}/Machines/Productions`
@@ -23,7 +31,7 @@ export class MachineService {
   ): Observable<MachineProdutionCurrentProcessDto> => {
     return this.http
       .put<MachineProdutionCurrentProcessDto>(
-        `${environment.baseUrl}/Machines/Process-Routing/${routerId}/${enquiryId}`,
+        `${environment.baseUrl}/Processes/Routing/${routerId}/${enquiryId}`,
         null
       )
       .pipe(
@@ -39,7 +47,7 @@ export class MachineService {
   ): Observable<MachineProdutionCurrentProcessDto> => {
     return this.http
       .put<MachineProdutionCurrentProcessDto>(
-        `${environment.baseUrl}/Machines/Process-Pressing/${presserId}/${enquiryId}`,
+        `${environment.baseUrl}/Processes/Pressing/${presserId}/${enquiryId}`,
         null
       )
       .pipe(
@@ -55,7 +63,7 @@ export class MachineService {
   ): Observable<MachineProdutionCurrentProcessDto> => {
     return this.http
       .put<MachineProdutionCurrentProcessDto>(
-        `${environment.baseUrl}/Machines/Process-Cleaning/${cleanerId}/${enquiryId}`,
+        `${environment.baseUrl}/Processes/Cleaning/${cleanerId}/${enquiryId}`,
         null
       )
       .pipe(
@@ -71,7 +79,7 @@ export class MachineService {
   ): Observable<MachineProdutionCurrentProcessDto> => {
     return this.http
       .put<MachineProdutionCurrentProcessDto>(
-        `${environment.baseUrl}/Machines/Process-Packing/${packerId}/${enquiryId}`,
+        `${environment.baseUrl}/Processes/Packing/${packerId}/${enquiryId}`,
         null
       )
       .pipe(
@@ -79,5 +87,28 @@ export class MachineService {
           return plainToClass(MachineProdutionCurrentProcessDto, response);
         })
       );
+  };
+
+  processDelivering = (
+    sheetId: number,
+    enquiryId: number
+  ): Observable<EnquiryForRunSheetDto> => {
+    return this.http
+      .put<EnquiryForRunSheetDto>(
+        `${environment.baseUrl}/Processes/Delivering/${sheetId}/${enquiryId}`,
+        null
+      )
+      .pipe(
+        map((response) => {
+          return plainToClass(EnquiryForRunSheetDto, response);
+        })
+      );
+  };
+
+  UndoDelivering = (enquiryId: number) => {
+    return this.http.put(
+      `${environment.baseUrl}/Processes/undo-delivering/${enquiryId}`,
+      null
+    );
   };
 }

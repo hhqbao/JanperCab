@@ -1,3 +1,8 @@
+import { RunSheetPdfComponent } from './components/run-sheet-pdf/run-sheet-pdf.component';
+import { RunSheetService } from './_services/run-sheet.service';
+import { DriverService } from './_services/driver.service';
+import { RunSheetFormComponent } from './components/run-sheet-form/run-sheet-form.component';
+import { DeliveryPageComponent } from './pages/delivery-page/delivery-page.component';
 import { MachinePackingControllerComponent } from './components/machine-packing-controller/machine-packing-controller.component';
 import { MachineCleaningControllerComponent } from './components/machine-cleaning-controller/machine-cleaning-controller.component';
 import { DuraformStatusUpdatorComponent } from './components/duraform-status-updator/duraform-status-updator.component';
@@ -21,7 +26,6 @@ import { ArraySumPipe } from './_pipes/arraySum.pipe';
 import { DuraformPriceBulkActionComponent } from './components/duraform-price-bulk-action/duraform-price-bulk-action.component';
 import { DuraformPriceEditorComponent } from './components/duraform-price-editor/duraform-price-editor.component';
 import { DuraformOptionAngledShelfFormComponent } from './components/duraform-option-angled-shelf-form/duraform-option-angled-shelf-form.component';
-import { MachineFileService } from './_services/machine-file.service';
 import { MiscItemService } from './_services/misc-item.service';
 import { EdgeProfileMenuComponent } from './components/edge-profile-menu/edge-profile-menu.component';
 import { CabinetMakerListComponent } from './components/cabinet-maker-list/cabinet-maker-list.component';
@@ -29,7 +33,6 @@ import { FileSizePipe } from './_pipes/fileSize.pipe';
 import { FileService } from './_services/file.service';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { DuraformOrderListPageComponent } from './pages/duraform-order-list-page/duraform-order-list-page.component';
-import { CabProService } from './_services/cab-pro.service';
 import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
 import { DeliveryDocketDuraformDrawersComponent } from './components/delivery-docket-duraform-drawers/delivery-docket-duraform-drawers.component';
 import { DeliveryDocketEndPanelsComponent } from './components/delivery-docket-end-panels/delivery-docket-end-panels.component';
@@ -241,6 +244,9 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     MachinePresserControllerComponent,
     MachineCleaningControllerComponent,
     MachinePackingControllerComponent,
+    DeliveryPageComponent,
+    RunSheetFormComponent,
+    RunSheetPdfComponent,
   ],
   imports: [
     BrowserModule,
@@ -262,7 +268,6 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     CommonAssetsService,
     LeadingPipe,
     FileService,
-    CabProService,
     AuthService,
     DialogService,
     LayoutService,
@@ -282,8 +287,9 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     DuraformOptionTypeService,
     HingeHoleService,
     MiscItemService,
-    MachineFileService,
     MachineService,
+    DriverService,
+    RunSheetService,
     ErrorInterceptorProvider,
   ],
   bootstrap: [AppComponent],

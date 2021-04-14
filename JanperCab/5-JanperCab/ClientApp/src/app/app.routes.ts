@@ -1,3 +1,4 @@
+import { DeliveryPageComponent } from './pages/delivery-page/delivery-page.component';
 import { MachineListPageComponent } from './pages/machine-list-page/machine-list-page.component';
 import { DuraformOrderListPageComponent } from './pages/duraform-order-list-page/duraform-order-list-page.component';
 import { CabinetMakerListPageComponent } from './pages/cabinet-maker-list-page/cabinet-maker-list-page.component';
@@ -39,6 +40,9 @@ export const routes: Routes = [
     component: PrimaryLayoutComponent,
     canActivate: [AuthGuard],
     runGuardsAndResolvers: 'always',
-    children: [{ path: 'machines', component: MachineListPageComponent }],
+    children: [
+      { path: 'machines', component: MachineListPageComponent },
+      { path: 'delivery', component: DeliveryPageComponent },
+    ],
   },
 ];

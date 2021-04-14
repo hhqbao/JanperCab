@@ -37,6 +37,8 @@ namespace _2_Persistent
 
         public DbSet<DuraformMiscPrice> DuraformMiscPrices { get; set; }
 
+        public DbSet<Driver> Drivers { get; set; }
+
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
@@ -119,6 +121,9 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformProcessPackingConfig());
             builder.ApplyConfiguration(new DuraformProcessPickingUpConfig());
             builder.ApplyConfiguration(new DuraformProcessDeliveringConfig());
+
+            builder.ApplyConfiguration(new DriverConfig());
+            builder.ApplyConfiguration(new DeliveryRunSheetConfig());
 
             base.OnModelCreating(builder);
         }

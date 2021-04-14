@@ -34,6 +34,8 @@ export abstract class EnquiryDto {
 
   notEditable: boolean;
 
+  deliveryRunSheetId: number;
+
   get discriminator(): string {
     return `${this.enquiryType}`;
   }

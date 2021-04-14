@@ -1,7 +1,7 @@
+import { MachineService } from './../../_services/machine.service';
 import { EnquiryTypeEnum } from './../../_enums/EnquiryTypeEnum';
 import { EnquiryService } from './../../_services/enquiry.service';
 import { DuraformEnquiryDto } from './../../_models/enquiry/DuraformEnquiryDto';
-import { MachineFileService } from './../../_services/machine-file.service';
 import { UploadDuraformFileDto } from './../../_models/files/UploadDuraformFileDto';
 import { FileService } from './../../_services/file.service';
 import { Role } from './../../_enums/Role';
@@ -47,7 +47,7 @@ export class DuraformOrderStepThreeComponent implements OnInit {
     private customerService: CustomerService,
     private layout: LayoutService,
     private dialog: DialogService,
-    private machineFile: MachineFileService,
+    private machineService: MachineService,
     public fileService: FileService
   ) {}
 
@@ -243,7 +243,7 @@ export class DuraformOrderStepThreeComponent implements OnInit {
 
   onExportDuraformIcb = () => {
     this.layout.showLoadingPanel();
-    this.machineFile.exportDuraformIcb(this.duraformEnquiry.id).subscribe(
+    this.machineService.exportDuraformIcb(this.duraformEnquiry.id).subscribe(
       (_) => {
         this.layout.closeLoadingPanel();
         this.dialog.success('ICB File Exported Successfully');

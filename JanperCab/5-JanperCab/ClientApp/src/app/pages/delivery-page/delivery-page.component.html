@@ -1,0 +1,67 @@
+<div class="delivery-page">
+  <app-float-box *ngIf="showRunSheetForm" [width]="70">
+    <app-run-sheet-form
+      [selectedSheet]="selectedSheet"
+      [runSheets]="runSheets"
+      (printBtnClick)="onPrintClick($event)"
+      (closeBtnClick)="showRunSheetForm = false"
+    ></app-run-sheet-form>
+  </app-float-box>
+  <app-pdf-viewer *ngIf="showRunSheetPdf" (closePanel)="onCloseRunSheetPdf()">
+    <app-run-sheet-pdf [sheetId]="selectedSheet.id"></app-run-sheet-pdf>
+  </app-pdf-viewer>
+  <div class="delivery-page__content">
+    <app-simple-box [heading]="'Delivery Run Sheets'">
+      <div class="delivery-page__header">
+        <button
+          class="btn btn--primary"
+          (click)="selectedSheet = null; showRunSheetForm = true"
+        >
+          <i class="fa fa-plus-circle" aria-hidden="true"></i>
+          Create Run Sheet
+        </button>
+      </div>
+      <div class="delivery-page__body">
+        <table class="table table--hovered table--left">
+          <thead>
+            <tr>
+              <th class="text-center" style="width: 9rem">Sheet No.</th>
+              <th style="width: 12rem">
+                <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                Created On
+              </th>
+              <th style="width: 12rem">
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                Time At
+              </th>
+              <th>Driver Name</th>
+              <th class="text-center" style="width: 12rem">Order Count</th>
+              <th style="width: 12rem"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sheet of runSheets">
+              <td class="text-center" (click)="onSelectSheet(sheet)">
+                {{ sheet.getBarcodePrefix() }}{{ sheet.id | leading }}
+              </td>
+              <td (click)="onSelectSheet(sheet)">
+                {{ sheet.createdDate | date: "dd/MM/yyyy" }}
+              </td>
+              <td (click)="onSelectSheet(sheet)">
+                {{ sheet.createdDate | date: "hh:mm" }}
+              </td>
+              <td (click)="onSelectSheet(sheet)">
+                {{ sheet.driver.fullName }}
+              </td>
+              <td class="text-center" (click)="onSelectSheet(sheet)">
+                {{ sheet.enquiriesForRunSheet.length }}
+              </td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="delivery-page__footer"></div>
+    </app-simple-box>
+  </div>
+</div>

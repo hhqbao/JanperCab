@@ -87,6 +87,11 @@ namespace _2_Persistent.Configs
                 .IsRequired()
                 .HasForeignKey(x => x.CabinetMakerId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.DeliveryRunSheet)
+                .WithMany(y => y.Enquiries)
+                .HasForeignKey(x => x.DeliveryRunSheetId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

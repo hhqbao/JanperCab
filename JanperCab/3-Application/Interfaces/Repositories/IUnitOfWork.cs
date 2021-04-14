@@ -38,6 +38,10 @@ namespace _3_Application.Interfaces.Repositories
 
         IMachineRepo Machines { get; }
 
+        IDriverRepo Drivers { get; }
+
+        IDeliveryRunSheetRepo DeliveryRunSheets { get; }
+
         Task ExecuteCommandAsync(string command);
 
         Task<int> CompleteAsync();

@@ -379,6 +379,52 @@ namespace _2_Persistent.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("Customer");
                 });
 
+            modelBuilder.Entity("_1_Domain.DeliveryRunSheet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DriverId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DriverId");
+
+                    b.ToTable("DeliveryRunSheets");
+                });
+
+            modelBuilder.Entity("_1_Domain.Driver", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("varchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Drivers");
+                });
+
             modelBuilder.Entity("_1_Domain.DuraformArch", b =>
                 {
                     b.Property<int>("Id")
@@ -867,6 +913,9 @@ namespace _2_Persistent.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
+                    b.Property<int?>("DeliveryRunSheetId")
+                        .HasColumnType("int");
+
                     b.Property<string>("DeliveryState")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
@@ -927,6 +976,8 @@ namespace _2_Persistent.Migrations
                     b.HasIndex("CabinetMakerId");
 
                     b.HasIndex("CreatorId");
+
+                    b.HasIndex("DeliveryRunSheetId");
 
                     b.HasIndex("DistributorId");
 
@@ -1758,6 +1809,15 @@ namespace _2_Persistent.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("_1_Domain.DeliveryRunSheet", b =>
+                {
+                    b.HasOne("_1_Domain.Driver", "Driver")
+                        .WithMany("DeliveryRunSheets")
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("_1_Domain.DuraformComponent", b =>
                 {
                     b.HasOne("_1_Domain.DuraformEdgeProfile", "DuraformEdgeProfile")
@@ -1858,6 +1918,11 @@ namespace _2_Persistent.Migrations
                         .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("_1_Domain.DeliveryRunSheet", "DeliveryRunSheet")
+                        .WithMany("Enquiries")
+                        .HasForeignKey("DeliveryRunSheetId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("_1_Domain.Distributor", "Distributor")
                         .WithMany("Enquiries")
