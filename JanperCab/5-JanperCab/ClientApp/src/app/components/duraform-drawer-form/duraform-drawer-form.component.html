@@ -8,18 +8,49 @@
     <td style="color: #ec092b">
       <i class="fa fa-hand-o-right" aria-hidden="true"></i>
     </td>
-    <app-duraform-door-basic-input
-      appRemoveTag
-      [formGroup]="formGroup"
-      (heightKeyUp)="onHeightChange()"
-    ></app-duraform-door-basic-input>
+    <td>
+      <input
+        class="form__control"
+        currencyMask
+        appSelectOnFocus
+        [formControl]="quantity"
+        (blur)="quantity.invalid && quantity.setValue(1)"
+        [options]="{
+          align: 'center',
+          allowZero: false,
+          precision: '0',
+          decimal: '',
+          prefix: '',
+          thousands: '',
+          max: 100
+        }"
+      />
+    </td>
+    <td>
+      {{ this.height.value }}
+    </td>
+    <td>
+      <input
+        class="form__control"
+        currencyMask
+        appSelectOnFocus
+        [formControl]="width"
+        [options]="{
+          align: 'center',
+          allowZero: false,
+          precision: '0',
+          decimal: '',
+          prefix: '',
+          thousands: ''
+        }"
+      />
+    </td>
     <td>
       <app-select-menu
-        [control]="formGroup.get('numberOfDrawers')"
+        [control]="numberOfDrawers"
         [values]="numberDrawers"
         [valueKey]="'id'"
         [valueDisplay]="'value'"
-        [isDisabled]="formGroup.get('height').invalid"
         (afterSet)="onNumberOfDrawersChanged()"
       ></app-select-menu>
     </td>
@@ -29,7 +60,7 @@
         [values]="asset.duraformDrawerTypes"
         [valueKey]="'id'"
         [valueDisplay]="'name'"
-        [isDisabled]="formGroup.get('numberOfDrawers').invalid"
+        [isDisabled]="numberOfDrawers.invalid"
       ></app-select-menu>
     </td>
     <app-edge-profile-form-control
@@ -44,8 +75,17 @@
       </label>
     </td>
     <td>
+      <app-select-menu
+        [control]="drawerGap"
+        [values]="drawerGaps"
+        [valueKey]="'value'"
+        [valueDisplay]="'text'"
+        (afterSet)="updateHeight()"
+      ></app-select-menu>
+    </td>
+    <td>
       <input
-        *ngIf="formGroup.get('numberOfDrawers').valid"
+        *ngIf="numberOfDrawers.valid"
         class="form__control"
         currencyMask
         appSelectOnFocus
@@ -59,11 +99,13 @@
           thousands: '',
           max: '2500'
         }"
+        (blur)="updateHeight()"
+        (keyup)="updateHeight()"
       />
     </td>
     <td>
       <input
-        *ngIf="formGroup.get('numberOfDrawers').value >= 2"
+        *ngIf="numberOfDrawers.value >= 2"
         class="form__control"
         currencyMask
         appSelectOnFocus
@@ -77,11 +119,13 @@
           thousands: '',
           max: '2500'
         }"
+        (blur)="updateHeight()"
+        (keyup)="updateHeight()"
       />
     </td>
     <td>
       <input
-        *ngIf="formGroup.get('numberOfDrawers').value >= 3"
+        *ngIf="numberOfDrawers.value >= 3"
         class="form__control"
         currencyMask
         appSelectOnFocus
@@ -95,11 +139,13 @@
           thousands: '',
           max: '2500'
         }"
+        (blur)="updateHeight()"
+        (keyup)="updateHeight()"
       />
     </td>
     <td>
       <input
-        *ngIf="formGroup.get('numberOfDrawers').value >= 4"
+        *ngIf="numberOfDrawers.value >= 4"
         class="form__control"
         currencyMask
         appSelectOnFocus
@@ -113,11 +159,13 @@
           thousands: '',
           max: '2500'
         }"
+        (blur)="updateHeight()"
+        (keyup)="updateHeight()"
       />
     </td>
     <td>
       <input
-        *ngIf="formGroup.get('numberOfDrawers').value >= 5"
+        *ngIf="numberOfDrawers.value >= 5"
         class="form__control"
         currencyMask
         appSelectOnFocus
@@ -131,6 +179,8 @@
           thousands: '',
           max: '2500'
         }"
+        (blur)="updateHeight()"
+        (keyup)="updateHeight()"
       />
     </td>
     <td>

@@ -187,6 +187,10 @@
 
               &.drawers {
                 width: 110px;
+
+                @media print {
+                  width: 85px;
+                }
               }
 
               &.drawer-type {
@@ -226,6 +230,11 @@
               }
 
               &.drill-front {
+                text-align: center;
+                width: 80px;
+              }
+
+              &.drawer-gap {
                 text-align: center;
                 width: 80px;
               }

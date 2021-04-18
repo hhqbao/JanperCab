@@ -21,6 +21,63 @@
     padding: 0.8rem 1.5rem;
   }
 
+  &__patch-list {
+    border: solid 2px rgba(black, 0.3);
+    padding: 1rem;
+
+    .patch {
+      &__cabinet-maker {
+        font-weight: bold;
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      &__address {
+        font-size: 1.5rem;
+      }
+
+      &__detail-table {
+        margin-top: 1rem;
+
+        table {
+          text-align: left;
+          width: 100%;
+
+          thead {
+            font-size: 1.5rem;
+            opacity: 0.4;
+
+            .col {
+              &__enquiry-id {
+                width: 9.5rem;
+              }
+
+              &__customer-ref {
+                width: 20rem;
+              }
+
+              &__door-type {
+                width: 18.5rem;
+              }
+
+              &__door-colour {
+                width: 36.5rem;
+              }
+            }
+          }
+
+          tbody {
+            font-size: 1.5rem;
+          }
+        }
+      }
+
+      &:not(:first-child) {
+        margin-top: 3rem;
+      }
+    }
+  }
+
   &__footer {
     padding: 0.8rem 1.5rem;
   }

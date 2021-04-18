@@ -12,6 +12,8 @@ namespace _1_Domain
 
         public bool HasDrillFronts { get; set; }
 
+        public decimal DrawerGap { get; set; }
+
         public decimal? DrawerOne { set; get; }
 
         public decimal? DrawerTwo { get; set; }
@@ -26,7 +28,7 @@ namespace _1_Domain
         {
             get
             {
-                var totalGap = (NumberOfDrawers - 1) * 3; //3mm gap fixed TODO remove fixed value
+                var totalGap = (NumberOfDrawers - 1) * DrawerGap;
                 var drawer1 = DrawerOne ?? 0;
                 var drawer2 = DrawerTwo ?? 0;
                 var drawer3 = DrawerThree ?? 0;

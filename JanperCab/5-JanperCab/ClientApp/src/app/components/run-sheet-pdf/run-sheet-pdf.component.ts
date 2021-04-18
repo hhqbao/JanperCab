@@ -22,24 +22,6 @@ export class RunSheetPdfComponent implements OnInit {
     )}`;
   }
 
-  get patches(): DeliveryPatchDto[] {
-    const patches: DeliveryPatchDto[] = [];
-
-    if (this.runSheet) {
-      this.runSheet.enquiriesForRunSheet.forEach((enquiry) => {
-        const existPatch = patches.find((p) => p.hasSameAddress(enquiry));
-
-        if (existPatch) {
-          existPatch.enquiriesForRunSheet.push(enquiry);
-        } else {
-          patches.push(new DeliveryPatchDto(enquiry));
-        }
-      });
-    }
-
-    return patches;
-  }
-
   constructor(
     private leadingPipe: LeadingPipe,
     private sheetService: RunSheetService,

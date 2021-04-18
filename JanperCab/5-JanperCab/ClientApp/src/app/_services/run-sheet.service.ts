@@ -33,6 +33,13 @@ export class RunSheetService {
       );
   };
 
+  lockRunSheet = (sheetId: number): Observable<Date> => {
+    return this.http.put<Date>(
+      `${environment.baseUrl}/RunSheets/Lock/${sheetId}`,
+      null
+    );
+  };
+
   changeDriver = (sheetId: number, driverId: number): Observable<DriverDto> => {
     return this.http
       .put<DriverDto>(

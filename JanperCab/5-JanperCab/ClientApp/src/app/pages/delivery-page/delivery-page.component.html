@@ -25,6 +25,7 @@
         <table class="table table--hovered table--left">
           <thead>
             <tr>
+              <th class="text-center" style="width: 6rem">Status</th>
               <th class="text-center" style="width: 9rem">Sheet No.</th>
               <th style="width: 12rem">
                 <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
@@ -36,11 +37,22 @@
               </th>
               <th>Driver Name</th>
               <th class="text-center" style="width: 12rem">Order Count</th>
+              <th class="text-center" style="width: 15rem">
+                <i class="fa fa-lock" aria-hidden="true"></i>
+                Locked Date
+              </th>
               <th style="width: 12rem"></th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let sheet of runSheets">
+              <td class="text-center">
+                <i
+                  *ngIf="sheet.lockedDate"
+                  class="fa fa-lock text-alert"
+                  aria-hidden="true"
+                ></i>
+              </td>
               <td class="text-center" (click)="onSelectSheet(sheet)">
                 {{ sheet.getBarcodePrefix() }}{{ sheet.id | leading }}
               </td>
@@ -55,6 +67,12 @@
               </td>
               <td class="text-center" (click)="onSelectSheet(sheet)">
                 {{ sheet.enquiriesForRunSheet.length }}
+              </td>
+              <td class="text-center" (click)="onSelectSheet(sheet)">
+                <span *ngIf="sheet.lockedDate">
+                  {{ sheet.lockedDate | date: "dd/MM/yyyy hh:mm" }}
+                </span>
+                <span *ngIf="!sheet.lockedDate">-- : --</span>
               </td>
               <td></td>
             </tr>

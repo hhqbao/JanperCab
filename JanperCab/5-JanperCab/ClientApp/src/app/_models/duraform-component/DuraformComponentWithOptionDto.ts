@@ -63,7 +63,9 @@ export abstract class DuraformComponentWithOptionDto extends DuraformComponentDt
   }
 
   get totalWidth(): number {
-    if (!this.duraformOption) return this.width;
+    if (!this.duraformOption) {
+      return this.width;
+    }
 
     return this.width + this.duraformOption.getExtraWidth();
   }

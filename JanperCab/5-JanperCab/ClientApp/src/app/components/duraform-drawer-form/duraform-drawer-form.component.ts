@@ -16,6 +16,11 @@ export class DuraformDrawerFormComponent
   implements OnInit {
   componentType: ComponentType = ComponentType.DuraformEndPanel;
 
+  drawerGaps = [
+    { value: 2, text: '2mm' },
+    { value: 3, text: '3mm' },
+  ];
+
   numberDrawers = [
     { id: 1, value: 1 },
     { id: 2, value: 2 },
@@ -32,6 +37,14 @@ export class DuraformDrawerFormComponent
     public dialog: DialogService
   ) {
     super(ef, dialog);
+  }
+
+  get numberOfDrawers(): AbstractControl {
+    return this.formGroup.get('numberOfDrawers');
+  }
+
+  get drawerGap(): AbstractControl {
+    return this.formGroup.get('drawerGap');
   }
 
   get drawerOne(): AbstractControl {
@@ -66,7 +79,7 @@ export class DuraformDrawerFormComponent
       ],
       duraformDrawerTypeId: [null, [Validators.required]],
       height: [
-        null,
+        0,
         [
           Validators.required,
           Validators.min(30),
@@ -87,6 +100,7 @@ export class DuraformDrawerFormComponent
       left: [false],
       right: [false],
       hasDrillFronts: [false],
+      drawerGap: [2, [Validators.required]],
       drawerOne: [null],
       drawerTwo: [null],
       drawerThree: [null],
@@ -171,9 +185,13 @@ export class DuraformDrawerFormComponent
     this.drawerThree.updateValueAndValidity();
     this.drawerFour.updateValueAndValidity();
     this.drawerFive.updateValueAndValidity();
+
+    this.updateHeight();
   };
 
   onSubmit = () => {
+    this.updateHeight();
+
     if (this.formGroup.invalid) {
       if (this.quantity.errors) {
         if (this.quantity.errors.required) {
@@ -186,7 +204,7 @@ export class DuraformDrawerFormComponent
 
       if (this.height.errors) {
         if (this.height.errors.required) {
-          return this.showErrorMsg('Height cannot be empty');
+          return this.showErrorMsg('Height cannot be less than 30');
         }
         if (this.height.errors.min || this.height.errors.max) {
           return this.showErrorMsg(
@@ -230,5 +248,24 @@ export class DuraformDrawerFormComponent
     }
 
     this.formSubmit.emit(this.formGroup);
+  };
+
+  updateHeight = () => {
+    if (this.numberOfDrawers.invalid) {
+      return;
+    }
+
+    const numberOfDrawers = this.numberOfDrawers.value;
+    const gap = this.drawerGap.value;
+    const totalGap = (numberOfDrawers - 1) * gap;
+
+    const d1 = this.drawerOne.value ?? 0;
+    const d2 = this.drawerTwo.value ?? 0;
+    const d3 = this.drawerThree.value ?? 0;
+    const d4 = this.drawerFour.value ?? 0;
+    const d5 = this.drawerFive.value ?? 0;
+
+    this.height.patchValue(totalGap + d1 + d2 + d3 + d4 + d5);
+    this.height.updateValueAndValidity();
   };
 }

@@ -13,6 +13,7 @@
         <th class="side">l</th>
         <th class="side">r</th>
         <th class="drill-front">drill fronts</th>
+        <th class="drawer-gap">Gap</th>
         <th class="draw-size">d1</th>
         <th class="draw-size">d2</th>
         <th class="draw-size">d3</th>
@@ -44,11 +45,22 @@
         <td style="text-align: center">
           {{ drawer.hasDrillFronts ? "YES" : "NO" }}
         </td>
-        <td style="padding-left: 10px">{{ drawer.drawerOne }}</td>
-        <td style="padding-left: 10px">{{ drawer.drawerTwo }}</td>
-        <td style="padding-left: 10px">{{ drawer.drawerThree }}</td>
-        <td style="padding-left: 10px">{{ drawer.drawerFour }}</td>
-        <td style="padding-left: 10px">{{ drawer.drawerFive }}</td>
+        <td style="text-align: center">{{ drawer.drawerGap }}mm</td>
+        <td style="padding-left: 10px">
+          {{ drawer.drawerOne === 0 ? "" : drawer.drawerOne }}
+        </td>
+        <td style="padding-left: 10px">
+          {{ drawer.drawerTwo === 0 ? "" : drawer.drawerTwo }}
+        </td>
+        <td style="padding-left: 10px">
+          {{ drawer.drawerThree === 0 ? "" : drawer.drawerThree }}
+        </td>
+        <td style="padding-left: 10px">
+          {{ drawer.drawerFour === 0 ? "" : drawer.drawerFour }}
+        </td>
+        <td style="padding-left: 10px">
+          {{ drawer.drawerFive === 0 ? "" : drawer.drawerFive }}
+        </td>
         <td class="checkbox">
           <div class="checkbox"></div>
         </td>

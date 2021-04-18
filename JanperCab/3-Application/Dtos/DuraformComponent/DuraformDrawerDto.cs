@@ -8,6 +8,8 @@
 
         public bool HasDrillFronts { get; set; }
 
+        public decimal DrawerGap { get; set; }
+
         public decimal? DrawerOne { get; set; }
 
         public decimal? DrawerTwo { get; set; }

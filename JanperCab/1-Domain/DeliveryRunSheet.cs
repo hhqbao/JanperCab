@@ -12,6 +12,8 @@ namespace _1_Domain
 
         public DateTime CreatedDate { get; set; }
 
+        public DateTime? LockedDate { get; set; }
+
 
         public virtual Driver Driver { get; set; }
 

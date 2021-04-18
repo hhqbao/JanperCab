@@ -5,6 +5,7 @@ using _3_Application.Interfaces.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -55,12 +56,32 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<DeliveryRunSheet, DeliveryRunSheetForListDto>(newSheet));
         }
 
+        [HttpPut("lock/{sheetId}")]
+        public async Task<IActionResult> Lock(int sheetId)
+        {
+            var runSheet = await _unitOfWork.DeliveryRunSheets.GetAsync(sheetId);
+
+            if (runSheet == null) return BadRequest("Run Sheet Not Found");
+
+            if (runSheet.Enquiries.Count == 0)
+                return BadRequest("At least 1 order required");
+
+            if (runSheet.LockedDate.HasValue) return BadRequest("Run Sheet Not Valid For Locking");
+
+            runSheet.LockedDate = DateTime.Now;
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(runSheet.LockedDate.Value);
+        }
+
         [HttpPut("change-driver/{sheetId}/{driverId}")]
         public async Task<IActionResult> ChangeDriver(int sheetId, int driverId)
         {
             var sheet = await _unitOfWork.DeliveryRunSheets.GetAsync(sheetId);
 
             if (sheet == null) return BadRequest("Run Sheet Not Found");
+
+            if (sheet.LockedDate.HasValue) return BadRequest("Run Sheet Is Locked! Cannot Be Changed");
 
             var driver = await _unitOfWork.Drivers.GetAsync(driverId);
 

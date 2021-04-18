@@ -16,6 +16,7 @@
             Drill <br />
             Fronts
           </th>
+          <th rowspan="2" style="width: 8rem">Gap</th>
           <th colspan="5">Drawer Size</th>
           <th rowspan="2">Note</th>
           <th rowspan="2" style="width: 8rem">Price</th>
@@ -50,18 +51,19 @@
           <td>{{ drawer.left ? "Y" : null }}</td>
           <td>{{ drawer.right ? "Y" : null }}</td>
           <td>{{ drawer.hasDrillFronts ? "YES" : "NO" }}</td>
-          <td>{{ drawer.drawerOne }}</td>
-          <td>{{ drawer.drawerTwo }}</td>
-          <td>{{ drawer.drawerThree }}</td>
-          <td>{{ drawer.drawerFour }}</td>
-          <td>{{ drawer.drawerFive }}</td>
+          <td>{{ drawer.drawerGap }}mm</td>
+          <td>{{ drawer.drawerOne === 0 ? "" : drawer.drawerOne }}</td>
+          <td>{{ drawer.drawerTwo === 0 ? "" : drawer.drawerTwo }}</td>
+          <td>{{ drawer.drawerThree === 0 ? "" : drawer.drawerThree }}</td>
+          <td>{{ drawer.drawerFour === 0 ? "" : drawer.drawerFour }}</td>
+          <td>{{ drawer.drawerFive === 0 ? "" : drawer.drawerFive }}</td>
           <td class="text-left">{{ drawer.note }}</td>
           <td class="text-right">{{ drawer.price | currency }}</td>
         </tr>
       </tbody>
       <tbody class="subtotal">
         <tr>
-          <td colspan="19" class="subtotal__header">
+          <td colspan="20" class="subtotal__header">
             <b>Subtotal</b>
           </td>
         </tr>
@@ -70,7 +72,7 @@
             <i class="fa fa-calculator" aria-hidden="true"></i>
           </td>
           <td>{{ totalQuantity }}</td>
-          <td colspan="16"></td>
+          <td colspan="17"></td>
           <td class="subtotal__price">
             {{ duraformDrawers | arraySum: "price" | currency }}
           </td>

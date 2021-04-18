@@ -8,6 +8,9 @@ namespace _2_Persistent.Configs
     {
         public void Configure(EntityTypeBuilder<DuraformDrawer> builder)
         {
+            builder.Property(x => x.DrawerGap)
+                .HasColumnType("decimal(18,2)");
+
             builder.Property(x => x.DrawerOne)
                 .HasColumnType("decimal(18,2)");
 

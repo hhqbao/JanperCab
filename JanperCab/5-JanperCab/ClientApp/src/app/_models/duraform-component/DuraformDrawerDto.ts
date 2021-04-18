@@ -9,6 +9,7 @@ export class DuraformDrawerDto extends DuraformComponentDto {
   numberOfDrawers: 2 | 3 | 4 | 5;
   duraformDrawerTypeId: number;
   hasDrillFronts: boolean;
+  drawerGap: number;
   drawerOne: number;
   drawerTwo: number;
   drawerThree: number;
@@ -22,7 +23,10 @@ export class DuraformDrawerDto extends DuraformComponentDto {
   }
 
   get totalHeight(): number {
+    const totalGap = (this.numberOfDrawers - 1) * this.drawerGap;
+
     return (
+      totalGap +
       this.drawerOne +
       this.drawerTwo +
       this.drawerThree +
@@ -42,11 +46,12 @@ export class DuraformDrawerDto extends DuraformComponentDto {
     this.numberOfDrawers = formValue.numberOfDrawers;
     this.duraformDrawerTypeId = formValue.duraformDrawerTypeId;
     this.hasDrillFronts = formValue.hasDrillFronts;
-    this.drawerOne = formValue.drawerOne;
-    this.drawerTwo = formValue.drawerTwo;
-    this.drawerThree = formValue.drawerThree;
-    this.drawerFour = formValue.drawerFour;
-    this.drawerFive = formValue.drawerFive;
+    this.drawerGap = formValue.drawerGap;
+    this.drawerOne = formValue.drawerOne ?? 0;
+    this.drawerTwo = formValue.drawerTwo ?? 0;
+    this.drawerThree = formValue.drawerThree ?? 0;
+    this.drawerFour = formValue.drawerFour ?? 0;
+    this.drawerFive = formValue.drawerFive ?? 0;
   }
 
   @Expose()

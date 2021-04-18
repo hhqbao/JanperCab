@@ -41,6 +41,14 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
     private dialogService: DialogService
   ) {}
 
+  get disableChangingDriver(): boolean {
+    if (this.selectedSheet && this.selectedSheet.lockedDate) {
+      return true;
+    }
+
+    return false;
+  }
+
   ngOnInit() {
     this.layoutService.showLoadingPanel();
 
@@ -74,7 +82,31 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.printBtnClick.emit(this.selectedSheet);
+    if (this.selectedSheet.lockedDate) {
+      this.printBtnClick.emit(this.selectedSheet);
+    } else {
+      this.dialogService.confirm(
+        'Locking Run Sheet',
+        'Run Sheet will be locked for editing! <br><br> Are you sure?',
+        () => {
+          this.isLoading = true;
+          this.layoutService.showLoadingPanel();
+          this.runSheetService.lockRunSheet(this.selectedSheet.id).subscribe(
+            (response) => {
+              this.selectedSheet.lockedDate = response;
+              this.isLoading = false;
+              this.layoutService.closeLoadingPanel();
+              this.printBtnClick.emit(this.selectedSheet);
+            },
+            (error) => {
+              this.isLoading = false;
+              this.layoutService.closeLoadingPanel();
+              this.dialogService.alert('Invalid Action', error, null);
+            }
+          );
+        }
+      );
+    }
   };
 
   onSelectDriver = () => {
@@ -97,7 +129,7 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
         (error) => {
           this.isLoading = false;
           this.layoutService.closeLoadingPanel();
-          this.dialogService.error(error);
+          this.dialogService.alert('Invalid Action', error, null);
         }
       );
   };
@@ -121,7 +153,7 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
         (error) => {
           this.isLoading = false;
           this.layoutService.closeLoadingPanel();
-          this.dialogService.error(error);
+          this.dialogService.alert('Invalid Action', error, null);
         }
       );
     });
