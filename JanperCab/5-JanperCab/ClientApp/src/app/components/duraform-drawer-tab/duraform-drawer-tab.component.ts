@@ -27,7 +27,11 @@ export class DuraformDrawerTabComponent
     const drawer = this.componentService.generateComponent(
       ComponentType.DuraformDrawer
     );
-    this.componentService.updateComponent(drawer, formGroup.value);
+    this.componentService.updateComponent(
+      drawer,
+      this.order.duraformEnquiry,
+      formGroup.value
+    );
 
     this.order.addComponent(drawer);
 

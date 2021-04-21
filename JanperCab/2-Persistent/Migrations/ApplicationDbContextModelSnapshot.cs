@@ -389,6 +389,9 @@ namespace _2_Persistent.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeliveredDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("DriverId")
                         .HasColumnType("int");
 
@@ -477,9 +480,6 @@ namespace _2_Persistent.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("varchar(1000)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -489,8 +489,20 @@ namespace _2_Persistent.Migrations
                     b.Property<int>("SortNumber")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<bool>("Top")
                         .HasColumnType("bit");
+
+                    b.Property<decimal>("TotalDiscount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Width")
                         .HasColumnType("decimal(18,2)");
@@ -699,11 +711,20 @@ namespace _2_Persistent.Migrations
                     b.Property<int>("DuraformEnquiryId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalDiscount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -931,6 +952,10 @@ namespace _2_Persistent.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
+                    b.Property<decimal>("DiscountRate")
+                        .HasColumnName("DiscountRate")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -940,6 +965,10 @@ namespace _2_Persistent.Migrations
 
                     b.Property<int>("EnquiryType")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("GstRate")
+                        .HasColumnName("GstRate")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("InvoiceAddress")
                         .IsRequired()
@@ -969,6 +998,14 @@ namespace _2_Persistent.Migrations
 
                     b.Property<DateTime?>("OrderedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnName("SubTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalGst")
+                        .HasColumnName("TotalGst")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal?>("TotalPrice")
                         .HasColumnName("TotalPrice")
@@ -1056,6 +1093,80 @@ namespace _2_Persistent.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("HingeHoleTypes");
+                });
+
+            modelBuilder.Entity("_1_Domain.Invoice", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("DeliveryFee")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DiscountRate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("EnquiryId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("GstRate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalGst")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnquiryId")
+                        .IsUnique();
+
+                    b.ToTable("Invoices");
+                });
+
+            modelBuilder.Entity("_1_Domain.InvoiceComponent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("varchar(1000)");
+
+                    b.Property<string>("InvoiceId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalDiscount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.ToTable("InvoiceComponents");
                 });
 
             modelBuilder.Entity("_1_Domain.Machine", b =>
@@ -1169,9 +1280,6 @@ namespace _2_Persistent.Migrations
                     b.Property<string>("DeliveryAddress")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<decimal>("DeliveryFee")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("DeliveryPostcode")
                         .HasColumnType("varchar(255)");
 
@@ -1183,6 +1291,9 @@ namespace _2_Persistent.Migrations
 
                     b.Property<string>("DeliveryTo")
                         .HasColumnType("varchar(255)");
+
+                    b.Property<decimal>("DiscountRate")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("DistributorId")
                         .HasColumnType("int");
@@ -1948,6 +2059,24 @@ namespace _2_Persistent.Migrations
                     b.HasOne("_1_Domain.DuraformComponentWithOptionAndHingeHole", "DuraformComponentWithOptionAndHingeHole")
                         .WithOne("HingeHoleOption")
                         .HasForeignKey("_1_Domain.HingeHoleOption", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("_1_Domain.Invoice", b =>
+                {
+                    b.HasOne("_1_Domain.Enquiry", "Enquiry")
+                        .WithOne("Invoice")
+                        .HasForeignKey("_1_Domain.Invoice", "EnquiryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("_1_Domain.InvoiceComponent", b =>
+                {
+                    b.HasOne("_1_Domain.Invoice", "Invoice")
+                        .WithMany("InvoiceComponents")
+                        .HasForeignKey("InvoiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

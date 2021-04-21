@@ -1,4 +1,6 @@
+import { InvoiceDto } from './../invoice/InvoiceDto';
 import { EnquiryTypeEnum } from './../../_enums/EnquiryTypeEnum';
+import { Type } from 'class-transformer';
 
 export abstract class EnquiryDto {
   $type: string;
@@ -28,21 +30,36 @@ export abstract class EnquiryDto {
   deliveryPostcode: string;
 
   deliveryNote: string;
-  deliveryFee: number;
 
+  gstRate: number;
+  discountRate: number;
+
+  deliveryFee: number;
+  subTotal: number;
+  totalGst: number;
   totalPrice: number;
 
   notEditable: boolean;
 
   deliveryRunSheetId: number;
 
+  @Type(() => InvoiceDto)
+  invoice: InvoiceDto;
+
   get discriminator(): string {
     return `${this.enquiryType}`;
+  }
+
+  get hasBeenInvoiced(): boolean {
+    return this.invoice !== null && this.invoice !== undefined;
   }
 
   constructor() {
     this.$type = '_3_Application.Dtos.Enquiry.EnquiryDto, 3-Application';
     this.enquiryType = EnquiryTypeEnum.Draft;
+
+    this.gstRate = 10;
+    this.discountRate = 0;
     this.deliveryFee = 30;
   }
 

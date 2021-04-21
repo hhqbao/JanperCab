@@ -48,7 +48,15 @@ namespace _1_Domain
 
         public string DeliveryNote { get; set; }
 
+        public decimal GstRate { get; set; }
+
+        public decimal DiscountRate { get; set; }
+
         public decimal DeliveryFee { get; set; }
+
+        public decimal SubTotal { get; set; }
+
+        public decimal TotalGst { get; set; }
 
         public decimal? TotalPrice { get; set; }
 
@@ -64,6 +72,8 @@ namespace _1_Domain
 
         public virtual DeliveryRunSheet DeliveryRunSheet { get; set; }
 
+        public virtual Invoice Invoice { get; set; }
+
 
         public abstract string DoorType { get; }
 
@@ -72,6 +82,14 @@ namespace _1_Domain
         public abstract Process CurrentProcess { get; }
 
         public abstract int PartCount { get; }
+
+        public abstract bool HasBeenDelivered { get; }
+
+
+        public string FullDeliveryAddress => $"{DeliveryAddress}, {DeliverySuburb} {DeliveryState} {DeliveryPostcode}";
+
+        public string FullInvoiceAddress => $"{InvoiceAddress}, {InvoiceSuburb} {InvoiceState} {InvoicePostcode}";
+
 
         public abstract void ProcessRouting(MachineRouter router);
 
@@ -84,6 +102,10 @@ namespace _1_Domain
         public abstract void ProcessDelivering(DeliveryRunSheet runSheet);
 
         public abstract void UndoDelivering();
+
+        public abstract void CompleteDelivering();
+
+        public abstract Invoice GenerateInvoice(string invoiceId);
 
         protected Enquiry()
         {

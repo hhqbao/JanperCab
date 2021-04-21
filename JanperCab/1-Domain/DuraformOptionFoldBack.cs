@@ -55,5 +55,22 @@ namespace _1_Domain
                     break;
             }
         }
+
+        public override string GetInvoiceDescription()
+        {
+            var desc = $"{Thickness:F0}mm ";
+
+            desc += FoldingType switch
+            {
+                FoldingType.Left => $"Left Fold {LeftLength:F0}mm",
+                FoldingType.Right => $"Right Fold {RightLength:F0}mm",
+                FoldingType.Double => $"Double Fold L{LeftLength:F0} x R{RightLength:F0}",
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            desc += HasProfile ? " With Profile" : " No Profile";
+
+            return desc;
+        }
     }
 }

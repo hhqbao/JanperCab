@@ -20,5 +20,14 @@ namespace _1_Domain
                     break;
             }
         }
+
+        public override string GetInvoiceDescription()
+        {
+            var desc = "Double Sided ";
+
+            desc += HasProfile ? " With Profile" : " No Profile";
+
+            return desc;
+        }
     }
 }

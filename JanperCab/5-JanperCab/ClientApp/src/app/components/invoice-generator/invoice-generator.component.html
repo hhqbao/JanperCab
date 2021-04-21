@@ -1,0 +1,30 @@
+<div class="invoice-generator">
+  <form [formGroup]="invoiceForm" (ngSubmit)="onSubmit()">
+    <div class="invoice-generator__header">Invoice Generator</div>
+    <div class="invoice-generator__body">
+      <input
+        #invoiceIdInput
+        type="text"
+        class="form__control"
+        formControlName="invoiceId"
+        placeholder="Enter Invoice Id..."
+      />
+    </div>
+    <div class="invoice-generator__footer">
+      <div class="row">
+        <div class="col-1-2">
+          <button type="submit" class="btn btn--secondary">
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            Submit
+          </button>
+        </div>
+        <div class="col-1-2 right">
+          <button type="button" class="btn btn--default" (click)="onClose()">
+            <i class="fa fa-times-circle" aria-hidden="true"></i>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

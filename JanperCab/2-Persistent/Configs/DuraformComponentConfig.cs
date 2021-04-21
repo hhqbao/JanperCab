@@ -24,7 +24,16 @@ namespace _2_Persistent.Configs
             builder.Property(x => x.Note)
                 .HasColumnType("varchar(1000)");
 
-            builder.Property(x => x.Price)
+            builder.Property(x => x.UnitPrice)
+                .HasColumnType("decimal(18,2)");
+
+            builder.Property(x => x.SubTotal)
+                .HasColumnType("decimal(18,2)");
+
+            builder.Property(x => x.TotalDiscount)
+                .HasColumnType("decimal(18,2)");
+
+            builder.Property(x => x.TotalPrice)
                 .HasColumnType("decimal(18,2)");
 
             builder.HasOne(x => x.DuraformEdgeProfile)

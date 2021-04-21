@@ -4,8 +4,45 @@
       [selectedSheet]="selectedSheet"
       [runSheets]="runSheets"
       (printBtnClick)="onPrintClick($event)"
-      (closeBtnClick)="showRunSheetForm = false"
+      (closeBtnClick)="onCloseSheetForm()"
     ></app-run-sheet-form>
+  </app-float-box>
+  <app-float-box *ngIf="selectedSheet && showControlBox" [width]="30">
+    <div class="control-box">
+      <div class="control-box__header">
+        Run Sheet - RS{{ selectedSheet.id | leading }}
+        <button
+          class="btn control-box__btn-close"
+          (click)="onCloseControlBox()"
+        >
+          <i class="fa fa-times-circle" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="control-box__body">
+        <button
+          class="btn control-box__action control-box__action--primary"
+          (click)="showControlBox = false; showRunSheetForm = true"
+        >
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+          View Details
+        </button>
+        <button
+          class="btn control-box__action control-box__action--primary"
+          (click)="showControlBox = false; showRunSheetPdf = true"
+        >
+          <i class="fa fa-print" aria-hidden="true"></i>
+          Print Sheet
+        </button>
+        <div class="divider"></div>
+        <button
+          class="btn control-box__action control-box__action--secondary"
+          (click)="onConfirmDelivery()"
+        >
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          Confirm Delivery
+        </button>
+      </div>
+    </div>
   </app-float-box>
   <app-pdf-viewer *ngIf="showRunSheetPdf" (closePanel)="onCloseRunSheetPdf()">
     <app-run-sheet-pdf [sheetId]="selectedSheet.id"></app-run-sheet-pdf>

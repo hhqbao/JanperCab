@@ -25,7 +25,13 @@ namespace _1_Domain
 
         public string Note { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal UnitPrice { get; set; }
+
+        public decimal SubTotal { get; set; }
+
+        public decimal TotalDiscount { get; set; }
+
+        public decimal TotalPrice { get; set; }
 
         public int SortNumber { get; set; }
 
@@ -34,6 +40,9 @@ namespace _1_Domain
         public abstract ICB_TYPE_ENUM ICBTYPE { get; }
 
         public abstract List<ICBLineStructure> ExportIcbLinesStructure();
+
+        public abstract string GetInvoiceDescription();
+
 
         public virtual DuraformEdgeProfile DuraformEdgeProfile { get; set; }
 

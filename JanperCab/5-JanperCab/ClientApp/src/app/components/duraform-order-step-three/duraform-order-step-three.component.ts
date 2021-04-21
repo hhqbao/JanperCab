@@ -1,3 +1,5 @@
+import { InvoiceDto } from './../../_models/invoice/InvoiceDto';
+import { InvoiceService } from './../../_services/invoice.service';
 import { MachineService } from './../../_services/machine.service';
 import { EnquiryTypeEnum } from './../../_enums/EnquiryTypeEnum';
 import { EnquiryService } from './../../_services/enquiry.service';
@@ -35,8 +37,19 @@ export class DuraformOrderStepThreeComponent implements OnInit {
   showCustomerSelector = false;
   showDeliveryDocket = false;
   showProcessViewer = false;
+  showInvoiceGenerator = false;
 
   cabinetMaker: CabinetMakerDto;
+
+  get miscItemTotalPrice(): number {
+    let totalPrice = 0;
+
+    this.duraformEnquiry.miscComponents.forEach(
+      (x) => (totalPrice += x.totalPrice)
+    );
+
+    return totalPrice;
+  }
 
   constructor(
     public asset: DuraformAssetService,
@@ -253,5 +266,9 @@ export class DuraformOrderStepThreeComponent implements OnInit {
         this.dialog.error(error);
       }
     );
+  };
+
+  onGenerateInvoice = (invoice: InvoiceDto) => {
+    this.showInvoiceGenerator = false;
   };
 }

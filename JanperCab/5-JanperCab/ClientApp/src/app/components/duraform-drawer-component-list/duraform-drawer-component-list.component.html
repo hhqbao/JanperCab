@@ -58,23 +58,34 @@
           <td>{{ drawer.drawerFour === 0 ? "" : drawer.drawerFour }}</td>
           <td>{{ drawer.drawerFive === 0 ? "" : drawer.drawerFive }}</td>
           <td class="text-left">{{ drawer.note }}</td>
-          <td class="text-right">{{ drawer.price | currency }}</td>
+          <td class="text-right">{{ drawer.subTotal | currency }}</td>
         </tr>
       </tbody>
       <tbody class="subtotal">
         <tr>
-          <td colspan="20" class="subtotal__header">
+          <td colspan="19" class="subtotal__header">
             <b>Subtotal</b>
+          </td>
+          <td class="text-right">
+            {{ duraformDrawers | arraySum: "subTotal" | currency }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="19" class="subtotal__header">
+            <b>Discount ({{ duraformEnquiry.discountRate }}%)</b>
+          </td>
+          <td class="text-right">
+            - {{ duraformDrawers | arraySum: "totalDiscount" | currency }}
           </td>
         </tr>
         <tr>
           <td class="line-number">
             <i class="fa fa-calculator" aria-hidden="true"></i>
           </td>
-          <td>{{ totalQuantity }}</td>
-          <td colspan="17"></td>
+          <td>{{ duraformDrawers | arraySum: "quantity" }}</td>
+          <td colspan="17" class="subtotal__header">Total Price</td>
           <td class="subtotal__price">
-            {{ duraformDrawers | arraySum: "price" | currency }}
+            {{ duraformDrawers | arraySum: "totalPrice" | currency }}
           </td>
         </tr>
       </tbody>

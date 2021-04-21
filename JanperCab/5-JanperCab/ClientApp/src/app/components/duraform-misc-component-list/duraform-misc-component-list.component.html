@@ -15,23 +15,32 @@
           <td class="line-number">{{ i + 1 }}</td>
           <td>{{ miscItem.quantity }}</td>
           <td class="text-left">{{ miscItem.toString() }}</td>
-          <td class="text-right">{{ miscItem.price | currency }}</td>
+          <td class="text-right">{{ miscItem.subTotal | currency }}</td>
         </tr>
       </tbody>
       <tbody class="subtotal">
         <tr>
-          <td colspan="4" class="subtotal__header">
+          <td colspan="3" class="subtotal__header">
             <b>Subtotal</b>
           </td>
+          <td class="text-right">
+            {{ getSum("subTotal") | currency }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3" class="subtotal__header">
+            <b>Discount ({{ duraformEnquiry.discountRate }}%)</b>
+          </td>
+          <td class="text-right">- {{ getSum("totalDiscount") | currency }}</td>
         </tr>
         <tr>
           <td class="line-number">
             <i class="fa fa-calculator" aria-hidden="true"></i>
           </td>
           <td>{{ totalQuantity }}</td>
-          <td></td>
+          <td class="subtotal__header">Total Price</td>
           <td class="subtotal__price">
-            {{ miscComponents | arraySum: "price" | currency }}
+            {{ getSum("totalPrice") | currency }}
           </td>
         </tr>
       </tbody>

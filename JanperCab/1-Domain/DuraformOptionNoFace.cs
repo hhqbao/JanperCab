@@ -15,5 +15,10 @@ namespace _1_Domain
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        public override string GetInvoiceDescription()
+        {
+            return "Plain Panel";
+        }
     }
 }

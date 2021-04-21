@@ -3,25 +3,24 @@ import { DuraformEndPanelDto } from './../../_models/duraform-component/Duraform
 import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
+import { DuraformEnquiryDto } from 'src/app/_models/enquiry/DuraformEnquiryDto';
 
 @Component({
   selector: 'app-end-panel-component-list',
   templateUrl: 'end-panel-component-list.component.html',
 })
 export class EndPanelComponentListComponent implements OnInit {
-  @Input() endPanels: DuraformEndPanelDto[] = [];
-
   constructor(
     public asset: DuraformAssetService,
-    public componentService: DuraformComponentService
+    public order: DuraformOrderService
   ) {}
 
-  get totalQuantity(): number {
-    let total = 0;
+  get duraformEnquiry(): DuraformEnquiryDto {
+    return this.order.duraformEnquiry;
+  }
 
-    this.endPanels.forEach((x) => (total += x.quantity));
-
-    return total;
+  get endPanels(): DuraformEndPanelDto[] {
+    return this.duraformEnquiry.endPanels;
   }
 
   ngOnInit() {}

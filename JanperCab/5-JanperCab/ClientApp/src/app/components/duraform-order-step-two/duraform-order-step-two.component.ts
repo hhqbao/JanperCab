@@ -3,7 +3,6 @@ import { UploadDuraformFileDto } from './../../_models/files/UploadDuraformFileD
 import { FileService } from './../../_services/file.service';
 import { DuraformFileDto } from './../../_models/application-file/DuraformFileDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
-import { forkJoin } from 'rxjs';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
 import { LayoutService } from './../../_services/layout.service';
 import { DialogService } from './../../_services/dialog.service';
@@ -15,6 +14,7 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
+import { DuraformPageComponent } from 'src/app/pages/duraform-page/duraform-page.component';
 
 @Component({
   selector: 'app-duraform-order-step-two',
@@ -36,49 +36,18 @@ export class DuraformOrderStepTwoComponent implements OnInit {
 
   ngOnInit() {
     this.layout.showLoadingPanel();
-    const { duraformEnquiry } = this.order;
+    const {
+      isRoutingOnly,
+      duraformSerieId,
+      duraformWrapTypeId,
+    } = this.order.duraformEnquiry;
 
-    const serieOneRequest = duraformEnquiry.isRoutingOnly
-      ? this.priceService.getRouteOnlyPriceGrid(1)
-      : this.priceService.getPressPriceGrid(
-          duraformEnquiry.duraformWrapTypeId,
-          1
-        );
-
-    const selectedSerieRequest = duraformEnquiry.isRoutingOnly
-      ? this.priceService.getRouteOnlyPriceGrid(duraformEnquiry.duraformSerieId)
-      : this.priceService.getPressPriceGrid(
-          duraformEnquiry.duraformWrapTypeId,
-          duraformEnquiry.duraformSerieId
-        );
-
-    const observables =
-      duraformEnquiry.duraformSerieId === 1
-        ? forkJoin({
-            serieOnePrices: serieOneRequest,
-            miscPrices: this.priceService.getAllMiscPrices(),
-          })
-        : forkJoin({
-            serieOnePrices: serieOneRequest,
-            miscPrices: this.priceService.getAllMiscPrices(),
-            selectedSeriePrices: selectedSerieRequest,
-          });
-
-    observables.subscribe(
-      (responses) => {
-        this.asset.priceGrids = responses.serieOnePrices;
-        this.asset.miscPrices = responses.miscPrices.prices;
-
-        if (responses['selectedSeriePrices']) {
-          this.asset.priceGrids = this.asset.priceGrids.concat(
-            responses['selectedSeriePrices']
-          );
-        }
-
+    this.asset.loadPrices(
+      isRoutingOnly,
+      duraformSerieId,
+      duraformWrapTypeId,
+      () => {
         this.layout.closeLoadingPanel();
-      },
-      (error) => {
-        this.dialog.error(error);
       }
     );
   }

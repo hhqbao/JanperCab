@@ -1,3 +1,4 @@
+import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { DuraformComponentService } from './../../_services/duraform-component.service';
 import {
   EventEmitter,
@@ -40,7 +41,8 @@ export abstract class DuraformCartItemComponent<
 
   constructor(
     protected componentService: DuraformComponentService,
-    protected ef: ElementRef
+    protected ef: ElementRef,
+    protected order: DuraformOrderService
   ) {}
 
   ngOnInit() {
@@ -70,7 +72,11 @@ export abstract class DuraformCartItemComponent<
   };
 
   onEdit = (formGroup: FormGroup) => {
-    this.componentService.updateComponent(this.component, formGroup.value);
+    this.componentService.updateComponent(
+      this.component,
+      this.order.duraformEnquiry,
+      formGroup.value
+    );
 
     this.isSelected = false;
     this.unselectComponent.emit();

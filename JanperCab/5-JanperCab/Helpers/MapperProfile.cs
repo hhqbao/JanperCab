@@ -19,6 +19,7 @@ using _3_Application.Dtos.DuraformWrapType;
 using _3_Application.Dtos.Enquiry;
 using _3_Application.Dtos.HingeHoleOption;
 using _3_Application.Dtos.HingeHoleType;
+using _3_Application.Dtos.Invoice;
 using _3_Application.Dtos.Machine;
 using _3_Application.Dtos.PantryDoorChairRailType;
 using _3_Application.Dtos.Process;
@@ -262,7 +263,8 @@ namespace _5_JanperCab.Helpers
                 .Include<DuraformEnquiry, DuraformEnquiryDto>();
             CreateMap<EnquiryDto, Enquiry>()
                 .Include<DuraformEnquiryDto, DuraformEnquiry>()
-                .ForMember(x => x.CreatedDate, opt => opt.Ignore());
+                .ForMember(x => x.CreatedDate, opt => opt.Ignore())
+                .ForMember(x => x.Invoice, opt => opt.Ignore());
 
             CreateMap<DuraformEnquiry, DuraformEnquiryDto>();
             CreateMap<DuraformEnquiry, DuraformEnquiryListDto>();
@@ -328,6 +330,12 @@ namespace _5_JanperCab.Helpers
 
             CreateMap<DeliveryRunSheet, DeliveryRunSheetForListDto>()
                 .ForMember(x => x.EnquiriesForRunSheet, opt => opt.MapFrom<EnquiriesForRunSheetResolver>());
+
+            CreateMap<InvoiceComponent, InvoiceComponentDto>();
+            CreateMap<InvoiceComponentDto, InvoiceComponent>();
+
+            CreateMap<Invoice, InvoiceDto>();
+            CreateMap<InvoiceDto, Invoice>();
         }
     }
 }

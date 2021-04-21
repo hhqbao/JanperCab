@@ -86,6 +86,16 @@ namespace _1_Domain
             return list;
         }
 
+        public override string GetInvoiceDescription()
+        {
+            var desc = $"{DuraformDrawerType.Name} Drawer - {Height:F0} x {Width:F0} - {DrawerOne:F0} | {DrawerTwo:F0} | {DrawerThree:F0} | {DrawerFour:F0} | {DrawerFive:F0}";
+
+            if (HasDrillFronts)
+                desc += " - Drill Front";
+
+            return desc;
+        }
+
         private ICBLineStructure ExportIndividualDrawerLine(int drawerNumber)
         {
             var design = DuraformEnquiry.DuraformDesign;

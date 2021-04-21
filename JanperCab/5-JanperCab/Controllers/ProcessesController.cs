@@ -123,7 +123,7 @@ namespace _5_JanperCab.Controllers
             if (sheet == null)
                 return BadRequest("Run Sheet Not Found");
 
-            if (sheet.LockedDate.HasValue)
+            if (!sheet.IsEditable)
                 return BadRequest("Run Sheet Is Locked! Cannot Be Changed");
 
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
@@ -155,7 +155,7 @@ namespace _5_JanperCab.Controllers
             if (!enquiry.DeliveryRunSheetId.HasValue)
                 return BadRequest("Order Not Being Delivered");
 
-            if (enquiry.DeliveryRunSheet.LockedDate.HasValue)
+            if (!enquiry.DeliveryRunSheet.IsEditable)
                 return BadRequest("Run Sheet Is Locked! Cannot Be Changed");
 
             enquiry.UndoDelivering();

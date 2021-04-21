@@ -1,11 +1,11 @@
 import { DuraformMiscPriceFingerPullDto } from './../duraform-misc-price/DuraformMiscPriceFingerPullDto';
-import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { FormGroup } from '@angular/forms';
 import { DuraformMiscTypeEnum } from 'src/app/_enums/DuraformMiscTypeEnum';
 import { FingerPullTypeEnum } from './../../_enums/FingerPullTypeEnum';
 import { DuraformMiscComponentDto } from './DuraformMiscComponentDto';
 import { DuraformEnquiryDto } from '../enquiry/DuraformEnquiryDto';
 import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
+import { DuraformComponentService } from 'src/app/_services/duraform-component.service';
 
 export class DuraformMiscFingerPullDto extends DuraformMiscComponentDto {
   type: FingerPullTypeEnum;
@@ -31,7 +31,7 @@ export class DuraformMiscFingerPullDto extends DuraformMiscComponentDto {
     this.isRaw = values.isRaw;
   }
 
-  calculatePrice(duraformEnquiry: DuraformEnquiryDto): void {
+  getUnitPrice(duraformEnquiry: DuraformEnquiryDto): number {
     const fingerPullPrices = DuraformAssetService.instance.miscPrices.filter(
       (x) => x instanceof DuraformMiscPriceFingerPullDto
     ) as DuraformMiscPriceFingerPullDto[];
@@ -42,11 +42,7 @@ export class DuraformMiscFingerPullDto extends DuraformMiscComponentDto {
           (x) => x.duraformWrapTypeId === duraformEnquiry.duraformWrapTypeId
         );
 
-    if (unitPrice) {
-      this.price = unitPrice.price * this.quantity;
-    } else {
-      this.price = 0;
-    }
+    return unitPrice ? unitPrice.price : 0;
   }
 
   toString(): string {

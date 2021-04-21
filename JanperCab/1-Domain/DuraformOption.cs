@@ -10,6 +10,7 @@ namespace _1_Domain
 
         public abstract void UpdateIcbLineStructure(DuraformComponent component, ICBLineStructure line);
 
+        public abstract string GetInvoiceDescription();
 
 
         public virtual DuraformOptionType DuraformOptionType { get; set; }

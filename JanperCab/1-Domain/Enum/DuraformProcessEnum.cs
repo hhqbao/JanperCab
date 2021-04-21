@@ -15,6 +15,7 @@
         PickingUp = 10,
         PickedUp = 11,
         Delivering = 12,
-        Delivered = 13
+        Delivered = 13,
+        Invoiced = 14
     }
 }

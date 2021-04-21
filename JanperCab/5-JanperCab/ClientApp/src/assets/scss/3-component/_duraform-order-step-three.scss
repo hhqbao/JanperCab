@@ -56,6 +56,18 @@ app-duraform-order-step-three {
             background-color: rgba($color: black, $alpha: 0.1);
           }
         }
+
+        &--alert {
+          background-color: $red-primary;
+          color: white;
+          font-weight: bold;
+
+          &:hover {
+            &:not(:disabled) {
+              background-color: rgba($color: $red-primary, $alpha: 0.7);
+            }
+          }
+        }
       }
 
       &:not(:first-child) {

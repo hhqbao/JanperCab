@@ -77,6 +77,9 @@ namespace _4_Infrastructure.Repositories
                 case DuraformProcessEnum.Delivered:
                     query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.DuraformProcessType == DuraformProcessEnum.Delivering));
                     break;
+                case DuraformProcessEnum.Invoiced:
+                    query = query.Where(x => x.Invoice != null);
+                    break;
                 default:
                     query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && !y.EndTime.HasValue && y.DuraformProcessType == status));
                     break;

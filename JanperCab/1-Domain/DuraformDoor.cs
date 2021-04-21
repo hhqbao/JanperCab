@@ -15,5 +15,15 @@ namespace _1_Domain
 
             return new List<ICBLineStructure> { line };
         }
+
+        public override string GetInvoiceDescription()
+        {
+            var desc = $"Door - {Height:F0} x {Width:F0}";
+
+            if (DuraformOption != null)
+                desc += $" - {DuraformOption.GetInvoiceDescription()}";
+
+            return desc;
+        }
     }
 }

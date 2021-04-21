@@ -1,3 +1,4 @@
+import { DuraformComponentService } from 'src/app/_services/duraform-component.service';
 import { DuraformProcessDeliveringDto } from '../DuraformProcess/DuraformProcessDeliveringDto';
 import { DuraformProcessPickingUpDto } from '../DuraformProcess/DuraformProcessPickingUpDto';
 import { DuraformProcessPackingDto } from '../DuraformProcess/DuraformProcessPackingDto';
@@ -291,20 +292,6 @@ export class DuraformEnquiryDto extends EnquiryDto {
     return DuraformAssetService.instance.getArch(this.duraformArchId);
   }
 
-  get subTotal(): number {
-    let total = 0;
-
-    this.duraformComponents.forEach((x) => (total += x.price));
-    this.miscComponents.forEach((x) => (total += x.price));
-    total += this.deliveryFee;
-
-    return total;
-  }
-
-  get gst(): number {
-    return _.round(this.subTotal / 10, 2);
-  }
-
   get timeInSystem(): string {
     const offset = moment().diff(moment(this.orderedDate), 'days');
 
@@ -322,10 +309,45 @@ export class DuraformEnquiryDto extends EnquiryDto {
       return 'Ordered';
     }
 
+    if (this.hasBeenInvoiced) {
+      return 'Invoiced';
+    }
+
     return this.currentStatus.getStatus();
   }
 
+  get hasBeenDelivered(): boolean {
+    const { endTime, duraformProcessType } = this.currentStatus;
+
+    return (
+      duraformProcessType === DuraformProcessEnum.Delivering &&
+      endTime !== null &&
+      endTime !== undefined
+    );
+  }
+
+  updateDiscountRate = (discountRate: number) => {
+    this.discountRate = discountRate;
+
+    this.duraformComponents.forEach((component) =>
+      DuraformComponentService.instance.calculateComponentPrice(component, this)
+    );
+
+    this.miscComponents.forEach((miscItem) =>
+      DuraformComponentService.instance.calculateMiscItemPrice(miscItem, this)
+    );
+
+    this.calculatePrice();
+  };
+
   calculatePrice = (): void => {
-    this.totalPrice = this.subTotal + this.gst;
+    this.subTotal = 0;
+
+    this.duraformComponents.forEach((x) => (this.subTotal += x.totalPrice));
+    this.miscComponents.forEach((x) => (this.subTotal += x.totalPrice));
+    this.subTotal += this.deliveryFee;
+
+    this.totalGst = _.round(this.subTotal / this.gstRate, 2);
+    this.totalPrice = this.subTotal + this.totalGst;
   };
 }

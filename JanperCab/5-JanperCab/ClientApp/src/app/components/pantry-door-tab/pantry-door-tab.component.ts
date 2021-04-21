@@ -30,7 +30,11 @@ export class PantryDoorTabComponent
     const pantryDoor = this.componentService.generateComponent(
       ComponentType.DuraformPantryDoor
     );
-    this.componentService.updateComponent(pantryDoor, formGroup.value);
+    this.componentService.updateComponent(
+      pantryDoor,
+      this.order.duraformEnquiry,
+      formGroup.value
+    );
 
     this.order.addComponent(pantryDoor);
 

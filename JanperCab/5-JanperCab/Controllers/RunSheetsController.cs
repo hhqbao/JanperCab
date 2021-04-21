@@ -28,7 +28,7 @@ namespace _5_JanperCab.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var sheets = await _unitOfWork.DeliveryRunSheets.GetAllAsync();
+            var sheets = await _unitOfWork.DeliveryRunSheets.GetAllAsync(x => !x.DeliveredDate.HasValue);
 
             return Ok(_mapper.Map<List<DeliveryRunSheet>, List<DeliveryRunSheetForListDto>>(sheets));
         }
@@ -56,6 +56,25 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<DeliveryRunSheet, DeliveryRunSheetForListDto>(newSheet));
         }
 
+        [HttpPut("change-driver/{sheetId}/{driverId}")]
+        public async Task<IActionResult> ChangeDriver(int sheetId, int driverId)
+        {
+            var sheet = await _unitOfWork.DeliveryRunSheets.GetAsync(sheetId);
+
+            if (sheet == null) return BadRequest("Run Sheet Not Found");
+
+            if (!sheet.IsEditable) return BadRequest("Run Sheet Is Locked! Cannot Be Changed");
+
+            var driver = await _unitOfWork.Drivers.GetAsync(driverId);
+
+            if (driver == null) return BadRequest("Driver Not Found");
+
+            sheet.DriverId = driver.Id;
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(_mapper.Map<Driver, DriverDto>(driver));
+        }
+
         [HttpPut("lock/{sheetId}")]
         public async Task<IActionResult> Lock(int sheetId)
         {
@@ -66,7 +85,7 @@ namespace _5_JanperCab.Controllers
             if (runSheet.Enquiries.Count == 0)
                 return BadRequest("At least 1 order required");
 
-            if (runSheet.LockedDate.HasValue) return BadRequest("Run Sheet Not Valid For Locking");
+            if (!runSheet.IsEditable) return BadRequest("Run Sheet Not Valid For Locking");
 
             runSheet.LockedDate = DateTime.Now;
             await _unitOfWork.CompleteAsync();
@@ -74,23 +93,24 @@ namespace _5_JanperCab.Controllers
             return Ok(runSheet.LockedDate.Value);
         }
 
-        [HttpPut("change-driver/{sheetId}/{driverId}")]
-        public async Task<IActionResult> ChangeDriver(int sheetId, int driverId)
+        [HttpPut("confirm-delivery/{sheetId}")]
+        public async Task<IActionResult> ConfirmDelivery(int sheetId)
         {
             var sheet = await _unitOfWork.DeliveryRunSheets.GetAsync(sheetId);
 
-            if (sheet == null) return BadRequest("Run Sheet Not Found");
+            if (sheet == null)
+                return BadRequest("Run Sheet Not Found");
 
-            if (sheet.LockedDate.HasValue) return BadRequest("Run Sheet Is Locked! Cannot Be Changed");
+            if (!sheet.LockedDate.HasValue)
+                return BadRequest("Run Sheet need to be LOCKED first");
 
-            var driver = await _unitOfWork.Drivers.GetAsync(driverId);
+            if (sheet.DeliveredDate.HasValue)
+                return BadRequest($"Run Sheet was completed on {sheet.DeliveredDate.Value:dd/MM/yyyy hh:mm}");
 
-            if (driver == null) return BadRequest("Driver Not Found");
-
-            sheet.DriverId = driver.Id;
+            var deliveredDate = sheet.ConfirmDelivery();
             await _unitOfWork.CompleteAsync();
 
-            return Ok(_mapper.Map<Driver, DriverDto>(driver));
+            return Ok(deliveredDate);
         }
     }
 }

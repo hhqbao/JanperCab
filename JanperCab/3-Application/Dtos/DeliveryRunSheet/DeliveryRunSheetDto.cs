@@ -11,5 +11,7 @@ namespace _3_Application.Dtos.DeliveryRunSheet
         public DateTime CreatedDate { get; set; }
 
         public DateTime? LockedDate { get; set; }
+
+        public DateTime? DeliveredDate { get; set; }
     }
 }

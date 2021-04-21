@@ -16,6 +16,6 @@ export class DuraformDoorCartItemComponent extends DuraformCartItemComponent<Dur
     public ef: ElementRef,
     public componentService: DuraformComponentService
   ) {
-    super(componentService, ef);
+    super(componentService, ef, order);
   }
 }

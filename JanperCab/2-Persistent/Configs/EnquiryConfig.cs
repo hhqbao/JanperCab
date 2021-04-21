@@ -62,8 +62,24 @@ namespace _2_Persistent.Configs
             builder.Property(x => x.DeliveryNote)
                 .HasColumnType("varchar(2000)");
 
+            builder.Property(x => x.GstRate)
+                .HasColumnName("GstRate")
+                .HasColumnType("decimal(18,2)");
+
+            builder.Property(x => x.DiscountRate)
+                .HasColumnName("DiscountRate")
+                .HasColumnType("decimal(18,2)");
+
+            builder.Property(x => x.SubTotal)
+                .HasColumnName("SubTotal")
+                .HasColumnType("decimal(18,2)");
+
             builder.Property(x => x.DeliveryFee)
                 .HasColumnName("DeliveryFee")
+                .HasColumnType("decimal(18,2)");
+
+            builder.Property(x => x.TotalGst)
+                .HasColumnName("TotalGst")
                 .HasColumnType("decimal(18,2)");
 
             builder.Property(x => x.TotalPrice)

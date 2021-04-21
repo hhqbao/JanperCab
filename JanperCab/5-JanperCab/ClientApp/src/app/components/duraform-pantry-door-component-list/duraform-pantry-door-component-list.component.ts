@@ -3,25 +3,24 @@ import { DuraformPantryDoorDto } from './../../_models/duraform-component/Durafo
 import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
+import { DuraformEnquiryDto } from 'src/app/_models/enquiry/DuraformEnquiryDto';
 
 @Component({
   selector: 'app-duraform-pantry-door-component-list',
   templateUrl: 'duraform-pantry-door-component-list.component.html',
 })
 export class DuraformPantryDoorComponentListComponent implements OnInit {
-  @Input() pantryDoors: DuraformPantryDoorDto[] = [];
-
   constructor(
     public asset: DuraformAssetService,
-    public componentService: DuraformComponentService
+    public order: DuraformOrderService
   ) {}
 
-  get totalQuantity(): number {
-    let total = 0;
+  get duraformEnquiry(): DuraformEnquiryDto {
+    return this.order.duraformEnquiry;
+  }
 
-    this.pantryDoors.forEach((x) => (total += x.quantity));
-
-    return total;
+  get pantryDoors(): DuraformPantryDoorDto[] {
+    return this.duraformEnquiry.pantryDoors;
   }
 
   ngOnInit() {}

@@ -30,7 +30,7 @@ namespace _3_Application.Dtos.Customer
 
         public string ThirdPhone { get; set; }
 
-        public decimal DeliveryFee { get; set; }
+        public decimal DiscountRate { get; set; }
 
 
         public CabinetMakerDto()

@@ -38,6 +38,10 @@ namespace _2_Persistent
         public DbSet<DuraformMiscPrice> DuraformMiscPrices { get; set; }
 
         public DbSet<Driver> Drivers { get; set; }
+        public DbSet<DeliveryRunSheet> DeliveryRunSheets { get; set; }
+
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<InvoiceComponent> InvoiceComponents { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,
@@ -124,6 +128,9 @@ namespace _2_Persistent
 
             builder.ApplyConfiguration(new DriverConfig());
             builder.ApplyConfiguration(new DeliveryRunSheetConfig());
+
+            builder.ApplyConfiguration(new InvoiceConfig());
+            builder.ApplyConfiguration(new InvoiceComponentConfig());
 
             base.OnModelCreating(builder);
         }

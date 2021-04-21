@@ -13,11 +13,8 @@
         (afterSet)="onSelectDriver()"
       ></app-select-menu>
     </div>
-    <div
-      class="rsf__patch-list"
-      *ngIf="selectedSheet && selectedSheet.getPatchDetails().length > 0"
-    >
-      <div class="patch" *ngFor="let patch of selectedSheet.getPatchDetails()">
+    <div class="rsf__patch-list" *ngIf="patches.length > 0">
+      <div class="patch" *ngFor="let patch of patches">
         <div class="patch__cabinet-maker">{{ patch.cabinetMakerName }}</div>
         <div class="patch__address">{{ patch.fullAddress }}</div>
         <div class="patch__detail-table">
@@ -40,7 +37,7 @@
                 <td>
                   <button
                     class="btn btn--link"
-                    *ngIf="!selectedSheet.lockedDate"
+                    *ngIf="selectedSheet.isEditable"
                     (click)="onUndoDelivering(enquiry)"
                   >
                     Remove

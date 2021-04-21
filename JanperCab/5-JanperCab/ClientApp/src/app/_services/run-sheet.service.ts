@@ -33,13 +33,6 @@ export class RunSheetService {
       );
   };
 
-  lockRunSheet = (sheetId: number): Observable<Date> => {
-    return this.http.put<Date>(
-      `${environment.baseUrl}/RunSheets/Lock/${sheetId}`,
-      null
-    );
-  };
-
   changeDriver = (sheetId: number, driverId: number): Observable<DriverDto> => {
     return this.http
       .put<DriverDto>(
@@ -51,6 +44,20 @@ export class RunSheetService {
           return plainToClass(DriverDto, response);
         })
       );
+  };
+
+  lockRunSheet = (sheetId: number): Observable<Date> => {
+    return this.http.put<Date>(
+      `${environment.baseUrl}/RunSheets/Lock/${sheetId}`,
+      null
+    );
+  };
+
+  confirmDelivery = (sheetId: number): Observable<Date> => {
+    return this.http.put<Date>(
+      `${environment.baseUrl}/RunSheets/confirm-delivery/${sheetId}`,
+      null
+    );
   };
 
   createRunSheet = (

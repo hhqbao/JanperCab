@@ -44,7 +44,7 @@ namespace _2_Persistent.Configs
             builder.Property(x => x.ThirdPhone)
                 .HasColumnType("varchar(255)");
 
-            builder.Property(x => x.DeliveryFee)
+            builder.Property(x => x.DiscountRate)
                 .HasColumnType("decimal(18,2)");
         }
     }

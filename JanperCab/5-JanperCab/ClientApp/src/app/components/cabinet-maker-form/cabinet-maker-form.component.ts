@@ -4,7 +4,12 @@ import { CustomerService } from './../../_services/customer.service';
 import { plainToClass } from 'class-transformer';
 import { CommonAssetsService } from './../../_services/common-assets.service';
 import { CabinetMakerDto } from './../../_models/customer/CabinetMakerDto';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import {
   Component,
   OnInit,
@@ -28,6 +33,10 @@ export class CabinetMakerFormComponent implements OnInit {
 
   formGroup: FormGroup;
   isLoading = false;
+
+  get discountRate(): AbstractControl {
+    return this.formGroup.get('discountRate');
+  }
 
   constructor(
     private layout: LayoutService,
@@ -69,6 +78,10 @@ export class CabinetMakerFormComponent implements OnInit {
       deliveryPostcode: [
         this.cabinetMaker?.deliveryPostcode,
         [Validators.required],
+      ],
+      discountRate: [
+        this.cabinetMaker ? this.cabinetMaker.discountRate : 0,
+        [Validators.required, Validators.min(0), Validators.max(100)],
       ],
     });
 

@@ -38,5 +38,19 @@ namespace _1_Domain
 
             return new List<ICBLineStructure> { line };
         }
+
+        public override string GetInvoiceDescription()
+        {
+            var desc = $"IB Back - {Height:F0} x {Width:F0} - {NumberOfShields} shields - {RailLeft:F0} x {RailCenter:F0} x {RailRight:F0}";
+
+            desc += ExtraRailBottom.HasValue ? $" - BOT={ExtraRailBottom:F0}" : string.Empty;
+
+            desc += ExtraRailTop.HasValue ? $" - TOP={ExtraRailTop:F0}" : string.Empty;
+
+            if (DuraformOption != null)
+                desc += $" - {DuraformOption.GetInvoiceDescription()}";
+
+            return desc;
+        }
     }
 }

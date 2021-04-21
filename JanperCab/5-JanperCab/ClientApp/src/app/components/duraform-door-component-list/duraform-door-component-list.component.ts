@@ -1,3 +1,5 @@
+import { DuraformEnquiryDto } from 'src/app/_models/enquiry/DuraformEnquiryDto';
+import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { DuraformComponentService } from './../../_services/duraform-component.service';
 import { DuraformEdgeProfileForList } from './../../_models/duraform-edge-profile/DuraformEdgeProfileForList';
 import { Observable } from 'rxjs';
@@ -11,8 +13,6 @@ import { DuraformEdgeProfileService } from 'src/app/_services/duraform-edge-prof
   templateUrl: 'duraform-door-component-list.component.html',
 })
 export class DuraformDoorComponentListComponent implements OnInit {
-  @Input() duraformDoors: DuraformDoorDto[] = [];
-
   isLoading = true;
   hasError = false;
 
@@ -21,16 +21,16 @@ export class DuraformDoorComponentListComponent implements OnInit {
 
   constructor(
     public asset: DuraformAssetService,
-    public componentService: DuraformComponentService,
+    public order: DuraformOrderService,
     private edgeProfileSerive: DuraformEdgeProfileService
   ) {}
 
-  get totalQuantity(): number {
-    let total = 0;
+  get duraformEnquiry(): DuraformEnquiryDto {
+    return this.order.duraformEnquiry;
+  }
 
-    this.duraformDoors.forEach((x) => (total += x.quantity));
-
-    return total;
+  get duraformDoors(): DuraformDoorDto[] {
+    return this.duraformEnquiry.duraformDoors;
   }
 
   ngOnInit() {

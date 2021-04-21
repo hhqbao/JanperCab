@@ -31,7 +31,7 @@ namespace _1_Domain
 
         public string ThirdPhone { get; set; }
 
-        public decimal DeliveryFee { get; set; }
+        public decimal DiscountRate { get; set; }
 
 
         public virtual Distributor Distributor { get; set; }

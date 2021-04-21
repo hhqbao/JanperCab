@@ -30,5 +30,14 @@ namespace _1_Domain
                     throw new NotImplementedException("Not Support Other Types Of Components");
             }
         }
+
+        public override string GetInvoiceDescription()
+        {
+            var desc = IsDoubleSided ? "Double Sided " : string.Empty;
+
+            desc += $"Angled Shelf {SideOne:F0} x {SideTwo:F0}";
+
+            return desc;
+        }
     }
 }

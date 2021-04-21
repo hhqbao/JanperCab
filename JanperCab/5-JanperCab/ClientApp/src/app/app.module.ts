@@ -1,3 +1,5 @@
+import { InvoiceGeneratorComponent } from './components/invoice-generator/invoice-generator.component';
+import { InvoiceService } from './_services/invoice.service';
 import { RunSheetPdfComponent } from './components/run-sheet-pdf/run-sheet-pdf.component';
 import { RunSheetService } from './_services/run-sheet.service';
 import { DriverService } from './_services/driver.service';
@@ -247,6 +249,7 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     DeliveryPageComponent,
     RunSheetFormComponent,
     RunSheetPdfComponent,
+    InvoiceGeneratorComponent,
   ],
   imports: [
     BrowserModule,
@@ -290,6 +293,7 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     MachineService,
     DriverService,
     RunSheetService,
+    InvoiceService,
     ErrorInterceptorProvider,
   ],
   bootstrap: [AppComponent],

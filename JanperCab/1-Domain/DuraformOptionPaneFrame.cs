@@ -30,5 +30,10 @@ namespace _1_Domain
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        public override string GetInvoiceDescription()
+        {
+            return $"Pane Frame ({Columns} x {Rows})";
+        }
     }
 }

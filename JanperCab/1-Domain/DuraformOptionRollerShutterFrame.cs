@@ -25,5 +25,10 @@ namespace _1_Domain
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        public override string GetInvoiceDescription()
+        {
+            return $"Roller Shutter T{TopSize:F0} x L{LeftSize:F0} x R{RightSize:F0}";
+        }
     }
 }

@@ -1,3 +1,4 @@
+import { DeliveryRunSheetDto } from './../../_models/delivery-run-sheet/DeliveryRunSheetDto';
 import { DialogService } from './../../_services/dialog.service';
 import { LayoutService } from './../../_services/layout.service';
 import { RunSheetService } from './../../_services/run-sheet.service';
@@ -17,7 +18,7 @@ export class RunSheetPdfComponent implements OnInit {
   runSheet: DeliveryRunSheetForListDto;
 
   get barcode(): string {
-    return `${this.runSheet.getBarcodePrefix()}${this.leadingPipe.transform(
+    return `${DeliveryRunSheetDto.BARCODE_PREFIX}${this.leadingPipe.transform(
       this.runSheet.id
     )}`;
   }

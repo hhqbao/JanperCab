@@ -55,23 +55,34 @@
             {{ door.hingeHoleOption?.toString() }}
           </td>
           <td class="text-left">{{ door.note }}</td>
-          <td class="text-right">{{ door.price | currency }}</td>
+          <td class="text-right">{{ door.subTotal | currency }}</td>
         </tr>
       </tbody>
       <tbody class="subtotal">
         <tr>
-          <td colspan="13" class="subtotal__header">
+          <td colspan="12" class="subtotal__header">
             <b>Subtotal</b>
+          </td>
+          <td class="text-right">
+            {{ duraformDoors | arraySum: "subTotal" | currency }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="12" class="subtotal__header">
+            <b>Discount ({{ duraformEnquiry.discountRate }}%)</b>
+          </td>
+          <td class="text-right">
+            - {{ duraformDoors | arraySum: "totalDiscount" | currency }}
           </td>
         </tr>
         <tr>
           <td class="line-number">
             <i class="fa fa-calculator" aria-hidden="true"></i>
           </td>
-          <td>{{ totalQuantity }}</td>
-          <td colspan="10"></td>
+          <td>{{ duraformDoors | arraySum: "quantity" }}</td>
+          <td colspan="10" class="subtotal__header">Total Price</td>
           <td class="subtotal__price">
-            {{ duraformDoors | arraySum: "price" | currency }}
+            {{ duraformDoors | arraySum: "totalPrice" | currency }}
           </td>
         </tr>
       </tbody>

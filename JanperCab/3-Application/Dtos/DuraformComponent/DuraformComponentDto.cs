@@ -22,7 +22,13 @@
 
         public string Note { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal UnitPrice { get; set; }
+
+        public decimal SubTotal { get; set; }
+
+        public decimal TotalDiscount { get; set; }
+
+        public decimal TotalPrice { get; set; }
 
         public int SortNumber { get; set; }
     }

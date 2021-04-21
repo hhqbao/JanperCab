@@ -68,24 +68,35 @@
             {{ pantryDoor.note }}
           </td>
           <td class="text-right">
-            {{ pantryDoor.price | currency }}
+            {{ pantryDoor.subTotal | currency }}
           </td>
         </tr>
       </tbody>
       <tbody class="subtotal">
         <tr>
-          <td colspan="16" class="subtotal__header">
+          <td colspan="15" class="subtotal__header">
             <b>Subtotal</b>
+          </td>
+          <td class="text-right">
+            {{ pantryDoors | arraySum: "subTotal" | currency }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="15" class="subtotal__header">
+            <b>Discount ({{ duraformEnquiry.discountRate }}%)</b>
+          </td>
+          <td class="text-right">
+            - {{ pantryDoors | arraySum: "totalDiscount" | currency }}
           </td>
         </tr>
         <tr>
           <td class="line-number">
             <i class="fa fa-calculator" aria-hidden="true"></i>
           </td>
-          <td>{{ totalQuantity }}</td>
-          <td colspan="13"></td>
+          <td>{{ pantryDoors | arraySum: "quantity" }}</td>
+          <td colspan="13" class="subtotal__header">Total Price</td>
           <td class="subtotal__price">
-            {{ pantryDoors | arraySum: "price" | currency }}
+            {{ pantryDoors | arraySum: "totalPrice" | currency }}
           </td>
         </tr>
       </tbody>

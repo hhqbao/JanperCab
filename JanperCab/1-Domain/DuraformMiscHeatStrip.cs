@@ -7,5 +7,10 @@ namespace _1_Domain
         public HeatStripTypeEnum Type { get; set; }
 
         public HeatStripSizeEnum Size { get; set; }
+
+        public override string GetInvoiceDescription()
+        {
+            return $"Heat Strip - Type {Type} - {Size}mm";
+        }
     }
 }

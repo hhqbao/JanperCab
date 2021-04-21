@@ -70,6 +70,8 @@ namespace _1_Domain
             get { return DuraformComponents.Sum(x => x.Quantity); }
         }
 
+        public override bool HasBeenDelivered => CurrentProcess is DuraformProcessDelivering && CurrentProcess.EndTime.HasValue;
+
         public override void ProcessRouting(MachineRouter router)
         {
             var routingProcess = DuraformProcesses
@@ -238,14 +240,6 @@ namespace _1_Domain
                     deliveringProcess.IsCurrent = true;
 
                     DeliveryRunSheetId = runSheet.Id;
-
-                    if (!runSheet.Enquiries.Any(x => x.CabinetMakerId == CabinetMakerId &&
-                                                     x.DeliveryAddress.Equals(DeliveryAddress) &&
-                                                     x.DeliverySuburb.Equals(DeliverySuburb) &&
-                                                     x.DeliveryState.Equals(DeliveryState) &&
-                                                     x.DeliveryPostcode.Equals(DeliveryPostcode) &&
-                                                     x.DeliveryFee > 0))
-                        DeliveryFee = 0;
                     break;
                 default:
                     throw new Exception("Order needs to be at PACKED stage to be DISPATCHED");
@@ -264,8 +258,28 @@ namespace _1_Domain
             deliveryProvess.EndTime = null;
 
             packingProcess.IsCurrent = true;
+        }
 
-            DeliveryFee = 30;
+        public override void CompleteDelivering()
+        {
+            if (!(CurrentProcess is DuraformProcessDelivering deliveringProcess))
+                throw new Exception($"Order [{Id:000000}] Not At Delivering Stage");
+
+            if (deliveringProcess.EndTime.HasValue)
+                throw new Exception($"Order [{Id:000000}] was already delivered on {deliveringProcess.EndTime.Value:dd/MM/yyyy hh:mm}");
+
+            deliveringProcess.EndTime = DateTime.Now;
+        }
+
+        public override Invoice GenerateInvoice(string invoiceId)
+        {
+            if (Invoice != null) throw new Exception("Order already been INVOICED");
+
+            if (!TotalPrice.HasValue) throw new Exception("Order missing total price");
+
+            Invoice = new Invoice(invoiceId, this);
+
+            return Invoice;
         }
 
         public override string GetDescription()

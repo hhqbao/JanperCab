@@ -1,3 +1,4 @@
+import { DuraformComponentService } from 'src/app/_services/duraform-component.service';
 import { DuraformMiscTypeEnum } from './../../_enums/DuraformMiscTypeEnum';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import {
@@ -36,7 +37,11 @@ export class DuraformMiscFormComponent implements OnInit {
     return this.formGroup.get('quantity');
   }
 
-  constructor(private fb: FormBuilder, private order: DuraformOrderService) {}
+  constructor(
+    private fb: FormBuilder,
+    private order: DuraformOrderService,
+    private componentService: DuraformComponentService
+  ) {}
 
   ngOnInit() {
     this.formGroup = this.fb.group({
@@ -83,7 +88,10 @@ export class DuraformMiscFormComponent implements OnInit {
     }
 
     this.cloneMisc.update(this.formGroup);
-    this.cloneMisc.calculatePrice(this.order.duraformEnquiry);
+    this.componentService.calculateMiscItemPrice(
+      this.cloneMisc,
+      this.order.duraformEnquiry
+    );
 
     const deepCopy = _.cloneDeep(this.cloneMisc);
 

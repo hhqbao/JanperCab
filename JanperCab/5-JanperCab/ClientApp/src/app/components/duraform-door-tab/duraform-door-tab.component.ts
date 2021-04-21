@@ -29,7 +29,11 @@ export class DuraformDoorTabComponent
     const door = this.componentService.generateComponent(
       ComponentType.DuraformDoor
     );
-    this.componentService.updateComponent(door, formGroup.value);
+    this.componentService.updateComponent(
+      door,
+      this.order.duraformEnquiry,
+      formGroup.value
+    );
 
     this.order.addComponent(door);
 

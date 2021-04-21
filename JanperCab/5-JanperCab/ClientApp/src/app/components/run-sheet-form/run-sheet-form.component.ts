@@ -1,3 +1,4 @@
+import { DeliveryPatchDto } from './../../_models/delivery-run-sheet/DeliveryPatchDto';
 import { EnquiryForRunSheetDto } from './../../_models/enquiry/EnquiryForRunSheetDto';
 import { MachineService } from './../../_services/machine.service';
 import { RunSheetService } from './../../_services/run-sheet.service';
@@ -14,6 +15,7 @@ import {
   Output,
   EventEmitter,
   Input,
+  ElementRef,
 } from '@angular/core';
 import * as scanner from 'onscan.js';
 import * as _ from 'lodash';
@@ -42,11 +44,19 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
   ) {}
 
   get disableChangingDriver(): boolean {
-    if (this.selectedSheet && this.selectedSheet.lockedDate) {
+    if (this.selectedSheet && this.selectedSheet.isEditable) {
       return true;
     }
 
     return false;
+  }
+
+  get patches(): DeliveryPatchDto[] {
+    if (!this.selectedSheet) {
+      return [];
+    }
+
+    return this.selectedSheet.getPatchDetails();
   }
 
   ngOnInit() {
@@ -59,9 +69,8 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
           this.selectedSheet ? this.selectedSheet.driverId : this.drivers[0].id,
           [Validators.required]
         );
-        scanner.attachTo(document, {
-          onScan: this.onScan,
-        });
+
+        this.initializeScanner();
 
         this.isLoading = false;
         this.layoutService.closeLoadingPanel();
@@ -74,7 +83,9 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    scanner.detachFrom(document);
+    if (scanner.isAttachedTo(document)) {
+      scanner.detachFrom(document);
+    }
   }
 
   onPrint = () => {
@@ -167,18 +178,21 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
     this.layoutService.showLoadingPanel();
 
     if (this.selectedSheet) {
-      this.addOrderToList(this.selectedSheet.id, enquiryId);
+      this.addOrderToList(this.selectedSheet, enquiryId);
     } else {
-      this.createRunSheet(driverId, (sheetId: number) => {
-        this.addOrderToList(sheetId, enquiryId);
+      this.createRunSheet(driverId, (sheet: DeliveryRunSheetForListDto) => {
+        this.addOrderToList(sheet, enquiryId);
       });
     }
   };
 
-  private addOrderToList = (sheetId: number, enquiryId: number): void => {
-    this.machineService.processDelivering(sheetId, enquiryId).subscribe(
+  private addOrderToList = (
+    sheet: DeliveryRunSheetForListDto,
+    enquiryId: number
+  ): void => {
+    this.machineService.processDelivering(sheet.id, enquiryId).subscribe(
       (response) => {
-        this.selectedSheet.enquiriesForRunSheet.push(response);
+        sheet.enquiriesForRunSheet.push(response);
         this.isLoading = false;
         this.layoutService.closeLoadingPanel();
         this.dialogService.success('Order has been added');
@@ -193,15 +207,15 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
 
   private createRunSheet = (
     driverId: number,
-    callBack: (sheetId: number) => any
+    callBack: (sheet: DeliveryRunSheetForListDto) => any
   ): void => {
     this.runSheetService.createRunSheet(driverId).subscribe(
       (response) => {
-        const clone = _.cloneDeep(response);
-        this.runSheets.push(clone);
-        this.selectedSheet = this.runSheets[this.runSheets.indexOf(clone)];
+        this.selectedSheet = response;
+        this.runSheets.push(this.selectedSheet);
+
         if (callBack) {
-          callBack(this.selectedSheet.id);
+          callBack(this.selectedSheet);
         }
       },
       (error) => {
@@ -210,5 +224,15 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
         this.dialogService.alert('Create Run Sheet Failed', error, null);
       }
     );
+  };
+
+  private initializeScanner = () => {
+    if (scanner.isAttachedTo(document)) {
+      scanner.detachFrom(document);
+    }
+
+    scanner.attachTo(document, {
+      onScan: this.onScan,
+    });
   };
 }

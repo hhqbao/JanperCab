@@ -29,5 +29,17 @@ namespace _1_Domain
 
             return new List<ICBLineStructure> { line };
         }
+
+        public override string GetInvoiceDescription()
+        {
+            var desc = $"Pantry - {Height:F0} x {Width:F0} - {ChairRailHeight:F0} x {ChairRailType.Name}";
+
+            desc += ExtraRailBottom.HasValue ? $" - BOT={ExtraRailBottom:F0}" : string.Empty;
+
+            if (DuraformOption != null)
+                desc += $" - {DuraformOption.GetInvoiceDescription()}";
+
+            return desc;
+        }
     }
 }

@@ -14,6 +14,25 @@
           />
         </div>
         <div class="form__group">
+          <label class="form__label">Discount %</label>
+          <input
+            class="form__control"
+            currencyMask
+            appSelectOnFocus
+            [formControl]="discountRate"
+            (blur)="discountRate.invalid && discountRate.setValue(0)"
+            [options]="{
+              align: 'left',
+              allowZero: false,
+              precision: '0',
+              decimal: '',
+              prefix: '',
+              thousands: '',
+              max: 100
+            }"
+          />
+        </div>
+        <div class="form__group">
           <label class="form__label">Email Address</label>
           <input type="email" class="form__control" formControlName="email" />
         </div>
@@ -133,7 +152,7 @@
           <button
             type="button"
             class="btn btn--default"
-            style="margin-left: 2rem;"
+            style="margin-left: 2rem"
             (click)="onCloseForm()"
           >
             <i class="fa fa-ban"></i>

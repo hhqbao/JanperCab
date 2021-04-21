@@ -14,7 +14,11 @@ export abstract class DuraformComponentDto {
   right: boolean;
   note: string;
   sortNumber: number;
-  price: number;
+
+  unitPrice: number;
+  subTotal: number;
+  totalDiscount: number;
+  totalPrice: number;
 
   get duraformEdgeProfile(): DuraformEdgeProfileForList {
     return DuraformAssetService.instance.getEdgeProfile(

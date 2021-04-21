@@ -1,3 +1,4 @@
+import { DuraformComponentService } from 'src/app/_services/duraform-component.service';
 import { DuraformMiscFingerPullDto } from './../_models/duraform-misc-component/DuraformMiscFingerPullDto';
 import { DuraformMiscCapMouldDto } from 'src/app/_models/duraform-misc-component/DuraformMiscCapMouldDto';
 import { DuraformMiscLooseFoilDto } from 'src/app/_models/duraform-misc-component/DuraformMiscLooseFoilDto';
@@ -18,7 +19,11 @@ import { DuraformComponentWithOptionDto } from '../_models/duraform-component/Du
 export class DuraformOrderService {
   duraformEnquiry: DuraformEnquiryDto;
 
-  constructor(private asset: DuraformAssetService, private auth: AuthService) {
+  constructor(
+    private asset: DuraformAssetService,
+    private auth: AuthService,
+    private componentService: DuraformComponentService
+  ) {
     this.duraformEnquiry = new DuraformEnquiryDto();
   }
 
@@ -78,23 +83,14 @@ export class DuraformOrderService {
       }
 
       this.duraformEnquiry.duraformComponents.forEach((component) => {
-        let serieId = this.duraformEnquiry.duraformSerie.id;
-
-        if (component instanceof DuraformComponentWithOptionDto) {
-          if (
-            component.duraformOption &&
-            component.duraformOption.hasNoProfile
-          ) {
-            serieId = 1;
-          }
-        }
-
-        component.price =
-          component.quantity * component.getPriceForOne(serieId);
+        this.componentService.calculateComponentPrice(
+          component,
+          this.duraformEnquiry
+        );
       });
 
       this.duraformEnquiry.miscComponents.forEach((misc) => {
-        misc.calculatePrice(this.duraformEnquiry);
+        misc.getUnitPrice(this.duraformEnquiry);
       });
     }
   };
@@ -114,6 +110,8 @@ export class DuraformOrderService {
     this.duraformEnquiry.deliverySuburb = cabinetMaker.deliverySuburb;
     this.duraformEnquiry.deliveryState = cabinetMaker.deliveryState;
     this.duraformEnquiry.deliveryPostcode = cabinetMaker.deliveryPostcode;
+
+    this.duraformEnquiry.updateDiscountRate(cabinetMaker.discountRate);
   };
 
   setEdgeProfile = (model: DuraformEdgeProfileForList) => {

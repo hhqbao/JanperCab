@@ -1,6 +1,6 @@
+import { DuraformComponentService } from 'src/app/_services/duraform-component.service';
 import { DuraformMiscPriceLooseFoilDto } from './../duraform-misc-price/DuraformMiscPriceLooseFoilDto';
 import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
-import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { FormGroup } from '@angular/forms';
 import { DuraformMiscTypeEnum } from 'src/app/_enums/DuraformMiscTypeEnum';
 import { DuraformMiscComponentDto } from './DuraformMiscComponentDto';
@@ -23,7 +23,7 @@ export class DuraformMiscLooseFoilDto extends DuraformMiscComponentDto {
     this.quantity = values.quantity;
   }
 
-  calculatePrice(duraformEnquiry: DuraformEnquiryDto): void {
+  getUnitPrice(duraformEnquiry: DuraformEnquiryDto): number {
     const looseFoilPrices = DuraformAssetService.instance.miscPrices.filter(
       (x) => x instanceof DuraformMiscPriceLooseFoilDto
     ) as DuraformMiscPriceLooseFoilDto[];
@@ -32,11 +32,7 @@ export class DuraformMiscLooseFoilDto extends DuraformMiscComponentDto {
       (x) => x.duraformWrapTypeId === duraformEnquiry.duraformWrapTypeId
     );
 
-    if (unitPrice) {
-      this.price = unitPrice.price * this.quantity;
-    } else {
-      this.price = 0;
-    }
+    return unitPrice ? unitPrice.price : 0;
   }
 
   toString(): string {

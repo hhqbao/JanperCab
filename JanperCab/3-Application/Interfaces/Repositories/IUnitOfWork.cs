@@ -42,6 +42,8 @@ namespace _3_Application.Interfaces.Repositories
 
         IDeliveryRunSheetRepo DeliveryRunSheets { get; }
 
+        IInvoiceRepo Invoices { get; }
+
         Task ExecuteCommandAsync(string command);
 
         Task<int> CompleteAsync();

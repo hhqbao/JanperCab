@@ -18,7 +18,7 @@ export class CabinetMakerDto extends CustomerDto {
 
   secondPhone: string;
   thirdPhone: string;
-  deliveryFee: number;
+  discountRate: number;
 
   constructor() {
     super();

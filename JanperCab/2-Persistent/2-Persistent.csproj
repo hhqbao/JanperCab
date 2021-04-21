@@ -100,6 +100,14 @@
     <Compile Remove="Migrations\20210330222640_Foo.Designer.cs" />
     <Compile Remove="Migrations\20210331221218_Edit-Enquiries-AddCol-DeliveryFee.cs" />
     <Compile Remove="Migrations\20210331221218_Edit-Enquiries-AddCol-DeliveryFee.Designer.cs" />
+    <Compile Remove="Migrations\20210420040528_EditTable_Enquiry_AddCol_DiscountRate.cs" />
+    <Compile Remove="Migrations\20210420040528_EditTable_Enquiry_AddCol_DiscountRate.Designer.cs" />
+    <Compile Remove="Migrations\20210420040829_EditTable_Enquiry_AddCol_DiscountRate.cs" />
+    <Compile Remove="Migrations\20210420040829_EditTable_Enquiry_AddCol_DiscountRate.Designer.cs" />
+    <Compile Remove="Migrations\20210420040926_EditTable_Enquiry_AddCol_DiscountRate.cs" />
+    <Compile Remove="Migrations\20210420040926_EditTable_Enquiry_AddCol_DiscountRate.Designer.cs" />
+    <Compile Remove="Migrations\20210420091527_EditTable_DuraformComponents_AddCols_SubTotal_TotalDiscount.cs" />
+    <Compile Remove="Migrations\20210420091527_EditTable_DuraformComponents_AddCols_SubTotal_TotalDiscount.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

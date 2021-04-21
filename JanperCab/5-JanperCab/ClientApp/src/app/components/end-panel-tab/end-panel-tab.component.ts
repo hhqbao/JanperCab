@@ -30,7 +30,11 @@ export class EndPanelTabComponent
     const endPanel = this.componentService.generateComponent(
       ComponentType.DuraformEndPanel
     );
-    this.componentService.updateComponent(endPanel, formGroup.value);
+    this.componentService.updateComponent(
+      endPanel,
+      this.order.duraformEnquiry,
+      formGroup.value
+    );
 
     this.order.addComponent(endPanel);
 

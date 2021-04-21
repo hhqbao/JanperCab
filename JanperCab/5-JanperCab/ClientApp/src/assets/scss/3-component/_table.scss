@@ -132,8 +132,11 @@
     }
 
     .subtotal {
-      &__header {
+      td {
         border: solid 1px rgba($color: black, $alpha: 0.2);
+      }
+
+      &__header {
         color: $blue-primary;
         font-weight: bold;
         font-size: 1.6rem;

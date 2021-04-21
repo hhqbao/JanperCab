@@ -47,6 +47,8 @@ namespace _4_Infrastructure.Repositories
 
         public IDeliveryRunSheetRepo DeliveryRunSheets { get; }
 
+        public IInvoiceRepo Invoices { get; }
+
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {
@@ -71,11 +73,12 @@ namespace _4_Infrastructure.Repositories
             Machines = new MachineRepo(_dbContext);
             Drivers = new DriverRepo(_dbContext);
             DeliveryRunSheets = new DeliveryRunSheetRepo(_dbContext);
+            Invoices = new InvoiceRepo(_dbContext);
         }
 
         public async Task ExecuteCommandAsync(string command)
         {
-            await this._dbContext.Database.ExecuteSqlRawAsync(command);
+            await _dbContext.Database.ExecuteSqlRawAsync(command);
         }
 
         public async Task<int> CompleteAsync()

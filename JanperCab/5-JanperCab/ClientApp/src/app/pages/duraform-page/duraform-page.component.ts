@@ -1,3 +1,4 @@
+import { DuraformPriceService } from './../../_services/duraform-price.service';
 import { EnquiryService } from './../../_services/enquiry.service';
 import { DuraformComponentService } from './../../_services/duraform-component.service';
 import { DuraformWrapColorService } from './../../_services/duraform-wrap-color.service';
@@ -25,6 +26,8 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: 'duraform-page.component.html',
 })
 export class DuraformPageComponent implements OnInit {
+  static instance: DuraformPageComponent;
+
   isLoadingAsset = true;
   duraformProcessStep = DuraformProcessStep;
   displayedStep = this.duraformProcessStep.StepOne;
@@ -47,8 +50,11 @@ export class DuraformPageComponent implements OnInit {
     private drawerTypeService: DuraformDrawerTypeService,
     private optionTypeService: DuraformOptionTypeService,
     private hingeService: HingeHoleService,
-    private componentService: DuraformComponentService
-  ) {}
+    private componentService: DuraformComponentService,
+    private priceService: DuraformPriceService
+  ) {
+    DuraformPageComponent.instance = this;
+  }
 
   ngOnInit() {
     this.layout.showLoadingPanel();
@@ -103,9 +109,22 @@ export class DuraformPageComponent implements OnInit {
         this.enquiryService.getDuraformEnquiry(id).subscribe(
           (response) => {
             this.order.duraformEnquiry = response;
-            this.isLoadingAsset = false;
-            this.displayedStep = this.duraformProcessStep.StepThree;
-            this.layout.closeLoadingPanel();
+
+            const {
+              isRoutingOnly,
+              duraformSerieId,
+              duraformWrapTypeId,
+            } = this.order.duraformEnquiry;
+            this.asset.loadPrices(
+              isRoutingOnly,
+              duraformSerieId,
+              duraformWrapTypeId,
+              () => {
+                this.isLoadingAsset = false;
+                this.displayedStep = this.duraformProcessStep.StepThree;
+                this.layout.closeLoadingPanel();
+              }
+            );
           },
           (error) => {
             this.dialog.error(error);

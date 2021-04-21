@@ -1,4 +1,5 @@
 ﻿using _1_Domain.Enum;
+using _3_Application.Dtos.Invoice;
 using System;
 
 namespace _3_Application.Dtos.Enquiry
@@ -48,12 +49,23 @@ namespace _3_Application.Dtos.Enquiry
 
         public string DeliveryNote { get; set; }
 
+        public decimal GstRate { get; set; }
+
+        public decimal DiscountRate { get; set; }
+
         public decimal DeliveryFee { get; set; }
+
+        public decimal SubTotal { get; set; }
+
+        public decimal TotalGst { get; set; }
 
         public decimal? TotalPrice { get; set; }
 
         public bool NotEditable { get; set; }
 
         public int? DeliveryRunSheetId { get; set; }
+
+
+        public InvoiceDto Invoice { get; set; }
     }
 }
