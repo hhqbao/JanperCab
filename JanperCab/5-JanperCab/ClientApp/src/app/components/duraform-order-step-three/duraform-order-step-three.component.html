@@ -44,6 +44,12 @@
       (cancel)="showDeliveryForm = false"
     ></app-delivery-detail-form>
   </app-float-box>
+  <app-float-box *ngIf="showInvoiceGenerator" [width]="25">
+    <app-invoice-generator
+      (afterGenerate)="onGenerateInvoice($event)"
+      (closeBtnClick)="showInvoiceGenerator = false"
+    ></app-invoice-generator>
+  </app-float-box>
   <app-pdf-viewer
     *ngIf="showDeliveryDocket"
     [documentName]="'Delivery-Docket'"
@@ -53,12 +59,13 @@
       [duraformEnquiry]="duraformEnquiry"
     ></app-duraform-delivery-docket>
   </app-pdf-viewer>
-  <app-float-box *ngIf="showInvoiceGenerator" [width]="25">
-    <app-invoice-generator
-      (afterGenerate)="onGenerateInvoice($event)"
-      (closeBtnClick)="showInvoiceGenerator = false"
-    ></app-invoice-generator>
-  </app-float-box>
+  <app-pdf-viewer
+    *ngIf="showInvoicePdf && duraformEnquiry.invoice"
+    [documentName]="'Invoice'"
+    (closePanel)="showInvoicePdf = false"
+  >
+    <app-invoice-pdf [invoiceId]="duraformEnquiry.invoice.id"></app-invoice-pdf>
+  </app-pdf-viewer>
   <div class="component-box">
     <div class="shipping-details-box">
       <button
@@ -566,7 +573,11 @@
           <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
           <span>Generate Invoice</span>
         </button>
-        <button class="action-btn" *ngIf="duraformEnquiry.hasBeenInvoiced">
+        <button
+          class="action-btn"
+          *ngIf="duraformEnquiry.hasBeenInvoiced"
+          (click)="showInvoicePdf = true"
+        >
           <i class="fa fa-folder-open" aria-hidden="true"></i>
           <span>View Invoice</span>
         </button>

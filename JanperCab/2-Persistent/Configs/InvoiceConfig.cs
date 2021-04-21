@@ -18,6 +18,58 @@ namespace _2_Persistent.Configs
             builder.HasIndex(x => x.EnquiryId)
                 .IsUnique();
 
+            builder.Property(x => x.CustomerReference)
+                .IsRequired()
+                .HasColumnType("varchar(500)");
+
+            builder.Property(x => x.DoorType)
+                .IsRequired()
+                .HasColumnType("varchar(1000)");
+
+            builder.Property(x => x.DoorColor)
+                .IsRequired()
+                .HasColumnType("varchar(1000)");
+
+            builder.Property(x => x.InvoiceTo)
+                .IsRequired()
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.InvoiceAddress)
+                .IsRequired()
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.InvoiceSuburb)
+                .IsRequired()
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.InvoiceState)
+                .IsRequired()
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.InvoicePostcode)
+                .IsRequired()
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.DeliveryTo)
+                .IsRequired()
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.DeliveryAddress)
+                .IsRequired()
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.DeliverySuburb)
+                .IsRequired()
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.DeliveryState)
+                .IsRequired()
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.DeliveryPostcode)
+                .IsRequired()
+                .HasColumnType("varchar(255)");
+
             builder.Property(x => x.GstRate)
                 .HasColumnType("decimal(18,2)");
 
@@ -39,6 +91,12 @@ namespace _2_Persistent.Configs
             builder.HasOne(x => x.Enquiry)
                 .WithOne(y => y.Invoice)
                 .HasForeignKey<Invoice>(x => x.EnquiryId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.CabinetMaker)
+                .WithMany(y => y.Invoices)
+                .HasForeignKey(x => x.CabinetMakerId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
         }

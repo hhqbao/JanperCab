@@ -108,6 +108,8 @@
     <Compile Remove="Migrations\20210420040926_EditTable_Enquiry_AddCol_DiscountRate.Designer.cs" />
     <Compile Remove="Migrations\20210420091527_EditTable_DuraformComponents_AddCols_SubTotal_TotalDiscount.cs" />
     <Compile Remove="Migrations\20210420091527_EditTable_DuraformComponents_AddCols_SubTotal_TotalDiscount.Designer.cs" />
+    <Compile Remove="Migrations\20210421125412_EditTable_Invoices_LinkToCabinetMaker.cs" />
+    <Compile Remove="Migrations\20210421125412_EditTable_Invoices_LinkToCabinetMaker.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

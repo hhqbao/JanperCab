@@ -12,6 +12,39 @@ namespace _3_Application.Dtos.Invoice
 
         public DateTime CreatedDate { get; set; }
 
+
+        public int CabinetMakerId { get; set; }
+
+        public string CustomerReference { get; set; }
+
+
+        public string DoorType { get; set; }
+
+        public string DoorColor { get; set; }
+
+
+        public string InvoiceTo { get; set; }
+
+        public string InvoiceAddress { get; set; }
+
+        public string InvoiceSuburb { get; set; }
+
+        public string InvoiceState { get; set; }
+
+        public string InvoicePostcode { get; set; }
+
+
+        public string DeliveryTo { get; set; }
+
+        public string DeliveryAddress { get; set; }
+
+        public string DeliverySuburb { get; set; }
+
+        public string DeliveryState { get; set; }
+
+        public string DeliveryPostcode { get; set; }
+
+
         public decimal GstRate { get; set; }
 
         public decimal DiscountRate { get; set; }

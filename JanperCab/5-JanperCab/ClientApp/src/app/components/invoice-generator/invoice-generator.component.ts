@@ -78,7 +78,7 @@ export class InvoiceGeneratorComponent implements OnInit {
             this.isLoading = false;
             this.layoutService.closeLoadingPanel();
             this.dialogService.alert(
-              'Generating Invoice Success',
+              'Success',
               'Invoice has been generated successfully',
               () => {
                 this.order.duraformEnquiry.invoice = response;

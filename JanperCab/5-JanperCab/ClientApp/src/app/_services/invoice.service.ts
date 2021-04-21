@@ -10,6 +10,16 @@ import { environment } from 'src/environments/environment';
 export class InvoiceService {
   constructor(private http: HttpClient) {}
 
+  getInvoice = (invoiceId: string): Observable<InvoiceDto> => {
+    return this.http
+      .get<InvoiceDto>(`${environment.baseUrl}/Invoices/${invoiceId}`)
+      .pipe(
+        map((response) => {
+          return plainToClass(InvoiceDto, response);
+        })
+      );
+  };
+
   createInvoice = (
     enquiryId: number,
     invoiceId: string

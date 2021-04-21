@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _2_Persistent;
 
 namespace _2_Persistent.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210421125713_EditTable_Invoices_LinkToCabinetMaker")]
+    partial class EditTable_Invoices_LinkToCabinetMaker
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1106,10 +1108,6 @@ namespace _2_Persistent.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CustomerReference")
-                        .IsRequired()
-                        .HasColumnType("varchar(500)");
-
                     b.Property<string>("DeliveryAddress")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
@@ -1135,14 +1133,6 @@ namespace _2_Persistent.Migrations
 
                     b.Property<decimal>("DiscountRate")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("DoorColor")
-                        .IsRequired()
-                        .HasColumnType("varchar(1000)");
-
-                    b.Property<string>("DoorType")
-                        .IsRequired()
-                        .HasColumnType("varchar(1000)");
 
                     b.Property<int>("EnquiryId")
                         .HasColumnType("int");

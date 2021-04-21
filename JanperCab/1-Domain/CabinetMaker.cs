@@ -38,11 +38,15 @@ namespace _1_Domain
 
         public virtual ICollection<Enquiry> Enquiries { get; set; }
 
+        public virtual ICollection<Invoice> Invoices { get; set; }
+
         public CabinetMaker()
         {
             CustomerType = CustomerType.CabinetMaker;
 
             Enquiries = new Collection<Enquiry>();
+
+            Invoices = new Collection<Invoice>();
         }
     }
 }
