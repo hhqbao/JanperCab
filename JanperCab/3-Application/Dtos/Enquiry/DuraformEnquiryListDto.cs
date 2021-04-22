@@ -28,6 +28,8 @@ namespace _3_Application.Dtos.Enquiry
 
         public string DeliveryNote { get; set; }
 
+        public bool HasBeenInvoiced { get; set; }
+
 
 
         public ICollection<DuraformProcessDto> DuraformProcesses { get; set; }

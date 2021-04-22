@@ -54,6 +54,8 @@ export abstract class EnquiryDto {
     return this.invoice !== null && this.invoice !== undefined;
   }
 
+  abstract get jobType(): string;
+
   constructor() {
     this.$type = '_3_Application.Dtos.Enquiry.EnquiryDto, 3-Application';
     this.enquiryType = EnquiryTypeEnum.Draft;

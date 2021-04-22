@@ -23,6 +23,7 @@ export class DuraformEnquiryListDto {
   cabinetMaker: CabinetMakerDto;
   distributor: DistributorDto;
   deliveryNote: string;
+  hasBeenInvoiced: boolean;
 
   @Type(() => DuraformProcessDto, {
     keepDiscriminatorProperty: true,
@@ -84,6 +85,10 @@ export class DuraformEnquiryListDto {
   get statusDescription(): string {
     if (!this.currentStatus) {
       return 'Ordered';
+    }
+
+    if (this.hasBeenInvoiced) {
+      return 'Invoiced';
     }
 
     return this.currentStatus.getStatus();

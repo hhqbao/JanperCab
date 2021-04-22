@@ -266,6 +266,9 @@ namespace _5_JanperCab.Helpers
                 .ForMember(x => x.CreatedDate, opt => opt.Ignore())
                 .ForMember(x => x.Invoice, opt => opt.Ignore());
 
+            CreateMap<Enquiry, EnquiryForInvoicingDto>()
+                .ForMember(x => x.CustomerName, opt => opt.MapFrom(x => x.CabinetMaker.Name));
+
             CreateMap<DuraformEnquiry, DuraformEnquiryDto>();
             CreateMap<DuraformEnquiry, DuraformEnquiryListDto>();
             CreateMap<DuraformEnquiryDto, DuraformEnquiry>();

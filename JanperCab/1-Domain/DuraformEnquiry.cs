@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _1_Domain.Enum;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -56,6 +57,8 @@ namespace _1_Domain
             DuraformProcesses = new Collection<DuraformProcess>();
         }
 
+        public override string JobType => IsRoutingOnly ? "DSW" : "DF";
+
         public override string DoorType => DuraformDesign.Name;
 
         public override string DoorColor => IsRoutingOnly ? "DSW" : $"{DuraformWrapType.Name} {DuraformWrapColor.Name}";
@@ -70,7 +73,33 @@ namespace _1_Domain
             get { return DuraformComponents.Sum(x => x.Quantity); }
         }
 
-        public override bool HasBeenDelivered => CurrentProcess is DuraformProcessDelivering && CurrentProcess.EndTime.HasValue;
+        public override bool HasBeenDelivered => DuraformProcesses.Any(x =>
+            x.DuraformProcessType == DuraformProcessEnum.Delivering && x.EndTime.HasValue);
+
+        public override DateTime? DeliveredTime => DuraformProcesses.FirstOrDefault(x =>
+            x.DuraformProcessType == DuraformProcessEnum.Delivering && x.EndTime.HasValue)?.EndTime;
+
+        public override void Approve()
+        {
+            ApprovedDate = DateTime.Now;
+            DuraformProcesses.Clear();
+
+            DuraformProcesses.Add(new DuraformProcessPreRoute { StartTime = DateTime.Now, IsCurrent = true });
+            DuraformProcesses.Add(new DuraformProcessRouting());
+
+            if (IsRoutingOnly)
+            {
+                DuraformProcesses.Add(new DuraformProcessPacking());
+            }
+            else
+            {
+                DuraformProcesses.Add(new DuraformProcessPressing());
+                DuraformProcesses.Add(new DuraformProcessCleaning());
+                DuraformProcesses.Add(new DuraformProcessPacking());
+            }
+
+            DuraformProcesses.Add(new DuraformProcessDelivering());
+        }
 
         public override void ProcessRouting(MachineRouter router)
         {

@@ -3,7 +3,6 @@ using _1_Domain.Enum;
 using _3_Application.Dtos.Common;
 using _3_Application.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,13 +32,27 @@ namespace _4_Infrastructure.Repositories
             }
         }
 
-        public async Task<List<DuraformEnquiry>> GetDuraformDraftListAsync(ApplicationUser creator)
+        public async Task<List<Enquiry>> GetEnquiriesForInvoicingAsync()
+        {
+            var enquiries = new List<Enquiry>();
+
+            var duraforms = await _dbSet.OfType<DuraformEnquiry>()
+                .Where(x => x.DuraformProcesses.Any(y => y.DuraformProcessType == DuraformProcessEnum.Delivering && y.EndTime.HasValue))
+                .Where(x => x.Invoice == null)
+                .ToListAsync();
+
+            enquiries.AddRange(duraforms);
+
+            return enquiries;
+        }
+
+        public async Task<List<DuraformEnquiry>> GetDuraformDraftsAsync(ApplicationUser creator)
         {
             return await _dbSet.OfType<DuraformEnquiry>()
                 .Where(x => x.EnquiryType == EnquiryTypeEnum.Draft && x.CreatorId == creator.Id).ToListAsync();
         }
 
-        public async Task<ItemList<DuraformEnquiry>> GetDuraformOrderListAsync(int? cabinetMakerId, int? distributorId, DuraformProcessEnum? status, string search, string sortBy, string direction, int page, int take)
+        public async Task<ItemList<DuraformEnquiry>> GetDuraformOrdersAsync(int? cabinetMakerId, int? distributorId, DuraformProcessEnum? status, string search, string sortBy, string direction, int page, int take)
         {
             var query = _dbSet.OfType<DuraformEnquiry>().Where(x => x.EnquiryType == EnquiryTypeEnum.Order && x.OrderedDate.HasValue);
 
@@ -86,28 +99,6 @@ namespace _4_Infrastructure.Repositories
             }
 
             return await GetSortedDuraformEnquiryListAsync(search, sortBy, direction, page, take, query);
-        }
-
-        public void Approve(DuraformEnquiry enquiry)
-        {
-            enquiry.ApprovedDate = DateTime.Now;
-            enquiry.DuraformProcesses.Clear();
-
-            enquiry.DuraformProcesses.Add(new DuraformProcessPreRoute { StartTime = DateTime.Now, IsCurrent = true });
-            enquiry.DuraformProcesses.Add(new DuraformProcessRouting());
-
-            if (enquiry.IsRoutingOnly)
-            {
-                enquiry.DuraformProcesses.Add(new DuraformProcessPacking());
-            }
-            else
-            {
-                enquiry.DuraformProcesses.Add(new DuraformProcessPressing());
-                enquiry.DuraformProcesses.Add(new DuraformProcessCleaning());
-                enquiry.DuraformProcesses.Add(new DuraformProcessPacking());
-            }
-
-            enquiry.DuraformProcesses.Add(new DuraformProcessDelivering());
         }
 
         private static async Task<ItemList<DuraformEnquiry>> GetSortedDuraformEnquiryListAsync(string search, string sortBy, string direction, int page, int take,

@@ -1,3 +1,4 @@
+import { EnquiryForInvoicingDto } from './../_models/enquiry/EnquiryForInvoicingDto';
 import { DuraformProcessDto } from '../_models/DuraformProcess/DuraformProcessDto';
 import { DuraformEnquiryListDto } from './../_models/enquiry/DuraformEnquiryListDto';
 import { DuraformEnquiryDto } from './../_models/enquiry/DuraformEnquiryDto';
@@ -14,6 +15,18 @@ import { OrderSearchFilterValues } from '../_models/commons/OrderSearchFilterVal
 @Injectable({ providedIn: 'root' })
 export class EnquiryService {
   constructor(private http: HttpClient) {}
+
+  getEnquiriesForInvoicing = (): Observable<EnquiryForInvoicingDto[]> => {
+    return this.http
+      .get<EnquiryForInvoicingDto[]>(
+        `${environment.baseUrl}/enquiries/for-invoicing`
+      )
+      .pipe(
+        map((response) => {
+          return plainToClass(EnquiryForInvoicingDto, response);
+        })
+      );
+  };
 
   getDuraformEnquiry = (id: number): Observable<DuraformEnquiryDto> => {
     return this.http

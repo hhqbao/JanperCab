@@ -1,3 +1,4 @@
+import { InvoiceProcessPageComponent } from './pages/invoice-process-page/invoice-process-page.component';
 import { InvoicePdfComponent } from './components/invoice-pdf/invoice-pdf.component';
 import { InvoiceGeneratorComponent } from './components/invoice-generator/invoice-generator.component';
 import { InvoiceService } from './_services/invoice.service';
@@ -252,6 +253,7 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     RunSheetPdfComponent,
     InvoiceGeneratorComponent,
     InvoicePdfComponent,
+    InvoiceProcessPageComponent,
   ],
   imports: [
     BrowserModule,

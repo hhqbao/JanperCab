@@ -100,7 +100,7 @@
           </h1>
         </div>
         <div class="col-2-3">
-          <div class="status-box">
+          <div class="status-box" *ngIf="duraformEnquiry.cabinetMakerId">
             <div class="status-box__status">
               <app-simple-box [heading]="'Customer Referrence'">
                 <input

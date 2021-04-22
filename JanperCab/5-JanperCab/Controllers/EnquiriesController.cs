@@ -29,6 +29,14 @@ namespace _5_JanperCab.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("for-invoicing")]
+        public async Task<IActionResult> GetEnquiriesForInvoicing()
+        {
+            var enquiries = await _unitOfWork.Enquiries.GetEnquiriesForInvoicingAsync();
+
+            return Ok(_mapper.Map<List<Enquiry>, List<EnquiryForInvoicingDto>>(enquiries));
+        }
+
         [HttpGet("duraform/{id}")]
         public async Task<IActionResult> GetDuraform(int id)
         {
@@ -49,13 +57,13 @@ namespace _5_JanperCab.Controllers
         {
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
 
-            var duraformDrafts = await _unitOfWork.Enquiries.GetDuraformDraftListAsync(currentUser);
+            var duraformDrafts = await _unitOfWork.Enquiries.GetDuraformDraftsAsync(currentUser);
 
             return Ok(_mapper.Map<List<DuraformEnquiry>, List<DuraformEnquiryListDto>>(duraformDrafts));
         }
 
         [HttpGet("duraform/orders")]
-        public async Task<IActionResult> GetCabinetMakerOrders(int? cusId, DuraformProcessEnum? status, string search,
+        public async Task<IActionResult> GetDuraformOrders(int? cusId, DuraformProcessEnum? status, string search,
             string sortBy, string dir, int page = 0, int take = 20)
         {
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
@@ -65,15 +73,15 @@ namespace _5_JanperCab.Controllers
             switch (currentUser.Customer.CustomerType)
             {
                 case CustomerType.CabinetMaker:
-                    itemList = await _unitOfWork.Enquiries.GetDuraformOrderListAsync(currentUser.CustomerId, null, status,
+                    itemList = await _unitOfWork.Enquiries.GetDuraformOrdersAsync(currentUser.CustomerId, null, status,
                         search, sortBy, dir, page, take);
                     break;
                 case CustomerType.Distributor:
-                    itemList = await _unitOfWork.Enquiries.GetDuraformOrderListAsync(cusId, currentUser.CustomerId, status,
+                    itemList = await _unitOfWork.Enquiries.GetDuraformOrdersAsync(cusId, currentUser.CustomerId, status,
                         search, sortBy, dir, page, take);
                     break;
                 case CustomerType.Manufacturer:
-                    itemList = await _unitOfWork.Enquiries.GetDuraformOrderListAsync(null, cusId, status,
+                    itemList = await _unitOfWork.Enquiries.GetDuraformOrdersAsync(null, cusId, status,
                         search, sortBy, dir, page, take);
                     break;
                 default:
@@ -135,10 +143,10 @@ namespace _5_JanperCab.Controllers
 
             var enquiry = await _unitOfWork.Enquiries.GetEnquiryAsync(id, currentUser.Customer);
 
-            if (!(enquiry is DuraformEnquiry duraformEnquiry))
+            if (enquiry == null)
                 return BadRequest("Enquiry Not Found");
 
-            _unitOfWork.Enquiries.Approve(duraformEnquiry);
+            enquiry.Approve();
             await _unitOfWork.CompleteAsync();
 
             return Ok();

@@ -10,11 +10,11 @@ namespace _3_Application.Interfaces.Repositories
     {
         Task<Enquiry> GetEnquiryAsync(int id, Customer customer);
 
-        Task<List<DuraformEnquiry>> GetDuraformDraftListAsync(ApplicationUser creator);
+        Task<List<Enquiry>> GetEnquiriesForInvoicingAsync();
 
-        Task<ItemList<DuraformEnquiry>> GetDuraformOrderListAsync(int? cabinetMakerId, int? distributorId, DuraformProcessEnum? status,
+        Task<List<DuraformEnquiry>> GetDuraformDraftsAsync(ApplicationUser creator);
+
+        Task<ItemList<DuraformEnquiry>> GetDuraformOrdersAsync(int? cabinetMakerId, int? distributorId, DuraformProcessEnum? status,
             string search, string sortBy, string direction, int page, int take);
-
-        void Approve(DuraformEnquiry enquiry);
     }
 }

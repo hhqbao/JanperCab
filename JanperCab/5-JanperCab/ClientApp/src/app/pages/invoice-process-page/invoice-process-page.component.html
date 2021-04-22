@@ -1,0 +1,41 @@
+<div class="invoice-pp">
+  <app-simple-box [heading]="'Orders For Invoicing'">
+    <div class="invoice-pp__body">
+      <table class="table table--hovered table--left">
+        <thead>
+          <tr>
+            <th style="width: 12rem">Order No.</th>
+            <th style="width: 10rem">Type</th>
+            <th class="text-center" style="width: 15rem">Delivered Time</th>
+            <th>Customer</th>
+            <th class="text-right" style="width: 8rem">Gst Rate</th>
+            <th class="text-right" style="width: 8rem">Discount</th>
+            <th class="text-right" style="width: 12rem">Subtotal</th>
+            <th class="text-right" style="width: 12rem">Total Gst</th>
+            <th class="text-right" style="width: 12rem">Total Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let enquiry of enquiries"
+            (click)="onSelectEnquiry(enquiry)"
+          >
+            <td>{{ enquiry.id | leading }}</td>
+            <td>{{ enquiry.jobType }}</td>
+            <td class="text-center">
+              {{ enquiry.deliveredTime | date: "dd/MM/yyyy hh:mm" }}
+            </td>
+            <td>{{ enquiry.customerName }}</td>
+            <td class="text-right">{{ enquiry.gstRate }}%</td>
+            <td class="text-right">{{ enquiry.discountRate }}%</td>
+            <td class="text-right">{{ enquiry.subTotal | currency }}</td>
+            <td class="text-right">{{ enquiry.totalGst | currency }}</td>
+            <td class="text-right text-alert">
+              <b>{{ enquiry.totalPrice | currency }}</b>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </app-simple-box>
+</div>

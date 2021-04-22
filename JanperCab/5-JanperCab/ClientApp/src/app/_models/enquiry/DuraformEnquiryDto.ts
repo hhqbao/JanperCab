@@ -326,6 +326,10 @@ export class DuraformEnquiryDto extends EnquiryDto {
     );
   }
 
+  get jobType(): string {
+    return this.isRoutingOnly ? 'DSW' : 'DF';
+  }
+
   updateDiscountRate = (discountRate: number) => {
     this.discountRate = discountRate;
 

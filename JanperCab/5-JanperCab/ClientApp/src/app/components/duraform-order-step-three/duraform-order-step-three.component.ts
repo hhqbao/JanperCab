@@ -271,5 +271,6 @@ export class DuraformOrderStepThreeComponent implements OnInit {
 
   onGenerateInvoice = (invoice: InvoiceDto) => {
     this.showInvoiceGenerator = false;
+    this.showInvoicePdf = true;
   };
 }

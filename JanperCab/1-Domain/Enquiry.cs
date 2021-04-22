@@ -75,6 +75,8 @@ namespace _1_Domain
         public virtual Invoice Invoice { get; set; }
 
 
+        public abstract string JobType { get; }
+
         public abstract string DoorType { get; }
 
         public abstract string DoorColor { get; }
@@ -85,11 +87,17 @@ namespace _1_Domain
 
         public abstract bool HasBeenDelivered { get; }
 
+        public abstract DateTime? DeliveredTime { get; }
+
 
         public string FullDeliveryAddress => $"{DeliveryAddress}, {DeliverySuburb} {DeliveryState} {DeliveryPostcode}";
 
         public string FullInvoiceAddress => $"{InvoiceAddress}, {InvoiceSuburb} {InvoiceState} {InvoicePostcode}";
 
+        public bool HasBeenInvoiced => Invoice != null;
+
+
+        public abstract void Approve();
 
         public abstract void ProcessRouting(MachineRouter router);
 

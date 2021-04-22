@@ -44,11 +44,11 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
   ) {}
 
   get disableChangingDriver(): boolean {
-    if (this.selectedSheet && this.selectedSheet.isEditable) {
-      return true;
+    if (!this.selectedSheet || this.selectedSheet.isEditable) {
+      return false;
     }
 
-    return false;
+    return true;
   }
 
   get patches(): DeliveryPatchDto[] {
