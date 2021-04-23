@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace _5_JanperCab.Controllers
 {
-    [Authorize(Roles = "Manufacturer")]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class InvoicesController : ControllerBase
@@ -25,11 +25,12 @@ namespace _5_JanperCab.Controllers
             _mapper = mapper;
         }
 
-
         [HttpGet("{invoiceId}")]
         public async Task<IActionResult> Get(string invoiceId)
         {
-            var invoice = await _unitOfWork.Invoices.GetAsync(invoiceId);
+            var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
+
+            var invoice = await _unitOfWork.Invoices.GetAsync(invoiceId, currentUser.Customer);
 
             if (invoice == null)
                 return BadRequest("Invoice Not Found");
@@ -37,6 +38,7 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<Invoice, InvoiceDto>(invoice));
         }
 
+        [Authorize(Roles = "Manufacturer")]
         [HttpPost("{enquiryId}/{invoiceId}")]
         public async Task<IActionResult> Create(int enquiryId, string invoiceId)
         {

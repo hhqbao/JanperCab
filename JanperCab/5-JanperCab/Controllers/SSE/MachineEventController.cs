@@ -1,5 +1,5 @@
 ﻿using _1_Domain;
-using _3_Application.Dtos.Enquiry;
+using _3_Application.Dtos.Machine;
 using _3_Application.Interfaces.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -12,27 +12,26 @@ using System.Threading.Tasks;
 
 namespace _5_JanperCab.Controllers.SSE
 {
-    [Authorize]
+    [Authorize(Roles = "Manufacturer")]
     [Route("sse/[controller]")]
     [ApiController]
-    public class EnquiryEventController : ControllerBase
+    public class MachineEventController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public EnquiryEventController(IUnitOfWork unitOfWork, IMapper mapper)
+        public MachineEventController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        [Authorize(Roles = "Manufacturer")]
-        [HttpGet("for-invoicing")]
-        public async Task GetEnquiriesForInvoicing()
+        [HttpGet("productions")]
+        public async Task GetMachinesInProduction()
         {
-            var enquiries = await _unitOfWork.Enquiries.GetEnquiriesForInvoicingAsync();
+            var machines = await _unitOfWork.Machines.GetAllAsync();
 
-            var model = _mapper.Map<List<Enquiry>, List<EnquiryForInvoicingDto>>(enquiries);
+            var model = _mapper.Map<List<Machine>, List<MachineProductionListDto>>(machines);
 
             var jsonString = JsonConvert.SerializeObject(model,
                 new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });

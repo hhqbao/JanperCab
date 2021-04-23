@@ -12,39 +12,29 @@ namespace _5_JanperCab.Helpers.Resolvers
         public List<MachineProdutionCurrentProcessDto> Resolve(Machine source, MachineProductionListDto destination,
             List<MachineProdutionCurrentProcessDto> destMember, ResolutionContext context)
         {
-            var machines = new List<MachineProdutionCurrentProcessDto>();
+            var processes = new List<Process>();
 
             switch (source)
             {
                 case MachineRouter router:
-                    var currentRoutingProcess = router.DuraformProcessRoutings.Where(x => x.IsCurrent && !x.EndTime.HasValue).ToList();
-
-                    machines.AddRange(currentRoutingProcess.Select(x => new MachineProdutionCurrentProcessDto(x)));
+                    processes.AddRange(router.DuraformProcessRoutings.Where(x => x.IsCurrent && !x.EndTime.HasValue).ToList());
                     break;
                 case MachinePresser presser:
-                    var currentPressingProcess = presser.DuraformProcessPressings.Where(x => x.IsCurrent && !x.EndTime.HasValue).ToList();
-
-                    machines.AddRange(currentPressingProcess.Select(x => new MachineProdutionCurrentProcessDto(x)));
+                    processes.AddRange(presser.DuraformProcessPressings.Where(x => x.IsCurrent && !x.EndTime.HasValue).ToList());
                     break;
                 case MachineCutter cutter:
-                    return null;
+                    break;
                 case MachineCleaning cleaning:
-                    var currentCleaningProcess = cleaning.DuraformProcessCleanings
-                        .Where(x => x.IsCurrent && !x.EndTime.HasValue).ToList();
-
-                    machines.AddRange(currentCleaningProcess.Select(x => new MachineProdutionCurrentProcessDto(x)));
+                    processes.AddRange(cleaning.DuraformProcessCleanings.Where(x => x.IsCurrent && !x.EndTime.HasValue).ToList());
                     break;
                 case MachinePacking packing:
-                    var currentPackingProcess = packing.DuraformProcessPackings
-                        .Where(x => x.IsCurrent && !x.EndTime.HasValue).ToList();
-
-                    machines.AddRange(currentPackingProcess.Select(x => new MachineProdutionCurrentProcessDto(x)));
+                    processes.AddRange(packing.DuraformProcessPackings.Where(x => x.IsCurrent && !x.EndTime.HasValue).ToList());
                     break;
                 default:
                     throw new NotImplementedException();
             }
 
-            return machines;
+            return processes.Select(x => new MachineProdutionCurrentProcessDto(x)).ToList();
         }
     }
 }

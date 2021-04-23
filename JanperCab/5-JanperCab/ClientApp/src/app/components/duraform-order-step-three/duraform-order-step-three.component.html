@@ -560,14 +560,14 @@
       </div>
       <div
         class="option-box__action-center"
-        *ngIf="
-          auth.isInRole(role[role.Manufacturer]) &&
-          duraformEnquiry.hasBeenDelivered
-        "
+        *ngIf="duraformEnquiry.hasBeenDelivered"
       >
         <button
           class="action-btn action-btn--alert"
-          *ngIf="!duraformEnquiry.hasBeenInvoiced"
+          *ngIf="
+            auth.isInRole(role[role.Manufacturer]) &&
+            !duraformEnquiry.hasBeenInvoiced
+          "
           (click)="showInvoiceGenerator = true"
         >
           <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>

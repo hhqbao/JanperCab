@@ -57,8 +57,12 @@
     <div class="job-details">
       Job No: {{ duraformEnquiry.id | leading }} |
       {{ duraformEnquiry.duraformDesign.name }} |
-      {{ duraformEnquiry.duraformWrapColor.name }}
-      {{ duraformEnquiry.duraformWrapType.name }} |
+      <span *ngIf="!duraformEnquiry.isRoutingOnly">
+        {{ duraformEnquiry.duraformWrapColor?.name }}
+        {{ duraformEnquiry.duraformWrapType?.name }}
+      </span>
+      <span *ngIf="duraformEnquiry.isRoutingOnly">DSW</span>
+      |
       {{ duraformEnquiry.duraformSerie.name }}
       {{
         duraformEnquiry.hingeHoleTypeId

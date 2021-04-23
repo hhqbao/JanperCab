@@ -21,6 +21,8 @@ namespace _1_Domain
 
         public virtual ICollection<Enquiry> Enquiries { get; set; }
 
+        public virtual ICollection<Invoice> Invoices { get; set; }
+
         public Distributor()
         {
             CustomerType = CustomerType.Distributor;
@@ -28,6 +30,8 @@ namespace _1_Domain
             CabinetMakers = new Collection<CabinetMaker>();
 
             Enquiries = new Collection<Enquiry>();
+
+            Invoices = new Collection<Invoice>();
         }
     }
 }

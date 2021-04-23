@@ -202,7 +202,7 @@
           </td>
           <td (click)="onSelectOrder(order.id)">{{ order.deliveryNote }}</td>
           <td (click)="onSelectOrder(order.id)">
-            {{ order.timeInSystem }}
+            {{ order.hasBeenInvoiced ? "Complete" : order.timeInSystem }}
           </td>
           <td (click)="onSelectOrder(order.id)">
             {{ order.statusDescription }}

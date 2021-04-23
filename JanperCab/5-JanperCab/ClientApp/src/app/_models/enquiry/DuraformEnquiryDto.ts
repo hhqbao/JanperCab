@@ -317,6 +317,10 @@ export class DuraformEnquiryDto extends EnquiryDto {
   }
 
   get hasBeenDelivered(): boolean {
+    if (!this.currentStatus) {
+      return false;
+    }
+
     const { endTime, duraformProcessType } = this.currentStatus;
 
     return (

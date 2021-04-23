@@ -15,6 +15,8 @@ namespace _1_Domain
 
         public int CabinetMakerId { get; set; }
 
+        public int DistributorId { get; set; }
+
         public string CustomerReference { get; set; }
 
 
@@ -62,6 +64,8 @@ namespace _1_Domain
 
         public virtual CabinetMaker CabinetMaker { get; set; }
 
+        public virtual Distributor Distributor { get; set; }
+
         public virtual ICollection<InvoiceComponent> InvoiceComponents { get; set; }
 
         public Invoice()
@@ -76,6 +80,7 @@ namespace _1_Domain
             EnquiryId = duraformEnquiry.Id;
 
             CabinetMakerId = duraformEnquiry.CabinetMakerId;
+            DistributorId = duraformEnquiry.DistributorId;
             CustomerReference = duraformEnquiry.CustomerReference;
 
             DoorType = duraformEnquiry.DoorType;

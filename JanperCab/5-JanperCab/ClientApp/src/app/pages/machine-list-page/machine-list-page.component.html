@@ -35,7 +35,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let machine of machines" (click)="onSelectMachine(machine)">
+        <tr
+          *ngFor="let machine of machines"
+          (click)="selectedMachine = machine"
+        >
           <td>{{ machine.id }}</td>
           <td>{{ machineTypeEnum[machine.machineType] }}</td>
           <td class="text-left">{{ machine.name }}</td>

@@ -34,7 +34,6 @@ export class DuraformOrderListPageComponent implements OnInit {
     private ef: ElementRef,
     private layout: LayoutService,
     public auth: AuthService,
-    private router: Router,
     private enquiryService: EnquiryService,
     private dialog: DialogService
   ) {}
@@ -139,6 +138,8 @@ export class DuraformOrderListPageComponent implements OnInit {
   };
 
   onSelectOrder = (id: string) => {
-    this.router.navigate([`dashboard/duraform/${id}`]);
+    const url = `${window.location.origin}/dashboard/duraform/${id}`;
+
+    window.open(url, '_blank');
   };
 }

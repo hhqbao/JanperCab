@@ -15,6 +15,8 @@ namespace _3_Application.Dtos.Invoice
 
         public int CabinetMakerId { get; set; }
 
+        public int DistributorId { get; set; }
+
         public string CustomerReference { get; set; }
 
 

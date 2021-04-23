@@ -99,6 +99,12 @@ namespace _2_Persistent.Configs
                 .HasForeignKey(x => x.CabinetMakerId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.Distributor)
+                .WithMany(y => y.Invoices)
+                .HasForeignKey(x => x.DistributorId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

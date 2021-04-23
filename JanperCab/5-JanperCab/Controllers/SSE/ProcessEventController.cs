@@ -56,7 +56,7 @@ namespace _5_JanperCab.Controllers.SSE
 
             await response.Body.FlushAsync();
 
-            await Task.Delay(5 * 1000);
+            await Task.Delay(10 * 1000);
         }
     }
 }

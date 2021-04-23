@@ -19,6 +19,8 @@ namespace _4_Infrastructure.Repositories
         {
             var duraformEnquiry = await _dbSet.FindAsync(id);
 
+            if (duraformEnquiry == null) return null;
+
             switch (customer)
             {
                 case CabinetMaker cabinetMaker:
@@ -86,9 +88,11 @@ namespace _4_Infrastructure.Repositories
                     break;
                 case DuraformProcessEnum.PickedUp:
                     query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.DuraformProcessType == DuraformProcessEnum.PickingUp));
+                    query = query.Where(x => x.Invoice == null);
                     break;
                 case DuraformProcessEnum.Delivered:
                     query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.DuraformProcessType == DuraformProcessEnum.Delivering));
+                    query = query.Where(x => x.Invoice == null);
                     break;
                 case DuraformProcessEnum.Invoiced:
                     query = query.Where(x => x.Invoice != null);

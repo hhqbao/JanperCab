@@ -7,6 +7,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,12 +22,14 @@ namespace _5_JanperCab.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _config;
 
-        public EnquiriesController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IMapper mapper)
+        public EnquiriesController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IMapper mapper, IConfiguration config)
         {
             _userManager = userManager;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _config = config;
         }
 
         [HttpGet("for-invoicing")]
@@ -45,9 +48,7 @@ namespace _5_JanperCab.Controllers
             var enquiry = await _unitOfWork.Enquiries.GetEnquiryAsync(id, currentUser.Customer);
 
             if (enquiry is DuraformEnquiry duraformEnquiry)
-            {
                 return Ok(_mapper.Map<DuraformEnquiry, DuraformEnquiryDto>(duraformEnquiry));
-            }
 
             return BadRequest("Enquiry Not Found");
         }
@@ -68,7 +69,21 @@ namespace _5_JanperCab.Controllers
         {
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
 
+            var itemListDto = new ItemList<DuraformEnquiryListDto>();
             ItemList<DuraformEnquiry> itemList;
+
+            if (int.TryParse(search, out var enquiryId))
+            {
+                var enquiry = await _unitOfWork.Enquiries.GetEnquiryAsync(enquiryId, cusId.HasValue ? await _unitOfWork.Customers.GetAsync(cusId) : currentUser.Customer);
+
+                if (enquiry is DuraformEnquiry duraformEnquiry)
+                {
+                    itemListDto.Items.Add(_mapper.Map<DuraformEnquiry, DuraformEnquiryListDto>(duraformEnquiry));
+                    itemListDto.TotalItemCount = 1;
+
+                    return Ok(itemListDto);
+                }
+            }
 
             switch (currentUser.Customer.CustomerType)
             {
@@ -88,11 +103,9 @@ namespace _5_JanperCab.Controllers
                     throw new ArgumentOutOfRangeException();
             }
 
-            var itemListDto = new ItemList<DuraformEnquiryListDto>
-            {
-                Items = _mapper.Map<List<DuraformEnquiry>, List<DuraformEnquiryListDto>>(itemList.Items),
-                TotalItemCount = itemList.TotalItemCount
-            };
+
+            itemListDto.Items = _mapper.Map<List<DuraformEnquiry>, List<DuraformEnquiryListDto>>(itemList.Items);
+            itemListDto.TotalItemCount = itemList.TotalItemCount;
 
             return Ok(itemListDto);
         }
@@ -126,6 +139,9 @@ namespace _5_JanperCab.Controllers
             var enquiryInDb = await _unitOfWork.Enquiries.GetEnquiryAsync(id, creator.Customer);
 
             if (enquiryInDb == null) return BadRequest("Enquiry Not Found");
+
+            if (enquiryInDb.EnquiryType == EnquiryTypeEnum.Order)
+                return BadRequest("Enquiry has been converted to Order! Cannot be editted");
 
             _mapper.Map(enquiryDto, enquiryInDb);
             enquiryInDb.LastEditted = DateTime.Now;

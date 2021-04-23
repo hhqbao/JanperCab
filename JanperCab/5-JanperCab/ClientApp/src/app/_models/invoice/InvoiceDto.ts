@@ -6,6 +6,7 @@ export class InvoiceDto {
   createdDate: Date;
 
   cabinetMakerId: number;
+  distributorId: number;
   customerReference: string;
 
   doorType: string;
