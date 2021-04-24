@@ -1,3 +1,5 @@
+import { Role } from 'src/app/_enums/Role';
+import { AuthService } from 'src/app/_services/auth.service';
 import { DeliveryPatchDto } from './../../_models/delivery-run-sheet/DeliveryPatchDto';
 import { EnquiryForRunSheetDto } from './../../_models/enquiry/EnquiryForRunSheetDto';
 import { MachineService } from './../../_services/machine.service';
@@ -35,15 +37,22 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
   drivers: DriverDto[] = [];
   driverIdControl: FormControl;
 
+  role = Role;
+
   constructor(
     private driverService: DriverService,
     private runSheetService: RunSheetService,
     private machineService: MachineService,
     private layoutService: LayoutService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    public authService: AuthService
   ) {}
 
   get disableChangingDriver(): boolean {
+    if (!this.authService.isInRole(Role[Role.Driver])) {
+      return true;
+    }
+
     if (!this.selectedSheet || this.selectedSheet.isEditable) {
       return false;
     }
@@ -70,7 +79,9 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
           [Validators.required]
         );
 
-        this.initializeScanner();
+        if (this.authService.isInRole(Role[Role.Driver])) {
+          this.initializeScanner();
+        }
 
         this.isLoading = false;
         this.layoutService.closeLoadingPanel();
@@ -96,6 +107,15 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
     if (this.selectedSheet.lockedDate) {
       this.printBtnClick.emit(this.selectedSheet);
     } else {
+      if (!this.authService.isInRole(Role[Role.Driver])) {
+        this.dialogService.alert(
+          'Unauthorized Action',
+          'Only Drivers can lock delivery run sheets',
+          null
+        );
+        return;
+      }
+
       this.dialogService.confirm(
         'Locking Run Sheet',
         'Run Sheet will be locked for editing! <br><br> Are you sure?',

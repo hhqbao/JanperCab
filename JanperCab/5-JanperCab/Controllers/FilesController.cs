@@ -31,6 +31,7 @@ namespace _5_JanperCab.Controllers
             _userManager = userManager;
         }
 
+        [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
         [HttpPost("DuraformFiles/Upload/{id}")]
         public async Task<IActionResult> UploadDuraformFiles(int id, [FromForm] List<UploadDuraformFileDto> uploadFiles)
         {
@@ -68,6 +69,7 @@ namespace _5_JanperCab.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
         [HttpGet("DuraformFiles/Download/{id}")]
         public async Task<IActionResult> DownloadDuraformFile(Guid id)
         {
@@ -101,6 +103,7 @@ namespace _5_JanperCab.Controllers
             }
         }
 
+        [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
         [HttpDelete("DuraformFiles/Delete/{id}")]
         public async Task<IActionResult> DeleteDuraformFile(Guid id)
         {

@@ -1,3 +1,4 @@
+import { Role } from 'src/app/_enums/Role';
 import { Component, OnInit } from '@angular/core';
 import { DialogService } from 'src/app/_services/dialog.service';
 import { Router } from '@angular/router';
@@ -23,9 +24,4 @@ export class LoginPageComponent implements OnInit {
       this.router.navigate(['dashboard']);
     }
   }
-
-  onLoginCallback = (): void => {
-    this.dialog.success('Login Successfully');
-    this.router.navigate(['dashboard']);
-  };
 }

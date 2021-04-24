@@ -37,7 +37,10 @@
                 <td>
                   <button
                     class="btn btn--link"
-                    *ngIf="selectedSheet.isEditable"
+                    *ngIf="
+                      selectedSheet.isEditable &&
+                      authService.isInRole(role[role.Driver])
+                    "
                     (click)="onUndoDelivering(enquiry)"
                   >
                     Remove

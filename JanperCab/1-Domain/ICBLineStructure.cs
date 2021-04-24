@@ -9,7 +9,7 @@ namespace _1_Domain
         public const string CORNER_RADIUS_VALUE = "G_CORNER_RADIUS";
         public const string DRAWER_TOOLING_FILE_VALUE = "RADIUS";
         public const string ROUTER_ONLY = "ROUTER ONLY";
-        public const string DWS = "DWS";
+        public const string DSW = "DSW";
 
         public ICB_TYPE_ENUM TYPE { get; set; }
 
@@ -238,7 +238,7 @@ namespace _1_Domain
             ACCOUNTNUMBER = component.DuraformEnquiry.CabinetMaker.Name.Replace(",", "_").Replace(" ", "_").ToUpper();
             JOBNUMBERCUST = component.DuraformEnquiry.CustomerReference;
             DOORFINISH = component.DuraformEnquiry.IsRoutingOnly ? ROUTER_ONLY : component.DuraformEnquiry.DuraformWrapType.Name.ToUpper();
-            DOORCOLOR = component.DuraformEnquiry.IsRoutingOnly ? DWS : $"{component.DuraformEnquiry.DuraformWrapColor.Name.ToUpper()} {component.DuraformEnquiry.DuraformWrapType.Name.ToUpper()}";
+            DOORCOLOR = component.DuraformEnquiry.IsRoutingOnly ? DSW : $"{component.DuraformEnquiry.DuraformWrapColor.Name.ToUpper()} {component.DuraformEnquiry.DuraformWrapType.Name.ToUpper()}";
             CNCCODE = "DOOR";
             MATERIAL = component.DuraformEnquiry.IsRoutingOnly ? $"DSW{DIMZ} MDF" : $"SS{DIMZ} MDF";
             CNCTYPE = "DOOR";

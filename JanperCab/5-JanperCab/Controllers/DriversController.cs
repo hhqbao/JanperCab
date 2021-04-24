@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace _5_JanperCab.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Manufacturer")]
     [Route("api/[controller]")]
     [ApiController]
     public class DriversController : ControllerBase
@@ -23,18 +23,13 @@ namespace _5_JanperCab.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "Driver,Sale")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             var drivers = await _unitOfWork.Drivers.GetAllAsync(x => !x.IsDisabled);
 
             return Ok(_mapper.Map<List<Driver>, List<DriverDto>>(drivers));
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            return Ok();
         }
     }
 }

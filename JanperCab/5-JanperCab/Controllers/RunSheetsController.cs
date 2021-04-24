@@ -25,6 +25,7 @@ namespace _5_JanperCab.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "Driver,Sale")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -33,6 +34,7 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<List<DeliveryRunSheet>, List<DeliveryRunSheetForListDto>>(sheets));
         }
 
+        [Authorize(Roles = "Driver,Sale")]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -41,6 +43,7 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<DeliveryRunSheet, DeliveryRunSheetForListDto>(sheet));
         }
 
+        [Authorize(Roles = "Driver")]
         [HttpPost("{driverId}")]
         public async Task<IActionResult> Create(int driverId)
         {
@@ -56,6 +59,7 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<DeliveryRunSheet, DeliveryRunSheetForListDto>(newSheet));
         }
 
+        [Authorize(Roles = "Driver")]
         [HttpPut("change-driver/{sheetId}/{driverId}")]
         public async Task<IActionResult> ChangeDriver(int sheetId, int driverId)
         {
@@ -75,6 +79,7 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<Driver, DriverDto>(driver));
         }
 
+        [Authorize(Roles = "Driver")]
         [HttpPut("lock/{sheetId}")]
         public async Task<IActionResult> Lock(int sheetId)
         {
@@ -93,6 +98,7 @@ namespace _5_JanperCab.Controllers
             return Ok(runSheet.LockedDate.Value);
         }
 
+        [Authorize(Roles = "Driver")]
         [HttpPut("confirm-delivery/{sheetId}")]
         public async Task<IActionResult> ConfirmDelivery(int sheetId)
         {

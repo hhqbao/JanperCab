@@ -27,13 +27,11 @@ namespace _5_JanperCab.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "Distributor,Sale")]
         [HttpGet("CabinetMakers")]
         public async Task<IActionResult> GetCabinetMakers(string search, string sortBy, string direction, int page = 0, int take = 20)
         {
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
-
-            if (currentUser.Customer.CustomerType != CustomerType.Distributor)
-                return BadRequest("Request Invalid! Only Distributors Allowed!");
 
             var itemList = await _unitOfWork.Customers.GetCabinetMakersAsync(currentUser.CustomerId, search, sortBy, direction, page, take);
 
@@ -46,14 +44,10 @@ namespace _5_JanperCab.Controllers
             return Ok(itemListDto);
         }
 
+        [Authorize(Roles = "Sale")]
         [HttpGet("Distributors")]
         public async Task<IActionResult> GetDistributors(string search, string sortBy, string direction, int page = 0, int take = 2)
         {
-            var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
-
-            if (currentUser.Customer.CustomerType != CustomerType.Manufacturer)
-                return BadRequest("Request Invalid! Only Manufacturers Allowed");
-
             var itemList = await _unitOfWork.Customers.GetDistributorsAsync(search, sortBy, direction, page, take);
 
             var itemListDto = new ItemList<DistributorDto>
@@ -65,6 +59,7 @@ namespace _5_JanperCab.Controllers
             return Ok(itemListDto);
         }
 
+        [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
         [HttpGet("CabinetMakers/{id}")]
         public async Task<IActionResult> CabinetMaker(int id)
         {
@@ -76,7 +71,7 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<CabinetMaker, CabinetMakerDto>(cabinetMaker));
         }
 
-
+        [Authorize(Roles = "Distributor,Sale")]
         [HttpGet("Distributors/{id}")]
         public async Task<IActionResult> Distributor(int id)
         {
@@ -88,6 +83,7 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<Distributor, DistributorDto>(distributor));
         }
 
+        [Authorize(Roles = "Distributor")]
         [HttpPost("CabinetMakers")]
         public async Task<IActionResult> CreateCabinetMaker(CabinetMakerDto modelDto)
         {
@@ -107,6 +103,7 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<CabinetMaker, CabinetMakerDto>(cabinetMaker));
         }
 
+        [Authorize(Roles = "Distributor")]
         [HttpPut("CabinetMakers/{id}")]
         public async Task<IActionResult> UpdateCabinetMaker(int id, CabinetMakerDto modelDto)
         {

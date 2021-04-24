@@ -25,6 +25,7 @@ namespace _5_JanperCab.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
         [HttpGet("{invoiceId}")]
         public async Task<IActionResult> Get(string invoiceId)
         {
@@ -38,7 +39,7 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<Invoice, InvoiceDto>(invoice));
         }
 
-        [Authorize(Roles = "Manufacturer")]
+        [Authorize(Roles = "Sale")]
         [HttpPost("{enquiryId}/{invoiceId}")]
         public async Task<IActionResult> Create(int enquiryId, string invoiceId)
         {

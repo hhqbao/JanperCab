@@ -7,7 +7,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -22,16 +21,15 @@ namespace _5_JanperCab.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IConfiguration _config;
 
-        public EnquiriesController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IMapper mapper, IConfiguration config)
+        public EnquiriesController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _userManager = userManager;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _config = config;
         }
 
+        [Authorize(Roles = "Sale")]
         [HttpGet("for-invoicing")]
         public async Task<IActionResult> GetEnquiriesForInvoicing()
         {
@@ -40,6 +38,7 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<List<Enquiry>, List<EnquiryForInvoicingDto>>(enquiries));
         }
 
+        [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
         [HttpGet("duraform/{id}")]
         public async Task<IActionResult> GetDuraform(int id)
         {
@@ -53,6 +52,7 @@ namespace _5_JanperCab.Controllers
             return BadRequest("Enquiry Not Found");
         }
 
+        [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
         [HttpGet("duraform/drafts")]
         public async Task<IActionResult> GetDuraformDrafts()
         {
@@ -63,6 +63,7 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<List<DuraformEnquiry>, List<DuraformEnquiryListDto>>(duraformDrafts));
         }
 
+        [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
         [HttpGet("duraform/orders")]
         public async Task<IActionResult> GetDuraformOrders(int? cusId, DuraformProcessEnum? status, string search,
             string sortBy, string dir, int page = 0, int take = 20)
@@ -110,6 +111,7 @@ namespace _5_JanperCab.Controllers
             return Ok(itemListDto);
         }
 
+        [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
         [HttpPost]
         public async Task<IActionResult> Create(EnquiryDto enquiryDto)
         {
@@ -132,6 +134,7 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<Enquiry, EnquiryDto>(enquiry));
         }
 
+        [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, EnquiryDto enquiryDto)
         {
@@ -151,7 +154,7 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<Enquiry, EnquiryDto>(enquiryInDb));
         }
 
-        [Authorize(Roles = "Manufacturer")]
+        [Authorize(Roles = "Sale")]
         [HttpPut("approve/{id}")]
         public async Task<IActionResult> Approve(int id)
         {

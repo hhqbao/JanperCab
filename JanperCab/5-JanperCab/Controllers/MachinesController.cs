@@ -32,6 +32,7 @@ namespace _5_JanperCab.Controllers
             _config = config;
         }
 
+        [Authorize(Roles = "Sale")]
         [HttpPost("icb-export/duraform/{id}")]
         public async Task<IActionResult> ExportDuraformIcb(int id)
         {
@@ -47,6 +48,7 @@ namespace _5_JanperCab.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Operator")]
         [HttpGet("productions")]
         public async Task<IActionResult> Productions()
         {

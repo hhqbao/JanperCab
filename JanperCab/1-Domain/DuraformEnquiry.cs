@@ -316,7 +316,7 @@ namespace _1_Domain
             var type = IsRoutingOnly ? "DSW" : "DF";
             var numberOfPieces = DuraformComponents.Sum(x => x.Quantity);
 
-            return $"{type} - {CabinetMaker.Name} | {numberOfPieces} parts | ${TotalPrice}";
+            return $"{type} - {CabinetMaker.Name} | {numberOfPieces} parts";
         }
     }
 }

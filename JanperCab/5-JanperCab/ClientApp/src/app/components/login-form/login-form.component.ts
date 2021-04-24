@@ -4,6 +4,7 @@ import { AuthService } from './../../_services/auth.service';
 import { DialogService } from './../../_services/dialog.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Role } from 'src/app/_enums/Role';
 
 @Component({
   selector: 'app-login-form',
@@ -17,7 +18,7 @@ export class LoginFormComponent implements OnInit {
     private fb: FormBuilder,
     private dialog: DialogService,
     private router: Router,
-    private auth: AuthService
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -47,11 +48,29 @@ export class LoginFormComponent implements OnInit {
     }
 
     this.isLoading = true;
-    this.auth.login(this.loginFormGroup.value).subscribe(
+    this.authService.login(this.loginFormGroup.value).subscribe(
       (_) => {
         this.isLoading = false;
-        this.router.navigate(['dashboard']);
         this.dialog.success('You have been signed in.');
+
+        if (
+          this.authService.isInRole(Role[Role.Sale]) ||
+          this.authService.isInRole(Role[Role.Distributor]) ||
+          this.authService.isInRole(Role[Role.CabinetMaker])
+        ) {
+          this.router.navigate(['dashboard']);
+          return;
+        }
+
+        if (this.authService.isInRole(Role[Role.Operator])) {
+          this.router.navigate(['production/machines']);
+          return;
+        }
+
+        if (this.authService.isInRole(Role[Role.Driver])) {
+          this.router.navigate(['production/delivery']);
+          return;
+        }
       },
       (error) => {
         this.isLoading = false;

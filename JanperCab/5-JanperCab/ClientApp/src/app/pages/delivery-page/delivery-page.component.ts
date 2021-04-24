@@ -1,3 +1,5 @@
+import { Role } from 'src/app/_enums/Role';
+import { AuthService } from 'src/app/_services/auth.service';
 import { DeliveryRunSheetDto } from './../../_models/delivery-run-sheet/DeliveryRunSheetDto';
 import { LeadingPipe } from './../../_pipes/leading.pipe';
 import { DeliveryRunSheetForListDto } from './../../_models/delivery-run-sheet/DeliveryRunSheetForListDto';
@@ -21,12 +23,14 @@ export class DeliveryPageComponent implements OnInit, OnDestroy {
   showRunSheetForm = false;
   showControlBox = false;
   showRunSheetPdf = false;
+  role = Role;
 
   constructor(
     private leadingPipe: LeadingPipe,
     private runSheetService: RunSheetService,
     private layoutService: LayoutService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    public authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -36,7 +40,10 @@ export class DeliveryPageComponent implements OnInit, OnDestroy {
         this.runSheets = response;
         this.isLoading = false;
         this.layoutService.closeLoadingPanel();
-        this.initializeScanner();
+
+        if (this.authService.isInRole(Role[Role.Driver])) {
+          this.initializeScanner();
+        }
       },
       (error) => {
         this.layoutService.closeLoadingPanel();

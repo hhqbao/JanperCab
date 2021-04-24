@@ -52,6 +52,7 @@
       <div class="delivery-page__header">
         <button
           class="btn btn--primary"
+          *ngIf="authService.isInRole(role[role.Driver])"
           (click)="selectedSheet = null; showRunSheetForm = true"
         >
           <i class="fa fa-plus-circle" aria-hidden="true"></i>

@@ -5,7 +5,14 @@
   </a>
   <div class="nav-body">
     <ul class="nav">
-      <li class="nav__item">
+      <li
+        class="nav__item"
+        *ngIf="
+          auth.isInRole(role.CabinetMaker) ||
+          auth.isInRole(role.Distributor) ||
+          auth.isInRole(role.Sale)
+        "
+      >
         <a
           [routerLink]="['']"
           routerLinkActive="active"
@@ -17,7 +24,14 @@
           <div class="nav__item__text">Dashboard</div>
         </a>
       </li>
-      <li class="nav__item">
+      <li
+        class="nav__item"
+        *ngIf="
+          auth.isInRole(role.CabinetMaker) ||
+          auth.isInRole(role.Distributor) ||
+          auth.isInRole(role.Sale)
+        "
+      >
         <a>
           <div class="nav__item__icon text-brown">
             <i class="fa fa-envelope-o"></i>
@@ -33,7 +47,15 @@
           <div class="nav__item__text">Customers</div>
         </a>
       </li>
-      <li class="nav__item" (click)="layoutService.toggleLeftNav(false)">
+      <li
+        class="nav__item"
+        (click)="layoutService.toggleLeftNav(false)"
+        *ngIf="
+          auth.isInRole(role.CabinetMaker) ||
+          auth.isInRole(role.Distributor) ||
+          auth.isInRole(role.Sale)
+        "
+      >
         <a [appClassToggle]="'active'">
           <div class="nav__item__icon text-orange">
             <i class="fa fa-table"></i>
@@ -41,7 +63,12 @@
           <div class="nav__item__text">
             Duraform Doors
             <ul class="nav__item__sub-menu">
-              <li *ngIf="auth.role !== role[role.Manufacturer]">
+              <li
+                *ngIf="
+                  auth.isInRole(role.CabinetMaker) ||
+                  auth.isInRole(role.Distributor)
+                "
+              >
                 <a [routerLink]="['/dashboard/duraform']">
                   <i
                     class="fa fa-plus-circle text-green"
@@ -81,19 +108,24 @@
           <div class="nav__item__text">
             Production
             <ul class="nav__item__sub-menu">
-              <li>
+              <li *ngIf="auth.isInRole(role[role.Operator])">
                 <a [routerLink]="['/production/machines']">
                   <i class="fa fa-android text-alert" aria-hidden="true"></i>
                   Machines
                 </a>
               </li>
-              <li>
+              <li
+                *ngIf="
+                  auth.isInRole(role[role.Driver]) ||
+                  auth.isInRole(role[role.Sale])
+                "
+              >
                 <a [routerLink]="['/production/delivery']">
                   <i class="fa fa-truck text-blue" aria-hidden="true"></i>
                   Delivery
                 </a>
               </li>
-              <li>
+              <li *ngIf="auth.isInRole(role[role.Sale])">
                 <a [routerLink]="['/production/invoicing']">
                   <i class="fa fa-inbox text-orange" aria-hidden="true"></i>
                   Invoicing
@@ -105,7 +137,10 @@
       </li>
       <li
         class="nav__item"
-        *ngIf="auth.isInRole(role[role.Manufacturer])"
+        *ngIf="
+          auth.isInRole(role[role.Manufacturer]) &&
+          auth.isInRole(role[role.Sale])
+        "
         (click)="layoutService.toggleLeftNav(false)"
       >
         <a [appClassToggle]="'active'">
@@ -131,7 +166,7 @@
           </div>
         </a>
       </li>
-      <li class="nav__item">
+      <!-- <li class="nav__item">
         <a [appClassToggle]="'active'">
           <div class="nav__item__icon">
             <i class="fa fa-files-o"></i>
@@ -154,7 +189,7 @@
             </ul>
           </div>
         </a>
-      </li>
+      </li> -->
     </ul>
   </div>
 </div>

@@ -86,7 +86,7 @@ export class AuthService {
       return false;
     }
 
-    return this.decodedToken.role === role;
+    return this.role.includes(role);
   };
 
   logOut = () => {

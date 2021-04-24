@@ -26,6 +26,7 @@ namespace _5_JanperCab.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "Operator")]
         [HttpPut("routing/{routerId}/{enquiryId}")]
         public async Task<IActionResult> ProcessRouting(int routerId, int enquiryId)
         {
@@ -49,6 +50,7 @@ namespace _5_JanperCab.Controllers
             return Ok(new MachineProdutionCurrentProcessDto(enquiry.CurrentProcess));
         }
 
+        [Authorize(Roles = "Operator")]
         [HttpPut("pressing/{presserId}/{enquiryId}")]
         public async Task<IActionResult> ProcessPressing(int presserId, int enquiryId)
         {
@@ -71,6 +73,7 @@ namespace _5_JanperCab.Controllers
             return Ok(new MachineProdutionCurrentProcessDto(enquiry.CurrentProcess));
         }
 
+        [Authorize(Roles = "Operator")]
         [HttpPut("cleaning/{cleanerId}/{enquiryId}")]
         public async Task<IActionResult> ProcessCleaning(int cleanerId, int enquiryId)
         {
@@ -93,6 +96,7 @@ namespace _5_JanperCab.Controllers
             return Ok(new MachineProdutionCurrentProcessDto(enquiry.CurrentProcess));
         }
 
+        [Authorize(Roles = "Operator")]
         [HttpPut("packing/{packerId}/{enquiryId}")]
         public async Task<IActionResult> ProcessPacking(int packerId, int enquiryId)
         {
@@ -115,6 +119,7 @@ namespace _5_JanperCab.Controllers
             return Ok(new MachineProdutionCurrentProcessDto(enquiry.CurrentProcess));
         }
 
+        [Authorize(Roles = "Driver")]
         [HttpPut("delivering/{sheetId}/{enquiryId}")]
         public async Task<IActionResult> ProcessDelivering(int sheetId, int enquiryId)
         {
@@ -142,6 +147,7 @@ namespace _5_JanperCab.Controllers
             return Ok(new EnquiryForRunSheetDto(enquiry));
         }
 
+        [Authorize(Roles = "Driver")]
         [HttpPut("undo-delivering/{enquiryId}")]
         public async Task<IActionResult> UndoProcessDelivering(int enquiryId)
         {
