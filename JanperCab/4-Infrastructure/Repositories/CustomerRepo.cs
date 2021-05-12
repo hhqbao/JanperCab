@@ -3,6 +3,7 @@ using _3_Application.Dtos.Common;
 using _3_Application.Interfaces.Repositories;
 using IdentityServer4.Extensions;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,81 +15,75 @@ namespace _4_Infrastructure.Repositories
         {
         }
 
-        public async Task<Distributor> GetDistributorAsync(int id)
+        public async Task<Customer> GetAsync(object id, ApplicationUser currentUser)
         {
-            return await _dbSet.OfType<Distributor>().SingleOrDefaultAsync(x => x.Id == id);
-        }
+            var customer = await _dbSet.FindAsync(id);
 
-        public async Task<CabinetMaker> GetCabinetMakerAsync(int id)
-        {
-            return await _dbSet.OfType<CabinetMaker>().SingleOrDefaultAsync(x => x.Id == id);
-        }
+            if (customer == null) return null;
 
-        public async Task<ItemList<Distributor>> GetDistributorsAsync(string search, string sortBy, string direction, int page = 0, int take = 20)
-        {
-            var queryable = _dbSet.OfType<Distributor>();
-
-            if (!search.IsNullOrEmpty())
-                queryable = queryable.Where(x => x.Name.Contains(search.Replace("@@@", "&")));
-
-            switch (sortBy)
+            return currentUser.Customer switch
             {
-                case "email":
-                    queryable = direction.Equals("asc")
-                        ? queryable.OrderBy(x => x.Email)
-                        : queryable.OrderByDescending(x => x.Email);
+                Manufacturer _ => customer,
+                Distributor distributor => (customer.Id == distributor.Id || customer.ManagerId == distributor.Id
+                    ? customer
+                    : null),
+                CabinetMaker cabinetMaker => (customer.Id == cabinetMaker.Id ? customer : null),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+
+
+        public async Task<ItemList<Customer>> GetCustomersAsync(ApplicationUser currentUser, string search, string sortBy, string direction, int page = 0, int take = 20)
+        {
+            var query = _dbSet.Where(x => x.CustomerType != CustomerType.Manufacturer);
+
+            switch (currentUser.Customer)
+            {
+                case CabinetMaker cabinetMaker:
+                    throw new Exception("Unauthorized Action! Not For Cabinet Maker");
+                case Distributor distributor:
+                    query = query.Where(x => x.ManagerId == distributor.Id);
                     break;
-                default:
-                    queryable = direction.Equals("asc")
-                        ? queryable.OrderBy(x => x.Name)
-                        : queryable.OrderByDescending(x => x.Name);
+                case Manufacturer _:
                     break;
             }
 
-            var totalCount = await queryable.CountAsync();
-            var distributors = await queryable.Skip(page * take).Take(take).ToListAsync();
-
-            var itemList = new ItemList<Distributor> { Items = distributors, TotalItemCount = totalCount };
-
-            return itemList;
-        }
-
-        public async Task<ItemList<CabinetMaker>> GetCabinetMakersAsync(int distributorId, string search, string sortBy, string direction, int page = 0, int take = 20)
-        {
-            var queryable = _dbSet.OfType<CabinetMaker>()
-                .Where(x => x.DistributorId == distributorId);
-
             if (!search.IsNullOrEmpty())
-                queryable = queryable.Where(x => x.Name.Contains(search.Replace("@@@", "&")));
+                query = query.Where(x => x.Name.Contains(search.Replace("@@@", "&")));
 
             switch (sortBy)
             {
+                case "type":
+                    query = direction.Equals("asc")
+                        ? query.OrderBy(x => x.CustomerType)
+                        : query.OrderByDescending(x => x.CustomerType);
+                    break;
                 case "email":
-                    queryable = direction.Equals("asc")
-                        ? queryable.OrderBy(x => x.Email)
-                        : queryable.OrderByDescending(x => x.Email);
+                    query = direction.Equals("asc")
+                        ? query.OrderBy(x => x.Email)
+                        : query.OrderByDescending(x => x.Email);
                     break;
                 case "invoice":
-                    queryable = direction.Equals("asc")
-                        ? queryable.OrderBy(x => x.InvoiceAddress)
-                        : queryable.OrderByDescending(x => x.InvoiceAddress);
+                    query = direction.Equals("asc")
+                        ? query.OrderBy(x => x.InvoiceAddress)
+                        : query.OrderByDescending(x => x.InvoiceAddress);
                     break;
                 case "delivery":
-                    queryable = direction.Equals("asc")
-                        ? queryable.OrderBy(x => x.DeliveryAddress)
-                        : queryable.OrderByDescending(x => x.DeliveryAddress);
+                    query = direction.Equals("asc")
+                        ? query.OrderBy(x => x.DeliveryAddress)
+                        : query.OrderByDescending(x => x.DeliveryAddress);
                     break;
                 default:
-                    queryable = direction.Equals("asc")
-                        ? queryable.OrderBy(x => x.Name)
-                        : queryable.OrderByDescending(x => x.Name);
+                    query = direction.Equals("asc")
+                        ? query.OrderBy(x => x.Name)
+                        : query.OrderByDescending(x => x.Name);
                     break;
             }
 
-            var totalCount = await queryable.CountAsync();
-            var cabinetMakers = await queryable.Skip(page * take).Take(take).ToListAsync();
+            var totalCount = await query.CountAsync();
+            var customer = await query.Skip(page * take).Take(take).ToListAsync();
 
-            var itemList = new ItemList<CabinetMaker> { Items = cabinetMakers, TotalItemCount = totalCount };
+            var itemList = new ItemList<Customer> { Items = customer, TotalItemCount = totalCount };
 
             return itemList;
         }

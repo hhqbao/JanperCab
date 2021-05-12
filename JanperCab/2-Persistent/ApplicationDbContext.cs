@@ -33,6 +33,7 @@ namespace _2_Persistent
 
         public DbSet<DuraformComponent> DuraformComponents { get; set; }
         public DbSet<DuraformMiscComponent> DuraformMiscComponents { get; set; }
+        public DbSet<OnHoldComponent> OnHoldComponents { get; set; }
         public DbSet<ApplicationFile> ApplicationFiles { get; set; }
 
         public DbSet<DuraformMiscPrice> DuraformMiscPrices { get; set; }
@@ -106,6 +107,8 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformMiscFingerPullConfig());
             builder.ApplyConfiguration(new DuraformMiscCapMouldConfig());
             builder.ApplyConfiguration(new DuraformMiscHeatStripConfig());
+
+            builder.ApplyConfiguration(new OnHoldComponentConfig());
 
             builder.ApplyConfiguration(new ApplicationFileConfig());
             builder.ApplyConfiguration(new DuraformFileConfig());

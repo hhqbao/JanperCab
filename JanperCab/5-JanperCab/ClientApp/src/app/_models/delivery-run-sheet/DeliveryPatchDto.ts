@@ -1,20 +1,20 @@
 import { EnquiryForRunSheetDto } from './../enquiry/EnquiryForRunSheetDto';
 
 export class DeliveryPatchDto {
-  cabinetMakerId: number;
-  cabinetMakerName: string;
+  customerId: number;
+  customerName: string;
   fullAddress: string;
   enquiriesForRunSheet: EnquiryForRunSheetDto[];
 
   constructor(enquiry: EnquiryForRunSheetDto) {
-    this.cabinetMakerId = enquiry.cabinetMakerId;
-    this.cabinetMakerName = enquiry.cabinetMakerName;
+    this.customerId = enquiry.customerId;
+    this.customerName = enquiry.customerName;
     this.fullAddress = enquiry.getFullAddress();
     this.enquiriesForRunSheet = [enquiry];
   }
 
   hasSameAddress = (enquiry: EnquiryForRunSheetDto): boolean => {
-    if (this.cabinetMakerId !== enquiry.cabinetMakerId) {
+    if (this.customerId !== enquiry.customerId) {
       return false;
     }
 

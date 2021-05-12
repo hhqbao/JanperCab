@@ -68,6 +68,8 @@ namespace _1_Domain
             get { return DuraformProcesses.FirstOrDefault(x => x.IsCurrent); }
         }
 
+        public override bool IsDeclineable => CurrentProcess == null || CurrentProcess is DuraformProcessPreRoute;
+
         public override int PartCount
         {
             get { return DuraformComponents.Sum(x => x.Quantity); }
@@ -78,6 +80,15 @@ namespace _1_Domain
 
         public override DateTime? DeliveredTime => DuraformProcesses.FirstOrDefault(x =>
             x.DuraformProcessType == DuraformProcessEnum.Delivering && x.EndTime.HasValue)?.EndTime;
+
+
+        public override List<InvoiceComponent> GenerateComponentsForInvoice()
+        {
+            var components = DuraformComponents.Select(component => new InvoiceComponent(component)).ToList();
+            components.AddRange(MiscComponents.Select(miscItem => new InvoiceComponent(miscItem)));
+
+            return components;
+        }
 
         public override void Approve()
         {
@@ -99,6 +110,15 @@ namespace _1_Domain
             }
 
             DuraformProcesses.Add(new DuraformProcessDelivering());
+        }
+
+        public override void Decline()
+        {
+            EnquiryType = EnquiryTypeEnum.Draft;
+            OrderedDate = null;
+            ApprovedDate = null;
+            DuraformProcesses.Clear();
+            NotEditable = false;
         }
 
         public override void ProcessRouting(MachineRouter router)
@@ -171,7 +191,7 @@ namespace _1_Domain
             }
         }
 
-        public override void ProcessCleaning(MachineCleaning cleaningMachine)
+        public override void StartCleaning(MachineCleaning cleaningMachine)
         {
             var cleanProcess = DuraformProcesses
                 .OfType<DuraformProcessCleaning>()
@@ -195,9 +215,19 @@ namespace _1_Domain
                 case DuraformProcessCleaning cleaning:
                     if (cleaning.EndTime.HasValue)
                         throw new Exception("Order has already been CLEANED");
+                    break;
+                default:
+                    throw new Exception("Order not valid for CLEANING");
+            }
+        }
 
-                    if (cleaning.MachineId != cleaningMachine.Id)
-                        throw new Exception($"Order is currently on Cleaning Machine {cleaning.MachineCleaning.Name}");
+        public override void FinishCleaning()
+        {
+            switch (CurrentProcess)
+            {
+                case DuraformProcessCleaning cleaning:
+                    if (cleaning.EndTime.HasValue)
+                        throw new Exception("Order has already been CLEANED");
 
                     cleaning.EndTime = DateTime.Now;
                     break;
@@ -206,7 +236,7 @@ namespace _1_Domain
             }
         }
 
-        public override void ProcessPacking(MachinePacking packingMachine)
+        public override void StartPacking(MachinePacking packingMachine)
         {
             var packingProcess = DuraformProcesses
                 .OfType<DuraformProcessPacking>()
@@ -243,9 +273,19 @@ namespace _1_Domain
                 case DuraformProcessPacking packing:
                     if (packing.EndTime.HasValue)
                         throw new Exception("Order has already been PACKED");
+                    break;
+                default:
+                    throw new Exception("Order not valid for PACKING");
+            }
+        }
 
-                    if (packing.MachineId != packingMachine.Id)
-                        throw new Exception($"Order is currently on Packing Machine {packing.MachinePacking.Name}");
+        public override void FinishPacking()
+        {
+            switch (CurrentProcess)
+            {
+                case DuraformProcessPacking packing:
+                    if (packing.EndTime.HasValue)
+                        throw new Exception("Order has already been PACKED");
 
                     packing.EndTime = DateTime.Now;
                     break;
@@ -300,23 +340,12 @@ namespace _1_Domain
             deliveringProcess.EndTime = DateTime.Now;
         }
 
-        public override Invoice GenerateInvoice(string invoiceId)
-        {
-            if (Invoice != null) throw new Exception("Order already been INVOICED");
-
-            if (!TotalPrice.HasValue) throw new Exception("Order missing total price");
-
-            Invoice = new Invoice(invoiceId, this);
-
-            return Invoice;
-        }
-
         public override string GetDescription()
         {
             var type = IsRoutingOnly ? "DSW" : "DF";
             var numberOfPieces = DuraformComponents.Sum(x => x.Quantity);
 
-            return $"{type} - {CabinetMaker.Name} | {numberOfPieces} parts";
+            return $"{type} - {Customer.Name} | {numberOfPieces} parts";
         }
     }
 }

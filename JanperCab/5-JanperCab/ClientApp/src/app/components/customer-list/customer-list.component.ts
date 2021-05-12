@@ -1,24 +1,26 @@
-import { LayoutService } from './../../_services/layout.service';
+import { LayoutService } from '../../_services/layout.service';
 import { plainToClass } from 'class-transformer';
-import { DialogService } from './../../_services/dialog.service';
-import { CabinetMakerSearchFilterValues } from './../../_models/commons/CabinetMakerSearchFilterValues';
-import { CustomerService } from './../../_services/customer.service';
+import { DialogService } from '../../_services/dialog.service';
+import { CabinetMakerSearchFilterValues } from '../../_models/commons/CabinetMakerSearchFilterValues';
+import { CustomerService } from '../../_services/customer.service';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ItemList } from 'src/app/_models/commons/ItemList';
 import { CabinetMakerDto } from 'src/app/_models/customer/CabinetMakerDto';
+import { CustomerDto } from 'src/app/_models/customer/CustomerDto';
+import { CustomerType } from 'src/app/_enums/CustomerType';
 
 @Component({
-  selector: 'app-cabinet-maker-list',
-  templateUrl: 'cabinet-maker-list.component.html',
+  selector: 'app-customer-list',
+  templateUrl: 'customer-list.component.html',
 })
-export class CabinetMakerListComponent implements OnInit {
+export class CustomerListComponent implements OnInit {
   @Input() allowAdd = true;
   @Input() allowDelete = true;
 
   @Output() addNewClick = new EventEmitter();
   @Output() itemClick = new EventEmitter<CabinetMakerDto>();
 
-  itemList: ItemList<CabinetMakerDto> = null;
+  itemList: ItemList<CustomerDto> = null;
   filterValues: CabinetMakerSearchFilterValues;
   isLoading: boolean;
 
@@ -37,7 +39,7 @@ export class CabinetMakerListComponent implements OnInit {
   loadCabinetMakerList = () => {
     this.isLoading = true;
     this.layout.showLoadingPanel();
-    this.customerService.getCabinetMakerList(this.filterValues).subscribe(
+    this.customerService.getCustomerList(this.filterValues).subscribe(
       (response) => {
         this.itemList = new ItemList<CabinetMakerDto>();
         this.itemList.items = plainToClass(CabinetMakerDto, response.items);
@@ -54,6 +56,17 @@ export class CabinetMakerListComponent implements OnInit {
     );
   };
 
+  getTypeDescription = (customerType: CustomerType): string => {
+    switch (customerType) {
+      case CustomerType.CabinetMaker:
+        return 'Cabinet Maker';
+      case CustomerType.Distributor:
+        return 'Distributor';
+      case CustomerType.Manufacturer:
+        return 'Manufacturer';
+    }
+  };
+
   onAddCabinetMaker = () => {
     this.addNewClick.emit();
   };
@@ -67,7 +80,9 @@ export class CabinetMakerListComponent implements OnInit {
     this.loadCabinetMakerList();
   };
 
-  onSortColumn = (sortBy: 'name' | 'email' | 'invoice' | 'delivery') => {
+  onSortColumn = (
+    sortBy: 'name' | 'type' | 'email' | 'invoice' | 'delivery'
+  ) => {
     if (this.filterValues.sortBy === sortBy) {
       this.filterValues.direction =
         this.filterValues.direction === 'desc' ? 'asc' : 'desc';

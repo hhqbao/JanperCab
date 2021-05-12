@@ -109,4 +109,11 @@ export class EnquiryService {
       null
     );
   };
+
+  declineEnquiry = (id: number): Observable<any> => {
+    return this.http.put(
+      `${environment.baseUrl}/enquiries/decline/${id}`,
+      null
+    );
+  };
 }

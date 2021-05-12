@@ -1,8 +1,8 @@
 export class EnquiryForRunSheetDto {
   deliveryRunSheetId: number;
   enquiryId: number;
-  cabinetMakerId: number;
-  cabinetMakerName: string;
+  customerId: number;
+  customerName: string;
   customerReference: string;
   doorType: string;
   doorColor: string;

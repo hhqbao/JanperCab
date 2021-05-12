@@ -92,16 +92,15 @@ namespace _2_Persistent.Configs
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(x => x.Distributor)
-                .WithMany(y => y.Enquiries)
+            builder.HasOne(x => x.Customer)
+                .WithMany(y => y.OrderedEnquiries)
+                .HasForeignKey(x => x.CustomerId)
                 .IsRequired()
-                .HasForeignKey(x => x.DistributorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(x => x.CabinetMaker)
-                .WithMany(y => y.Enquiries)
-                .IsRequired()
-                .HasForeignKey(x => x.CabinetMakerId)
+            builder.HasOne(x => x.Manager)
+                .WithMany(y => y.ManagedEnquiries)
+                .HasForeignKey(x => x.ManagerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(x => x.DeliveryRunSheet)

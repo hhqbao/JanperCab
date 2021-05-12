@@ -24,7 +24,8 @@
           <th colspan="4">'X' For Square Edge</th>
           <th rowspan="2" style="width: 26rem">Option</th>
           <th rowspan="2">Note</th>
-          <th rowspan="2" style="width: 8rem">Price</th>
+          <th rowspan="2" style="width: 10rem">Unit Price</th>
+          <th rowspan="2" style="width: 10rem">Price</th>
         </tr>
         <tr>
           <th style="width: 6rem">Left</th>
@@ -61,12 +62,13 @@
             {{ endPanel.duraformOption?.toString() }}
           </td>
           <td class="text-left">{{ endPanel.note }}</td>
+          <td class="text-right">{{ endPanel.unitPrice | currency }}</td>
           <td class="text-right">{{ endPanel.subTotal | currency }}</td>
         </tr>
       </tbody>
       <tbody class="subtotal">
         <tr>
-          <td colspan="17" class="subtotal__header">
+          <td colspan="18" class="subtotal__header">
             <b>Subtotal</b>
           </td>
           <td class="text-right">
@@ -74,7 +76,7 @@
           </td>
         </tr>
         <tr>
-          <td colspan="17" class="subtotal__header">
+          <td colspan="18" class="subtotal__header">
             <b>Discount ({{ duraformEnquiry.discountRate }}%)</b>
           </td>
           <td class="text-right">
@@ -86,7 +88,7 @@
             <i class="fa fa-calculator" aria-hidden="true"></i>
           </td>
           <td>{{ endPanels | arraySum: "quantity" }}</td>
-          <td colspan="15" class="subtotal__header">Total Price</td>
+          <td colspan="16" class="subtotal__header">Total Price</td>
           <td class="subtotal__price">
             {{ endPanels | arraySum: "totalPrice" | currency }}
           </td>

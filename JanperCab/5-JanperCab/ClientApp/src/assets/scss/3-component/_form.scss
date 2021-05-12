@@ -23,6 +23,26 @@
     }
   }
 
+  &__input-btn {
+    display: flex;
+    width: fit-content;
+
+    .form__control {
+      border-top-right-radius: unset;
+      border-bottom-right-radius: unset;
+      flex: 1;
+    }
+
+    .btn {
+      border-top-left-radius: unset;
+      border-bottom-left-radius: unset;
+
+      &:hover {
+        transform: translateY(0) !important;
+      }
+    }
+  }
+
   &__group,
   &__inline-group {
     &:not(:first-child) {

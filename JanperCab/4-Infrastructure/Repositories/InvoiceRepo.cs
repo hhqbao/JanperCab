@@ -1,7 +1,6 @@
 ﻿using _1_Domain;
 using _3_Application.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Threading.Tasks;
 
 namespace _4_Infrastructure.Repositories
@@ -12,7 +11,17 @@ namespace _4_Infrastructure.Repositories
         {
         }
 
-        public async Task<Invoice> GetAsync(string id, Customer customer)
+        public async Task<int> GetNextAvailableInvoiceIdAsync()
+        {
+            if (!await _dbSet.AnyAsync())
+                return 1;
+
+            var maxInvoiceId = await _dbSet.MaxAsync(x => x.Id);
+
+            return maxInvoiceId + 1;
+        }
+
+        public async Task<Invoice> GetAsync(int id, Customer customer)
         {
             var invoice = await GetAsync(id);
 
@@ -21,10 +30,15 @@ namespace _4_Infrastructure.Repositories
             return customer switch
             {
                 Manufacturer _ => invoice,
-                Distributor distributor => (invoice.DistributorId == distributor.Id ? invoice : null),
-                CabinetMaker cabinetMaker => (invoice.CabinetMakerId == cabinetMaker.Id ? invoice : null),
-                _ => throw new NotImplementedException("Unsupported Customer Type")
+                _ => invoice.CustomerId == customer.Id ? invoice : null
             };
+        }
+
+        public async Task<Invoice> GenerateAsync(Enquiry enquiry)
+        {
+            var invoice = new Invoice(enquiry) { Id = await GetNextAvailableInvoiceIdAsync() };
+
+            return invoice;
         }
     }
 }

@@ -1,4 +1,11 @@
 <div class="mrc">
+  <app-float-box [width]="100" *ngIf="showControlBox">
+    <app-on-hold-detail-form
+      [process]="currentProcess"
+      (completeBtnClick)="onComplete()"
+      (closeBtnClick)="showControlBox = false; currentProcess = null"
+    ></app-on-hold-detail-form>
+  </app-float-box>
   <app-simple-box [heading]="'CLEANING - ' + machine.name">
     <div class="mrc__process-box">
       <table class="table table--hovered table--sortable table--left">

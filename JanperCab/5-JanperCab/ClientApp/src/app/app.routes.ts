@@ -2,7 +2,7 @@ import { InvoiceProcessPageComponent } from './pages/invoice-process-page/invoic
 import { DeliveryPageComponent } from './pages/delivery-page/delivery-page.component';
 import { MachineListPageComponent } from './pages/machine-list-page/machine-list-page.component';
 import { DuraformOrderListPageComponent } from './pages/duraform-order-list-page/duraform-order-list-page.component';
-import { CabinetMakerListPageComponent } from './pages/cabinet-maker-list-page/cabinet-maker-list-page.component';
+import { CustomerListPageComponent } from './pages/customer-list-page/customer-list-page.component';
 import { DuraformQuotePageComponent } from './pages/duraform-quote-page/duraform-quote-page.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
@@ -24,7 +24,7 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     runGuardsAndResolvers: 'always',
     children: [
-      { path: 'customers', component: CabinetMakerListPageComponent },
+      { path: 'customers', component: CustomerListPageComponent },
       { path: 'duraform/orders', component: DuraformOrderListPageComponent },
       { path: 'duraform/quote/:id', component: DuraformQuotePageComponent },
       { path: 'duraform/:id', component: DuraformPageComponent },

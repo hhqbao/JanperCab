@@ -52,25 +52,7 @@ export class LoginFormComponent implements OnInit {
       (_) => {
         this.isLoading = false;
         this.dialog.success('You have been signed in.');
-
-        if (
-          this.authService.isInRole(Role[Role.Sale]) ||
-          this.authService.isInRole(Role[Role.Distributor]) ||
-          this.authService.isInRole(Role[Role.CabinetMaker])
-        ) {
-          this.router.navigate(['dashboard']);
-          return;
-        }
-
-        if (this.authService.isInRole(Role[Role.Operator])) {
-          this.router.navigate(['production/machines']);
-          return;
-        }
-
-        if (this.authService.isInRole(Role[Role.Driver])) {
-          this.router.navigate(['production/delivery']);
-          return;
-        }
+        this.authService.homePageNavigate();
       },
       (error) => {
         this.isLoading = false;

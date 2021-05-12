@@ -1,6 +1,6 @@
 export class InvoiceComponentDto {
   id: number;
-  invoiceId: string;
+  invoiceId: number;
   quantity: number;
   description: string;
   unitPrice: number;

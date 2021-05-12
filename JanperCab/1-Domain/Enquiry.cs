@@ -1,11 +1,16 @@
 ﻿using _1_Domain.Enum;
 using System;
+using System.Collections.Generic;
 
 namespace _1_Domain
 {
     public abstract class Enquiry
     {
         public int Id { get; set; }
+
+        public int CustomerId { set; get; }
+
+        public int? ManagerId { get; set; }
 
         public string CustomerReference { get; set; }
 
@@ -21,10 +26,6 @@ namespace _1_Domain
 
         public string CreatorId { get; set; }
 
-
-        public int DistributorId { get; set; }
-
-        public int CabinetMakerId { get; set; }
 
         public string InvoiceTo { get; set; }
 
@@ -64,11 +65,12 @@ namespace _1_Domain
 
         public int? DeliveryRunSheetId { get; set; }
 
+
         public virtual ApplicationUser Creator { get; set; }
 
-        public virtual Distributor Distributor { get; set; }
+        public virtual Customer Customer { get; set; }
 
-        public virtual CabinetMaker CabinetMaker { get; set; }
+        public virtual Customer Manager { get; set; }
 
         public virtual DeliveryRunSheet DeliveryRunSheet { get; set; }
 
@@ -83,11 +85,14 @@ namespace _1_Domain
 
         public abstract Process CurrentProcess { get; }
 
+        public abstract bool IsDeclineable { get; }
+
         public abstract int PartCount { get; }
 
         public abstract bool HasBeenDelivered { get; }
 
         public abstract DateTime? DeliveredTime { get; }
+
 
 
         public string FullDeliveryAddress => $"{DeliveryAddress}, {DeliverySuburb} {DeliveryState} {DeliveryPostcode}";
@@ -97,15 +102,23 @@ namespace _1_Domain
         public bool HasBeenInvoiced => Invoice != null;
 
 
+        public abstract List<InvoiceComponent> GenerateComponentsForInvoice();
+
         public abstract void Approve();
+
+        public abstract void Decline();
 
         public abstract void ProcessRouting(MachineRouter router);
 
         public abstract void ProcessPressing(MachinePresser presser);
 
-        public abstract void ProcessCleaning(MachineCleaning cleaningMachine);
+        public abstract void StartCleaning(MachineCleaning cleaningMachine);
 
-        public abstract void ProcessPacking(MachinePacking packingMachine);
+        public abstract void FinishCleaning();
+
+        public abstract void StartPacking(MachinePacking packingMachine);
+
+        public abstract void FinishPacking();
 
         public abstract void ProcessDelivering(DeliveryRunSheet runSheet);
 
@@ -113,7 +126,6 @@ namespace _1_Domain
 
         public abstract void CompleteDelivering();
 
-        public abstract Invoice GenerateInvoice(string invoiceId);
 
         protected Enquiry()
         {

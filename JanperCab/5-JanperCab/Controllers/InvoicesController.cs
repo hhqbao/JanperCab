@@ -27,7 +27,7 @@ namespace _5_JanperCab.Controllers
 
         [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
         [HttpGet("{invoiceId}")]
-        public async Task<IActionResult> Get(string invoiceId)
+        public async Task<IActionResult> Get(int invoiceId)
         {
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
 
@@ -40,12 +40,9 @@ namespace _5_JanperCab.Controllers
         }
 
         [Authorize(Roles = "Sale")]
-        [HttpPost("{enquiryId}/{invoiceId}")]
-        public async Task<IActionResult> Create(int enquiryId, string invoiceId)
+        [HttpPost("{enquiryId}")]
+        public async Task<IActionResult> Create(int enquiryId)
         {
-            if (await _unitOfWork.Invoices.AnyAsync(x => x.Id.Equals(invoiceId)))
-                return BadRequest("Invoice Id Duplicate");
-
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
 
             var enquiry = await _unitOfWork.Enquiries.GetEnquiryAsync(enquiryId, currentUser.Customer);
@@ -59,7 +56,9 @@ namespace _5_JanperCab.Controllers
             if (enquiry.Invoice != null)
                 return BadRequest("Order already been INVOICED");
 
-            var invoice = enquiry.GenerateInvoice(invoiceId);
+            var invoice = await _unitOfWork.Invoices.GenerateAsync(enquiry);
+
+            _unitOfWork.Invoices.Add(invoice);
             await _unitOfWork.CompleteAsync();
 
             return Ok(_mapper.Map<Invoice, InvoiceDto>(invoice));

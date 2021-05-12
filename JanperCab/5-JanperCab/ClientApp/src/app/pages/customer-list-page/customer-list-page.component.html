@@ -1,0 +1,15 @@
+<div class="customer-list-page">
+  <app-customer-form
+    *ngIf="showCustomerForm"
+    [customer]="selectedCustomer"
+    (submitForm)="onSubmitCustomerForm($event)"
+    (closeForm)="showCustomerForm = false"
+  ></app-customer-form>
+  <app-simple-box [heading]="'Customer List'">
+    <app-customer-list
+      #customerList
+      (addNewClick)="onAddNewClick()"
+      (itemClick)="onSelectCustomer($event)"
+    ></app-customer-list>
+  </app-simple-box>
+</div>

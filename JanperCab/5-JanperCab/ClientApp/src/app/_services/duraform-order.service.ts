@@ -1,3 +1,4 @@
+import { Role } from './../_enums/Role';
 import { DuraformComponentService } from 'src/app/_services/duraform-component.service';
 import { DuraformMiscFingerPullDto } from './../_models/duraform-misc-component/DuraformMiscFingerPullDto';
 import { DuraformMiscCapMouldDto } from 'src/app/_models/duraform-misc-component/DuraformMiscCapMouldDto';
@@ -14,6 +15,7 @@ import { Injectable } from '@angular/core';
 import { DuraformComponentDto } from '../_models/duraform-component/DuraformComponentDto';
 import { CustomerType } from '../_enums/CustomerType';
 import { DuraformComponentWithOptionDto } from '../_models/duraform-component/DuraformComponentWithOptionDto';
+import { CustomerDto } from '../_models/customer/CustomerDto';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformOrderService {
@@ -95,23 +97,23 @@ export class DuraformOrderService {
     }
   };
 
-  setCabinetMaker = (cabinetMaker: CabinetMakerDto) => {
-    this.duraformEnquiry.distributorId = cabinetMaker.distributorId;
-    this.duraformEnquiry.cabinetMakerId = cabinetMaker.id;
+  setCustomer = (customer: CustomerDto) => {
+    this.duraformEnquiry.customerId = customer.id;
+    this.duraformEnquiry.managerId = customer.managerId;
 
-    this.duraformEnquiry.invoiceTo = cabinetMaker.invoiceTo;
-    this.duraformEnquiry.invoiceAddress = cabinetMaker.invoiceAddress;
-    this.duraformEnquiry.invoiceSuburb = cabinetMaker.invoiceSuburb;
-    this.duraformEnquiry.invoiceState = cabinetMaker.invoiceState;
-    this.duraformEnquiry.invoicePostcode = cabinetMaker.invoicePostcode;
+    this.duraformEnquiry.invoiceTo = customer.invoiceTo;
+    this.duraformEnquiry.invoiceAddress = customer.invoiceAddress;
+    this.duraformEnquiry.invoiceSuburb = customer.invoiceSuburb;
+    this.duraformEnquiry.invoiceState = customer.invoiceState;
+    this.duraformEnquiry.invoicePostcode = customer.invoicePostcode;
 
-    this.duraformEnquiry.deliveryTo = cabinetMaker.deliveryTo;
-    this.duraformEnquiry.deliveryAddress = cabinetMaker.deliveryAddress;
-    this.duraformEnquiry.deliverySuburb = cabinetMaker.deliverySuburb;
-    this.duraformEnquiry.deliveryState = cabinetMaker.deliveryState;
-    this.duraformEnquiry.deliveryPostcode = cabinetMaker.deliveryPostcode;
+    this.duraformEnquiry.deliveryTo = customer.deliveryTo;
+    this.duraformEnquiry.deliveryAddress = customer.deliveryAddress;
+    this.duraformEnquiry.deliverySuburb = customer.deliverySuburb;
+    this.duraformEnquiry.deliveryState = customer.deliveryState;
+    this.duraformEnquiry.deliveryPostcode = customer.deliveryPostcode;
 
-    this.duraformEnquiry.updateDiscountRate(cabinetMaker.discountRate);
+    this.duraformEnquiry.updateDiscountRate(customer.discountRate);
   };
 
   setEdgeProfile = (model: DuraformEdgeProfileForList) => {
@@ -181,15 +183,8 @@ export class DuraformOrderService {
   loadNewDraft = () => {
     this.duraformEnquiry = new DuraformEnquiryDto();
 
-    switch (this.auth.customer.customerType) {
-      case CustomerType.Distributor:
-        this.duraformEnquiry.distributorId = this.auth.customer.id;
-        break;
-      case CustomerType.CabinetMaker:
-        this.setCabinetMaker(this.auth.customer as CabinetMakerDto);
-        break;
-      default:
-        throw new Error('Invalid Customer Type! Contact IT Support.');
+    if (this.auth.isInRole(Role.CabinetMaker)) {
+      this.setCustomer(this.auth.customer);
     }
   };
 }

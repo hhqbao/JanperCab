@@ -29,6 +29,10 @@ namespace _4_Infrastructure.Repositories
 
         public IDuraformOptionTypeRepo DuraformOptionTypes { get; }
 
+        public IProcessRepo Processes { get; }
+
+        public IOnHoldComponentRepo OnHoldComponents { get; }
+
         public IHingeHoleTypeRepo HingeHoleTypes { get; }
 
         public IHingeHoleStyleRepo HingeHoleStyles { get; }
@@ -64,6 +68,8 @@ namespace _4_Infrastructure.Repositories
             PantryDoorChairRailTypes = new PantryDoorChairRailTypeRepo(_dbContext);
             DuraformDrawerTypes = new DuraformDrawerTypeRepo(_dbContext);
             DuraformOptionTypes = new DuraformOptionTypeRepo(_dbContext);
+            Processes = new ProcessRepo(_dbContext);
+            OnHoldComponents = new OnHoldComponentRepo(_dbContext);
             HingeHoleTypes = new HingeHoleTypeRepo(_dbContext);
             HingeHoleStyles = new HingeHoleStyleRepo(_dbContext);
             Enquiries = new EnquiryRepo(_dbContext);

@@ -235,12 +235,12 @@ namespace _1_Domain
             DRAWER8 = 0;
             SLICE_WIDTH = 0;
             JOBNUMBER = component.DuraformEnquiry.Id;
-            ACCOUNTNUMBER = component.DuraformEnquiry.CabinetMaker.Name.Replace(",", "_").Replace(" ", "_").ToUpper();
+            ACCOUNTNUMBER = component.DuraformEnquiry.Customer.Name.Replace(",", "_").Replace(" ", "_").ToUpper();
             JOBNUMBERCUST = component.DuraformEnquiry.CustomerReference;
             DOORFINISH = component.DuraformEnquiry.IsRoutingOnly ? ROUTER_ONLY : component.DuraformEnquiry.DuraformWrapType.Name.ToUpper();
             DOORCOLOR = component.DuraformEnquiry.IsRoutingOnly ? DSW : $"{component.DuraformEnquiry.DuraformWrapColor.Name.ToUpper()} {component.DuraformEnquiry.DuraformWrapType.Name.ToUpper()}";
             CNCCODE = "DOOR";
-            MATERIAL = component.DuraformEnquiry.IsRoutingOnly ? $"DSW{DIMZ} MDF" : $"SS{DIMZ} MDF";
+            MATERIAL = component.DuraformEnquiry.IsRoutingOnly ? $"{DSW}{DIMZ} MDF" : $"SS{DIMZ} MDF";
             CNCTYPE = "DOOR";
             QUANTITY = component.Quantity;
             DESCRIPTION = component.Note.ToUpper();

@@ -46,25 +46,30 @@ export class DuraformStatusUpdatorComponent implements OnInit, OnDestroy {
           enquiryProcess.isCurrent = newProcess.isCurrent;
           enquiryProcess.startTime = newProcess.startTime;
           enquiryProcess.endTime = newProcess.endTime;
+          enquiryProcess.onHoldComponents = newProcess.onHoldComponents;
 
           switch (enquiryProcess.duraformProcessType) {
             case DuraformProcessEnum.Routing:
-              const routingProcess = enquiryProcess as DuraformProcessRoutingDto;
+              const routingProcess =
+                enquiryProcess as DuraformProcessRoutingDto;
               routingProcess.machineId = newProcess.machineId;
               routingProcess.machineRouter = newProcess.machineRouter;
               break;
             case DuraformProcessEnum.Pressing:
-              const pressingProcess = enquiryProcess as DuraformProcessPressingDto;
+              const pressingProcess =
+                enquiryProcess as DuraformProcessPressingDto;
               pressingProcess.machineId = newProcess.machineId;
               pressingProcess.machinePresser = newProcess.machinePresser;
               break;
             case DuraformProcessEnum.Cleaning:
-              const cleaningProcess = enquiryProcess as DuraformProcessCleaningDto;
+              const cleaningProcess =
+                enquiryProcess as DuraformProcessCleaningDto;
               cleaningProcess.machineId = newProcess.machineId;
               cleaningProcess.machineCleaning = newProcess.machineCleaning;
               break;
             case DuraformProcessEnum.Packing:
-              const packingProcess = enquiryProcess as DuraformProcessPackingDto;
+              const packingProcess =
+                enquiryProcess as DuraformProcessPackingDto;
               packingProcess.machineId = newProcess.machineId;
               packingProcess.machinePacking = newProcess.machinePacking;
               break;

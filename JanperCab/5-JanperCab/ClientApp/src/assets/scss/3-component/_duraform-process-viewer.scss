@@ -50,6 +50,12 @@
 
     &__status {
       font-size: 2rem;
+
+      &--extra {
+        color: $red-primary;
+        font-size: 1.8rem;
+        text-decoration: none;
+      }
     }
 
     &__time-title {

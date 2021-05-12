@@ -1,6 +1,6 @@
 import { DuraformProcessEnum } from 'src/app/_enums/DuraformProcessEnum';
 import * as moment from 'moment';
-import { ProcessDto } from './Process';
+import { ProcessDto } from './ProcessDto';
 
 export abstract class DuraformProcessDto extends ProcessDto {
   duraformProcessType: DuraformProcessEnum;

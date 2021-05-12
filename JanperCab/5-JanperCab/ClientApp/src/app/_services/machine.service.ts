@@ -1,3 +1,4 @@
+import { OnHoldComponentDto } from './../_models/on-hold-detail/OnHoldComponentDto';
 import { EnquiryForRunSheetDto } from './../_models/enquiry/EnquiryForRunSheetDto';
 import { plainToClass } from 'class-transformer';
 import { map } from 'rxjs/operators';
@@ -7,6 +8,7 @@ import { MachineProductionListDto } from '../_models/machine/MachineProductionLi
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MachineProdutionCurrentProcessDto } from '../_models/machine/MachineProdutionCurrentProcessDto';
+import { ProcessDto } from '../_models/DuraformProcess/ProcessDto';
 
 @Injectable({ providedIn: 'root' })
 export class MachineService {
@@ -57,13 +59,13 @@ export class MachineService {
       );
   };
 
-  processCleaning = (
+  startCleaning = (
     cleanerId: number,
     enquiryId: number
   ): Observable<MachineProdutionCurrentProcessDto> => {
     return this.http
       .put<MachineProdutionCurrentProcessDto>(
-        `${environment.baseUrl}/Processes/Cleaning/${cleanerId}/${enquiryId}`,
+        `${environment.baseUrl}/Processes/Cleaning/Start/${cleanerId}/${enquiryId}`,
         null
       )
       .pipe(
@@ -73,13 +75,43 @@ export class MachineService {
       );
   };
 
-  processPacking = (
+  finishCleaning = (
+    enquiryId: number
+  ): Observable<MachineProdutionCurrentProcessDto> => {
+    return this.http
+      .put<MachineProdutionCurrentProcessDto>(
+        `${environment.baseUrl}/Processes/Cleaning/Finish/${enquiryId}`,
+        null
+      )
+      .pipe(
+        map((response) => {
+          return plainToClass(MachineProdutionCurrentProcessDto, response);
+        })
+      );
+  };
+
+  startPacking = (
     packerId: number,
     enquiryId: number
   ): Observable<MachineProdutionCurrentProcessDto> => {
     return this.http
       .put<MachineProdutionCurrentProcessDto>(
-        `${environment.baseUrl}/Processes/Packing/${packerId}/${enquiryId}`,
+        `${environment.baseUrl}/Processes/Packing/Start/${packerId}/${enquiryId}`,
+        null
+      )
+      .pipe(
+        map((response) => {
+          return plainToClass(MachineProdutionCurrentProcessDto, response);
+        })
+      );
+  };
+
+  finishPacking = (
+    enquiryId: number
+  ): Observable<MachineProdutionCurrentProcessDto> => {
+    return this.http
+      .put<MachineProdutionCurrentProcessDto>(
+        `${environment.baseUrl}/Processes/Packing/Finish/${enquiryId}`,
         null
       )
       .pipe(

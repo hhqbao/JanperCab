@@ -31,7 +31,8 @@
           <th rowspan="2" style="width: 26rem">Option</th>
           <th rowspan="2" style="width: 20rem">Hinge Hole</th>
           <th rowspan="2">Note</th>
-          <th rowspan="2" style="width: 8rem">Price</th>
+          <th rowspan="2" style="width: 10rem">Unit Price</th>
+          <th rowspan="2" style="width: 10rem">Price</th>
         </tr>
         <tr>
           <th style="width: 4rem">T</th>
@@ -68,13 +69,16 @@
             {{ pantryDoor.note }}
           </td>
           <td class="text-right">
+            {{ pantryDoor.unitPrice | currency }}
+          </td>
+          <td class="text-right">
             {{ pantryDoor.subTotal | currency }}
           </td>
         </tr>
       </tbody>
       <tbody class="subtotal">
         <tr>
-          <td colspan="15" class="subtotal__header">
+          <td colspan="16" class="subtotal__header">
             <b>Subtotal</b>
           </td>
           <td class="text-right">
@@ -82,7 +86,7 @@
           </td>
         </tr>
         <tr>
-          <td colspan="15" class="subtotal__header">
+          <td colspan="16" class="subtotal__header">
             <b>Discount ({{ duraformEnquiry.discountRate }}%)</b>
           </td>
           <td class="text-right">
@@ -94,7 +98,7 @@
             <i class="fa fa-calculator" aria-hidden="true"></i>
           </td>
           <td>{{ pantryDoors | arraySum: "quantity" }}</td>
-          <td colspan="13" class="subtotal__header">Total Price</td>
+          <td colspan="14" class="subtotal__header">Total Price</td>
           <td class="subtotal__price">
             {{ pantryDoors | arraySum: "totalPrice" | currency }}
           </td>

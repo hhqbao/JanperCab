@@ -110,6 +110,18 @@
     <Compile Remove="Migrations\20210420091527_EditTable_DuraformComponents_AddCols_SubTotal_TotalDiscount.Designer.cs" />
     <Compile Remove="Migrations\20210421125412_EditTable_Invoices_LinkToCabinetMaker.cs" />
     <Compile Remove="Migrations\20210421125412_EditTable_Invoices_LinkToCabinetMaker.Designer.cs" />
+    <Compile Remove="Migrations\20210503104118_EditTable_Invoices_ChangeIdType.cs" />
+    <Compile Remove="Migrations\20210503104118_EditTable_Invoices_ChangeIdType.Designer.cs" />
+    <Compile Remove="Migrations\20210503104247_EditTable_Invoices_ChangeIdType.cs" />
+    <Compile Remove="Migrations\20210503104247_EditTable_Invoices_ChangeIdType.Designer.cs" />
+    <Compile Remove="Migrations\20210503104332_EditTable_Invoices_ChangeIdType.cs" />
+    <Compile Remove="Migrations\20210503104332_EditTable_Invoices_ChangeIdType.Designer.cs" />
+    <Compile Remove="Migrations\20210503104609_DeleteTable_Invoices.cs" />
+    <Compile Remove="Migrations\20210503104609_DeleteTable_Invoices.Designer.cs" />
+    <Compile Remove="Migrations\20210503105233_EditTable_Invoices_RemoveCol_SubId.cs" />
+    <Compile Remove="Migrations\20210503105233_EditTable_Invoices_RemoveCol_SubId.Designer.cs" />
+    <Compile Remove="Migrations\20210503105639_DropLink_Invoice_InvoiceComponent.cs" />
+    <Compile Remove="Migrations\20210503105639_DropLink_Invoice_InvoiceComponent.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

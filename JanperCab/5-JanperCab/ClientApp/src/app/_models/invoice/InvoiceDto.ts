@@ -1,12 +1,11 @@
 import { Type } from 'class-transformer';
 import { InvoiceComponentDto } from './InvoiceComponentDto';
 export class InvoiceDto {
-  id: string;
+  id: number;
   enquiryId: number;
   createdDate: Date;
 
-  cabinetMakerId: number;
-  distributorId: number;
+  customerId: number;
   customerReference: string;
 
   doorType: string;

@@ -37,8 +37,11 @@
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
       {{ component.note }}
     </td>
-    <td>
-      {{ component.totalPrice | currency }}
+    <td style="width: 12rem">
+      {{ component.unitPrice | currency }}
+    </td>
+    <td style="width: 12rem">
+      {{ component.subTotal | currency }}
     </td>
     <td style="width: 5rem">
       <button

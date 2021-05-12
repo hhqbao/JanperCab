@@ -1,6 +1,6 @@
 export class CabinetMakerSearchFilterValues {
   search: string;
-  sortBy: 'name' | 'email' | 'invoice' | 'delivery';
+  sortBy: 'name' | 'type' | 'email' | 'invoice' | 'delivery';
   direction: 'asc' | 'desc';
   page: number;
   take: 10 | 20 | 50 | 100;

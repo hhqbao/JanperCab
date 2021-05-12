@@ -28,93 +28,70 @@ namespace _5_JanperCab.Controllers
         }
 
         [Authorize(Roles = "Distributor,Sale")]
-        [HttpGet("CabinetMakers")]
-        public async Task<IActionResult> GetCabinetMakers(string search, string sortBy, string direction, int page = 0, int take = 20)
+        [HttpGet]
+        public async Task<IActionResult> Get(string search, string sortBy, string direction, int page = 0, int take = 20)
         {
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
 
-            var itemList = await _unitOfWork.Customers.GetCabinetMakersAsync(currentUser.CustomerId, search, sortBy, direction, page, take);
+            var itemList = await _unitOfWork.Customers.GetCustomersAsync(currentUser, search, sortBy, direction, page, take);
 
-            var itemListDto = new ItemList<CabinetMakerDto>
+            var itemListDto = new ItemList<CustomerDto>
             {
-                Items = _mapper.Map<List<CabinetMaker>, List<CabinetMakerDto>>(itemList.Items),
+                Items = _mapper.Map<List<Customer>, List<CustomerDto>>(itemList.Items),
                 TotalItemCount = itemList.TotalItemCount,
             };
 
             return Ok(itemListDto);
         }
 
-        [Authorize(Roles = "Sale")]
-        [HttpGet("Distributors")]
-        public async Task<IActionResult> GetDistributors(string search, string sortBy, string direction, int page = 0, int take = 2)
-        {
-            var itemList = await _unitOfWork.Customers.GetDistributorsAsync(search, sortBy, direction, page, take);
 
-            var itemListDto = new ItemList<DistributorDto>
-            {
-                Items = _mapper.Map<List<Distributor>, List<DistributorDto>>(itemList.Items),
-                TotalItemCount = itemList.TotalItemCount,
-            };
-
-            return Ok(itemListDto);
-        }
 
         [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
-        [HttpGet("CabinetMakers/{id}")]
-        public async Task<IActionResult> CabinetMaker(int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
         {
-            var cabinetMaker = await _unitOfWork.Customers.GetCabinetMakerAsync(id);
+            var customer = await _unitOfWork.Customers.GetAsync(id);
 
-            if (cabinetMaker == null)
+            if (customer == null)
                 return BadRequest("Customer Not Found");
 
-            return Ok(_mapper.Map<CabinetMaker, CabinetMakerDto>(cabinetMaker));
+            return Ok(_mapper.Map<Customer, CustomerDto>(customer));
         }
+
+
 
         [Authorize(Roles = "Distributor,Sale")]
-        [HttpGet("Distributors/{id}")]
-        public async Task<IActionResult> Distributor(int id)
-        {
-            var distributor = await _unitOfWork.Customers.GetDistributorAsync(id);
-
-            if (distributor == null)
-                return BadRequest("Distributor Not Found");
-
-            return Ok(_mapper.Map<Distributor, DistributorDto>(distributor));
-        }
-
-        [Authorize(Roles = "Distributor")]
-        [HttpPost("CabinetMakers")]
-        public async Task<IActionResult> CreateCabinetMaker(CabinetMakerDto modelDto)
+        [HttpPost]
+        public async Task<IActionResult> Create(CustomerDto modelDto)
         {
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
 
-            if (currentUser.Customer.CustomerType != CustomerType.Distributor)
-                return BadRequest("Request Invalid! Only Distributors Allowed!");
+            var customer = _mapper.Map<CustomerDto, Customer>(modelDto);
 
-            if (currentUser.CustomerId != modelDto.DistributorId)
-                return BadRequest("Distributor Not Match!");
+            if (User.IsInRole("Distributor"))
+                customer.ManagerId = currentUser.CustomerId;
 
-            var cabinetMaker = _mapper.Map<CabinetMakerDto, CabinetMaker>(modelDto);
 
-            _unitOfWork.Customers.Add(cabinetMaker);
+            _unitOfWork.Customers.Add(customer);
             await _unitOfWork.CompleteAsync();
 
-            return Ok(_mapper.Map<CabinetMaker, CabinetMakerDto>(cabinetMaker));
+            return Ok(_mapper.Map<Customer, CustomerDto>(customer));
         }
 
-        [Authorize(Roles = "Distributor")]
-        [HttpPut("CabinetMakers/{id}")]
-        public async Task<IActionResult> UpdateCabinetMaker(int id, CabinetMakerDto modelDto)
+        [Authorize(Roles = "Distributor, Sale")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, CustomerDto modelDto)
         {
-            var existCustomer = await _unitOfWork.Customers.GetCabinetMakerAsync(id);
+            var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
+
+            var existCustomer = await _unitOfWork.Customers.GetAsync(id, currentUser);
 
             if (existCustomer == null) return NotFound("Customer Not Found");
 
             _mapper.Map(modelDto, existCustomer);
             await _unitOfWork.CompleteAsync();
 
-            return Ok(_mapper.Map<CabinetMaker, CabinetMakerDto>(existCustomer));
+            return Ok(_mapper.Map<Customer, CustomerDto>(existCustomer));
         }
     }
 }

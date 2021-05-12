@@ -1,44 +1,67 @@
 <div class="cabinet-maker-form">
   <div class="container">
     <app-simple-box
-      [heading]="cabinetMaker ? 'Edit Customer' : 'Create New Customer'"
+      [heading]="customer ? 'Edit Customer' : 'Create New Customer'"
     >
       <form [formGroup]="formGroup" (submit)="onSubmit()">
-        <div class="form__group">
-          <label class="form__label">Customer Name</label>
-          <input
-            #cabinetMakerName
-            type="text"
-            class="form__control"
-            formControlName="name"
-          />
+        <div
+          class="form__group"
+          *ngIf="authService.isInRole(role[role.Manufacturer])"
+        >
+          <label class="form__label">Customer Type</label>
+          <app-select-menu
+            [control]="customerTypeControl"
+            [values]="customerTypeOptions"
+            [valueKey]="'id'"
+            [valueDisplay]="'value'"
+            [isDisabled]="customer && customer.id"
+          ></app-select-menu>
         </div>
-        <div class="form__group">
-          <label class="form__label">Discount %</label>
-          <input
-            class="form__control"
-            currencyMask
-            appSelectOnFocus
-            [formControl]="discountRate"
-            (blur)="discountRate.invalid && discountRate.setValue(0)"
-            [options]="{
-              align: 'left',
-              allowZero: false,
-              precision: '0',
-              decimal: '',
-              prefix: '',
-              thousands: '',
-              max: 100
-            }"
-          />
-        </div>
-        <div class="form__group">
-          <label class="form__label">Email Address</label>
-          <input type="email" class="form__control" formControlName="email" />
-        </div>
-        <div class="form__group">
-          <label class="form__label">Phone Number</label>
-          <input type="tel" class="form__control" formControlName="phone" />
+        <div class="row">
+          <div class="col-1-2">
+            <div class="form__group">
+              <label class="form__label">Customer Name</label>
+              <input
+                #customerName
+                type="text"
+                class="form__control"
+                formControlName="name"
+              />
+            </div>
+            <div class="form__group">
+              <label class="form__label">Email Address</label>
+              <input
+                type="email"
+                class="form__control"
+                formControlName="email"
+              />
+            </div>
+          </div>
+          <div class="col-1-2">
+            <div class="form__group">
+              <label class="form__label">Phone Number</label>
+              <input type="tel" class="form__control" formControlName="phone" />
+            </div>
+            <div class="form__group">
+              <label class="form__label">Discount %</label>
+              <input
+                class="form__control"
+                currencyMask
+                appSelectOnFocus
+                [formControl]="discountRate"
+                (blur)="discountRate.invalid && discountRate.setValue(0)"
+                [options]="{
+                  align: 'left',
+                  allowZero: false,
+                  precision: '0',
+                  decimal: '',
+                  prefix: '',
+                  thousands: '',
+                  max: 100
+                }"
+              />
+            </div>
+          </div>
         </div>
         <div class="row">
           <div class="col-1-2">
@@ -147,7 +170,7 @@
             [disabled]="formGroup.invalid"
           >
             <i class="fa fa-floppy-o"></i>
-            {{ cabinetMaker ? "Update Customer" : "Create New Customer" }}
+            {{ customer ? "Update Customer" : "Create New Customer" }}
           </button>
           <button
             type="button"

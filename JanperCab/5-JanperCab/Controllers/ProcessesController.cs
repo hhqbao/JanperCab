@@ -74,8 +74,8 @@ namespace _5_JanperCab.Controllers
         }
 
         [Authorize(Roles = "Operator")]
-        [HttpPut("cleaning/{cleanerId}/{enquiryId}")]
-        public async Task<IActionResult> ProcessCleaning(int cleanerId, int enquiryId)
+        [HttpPut("cleaning/start/{cleanerId}/{enquiryId}")]
+        public async Task<IActionResult> StartProcessCleaning(int cleanerId, int enquiryId)
         {
             var machine = await _unitOfWork.Machines.GetAsync(cleanerId);
 
@@ -90,15 +90,33 @@ namespace _5_JanperCab.Controllers
             if (!duraformEnquiry.ApprovedDate.HasValue)
                 return BadRequest("Order needs to be APPROVED");
 
-            enquiry.ProcessCleaning(cleaningMachine);
+            enquiry.StartCleaning(cleaningMachine);
             await _unitOfWork.CompleteAsync();
 
             return Ok(new MachineProdutionCurrentProcessDto(enquiry.CurrentProcess));
         }
 
         [Authorize(Roles = "Operator")]
-        [HttpPut("packing/{packerId}/{enquiryId}")]
-        public async Task<IActionResult> ProcessPacking(int packerId, int enquiryId)
+        [HttpPut("cleaning/finish/{enquiryId}")]
+        public async Task<IActionResult> FinishProcessCleaning(int enquiryId)
+        {
+            var enquiry = await _unitOfWork.Enquiries.GetAsync(enquiryId);
+
+            if (!(enquiry is DuraformEnquiry duraformEnquiry))
+                return BadRequest("Duraform Order Not Found");
+
+            if (!duraformEnquiry.ApprovedDate.HasValue)
+                return BadRequest("Order needs to be APPROVED");
+
+            enquiry.FinishCleaning();
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(new MachineProdutionCurrentProcessDto(enquiry.CurrentProcess));
+        }
+
+        [Authorize(Roles = "Operator")]
+        [HttpPut("packing/start/{packerId}/{enquiryId}")]
+        public async Task<IActionResult> StartProcessPacking(int packerId, int enquiryId)
         {
             var machine = await _unitOfWork.Machines.GetAsync(packerId);
 
@@ -113,7 +131,25 @@ namespace _5_JanperCab.Controllers
             if (!duraformEnquiry.ApprovedDate.HasValue)
                 return BadRequest("Order needs to be APPROVED");
 
-            enquiry.ProcessPacking(packingMachine);
+            enquiry.StartPacking(packingMachine);
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(new MachineProdutionCurrentProcessDto(enquiry.CurrentProcess));
+        }
+
+        [Authorize(Roles = "Operator")]
+        [HttpPut("packing/finish/{enquiryId}")]
+        public async Task<IActionResult> FinishProcessPacking(int enquiryId)
+        {
+            var enquiry = await _unitOfWork.Enquiries.GetAsync(enquiryId);
+
+            if (!(enquiry is DuraformEnquiry duraformEnquiry))
+                return BadRequest("Duraform Order Not Found");
+
+            if (!duraformEnquiry.ApprovedDate.HasValue)
+                return BadRequest("Order needs to be APPROVED");
+
+            enquiry.FinishPacking();
             await _unitOfWork.CompleteAsync();
 
             return Ok(new MachineProdutionCurrentProcessDto(enquiry.CurrentProcess));

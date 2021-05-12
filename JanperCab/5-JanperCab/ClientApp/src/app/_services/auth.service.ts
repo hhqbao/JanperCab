@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Role } from './../_enums/Role';
 import { plainToClass, classToClass, classToPlain } from 'class-transformer';
 import { UserTokenDto } from './../_models/auth/UserTokenDto';
@@ -19,7 +20,11 @@ export class AuthService {
 
   private userToken: UserTokenDto;
 
-  constructor(private http: HttpClient, private dialogService: DialogService) {
+  constructor(
+    private http: HttpClient,
+    private dialogService: DialogService,
+    private router: Router
+  ) {
     this.jwtHelper = new JwtHelperService();
     this.userToken = new UserTokenDto();
   }
@@ -51,6 +56,27 @@ export class AuthService {
 
     return !this.jwtHelper.isTokenExpired(this.userToken.token);
   }
+
+  homePageNavigate = () => {
+    if (
+      this.isInRole(Role.Sale) ||
+      this.isInRole(Role.Distributor) ||
+      this.isInRole(Role.CabinetMaker)
+    ) {
+      this.router.navigate(['dashboard']);
+      return;
+    }
+
+    if (this.isInRole(Role.Operator)) {
+      this.router.navigate(['production/machines']);
+      return;
+    }
+
+    if (this.isInRole(Role.Driver)) {
+      this.router.navigate(['production/delivery']);
+      return;
+    }
+  };
 
   loadStoredToken = () => {
     const token = localStorage.getItem('token');

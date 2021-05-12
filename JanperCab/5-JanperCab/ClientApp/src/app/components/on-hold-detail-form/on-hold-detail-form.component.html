@@ -1,0 +1,115 @@
+<div class="ohdf">
+  <div class="ohdf__form" *ngIf="showComponentForm">
+    <form [formGroup]="onHoldComponentForm">
+      <div class="form__group">
+        <label class="form__label">Quantity</label>
+        <input
+          #quantityInput
+          class="form__control text-left"
+          currencyMask
+          appSelectOnFocus
+          [formControl]="quantity"
+          (blur)="quantity.invalid && quantity.setValue(1)"
+          [options]="{
+            align: 'center',
+            allowZero: false,
+            precision: '0',
+            decimal: '',
+            prefix: '',
+            thousands: '',
+            max: 100
+          }"
+        />
+      </div>
+      <div class="form__group">
+        <label class="form__label">Description</label>
+        <app-select-menu
+          [control]="description"
+          [values]="descriptions"
+          [valueKey]="'value'"
+          [valueDisplay]="'value'"
+        ></app-select-menu>
+      </div>
+      <div class="row">
+        <div class="col-1-2">
+          <button
+            type="submit"
+            class="btn btn--primary"
+            [disabled]="onHoldComponentForm.invalid"
+            (click)="onSaveComponentForm()"
+          >
+            Save
+          </button>
+        </div>
+        <div class="col-1-2 right">
+          <button
+            class="btn btn--default"
+            (click)="selectedComponent = null; showComponentForm = false"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="ohdf__header">On Hold Details</div>
+  <div class="ohdf__body">
+    <table class="table table--bordered table--hovered">
+      <thead>
+        <tr>
+          <th style="width: 5rem">Qty.</th>
+          <th class="text-left">Description</th>
+          <th style="width: 5rem"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let component of onHoldComponents">
+          <td (click)="onSelectComponent(component)">
+            <b>{{ component.quantity }}</b>
+          </td>
+          <td class="text-left" (click)="onSelectComponent(component)">
+            <b>{{ component.description }}</b>
+          </td>
+          <td>
+            <button
+              class="btn btn--secondary"
+              (click)="onDeleteComponent(component)"
+            >
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
+          <td colspan="3" style="border: none">
+            <button
+              class="btn btn--primary"
+              (click)="selectedComponent = null; initialForm()"
+            >
+              Add
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="ohdf__footer">
+    <div class="row">
+      <div class="col-1-2">
+        <button class="btn btn--secondary" (click)="completeBtnClick.emit()">
+          Complete
+        </button>
+      </div>
+      <div class="col-1-2 right">
+        <button
+          class="btn btn--default"
+          [disabled]="onHoldComponents.length === 0"
+          (click)="onClose()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -6,9 +6,9 @@
 
         public int EnquiryId { get; set; }
 
-        public int CabinetMakerId { get; set; }
+        public int CustomerId { get; set; }
 
-        public string CabinetMakerName { get; set; }
+        public string CustomerName { get; set; }
 
         public string CustomerReference { get; set; }
 
@@ -30,8 +30,8 @@
         {
             DeliveryRunSheetId = enquiry.DeliveryRunSheetId;
             EnquiryId = enquiry.Id;
-            CabinetMakerId = enquiry.CabinetMakerId;
-            CabinetMakerName = enquiry.CabinetMaker.Name;
+            CustomerId = enquiry.CustomerId;
+            CustomerName = enquiry.Customer.Name;
             CustomerReference = enquiry.CustomerReference;
             DoorType = enquiry.DoorType;
             DoorColor = enquiry.DoorColor;

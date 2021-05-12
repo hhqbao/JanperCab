@@ -21,6 +21,7 @@ using _3_Application.Dtos.HingeHoleOption;
 using _3_Application.Dtos.HingeHoleType;
 using _3_Application.Dtos.Invoice;
 using _3_Application.Dtos.Machine;
+using _3_Application.Dtos.OnHoldComponent;
 using _3_Application.Dtos.PantryDoorChairRailType;
 using _3_Application.Dtos.Process;
 using _3_Application.Dtos.UploadFile;
@@ -186,6 +187,10 @@ namespace _5_JanperCab.Helpers
             CreateMap<DuraformMiscHeatStrip, DuraformMiscHeatStripDto>();
             CreateMap<DuraformMiscHeatStripDto, DuraformMiscHeatStrip>();
 
+            CreateMap<OnHoldComponent, OnHoldComponentDto>();
+            CreateMap<OnHoldComponentDto, OnHoldComponent>()
+                .ForMember(x => x.CreatedDate, opt => opt.Ignore());
+
             CreateMap<Machine, MachineDto>()
                 .Include<MachineRouter, MachineRouterDto>()
                 .Include<MachinePresser, MachinePresserDto>()
@@ -267,7 +272,7 @@ namespace _5_JanperCab.Helpers
                 .ForMember(x => x.Invoice, opt => opt.Ignore());
 
             CreateMap<Enquiry, EnquiryForInvoicingDto>()
-                .ForMember(x => x.CustomerName, opt => opt.MapFrom(x => x.CabinetMaker.Name));
+                .ForMember(x => x.CustomerName, opt => opt.MapFrom(x => x.Customer.Name));
 
             CreateMap<DuraformEnquiry, DuraformEnquiryDto>();
             CreateMap<DuraformEnquiry, DuraformEnquiryListDto>();

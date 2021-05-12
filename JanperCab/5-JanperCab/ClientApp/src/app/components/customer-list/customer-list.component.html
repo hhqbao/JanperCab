@@ -47,6 +47,16 @@
           </th>
           <th
             [ngClass]="{
+              active: filterValues.sortBy === 'type',
+              asc: filterValues.direction === 'asc',
+              desc: filterValues.direction === 'desc'
+            }"
+            (click)="onSortColumn('type')"
+          >
+            Type
+          </th>
+          <th
+            [ngClass]="{
               active: filterValues.sortBy === 'email',
               asc: filterValues.direction === 'asc',
               desc: filterValues.direction === 'desc'
@@ -82,6 +92,9 @@
         <tr *ngFor="let maker of itemList.items">
           <td (click)="onSelectCabinetMaker(maker)">
             {{ maker.name }}
+          </td>
+          <td (click)="onSelectCabinetMaker(maker)">
+            {{ getTypeDescription(maker.customerType) }}
           </td>
           <td (click)="onSelectCabinetMaker(maker)">
             {{ maker.email }}

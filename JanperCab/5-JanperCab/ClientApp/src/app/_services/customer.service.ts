@@ -1,3 +1,4 @@
+import { ManufacturerDto } from './../_models/customer/ManufacturerDto';
 import { CabinetMakerSearchFilterValues } from './../_models/commons/CabinetMakerSearchFilterValues';
 import { DistributorDto } from './../_models/customer/DistributorDto';
 import { plainToClass } from 'class-transformer';
@@ -9,83 +10,72 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ItemList } from '../_models/commons/ItemList';
+import { CustomerDto } from '../_models/customer/CustomerDto';
+import { CustomerType } from '../_enums/CustomerType';
 
 @Injectable({ providedIn: 'root' })
 export class CustomerService {
   constructor(private http: HttpClient, private auth: AuthService) {}
 
-  getCabinetMaker = (id: number): Observable<CabinetMakerDto> => {
+  getCustomer = (id: number): Observable<CustomerDto> => {
     return this.http
-      .get<CabinetMakerDto>(
-        `${environment.baseUrl}/Customers/CabinetMakers/${id}`
-      )
+      .get<CustomerDto>(`${environment.baseUrl}/Customers/${id}`)
       .pipe(
         map((response) => {
-          return plainToClass(CabinetMakerDto, response);
+          switch (response.customerType) {
+            case CustomerType.CabinetMaker:
+              return plainToClass(CabinetMakerDto, response);
+            case CustomerType.Distributor:
+              return plainToClass(DistributorDto, response);
+            case CustomerType.Manufacturer:
+              return plainToClass(ManufacturerDto, response);
+          }
         })
       );
   };
 
-  getDistributor = (id: number): Observable<DistributorDto> => {
-    return this.http
-      .get<DistributorDto>(
-        `${environment.baseUrl}/Customers/Distributors/${id}`
-      )
-      .pipe(
-        map((response) => {
-          return plainToClass(DistributorDto, response);
-        })
-      );
-  };
-
-  getDistributorList = () => {
-    return this.http
-      .get<DistributorDto[]>(`${environment.baseUrl}/Customers/Distributors`)
-      .pipe(
-        map((response) => {
-          return plainToClass(DistributorDto, response);
-        })
-      );
-  };
-
-  getCabinetMakerList = (
+  getCustomerList = (
     filter: CabinetMakerSearchFilterValues
-  ): Observable<ItemList<CabinetMakerDto>> => {
-    let url = `${environment.baseUrl}/Customers/CabinetMakers?sortBy=${filter.sortBy}&direction=${filter.direction}&page=${filter.page}&take=${filter.take}`;
+  ): Observable<ItemList<CustomerDto>> => {
+    let url = `${environment.baseUrl}/Customers?sortBy=${filter.sortBy}&direction=${filter.direction}&page=${filter.page}&take=${filter.take}`;
 
     if (filter.search.length > 0) {
       url += `&search=${filter.search.replace('&', '@@@')}`;
     }
 
-    return this.http.get<ItemList<CabinetMakerDto>>(url);
+    return this.http.get<ItemList<CustomerDto>>(url);
   };
 
-  createCabinetMaker = (cabinetMaker: CabinetMakerDto) => {
-    cabinetMaker.distributorId = this.auth.customer.id;
-
+  create = (customer: CustomerDto): Observable<CustomerDto> => {
     return this.http
-      .post<CabinetMakerDto>(
-        `${environment.baseUrl}/Customers/CabinetMakers`,
-        cabinetMaker
-      )
+      .post<CustomerDto>(`${environment.baseUrl}/Customers`, customer)
       .pipe(
         map((response) => {
-          return plainToClass(CabinetMakerDto, response);
+          switch (response.customerType) {
+            case CustomerType.CabinetMaker:
+              return plainToClass(CabinetMakerDto, response);
+            case CustomerType.Distributor:
+              return plainToClass(DistributorDto, response);
+            case CustomerType.Manufacturer:
+              return plainToClass(ManufacturerDto, response);
+          }
         })
       );
   };
 
-  updateCabinetMaker = (id: number, cabinetMaker: CabinetMakerDto) => {
-    cabinetMaker.distributorId = this.auth.customer.id;
-
+  update = (id: number, customer: CustomerDto): Observable<CustomerDto> => {
     return this.http
-      .put<CabinetMakerDto>(
-        `${environment.baseUrl}/Customers/CabinetMakers/${id}`,
-        cabinetMaker
-      )
+      .put<CustomerDto>(`${environment.baseUrl}/Customers/${id}`, customer)
       .pipe(
         map((response) => {
-          return plainToClass(CabinetMakerDto, response);
+          switch (response.customerType) {
+            case CustomerType.CabinetMaker:
+              return plainToClass(CabinetMakerDto, response);
+            case CustomerType.Distributor:
+              return plainToClass(DistributorDto, response);
+            case CustomerType.Manufacturer:
+              return plainToClass(ManufacturerDto, response);
+          }
         })
       );
   };

@@ -8,6 +8,10 @@ namespace _3_Application.Dtos.Enquiry
     {
         public int Id { get; set; }
 
+        public int CustomerId { set; get; }
+
+        public int? ManagerId { get; set; }
+
         public string CustomerReference { get; set; }
 
         public EnquiryTypeEnum EnquiryType { get; set; }
@@ -22,10 +26,6 @@ namespace _3_Application.Dtos.Enquiry
 
         public string CreatorId { get; set; }
 
-
-        public int DistributorId { get; set; }
-
-        public int CabinetMakerId { get; set; }
 
         public string InvoiceTo { get; set; }
 
@@ -62,6 +62,8 @@ namespace _3_Application.Dtos.Enquiry
         public decimal? TotalPrice { get; set; }
 
         public bool NotEditable { get; set; }
+
+        public bool IsDeclineable { get; set; }
 
         public int? DeliveryRunSheetId { get; set; }
 

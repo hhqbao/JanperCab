@@ -15,7 +15,7 @@
     </div>
     <div class="rsf__patch-list" *ngIf="patches.length > 0">
       <div class="patch" *ngFor="let patch of patches">
-        <div class="patch__cabinet-maker">{{ patch.cabinetMakerName }}</div>
+        <div class="patch__cabinet-maker">{{ patch.customerName }}</div>
         <div class="patch__address">{{ patch.fullAddress }}</div>
         <div class="patch__detail-table">
           <table>

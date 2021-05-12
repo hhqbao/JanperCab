@@ -28,16 +28,23 @@
           </button>
         </div>
       </div>
-      <app-cabinet-maker-list
-        *ngIf="auth.customer.customerType === customerType.Distributor"
+      <app-customer-list
+        *ngIf="
+          auth.isInRole(roles.Distributor) || auth.isInRole(roles.Manufacturer)
+        "
         [allowAdd]="false"
         (itemClick)="onSelectCustomer($event)"
-      ></app-cabinet-maker-list>
+      ></app-customer-list>
     </div>
   </app-float-box>
   <app-simple-box [heading]="'Duraform Order List'" [height]="'100%'">
-    <div class="control-box">
-      <div class="row" *ngIf="auth.isInRole(roles[roles.Distributor])">
+    <div class="duraform-order-list-page__control-box">
+      <div
+        class="row"
+        *ngIf="
+          auth.isInRole(roles.Distributor) || auth.isInRole(roles.Manufacturer)
+        "
+      >
         <div class="col-1-4">
           <div class="form__inline-group">
             <label class="form__label" style="width: 8rem">Customer</label>
@@ -150,7 +157,7 @@
           >
             Customer
           </th>
-          <th style="width: 25rem">Cabinet Maker</th>
+          <th style="width: 25rem">Distributor</th>
           <th
             [ngClass]="{
               active: filterValues.sortBy === 'description',
@@ -195,10 +202,10 @@
             {{ order.isRoutingOnly ? "DSW" : "DF" }}
           </td>
           <td (click)="onSelectOrder(order.id)">
-            {{ order.distributor.name }}
+            {{ order.customer.name }}
           </td>
           <td (click)="onSelectOrder(order.id)">
-            {{ order.cabinetMaker.name }}
+            {{ order.manager ? order.manager.name : "Janper Pty Ltd" }}
           </td>
           <td (click)="onSelectOrder(order.id)">{{ order.deliveryNote }}</td>
           <td (click)="onSelectOrder(order.id)">

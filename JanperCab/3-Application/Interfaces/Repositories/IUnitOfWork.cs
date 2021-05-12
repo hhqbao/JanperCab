@@ -24,6 +24,10 @@ namespace _3_Application.Interfaces.Repositories
 
         IDuraformOptionTypeRepo DuraformOptionTypes { get; }
 
+        IProcessRepo Processes { get; }
+
+        IOnHoldComponentRepo OnHoldComponents { get; }
+
         IHingeHoleTypeRepo HingeHoleTypes { get; }
 
         IHingeHoleStyleRepo HingeHoleStyles { get; }

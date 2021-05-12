@@ -1,3 +1,5 @@
+import { ManufacturerDto } from './../customer/ManufacturerDto';
+import { CustomerDto } from 'src/app/_models/customer/CustomerDto';
 import { DuraformProcessDto } from '../DuraformProcess/DuraformProcessDto';
 import { DistributorDto } from './../customer/DistributorDto';
 import { CabinetMakerDto } from 'src/app/_models/customer/CabinetMakerDto';
@@ -20,8 +22,51 @@ export class DuraformEnquiryListDto {
   approvedDate: Date;
   isRoutingOnly: boolean;
   customerReference: string;
-  cabinetMaker: CabinetMakerDto;
-  distributor: DistributorDto;
+
+  @Type(() => CustomerDto, {
+    keepDiscriminatorProperty: true,
+    discriminator: {
+      property: '$type',
+      subTypes: [
+        {
+          value: CabinetMakerDto,
+          name: '_3_Application.Dtos.Customer.CabinetMakerDto, 3-Application',
+        },
+        {
+          value: DistributorDto,
+          name: '_3_Application.Dtos.Customer.DistributorDto, 3-Application',
+        },
+        {
+          value: ManufacturerDto,
+          name: '_3_Application.Dtos.Customer.ManufacturerDto, 3-Application',
+        },
+      ],
+    },
+  })
+  customer: CustomerDto;
+
+  @Type(() => CustomerDto, {
+    keepDiscriminatorProperty: true,
+    discriminator: {
+      property: '$type',
+      subTypes: [
+        {
+          value: CabinetMakerDto,
+          name: '_3_Application.Dtos.Customer.CabinetMakerDto, 3-Application',
+        },
+        {
+          value: DistributorDto,
+          name: '_3_Application.Dtos.Customer.DistributorDto, 3-Application',
+        },
+        {
+          value: ManufacturerDto,
+          name: '_3_Application.Dtos.Customer.ManufacturerDto, 3-Application',
+        },
+      ],
+    },
+  })
+  manager: CustomerDto;
+
   deliveryNote: string;
   hasBeenInvoiced: boolean;
 

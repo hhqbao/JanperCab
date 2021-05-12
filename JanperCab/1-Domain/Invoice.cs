@@ -6,16 +6,14 @@ namespace _1_Domain
 {
     public class Invoice
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public int EnquiryId { get; set; }
 
         public DateTime CreatedDate { get; set; }
 
 
-        public int CabinetMakerId { get; set; }
-
-        public int DistributorId { get; set; }
+        public int CustomerId { get; set; }
 
         public string CustomerReference { get; set; }
 
@@ -62,9 +60,7 @@ namespace _1_Domain
 
         public virtual Enquiry Enquiry { get; set; }
 
-        public virtual CabinetMaker CabinetMaker { get; set; }
-
-        public virtual Distributor Distributor { get; set; }
+        public virtual Customer Customer { get; set; }
 
         public virtual ICollection<InvoiceComponent> InvoiceComponents { get; set; }
 
@@ -74,45 +70,39 @@ namespace _1_Domain
             InvoiceComponents = new Collection<InvoiceComponent>();
         }
 
-        public Invoice(string invoiceId, DuraformEnquiry duraformEnquiry) : this()
+        public Invoice(Enquiry enquiry) : this()
         {
-            Id = invoiceId;
-            EnquiryId = duraformEnquiry.Id;
+            EnquiryId = enquiry.Id;
 
-            CabinetMakerId = duraformEnquiry.CabinetMakerId;
-            DistributorId = duraformEnquiry.DistributorId;
-            CustomerReference = duraformEnquiry.CustomerReference;
+            CustomerId = enquiry.Customer.ManagerId ?? enquiry.CustomerId;
+            CustomerReference = enquiry.CustomerReference;
 
-            DoorType = duraformEnquiry.DoorType;
-            DoorColor = duraformEnquiry.DoorColor;
+            DoorType = enquiry.DoorType;
+            DoorColor = enquiry.DoorColor;
 
-            InvoiceTo = duraformEnquiry.InvoiceTo;
-            InvoiceAddress = duraformEnquiry.InvoiceAddress;
-            InvoiceSuburb = duraformEnquiry.InvoiceSuburb;
-            InvoiceState = duraformEnquiry.InvoiceState;
-            InvoicePostcode = duraformEnquiry.InvoicePostcode;
+            InvoiceTo = enquiry.InvoiceTo;
+            InvoiceAddress = enquiry.InvoiceAddress;
+            InvoiceSuburb = enquiry.InvoiceSuburb;
+            InvoiceState = enquiry.InvoiceState;
+            InvoicePostcode = enquiry.InvoicePostcode;
 
-            DeliveryTo = duraformEnquiry.DeliveryTo;
-            DeliveryAddress = duraformEnquiry.DeliveryAddress;
-            DeliverySuburb = duraformEnquiry.DeliverySuburb;
-            DeliveryState = duraformEnquiry.DeliveryState;
-            DeliveryPostcode = duraformEnquiry.DeliveryPostcode;
+            DeliveryTo = enquiry.DeliveryTo;
+            DeliveryAddress = enquiry.DeliveryAddress;
+            DeliverySuburb = enquiry.DeliverySuburb;
+            DeliveryState = enquiry.DeliveryState;
+            DeliveryPostcode = enquiry.DeliveryPostcode;
 
-            GstRate = duraformEnquiry.GstRate;
-            DiscountRate = duraformEnquiry.DiscountRate;
-            DeliveryFee = duraformEnquiry.DeliveryFee;
-            SubTotal = duraformEnquiry.SubTotal;
-            TotalGst = duraformEnquiry.TotalGst;
-            TotalPrice = duraformEnquiry.TotalPrice ?? 0;
+            GstRate = enquiry.GstRate;
+            DiscountRate = enquiry.DiscountRate;
+            DeliveryFee = enquiry.DeliveryFee;
+            SubTotal = enquiry.SubTotal;
+            TotalGst = enquiry.TotalGst;
+            TotalPrice = enquiry.TotalPrice ?? 0;
 
-            foreach (var component in duraformEnquiry.DuraformComponents)
+
+            foreach (var component in enquiry.GenerateComponentsForInvoice())
             {
-                InvoiceComponents.Add(new InvoiceComponent(component));
-            }
-
-            foreach (var miscItem in duraformEnquiry.MiscComponents)
-            {
-                InvoiceComponents.Add(new InvoiceComponent(miscItem));
+                InvoiceComponents.Add(component);
             }
         }
     }

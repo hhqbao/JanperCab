@@ -22,9 +22,9 @@ namespace _3_Application.Dtos.Enquiry
 
         public bool IsRoutingOnly { get; set; }
 
-        public CabinetMakerDto CabinetMaker { get; set; }
+        public CustomerDto Customer { get; set; }
 
-        public DistributorDto Distributor { get; set; }
+        public CustomerDto Manager { get; set; }
 
         public string DeliveryNote { get; set; }
 

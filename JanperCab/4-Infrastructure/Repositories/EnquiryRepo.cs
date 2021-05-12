@@ -24,9 +24,9 @@ namespace _4_Infrastructure.Repositories
             switch (customer)
             {
                 case CabinetMaker cabinetMaker:
-                    return duraformEnquiry.CabinetMakerId == cabinetMaker.Id ? duraformEnquiry : null;
+                    return duraformEnquiry.CustomerId == cabinetMaker.Id ? duraformEnquiry : null;
                 case Distributor distributor:
-                    return duraformEnquiry.DistributorId == distributor.Id ? duraformEnquiry : null;
+                    return duraformEnquiry.CustomerId == distributor.Id || duraformEnquiry.ManagerId == distributor.Id ? duraformEnquiry : null;
                 case Manufacturer _:
                     return duraformEnquiry;
                 default:
@@ -54,15 +54,24 @@ namespace _4_Infrastructure.Repositories
                 .Where(x => x.EnquiryType == EnquiryTypeEnum.Draft && x.CreatorId == creator.Id).ToListAsync();
         }
 
-        public async Task<ItemList<DuraformEnquiry>> GetDuraformOrdersAsync(int? cabinetMakerId, int? distributorId, DuraformProcessEnum? status, string search, string sortBy, string direction, int page, int take)
+        public async Task<ItemList<DuraformEnquiry>> GetDuraformOrdersAsync(int? searchCustomerId, ApplicationUser currentUser, DuraformProcessEnum? status, string search, string sortBy, string direction, int page, int take)
         {
             var query = _dbSet.OfType<DuraformEnquiry>().Where(x => x.EnquiryType == EnquiryTypeEnum.Order && x.OrderedDate.HasValue);
 
-            if (distributorId.HasValue)
-                query = query.Where(x => x.DistributorId == distributorId);
-
-            if (cabinetMakerId.HasValue)
-                query = query.Where(x => x.CabinetMakerId == cabinetMakerId);
+            switch (currentUser.Customer)
+            {
+                case CabinetMaker cabinetMaker:
+                    query = query.Where(x => x.CustomerId == cabinetMaker.Id);
+                    break;
+                case Distributor distributor:
+                    query = searchCustomerId.HasValue ? query.Where(x => x.CustomerId == searchCustomerId.Value && x.ManagerId == distributor.Id) :
+                                                        query.Where(x => x.ManagerId == distributor.Id || x.CustomerId == distributor.Id);
+                    break;
+                case Manufacturer _:
+                    if (searchCustomerId.HasValue)
+                        query = query.Where(x => x.CustomerId == searchCustomerId.Value);
+                    break;
+            }
 
             switch (status)
             {
@@ -109,7 +118,7 @@ namespace _4_Infrastructure.Repositories
             IQueryable<DuraformEnquiry> query)
         {
             if (!string.IsNullOrEmpty(search))
-                query = query.Where(x => x.CustomerReference.Contains(search) || x.CabinetMaker.Name.Contains(search) || x.Distributor.Name.Contains(search));
+                query = query.Where(x => x.CustomerReference.Contains(search) || x.Customer.Name.Contains(search));
 
             switch (sortBy)
             {
@@ -125,8 +134,8 @@ namespace _4_Infrastructure.Repositories
                     break;
                 case "customer":
                     query = direction.Equals("asc")
-                        ? query.OrderBy(x => x.CabinetMaker.Name)
-                        : query.OrderByDescending(x => x.CabinetMaker.Name);
+                        ? query.OrderBy(x => x.Customer.Name)
+                        : query.OrderByDescending(x => x.Customer.Name);
                     break;
                 case "description":
                     query = direction.Equals("asc")

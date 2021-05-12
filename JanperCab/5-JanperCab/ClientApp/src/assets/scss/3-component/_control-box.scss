@@ -1,0 +1,54 @@
+.control-box {
+  background-color: rgb(253 255 228);
+  border: solid 1px black;
+  box-shadow: 2px 2px 1rem rgba(black, 0.8);
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  overflow: hidden;
+
+  &__header {
+    background-color: $blue-primary;
+    color: white;
+    font-weight: bold;
+    padding: 1rem;
+    position: relative;
+  }
+
+  &__body {
+    padding: 1rem;
+
+    .divider {
+      border-top: dashed 2px rgba(black, 0.7);
+      margin: 2rem 0;
+    }
+  }
+
+  &__btn-close {
+    position: absolute;
+    right: 1rem;
+  }
+
+  &__action {
+    border: none;
+    border-radius: 5px;
+    display: block;
+    font-weight: bold;
+    font-size: 1.8rem;
+    padding: 2rem 1rem;
+    width: 100%;
+
+    &:not(:first-child) {
+      margin-top: 1rem;
+    }
+
+    &--primary {
+      background-color: $blue-primary;
+      color: white;
+    }
+
+    &--secondary {
+      background-color: $red-primary;
+      color: white;
+    }
+  }
+}

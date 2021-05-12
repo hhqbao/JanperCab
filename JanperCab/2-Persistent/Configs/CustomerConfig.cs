@@ -33,10 +33,53 @@ namespace _2_Persistent.Configs
             builder.Property(x => x.Fax)
                 .HasColumnType("varchar(255)");
 
+            builder.Property(x => x.InvoiceTo)
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.InvoiceAddress)
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.InvoiceSuburb)
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.InvoiceState)
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.InvoicePostcode)
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.DeliveryTo)
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.DeliveryAddress)
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.DeliverySuburb)
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.DeliveryState)
+                .HasColumnType("varchar(255)");
+
+            builder.Property(x => x.DeliveryPostcode)
+                .HasColumnType("varchar(255)");
+
+
+
+            builder.Property(x => x.DiscountRate)
+                .HasColumnType("decimal(18,2)");
+
+            builder.Property(x => x.Note)
+                .HasColumnType("varchar(MAX)");
+
             builder.HasMany(x => x.ApplicationUsers)
                 .WithOne(y => y.Customer)
                 .IsRequired()
                 .HasForeignKey(y => y.CustomerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.Manager)
+                .WithMany(y => y.ManagedCustomers)
+                .HasForeignKey(x => x.ManagerId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

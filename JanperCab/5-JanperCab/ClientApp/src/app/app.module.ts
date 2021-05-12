@@ -1,6 +1,7 @@
+import { OnHoldComponentService } from './_services/on-hold-component.service';
+import { OnHoldDetailFormComponent } from './components/on-hold-detail-form/on-hold-detail-form.component';
 import { InvoiceProcessPageComponent } from './pages/invoice-process-page/invoice-process-page.component';
 import { InvoicePdfComponent } from './components/invoice-pdf/invoice-pdf.component';
-import { InvoiceGeneratorComponent } from './components/invoice-generator/invoice-generator.component';
 import { InvoiceService } from './_services/invoice.service';
 import { RunSheetPdfComponent } from './components/run-sheet-pdf/run-sheet-pdf.component';
 import { RunSheetService } from './_services/run-sheet.service';
@@ -32,7 +33,7 @@ import { DuraformPriceEditorComponent } from './components/duraform-price-editor
 import { DuraformOptionAngledShelfFormComponent } from './components/duraform-option-angled-shelf-form/duraform-option-angled-shelf-form.component';
 import { MiscItemService } from './_services/misc-item.service';
 import { EdgeProfileMenuComponent } from './components/edge-profile-menu/edge-profile-menu.component';
-import { CabinetMakerListComponent } from './components/cabinet-maker-list/cabinet-maker-list.component';
+import { CustomerListComponent } from './components/customer-list/customer-list.component';
 import { FileSizePipe } from './_pipes/fileSize.pipe';
 import { FileService } from './_services/file.service';
 import { PaginationComponent } from './components/pagination/pagination.component';
@@ -45,9 +46,9 @@ import { DeliveryDocketDuraformDoorsComponent } from './components/delivery-dock
 import { DuraformDeliveryDocketComponent } from './components/duraform-delivery-docket/duraform-delivery-docket.component';
 import { FloatBoxComponent } from './components/float-box/float-box.component';
 import { CustomerService } from './_services/customer.service';
-import { CabinetMakerListPageComponent } from './pages/cabinet-maker-list-page/cabinet-maker-list-page.component';
+import { CustomerListPageComponent } from './pages/customer-list-page/customer-list-page.component';
 import { CommonAssetsService } from './_services/common-assets.service';
-import { CabinetMakerFormComponent } from './components/cabinet-maker-form/cabinet-maker-form.component';
+import { CustomerFormComponent } from './components/customer-form/customer-form.component';
 import { LeadingPipe } from './_pipes/leading.pipe';
 import { DuraformQuotePageComponent } from './pages/duraform-quote-page/duraform-quote-page.component';
 import { DuraformDraftListComponent } from './components/duraform-draft-list/duraform-draft-list.component.';
@@ -211,10 +212,10 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     EndPanelComponentListComponent,
     DuraformDrawerComponentListComponent,
     DuraformDraftListComponent,
-    CabinetMakerFormComponent,
+    CustomerFormComponent,
     LoginPageComponent,
     HomePageComponent,
-    CabinetMakerListPageComponent,
+    CustomerListPageComponent,
     DuraformPageComponent,
     DuraformOrderListPageComponent,
     PaginationComponent,
@@ -225,7 +226,7 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     DeliveryDocketPantryDoorsComponent,
     DeliveryDocketEndPanelsComponent,
     DeliveryDocketDuraformDrawersComponent,
-    CabinetMakerListComponent,
+    CustomerListComponent,
     EdgeProfileMenuComponent,
     DuraformPriceEditorComponent,
     DuraformPriceBulkActionComponent,
@@ -251,9 +252,9 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     DeliveryPageComponent,
     RunSheetFormComponent,
     RunSheetPdfComponent,
-    InvoiceGeneratorComponent,
     InvoicePdfComponent,
     InvoiceProcessPageComponent,
+    OnHoldDetailFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -264,7 +265,9 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => localStorage.getItem('token'),
+        tokenGetter: () => {
+          return localStorage.getItem('token');
+        },
         whitelistedDomains: [environment.domain],
         blacklistedRoutes: [`${environment.baseUrl}/Auth/Login`],
       },
@@ -298,6 +301,7 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     DriverService,
     RunSheetService,
     InvoiceService,
+    OnHoldComponentService,
     ErrorInterceptorProvider,
   ],
   bootstrap: [AppComponent],

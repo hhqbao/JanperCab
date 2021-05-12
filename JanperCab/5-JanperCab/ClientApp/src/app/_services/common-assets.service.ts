@@ -10,6 +10,7 @@ export class CommonAssetsService {
     { id: 'SA', name: 'SA' },
     { id: 'TAS', name: 'TAS' },
     { id: 'VIC', name: 'VIC' },
+    { id: 'WA', name: 'WA' },
   ];
 
   constructor() {}

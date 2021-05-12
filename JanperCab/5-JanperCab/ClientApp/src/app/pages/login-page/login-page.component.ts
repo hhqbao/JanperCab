@@ -11,17 +11,13 @@ import { AuthService } from 'src/app/_services/auth.service';
 export class LoginPageComponent implements OnInit {
   currentYear: number = new Date().getFullYear();
 
-  constructor(
-    private dialog: DialogService,
-    private router: Router,
-    private authService: AuthService
-  ) {
+  constructor(private authService: AuthService) {
     document.title = 'JanperCab - Sign In';
   }
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn) {
-      this.router.navigate(['dashboard']);
+      this.authService.homePageNavigate();
     }
   }
 }

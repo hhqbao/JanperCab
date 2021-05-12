@@ -1,8 +1,9 @@
 import { DialogService } from './../../_services/dialog.service';
 import { CustomerService } from './../../_services/customer.service';
-import { CabinetMakerDto } from 'src/app/_models/customer/CabinetMakerDto';
 import { DuraformEnquiryDto } from './../../_models/enquiry/DuraformEnquiryDto';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { CustomerDto } from 'src/app/_models/customer/CustomerDto';
+import { DuraformProcessDto } from 'src/app/_models/DuraformProcess/DuraformProcessDto';
 
 @Component({
   selector: 'app-duraform-process-viewer',
@@ -13,7 +14,7 @@ export class DuraformProcessViewerComponent implements OnInit {
 
   @Output() closeBtnClick = new EventEmitter();
 
-  cabinetMaker: CabinetMakerDto;
+  customer: CustomerDto;
 
   constructor(
     private customerService: CustomerService,
@@ -21,15 +22,23 @@ export class DuraformProcessViewerComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.customerService
-      .getCabinetMaker(this.duraformEnquiry.cabinetMakerId)
-      .subscribe(
-        (response) => {
-          this.cabinetMaker = response;
-        },
-        (error) => {
-          this.dialogService.error(error);
-        }
-      );
+    this.customerService.getCustomer(this.duraformEnquiry.customerId).subscribe(
+      (response) => {
+        this.customer = response;
+      },
+      (error) => {
+        this.dialogService.error(error);
+      }
+    );
   }
+
+  onDisplayOnHoldComponents = (process: DuraformProcessDto) => {
+    let msg = '';
+
+    process.onHoldComponents.forEach((x) => {
+      msg += `${x.quantity} x ${x.description} </br>`;
+    });
+
+    this.dialogService.alert('On Hold Components', msg, null);
+  };
 }

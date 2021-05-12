@@ -40,7 +40,7 @@ namespace _1_Domain
                 enquiry.CompleteDelivering();
 
                 if (!Enquiries.Any(x => x.Id != enquiry.Id &&
-                                        x.CabinetMakerId == enquiry.CabinetMakerId &&
+                                        x.CustomerId == enquiry.CustomerId &&
                                         x.FullDeliveryAddress.Equals(enquiry.FullDeliveryAddress) &&
                                         x.DeliveryFee == 30)) continue;
 

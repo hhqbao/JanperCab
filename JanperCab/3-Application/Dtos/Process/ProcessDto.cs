@@ -1,4 +1,6 @@
-﻿using System;
+﻿using _3_Application.Dtos.OnHoldComponent;
+using System;
+using System.Collections.Generic;
 
 namespace _3_Application.Dtos.Process
 {
@@ -13,5 +15,8 @@ namespace _3_Application.Dtos.Process
         public DateTime? EndTime { get; set; }
 
         public bool IsCurrent { get; set; }
+
+
+        public ICollection<OnHoldComponentDto> OnHoldComponents { get; set; }
     }
 }

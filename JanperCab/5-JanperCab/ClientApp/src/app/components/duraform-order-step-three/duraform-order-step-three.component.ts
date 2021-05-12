@@ -18,6 +18,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { DuraformProcessStep } from 'src/app/_enums/DuraformProcessStep';
 import { CustomerType } from 'src/app/_enums/CustomerType';
+import { CustomerDto } from 'src/app/_models/customer/CustomerDto';
 
 @Component({
   selector: 'app-duraform-order-step-three',
@@ -37,10 +38,9 @@ export class DuraformOrderStepThreeComponent implements OnInit {
   showCustomerSelector = false;
   showDeliveryDocket = false;
   showProcessViewer = false;
-  showInvoiceGenerator = false;
   showInvoicePdf = false;
 
-  cabinetMaker: CabinetMakerDto;
+  customer: CustomerDto;
 
   get miscItemTotalPrice(): number {
     let totalPrice = 0;
@@ -62,7 +62,8 @@ export class DuraformOrderStepThreeComponent implements OnInit {
     private layout: LayoutService,
     private dialog: DialogService,
     private machineService: MachineService,
-    public fileService: FileService
+    public fileService: FileService,
+    private invoiceService: InvoiceService
   ) {}
 
   ngOnInit() {
@@ -72,7 +73,7 @@ export class DuraformOrderStepThreeComponent implements OnInit {
       this.tryAutoFillShippingDetails();
     }
 
-    if (this.duraformEnquiry.cabinetMakerId) {
+    if (this.duraformEnquiry.customerId) {
       this.loadCabinetMaker();
     }
   }
@@ -81,30 +82,28 @@ export class DuraformOrderStepThreeComponent implements OnInit {
     const { customerType } = this.auth.customer;
 
     if (customerType === CustomerType.CabinetMaker) {
-      this.order.setCabinetMaker(this.auth.customer as CabinetMakerDto);
+      this.order.setCustomer(this.auth.customer as CabinetMakerDto);
     }
   };
 
   private loadCabinetMaker = () => {
     this.layout.showLoadingPanel();
-    this.customerService
-      .getCabinetMaker(this.duraformEnquiry.cabinetMakerId)
-      .subscribe(
-        (response) => {
-          this.layout.closeLoadingPanel();
-          this.cabinetMaker = response;
-        },
-        (error) => {
-          this.layout.closeLoadingPanel();
-          this.dialog.error(error);
-          this.dialog.error('Failed Loading Customer');
-        }
-      );
+    this.customerService.getCustomer(this.duraformEnquiry.customerId).subscribe(
+      (response) => {
+        this.layout.closeLoadingPanel();
+        this.customer = response;
+      },
+      (error) => {
+        this.layout.closeLoadingPanel();
+        this.dialog.error(error);
+        this.dialog.error('Failed Loading Customer');
+      }
+    );
   };
 
-  onSelectCabinetMaker = (maker: CabinetMakerDto) => {
-    this.order.setCabinetMaker(maker);
-    this.cabinetMaker = maker;
+  onSelectCustomer = (maker: CabinetMakerDto) => {
+    this.order.setCustomer(maker);
+    this.customer = maker;
     this.showCustomerSelector = false;
   };
 
@@ -221,7 +220,23 @@ export class DuraformOrderStepThreeComponent implements OnInit {
       'Decline Order',
       'Declining Order! Are you sure?',
       () => {
-        console.log('Order has been declined');
+        this.layout.showLoadingPanel();
+        this.enquiryService
+          .declineEnquiry(this.order.duraformEnquiry.id)
+          .subscribe(
+            (_) => {
+              this.order.duraformEnquiry.enquiryType = EnquiryTypeEnum.Draft;
+              this.order.duraformEnquiry.orderedDate = null;
+              this.order.duraformEnquiry.approvedDate = null;
+
+              this.dialog.success('Order has been declined!');
+              window.location.reload();
+            },
+            (error) => {
+              this.layout.closeLoadingPanel();
+              this.dialog.error(error);
+            }
+          );
       }
     );
   };
@@ -269,8 +284,24 @@ export class DuraformOrderStepThreeComponent implements OnInit {
     );
   };
 
-  onGenerateInvoice = (invoice: InvoiceDto) => {
-    this.showInvoiceGenerator = false;
-    this.showInvoicePdf = true;
+  onGenerateInvoice = () => {
+    this.dialog.confirm(
+      'Invoicing',
+      'Invoice will be issued and sent to customer.<br/><br/>Are you sure?',
+      () => {
+        this.layout.showLoadingPanel();
+        this.invoiceService.createInvoice(this.duraformEnquiry.id).subscribe(
+          (response) => {
+            this.duraformEnquiry.invoice = response;
+            this.layout.closeLoadingPanel();
+            this.showInvoicePdf = true;
+          },
+          (error) => {
+            this.layout.closeLoadingPanel();
+            this.dialog.error(error);
+          }
+        );
+      }
+    );
   };
 }

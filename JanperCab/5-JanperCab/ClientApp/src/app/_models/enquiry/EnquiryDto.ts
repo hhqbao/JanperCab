@@ -14,8 +14,8 @@ export abstract class EnquiryDto {
 
   creatorId: string;
 
-  distributorId: number;
-  cabinetMakerId: number;
+  customerId: number;
+  managerId: number;
 
   invoiceTo: string;
   invoiceAddress: string;
@@ -40,6 +40,7 @@ export abstract class EnquiryDto {
   totalPrice: number;
 
   notEditable: boolean;
+  isDeclineable: boolean;
 
   deliveryRunSheetId: number;
 

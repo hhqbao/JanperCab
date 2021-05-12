@@ -6,16 +6,14 @@ namespace _3_Application.Dtos.Invoice
 {
     public class InvoiceDto
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public int EnquiryId { get; set; }
 
         public DateTime CreatedDate { get; set; }
 
 
-        public int CabinetMakerId { get; set; }
-
-        public int DistributorId { get; set; }
+        public int CustomerId { get; set; }
 
         public string CustomerReference { get; set; }
 
