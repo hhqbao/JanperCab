@@ -34,4 +34,10 @@
     padding: 1rem 0;
     text-align: right;
   }
+
+  @media print {
+    position: fixed;
+    overflow: hidden;
+    width: 0;
+  }
 }

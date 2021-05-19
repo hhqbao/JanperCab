@@ -12,7 +12,11 @@ import { MachineProdutionCurrentProcessDto } from 'src/app/_models/machine/Machi
 })
 export class MachinePackingControllerComponent extends MachineProcessControllerDirective {
   currentProcess: MachineProdutionCurrentProcessDto = null;
-  showControlBox = false;
+
+  scannedEnquiryId: number = null;
+
+  showOptionBox = false;
+  showPackingLabel = false;
 
   constructor(
     public dialogService: DialogService,
@@ -28,54 +32,77 @@ export class MachinePackingControllerComponent extends MachineProcessControllerD
       return;
     }
 
-    this.isLoading = true;
+    this.scannedEnquiryId = Number(sCode);
     this.isScannerBusy = true;
+    this.showOptionBox = true;
+  };
+
+  onCloseOptionBox = () => {
+    this.scannedEnquiryId = null;
+  };
+
+  onClosePackingLabelPdf = () => {
+    this.isScannerBusy = false;
+    this.showPackingLabel = false;
+    this.scannedEnquiryId = null;
+  };
+
+  onProcessPacking = () => {
+    this.showOptionBox = false;
+
+    if (!this.scannedEnquiryId) {
+      this.isScannerBusy = false;
+
+      return;
+    }
+
+    this.isLoading = true;
     this.layoutService.showLoadingPanel();
 
-    const enquiryId = Number(sCode);
-    this.machineService.startPacking(this.machine.id, enquiryId).subscribe(
-      (response) => {
-        if (
-          !this.machine.currentProcesses.some(
-            (x) => x.enquiryId === response.enquiryId
-          )
-        ) {
-          this.machine.currentProcesses.push(response);
-        }
+    this.machineService
+      .startPacking(this.machine.id, this.scannedEnquiryId)
+      .subscribe(
+        (response) => {
+          if (
+            !this.machine.currentProcesses.some(
+              (x) => x.enquiryId === response.enquiryId
+            )
+          ) {
+            this.machine.currentProcesses.push(response);
+          }
 
-        this.isLoading = false;
-        this.isScannerBusy = false;
-
-        this.currentProcess = response;
-        this.showControlBox = true;
-
-        this.layoutService.closeLoadingPanel();
-      },
-      (error) => {
-        this.layoutService.closeLoadingPanel();
-        this.dialogService.alert('Cannot Process Packing', error, () => {
           this.isLoading = false;
           this.isScannerBusy = false;
-        });
-      }
-    );
+
+          this.currentProcess = response;
+
+          this.layoutService.closeLoadingPanel();
+        },
+        (error) => {
+          this.layoutService.closeLoadingPanel();
+          this.dialogService.alert('Cannot Process Packing', error, () => {
+            this.isLoading = false;
+            this.isScannerBusy = false;
+          });
+        }
+      );
   };
 
   onComplete = () => {
     this.dialogService.confirm('Complete Packing', 'Are you sure?', () => {
-      this.showControlBox = false;
       this.isLoading = true;
       this.layoutService.showLoadingPanel();
       this.machineService
         .finishPacking(this.currentProcess.enquiryId)
         .subscribe(
           (response) => {
-            this.machine.currentProcesses = this.machine.currentProcesses.filter(
-              (x) => x.processId !== response.processId
-            );
+            this.machine.currentProcesses =
+              this.machine.currentProcesses.filter(
+                (x) => x.processId !== response.processId
+              );
 
             this.currentProcess = null;
-            this.showControlBox = false;
+
             this.isLoading = false;
             this.layoutService.closeLoadingPanel();
             this.dialogService.alert(
@@ -87,9 +114,7 @@ export class MachinePackingControllerComponent extends MachineProcessControllerD
           (error) => {
             this.isLoading = false;
             this.layoutService.closeLoadingPanel();
-            this.dialogService.alert('Complete Packing Failed', error, () => {
-              this.showControlBox = true;
-            });
+            this.dialogService.alert('Complete Packing Failed', error, null);
           }
         );
     });

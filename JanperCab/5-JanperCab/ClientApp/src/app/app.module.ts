@@ -1,3 +1,4 @@
+import { PackingLabelPdfComponent } from './components/packing-label-pdf/packing-label-pdf.component';
 import { OnHoldComponentService } from './_services/on-hold-component.service';
 import { OnHoldDetailFormComponent } from './components/on-hold-detail-form/on-hold-detail-form.component';
 import { InvoiceProcessPageComponent } from './pages/invoice-process-page/invoice-process-page.component';
@@ -255,6 +256,7 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     InvoicePdfComponent,
     InvoiceProcessPageComponent,
     OnHoldDetailFormComponent,
+    PackingLabelPdfComponent,
   ],
   imports: [
     BrowserModule,

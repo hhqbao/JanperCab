@@ -1,0 +1,70 @@
+.pl-pdf {
+  background-color: white;
+
+  @media print {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 9999;
+  }
+
+  &__container {
+  }
+
+  &__main-name {
+    font-size: 5rem;
+    font-weight: bold;
+    margin-bottom: 3rem;
+    text-align: center;
+
+    @media print and (max-width: 500px) {
+      font-size: 3rem;
+    }
+  }
+
+  &__info-table {
+    border-collapse: collapse;
+    font-size: 1.8rem;
+    margin: 0 auto;
+
+    width: 80%;
+
+    td {
+      border: solid 1px black;
+      padding: 2rem;
+      text-align: left;
+
+      &.label {
+        width: 14rem;
+      }
+
+      &.enquiry-id {
+        font-size: 4rem;
+        font-weight: bold;
+      }
+    }
+
+    @media print {
+      font-size: 2rem;
+      width: 90%;
+    }
+
+    @media print and (max-width: 500px) {
+      font-size: 1.4rem;
+
+      td {
+        padding: 0.5rem;
+
+        &.label {
+          width: 10rem;
+        }
+
+        &.enquiry-id {
+          font-size: 2rem;
+        }
+      }
+    }
+  }
+}

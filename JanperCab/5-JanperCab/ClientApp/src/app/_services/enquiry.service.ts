@@ -1,3 +1,4 @@
+import { PackingLabelDto } from './../_models/packing-label/PackingLabelDto';
 import { EnquiryForInvoicingDto } from './../_models/enquiry/EnquiryForInvoicingDto';
 import { DuraformProcessDto } from '../_models/DuraformProcess/DuraformProcessDto';
 import { DuraformEnquiryListDto } from './../_models/enquiry/DuraformEnquiryListDto';
@@ -15,6 +16,18 @@ import { OrderSearchFilterValues } from '../_models/commons/OrderSearchFilterVal
 @Injectable({ providedIn: 'root' })
 export class EnquiryService {
   constructor(private http: HttpClient) {}
+
+  getPackingLabel = (enquiryId: number): Observable<PackingLabelDto> => {
+    return this.http
+      .get<PackingLabelDto>(
+        `${environment.baseUrl}/enquiries/packing-label/${enquiryId}`
+      )
+      .pipe(
+        map((response) => {
+          return plainToClass(PackingLabelDto, response);
+        })
+      );
+  };
 
   getEnquiriesForInvoicing = (): Observable<EnquiryForInvoicingDto[]> => {
     return this.http
@@ -55,15 +68,8 @@ export class EnquiryService {
   getDuraformOrders = (
     filterValues: OrderSearchFilterValues
   ): Observable<ItemList<DuraformEnquiryListDto>> => {
-    const {
-      customerId,
-      search,
-      status,
-      sortBy,
-      direction,
-      page,
-      take,
-    } = filterValues;
+    const { customerId, search, status, sortBy, direction, page, take } =
+      filterValues;
 
     let url = `${environment.baseUrl}/Enquiries/Duraform/Orders?page=${page}&take=${take}`;
     url += `&sortBy=${sortBy}&dir=${direction}`;

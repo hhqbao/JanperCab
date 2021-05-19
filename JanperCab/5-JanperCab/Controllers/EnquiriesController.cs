@@ -2,6 +2,7 @@
 using _1_Domain.Enum;
 using _3_Application.Dtos.Common;
 using _3_Application.Dtos.Enquiry;
+using _3_Application.Dtos.PackingLabel;
 using _3_Application.Interfaces.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -27,6 +28,18 @@ namespace _5_JanperCab.Controllers
             _userManager = userManager;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+        }
+
+        [Authorize(Roles = "Manufacturer")]
+        [HttpGet("packing-label/{enquiryId}")]
+        public async Task<IActionResult> GetEnquiryPackingLabel(int enquiryId)
+        {
+            var enquiry = await _unitOfWork.Enquiries.GetAsync(enquiryId);
+
+            if (enquiry == null)
+                return BadRequest("Order Not Found");
+
+            return Ok(new PackingLabelDto(enquiry));
         }
 
         [Authorize(Roles = "Sale")]

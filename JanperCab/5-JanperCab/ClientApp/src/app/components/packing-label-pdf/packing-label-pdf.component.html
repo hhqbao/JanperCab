@@ -1,0 +1,30 @@
+<div class="pl-pdf">
+  <div class="pl-pdf__container" *ngIf="packingLabel">
+    <div class="pl-pdf__main-name">
+      <span *ngIf="!packingLabel.managerName">
+        {{ packingLabel.customerName }}
+      </span>
+      <span *ngIf="packingLabel.managerName">
+        {{ packingLabel.managerName }}
+      </span>
+    </div>
+    <table class="table pl-pdf__info-table">
+      <tr *ngIf="packingLabel.managerName">
+        <td class="label">Customer</td>
+        <td>{{ packingLabel.customerName }}</td>
+      </tr>
+      <tr>
+        <td class="label">Job No.</td>
+        <td class="enquiry-id">{{ packingLabel.enquiryId | leading }}</td>
+      </tr>
+      <tr>
+        <td class="label">Order No.</td>
+        <td>{{ packingLabel.customerReference }}</td>
+      </tr>
+      <tr>
+        <td class="label">Parcels</td>
+        <td></td>
+      </tr>
+    </table>
+  </div>
+</div>

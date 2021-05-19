@@ -1,9 +1,44 @@
 <div class="mrc">
-  <app-float-box [width]="100" *ngIf="showControlBox">
+  <app-float-box *ngIf="showOptionBox" [width]="30">
+    <div class="control-box">
+      <div class="control-box__header">
+        Action Center
+        <button class="btn control-box__btn-close" (click)="onCloseOptionBox()">
+          <i class="fa fa-times-circle" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="control-box__body">
+        <button
+          class="btn control-box__action control-box__action--primary"
+          (click)="showOptionBox = false; showPackingLabel = true"
+        >
+          <i class="fa fa-print" aria-hidden="true"></i>
+          Print Label
+        </button>
+        <div class="divider"></div>
+        <button
+          class="btn control-box__action control-box__action--secondary"
+          (click)="onProcessPacking()"
+        >
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          Process Packing
+        </button>
+      </div>
+    </div>
+  </app-float-box>
+  <app-pdf-viewer
+    *ngIf="showPackingLabel"
+    (closePanel)="onClosePackingLabelPdf()"
+  >
+    <app-packing-label-pdf
+      [enquiryId]="scannedEnquiryId"
+    ></app-packing-label-pdf>
+  </app-pdf-viewer>
+  <app-float-box [width]="100" *ngIf="currentProcess">
     <app-on-hold-detail-form
       [process]="currentProcess"
       (completeBtnClick)="onComplete()"
-      (closeBtnClick)="showControlBox = false; currentProcess = null"
+      (closeBtnClick)="currentProcess = null"
     ></app-on-hold-detail-form>
   </app-float-box>
   <app-simple-box [heading]="'PACKING - ' + machine.name">

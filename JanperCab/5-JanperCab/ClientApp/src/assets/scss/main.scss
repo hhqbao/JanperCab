@@ -55,6 +55,7 @@
 @import "./3-component/invoice-pdf";
 @import "./3-component/control-box";
 @import "./3-component/on-hold-detail-form";
+@import "./3-component/packing-label-pdf";
 @import "./4-layout/grid";
 @import "./4-layout/primary-layout";
 @import "./5-page/duraform-page";
@@ -63,6 +64,7 @@
 @import "./5-page/duraform-price-page";
 @import "./5-page/delivery-page";
 @import "./5-page/invoice-process-page";
+@import "./5-page/machine-list-page";
 
 @import "./../../../node_modules/alertifyjs/build/css/alertify.min.css";
 .ajs-message {
