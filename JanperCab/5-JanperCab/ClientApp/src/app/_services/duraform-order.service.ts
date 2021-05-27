@@ -63,16 +63,17 @@ export class DuraformOrderService {
 
     if (this.duraformEnquiry.hasComponent) {
       if (this.duraformEnquiry.isRoutingOnly) {
-        const doubleSidedComponents = this.duraformEnquiry
-          .componentsWithDoubleSidedOption;
+        const doubleSidedComponents =
+          this.duraformEnquiry.componentsWithDoubleSidedOption;
 
         doubleSidedComponents.forEach(
           (x) => ((x as DuraformComponentWithOptionDto).duraformOption = null)
         );
 
-        this.duraformEnquiry.miscComponents = this.duraformEnquiry.miscComponents.filter(
-          (x) => !(x instanceof DuraformMiscLooseFoilDto)
-        );
+        this.duraformEnquiry.miscComponents =
+          this.duraformEnquiry.miscComponents.filter(
+            (x) => !(x instanceof DuraformMiscLooseFoilDto)
+          );
 
         this.duraformEnquiry.miscComponents.forEach((misc) => {
           if (

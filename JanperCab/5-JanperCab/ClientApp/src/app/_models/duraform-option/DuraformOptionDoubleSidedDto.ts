@@ -1,6 +1,9 @@
+import { DuraformEnquiryDto } from './../enquiry/DuraformEnquiryDto';
 import { DuraformOptionDto } from './DuraformOptionDto';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Expose } from 'class-transformer';
+import { DuraformComponentWithOptionDto } from '../duraform-component/DuraformComponentWithOptionDto';
+import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 
 export class DuraformOptionDoubleSidedDto extends DuraformOptionDto {
   hasProfile: boolean;
@@ -37,7 +40,13 @@ export class DuraformOptionDoubleSidedDto extends DuraformOptionDto {
   }
 
   @Expose()
-  getExtraCharge(basePrice: number): number {
-    return (basePrice * 50) / 100;
+  calculateUnitPrice(
+    basePrice: number,
+    duraformEnquiry: DuraformEnquiryDto,
+    component: DuraformComponentWithOptionDto
+  ): number {
+    const extraCharge = (basePrice * 50) / 100;
+
+    return basePrice + extraCharge;
   }
 }

@@ -36,17 +36,15 @@ export class DuraformOrderStepTwoComponent implements OnInit {
 
   ngOnInit() {
     this.layout.showLoadingPanel();
-    const {
-      isRoutingOnly,
-      duraformSerieId,
-      duraformWrapTypeId,
-    } = this.order.duraformEnquiry;
+    const { isRoutingOnly, duraformSerieId, duraformWrapTypeId } =
+      this.order.duraformEnquiry;
 
     this.asset.loadPrices(
       isRoutingOnly,
       duraformSerieId,
       duraformWrapTypeId,
       () => {
+        this.order.duraformEnquiry.calculatePrice();
         this.layout.closeLoadingPanel();
       }
     );
@@ -96,9 +94,8 @@ export class DuraformOrderStepTwoComponent implements OnInit {
         this.layout.showLoadingPanel();
         this.fileService.deleteDuraformFile(file.id).subscribe(
           () => {
-            const index = this.order.duraformEnquiry.duraformFiles.indexOf(
-              file
-            );
+            const index =
+              this.order.duraformEnquiry.duraformFiles.indexOf(file);
 
             this.order.duraformEnquiry.duraformFiles.splice(index, 1);
             this.layout.closeLoadingPanel();

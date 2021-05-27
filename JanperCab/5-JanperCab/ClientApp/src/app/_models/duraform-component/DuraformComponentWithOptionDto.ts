@@ -1,3 +1,4 @@
+import { DuraformEnquiryDto } from './../enquiry/DuraformEnquiryDto';
 import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 import { DuraformOptionAngledShelfDto } from './../duraform-option/DuraformOptionAngledShelfDto';
 import { DuraformOptionMicrowaveFrameDto } from './../duraform-option/DuraformOptionMicrowaveFrameDto';
@@ -20,38 +21,31 @@ export abstract class DuraformComponentWithOptionDto extends DuraformComponentDt
       subTypes: [
         {
           value: DuraformOptionNoFaceDto,
-          name:
-            '_3_Application.Dtos.DuraformOption.DuraformOptionNoFaceDto, 3-Application',
+          name: '_3_Application.Dtos.DuraformOption.DuraformOptionNoFaceDto, 3-Application',
         },
         {
           value: DuraformOptionDoubleSidedDto,
-          name:
-            '_3_Application.Dtos.DuraformOption.DuraformOptionDoubleSidedDto, 3-Application',
+          name: '_3_Application.Dtos.DuraformOption.DuraformOptionDoubleSidedDto, 3-Application',
         },
         {
           value: DuraformOptionFoldBackDto,
-          name:
-            '_3_Application.Dtos.DuraformOption.DuraformOptionFoldBackDto, 3-Application',
+          name: '_3_Application.Dtos.DuraformOption.DuraformOptionFoldBackDto, 3-Application',
         },
         {
           value: DuraformOptionPaneFrameDto,
-          name:
-            '_3_Application.Dtos.DuraformOption.DuraformOptionPaneFrameDto, 3-Application',
+          name: '_3_Application.Dtos.DuraformOption.DuraformOptionPaneFrameDto, 3-Application',
         },
         {
           value: DuraformOptionRollerShutterFrameDto,
-          name:
-            '_3_Application.Dtos.DuraformOption.DuraformOptionRollerShutterFrameDto, 3-Application',
+          name: '_3_Application.Dtos.DuraformOption.DuraformOptionRollerShutterFrameDto, 3-Application',
         },
         {
           value: DuraformOptionMicrowaveFrameDto,
-          name:
-            '_3_Application.Dtos.DuraformOption.DuraformOptionMicrowaveFrameDto, 3-Application',
+          name: '_3_Application.Dtos.DuraformOption.DuraformOptionMicrowaveFrameDto, 3-Application',
         },
         {
           value: DuraformOptionAngledShelfDto,
-          name:
-            '_3_Application.Dtos.DuraformOption.DuraformOptionAngledShelfDto, 3-Application',
+          name: '_3_Application.Dtos.DuraformOption.DuraformOptionAngledShelfDto, 3-Application',
         },
       ],
     },
@@ -98,7 +92,12 @@ export abstract class DuraformComponentWithOptionDto extends DuraformComponentDt
   }
 
   @Expose()
-  getPriceForOne(serieId: number): number {
+  getPriceForOne(duraformEnquiry: DuraformEnquiryDto): number {
+    const serieId =
+      this.duraformOption && this.duraformOption.hasNoProfile
+        ? 1
+        : duraformEnquiry.duraformSerieId;
+
     let basePrice = DuraformAssetService.instance.getBasePrice(
       serieId,
       this.totalHeight,
@@ -106,7 +105,11 @@ export abstract class DuraformComponentWithOptionDto extends DuraformComponentDt
     );
 
     if (this.duraformOption) {
-      basePrice += this.duraformOption.getExtraCharge(basePrice);
+      basePrice = this.duraformOption.calculateUnitPrice(
+        basePrice,
+        duraformEnquiry,
+        this
+      );
     }
 
     return _.round(basePrice, 2);

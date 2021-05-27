@@ -13,6 +13,7 @@ import { DuraformSerieForList } from 'src/app/_models/duraform-serie/DuraformSer
 
 import * as _ from 'lodash';
 import { DuraformPriceGridDto } from 'src/app/_models/duraform-price/DuraformPriceGridDto';
+import { DuraformSerieTypeEnum } from 'src/app/_enums/DuraformSerieTypeEnum';
 
 @Component({
   selector: 'app-duraform-price-grid-page',
@@ -34,7 +35,7 @@ export class DuraformPriceGridPageComponent implements OnInit {
   heightHeaders: DuraformPriceHeightHeader[] = [];
 
   selectedFinishId: number = null;
-  selectedSerieId: number = null;
+  selectedSerieType: DuraformSerieTypeEnum = null;
 
   constructor(
     private finishService: DuraformWrapTypeService,
@@ -45,7 +46,9 @@ export class DuraformPriceGridPageComponent implements OnInit {
   ) {}
 
   get changes(): number {
-    if (!this.priceGrids) return 0;
+    if (!this.priceGrids) {
+      return 0;
+    }
 
     return this.priceGrids.filter((x) => x.price !== x.tempPrice).length;
   }
@@ -76,7 +79,7 @@ export class DuraformPriceGridPageComponent implements OnInit {
   onSelectionChange = () => {
     if (
       ![null, undefined].includes(this.selectedFinishId) &&
-      ![null, undefined].includes(this.selectedSerieId)
+      ![null, undefined].includes(this.selectedSerieType)
     ) {
       this.heightHeaders = [];
       this.widthHeaders = [];
@@ -86,10 +89,10 @@ export class DuraformPriceGridPageComponent implements OnInit {
 
       const request =
         this.selectedFinishId === 0
-          ? this.priceService.getRouteOnlyPriceGrid(this.selectedSerieId)
+          ? this.priceService.getRouteOnlyPriceGrid(this.selectedSerieType)
           : this.priceService.getPressPriceGrid(
               this.selectedFinishId,
-              this.selectedSerieId
+              this.selectedSerieType
             );
 
       request.subscribe(

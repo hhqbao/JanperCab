@@ -1,7 +1,11 @@
-import { DuraformOptionTypeDto } from './DuraformOptionTypeDto';
+import { throwError } from 'rxjs';
 import { DuraformOptionDto } from './DuraformOptionDto';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Expose } from 'class-transformer';
+import { DuraformComponentWithOptionDto } from '../duraform-component/DuraformComponentWithOptionDto';
+import { DuraformEnquiryDto } from '../enquiry/DuraformEnquiryDto';
+import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
+import { DuraformSerieTypeEnum } from 'src/app/_enums/DuraformSerieTypeEnum';
 
 export class DuraformOptionNoFaceDto extends DuraformOptionDto {
   get hasNoProfile(): boolean {
@@ -35,7 +39,25 @@ export class DuraformOptionNoFaceDto extends DuraformOptionDto {
   }
 
   @Expose()
-  getExtraCharge(basePrice: number): number {
-    return 0;
+  calculateUnitPrice(
+    basePrice: number,
+    duraformEnquiry: DuraformEnquiryDto,
+    component: DuraformComponentWithOptionDto
+  ): number {
+    const panelSerie = DuraformAssetService.instance.duraformSeries.find(
+      (x) => x.serieTypeEnum === DuraformSerieTypeEnum.PlainPanel
+    );
+
+    if (!panelSerie) {
+      throw new Error('Missing Panel Serie!');
+    }
+
+    const panelPrice = DuraformAssetService.instance.getBasePrice(
+      panelSerie.id,
+      component.totalHeight,
+      component.totalWidth
+    );
+
+    return panelPrice <= 0 ? basePrice : panelPrice;
   }
 }

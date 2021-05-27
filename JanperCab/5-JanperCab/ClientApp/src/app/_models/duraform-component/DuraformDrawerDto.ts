@@ -1,3 +1,4 @@
+import { DuraformEnquiryDto } from './../enquiry/DuraformEnquiryDto';
 import { DuraformDrawerTypeForList } from './../duraform-drawer-type/DuraformDrawerTypeForList';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DrawerDesign } from 'src/app/_enums/DrawerDesign';
@@ -55,9 +56,9 @@ export class DuraformDrawerDto extends DuraformComponentDto {
   }
 
   @Expose()
-  getPriceForOne(serieId: number): number {
+  getPriceForOne(duraformEnquiry: DuraformEnquiryDto): number {
     let basePrice = DuraformAssetService.instance.getBasePrice(
-      serieId,
+      duraformEnquiry.duraformSerieId,
       this.totalHeight,
       this.totalWidth
     );

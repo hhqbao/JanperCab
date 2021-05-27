@@ -2,6 +2,8 @@ import { DuraformOptionDto } from './DuraformOptionDto';
 import { DuraformOptionTypeDto } from './DuraformOptionTypeDto';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Expose } from 'class-transformer';
+import { DuraformComponentWithOptionDto } from '../duraform-component/DuraformComponentWithOptionDto';
+import { DuraformEnquiryDto } from '../enquiry/DuraformEnquiryDto';
 
 export class DuraformOptionPaneFrameDto extends DuraformOptionDto {
   columns: number;
@@ -63,7 +65,13 @@ export class DuraformOptionPaneFrameDto extends DuraformOptionDto {
   }
 
   @Expose()
-  getExtraCharge(basePrice: number): number {
-    return this.columns * this.rows * 7;
+  calculateUnitPrice(
+    basePrice: number,
+    duraformEnquiry: DuraformEnquiryDto,
+    component: DuraformComponentWithOptionDto
+  ): number {
+    const extraCharge = this.columns * this.rows * 7;
+
+    return basePrice + extraCharge;
   }
 }

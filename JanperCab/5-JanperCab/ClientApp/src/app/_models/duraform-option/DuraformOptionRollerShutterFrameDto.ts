@@ -1,6 +1,9 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Expose } from 'class-transformer';
 import { DuraformOptionDto } from 'src/app/_models/duraform-option/DuraformOptionDto';
+import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
+import { DuraformComponentWithOptionDto } from '../duraform-component/DuraformComponentWithOptionDto';
+import { DuraformEnquiryDto } from '../enquiry/DuraformEnquiryDto';
 
 export class DuraformOptionRollerShutterFrameDto extends DuraformOptionDto {
   topSize: number;
@@ -52,7 +55,11 @@ export class DuraformOptionRollerShutterFrameDto extends DuraformOptionDto {
   }
 
   @Expose()
-  getExtraCharge(basePrice: number): number {
-    return 11;
+  calculateUnitPrice(
+    basePrice: number,
+    duraformEnquiry: DuraformEnquiryDto,
+    component: DuraformComponentWithOptionDto
+  ): number {
+    return basePrice + 11;
   }
 }

@@ -1,12 +1,13 @@
 ﻿using _1_Domain;
+using _1_Domain.Enum;
 using _3_Application.Dtos.DuraformMiscPrice;
 using _3_Application.Dtos.DuraformPriceGrid;
 using _3_Application.Interfaces.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace _5_JanperCab.Controllers
@@ -45,51 +46,46 @@ namespace _5_JanperCab.Controllers
             return Ok(model);
         }
 
-        [HttpGet("Grids/{finishId}/{serieId}")]
-        public async Task<IActionResult> GetPressPrice(int finishId, int serieId)
+        [HttpGet("Grids/{finishId}/{serieTypeEnum}")]
+        public async Task<IActionResult> GetPressPrice(int finishId, DuraformSerieTypeEnum serieTypeEnum)
         {
             if (!await _unitOfWork.DuraformWrapTypes.AnyAsync(x => x.Id == finishId))
                 return BadRequest("Duraform Finish Not Found! Invalid Finish Id");
 
-            if (!await _unitOfWork.DuraformSeries.AnyAsync(x => x.Id == serieId))
-                return BadRequest("Duraform Serie Not Found! Invalid Serie Id");
+            var series = await _unitOfWork.DuraformSeries.GetAllAsync(x => x.SerieTypeEnum == serieTypeEnum);
 
-            var prices = await _unitOfWork.DuraformPrices.GetPressPriceGridAsync(finishId, serieId);
+            if (series.FirstOrDefault() == null)
+                return BadRequest("Duraform Serie Not Found! Invalid Serie Type");
+
+            var prices = await _unitOfWork.DuraformPrices.GetPressPriceGridAsync(finishId, series.First().Id);
 
             return Ok(_mapper.Map<List<DuraformWrapPriceGrid>, List<DuraformWrapPriceGridDto>>(prices));
         }
 
-        [HttpGet("Grids/{serieId}")]
-        public async Task<IActionResult> GetRouteOnlyPrice(int serieId)
+        [HttpGet("Grids/{serieTypeEnum}")]
+        public async Task<IActionResult> GetRouteOnlyPrice(DuraformSerieTypeEnum serieTypeEnum)
         {
-            if (!await _unitOfWork.DuraformSeries.AnyAsync(x => x.Id == serieId))
-                return BadRequest("Duraform Serie Not Found! Invalid Serie Id");
+            var series = await _unitOfWork.DuraformSeries.GetAllAsync(x => x.SerieTypeEnum == serieTypeEnum);
 
-            var prices = await _unitOfWork.DuraformPrices.GetRouteOnlyPriceGridAsync(serieId);
+            if (series.FirstOrDefault() == null)
+                return BadRequest("Duraform Serie Not Found! Invalid Serie Type");
+
+            var prices = await _unitOfWork.DuraformPrices.GetRouteOnlyPriceGridAsync(series.First().Id);
 
             return Ok(_mapper.Map<List<DuraformRouteOnlyPriceGrid>, List<DuraformRouteOnlyPriceGridDto>>(prices));
         }
 
         [Authorize(Roles = "Sale")]
-        [HttpPost("Grids")]
+        [HttpPut("Grids")]
         public async Task<IActionResult> SavePriceGrids(List<DuraformPriceGridDto> priceGridDtos)
         {
-            try
-            {
-                var priceGrids = _mapper.Map<List<DuraformPriceGridDto>, List<DuraformPriceGrid>>(priceGridDtos);
+            var priceGrids = _mapper.Map<List<DuraformPriceGridDto>, List<DuraformPriceGrid>>(priceGridDtos);
 
-                await _unitOfWork.DuraformPrices.SavePriceGridsAsync(priceGrids);
+            await _unitOfWork.DuraformPrices.SavePriceGridsAsync(priceGrids);
 
-                await _unitOfWork.CompleteAsync();
+            await _unitOfWork.CompleteAsync();
 
-                return Ok(_mapper.Map<List<DuraformPriceGrid>, List<DuraformPriceGridDto>>(priceGrids));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-
+            return Ok(_mapper.Map<List<DuraformPriceGrid>, List<DuraformPriceGridDto>>(priceGrids));
         }
     }
 }

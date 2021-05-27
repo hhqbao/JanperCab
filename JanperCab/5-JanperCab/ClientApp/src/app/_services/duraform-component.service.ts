@@ -80,16 +80,9 @@ export class DuraformComponentService {
     component: DuraformComponentDto,
     duraformEnquiry: DuraformEnquiryDto
   ) => {
-    let serieId = duraformEnquiry.duraformSerie.id;
     const discountRate = duraformEnquiry.discountRate;
 
-    if (component instanceof DuraformComponentWithOptionDto) {
-      if (component.duraformOption && component.duraformOption.hasNoProfile) {
-        serieId = 1;
-      }
-    }
-
-    component.unitPrice = component.getPriceForOne(serieId);
+    component.unitPrice = component.getPriceForOne(duraformEnquiry);
     component.subTotal = component.quantity * component.unitPrice;
     component.totalDiscount = _.round(
       (component.subTotal * discountRate) / 100,

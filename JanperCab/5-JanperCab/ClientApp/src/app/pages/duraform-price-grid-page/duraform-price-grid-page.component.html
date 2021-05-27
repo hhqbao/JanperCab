@@ -19,7 +19,10 @@
   </app-pdf-viewer>
 
   <table
-    class="table table--bordered table--hovered duraform-price-page__price-table"
+    class="
+      table table--bordered table--hovered
+      duraform-price-page__price-table
+    "
   >
     <thead>
       <tr>
@@ -61,11 +64,14 @@
               <div class="form__label">Serie:</div>
               <select
                 class="form__control"
-                [(ngModel)]="selectedSerieId"
+                [(ngModel)]="selectedSerieType"
                 (change)="onSelectionChange()"
               >
                 <option disabled [value]="null">-- Select Serie --</option>
-                <option *ngFor="let serie of serieList" [value]="serie.id">
+                <option
+                  *ngFor="let serie of serieList"
+                  [value]="serie.serieTypeEnum"
+                >
                   {{ serie.name }}
                 </option>
               </select>

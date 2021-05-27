@@ -1,5 +1,7 @@
+import { DuraformEnquiryDto } from './../enquiry/DuraformEnquiryDto';
 import { FormGroup } from '@angular/forms';
 import { DuraformOptionTypeKey } from '../../_enums/DuraformOptionTypeKey';
+import { DuraformComponentWithOptionDto } from '../duraform-component/DuraformComponentWithOptionDto';
 
 export abstract class DuraformOptionDto {
   $type: string;
@@ -9,7 +11,11 @@ export abstract class DuraformOptionDto {
   abstract get hasNoProfile(): boolean;
 
   abstract getExtraWidth(): number;
-  abstract getExtraCharge(basePrice: number): number;
+  abstract calculateUnitPrice(
+    basePrice: number,
+    duraformEnquiry: DuraformEnquiryDto,
+    component: DuraformComponentWithOptionDto
+  ): number;
 
   abstract toFormGroup(): FormGroup;
   abstract toString(): string;

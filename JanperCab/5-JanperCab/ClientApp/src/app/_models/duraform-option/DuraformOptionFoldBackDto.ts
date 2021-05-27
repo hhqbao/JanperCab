@@ -2,6 +2,9 @@ import { FoldingType } from './../../_enums/FoldingType';
 import { DuraformOptionDto } from './DuraformOptionDto';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Expose } from 'class-transformer';
+import { DuraformComponentWithOptionDto } from '../duraform-component/DuraformComponentWithOptionDto';
+import { DuraformEnquiryDto } from '../enquiry/DuraformEnquiryDto';
+import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 
 export class DuraformOptionFoldBackDto extends DuraformOptionDto {
   hasProfile: boolean;
@@ -111,7 +114,11 @@ export class DuraformOptionFoldBackDto extends DuraformOptionDto {
   }
 
   @Expose()
-  getExtraCharge(basePrice: number): number {
+  calculateUnitPrice(
+    basePrice: number,
+    duraformEnquiry: DuraformEnquiryDto,
+    component: DuraformComponentWithOptionDto
+  ): number {
     let extraPrice = (basePrice * 5) / 100;
 
     const perFold = 20;
@@ -119,6 +126,6 @@ export class DuraformOptionFoldBackDto extends DuraformOptionDto {
     extraPrice +=
       this.foldingType === FoldingType.Double ? perFold * 2 : perFold;
 
-    return extraPrice;
+    return basePrice + extraPrice;
   }
 }

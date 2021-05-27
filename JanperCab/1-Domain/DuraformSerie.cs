@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using _1_Domain.Enum;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace _1_Domain
@@ -8,6 +9,10 @@ namespace _1_Domain
         public int Id { get; set; }
 
         public string Name { get; set; }
+
+        public DuraformSerieTypeEnum SerieTypeEnum { get; set; }
+
+        public bool IsHidden { get; set; }
 
 
         public virtual ICollection<DuraformDesign> DuraformDesigns { get; set; }

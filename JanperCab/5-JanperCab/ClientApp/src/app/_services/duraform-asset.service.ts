@@ -19,6 +19,7 @@ import { DuraformOptionTypeDto } from '../_models/duraform-option/DuraformOption
 import { HingeHoleTypeDto } from '../_models/hinge-hole-type/HingeHoleTypeDto';
 import { DuraformMiscPriceDto } from '../_models/duraform-misc-price/DuraformMiscPriceDto';
 import { forkJoin } from 'rxjs';
+import { DuraformSerieTypeEnum } from '../_enums/DuraformSerieTypeEnum';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformAssetService {
@@ -52,22 +53,41 @@ export class DuraformAssetService {
     wrapTypeId: number,
     callBack: () => any
   ) => {
+    const duraformSerie = this.getDoorSerie(serieId);
+
     const serieOneRequest = isRoutingOnly
-      ? this.priceService.getRouteOnlyPriceGrid(1)
-      : this.priceService.getPressPriceGrid(wrapTypeId, 1);
+      ? this.priceService.getRouteOnlyPriceGrid(DuraformSerieTypeEnum.SerieOne)
+      : this.priceService.getPressPriceGrid(
+          wrapTypeId,
+          DuraformSerieTypeEnum.SerieOne
+        );
+
+    const plainPanelRequest = isRoutingOnly
+      ? this.priceService.getRouteOnlyPriceGrid(
+          DuraformSerieTypeEnum.PlainPanel
+        )
+      : this.priceService.getPressPriceGrid(
+          wrapTypeId,
+          DuraformSerieTypeEnum.PlainPanel
+        );
 
     const selectedSerieRequest = isRoutingOnly
-      ? this.priceService.getRouteOnlyPriceGrid(serieId)
-      : this.priceService.getPressPriceGrid(wrapTypeId, serieId);
+      ? this.priceService.getRouteOnlyPriceGrid(duraformSerie.serieTypeEnum)
+      : this.priceService.getPressPriceGrid(
+          wrapTypeId,
+          duraformSerie.serieTypeEnum
+        );
 
     const observables =
       serieId === 1
         ? forkJoin({
             serieOnePrices: serieOneRequest,
+            plainPanelPrices: plainPanelRequest,
             miscPrices: this.priceService.getAllMiscPrices(),
           })
         : forkJoin({
             serieOnePrices: serieOneRequest,
+            plainPanelPrices: plainPanelRequest,
             miscPrices: this.priceService.getAllMiscPrices(),
             selectedSeriePrices: selectedSerieRequest,
           });
@@ -75,6 +95,7 @@ export class DuraformAssetService {
     observables.subscribe(
       (responses) => {
         this.priceGrids = responses.serieOnePrices;
+        this.priceGrids = this.priceGrids.concat(responses.plainPanelPrices);
         this.miscPrices = responses.miscPrices.prices;
 
         if (responses['selectedSeriePrices']) {
@@ -166,12 +187,12 @@ export class DuraformAssetService {
       return priceGrid.price;
     }
 
-    this.dialog.alert(
-      'Price Out Of Range',
-      `${totalHeight} x ${totalWidth} size is out of price range! Please supply price data for this range!`,
-      null
-    );
+    // this.dialog.alert(
+    //   'Price Out Of Range',
+    //   `${totalHeight} x ${totalWidth} size is out of price range! Please supply price data for this range!`,
+    //   null
+    // );
 
-    return 0;
+    return -1;
   };
 }

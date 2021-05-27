@@ -1,6 +1,9 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Expose } from 'class-transformer';
 import { DuraformOptionDto } from 'src/app/_models/duraform-option/DuraformOptionDto';
+import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
+import { DuraformComponentWithOptionDto } from '../duraform-component/DuraformComponentWithOptionDto';
+import { DuraformEnquiryDto } from '../enquiry/DuraformEnquiryDto';
 
 export class DuraformOptionAngledShelfDto extends DuraformOptionDto {
   sideOne: number;
@@ -43,11 +46,17 @@ export class DuraformOptionAngledShelfDto extends DuraformOptionDto {
   }
 
   @Expose()
-  getExtraCharge(basePrice: number): number {
-    if (!this.isDoubleSided) return 10;
+  calculateUnitPrice(
+    basePrice: number,
+    duraformEnquiry: DuraformEnquiryDto,
+    component: DuraformComponentWithOptionDto
+  ): number {
+    let extraPrice = 10;
 
-    let extraPrice = (basePrice * 50) / 100;
+    if (this.isDoubleSided) {
+      extraPrice += (basePrice * 50) / 100;
+    }
 
-    return extraPrice + 10;
+    return basePrice + extraPrice;
   }
 }

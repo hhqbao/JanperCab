@@ -12,7 +12,11 @@ export class DuraformFilterBoxComponent implements OnInit {
 
   filterFg: FormGroup;
 
-  constructor(private fb: FormBuilder, public asset: DuraformAssetService) {}
+  get selectableSeries(): DuraformSerieForList[] {
+    return this.asset.duraformSeries.filter((x) => !x.isHidden);
+  }
+
+  constructor(private fb: FormBuilder, private asset: DuraformAssetService) {}
 
   ngOnInit() {
     this.filterFg = this.fb.group({

@@ -1,3 +1,4 @@
+import { DuraformEnquiryDto } from './../enquiry/DuraformEnquiryDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { PantryDoorChairRailTypeForList } from './../pantry-door-chair-rail-type/PantryDoorChairRailTypeForList';
 import { DuraformComponentWithOptionAndHingeHoleDto } from './DuraformComponentWithOptionAndHingeHoleDto';
@@ -27,8 +28,8 @@ export class DuraformPantryDoorDto extends DuraformComponentWithOptionAndHingeHo
   }
 
   @Expose()
-  getPriceForOne(serieId: number): number {
-    let priceForOne = super.getPriceForOne(serieId);
+  getPriceForOne(duraformEnquiry: DuraformEnquiryDto): number {
+    let priceForOne = super.getPriceForOne(duraformEnquiry);
 
     if (this.hingeHoleOption) {
       const hingeStyle = DuraformAssetService.instance.getHingeStyle(

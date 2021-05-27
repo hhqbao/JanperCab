@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { DuraformRouteOnlyPriceGridDto } from '../_models/duraform-price/DuraformRouteOnlyPriceGridDto';
 import { DuraformMiscPriceDto } from '../_models/duraform-misc-price/DuraformMiscPriceDto';
 import { DuraformMiscPriceModel } from '../_models/duraform-price/DuraformMiscPriceModel';
+import { DuraformSerieTypeEnum } from '../_enums/DuraformSerieTypeEnum';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformPriceService {
@@ -39,11 +40,11 @@ export class DuraformPriceService {
 
   getPressPriceGrid = (
     finishId: number,
-    serieId: number
+    serieTypeEnum: DuraformSerieTypeEnum
   ): Observable<DuraformWrapPriceGridDto[]> => {
     return this.http
       .get<DuraformWrapPriceGridDto[]>(
-        `${environment.baseUrl}/DuraformPrices/Grids/${finishId}/${serieId}`
+        `${environment.baseUrl}/DuraformPrices/Grids/${finishId}/${serieTypeEnum}`
       )
       .pipe(
         map((response) => {
@@ -53,11 +54,11 @@ export class DuraformPriceService {
   };
 
   getRouteOnlyPriceGrid = (
-    serieId: number
+    serieTypeEnum: DuraformSerieTypeEnum
   ): Observable<DuraformRouteOnlyPriceGridDto[]> => {
     return this.http
       .get<DuraformRouteOnlyPriceGridDto[]>(
-        `${environment.baseUrl}/DuraformPrices/Grids/${serieId}`
+        `${environment.baseUrl}/DuraformPrices/Grids/${serieTypeEnum}`
       )
       .pipe(
         map((response) => {
@@ -70,7 +71,7 @@ export class DuraformPriceService {
     priceGrids: DuraformPriceGridDto[]
   ): Observable<DuraformPriceGridDto[]> => {
     return this.http
-      .post<DuraformPriceGridDto[]>(
+      .put<DuraformPriceGridDto[]>(
         `${environment.baseUrl}/DuraformPrices/Grids`,
         priceGrids
       )

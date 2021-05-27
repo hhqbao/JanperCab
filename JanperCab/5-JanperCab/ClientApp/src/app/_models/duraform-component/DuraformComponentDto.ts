@@ -1,3 +1,4 @@
+import { DuraformEnquiryDto } from './../enquiry/DuraformEnquiryDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { Expose } from 'class-transformer';
 import { DuraformEdgeProfileForList } from './../duraform-edge-profile/DuraformEdgeProfileForList';
@@ -63,5 +64,5 @@ export abstract class DuraformComponentDto {
 
   abstract get totalHeight(): number;
   abstract get totalWidth(): number;
-  abstract getPriceForOne(serieId: number): number;
+  abstract getPriceForOne(duraformEnquiry: DuraformEnquiryDto): number;
 }

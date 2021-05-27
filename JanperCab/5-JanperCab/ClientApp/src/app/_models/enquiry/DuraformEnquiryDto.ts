@@ -53,23 +53,19 @@ export class DuraformEnquiryDto extends EnquiryDto {
       subTypes: [
         {
           value: DuraformDoorDto,
-          name:
-            '_3_Application.Dtos.DuraformComponent.DuraformDoorDto, 3-Application',
+          name: '_3_Application.Dtos.DuraformComponent.DuraformDoorDto, 3-Application',
         },
         {
           value: DuraformPantryDoorDto,
-          name:
-            '_3_Application.Dtos.DuraformComponent.DuraformPantryDoorDto, 3-Application',
+          name: '_3_Application.Dtos.DuraformComponent.DuraformPantryDoorDto, 3-Application',
         },
         {
           value: DuraformEndPanelDto,
-          name:
-            '_3_Application.Dtos.DuraformComponent.DuraformEndPanelDto, 3-Application',
+          name: '_3_Application.Dtos.DuraformComponent.DuraformEndPanelDto, 3-Application',
         },
         {
           value: DuraformDrawerDto,
-          name:
-            '_3_Application.Dtos.DuraformComponent.DuraformDrawerDto, 3-Application',
+          name: '_3_Application.Dtos.DuraformComponent.DuraformDrawerDto, 3-Application',
         },
       ],
     },
@@ -83,23 +79,19 @@ export class DuraformEnquiryDto extends EnquiryDto {
       subTypes: [
         {
           value: DuraformMiscLooseFoilDto,
-          name:
-            '_3_Application.Dtos.DuraformMiscComponent.DuraformMiscLooseFoilDto, 3-Application',
+          name: '_3_Application.Dtos.DuraformMiscComponent.DuraformMiscLooseFoilDto, 3-Application',
         },
         {
           value: DuraformMiscCapMouldDto,
-          name:
-            '_3_Application.Dtos.DuraformMiscComponent.DuraformMiscCapMouldDto, 3-Application',
+          name: '_3_Application.Dtos.DuraformMiscComponent.DuraformMiscCapMouldDto, 3-Application',
         },
         {
           value: DuraformMiscFingerPullDto,
-          name:
-            '_3_Application.Dtos.DuraformMiscComponent.DuraformMiscFingerPullDto, 3-Application',
+          name: '_3_Application.Dtos.DuraformMiscComponent.DuraformMiscFingerPullDto, 3-Application',
         },
         {
           value: DuraformMiscHeatStripDto,
-          name:
-            '_3_Application.Dtos.DuraformMiscComponent.DuraformMiscHeatStripDto, 3-Application',
+          name: '_3_Application.Dtos.DuraformMiscComponent.DuraformMiscHeatStripDto, 3-Application',
         },
       ],
     },
@@ -114,38 +106,31 @@ export class DuraformEnquiryDto extends EnquiryDto {
       subTypes: [
         {
           value: DuraformProcessPreRouteDto,
-          name:
-            '_3_Application.Dtos.Process.DuraformProcessPreRouteDto, 3-Application',
+          name: '_3_Application.Dtos.Process.DuraformProcessPreRouteDto, 3-Application',
         },
         {
           value: DuraformProcessRoutingDto,
-          name:
-            '_3_Application.Dtos.Process.DuraformProcessRoutingDto, 3-Application',
+          name: '_3_Application.Dtos.Process.DuraformProcessRoutingDto, 3-Application',
         },
         {
           value: DuraformProcessPressingDto,
-          name:
-            '_3_Application.Dtos.Process.DuraformProcessPressingDto, 3-Application',
+          name: '_3_Application.Dtos.Process.DuraformProcessPressingDto, 3-Application',
         },
         {
           value: DuraformProcessCleaningDto,
-          name:
-            '_3_Application.Dtos.Process.DuraformProcessCleaningDto, 3-Application',
+          name: '_3_Application.Dtos.Process.DuraformProcessCleaningDto, 3-Application',
         },
         {
           value: DuraformProcessPackingDto,
-          name:
-            '_3_Application.Dtos.Process.DuraformProcessPackingDto, 3-Application',
+          name: '_3_Application.Dtos.Process.DuraformProcessPackingDto, 3-Application',
         },
         {
           value: DuraformProcessPickingUpDto,
-          name:
-            '_3_Application.Dtos.Process.DuraformProcessPickingUpDto, 3-Application',
+          name: '_3_Application.Dtos.Process.DuraformProcessPickingUpDto, 3-Application',
         },
         {
           value: DuraformProcessDeliveringDto,
-          name:
-            '_3_Application.Dtos.Process.DuraformProcessDeliveringDto, 3-Application',
+          name: '_3_Application.Dtos.Process.DuraformProcessDeliveringDto, 3-Application',
         },
       ],
     },
@@ -336,23 +321,22 @@ export class DuraformEnquiryDto extends EnquiryDto {
 
   updateDiscountRate = (discountRate: number) => {
     this.discountRate = discountRate;
-
-    this.duraformComponents.forEach((component) =>
-      DuraformComponentService.instance.calculateComponentPrice(component, this)
-    );
-
-    this.miscComponents.forEach((miscItem) =>
-      DuraformComponentService.instance.calculateMiscItemPrice(miscItem, this)
-    );
-
     this.calculatePrice();
   };
 
   calculatePrice = (): void => {
     this.subTotal = 0;
 
-    this.duraformComponents.forEach((x) => (this.subTotal += x.totalPrice));
-    this.miscComponents.forEach((x) => (this.subTotal += x.totalPrice));
+    this.duraformComponents.forEach((comp) => {
+      DuraformComponentService.instance.calculateComponentPrice(comp, this);
+      this.subTotal += comp.totalPrice;
+    });
+
+    this.miscComponents.forEach((miscItem) => {
+      DuraformComponentService.instance.calculateMiscItemPrice(miscItem, this);
+      this.subTotal += miscItem.totalPrice;
+    });
+
     this.subTotal += this.deliveryFee;
 
     this.totalGst = _.round(this.subTotal / this.gstRate, 2);
