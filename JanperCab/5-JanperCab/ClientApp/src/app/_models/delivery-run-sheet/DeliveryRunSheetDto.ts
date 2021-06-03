@@ -3,6 +3,7 @@ export class DeliveryRunSheetDto {
 
   id: number;
   driverId: number;
+  truckId: number;
   createdDate: Date;
   lockedDate: Date;
   deliveredDate: Date;

@@ -20,6 +20,12 @@ namespace _2_Persistent.Configs
                 .HasForeignKey(x => x.DriverId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.Truck)
+                .WithMany(y => y.DeliveryRunSheets)
+                .HasForeignKey(x => x.TruckId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

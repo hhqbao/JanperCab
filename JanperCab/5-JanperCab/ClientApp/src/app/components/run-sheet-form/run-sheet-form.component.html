@@ -2,16 +2,30 @@
   <div class="rsf__header">Delivery Run Sheet</div>
   <div class="rsf__body">
     <div class="rsf__driver-form">
-      <label class="form__label">Driver</label>
-      <app-select-menu
-        *ngIf="drivers.length > 0"
-        [control]="driverIdControl"
-        [values]="drivers"
-        [valueKey]="'id'"
-        [valueDisplay]="'fullName'"
-        [isDisabled]="disableChangingDriver"
-        (afterSet)="onSelectDriver()"
-      ></app-select-menu>
+      <div class="form__group">
+        <label class="form__label">Driver</label>
+        <app-select-menu
+          *ngIf="drivers.length > 0"
+          [control]="driverIdControl"
+          [values]="drivers"
+          [valueKey]="'id'"
+          [valueDisplay]="'fullName'"
+          [isDisabled]="disableEditing"
+          (afterSet)="onSelectDriver()"
+        ></app-select-menu>
+      </div>
+      <div class="form__group">
+        <label class="form__label">Truck</label>
+        <app-select-menu
+          *ngIf="trucks.length > 0"
+          [control]="truckIdControl"
+          [values]="trucks"
+          [valueKey]="'id'"
+          [valueDisplay]="'plateNumber'"
+          [isDisabled]="disableEditing"
+          (afterSet)="onSelectTruck()"
+        ></app-select-menu>
+      </div>
     </div>
     <div class="rsf__patch-list" *ngIf="patches.length > 0">
       <div class="patch" *ngFor="let patch of patches">

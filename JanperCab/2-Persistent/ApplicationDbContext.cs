@@ -39,6 +39,7 @@ namespace _2_Persistent
         public DbSet<DuraformMiscPrice> DuraformMiscPrices { get; set; }
 
         public DbSet<Driver> Drivers { get; set; }
+        public DbSet<Truck> Trucks { get; set; }
         public DbSet<DeliveryRunSheet> DeliveryRunSheets { get; set; }
 
         public DbSet<Invoice> Invoices { get; set; }
@@ -130,6 +131,7 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformProcessDeliveringConfig());
 
             builder.ApplyConfiguration(new DriverConfig());
+            builder.ApplyConfiguration(new TruckConfig());
             builder.ApplyConfiguration(new DeliveryRunSheetConfig());
 
             builder.ApplyConfiguration(new InvoiceConfig());

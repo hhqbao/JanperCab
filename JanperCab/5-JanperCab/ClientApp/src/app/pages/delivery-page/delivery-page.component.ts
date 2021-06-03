@@ -1,3 +1,5 @@
+import { EnquiryService } from './../../_services/enquiry.service';
+import { DuraformEnquiryDto } from './../../_models/enquiry/DuraformEnquiryDto';
 import { Role } from 'src/app/_enums/Role';
 import { AuthService } from 'src/app/_services/auth.service';
 import { DeliveryRunSheetDto } from './../../_models/delivery-run-sheet/DeliveryRunSheetDto';
@@ -16,6 +18,7 @@ import * as scanner from 'onscan.js';
 export class DeliveryPageComponent implements OnInit, OnDestroy {
   selectedSheet: DeliveryRunSheetForListDto;
   runSheets: DeliveryRunSheetForListDto[] = [];
+  deliveryDocket: DuraformEnquiryDto = null;
 
   isLoading = true;
   canScan = true;
@@ -30,10 +33,13 @@ export class DeliveryPageComponent implements OnInit, OnDestroy {
     private runSheetService: RunSheetService,
     private layoutService: LayoutService,
     private dialogService: DialogService,
-    public authService: AuthService
+    public authService: AuthService,
+    private enquiryService: EnquiryService
   ) {}
 
   ngOnInit() {
+    document.title = 'Delivery Process';
+
     this.layoutService.showLoadingPanel();
     this.runSheetService.getRunSheets().subscribe(
       (response) => {
@@ -60,6 +66,9 @@ export class DeliveryPageComponent implements OnInit, OnDestroy {
 
   onScan = (sCode: any, sQty: any) => {
     if (!this.canScan) {
+      this.dialogService.error(
+        'Scanner is busy! Please omplete your current action.'
+      );
       return;
     }
 
@@ -85,11 +94,22 @@ export class DeliveryPageComponent implements OnInit, OnDestroy {
         );
       }
     } else {
-      this.dialogService.alert(
-        'Invalid Barcode',
-        'Run Sheet Barcode Invalid',
-        () => {
-          this.canScan = true;
+      this.isLoading = true;
+      this.layoutService.showLoadingPanel();
+
+      const enquiryId = Number(sheetCode);
+      this.enquiryService.getDuraformEnquiry(enquiryId).subscribe(
+        (response) => {
+          this.deliveryDocket = response;
+          this.isLoading = false;
+          this.layoutService.closeLoadingPanel();
+        },
+        (error) => {
+          this.layoutService.closeLoadingPanel();
+          this.dialogService.alert('Invalid Action', error, () => {
+            this.isLoading = false;
+            this.canScan = true;
+          });
         }
       );
     }

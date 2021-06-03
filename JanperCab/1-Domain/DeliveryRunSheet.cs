@@ -11,6 +11,8 @@ namespace _1_Domain
 
         public int DriverId { get; set; }
 
+        public int TruckId { get; set; }
+
         public DateTime CreatedDate { get; set; }
 
         public DateTime? LockedDate { get; set; }
@@ -21,6 +23,8 @@ namespace _1_Domain
 
 
         public virtual Driver Driver { get; set; }
+
+        public virtual Truck Truck { get; set; }
 
         public virtual ICollection<Enquiry> Enquiries { get; set; }
 

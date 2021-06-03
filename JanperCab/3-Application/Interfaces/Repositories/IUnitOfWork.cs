@@ -44,6 +44,8 @@ namespace _3_Application.Interfaces.Repositories
 
         IDriverRepo Drivers { get; }
 
+        ITruckRepo Trucks { get; }
+
         IDeliveryRunSheetRepo DeliveryRunSheets { get; }
 
         IInvoiceRepo Invoices { get; }

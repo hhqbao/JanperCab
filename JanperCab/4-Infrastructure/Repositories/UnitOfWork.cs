@@ -49,6 +49,8 @@ namespace _4_Infrastructure.Repositories
 
         public IDriverRepo Drivers { get; }
 
+        public ITruckRepo Trucks { get; }
+
         public IDeliveryRunSheetRepo DeliveryRunSheets { get; }
 
         public IInvoiceRepo Invoices { get; }
@@ -78,6 +80,7 @@ namespace _4_Infrastructure.Repositories
             DuraformMiscPrices = new DuraformMiscPriceRepo(_dbContext);
             Machines = new MachineRepo(_dbContext);
             Drivers = new DriverRepo(_dbContext);
+            Trucks = new TruckRepo(_dbContext);
             DeliveryRunSheets = new DeliveryRunSheetRepo(_dbContext);
             Invoices = new InvoiceRepo(_dbContext);
         }

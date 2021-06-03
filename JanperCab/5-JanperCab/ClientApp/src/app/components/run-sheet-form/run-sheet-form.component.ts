@@ -1,3 +1,6 @@
+import { TruckDto } from './../../_models/truck/TruckDto';
+import { forkJoin } from 'rxjs';
+import { TruckService } from './../../_services/truck.service';
 import { Role } from 'src/app/_enums/Role';
 import { AuthService } from 'src/app/_services/auth.service';
 import { DeliveryPatchDto } from './../../_models/delivery-run-sheet/DeliveryPatchDto';
@@ -5,7 +8,13 @@ import { EnquiryForRunSheetDto } from './../../_models/enquiry/EnquiryForRunShee
 import { MachineService } from './../../_services/machine.service';
 import { RunSheetService } from './../../_services/run-sheet.service';
 import { DeliveryRunSheetForListDto } from './../../_models/delivery-run-sheet/DeliveryRunSheetForListDto';
-import { FormControl, Validators } from '@angular/forms';
+import {
+  FormControl,
+  Validators,
+  FormGroup,
+  FormBuilder,
+  AbstractControl,
+} from '@angular/forms';
 import { DialogService } from './../../_services/dialog.service';
 import { DriverDto } from './../../_models/driver/DriverDto';
 import { LayoutService } from './../../_services/layout.service';
@@ -35,20 +44,32 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
 
   isLoading = true;
   drivers: DriverDto[] = [];
-  driverIdControl: FormControl;
+  trucks: TruckDto[] = [];
+
+  sheetForm: FormGroup;
 
   role = Role;
 
   constructor(
     private driverService: DriverService,
+    private truckSerivce: TruckService,
     private runSheetService: RunSheetService,
     private machineService: MachineService,
     private layoutService: LayoutService,
     private dialogService: DialogService,
+    private fb: FormBuilder,
     public authService: AuthService
   ) {}
 
-  get disableChangingDriver(): boolean {
+  get driverIdControl(): AbstractControl {
+    return this.sheetForm.get('driverId');
+  }
+
+  get truckIdControl(): AbstractControl {
+    return this.sheetForm.get('truckId');
+  }
+
+  get disableEditing(): boolean {
     if (!this.authService.isInRole(Role[Role.Driver])) {
       return true;
     }
@@ -71,13 +92,28 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.layoutService.showLoadingPanel();
 
-    this.driverService.getAll().subscribe(
-      (response) => {
-        this.drivers = response;
-        this.driverIdControl = new FormControl(
-          this.selectedSheet ? this.selectedSheet.driverId : this.drivers[0].id,
-          [Validators.required]
-        );
+    const observables = forkJoin({
+      drivers: this.driverService.getAll(),
+      trucks: this.truckSerivce.getAll(),
+    });
+
+    observables.subscribe(
+      (responses) => {
+        this.drivers = responses.drivers;
+        this.trucks = responses.trucks;
+
+        this.sheetForm = this.fb.group({
+          driverId: [
+            this.selectedSheet
+              ? this.selectedSheet.driverId
+              : this.drivers[0].id,
+            [Validators.required],
+          ],
+          truckId: [
+            this.selectedSheet ? this.selectedSheet.truckId : this.trucks[0].id,
+            [Validators.required],
+          ],
+        });
 
         if (this.authService.isInRole(Role[Role.Driver])) {
           this.initializeScanner();
@@ -165,15 +201,39 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
       );
   };
 
+  onSelectTruck = () => {
+    if (!this.selectedSheet) {
+      return;
+    }
+
+    this.isLoading = true;
+    this.layoutService.showLoadingPanel();
+    this.runSheetService
+      .changeTruck(this.selectedSheet.id, this.truckIdControl.value)
+      .subscribe(
+        (response) => {
+          this.selectedSheet.truck = response;
+          this.selectedSheet.truckId = response.id;
+          this.isLoading = false;
+          this.layoutService.closeLoadingPanel();
+          this.dialogService.success('Truck has been changed');
+        },
+        (error) => {
+          this.isLoading = false;
+          this.layoutService.closeLoadingPanel();
+          this.dialogService.alert('Invalid Action', error, null);
+        }
+      );
+  };
+
   onUndoDelivering = (enquiry: EnquiryForRunSheetDto) => {
     this.dialogService.confirm('Action Confirmation', 'Are you sure?', () => {
       this.isLoading = true;
       this.layoutService.showLoadingPanel();
       this.machineService.UndoDelivering(enquiry.enquiryId).subscribe(
         (_) => {
-          const index = this.selectedSheet.enquiriesForRunSheet.indexOf(
-            enquiry
-          );
+          const index =
+            this.selectedSheet.enquiriesForRunSheet.indexOf(enquiry);
           this.selectedSheet.enquiriesForRunSheet.splice(index, 1);
           this.isLoading = false;
           this.layoutService.closeLoadingPanel();

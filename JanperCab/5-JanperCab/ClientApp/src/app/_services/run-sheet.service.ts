@@ -1,3 +1,4 @@
+import { TruckDto } from './../_models/truck/TruckDto';
 import { DriverDto } from './../_models/driver/DriverDto';
 import { DeliveryRunSheetForListDto } from './../_models/delivery-run-sheet/DeliveryRunSheetForListDto';
 import { plainToClass } from 'class-transformer';
@@ -42,6 +43,19 @@ export class RunSheetService {
       .pipe(
         map((response) => {
           return plainToClass(DriverDto, response);
+        })
+      );
+  };
+
+  changeTruck = (sheetId: number, truckId: number): Observable<TruckDto> => {
+    return this.http
+      .put<TruckDto>(
+        `${environment.baseUrl}/RunSheets/change-truck/${sheetId}/${truckId}`,
+        null
+      )
+      .pipe(
+        map((response) => {
+          return plainToClass(TruckDto, response);
         })
       );
   };

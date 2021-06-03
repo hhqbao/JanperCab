@@ -1,6 +1,7 @@
 ﻿using _1_Domain;
 using _3_Application.Dtos.DeliveryRunSheet;
 using _3_Application.Dtos.Driver;
+using _3_Application.Dtos.Truck;
 using _3_Application.Interfaces.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -77,6 +78,28 @@ namespace _5_JanperCab.Controllers
             await _unitOfWork.CompleteAsync();
 
             return Ok(_mapper.Map<Driver, DriverDto>(driver));
+        }
+
+        [Authorize(Roles = "Driver")]
+        [HttpPut("change-truck/{sheetId}/{truckId}")]
+        public async Task<IActionResult> ChangeTruck(int sheetId, int truckId)
+        {
+            var sheet = await _unitOfWork.DeliveryRunSheets.GetAsync(sheetId);
+
+            if (sheet == null) return BadRequest("Run Sheet Not Found");
+
+            if (!sheet.IsEditable) return BadRequest("Run Sheet Is Locked! Cannot Be Changed");
+
+            var truck = await _unitOfWork.Trucks.GetAsync(truckId);
+
+            if (truck == null) return BadRequest("Truck Not Found");
+
+            if (truck.IsDisabled) return BadRequest("Truck has been disabled");
+
+            sheet.TruckId = truck.Id;
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(_mapper.Map<Truck, TruckDto>(truck));
         }
 
         [Authorize(Roles = "Driver")]

@@ -1,3 +1,4 @@
+import { TruckDto } from './../truck/TruckDto';
 import { DeliveryPatchDto } from './DeliveryPatchDto';
 import { DeliveryRunSheetDto } from './DeliveryRunSheetDto';
 import { DriverDto } from './../driver/DriverDto';
@@ -7,6 +8,9 @@ import { Type } from 'class-transformer';
 export class DeliveryRunSheetForListDto extends DeliveryRunSheetDto {
   @Type(() => DriverDto)
   driver: DriverDto;
+
+  @Type(() => TruckDto)
+  truck: TruckDto;
 
   @Type(() => EnquiryForRunSheetDto)
   enquiriesForRunSheet: EnquiryForRunSheetDto[];

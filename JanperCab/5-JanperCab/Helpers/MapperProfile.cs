@@ -24,6 +24,7 @@ using _3_Application.Dtos.Machine;
 using _3_Application.Dtos.OnHoldComponent;
 using _3_Application.Dtos.PantryDoorChairRailType;
 using _3_Application.Dtos.Process;
+using _3_Application.Dtos.Truck;
 using _3_Application.Dtos.UploadFile;
 using _5_JanperCab.Helpers.Resolvers;
 using AutoMapper;
@@ -332,6 +333,9 @@ namespace _5_JanperCab.Helpers
 
             CreateMap<Driver, DriverDto>();
             CreateMap<DriverDto, Driver>();
+
+            CreateMap<Truck, TruckDto>();
+            CreateMap<TruckDto, Truck>();
 
             CreateMap<DeliveryRunSheet, DeliveryRunSheetDto>();
             CreateMap<DeliveryRunSheetDto, DeliveryRunSheet>();

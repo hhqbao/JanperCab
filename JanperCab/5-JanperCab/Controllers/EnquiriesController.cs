@@ -51,7 +51,7 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<List<Enquiry>, List<EnquiryForInvoicingDto>>(enquiries));
         }
 
-        [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
+        [Authorize(Roles = "CabinetMaker,Distributor,Manufacturer")]
         [HttpGet("duraform/{id}")]
         public async Task<IActionResult> GetDuraform(int id)
         {

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _2_Persistent;
 
 namespace _2_Persistent.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210530112021_CreateTable_Trucks")]
+    partial class CreateTable_Trucks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -436,14 +438,9 @@ namespace _2_Persistent.Migrations
                     b.Property<DateTime?>("LockedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TruckId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DriverId");
-
-                    b.HasIndex("TruckId");
 
                     b.ToTable("DeliveryRunSheets");
                 });
@@ -2029,12 +2026,6 @@ namespace _2_Persistent.Migrations
                     b.HasOne("_1_Domain.Driver", "Driver")
                         .WithMany("DeliveryRunSheets")
                         .HasForeignKey("DriverId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("_1_Domain.Truck", "Truck")
-                        .WithMany("DeliveryRunSheets")
-                        .HasForeignKey("TruckId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
