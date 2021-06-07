@@ -1,3 +1,7 @@
+import { CustomerCategoryCBDDto } from './../customer-category/CustomerCategoryCBDDto';
+import { CustomerCategoryAccountDto } from './../customer-category/CustomerCategoryAccountDto';
+import { Type } from 'class-transformer';
+import { CustomerCategoryDto } from '../customer-category/CustomerCategoryDto';
 import { CustomerType } from './../../_enums/CustomerType';
 
 export abstract class CustomerDto {
@@ -5,6 +9,7 @@ export abstract class CustomerDto {
   id: number;
   managerId: number;
   customerType: CustomerType;
+  customerCategoryId: number;
   name: string;
   imageUrl: string;
   email: string;
@@ -25,6 +30,24 @@ export abstract class CustomerDto {
   deliveryPostcode: string;
 
   discountRate: number;
+
+  @Type(() => CustomerCategoryDto, {
+    keepDiscriminatorProperty: true,
+    discriminator: {
+      property: '$type',
+      subTypes: [
+        {
+          value: CustomerCategoryAccountDto,
+          name: '_3_Application.Dtos.CustomerCategory.CustomerCategoryAccountDto, 3-Application',
+        },
+        {
+          value: CustomerCategoryCBDDto,
+          name: '_3_Application.Dtos.CustomerCategory.CustomerCategoryCBDDto, 3-Application',
+        },
+      ],
+    },
+  })
+  customerCategory: CustomerCategoryDto;
 
   get invoiceDetails(): string {
     return `${this.invoiceAddress}, ${this.invoiceSuburb} ${this.invoiceState} ${this.invoicePostcode}`;

@@ -76,11 +76,23 @@ namespace _1_Domain
         }
 
         public override bool HasBeenDelivered => DuraformProcesses.Any(x =>
-            x.DuraformProcessType == DuraformProcessEnum.Delivering && x.EndTime.HasValue);
+            (x.DuraformProcessType == DuraformProcessEnum.Delivering || x.DuraformProcessType == DuraformProcessEnum.PickingUp) &&
+            x.EndTime.HasValue);
 
-        public override DateTime? DeliveredTime => DuraformProcesses.FirstOrDefault(x =>
-            x.DuraformProcessType == DuraformProcessEnum.Delivering && x.EndTime.HasValue)?.EndTime;
 
+        public override DateTime? DeliveredTime
+        {
+            get
+            {
+                var deliveryProcess = DuraformProcesses.OfType<DuraformProcessDelivering>().FirstOrDefault();
+
+                if (deliveryProcess?.EndTime != null) return deliveryProcess.EndTime;
+
+                var pickUpProcess = DuraformProcesses.OfType<DuraformProcessPickingUp>().FirstOrDefault();
+
+                return pickUpProcess?.EndTime;
+            }
+        }
 
         public override List<InvoiceComponent> GenerateComponentsForInvoice()
         {
@@ -315,6 +327,28 @@ namespace _1_Domain
             }
         }
 
+        public override void ProcessPickUp(PickUpSheet pickUpSheet)
+        {
+            switch (CurrentProcess)
+            {
+                case DuraformProcessPacking packing:
+                    if (!packing.EndTime.HasValue)
+                        throw new Exception($"Order currently being PACKED on Packing Machine {packing.MachinePacking.Name}");
+
+                    packing.IsCurrent = false;
+
+                    var deliveringProcess = DuraformProcesses.OfType<DuraformProcessDelivering>().First();
+                    DuraformProcesses.Remove(deliveringProcess);
+
+                    DuraformProcesses.Add(new DuraformProcessPickingUp { StartTime = DateTime.Now, IsCurrent = true });
+
+                    PickUpSheetId = pickUpSheet.Id;
+                    break;
+                default:
+                    throw new Exception("Order needs to be at PACKED stage to be DISPATCHED");
+            }
+        }
+
         public override void UndoDelivering()
         {
             DeliveryRunSheetId = null;
@@ -329,6 +363,19 @@ namespace _1_Domain
             packingProcess.IsCurrent = true;
         }
 
+        public override void UndoPickUp()
+        {
+            PickUpSheetId = null;
+
+            var pickUpProcess = DuraformProcesses.OfType<DuraformProcessPickingUp>().First();
+            DuraformProcesses.Remove(pickUpProcess);
+
+            var packingProcess = DuraformProcesses.OfType<DuraformProcessPacking>().First();
+            packingProcess.IsCurrent = true;
+
+            DuraformProcesses.Add(new DuraformProcessDelivering());
+        }
+
         public override void CompleteDelivering()
         {
             if (!(CurrentProcess is DuraformProcessDelivering deliveringProcess))
@@ -338,6 +385,17 @@ namespace _1_Domain
                 throw new Exception($"Order [{Id:000000}] was already delivered on {deliveringProcess.EndTime.Value:dd/MM/yyyy hh:mm}");
 
             deliveringProcess.EndTime = DateTime.Now;
+        }
+
+        public override void CompletePickingUp()
+        {
+            if (!(CurrentProcess is DuraformProcessPickingUp pickUpProcess))
+                throw new Exception($"Order [{Id:000000}] Not At Delivering Stage");
+
+            if (pickUpProcess.EndTime.HasValue)
+                throw new Exception($"Order [{Id:000000}] was already picked up on {pickUpProcess.EndTime.Value:dd/MM/yyyy hh:mm}");
+
+            pickUpProcess.EndTime = DateTime.Now;
         }
 
         public override string GetDescription()

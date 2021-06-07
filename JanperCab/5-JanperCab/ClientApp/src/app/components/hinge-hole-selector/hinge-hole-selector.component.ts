@@ -26,6 +26,7 @@ export class HingeHoleSelectorComponent implements OnInit {
   @ViewChild('mainInput') mainInput: ElementRef;
   @ViewChild('topInput') topInput: ElementRef;
   @ViewChild('topCenterInput') topCenterInput: ElementRef;
+  @ViewChild('middleOneInput') middleOneInput: ElementRef;
   @ViewChild('bottomCenterInput') bottomCenterInput: ElementRef;
   @ViewChild('bottomInput') bottomInput: ElementRef;
 
@@ -38,6 +39,7 @@ export class HingeHoleSelectorComponent implements OnInit {
     { text: '2', value: 2 },
     { text: '3', value: 3 },
     { text: '4', value: 4 },
+    { text: '5', value: 5 },
   ];
 
   get quantity(): AbstractControl {
@@ -50,6 +52,10 @@ export class HingeHoleSelectorComponent implements OnInit {
 
   get topCenter(): AbstractControl {
     return this.formGroup.get('hingeHole')?.get('topCenter');
+  }
+
+  get middleOne(): AbstractControl {
+    return this.formGroup.get('hingeHole')?.get('middleOne');
   }
 
   get bottomCenter(): AbstractControl {
@@ -104,20 +110,42 @@ export class HingeHoleSelectorComponent implements OnInit {
 
   onTopTab = (event: KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === 'Tab') {
-      if (this.quantity.value === 2) {
-        (this.bottomInput.nativeElement as HTMLElement).focus();
-      } else {
-        (this.topCenterInput.nativeElement as HTMLElement).focus();
+      switch (this.quantity.value) {
+        case 1:
+          (this.mainInput.nativeElement as HTMLElement).focus();
+          break;
+        case 2:
+          (this.bottomInput.nativeElement as HTMLElement).focus();
+          break;
+        default:
+          (this.topCenterInput.nativeElement as HTMLElement).focus();
+          break;
       }
     }
   };
 
   onTopCenterTab = (event: KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === 'Tab') {
-      if (this.quantity.value > 3) {
-        (this.bottomCenterInput.nativeElement as HTMLElement).focus();
-      } else {
-        (this.bottomInput.nativeElement as HTMLElement).focus();
+      switch (this.quantity.value) {
+        case 3:
+          (this.bottomInput.nativeElement as HTMLElement).focus();
+          break;
+        case 4:
+          (this.bottomCenterInput.nativeElement as HTMLElement).focus();
+          break;
+        default:
+          (this.middleOneInput.nativeElement as HTMLElement).focus();
+          break;
+      }
+    }
+  };
+
+  onMiddleOneTab = (event: KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === 'Tab') {
+      switch (this.quantity.value) {
+        case 5:
+          (this.bottomCenterInput.nativeElement as HTMLElement).focus();
+          break;
       }
     }
   };
@@ -157,10 +185,12 @@ export class HingeHoleSelectorComponent implements OnInit {
     const quantity = this.quantity.value;
 
     this.topCenter.patchValue(null);
+    this.middleOne.patchValue(null);
     this.bottomCenter.patchValue(null);
     this.bottom.patchValue(null);
 
     this.topCenter.clearValidators();
+    this.middleOne.clearValidators();
     this.bottomCenter.clearValidators();
     this.bottom.clearValidators();
 
@@ -182,7 +212,13 @@ export class HingeHoleSelectorComponent implements OnInit {
       ]);
     }
 
+    if (quantity >= 5) {
+      this.middleOne.patchValue(96);
+      this.middleOne.setValidators([Validators.required, Validators.min(50)]);
+    }
+
     this.topCenter.updateValueAndValidity();
+    this.middleOne.updateValueAndValidity();
     this.bottomCenter.updateValueAndValidity();
     this.bottom.updateValueAndValidity();
 
@@ -198,10 +234,11 @@ export class HingeHoleSelectorComponent implements OnInit {
           hingeHoleStyle: [hingeHoleStyle, Validators.required],
           quantity: [
             2,
-            [Validators.required, Validators.min(1), Validators.max(4)],
+            [Validators.required, Validators.min(1), Validators.max(5)],
           ],
           top: [96, [Validators.required, Validators.min(50)]],
           topCenter: [null, []],
+          middleOne: [null, []],
           bottomCenter: [null, []],
           bottom: [96, [Validators.required, Validators.min(50)]],
         })
@@ -232,6 +269,9 @@ export class HingeHoleSelectorComponent implements OnInit {
           break;
         case 4:
           valueString = `${style} ${formValue.top}/${formValue.topCenter}/${formValue.bottomCenter}/${formValue.bottom}`;
+          break;
+        case 5:
+          valueString = `${style} ${formValue.top}/${formValue.topCenter}/${formValue.middleOne}/${formValue.bottomCenter}/${formValue.bottom}`;
           break;
         default:
           valueString = 'Unsupported Hinge Hole Quantity';

@@ -101,7 +101,7 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
       (responses) => {
         this.drivers = responses.drivers;
         this.trucks = responses.trucks;
-
+        console.log(this.selectedSheet);
         this.sheetForm = this.fb.group({
           driverId: [
             this.selectedSheet
@@ -230,7 +230,7 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
     this.dialogService.confirm('Action Confirmation', 'Are you sure?', () => {
       this.isLoading = true;
       this.layoutService.showLoadingPanel();
-      this.machineService.UndoDelivering(enquiry.enquiryId).subscribe(
+      this.machineService.undoDelivering(enquiry.enquiryId).subscribe(
         (_) => {
           const index =
             this.selectedSheet.enquiriesForRunSheet.indexOf(enquiry);
@@ -252,7 +252,6 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
 
   onScan = (sCode: any, iQty: any) => {
     const enquiryId = Number(sCode);
-    const driverId = this.driverIdControl.value;
 
     this.isLoading = true;
     this.layoutService.showLoadingPanel();
@@ -260,7 +259,7 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
     if (this.selectedSheet) {
       this.addOrderToList(this.selectedSheet, enquiryId);
     } else {
-      this.createRunSheet(driverId, (sheet: DeliveryRunSheetForListDto) => {
+      this.createRunSheet((sheet: DeliveryRunSheetForListDto) => {
         this.addOrderToList(sheet, enquiryId);
       });
     }
@@ -286,10 +285,12 @@ export class RunSheetFormComponent implements OnInit, OnDestroy {
   };
 
   private createRunSheet = (
-    driverId: number,
     callBack: (sheet: DeliveryRunSheetForListDto) => any
   ): void => {
-    this.runSheetService.createRunSheet(driverId).subscribe(
+    const driverId = this.driverIdControl.value;
+    const truckId = this.truckIdControl.value;
+
+    this.runSheetService.createRunSheet(driverId, truckId).subscribe(
       (response) => {
         this.selectedSheet = response;
         this.runSheets.push(this.selectedSheet);

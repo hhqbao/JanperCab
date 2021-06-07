@@ -63,7 +63,10 @@ namespace _1_Domain
 
         public bool NotEditable { get; set; }
 
+
         public int? DeliveryRunSheetId { get; set; }
+
+        public int? PickUpSheetId { get; set; }
 
 
         public virtual ApplicationUser Creator { get; set; }
@@ -73,6 +76,8 @@ namespace _1_Domain
         public virtual Customer Manager { get; set; }
 
         public virtual DeliveryRunSheet DeliveryRunSheet { get; set; }
+
+        public virtual PickUpSheet PickUpSheet { get; set; }
 
         public virtual Invoice Invoice { get; set; }
 
@@ -122,9 +127,15 @@ namespace _1_Domain
 
         public abstract void ProcessDelivering(DeliveryRunSheet runSheet);
 
+        public abstract void ProcessPickUp(PickUpSheet pickUpSheet);
+
         public abstract void UndoDelivering();
 
+        public abstract void UndoPickUp();
+
         public abstract void CompleteDelivering();
+
+        public abstract void CompletePickingUp();
 
 
         protected Enquiry()

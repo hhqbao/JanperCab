@@ -25,6 +25,7 @@ import {
   Input,
 } from '@angular/core';
 import { DistributorDto } from 'src/app/_models/customer/DistributorDto';
+import { CustomerCategoryDto } from 'src/app/_models/customer-category/CustomerCategoryDto';
 
 @Component({
   selector: 'app-customer-form',
@@ -52,8 +53,14 @@ export class CustomerFormComponent implements OnInit {
     },
   ];
 
+  customerCategories: CustomerCategoryDto[] = [];
+
   get customerTypeControl(): AbstractControl {
     return this.formGroup.get('customerType');
+  }
+
+  get customerCategoryIdControl(): AbstractControl {
+    return this.formGroup.get('customerCategoryId');
   }
 
   get discountRate(): AbstractControl {
@@ -90,6 +97,10 @@ export class CustomerFormComponent implements OnInit {
         this.customer ? this.customer.customerType : CustomerType.CabinetMaker,
         [Validators.required],
       ],
+      customerCategoryId: [
+        this.customer ? this.customer.customerCategoryId : null,
+        [Validators.required],
+      ],
       name: [this.customer?.name, [Validators.required]],
       email: [this.customer?.email, [Validators.required, Validators.email]],
       phone: [this.customer?.phone, [Validators.required]],
@@ -112,9 +123,24 @@ export class CustomerFormComponent implements OnInit {
       ],
     });
 
-    setTimeout(() => {
-      (this.customerName.nativeElement as HTMLElement).focus();
-    });
+    this.isLoading = true;
+    this.layout.showLoadingPanel();
+    this.customerService.getCustomerCategoryList().subscribe(
+      (response) => {
+        this.customerCategories = response;
+
+        this.isLoading = false;
+        this.layout.closeLoadingPanel();
+
+        setTimeout(() => {
+          (this.customerName.nativeElement as HTMLElement).focus();
+        });
+      },
+      (error) => {
+        this.layout.closeLoadingPanel();
+        this.dialog.alert('Application Error', error, null);
+      }
+    );
   }
 
   onSubmit = () => {

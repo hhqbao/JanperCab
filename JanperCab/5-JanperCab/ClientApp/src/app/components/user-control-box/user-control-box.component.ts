@@ -14,6 +14,6 @@ export class UserControlBoxComponent implements OnInit {
 
   onLogOut = () => {
     this.authService.logOut();
-    this.router.navigate(['']);
+    location.reload();
   };
 }

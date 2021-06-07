@@ -1,5 +1,2 @@
-export class DuraformArchForList {
-  id: number;
-  name: string;
-  imageUrl: string;
-}
+import { DuraformArchDto } from './DuraformArchDto';
+export class DuraformArchForList extends DuraformArchDto {}

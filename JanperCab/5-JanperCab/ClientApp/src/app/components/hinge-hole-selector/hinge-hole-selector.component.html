@@ -43,7 +43,8 @@
               'col-1-1': quantity.value === 1,
               'col-1-2': quantity.value === 2,
               'col-1-3': quantity.value === 3,
-              'col-1-4': quantity.value === 4
+              'col-1-4': quantity.value === 4,
+              'col-1-5': quantity.value === 5
             }"
           >
             <label class="form__label">Top</label>
@@ -67,13 +68,14 @@
             />
           </div>
           <div
-            *ngIf="quantity.value > 2"
+            *ngIf="quantity.value >= 3"
             [ngClass]="{
               'col-1-3': quantity.value === 3,
-              'col-1-4': quantity.value === 4
+              'col-1-4': quantity.value === 4,
+              'col-1-5': quantity.value === 5
             }"
           >
-            <label class="form__label">C1</label>
+            <label class="form__label">T1</label>
             <input
               #topCenterInput
               type="text"
@@ -93,8 +95,40 @@
               (keydown)="onTopCenterTab($event)"
             />
           </div>
-          <div *ngIf="quantity.value > 3" class="col-1-4">
-            <label class="form__label">C2</label>
+          <div
+            *ngIf="quantity.value >= 5"
+            [ngClass]="{
+              'col-1-5': quantity.value === 5
+            }"
+          >
+            <label class="form__label">C1</label>
+            <input
+              #middleOneInput
+              type="text"
+              class="form__control tab-ignore"
+              currencyMask
+              appSelectOnFocus
+              formControlName="middleOne"
+              [options]="{
+                align: 'center',
+                allowZero: false,
+                precision: '0',
+                decimal: '',
+                prefix: '',
+                thousands: ''
+              }"
+              (blur)="onSizeBlur(middleOne)"
+              (keydown)="onMiddleOneTab($event)"
+            />
+          </div>
+          <div
+            *ngIf="quantity.value >= 4"
+            [ngClass]="{
+              'col-1-4': quantity.value === 4,
+              'col-1-5': quantity.value === 5
+            }"
+          >
+            <label class="form__label">B2</label>
             <input
               #bottomCenterInput
               type="text"
@@ -115,11 +149,12 @@
             />
           </div>
           <div
-            *ngIf="quantity.value > 1"
+            *ngIf="quantity.value >= 2"
             [ngClass]="{
               'col-1-2': quantity.value === 2,
               'col-1-3': quantity.value === 3,
-              'col-1-4': quantity.value === 4
+              'col-1-4': quantity.value === 4,
+              'col-1-5': quantity.value === 5
             }"
           >
             <label class="form__label">Bottom</label>

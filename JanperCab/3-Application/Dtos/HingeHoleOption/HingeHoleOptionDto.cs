@@ -14,6 +14,8 @@ namespace _3_Application.Dtos.HingeHoleOption
 
         public decimal? TopCenter { get; set; }
 
+        public decimal? MiddleOne { get; set; }
+
         public decimal? BottomCenter { get; set; }
 
         public decimal? Bottom { get; set; }

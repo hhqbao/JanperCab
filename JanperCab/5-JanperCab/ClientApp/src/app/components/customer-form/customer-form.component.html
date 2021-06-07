@@ -17,6 +17,18 @@
             [isDisabled]="customer && customer.id"
           ></app-select-menu>
         </div>
+        <div
+          class="form__group"
+          *ngIf="authService.isInRole(role[role.Manufacturer])"
+        >
+          <label class="form__label">Account Type</label>
+          <app-select-menu
+            [control]="customerCategoryIdControl"
+            [values]="customerCategories"
+            [valueKey]="'id'"
+            [valueDisplay]="'description'"
+          ></app-select-menu>
+        </div>
         <div class="row">
           <div class="col-1-2">
             <div class="form__group">

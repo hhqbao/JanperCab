@@ -1,15 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using _1_Domain.Enum;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace _1_Domain
 {
-    public enum CustomerType
-    {
-        Manufacturer = 1,
-        Distributor = 2,
-        CabinetMaker = 3
-    }
-
     public abstract class Customer
     {
         public int Id { get; set; }
@@ -17,6 +11,8 @@ namespace _1_Domain
         public int? ManagerId { get; set; }
 
         public CustomerType CustomerType { get; set; }
+
+        public int CustomerCategoryId { get; set; }
 
         public string Name { get; set; }
 
@@ -57,6 +53,8 @@ namespace _1_Domain
 
         public virtual Customer Manager { get; set; }
 
+        public virtual CustomerCategory CustomerCategory { get; set; }
+
         public virtual ICollection<Customer> ManagedCustomers { get; set; }
 
         public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
@@ -65,7 +63,10 @@ namespace _1_Domain
 
         public virtual ICollection<Enquiry> ManagedEnquiries { get; set; }
 
+        public virtual ICollection<PickUpSheet> PickUpSheets { get; set; }
+
         public virtual ICollection<Invoice> Invoices { get; set; }
+
 
 
         protected Customer()
@@ -77,6 +78,8 @@ namespace _1_Domain
             OrderedEnquiries = new Collection<Enquiry>();
 
             ManagedEnquiries = new Collection<Enquiry>();
+
+            PickUpSheets = new Collection<PickUpSheet>();
 
             Invoices = new Collection<Invoice>();
         }

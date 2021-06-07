@@ -23,7 +23,10 @@ namespace _2_Persistent
         public DbSet<HingeHoleType> HingeHoleTypes { get; set; }
         public DbSet<HingeHoleOption> HingeHoleOptions { get; set; }
         public DbSet<HingeHoleStyle> HingeHoleStyle { get; set; }
+
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<CustomerCategory> CustomerCategories { get; set; }
+
         public DbSet<DuraformDesignEdgeProfile> DuraformDesignEdgeProfiles { get; set; }
         public DbSet<DuraformPriceGrid> DuraformPriceGrids { get; set; }
         public DbSet<Machine> Machines { get; set; }
@@ -41,6 +44,7 @@ namespace _2_Persistent
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<Truck> Trucks { get; set; }
         public DbSet<DeliveryRunSheet> DeliveryRunSheets { get; set; }
+        public DbSet<PickUpSheet> PickUpSheets { get; set; }
 
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<InvoiceComponent> InvoiceComponents { get; set; }
@@ -89,6 +93,10 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DistributorConfig());
             builder.ApplyConfiguration(new CabinetMakerConfig());
 
+            builder.ApplyConfiguration(new CustomerCategoryConfig());
+            builder.ApplyConfiguration(new CustomerCategoryAccountConfig());
+            builder.ApplyConfiguration(new CustomerCategoryCBDConfig());
+
             builder.ApplyConfiguration(new DuraformDesignEdgeProfileConfig());
             builder.ApplyConfiguration(new DuraformPriceGridConfig());
             builder.ApplyConfiguration(new DuraformWrapPriceGridConfig());
@@ -133,6 +141,7 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DriverConfig());
             builder.ApplyConfiguration(new TruckConfig());
             builder.ApplyConfiguration(new DeliveryRunSheetConfig());
+            builder.ApplyConfiguration(new PickUpSheetConfig());
 
             builder.ApplyConfiguration(new InvoiceConfig());
             builder.ApplyConfiguration(new InvoiceComponentConfig());

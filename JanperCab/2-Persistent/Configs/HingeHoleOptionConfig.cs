@@ -21,6 +21,9 @@ namespace _2_Persistent.Configs
             builder.Property(x => x.TopCenter)
                 .HasColumnType("decimal(18,2)");
 
+            builder.Property(x => x.MiddleOne)
+                .HasColumnType("decimal(18,2)");
+
             builder.Property(x => x.BottomCenter)
                 .HasColumnType("decimal(18,2)");
 

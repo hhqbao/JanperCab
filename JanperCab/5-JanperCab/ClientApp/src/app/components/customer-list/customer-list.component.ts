@@ -41,9 +41,8 @@ export class CustomerListComponent implements OnInit {
     this.layout.showLoadingPanel();
     this.customerService.getCustomerList(this.filterValues).subscribe(
       (response) => {
-        this.itemList = new ItemList<CabinetMakerDto>();
-        this.itemList.items = plainToClass(CabinetMakerDto, response.items);
-        this.itemList.totalItemCount = response.totalItemCount;
+        this.itemList = response;
+
         this.isLoading = false;
         this.layout.closeLoadingPanel();
       },

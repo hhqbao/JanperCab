@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using _1_Domain.Enum;
 
 namespace _4_Infrastructure.Repositories
 {

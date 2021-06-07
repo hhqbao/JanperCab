@@ -344,6 +344,9 @@ namespace _2_Persistent.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CustomerCategoryId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CustomerType")
                         .HasColumnType("int");
 
@@ -410,11 +413,34 @@ namespace _2_Persistent.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CustomerCategoryId");
+
                     b.HasIndex("ManagerId");
 
                     b.ToTable("Customers");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Customer");
+                });
+
+            modelBuilder.Entity("_1_Domain.CustomerCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomerCategories");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("CustomerCategory");
                 });
 
             modelBuilder.Entity("_1_Domain.DeliveryRunSheet", b =>
@@ -1048,6 +1074,9 @@ namespace _2_Persistent.Migrations
                     b.Property<DateTime?>("OrderedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("PickUpSheetId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("SubTotal")
                         .HasColumnName("SubTotal")
                         .HasColumnType("decimal(18,2)");
@@ -1070,6 +1099,8 @@ namespace _2_Persistent.Migrations
 
                     b.HasIndex("ManagerId");
 
+                    b.HasIndex("PickUpSheetId");
+
                     b.ToTable("Enquiries");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Enquiry");
@@ -1088,6 +1119,9 @@ namespace _2_Persistent.Migrations
 
                     b.Property<int>("HingeHoleStyle")
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("MiddleOne")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -1360,6 +1394,35 @@ namespace _2_Persistent.Migrations
                     b.ToTable("PantryDoorChairRailTypes");
                 });
 
+            modelBuilder.Entity("_1_Domain.PickUpSheet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("PickUpSheets");
+                });
+
             modelBuilder.Entity("_1_Domain.Process", b =>
                 {
                     b.Property<int>("Id")
@@ -1446,6 +1509,24 @@ namespace _2_Persistent.Migrations
                     b.HasBaseType("_1_Domain.Customer");
 
                     b.HasDiscriminator().HasValue("Manufacturer");
+                });
+
+            modelBuilder.Entity("_1_Domain.CustomerCategoryAccount", b =>
+                {
+                    b.HasBaseType("_1_Domain.CustomerCategory");
+
+                    b.Property<int>("DurationInDays")
+                        .HasColumnName("DurationInDays")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("CustomerCategoryAccount");
+                });
+
+            modelBuilder.Entity("_1_Domain.CustomerCategoryCBD", b =>
+                {
+                    b.HasBaseType("_1_Domain.CustomerCategory");
+
+                    b.HasDiscriminator().HasValue("CustomerCategoryCBD");
                 });
 
             modelBuilder.Entity("_1_Domain.DuraformComponentWithOption", b =>
@@ -2018,6 +2099,12 @@ namespace _2_Persistent.Migrations
 
             modelBuilder.Entity("_1_Domain.Customer", b =>
                 {
+                    b.HasOne("_1_Domain.CustomerCategory", "CustomerCategory")
+                        .WithMany("Customers")
+                        .HasForeignKey("CustomerCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("_1_Domain.Customer", "Manager")
                         .WithMany("ManagedCustomers")
                         .HasForeignKey("ManagerId")
@@ -2149,6 +2236,11 @@ namespace _2_Persistent.Migrations
                         .WithMany("ManagedEnquiries")
                         .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("_1_Domain.PickUpSheet", "PickUpSheet")
+                        .WithMany("Enquiries")
+                        .HasForeignKey("PickUpSheetId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("_1_Domain.HingeHoleOption", b =>
@@ -2211,6 +2303,21 @@ namespace _2_Persistent.Migrations
                         .WithMany("OnHoldComponents")
                         .HasForeignKey("ProcessId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("_1_Domain.PickUpSheet", b =>
+                {
+                    b.HasOne("_1_Domain.ApplicationUser", "ApplicationUser")
+                        .WithMany("CreatedPickUpSheets")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("_1_Domain.Customer", "Custom")
+                        .WithMany("PickUpSheets")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

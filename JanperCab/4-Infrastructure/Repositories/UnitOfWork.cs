@@ -11,6 +11,8 @@ namespace _4_Infrastructure.Repositories
 
         public ICustomerRepo Customers { get; }
 
+        public ICustomerCategoryRepo CustomerCategories { get; }
+
         public IDuraformSerieRepo DuraformSeries { get; }
 
         public IDuraformDesignRepo DuraformDesigns { get; }
@@ -53,6 +55,8 @@ namespace _4_Infrastructure.Repositories
 
         public IDeliveryRunSheetRepo DeliveryRunSheets { get; }
 
+        public IPickUpSheetRepo PickUpSheets { get; }
+
         public IInvoiceRepo Invoices { get; }
 
 
@@ -61,6 +65,7 @@ namespace _4_Infrastructure.Repositories
             _dbContext = dbContext;
 
             Customers = new CustomerRepo(_dbContext);
+            CustomerCategories = new CustomerCategoryRepo(_dbContext);
             DuraformSeries = new DuraformSerieRepo(_dbContext);
             DuraformDesigns = new DuraformDesignRepo(_dbContext);
             DuraformWrapTypes = new DuraformWrapTypeRepo(_dbContext);
@@ -82,6 +87,7 @@ namespace _4_Infrastructure.Repositories
             Drivers = new DriverRepo(_dbContext);
             Trucks = new TruckRepo(_dbContext);
             DeliveryRunSheets = new DeliveryRunSheetRepo(_dbContext);
+            PickUpSheets = new PickUpSheetRepo(_dbContext);
             Invoices = new InvoiceRepo(_dbContext);
         }
 

@@ -1,0 +1,93 @@
+<div class="pick-up-page">
+  <app-float-box *ngIf="showSheetForm" [width]="70">
+    <app-pick-up-form
+      [selectedSheet]="selectedSheet"
+      [sheets]="sheets"
+      (printBtnClick)="onPrintClick($event)"
+      (closeBtnClick)="onCloseSheetForm()"
+    ></app-pick-up-form>
+  </app-float-box>
+  <app-pdf-viewer *ngIf="showSheetPdf" (closePanel)="onCloseSheetPdf()">
+    <app-pick-up-sheet-pdf [sheetId]="selectedSheet.id"></app-pick-up-sheet-pdf>
+  </app-pdf-viewer>
+  <app-pdf-viewer
+    *ngIf="scannedEnquiryId"
+    [documentName]="'Delivery-Docket'"
+    (closePanel)="scannedEnquiryId = null; canScan = true"
+  >
+    <app-delivery-docket [enquiryId]="scannedEnquiryId"></app-delivery-docket>
+  </app-pdf-viewer>
+  <div class="pick-up-page__content">
+    <app-simple-box [heading]="'Pick Up Sheets'">
+      <div class="pick-up-page__header">
+        <button
+          class="btn btn--secondary"
+          *ngIf="authService.isInRole(role[role.Driver])"
+          (click)="selectedSheet = null; showSheetForm = true"
+        >
+          <i class="fa fa-plus-circle" aria-hidden="true"></i>
+          Create Pick Up Sheet
+        </button>
+      </div>
+      <div class="pick-up-page__body">
+        <table class="table table--hovered table--left">
+          <thead>
+            <tr>
+              <th class="text-center" style="width: 6rem">Status</th>
+              <th class="text-center" style="width: 9rem">Sheet No.</th>
+              <th style="width: 12rem">
+                <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                Created On
+              </th>
+              <th style="width: 12rem">
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                Time At
+              </th>
+              <th>Customer Name</th>
+              <th class="text-center" style="width: 12rem">Order Count</th>
+              <th class="text-center" style="width: 12rem">Created By</th>
+              <th style="width: 12rem"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sheet of sheets">
+              <td class="text-center">
+                <i
+                  *ngIf="sheet.isCompleted"
+                  class="fa fa-lock text-alert"
+                  aria-hidden="true"
+                ></i>
+              </td>
+              <td class="text-center" (click)="onSelectSheet(sheet)">
+                {{ sheet.getBarcodePrefix() }}{{ sheet.id | leading }}
+              </td>
+              <td (click)="onSelectSheet(sheet)">
+                {{ sheet.createdDate | date: "dd/MM/yyyy" }}
+              </td>
+              <td (click)="onSelectSheet(sheet)">
+                {{ sheet.createdDate | date: "hh:mm" }}
+              </td>
+              <td (click)="onSelectSheet(sheet)">
+                {{ sheet.customer.name }}
+              </td>
+              <td class="text-center" (click)="onSelectSheet(sheet)">
+                {{ sheet.enquiriesForPickUpSheet.length }}
+              </td>
+              <td class="text-center" (click)="onSelectSheet(sheet)">User</td>
+              <td>
+                <button
+                  *ngIf="!sheet.isCompleted"
+                  class="btn btn--link"
+                  (click)="onDeleteSheet(sheet)"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pick-up-page__footer"></div>
+    </app-simple-box>
+  </div>
+</div>

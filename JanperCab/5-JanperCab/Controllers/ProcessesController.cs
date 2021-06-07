@@ -175,12 +175,51 @@ namespace _5_JanperCab.Controllers
                 return BadRequest("Order Not Found");
 
             if (enquiry.DeliveryRunSheetId.HasValue)
-                return BadRequest($"Order is already in run sheet number {enquiry.DeliveryRunSheetId}");
+                return BadRequest($"Order is already in delivery sheet number {enquiry.DeliveryRunSheetId}");
+
+            if (enquiry.PickUpSheetId.HasValue)
+                return BadRequest($"Order is in pick up sheet number {enquiry.PickUpSheetId}");
 
             enquiry.ProcessDelivering(sheet);
             await _unitOfWork.CompleteAsync();
 
             return Ok(new EnquiryForRunSheetDto(enquiry));
+        }
+
+        [Authorize(Roles = "Driver")]
+        [HttpPut("pickup/{sheetId}/{enquiryId}")]
+        public async Task<IActionResult> ProcessPickUp(int sheetId, int enquiryId)
+        {
+            var sheet = await _unitOfWork.PickUpSheets.GetAsync(sheetId);
+
+            if (sheet == null)
+                return BadRequest("Sheet Not Found");
+
+            if (sheet.IsCompleted)
+                return BadRequest("Sheet Is Completed! Cannot Be Changed");
+
+            var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
+
+            var enquiry = await _unitOfWork.Enquiries.GetEnquiryAsync(enquiryId, currentUser.Customer);
+
+            if (enquiry == null)
+                return BadRequest("Order Not Found");
+
+            if (enquiry.DeliveryRunSheetId.HasValue)
+                return BadRequest($"Order is in delivery sheet number {enquiry.DeliveryRunSheetId}");
+
+            if (enquiry.PickUpSheetId.HasValue)
+                return BadRequest($"Order is in pick up sheet number {enquiry.PickUpSheetId}");
+
+            var pickUpCustomer = await _unitOfWork.Customers.GetAsync(sheet.CustomerId);
+
+            if (enquiry.CustomerId != pickUpCustomer.Id && enquiry.ManagerId != pickUpCustomer.Id)
+                return BadRequest($"This order belongs to {enquiry.Customer.Name}! Cannot process pick up");
+
+            enquiry.ProcessPickUp(sheet);
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(new EnquiryForPickUpSheetDto(enquiry));
         }
 
         [Authorize(Roles = "Driver")]
@@ -201,6 +240,29 @@ namespace _5_JanperCab.Controllers
                 return BadRequest("Run Sheet Is Locked! Cannot Be Changed");
 
             enquiry.UndoDelivering();
+            await _unitOfWork.CompleteAsync();
+
+            return Ok();
+        }
+
+        [Authorize(Roles = "Driver")]
+        [HttpPut("undo-pickup/{enquiryId}")]
+        public async Task<IActionResult> UndoProcessPickUp(int enquiryId)
+        {
+            var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
+
+            var enquiry = await _unitOfWork.Enquiries.GetEnquiryAsync(enquiryId, currentUser.Customer);
+
+            if (enquiry == null)
+                return BadRequest("Order Not Found");
+
+            if (!enquiry.PickUpSheetId.HasValue)
+                return BadRequest("Order Not Being Picked Up");
+
+            if (enquiry.PickUpSheet.IsCompleted)
+                return BadRequest("Order Has Been Picked Up! Cannot Be Changed");
+
+            enquiry.UndoPickUp();
             await _unitOfWork.CompleteAsync();
 
             return Ok();

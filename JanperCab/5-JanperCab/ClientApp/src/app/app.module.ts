@@ -1,3 +1,8 @@
+import { DeliveryDocketComponent } from './components/delivery-docket/delivery-docket.component';
+import { PickUpSheetPdfComponent } from './components/pick-up-sheet-pdf/pick-up-sheet-pdf.component';
+import { PickUpFormComponent } from './components/pick-up-form/pick-up-form.component';
+import { PickUpPageComponent } from './pages/pick-up-page/pick-up-page.component';
+import { PickUpSheetService } from './_services/pick-up-sheet.service';
 import { TruckService } from './_services/truck.service';
 import { PackingLabelPdfComponent } from './components/packing-label-pdf/packing-label-pdf.component';
 import { OnHoldComponentService } from './_services/on-hold-component.service';
@@ -223,6 +228,7 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     PaginationComponent,
     DuraformQuotePageComponent,
     DuraformPriceGridPageComponent,
+    DeliveryDocketComponent,
     DuraformDeliveryDocketComponent,
     DeliveryDocketDuraformDoorsComponent,
     DeliveryDocketPantryDoorsComponent,
@@ -258,6 +264,10 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     InvoiceProcessPageComponent,
     OnHoldDetailFormComponent,
     PackingLabelPdfComponent,
+    PickUpPageComponent,
+    PickUpFormComponent,
+    PickUpFormComponent,
+    PickUpSheetPdfComponent,
   ],
   imports: [
     BrowserModule,
@@ -304,6 +314,7 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     DriverService,
     TruckService,
     RunSheetService,
+    PickUpSheetService,
     InvoiceService,
     OnHoldComponentService,
     ErrorInterceptorProvider,

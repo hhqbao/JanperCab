@@ -1,0 +1,117 @@
+<div class="pks">
+  <app-float-box *ngIf="showCustomerSelector" [width]="150">
+    <div style="padding: 2rem; background-color: white">
+      <div class="row" style="margin-bottom: 1.5rem">
+        <div class="col-1-2">
+          <h1
+            class="heading heading--default"
+            style="padding-bottom: 0; border-bottom: none"
+          >
+            Select Customer
+          </h1>
+        </div>
+        <div class="col-1-2 text-right">
+          <button
+            type="button"
+            class="btn btn--default"
+            (click)="showCustomerSelector = false"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+      <app-customer-list
+        [allowAdd]="false"
+        (itemClick)="onSelectCustomer($event)"
+      ></app-customer-list>
+    </div>
+  </app-float-box>
+  <div class="pks__header">
+    Pick Up Sheet
+    <span *ngIf="selectedSheet">- PK{{ selectedSheet.id | leading }}</span>
+  </div>
+  <div class="pks__body">
+    <div class="pks__driver-form">
+      <button
+        type="button"
+        class="btn btn--primary"
+        *ngIf="!selectedCustomer"
+        (click)="showCustomerSelector = true"
+        style="margin-bottom: 2rem"
+      >
+        Select Customer
+      </button>
+      <h1 class="customer-name" *ngIf="selectedCustomer">
+        {{ selectedCustomer.name }}
+        <button
+          type="button"
+          class="btn btn--link"
+          style="font-size: inherit; margin-left: 2rem"
+          *ngIf="!selectedSheet"
+          (click)="showCustomerSelector = true"
+        >
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+        </button>
+      </h1>
+    </div>
+    <div
+      class="pks__patch-list"
+      *ngIf="selectedSheet && selectedSheet.enquiriesForPickUpSheet.length > 0"
+    >
+      <div class="patch__detail-table">
+        <table>
+          <thead>
+            <tr>
+              <th class="col__enquiry-id">Job No.</th>
+              <th class="col__customer-ref">Order No.</th>
+              <th class="col__door-type">Door Type</th>
+              <th class="col__door-colour">Door Colour</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let enquiry of selectedSheet.enquiriesForPickUpSheet">
+              <td>{{ enquiry.enquiryId | leading }}</td>
+              <td>{{ enquiry.customerReference }}</td>
+              <td>{{ enquiry.doorType }}</td>
+              <td>{{ enquiry.doorColor }}</td>
+              <td>
+                <button
+                  class="btn btn--link"
+                  *ngIf="
+                    !selectedSheet.isCompleted &&
+                    authService.isInRole(role[role.Driver])
+                  "
+                  (click)="onUndoPickUp(enquiry)"
+                >
+                  Remove
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="pks__footer">
+    <div class="row">
+      <div class="col-1-2">
+        <button
+          class="btn btn--primary"
+          *ngIf="
+            selectedSheet && selectedSheet.enquiriesForPickUpSheet.length > 0
+          "
+          (click)="onPrint()"
+        >
+          <i class="fa fa-print" aria-hidden="true"></i>
+          {{ selectedSheet.isCompleted ? "Print" : "Complete & Print" }}
+        </button>
+      </div>
+      <div class="col-1-2 right">
+        <button class="btn btn--default" (click)="closeBtnClick.emit()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

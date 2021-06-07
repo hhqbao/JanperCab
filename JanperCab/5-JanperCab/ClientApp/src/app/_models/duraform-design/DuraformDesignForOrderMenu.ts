@@ -1,14 +1,7 @@
+import { DuraformDesignDto } from './DuraformDesignDto';
 import { DuraformDesignEdgeProfileDto } from './DuraformDesignEdgeProfileDto';
 
-export class DuraformDesignForOrderMenu {
-  id: number;
-  name: string;
-  imageUrl: string;
-  isPopular: boolean;
-  duraformSerieId: number;
-  defaultEdgeProfileId: number;
+export class DuraformDesignForOrderMenu extends DuraformDesignDto {
   defaultEdgeProfileName: string;
-  hasNoArch: boolean;
-  thickness: number;
   allowedEdgeProfiles: DuraformDesignEdgeProfileDto[] = [];
 }

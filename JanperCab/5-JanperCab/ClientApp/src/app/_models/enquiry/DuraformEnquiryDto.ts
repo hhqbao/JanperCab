@@ -1,3 +1,4 @@
+import { DuraformDesignDto } from './../duraform-design/DuraformDesignDto';
 import { DuraformComponentService } from 'src/app/_services/duraform-component.service';
 import { DuraformProcessDeliveringDto } from '../DuraformProcess/DuraformProcessDeliveringDto';
 import { DuraformProcessPickingUpDto } from '../DuraformProcess/DuraformProcessPickingUpDto';
@@ -309,7 +310,9 @@ export class DuraformEnquiryDto extends EnquiryDto {
     const { endTime, duraformProcessType } = this.currentStatus;
 
     return (
-      duraformProcessType === DuraformProcessEnum.Delivering &&
+      [DuraformProcessEnum.Delivering, DuraformProcessEnum.PickingUp].includes(
+        duraformProcessType
+      ) &&
       endTime !== null &&
       endTime !== undefined
     );

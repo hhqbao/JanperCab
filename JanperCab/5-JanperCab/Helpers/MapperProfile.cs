@@ -1,6 +1,8 @@
 ﻿using _1_Domain;
 using _3_Application.Dtos.ApplicationFile;
 using _3_Application.Dtos.Customer;
+using _3_Application.Dtos.CustomerCategory;
+using _3_Application.Dtos.DeliveryDocket;
 using _3_Application.Dtos.DeliveryRunSheet;
 using _3_Application.Dtos.Driver;
 using _3_Application.Dtos.DuraformArch;
@@ -23,6 +25,7 @@ using _3_Application.Dtos.Invoice;
 using _3_Application.Dtos.Machine;
 using _3_Application.Dtos.OnHoldComponent;
 using _3_Application.Dtos.PantryDoorChairRailType;
+using _3_Application.Dtos.PickUpSheet;
 using _3_Application.Dtos.Process;
 using _3_Application.Dtos.Truck;
 using _3_Application.Dtos.UploadFile;
@@ -44,7 +47,8 @@ namespace _5_JanperCab.Helpers
                 .Include<ManufacturerDto, Manufacturer>()
                 .Include<DistributorDto, Distributor>()
                 .Include<CabinetMakerDto, CabinetMaker>()
-                .ForMember(x => x.Id, opt => opt.Ignore());
+                .ForMember(x => x.Id, opt => opt.Ignore())
+                .ForMember(x => x.CustomerCategory, opt => opt.Ignore());
 
             CreateMap<Manufacturer, ManufacturerDto>();
             CreateMap<ManufacturerDto, Manufacturer>();
@@ -55,26 +59,44 @@ namespace _5_JanperCab.Helpers
             CreateMap<CabinetMaker, CabinetMakerDto>();
             CreateMap<CabinetMakerDto, CabinetMaker>();
 
+            CreateMap<CustomerCategory, CustomerCategoryDto>()
+                .Include<CustomerCategoryAccount, CustomerCategoryAccountDto>()
+                .Include<CustomerCategoryCBD, CustomerCategoryCBDDto>();
+            CreateMap<CustomerCategoryDto, CustomerCategory>()
+                .Include<CustomerCategoryAccountDto, CustomerCategoryAccount>()
+                .Include<CustomerCategoryCBDDto, CustomerCategoryCBD>();
+
+            CreateMap<CustomerCategoryAccount, CustomerCategoryAccountDto>();
+            CreateMap<CustomerCategoryAccountDto, CustomerCategoryAccount>();
+
+            CreateMap<CustomerCategoryCBD, CustomerCategoryCBDDto>();
+            CreateMap<CustomerCategoryCBDDto, CustomerCategoryCBD>();
+
             CreateMap<DuraformSerie, DuraformSerieForList>();
+            CreateMap<DuraformSerie, DuraformSerieDto>();
 
             CreateMap<DuraformDesign, DuraformDesignForOrderMenu>()
                 .ForMember(
                     dest => dest.DefaultEdgeProfileName,
                     opt => opt.MapFrom(src => src.DefaultEdgeProfile.Name)
                 );
+            CreateMap<DuraformDesign, DuraformDesignDto>();
 
             CreateMap<DuraformWrapType, DuraformWrapTypeForSelection>();
+            CreateMap<DuraformWrapType, DuraformWrapTypeDto>();
 
             CreateMap<DuraformWrapColor, DuraformWrapColorForSelection>()
                 .ForMember(
                     dest => dest.DuraformWrapTypeName,
                     opt => opt.MapFrom(src => src.DuraformWrapType.Name)
                 );
+            CreateMap<DuraformWrapColor, DuraformWrapColorDto>();
 
             CreateMap<DuraformEdgeProfile, DuraformEdgeProfileForList>();
             CreateMap<DuraformEdgeProfile, DuraformEdgeProfileDto>();
 
             CreateMap<DuraformArch, DuraformArchForList>();
+            CreateMap<DuraformArch, DuraformArchDto>();
             CreateMap<PantryDoorChairRailType, PantryDoorChairRailTypeForList>();
             CreateMap<DuraformDrawerType, DuraformDrawerTypeForList>();
 
@@ -279,6 +301,12 @@ namespace _5_JanperCab.Helpers
             CreateMap<DuraformEnquiry, DuraformEnquiryListDto>();
             CreateMap<DuraformEnquiryDto, DuraformEnquiry>();
 
+            CreateMap<Enquiry, DeliveryDocketDto>()
+                .Include<DuraformEnquiry, DeliveryDocketDuraformDto>()
+                .ForMember(x => x.DeliveryDocketType, opt => opt.MapFrom<DeliveryDocketTypeResolver>());
+
+            CreateMap<DuraformEnquiry, DeliveryDocketDuraformDto>();
+
             CreateMap<UploadFileDto, ApplicationFile>()
                 .Include<UploadDuraformFileDto, DuraformFile>();
 
@@ -342,6 +370,12 @@ namespace _5_JanperCab.Helpers
 
             CreateMap<DeliveryRunSheet, DeliveryRunSheetForListDto>()
                 .ForMember(x => x.EnquiriesForRunSheet, opt => opt.MapFrom<EnquiriesForRunSheetResolver>());
+
+            CreateMap<PickUpSheet, PickUpSheetDto>();
+            CreateMap<PickUpSheetDto, PickUpSheet>();
+
+            CreateMap<PickUpSheet, PickUpSheetForListDto>()
+                .ForMember(x => x.EnquiriesForPickUpSheet, opt => opt.MapFrom<EnquiriesForPickUpSheetResolver>());
 
             CreateMap<InvoiceComponent, InvoiceComponentDto>();
             CreateMap<InvoiceComponentDto, InvoiceComponent>();

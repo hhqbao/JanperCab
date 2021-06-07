@@ -31,6 +31,8 @@ export class MachineListPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    document.title = 'Production';
+
     this.layoutService.toggleLeftNav(true);
     this.layoutService.showLoadingPanel();
     this.machineService.getMachinesForProductionList().subscribe(

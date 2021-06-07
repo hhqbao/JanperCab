@@ -38,6 +38,7 @@
 @import "./3-component/cabinet-maker-form";
 @import "./3-component/float-box";
 @import "./3-component/delivery-docket";
+@import "./3-component/delivery-docket-duraform";
 @import "./3-component/pdf-viewer";
 @import "./3-component/duraform-order-list-page";
 @import "./3-component/pagination";
@@ -50,7 +51,9 @@
 @import "./3-component/duraform-process-viewer";
 @import "./3-component/machine-router-controller";
 @import "./3-component/run-sheet-form";
+@import "./3-component/pick-up-form";
 @import "./3-component/run-sheet-pdf";
+@import "./3-component/pick-up-sheet-pdf";
 @import "./3-component/invoice-generator";
 @import "./3-component/invoice-pdf";
 @import "./3-component/control-box";
@@ -63,6 +66,7 @@
 @import "./5-page/duraform-quote-page";
 @import "./5-page/duraform-price-page";
 @import "./5-page/delivery-page";
+@import "./5-page/pick-up-page";
 @import "./5-page/invoice-process-page";
 @import "./5-page/machine-list-page";
 

@@ -81,6 +81,12 @@ namespace _2_Persistent.Configs
                 .WithMany(y => y.ManagedCustomers)
                 .HasForeignKey(x => x.ManagerId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.CustomerCategory)
+                .WithMany(y => y.Customers)
+                .HasForeignKey(x => x.CustomerCategoryId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

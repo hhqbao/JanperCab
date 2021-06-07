@@ -1,3 +1,4 @@
+import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 import { EnquiryService } from './../../_services/enquiry.service';
 import { DuraformEnquiryDto } from './../../_models/enquiry/DuraformEnquiryDto';
 import { Role } from 'src/app/_enums/Role';
@@ -10,6 +11,18 @@ import { LayoutService } from './../../_services/layout.service';
 import { RunSheetService } from '../../_services/run-sheet.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as scanner from 'onscan.js';
+import { forkJoin } from 'rxjs';
+import { DuraformArchService } from 'src/app/_services/duraform-arch.service';
+import { DuraformComponentService } from 'src/app/_services/duraform-component.service';
+import { DuraformDesignService } from 'src/app/_services/duraform-design.service';
+import { DuraformDrawerTypeService } from 'src/app/_services/duraform-drawer-type.service';
+import { DuraformEdgeProfileService } from 'src/app/_services/duraform-edge-profile.service';
+import { DuraformOptionTypeService } from 'src/app/_services/duraform-option-type.service';
+import { DuraformSerieService } from 'src/app/_services/duraform-serie.service';
+import { DuraformWrapColorService } from 'src/app/_services/duraform-wrap-color.service';
+import { DuraformWrapTypeService } from 'src/app/_services/duraform-wrap-type.service';
+import { HingeHoleService } from 'src/app/_services/hinge-hole.service';
+import { PantryDoorChairRailTypeService } from 'src/app/_services/pantry-door-chair-rail-type.service';
 
 @Component({
   selector: 'app-delivery-page',
@@ -18,7 +31,7 @@ import * as scanner from 'onscan.js';
 export class DeliveryPageComponent implements OnInit, OnDestroy {
   selectedSheet: DeliveryRunSheetForListDto;
   runSheets: DeliveryRunSheetForListDto[] = [];
-  deliveryDocket: DuraformEnquiryDto = null;
+  scannedEnquiryId: number = null;
 
   isLoading = true;
   canScan = true;
@@ -33,14 +46,14 @@ export class DeliveryPageComponent implements OnInit, OnDestroy {
     private runSheetService: RunSheetService,
     private layoutService: LayoutService,
     private dialogService: DialogService,
-    public authService: AuthService,
-    private enquiryService: EnquiryService
+    public authService: AuthService
   ) {}
 
   ngOnInit() {
     document.title = 'Delivery Process';
 
     this.layoutService.showLoadingPanel();
+
     this.runSheetService.getRunSheets().subscribe(
       (response) => {
         this.runSheets = response;
@@ -67,7 +80,7 @@ export class DeliveryPageComponent implements OnInit, OnDestroy {
   onScan = (sCode: any, sQty: any) => {
     if (!this.canScan) {
       this.dialogService.error(
-        'Scanner is busy! Please omplete your current action.'
+        'Scanner is busy! Please complete your current action.'
       );
       return;
     }
@@ -94,24 +107,8 @@ export class DeliveryPageComponent implements OnInit, OnDestroy {
         );
       }
     } else {
-      this.isLoading = true;
-      this.layoutService.showLoadingPanel();
-
       const enquiryId = Number(sheetCode);
-      this.enquiryService.getDuraformEnquiry(enquiryId).subscribe(
-        (response) => {
-          this.deliveryDocket = response;
-          this.isLoading = false;
-          this.layoutService.closeLoadingPanel();
-        },
-        (error) => {
-          this.layoutService.closeLoadingPanel();
-          this.dialogService.alert('Invalid Action', error, () => {
-            this.isLoading = false;
-            this.canScan = true;
-          });
-        }
-      );
+      this.scannedEnquiryId = enquiryId;
     }
   };
 

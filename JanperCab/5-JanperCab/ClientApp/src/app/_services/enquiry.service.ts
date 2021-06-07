@@ -1,10 +1,11 @@
+import { DeliveryDocketDuraformDto } from './../_models/delivery-docket/DeliveryDocketDuraformDto';
 import { PackingLabelDto } from './../_models/packing-label/PackingLabelDto';
 import { EnquiryForInvoicingDto } from './../_models/enquiry/EnquiryForInvoicingDto';
 import { DuraformProcessDto } from '../_models/DuraformProcess/DuraformProcessDto';
 import { DuraformEnquiryListDto } from './../_models/enquiry/DuraformEnquiryListDto';
 import { DuraformEnquiryDto } from './../_models/enquiry/DuraformEnquiryDto';
 import { plainToClass } from 'class-transformer';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -12,10 +13,29 @@ import { map } from 'rxjs/operators';
 import { EnquiryDto } from '../_models/enquiry/EnquiryDto';
 import { ItemList } from '../_models/commons/ItemList';
 import { OrderSearchFilterValues } from '../_models/commons/OrderSearchFilterValues';
+import { DeliveryDocketDto } from '../_models/delivery-docket/DeliveryDocketDto';
+import { DeliveryDocketType } from '../_enums/DeliveryDocketType';
 
 @Injectable({ providedIn: 'root' })
 export class EnquiryService {
   constructor(private http: HttpClient) {}
+
+  getDeliveryDocket = (enquiryId: number): Observable<DeliveryDocketDto> => {
+    return this.http
+      .get<DeliveryDocketDto>(
+        `${environment.baseUrl}/DeliveryDockets/${enquiryId}`
+      )
+      .pipe(
+        map((response) => {
+          switch (response.deliveryDocketType) {
+            case DeliveryDocketType.Duraform:
+              return plainToClass(DeliveryDocketDuraformDto, response);
+            default:
+              throw new Error('Order Type Not Supported');
+          }
+        })
+      );
+  };
 
   getPackingLabel = (enquiryId: number): Observable<PackingLabelDto> => {
     return this.http

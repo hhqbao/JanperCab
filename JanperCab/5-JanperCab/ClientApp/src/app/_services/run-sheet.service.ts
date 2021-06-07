@@ -75,11 +75,12 @@ export class RunSheetService {
   };
 
   createRunSheet = (
-    driverId: number
+    driverId: number,
+    truckId: number
   ): Observable<DeliveryRunSheetForListDto> => {
     return this.http
       .post<DeliveryRunSheetForListDto>(
-        `${environment.baseUrl}/RunSheets/${driverId}`,
+        `${environment.baseUrl}/RunSheets/${driverId}/${truckId}`,
         null
       )
       .pipe(

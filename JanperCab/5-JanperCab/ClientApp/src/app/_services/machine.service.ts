@@ -1,3 +1,4 @@
+import { EnquiryForPickUpSheetDto } from './../_models/enquiry/EnquiryForPickUpSheetDto';
 import { OnHoldComponentDto } from './../_models/on-hold-detail/OnHoldComponentDto';
 import { EnquiryForRunSheetDto } from './../_models/enquiry/EnquiryForRunSheetDto';
 import { plainToClass } from 'class-transformer';
@@ -137,9 +138,32 @@ export class MachineService {
       );
   };
 
-  UndoDelivering = (enquiryId: number) => {
+  processPickUp = (
+    sheetId: number,
+    enquiryId: number
+  ): Observable<EnquiryForPickUpSheetDto> => {
+    return this.http
+      .put<EnquiryForPickUpSheetDto>(
+        `${environment.baseUrl}/Processes/PickUp/${sheetId}/${enquiryId}`,
+        null
+      )
+      .pipe(
+        map((response) => {
+          return plainToClass(EnquiryForPickUpSheetDto, response);
+        })
+      );
+  };
+
+  undoDelivering = (enquiryId: number) => {
     return this.http.put(
       `${environment.baseUrl}/Processes/undo-delivering/${enquiryId}`,
+      null
+    );
+  };
+
+  undoPickUp = (enquiryId: number) => {
+    return this.http.put(
+      `${environment.baseUrl}/Processes/undo-pickup/${enquiryId}`,
       null
     );
   };

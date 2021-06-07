@@ -49,9 +49,7 @@
     [documentName]="'Delivery-Docket'"
     (closePanel)="showDeliveryDocket = false"
   >
-    <app-duraform-delivery-docket
-      [duraformEnquiry]="duraformEnquiry"
-    ></app-duraform-delivery-docket>
+    <app-delivery-docket [enquiryId]="duraformEnquiry.id"></app-delivery-docket>
   </app-pdf-viewer>
   <app-pdf-viewer
     *ngIf="showInvoicePdf && duraformEnquiry.invoice"

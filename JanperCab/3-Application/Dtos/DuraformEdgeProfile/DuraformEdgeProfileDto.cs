@@ -23,7 +23,5 @@
         public bool HideInPanel { get; set; }
 
         public bool HideInDrawer { get; set; }
-
-        public string ICB_EDGE_TOOLING { get; set; }
     }
 }

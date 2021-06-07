@@ -27,7 +27,7 @@ namespace _5_JanperCab.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Roles = "Distributor,Sale")]
+        [Authorize(Roles = "Distributor,Manufacturer")]
         [HttpGet]
         public async Task<IActionResult> Get(string search, string sortBy, string direction, int page = 0, int take = 20)
         {
@@ -46,7 +46,7 @@ namespace _5_JanperCab.Controllers
 
 
 
-        [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
+        [Authorize(Roles = "CabinetMaker,Distributor,Manufacturer")]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {

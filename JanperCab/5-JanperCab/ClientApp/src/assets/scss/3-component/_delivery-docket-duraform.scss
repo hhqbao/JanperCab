@@ -1,0 +1,437 @@
+.delivery-docket-duraform {
+  .header {
+    display: flex;
+
+    &__manufacturer-details,
+    &__tag-box,
+    &__form-details {
+      flex: 1;
+    }
+
+    &__manufacturer-details {
+      font-size: 20px;
+
+      * {
+        &:not(:first-child) {
+          margin-top: 7px;
+        }
+      }
+
+      .name {
+        font-size: 50px;
+        font-weight: bold;
+        font-style: italic;
+        text-transform: uppercase;
+      }
+
+      @media print {
+        font-size: 12px;
+
+        .name {
+          font-size: 30px;
+        }
+      }
+    }
+
+    &__tag-box {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+
+      .cbd-tag {
+        display: inline-block;
+        font-size: 75px;
+        font-weight: bold;
+        letter-spacing: 4px;
+        font-family: sans-serif;
+        border: solid 4px black;
+        border-radius: 10px;
+        padding: 10px 30px;
+
+        @media print {
+          font-size: 55px;
+          padding: 5px 15px;
+        }
+      }
+
+      @media print {
+        justify-content: flex-end;
+      }
+    }
+
+    &__form-details {
+      font-weight: bold;
+      font-size: 30px;
+      text-align: right;
+
+      & > .barcode {
+        font-size: 30px;
+        margin-top: -3px;
+        margin-right: -10px;
+      }
+
+      .title {
+        text-transform: uppercase;
+      }
+
+      .created-date {
+        font-weight: normal;
+        margin-top: 10px;
+        text-transform: uppercase;
+
+        @media print {
+          margin-top: 5px;
+        }
+      }
+
+      @media print {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .packaging-box {
+    display: flex;
+    margin-top: 50px;
+
+    @media print {
+      margin-top: 25px;
+    }
+
+    .box {
+      display: inline-block;
+      font-weight: bold;
+      vertical-align: top;
+
+      * {
+        &:not(:first-child) {
+          margin-top: 3px;
+        }
+      }
+
+      .title {
+        font-weight: normal;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+
+        @media print {
+          margin-bottom: 8px;
+        }
+      }
+
+      .description {
+        font-weight: normal;
+        font-style: italic;
+      }
+
+      &:not(:first-child) {
+        margin-left: 150px;
+
+        @media print {
+          margin-left: 40px;
+        }
+      }
+    }
+  }
+
+  .job-details-box {
+    margin-top: 50px;
+
+    .customer-order-number {
+      font-weight: bold;
+      margin-top: 3px;
+      text-transform: uppercase;
+    }
+
+    .job-details {
+      font-weight: bold;
+      margin-top: 30px;
+      text-transform: uppercase;
+    }
+
+    @media print {
+      margin-top: 25px;
+    }
+  }
+
+  .components-section {
+    margin-top: 30px;
+
+    .component-table {
+      &:not(:first-child) {
+        margin-top: 30px;
+      }
+
+      .title {
+        font-size: 25px;
+        font-weight: bold;
+
+        @media print {
+          font-size: 20px;
+        }
+      }
+
+      table {
+        border-collapse: collapse;
+        text-align: left;
+        text-transform: uppercase;
+        width: 100%;
+
+        thead {
+          tr {
+            th {
+              font-weight: 300;
+              font-size: 16px;
+              padding: 5px 0;
+
+              &.qty {
+                width: 70px;
+
+                @media print {
+                  width: 40px;
+                }
+              }
+
+              &.height {
+                width: 110px;
+
+                @media print {
+                  width: 60px;
+                }
+              }
+
+              &.width {
+                width: 110px;
+
+                @media print {
+                  width: 60px;
+                }
+              }
+
+              &.drawers {
+                width: 110px;
+
+                @media print {
+                  width: 85px;
+                }
+              }
+
+              &.drawer-type {
+              }
+
+              &.shields {
+                width: 90px;
+
+                @media print {
+                  width: 80px;
+                }
+              }
+
+              &.rail-size {
+                width: 110px;
+
+                @media print {
+                  width: 60px;
+                }
+              }
+
+              &.extra-rail {
+                width: 95px;
+
+                @media print {
+                  width: 80px;
+                }
+              }
+
+              &.side {
+                text-align: center;
+                width: 35px;
+
+                @media print {
+                  width: 15px;
+                }
+              }
+
+              &.drill-front {
+                text-align: center;
+                width: 80px;
+              }
+
+              &.drawer-gap {
+                text-align: center;
+                width: 80px;
+              }
+
+              &.draw-size {
+                padding-left: 10px;
+                width: 100px;
+
+                @media print {
+                  width: 60px;
+                }
+              }
+
+              &.cr-height {
+                width: 140px;
+
+                @media print {
+                  width: 80px;
+                }
+              }
+
+              &.cr-type {
+                width: 120px;
+
+                @media print {
+                  width: 70px;
+                }
+              }
+
+              &.cr-bottom {
+                width: 150px;
+
+                @media print {
+                  width: 85px;
+                }
+              }
+
+              &.option {
+                padding-left: 10px;
+              }
+
+              &.edge {
+                padding-left: 10px;
+                width: 250px;
+
+                @media print {
+                  width: 140px;
+                }
+              }
+
+              &.hinge-hole {
+                padding-left: 10px;
+                width: 200px;
+
+                @media print {
+                  width: 150px;
+                }
+              }
+
+              &.checkbox {
+                padding-left: 10px;
+                width: 100px;
+
+                @media print {
+                  width: 50px;
+                }
+              }
+
+              @media print {
+                font-size: 14px;
+                padding: 3px 0;
+              }
+            }
+          }
+        }
+
+        tbody {
+          font-weight: 500;
+
+          tr {
+            td {
+              font-size: 18px;
+              min-height: 15px;
+              padding: 5px 0;
+              vertical-align: top;
+
+              .checkbox {
+                display: flex;
+
+                &::before,
+                &::after {
+                  content: "";
+                  display: block;
+                  height: 22px;
+
+                  @media print {
+                    height: 10px;
+                  }
+                }
+
+                &::before {
+                  border: solid 1px black;
+                  margin-right: 3px;
+                  width: 22px;
+
+                  @media print {
+                    width: 10px;
+                  }
+                }
+
+                &::after {
+                  border-bottom: solid 1px black;
+                  flex: 1;
+                }
+              }
+
+              &.qty {
+              }
+
+              &.height {
+              }
+
+              &.width {
+              }
+
+              &.side {
+                text-align: center;
+              }
+
+              &.option {
+                padding-left: 10px;
+              }
+
+              &.edge {
+                padding-left: 10px;
+              }
+
+              &.hingeHole {
+                padding-left: 10px;
+              }
+
+              &.checkbox {
+                padding-left: 10px;
+              }
+
+              @media print {
+                font-size: 12px;
+                min-height: unset;
+                padding: 3.5px 0;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    @media print {
+      margin-top: 25px;
+    }
+  }
+
+  .footer {
+    font-size: 23px;
+    margin-top: 50px;
+
+    .note {
+      &:not(:first-child) {
+        margin-top: 15px;
+      }
+    }
+
+    @media print {
+      font-size: 12px;
+      margin-top: 30px;
+    }
+  }
+}

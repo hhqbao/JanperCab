@@ -2,6 +2,10 @@
   position: relative;
 
   .control-box {
+    border: unset;
+    box-shadow: unset;
+    border-top-left-radius: unset;
+    border-top-right-radius: unset;
   }
 
   .absolute-container {

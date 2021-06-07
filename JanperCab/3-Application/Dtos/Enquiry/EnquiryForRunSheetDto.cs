@@ -1,45 +1,12 @@
 ﻿namespace _3_Application.Dtos.Enquiry
 {
-    public class EnquiryForRunSheetDto
+    public class EnquiryForRunSheetDto : EnquiryForSheetDto
     {
         public int? DeliveryRunSheetId { get; set; }
 
-        public int EnquiryId { get; set; }
-
-        public int CustomerId { get; set; }
-
-        public string CustomerName { get; set; }
-
-        public string CustomerReference { get; set; }
-
-        public string DoorType { get; set; }
-
-        public string DoorColor { get; set; }
-
-        public int PartCount { get; set; }
-
-        public string Address { get; set; }
-
-        public string Suburb { get; set; }
-
-        public string State { get; set; }
-
-        public string Postcode { get; set; }
-
-        public EnquiryForRunSheetDto(_1_Domain.Enquiry enquiry)
+        public EnquiryForRunSheetDto(_1_Domain.Enquiry enquiry) : base(enquiry)
         {
             DeliveryRunSheetId = enquiry.DeliveryRunSheetId;
-            EnquiryId = enquiry.Id;
-            CustomerId = enquiry.CustomerId;
-            CustomerName = enquiry.Customer.Name;
-            CustomerReference = enquiry.CustomerReference;
-            DoorType = enquiry.DoorType;
-            DoorColor = enquiry.DoorColor;
-            PartCount = enquiry.PartCount;
-            Address = enquiry.DeliveryAddress;
-            Suburb = enquiry.DeliverySuburb;
-            State = enquiry.DeliveryState;
-            Postcode = enquiry.DeliveryPostcode;
         }
     }
 }

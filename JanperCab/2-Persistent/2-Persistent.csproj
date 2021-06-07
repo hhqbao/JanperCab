@@ -122,6 +122,10 @@
     <Compile Remove="Migrations\20210503105233_EditTable_Invoices_RemoveCol_SubId.Designer.cs" />
     <Compile Remove="Migrations\20210503105639_DropLink_Invoice_InvoiceComponent.cs" />
     <Compile Remove="Migrations\20210503105639_DropLink_Invoice_InvoiceComponent.Designer.cs" />
+    <Compile Remove="Migrations\20210603114456_CreateTable_CustomerCategories.cs" />
+    <Compile Remove="Migrations\20210603114456_CreateTable_CustomerCategories.Designer.cs" />
+    <Compile Remove="Migrations\20210606231342_CreateTable_PickUpSheets.cs" />
+    <Compile Remove="Migrations\20210606231342_CreateTable_PickUpSheets.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

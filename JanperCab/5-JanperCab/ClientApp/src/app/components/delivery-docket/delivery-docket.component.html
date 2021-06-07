@@ -1,0 +1,9 @@
+<div class="delivery-docket">
+  <app-duraform-delivery-docket
+    *ngIf="
+      deliveryDocket &&
+      deliveryDocket.deliveryDocketType === docketType.Duraform
+    "
+    [deliveryDocket]="deliveryDocket"
+  ></app-duraform-delivery-docket>
+</div>

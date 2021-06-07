@@ -1,15 +1,4 @@
-export class DuraformWrapColorForSelection {
-  id: number;
-
-  duraformWrapTypeId: number;
-
-  name: string;
-
-  imageUrl: string;
-
-  isJanperMatching: boolean;
-
-  isLaminexMatching: boolean;
-
+import { DuraformWrapColorDto } from './DuraformWrapColorDto';
+export class DuraformWrapColorForSelection extends DuraformWrapColorDto {
   duraformWrapTypeName: string;
 }

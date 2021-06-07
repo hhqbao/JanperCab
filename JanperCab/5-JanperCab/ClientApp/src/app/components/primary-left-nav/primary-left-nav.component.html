@@ -123,9 +123,20 @@
                   Delivery
                 </a>
               </li>
+              <li
+                *ngIf="
+                  auth.isInRole(role[role.Driver]) ||
+                  auth.isInRole(role[role.Sale])
+                "
+              >
+                <a [routerLink]="['/production/pick-up']">
+                  <i class="fa fa-archive text-alert" aria-hidden="true"></i>
+                  Pick Up
+                </a>
+              </li>
               <li *ngIf="auth.isInRole(role[role.Sale])">
                 <a [routerLink]="['/production/invoicing']">
-                  <i class="fa fa-inbox text-orange" aria-hidden="true"></i>
+                  <i class="fa fa-inbox text-green" aria-hidden="true"></i>
                   Invoicing
                 </a>
               </li>

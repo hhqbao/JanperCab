@@ -1,4 +1,5 @@
 ﻿using _1_Domain.Enum;
+using _3_Application.Dtos.Customer;
 using _3_Application.Dtos.Invoice;
 using System;
 
@@ -69,5 +70,9 @@ namespace _3_Application.Dtos.Enquiry
 
 
         public InvoiceDto Invoice { get; set; }
+
+        public virtual CustomerDto Customer { get; set; }
+
+        public virtual CustomerDto Manager { get; set; }
     }
 }

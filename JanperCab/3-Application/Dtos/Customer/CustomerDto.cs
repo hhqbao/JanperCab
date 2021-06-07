@@ -1,4 +1,5 @@
-﻿using _1_Domain;
+﻿using _1_Domain.Enum;
+using _3_Application.Dtos.CustomerCategory;
 using System.ComponentModel.DataAnnotations;
 
 namespace _3_Application.Dtos.Customer
@@ -10,6 +11,8 @@ namespace _3_Application.Dtos.Customer
         public int? ManagerId { get; set; }
 
         public CustomerType CustomerType { get; set; }
+
+        public int CustomerCategoryId { get; set; }
 
         [Required]
         [StringLength(255)]
@@ -54,5 +57,8 @@ namespace _3_Application.Dtos.Customer
 
 
         public decimal DiscountRate { get; set; }
+
+
+        public CustomerCategoryDto CustomerCategory { get; set; }
     }
 }

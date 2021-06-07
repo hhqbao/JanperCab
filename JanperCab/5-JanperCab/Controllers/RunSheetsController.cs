@@ -45,15 +45,20 @@ namespace _5_JanperCab.Controllers
         }
 
         [Authorize(Roles = "Driver")]
-        [HttpPost("{driverId}")]
-        public async Task<IActionResult> Create(int driverId)
+        [HttpPost("{driverId}/{truckId}")]
+        public async Task<IActionResult> Create(int driverId, int truckId)
         {
             var driver = await _unitOfWork.Drivers.GetAsync(driverId);
 
             if (driver == null)
                 return BadRequest("Driver Not Found");
 
-            var newSheet = new DeliveryRunSheet { DriverId = driver.Id };
+            var truck = await _unitOfWork.Trucks.GetAsync(truckId);
+
+            if (truck == null)
+                return BadRequest("Truck Not Found");
+
+            var newSheet = new DeliveryRunSheet { DriverId = driver.Id, TruckId = truck.Id };
             _unitOfWork.DeliveryRunSheets.Add(newSheet);
             await _unitOfWork.CompleteAsync();
 

@@ -39,7 +39,7 @@ namespace _4_Infrastructure.Repositories
             var enquiries = new List<Enquiry>();
 
             var duraforms = await _dbSet.OfType<DuraformEnquiry>()
-                .Where(x => x.DuraformProcesses.Any(y => y.DuraformProcessType == DuraformProcessEnum.Delivering && y.EndTime.HasValue))
+                .Where(x => x.DuraformProcesses.Any(y => (y.DuraformProcessType == DuraformProcessEnum.Delivering || y.DuraformProcessType == DuraformProcessEnum.PickingUp) && y.EndTime.HasValue))
                 .Where(x => x.Invoice == null)
                 .ToListAsync();
 

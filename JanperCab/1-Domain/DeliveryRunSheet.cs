@@ -46,10 +46,11 @@ namespace _1_Domain
                 if (!Enquiries.Any(x => x.Id != enquiry.Id &&
                                         x.CustomerId == enquiry.CustomerId &&
                                         x.FullDeliveryAddress.Equals(enquiry.FullDeliveryAddress) &&
-                                        x.DeliveryFee == 30)) continue;
+                                        x.DeliveryFee > 0)) continue;
 
+                enquiry.SubTotal -= enquiry.DeliveryFee;
                 enquiry.DeliveryFee = 0;
-                enquiry.SubTotal -= 30;
+
                 enquiry.TotalGst = Math.Round(enquiry.SubTotal / 10, 2);
                 enquiry.TotalPrice = enquiry.SubTotal + enquiry.TotalGst;
             }

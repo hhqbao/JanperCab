@@ -8,9 +8,10 @@ import { DuraformComponentWithOptionAndHingeHoleDto } from '../duraform-componen
 export class HingeHoleOptionDto {
   id: number;
   hingeHoleStyle: HingeHoleStyleEnum;
-  quantity: 1 | 2 | 3 | 4;
+  quantity: 1 | 2 | 3 | 4 | 5;
   top: number;
   topCenter: number;
+  middleOne: number;
   bottomCenter: number;
   bottom: number;
 
@@ -25,10 +26,11 @@ export class HingeHoleOptionDto {
       quantity: new FormControl(this.quantity, [
         Validators.required,
         Validators.min(1),
-        Validators.max(4),
+        Validators.max(5),
       ]),
       top: new FormControl(this.top, [Validators.required, Validators.min(50)]),
       topCenter: new FormControl(this.topCenter, []),
+      middleOne: new FormControl(this.middleOne, []),
       bottomCenter: new FormControl(this.bottomCenter, []),
       bottom: new FormControl(this.bottom, []),
     });
@@ -47,11 +49,18 @@ export class HingeHoleOptionDto {
       formGroup.get('topCenter').updateValueAndValidity();
     }
 
-    if (this.quantity === 4) {
+    if (this.quantity >= 4) {
       formGroup
         .get('bottomCenter')
         .setValidators([Validators.required, Validators.min(50)]);
       formGroup.get('bottomCenter').updateValueAndValidity();
+    }
+
+    if (this.quantity >= 5) {
+      formGroup
+        .get('middleOne')
+        .setValidators([Validators.required, Validators.min(50)]);
+      formGroup.get('middleOne').updateValueAndValidity();
     }
 
     return formGroup;
@@ -70,6 +79,8 @@ export class HingeHoleOptionDto {
         return `${style} ${this.top}/${this.topCenter}/${this.bottom}`;
       case 4:
         return `${style} ${this.top}/${this.topCenter}/${this.bottomCenter}/${this.bottom}`;
+      case 5:
+        return `${style} ${this.top}/${this.topCenter}/${this.middleOne}/${this.bottomCenter}/${this.bottom}`;
       default:
         return `Unsupported Hinge Hole Quantity`;
     }

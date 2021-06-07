@@ -6,6 +6,8 @@ namespace _3_Application.Interfaces.Repositories
     {
         ICustomerRepo Customers { get; }
 
+        ICustomerCategoryRepo CustomerCategories { get; }
+
         IDuraformSerieRepo DuraformSeries { get; }
 
         IDuraformDesignRepo DuraformDesigns { get; }
@@ -47,6 +49,8 @@ namespace _3_Application.Interfaces.Repositories
         ITruckRepo Trucks { get; }
 
         IDeliveryRunSheetRepo DeliveryRunSheets { get; }
+
+        IPickUpSheetRepo PickUpSheets { get; }
 
         IInvoiceRepo Invoices { get; }
 

@@ -48,13 +48,11 @@
     <app-run-sheet-pdf [sheetId]="selectedSheet.id"></app-run-sheet-pdf>
   </app-pdf-viewer>
   <app-pdf-viewer
-    *ngIf="deliveryDocket"
+    *ngIf="scannedEnquiryId"
     [documentName]="'Delivery-Docket'"
-    (closePanel)="deliveryDocket = null; canScan = true"
+    (closePanel)="scannedEnquiryId = null; canScan = true"
   >
-    <app-duraform-delivery-docket
-      [duraformEnquiry]="deliveryDocket"
-    ></app-duraform-delivery-docket>
+    <app-delivery-docket [enquiryId]="scannedEnquiryId"></app-delivery-docket>
   </app-pdf-viewer>
   <div class="delivery-page__content">
     <app-simple-box [heading]="'Delivery Run Sheets'">

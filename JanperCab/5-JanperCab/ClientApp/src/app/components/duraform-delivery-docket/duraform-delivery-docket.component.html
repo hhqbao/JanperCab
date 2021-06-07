@@ -1,72 +1,75 @@
-<div class="delivery-docket">
+<div class="delivery-docket-duraform">
   <div class="header">
     <div class="header__manufacturer-details">
       <div class="name">Janper Pty Ltd</div>
       <div class="address">19 Newcastle Road, Bayswater VIC 3153</div>
       <div class="abn-tel">ABN 45 004 772 034 - Tel 03 9720 0533</div>
     </div>
+    <div class="header__tag-box">
+      <span class="cbd-tag" *ngIf="isCBDCustomer">C.B.D</span>
+    </div>
     <div class="header__form-details">
       <div class="barcode">
         <ngx-barcode
-          [bc-value]="duraformEnquiry.id | leading"
+          [bc-value]="deliveryDocket.id | leading"
           [bc-height]="'50px'"
         ></ngx-barcode>
       </div>
       <div class="title">Delivery Docket</div>
       <div class="order-number">
-        {{ duraformEnquiry.id | leading }}
+        {{ deliveryDocket.id | leading }}
       </div>
       <div class="created-date">
-        Date {{ duraformEnquiry.createdDate | date: "dd/MM/yyyy" }}
+        Date {{ deliveryDocket.createdDate | date: "dd/MM/yyyy" }}
       </div>
     </div>
   </div>
   <div class="packaging-box">
     <div class="box">
       <div class="title">Invoice To</div>
-      <div class="name">{{ duraformEnquiry.invoiceTo }}</div>
-      <div class="address-1">{{ duraformEnquiry.invoiceAddress }}</div>
+      <div class="name">{{ deliveryDocket.invoiceTo }}</div>
+      <div class="address-1">{{ deliveryDocket.invoiceAddress }}</div>
       <div class="address-2">
-        {{ duraformEnquiry.invoiceSuburb }}
-        {{ duraformEnquiry.invoiceState | uppercase }}
-        {{ duraformEnquiry.invoicePostcode }}
+        {{ deliveryDocket.invoiceSuburb }}
+        {{ deliveryDocket.invoiceState | uppercase }}
+        {{ deliveryDocket.invoicePostcode }}
       </div>
     </div>
     <div class="box">
       <div class="title">Delivery To</div>
-      <div class="name">{{ duraformEnquiry.deliveryTo }}</div>
-      <div class="address-1">{{ duraformEnquiry.deliveryAddress }}</div>
+      <div class="name">{{ deliveryDocket.deliveryTo }}</div>
+      <div class="address-1">{{ deliveryDocket.deliveryAddress }}</div>
       <div class="address-2">
-        {{ duraformEnquiry.deliverySuburb }}
-        {{ duraformEnquiry.deliveryState | uppercase }}
-        {{ duraformEnquiry.deliveryPostcode }}
+        {{ deliveryDocket.deliverySuburb }}
+        {{ deliveryDocket.deliveryState | uppercase }}
+        {{ deliveryDocket.deliveryPostcode }}
       </div>
     </div>
     <div class="box">
       <div class="title">Delivery Note</div>
       <div class="description">
-        {{ duraformEnquiry.deliveryNote }}
+        {{ deliveryDocket.deliveryNote }}
       </div>
     </div>
   </div>
   <div class="job-details-box">
     <div class="title">Customer Order No</div>
     <div class="customer-order-number">
-      {{ duraformEnquiry.customerReference }}
+      {{ deliveryDocket.customerReference }}
     </div>
     <div class="job-details">
-      Job No: {{ duraformEnquiry.id | leading }} |
-      {{ duraformEnquiry.duraformDesign.name }} |
-      <span *ngIf="!duraformEnquiry.isRoutingOnly">
-        {{ duraformEnquiry.duraformWrapColor?.name }}
-        {{ duraformEnquiry.duraformWrapType?.name }}
+      Job No: {{ deliveryDocket.id | leading }} |
+      {{ deliveryDocket.duraformDesign.name }} |
+      <span *ngIf="!deliveryDocket.isRoutingOnly">
+        {{ deliveryDocket.duraformWrapColor?.name }}
+        {{ deliveryDocket.duraformWrapType?.name }}
       </span>
-      <span *ngIf="duraformEnquiry.isRoutingOnly">DSW</span>
+      <span *ngIf="deliveryDocket.isRoutingOnly">DSW</span>
       |
-      {{ duraformEnquiry.duraformSerie.name }}
+      {{ deliveryDocket.duraformSerie.name }}
       {{
-        duraformEnquiry.hingeHoleTypeId
-          ? "| " + duraformEnquiry.hingeHoleType.name
+        deliveryDocket.hingeHoleTypeId
+          ? "| " + deliveryDocket.hingeHoleType.name
           : null
       }}
     </div>
@@ -74,28 +77,28 @@
   <div class="components-section">
     <div
       class="component-table"
-      *ngIf="duraformEnquiry.duraformDoors.length > 0"
+      *ngIf="deliveryDocket.duraformDoors.length > 0"
     >
       <app-delivery-docket-duraform-doors
-        [doors]="duraformEnquiry.duraformDoors"
+        [doors]="deliveryDocket.duraformDoors"
       ></app-delivery-docket-duraform-doors>
     </div>
-    <div class="component-table" *ngIf="duraformEnquiry.pantryDoors.length > 0">
+    <div class="component-table" *ngIf="deliveryDocket.pantryDoors.length > 0">
       <app-delivery-docket-pantry-doors
-        [pantryDoors]="duraformEnquiry.pantryDoors"
+        [pantryDoors]="deliveryDocket.pantryDoors"
       ></app-delivery-docket-pantry-doors>
     </div>
-    <div class="component-table" *ngIf="duraformEnquiry.endPanels.length > 0">
+    <div class="component-table" *ngIf="deliveryDocket.endPanels.length > 0">
       <app-delivery-docket-end-panels
-        [endPanels]="duraformEnquiry.endPanels"
+        [endPanels]="deliveryDocket.endPanels"
       ></app-delivery-docket-end-panels>
     </div>
     <div
       class="component-table"
-      *ngIf="duraformEnquiry.duraformDrawers.length > 0"
+      *ngIf="deliveryDocket.duraformDrawers.length > 0"
     >
       <app-delivery-docket-duraform-drawers
-        [drawers]="duraformEnquiry.duraformDrawers"
+        [drawers]="deliveryDocket.duraformDrawers"
       ></app-delivery-docket-duraform-drawers>
     </div>
   </div>

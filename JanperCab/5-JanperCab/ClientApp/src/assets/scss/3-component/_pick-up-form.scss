@@ -1,0 +1,71 @@
+.pks {
+  background-color: #fdffe4;
+  border: solid 1px black;
+  box-shadow: 2px 2px 1rem rgba(black, 0.6);
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+
+  &__header {
+    font-weight: bold;
+    font-size: 2rem;
+    padding: 0.8rem 1.5rem;
+  }
+
+  &__driver-form {
+    margin-bottom: 2rem;
+  }
+
+  &__body {
+    flex: 1;
+    padding: 0.8rem 1.5rem;
+  }
+
+  &__patch-list {
+    .patch {
+      &__detail-table {
+        margin-top: 1rem;
+
+        table {
+          text-align: left;
+          width: 100%;
+
+          thead {
+            font-size: 1.5rem;
+            opacity: 0.4;
+
+            .col {
+              &__enquiry-id {
+                width: 9.5rem;
+              }
+
+              &__customer-ref {
+                width: 20rem;
+              }
+
+              &__door-type {
+                width: 18.5rem;
+              }
+
+              &__door-colour {
+                width: 36.5rem;
+              }
+            }
+          }
+
+          tbody {
+            font-size: 1.5rem;
+          }
+        }
+      }
+
+      &:not(:first-child) {
+        margin-top: 3rem;
+      }
+    }
+  }
+
+  &__footer {
+    padding: 0.8rem 1.5rem;
+  }
+}
