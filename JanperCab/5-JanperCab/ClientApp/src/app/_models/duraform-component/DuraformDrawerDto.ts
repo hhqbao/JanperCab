@@ -1,5 +1,5 @@
+import { DuraformDrawerTypeDto } from './../duraform-drawer-type/DuraformDrawerTypeDto';
 import { DuraformEnquiryDto } from './../enquiry/DuraformEnquiryDto';
-import { DuraformDrawerTypeForList } from './../duraform-drawer-type/DuraformDrawerTypeForList';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { DrawerDesign } from 'src/app/_enums/DrawerDesign';
 import { DuraformComponentDto } from './DuraformComponentDto';
@@ -17,11 +17,7 @@ export class DuraformDrawerDto extends DuraformComponentDto {
   drawerFour: number;
   drawerFive: number;
 
-  get duraformDrawerType(): DuraformDrawerTypeForList {
-    return DuraformAssetService.instance.getDrawerType(
-      this.duraformDrawerTypeId
-    );
-  }
+  duraformDrawerType: DuraformDrawerTypeDto;
 
   get totalHeight(): number {
     const totalGap = (this.numberOfDrawers - 1) * this.drawerGap;
@@ -53,10 +49,14 @@ export class DuraformDrawerDto extends DuraformComponentDto {
     this.drawerThree = formValue.drawerThree ?? 0;
     this.drawerFour = formValue.drawerFour ?? 0;
     this.drawerFive = formValue.drawerFive ?? 0;
+
+    this.duraformDrawerType = DuraformAssetService.instance.getDrawerType(
+      this.duraformDrawerTypeId
+    );
   }
 
   @Expose()
-  getPriceForOne(duraformEnquiry: DuraformEnquiryDto): number {
+  getUnitPrice(duraformEnquiry: DuraformEnquiryDto): number {
     let basePrice = DuraformAssetService.instance.getBasePrice(
       duraformEnquiry.duraformSerieId,
       this.totalHeight,
@@ -73,5 +73,10 @@ export class DuraformDrawerDto extends DuraformComponentDto {
     }
 
     return _.round(basePrice, 2);
+  }
+
+  @Expose()
+  calculateUnitPrice(duraformEnquiry: DuraformEnquiryDto): void {
+    this.unitPrice = this.getUnitPrice(duraformEnquiry);
   }
 }

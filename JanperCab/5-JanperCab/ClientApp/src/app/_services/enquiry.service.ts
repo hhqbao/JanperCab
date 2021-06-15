@@ -15,6 +15,7 @@ import { ItemList } from '../_models/commons/ItemList';
 import { OrderSearchFilterValues } from '../_models/commons/OrderSearchFilterValues';
 import { DeliveryDocketDto } from '../_models/delivery-docket/DeliveryDocketDto';
 import { DeliveryDocketType } from '../_enums/DeliveryDocketType';
+import { EnquiryPriceDto } from '../_models/enquiry/EnquiryPriceDto';
 
 @Injectable({ providedIn: 'root' })
 export class EnquiryService {
@@ -122,6 +123,22 @@ export class EnquiryService {
   updateEnquiry = (id: number, enquiry: EnquiryDto): Observable<EnquiryDto> => {
     return this.http
       .put<EnquiryDto>(`${environment.baseUrl}/enquiries/${id}`, enquiry)
+      .pipe(
+        map((response) => {
+          return plainToClass(EnquiryDto as any, response);
+        })
+      );
+  };
+
+  updateEnquiryPriceOnly = (
+    id: number,
+    enquiryPrice: EnquiryPriceDto
+  ): Observable<EnquiryDto> => {
+    return this.http
+      .put<EnquiryDto>(
+        `${environment.baseUrl}/enquiries/update-price-only/${id}`,
+        enquiryPrice
+      )
       .pipe(
         map((response) => {
           return plainToClass(EnquiryDto as any, response);

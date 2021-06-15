@@ -18,13 +18,11 @@
     <td>{{ component.width }}</td>
     <td>{{ component.chairRailHeight }}</td>
     <td>
-      {{ asset.getChairRailType(component.chairRailTypeId).name | uppercase }}
+      {{ component.chairRailType.name | uppercase }}
     </td>
     <td>{{ component.extraRailBottom }}</td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
-      {{
-        asset.getEdgeProfile(component.duraformEdgeProfileId).name | uppercase
-      }}
+      {{ component.duraformEdgeProfile.name | uppercase }}
     </td>
     <td>{{ component.top ? "X" : "" }}</td>
     <td>{{ component.bottom ? "X" : "" }}</td>

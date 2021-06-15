@@ -23,12 +23,12 @@ namespace _5_JanperCab.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("GetForOrderMenu")]
-        public async Task<IActionResult> GetForOrderMenu()
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
-            var duraformDoors = await _unitOfWork.DuraformDesigns.GetForOrderMenuAsync();
+            var designs = await _unitOfWork.DuraformDesigns.GetAllAsync();
 
-            return Ok(_mapper.Map<List<DuraformDesign>, List<DuraformDesignForOrderMenu>>(duraformDoors));
+            return Ok(_mapper.Map<List<DuraformDesign>, List<DuraformDesignDto>>(designs));
         }
     }
 }

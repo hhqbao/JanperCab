@@ -42,10 +42,10 @@
           <td>{{ drawer.width }}</td>
           <td>{{ drawer.numberOfDrawers }}</td>
           <td class="text-left">
-            {{ asset.getDrawerType(drawer.duraformDrawerTypeId).name }}
+            {{ drawer.duraformDrawerType.name }}
           </td>
           <td class="text-left">
-            {{ asset.getEdgeProfile(drawer.duraformEdgeProfileId).name }}
+            {{ drawer.duraformEdgeProfile.name }}
           </td>
           <td>{{ drawer.top ? "Y" : null }}</td>
           <td>{{ drawer.bottom ? "Y" : null }}</td>
@@ -59,7 +59,18 @@
           <td>{{ drawer.drawerFour === 0 ? "" : drawer.drawerFour }}</td>
           <td>{{ drawer.drawerFive === 0 ? "" : drawer.drawerFive }}</td>
           <td class="text-left">{{ drawer.note }}</td>
-          <td class="text-right">{{ drawer.unitPrice | currency }}</td>
+          <td class="text-right">
+            <span *ngIf="!canEditPrice">
+              {{ drawer.unitPrice | currency }}
+            </span>
+            <app-object-editor
+              *ngIf="canEditPrice"
+              [object]="drawer"
+              [property]="'unitPrice'"
+              [isRequired]="true"
+              (afterSet)="duraformEnquiry.calculatePrice(false)"
+            ></app-object-editor>
+          </td>
           <td class="text-right">{{ drawer.subTotal | currency }}</td>
         </tr>
       </tbody>

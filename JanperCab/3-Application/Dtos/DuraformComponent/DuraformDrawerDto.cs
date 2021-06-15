@@ -1,4 +1,6 @@
-﻿namespace _3_Application.Dtos.DuraformComponent
+﻿using _3_Application.Dtos.DuraformDrawerType;
+
+namespace _3_Application.Dtos.DuraformComponent
 {
     public class DuraformDrawerDto : DuraformComponentDto
     {
@@ -19,5 +21,8 @@
         public decimal? DrawerFour { get; set; }
 
         public decimal? DrawerFive { get; set; }
+
+
+        public DuraformDrawerTypeDto DuraformDrawerType { get; set; }
     }
 }

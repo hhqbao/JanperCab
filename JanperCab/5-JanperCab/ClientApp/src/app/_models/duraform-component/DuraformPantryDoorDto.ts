@@ -1,6 +1,6 @@
+import { PantryDoorChairRailTypeDto } from './../pantry-door-chair-rail-type/PantryDoorChairRailTypeDto';
 import { DuraformEnquiryDto } from './../enquiry/DuraformEnquiryDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
-import { PantryDoorChairRailTypeForList } from './../pantry-door-chair-rail-type/PantryDoorChairRailTypeForList';
 import { DuraformComponentWithOptionAndHingeHoleDto } from './DuraformComponentWithOptionAndHingeHoleDto';
 import { DuraformOptionTypeDto } from '../duraform-option/DuraformOptionTypeDto';
 import { Expose } from 'class-transformer';
@@ -11,9 +11,7 @@ export class DuraformPantryDoorDto extends DuraformComponentWithOptionAndHingeHo
   chairRailTypeId: number;
   extraRailBottom: number;
 
-  get chairRailType(): PantryDoorChairRailTypeForList {
-    return DuraformAssetService.instance.getChairRailType(this.chairRailTypeId);
-  }
+  chairRailType: PantryDoorChairRailTypeDto;
 
   @Expose()
   updateWithOption(
@@ -25,11 +23,15 @@ export class DuraformPantryDoorDto extends DuraformComponentWithOptionAndHingeHo
     this.chairRailHeight = formValue.chairRailHeight;
     this.chairRailTypeId = formValue.chairRailTypeId;
     this.extraRailBottom = formValue.extraRailBottom;
+
+    this.chairRailType = DuraformAssetService.instance.getChairRailType(
+      this.chairRailTypeId
+    );
   }
 
   @Expose()
-  getPriceForOne(duraformEnquiry: DuraformEnquiryDto): number {
-    let priceForOne = super.getPriceForOne(duraformEnquiry);
+  getUnitPrice(duraformEnquiry: DuraformEnquiryDto): number {
+    let priceForOne = super.getUnitPrice(duraformEnquiry);
 
     if (this.hingeHoleOption) {
       const hingeStyle = DuraformAssetService.instance.getHingeStyle(
@@ -40,5 +42,10 @@ export class DuraformPantryDoorDto extends DuraformComponentWithOptionAndHingeHo
     }
 
     return _.round(priceForOne, 2);
+  }
+
+  @Expose()
+  calculateUnitPrice(duraformEnquiry: DuraformEnquiryDto): void {
+    this.unitPrice = this.getUnitPrice(duraformEnquiry);
   }
 }

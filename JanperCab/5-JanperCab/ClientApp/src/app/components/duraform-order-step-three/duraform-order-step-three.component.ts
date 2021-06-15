@@ -1,4 +1,4 @@
-import { InvoiceDto } from './../../_models/invoice/InvoiceDto';
+import { DuraformEnquiryPriceDto } from './../../_models/enquiry/DuraformEnquiryPriceDto';
 import { InvoiceService } from './../../_services/invoice.service';
 import { MachineService } from './../../_services/machine.service';
 import { EnquiryTypeEnum } from './../../_enums/EnquiryTypeEnum';
@@ -27,12 +27,12 @@ import { CustomerDto } from 'src/app/_models/customer/CustomerDto';
 export class DuraformOrderStepThreeComponent implements OnInit {
   @Output() processClick = new EventEmitter<DuraformProcessStep>();
 
-  duraformEnquiry: DuraformEnquiryDto;
   role = Role;
 
   enquiryType = EnquiryTypeEnum;
   customerType = CustomerType;
 
+  forceEditPrice = false;
   showInvoiceForm = false;
   showDeliveryForm = false;
   showCustomerSelector = false;
@@ -41,6 +41,21 @@ export class DuraformOrderStepThreeComponent implements OnInit {
   showInvoicePdf = false;
 
   customer: CustomerDto;
+
+  get canEditPrice(): boolean {
+    if (this.forceEditPrice) {
+      return true;
+    }
+
+    return (
+      this.auth.isInRole(Role.Sale) &&
+      this.duraformEnquiry.enquiryType !== EnquiryTypeEnum.Order
+    );
+  }
+
+  get duraformEnquiry(): DuraformEnquiryDto {
+    return this.order.duraformEnquiry;
+  }
 
   get miscItemTotalPrice(): number {
     let totalPrice = 0;
@@ -67,8 +82,6 @@ export class DuraformOrderStepThreeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.duraformEnquiry = this.order.duraformEnquiry;
-
     if (!this.duraformEnquiry.id) {
       this.tryAutoFillShippingDetails();
     }
@@ -149,6 +162,55 @@ export class DuraformOrderStepThreeComponent implements OnInit {
     );
   };
 
+  onToggleForceEditPrice = () => {
+    if (this.forceEditPrice) {
+      this.layout.showLoadingPanel();
+      this.enquiryService.getDuraformEnquiry(this.duraformEnquiry.id).subscribe(
+        (response) => {
+          this.order.duraformEnquiry = response;
+
+          this.forceEditPrice = false;
+          this.layout.closeLoadingPanel();
+        },
+        (error) => {
+          this.layout.closeLoadingPanel();
+          this.dialog.alert('Error Occured', error, null);
+        }
+      );
+    } else {
+      this.forceEditPrice = true;
+    }
+  };
+
+  onUpdatePrice = () => {
+    if (!this.forceEditPrice || this.duraformEnquiry.hasBeenInvoiced) {
+      return;
+    }
+
+    this.dialog.confirm(
+      'Action Confirmation',
+      'Updating New Prices. </br></br>Are you sure?',
+      () => {
+        const model = new DuraformEnquiryPriceDto(this.duraformEnquiry);
+
+        this.layout.showLoadingPanel();
+        const { id } = this.duraformEnquiry;
+
+        this.enquiryService.updateEnquiryPriceOnly(id, model).subscribe(
+          (_) => {
+            this.dialog.success('Prices have been updated');
+
+            window.location.reload();
+          },
+          (error) => {
+            this.dialog.error(error);
+            this.layout.closeLoadingPanel();
+          }
+        );
+      }
+    );
+  };
+
   private saveDuraformEnquiry = (successMsg: string) => {
     this.layout.showLoadingPanel();
     const { id } = this.duraformEnquiry;
@@ -199,18 +261,16 @@ export class DuraformOrderStepThreeComponent implements OnInit {
       'Approving Order! Are you sure?',
       () => {
         this.layout.showLoadingPanel();
-        this.enquiryService
-          .approveEnquiry(this.order.duraformEnquiry.id)
-          .subscribe(
-            (_) => {
-              this.dialog.success('Order has been approved!');
-              window.location.reload();
-            },
-            (error) => {
-              this.layout.closeLoadingPanel();
-              this.dialog.error(error);
-            }
-          );
+        this.enquiryService.approveEnquiry(this.duraformEnquiry.id).subscribe(
+          (_) => {
+            this.dialog.success('Order has been approved!');
+            window.location.reload();
+          },
+          (error) => {
+            this.layout.closeLoadingPanel();
+            this.dialog.error(error);
+          }
+        );
       }
     );
   };
@@ -221,22 +281,20 @@ export class DuraformOrderStepThreeComponent implements OnInit {
       'Declining Order! Are you sure?',
       () => {
         this.layout.showLoadingPanel();
-        this.enquiryService
-          .declineEnquiry(this.order.duraformEnquiry.id)
-          .subscribe(
-            (_) => {
-              this.order.duraformEnquiry.enquiryType = EnquiryTypeEnum.Draft;
-              this.order.duraformEnquiry.orderedDate = null;
-              this.order.duraformEnquiry.approvedDate = null;
+        this.enquiryService.declineEnquiry(this.duraformEnquiry.id).subscribe(
+          (_) => {
+            this.duraformEnquiry.enquiryType = EnquiryTypeEnum.Draft;
+            this.duraformEnquiry.orderedDate = null;
+            this.duraformEnquiry.approvedDate = null;
 
-              this.dialog.success('Order has been declined!');
-              window.location.reload();
-            },
-            (error) => {
-              this.layout.closeLoadingPanel();
-              this.dialog.error(error);
-            }
-          );
+            this.dialog.success('Order has been declined!');
+            window.location.reload();
+          },
+          (error) => {
+            this.layout.closeLoadingPanel();
+            this.dialog.error(error);
+          }
+        );
       }
     );
   };

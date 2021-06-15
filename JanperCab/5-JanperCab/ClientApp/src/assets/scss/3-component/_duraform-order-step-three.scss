@@ -93,11 +93,26 @@ app-duraform-order-step-three {
       }
 
       &__title {
+        align-items: center;
+        display: flex;
         flex: 1;
       }
 
       &__subtotal {
         font-weight: bold;
+        text-align: right;
+
+        .object-editor {
+          display: inline-block;
+          max-width: 70%;
+
+          .form__control {
+            background-color: rgba(yellow, 0.2);
+            border-radius: unset;
+            padding: 0.5rem;
+            font-weight: bold;
+          }
+        }
       }
 
       &__total {

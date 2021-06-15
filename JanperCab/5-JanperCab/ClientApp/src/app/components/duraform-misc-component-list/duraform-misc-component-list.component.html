@@ -16,7 +16,19 @@
           <td class="line-number">{{ i + 1 }}</td>
           <td>{{ miscItem.quantity }}</td>
           <td class="text-left">{{ miscItem.toString() }}</td>
-          <td class="text-right">{{ miscItem.unitPrice | currency }}</td>
+          <td class="text-right">
+            <span *ngIf="!canEditPrice">
+              {{ miscItem.unitPrice | currency }}
+            </span>
+            <app-object-editor
+              *ngIf="canEditPrice"
+              [object]="miscItem"
+              [property]="'unitPrice'"
+              [isRequired]="true"
+              (afterSet)="duraformEnquiry.calculatePrice(false)"
+            ></app-object-editor>
+          </td>
+
           <td class="text-right">{{ miscItem.subTotal | currency }}</td>
         </tr>
       </tbody>

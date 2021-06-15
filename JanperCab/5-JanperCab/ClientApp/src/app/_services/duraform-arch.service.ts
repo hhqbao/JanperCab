@@ -1,5 +1,5 @@
+import { DuraformArchDto } from './../_models/duraform-arch/DuraformArchDto';
 import { environment } from './../../environments/environment';
-import { DuraformArchForList } from './../_models/duraform-arch/DuraformArchForList';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -8,7 +8,7 @@ export class DuraformArchService {
   constructor(private http: HttpClient) {}
 
   getAll = () => {
-    return this.http.get<DuraformArchForList[]>(
+    return this.http.get<DuraformArchDto[]>(
       `${environment.baseUrl}/DuraformArches`
     );
   };

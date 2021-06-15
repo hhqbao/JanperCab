@@ -1,6 +1,6 @@
+import { DuraformEdgeProfileDto } from './../../_models/duraform-edge-profile/DuraformEdgeProfileDto';
 import { ComponentType } from './../../_enums/ComponentType';
 import { DialogService } from './../../_services/dialog.service';
-import { DuraformEdgeProfileForList } from './../../_models/duraform-edge-profile/DuraformEdgeProfileForList';
 import { FormGroup } from '@angular/forms';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
@@ -24,7 +24,7 @@ export class EdgeProfileFormControlComponent implements OnInit {
     private dialog: DialogService
   ) {}
 
-  get allowedEdgeProfiles(): DuraformEdgeProfileForList[] {
+  get allowedEdgeProfiles(): DuraformEdgeProfileDto[] {
     const allowedList = this.asset.getAllowedEdgeProfiles(
       this.order.duraformEnquiry.duraformDesign
     );
@@ -43,7 +43,7 @@ export class EdgeProfileFormControlComponent implements OnInit {
     }
   }
 
-  get selectedEdgeProfile(): DuraformEdgeProfileForList {
+  get selectedEdgeProfile(): DuraformEdgeProfileDto {
     const edgeId = +this.formGroup.get('duraformEdgeProfileId').value;
 
     if (!edgeId) {

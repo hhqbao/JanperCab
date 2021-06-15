@@ -6,6 +6,6 @@
     *ngFor="let design of asset.duraformDesigns"
     [hidden]="hideDesign(design)"
     [design]="design"
-    (selectDesign)="onSelectDesign($event)"
+    (selectDesign)="this.selectDesign.emit($event)"
   ></app-duraform-design>
 </div>

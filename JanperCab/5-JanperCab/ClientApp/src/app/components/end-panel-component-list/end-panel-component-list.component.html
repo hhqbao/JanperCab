@@ -52,7 +52,7 @@
           <td>{{ endPanel.extraRailTop }}</td>
           <td>{{ endPanel.extraRailBottom }}</td>
           <td class="text-left">
-            {{ asset.getEdgeProfile(endPanel.duraformEdgeProfileId).name }}
+            {{ endPanel.duraformEdgeProfile.name }}
           </td>
           <td>{{ endPanel.top ? "X" : null }}</td>
           <td>{{ endPanel.bottom ? "X" : null }}</td>
@@ -62,7 +62,18 @@
             {{ endPanel.duraformOption?.toString() }}
           </td>
           <td class="text-left">{{ endPanel.note }}</td>
-          <td class="text-right">{{ endPanel.unitPrice | currency }}</td>
+          <td class="text-right">
+            <span *ngIf="!canEditPrice">
+              {{ endPanel.unitPrice | currency }}
+            </span>
+            <app-object-editor
+              *ngIf="canEditPrice"
+              [object]="endPanel"
+              [property]="'unitPrice'"
+              [isRequired]="true"
+              (afterSet)="duraformEnquiry.calculatePrice(false)"
+            ></app-object-editor>
+          </td>
           <td class="text-right">{{ endPanel.subTotal | currency }}</td>
         </tr>
       </tbody>

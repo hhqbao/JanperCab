@@ -18,12 +18,10 @@
     <td>{{ component.width }}</td>
     <td>{{ component.numberOfDrawers }}</td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
-      {{ asset.getDrawerType(component.duraformDrawerTypeId).name | uppercase }}
+      {{ component.duraformDrawerType.name | uppercase }}
     </td>
     <td class="text-left" style="padding-left: 1rem; padding-right: 1rem">
-      {{
-        asset.getEdgeProfile(component.duraformEdgeProfileId).name | uppercase
-      }}
+      {{ component.duraformEdgeProfile.name | uppercase }}
     </td>
     <td>{{ component.top ? "X" : "" }}</td>
     <td>{{ component.bottom ? "X" : "" }}</td>

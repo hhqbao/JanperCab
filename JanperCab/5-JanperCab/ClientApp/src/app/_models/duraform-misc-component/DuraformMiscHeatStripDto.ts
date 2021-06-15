@@ -6,7 +6,7 @@ import { DuraformEnquiryDto } from '../enquiry/DuraformEnquiryDto';
 import { HeatStripSizeEnum } from './../../_enums/HeatStripSizeEnum';
 import { HeatStripTypeEnum } from './../../_enums/HeatStripTypeEnum';
 import { DuraformMiscComponentDto } from './DuraformMiscComponentDto';
-import { DuraformComponentService } from 'src/app/_services/duraform-component.service';
+import { Expose } from 'class-transformer';
 
 export class DuraformMiscHeatStripDto extends DuraformMiscComponentDto {
   type: HeatStripTypeEnum;
@@ -24,6 +24,7 @@ export class DuraformMiscHeatStripDto extends DuraformMiscComponentDto {
     return DuraformMiscTypeEnum.HeatStrip;
   }
 
+  @Expose()
   update(formGroup: FormGroup) {
     const values = formGroup.value;
     this.quantity = values.quantity;
@@ -31,6 +32,7 @@ export class DuraformMiscHeatStripDto extends DuraformMiscComponentDto {
     this.size = values.size;
   }
 
+  @Expose()
   getUnitPrice(duraformEnquiry: DuraformEnquiryDto): number {
     const heatStripPrices = DuraformAssetService.instance.miscPrices.filter(
       (x) => x instanceof DuraformMiscPriceHeatStripDto
@@ -43,6 +45,12 @@ export class DuraformMiscHeatStripDto extends DuraformMiscComponentDto {
     return unitPrice ? unitPrice.price : 0;
   }
 
+  @Expose()
+  calculateUnitPrice(duraformEnquiry: DuraformEnquiryDto): void {
+    this.unitPrice = this.getUnitPrice(duraformEnquiry);
+  }
+
+  @Expose()
   toString(): string {
     return `Heat Strip - Type ${HeatStripTypeEnum[this.type]} - ${this.size}mm`;
   }

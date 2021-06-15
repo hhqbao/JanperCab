@@ -1,6 +1,6 @@
-import { DuraformDesignForOrderMenu } from './../../_models/duraform-design/DuraformDesignForOrderMenu';
+import { DuraformEdgeProfileDto } from './../../_models/duraform-edge-profile/DuraformEdgeProfileDto';
+import { DuraformDesignDto } from './../../_models/duraform-design/DuraformDesignDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
-import { DuraformEdgeProfileForList } from './../../_models/duraform-edge-profile/DuraformEdgeProfileForList';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -8,10 +8,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: 'edge-profile-selector.component.html',
 })
 export class EdgeProfileSelectorComponent implements OnInit {
-  @Input() selectedDuraformDesign: DuraformDesignForOrderMenu;
-  @Input() selectedEdgeProfile: DuraformEdgeProfileForList;
+  @Input() selectedDuraformDesign: DuraformDesignDto;
+  @Input() selectedEdgeProfile: DuraformEdgeProfileDto;
 
-  @Output() selectProfile = new EventEmitter<DuraformEdgeProfileForList>();
+  @Output() selectProfile = new EventEmitter<DuraformEdgeProfileDto>();
 
   constructor(public asset: DuraformAssetService) {}
 
@@ -21,7 +21,7 @@ export class EdgeProfileSelectorComponent implements OnInit {
 
   ngOnInit() {}
 
-  onSelectProfile = (profile: DuraformEdgeProfileForList) => {
+  onSelectProfile = (profile: DuraformEdgeProfileDto) => {
     this.selectProfile.emit(profile);
   };
 }

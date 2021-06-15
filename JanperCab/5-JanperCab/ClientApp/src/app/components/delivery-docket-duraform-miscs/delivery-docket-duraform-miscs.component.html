@@ -1,0 +1,25 @@
+<div class="component-table">
+  <div class="title">Miscs</div>
+  <table>
+    <thead>
+      <tr>
+        <th class="qty">qty</th>
+        <th class="misc-description">description</th>
+        <th class="checkbox">routed</th>
+        <th class="checkbox">cleaned</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let misc of miscs">
+        <td>{{ misc.quantity }}</td>
+        <td>{{ misc.toString() }}</td>
+        <td class="checkbox">
+          <div class="checkbox"></div>
+        </td>
+        <td class="checkbox">
+          <div class="checkbox"></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

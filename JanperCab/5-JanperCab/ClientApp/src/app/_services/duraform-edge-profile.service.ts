@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs';
 import { DuraformEdgeProfileDto } from './../_models/duraform-edge-profile/DuraformEdgeProfileDto';
 import { environment } from 'src/environments/environment';
-import { DuraformEdgeProfileForList } from './../_models/duraform-edge-profile/DuraformEdgeProfileForList';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -16,7 +15,7 @@ export class DuraformEdgeProfileService {
   };
 
   getAll = () => {
-    return this.http.get<DuraformEdgeProfileForList[]>(
+    return this.http.get<DuraformEdgeProfileDto[]>(
       `${environment.baseUrl}/DuraformEdgeProfiles`
     );
   };

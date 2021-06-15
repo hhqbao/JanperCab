@@ -1,4 +1,6 @@
-﻿namespace _3_Application.Dtos.DuraformComponent
+﻿using _3_Application.Dtos.DuraformEdgeProfile;
+
+namespace _3_Application.Dtos.DuraformComponent
 {
     public class DuraformComponentDto
     {
@@ -31,5 +33,8 @@
         public decimal TotalPrice { get; set; }
 
         public int SortNumber { get; set; }
+
+
+        public DuraformEdgeProfileDto DuraformEdgeProfile { get; set; }
     }
 }

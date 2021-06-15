@@ -1,25 +1,17 @@
-import { DuraformPriceHeightHeader } from './../../_models/duraform-price/DuraformPriceHeightHeader';
-import { DuraformPriceWidthHeader } from './../../_models/duraform-price/DuraformPriceWidthHeader';
-import { forkJoin } from 'rxjs';
-import { DuraformSerieService } from './../../_services/duraform-serie.service';
-import { DuraformWrapTypeService } from './../../_services/duraform-wrap-type.service';
-import { DialogService } from './../../_services/dialog.service';
-import { LayoutService } from './../../_services/layout.service';
-import { DuraformPriceService } from './../../_services/duraform-price.service';
+import { DuraformSerieDto } from './../../_models/duraform-serie/DuraformSerieDto';
+import { DuraformWrapTypeDto } from './../../_models/duraform-wrap-type/DuraformWrapTypeDto';
 import { DuraformRouteOnlyPriceGridDto } from './../../_models/duraform-price/DuraformRouteOnlyPriceGridDto';
 import { DuraformPriceGridDto } from 'src/app/_models/duraform-price/DuraformPriceGridDto';
 import { Component, Input, OnInit } from '@angular/core';
 import { DuraformWrapPriceGridDto } from 'src/app/_models/duraform-price/DuraformWrapPriceGridDto';
-import { DuraformSerieForList } from 'src/app/_models/duraform-serie/DuraformSerieForList';
-import { DuraformWrapTypeForSelection } from 'src/app/_models/duraform-wrap-type/DuraformWrapTypeForSelection';
 
 @Component({
   selector: 'app-duraform-price-list-pdf',
   templateUrl: 'duraform-price-list-pdf.component.html',
 })
 export class DuraformPriceListPdfComponent implements OnInit {
-  @Input() finishList: DuraformWrapTypeForSelection[] = [];
-  @Input() serieList: DuraformSerieForList[] = [];
+  @Input() finishList: DuraformWrapTypeDto[] = [];
+  @Input() serieList: DuraformSerieDto[] = [];
   @Input() priceList: DuraformPriceGridDto[] = [];
 
   constructor() {}

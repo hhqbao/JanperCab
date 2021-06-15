@@ -21,5 +21,17 @@ export abstract class DuraformMiscComponentDto {
   abstract get miscType(): DuraformMiscTypeEnum;
   abstract update(formGroup: FormGroup): void;
   abstract getUnitPrice(duraformEnquiry: DuraformEnquiryDto): number;
+  abstract calculateUnitPrice(duraformEnquiry: DuraformEnquiryDto): void;
   abstract toString(): string;
+
+  calculateTotal(duraformEnquiry: DuraformEnquiryDto): void {
+    this.subTotal = this.unitPrice * this.quantity;
+
+    this.totalDiscount = _.round(
+      (this.subTotal * duraformEnquiry.discountRate) / 100,
+      2
+    );
+
+    this.totalPrice = this.subTotal - this.totalDiscount;
+  }
 }

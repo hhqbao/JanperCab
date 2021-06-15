@@ -1,14 +1,16 @@
-import { DuraformDesignForOrderMenu } from '../duraform-design/DuraformDesignForOrderMenu';
-import { DuraformWrapColorForSelection } from '../duraform-wrap-color/DuraformWrapColorForSelection';
-import { DuraformWrapTypeForSelection } from '../duraform-wrap-type/DuraformWrapTypeForSelection';
-import { DuraformSerieForList } from '../duraform-serie/DuraformSerieForList';
-import { DuraformEdgeProfileForList } from '../duraform-edge-profile/DuraformEdgeProfileForList';
+import { DuraformArchDto } from './../duraform-arch/DuraformArchDto';
+import { DuraformWrapColorDto } from './../duraform-wrap-color/DuraformWrapColorDto';
+import { DuraformWrapTypeDto } from './../duraform-wrap-type/DuraformWrapTypeDto';
+import { DuraformSerieDto } from './../duraform-serie/DuraformSerieDto';
+import { DuraformDesignDto } from './../duraform-design/DuraformDesignDto';
+import { DuraformEdgeProfileDto } from './../duraform-edge-profile/DuraformEdgeProfileDto';
 
 export class StepOneReturnValue {
-  design: DuraformDesignForOrderMenu;
-  edgeProfile: DuraformEdgeProfileForList;
-  serie: DuraformSerieForList;
+  design: DuraformDesignDto;
+  edgeProfile: DuraformEdgeProfileDto;
+  serie: DuraformSerieDto;
+  arch: DuraformArchDto;
   isRoutingOnly: boolean;
-  wrapType: DuraformWrapTypeForSelection;
-  wrapColor: DuraformWrapColorForSelection;
+  wrapType: DuraformWrapTypeDto;
+  wrapColor: DuraformWrapColorDto;
 }

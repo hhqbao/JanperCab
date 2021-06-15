@@ -1,5 +1,4 @@
-import { DuraformOrderService } from './../../_services/duraform-order.service';
-import { DuraformDesignForOrderMenu } from '../../_models/duraform-design/DuraformDesignForOrderMenu';
+import { DuraformDesignDto } from './../../_models/duraform-design/DuraformDesignDto';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -7,17 +6,13 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: 'duraform-design.component.html',
 })
 export class DuraformDesignComponent implements OnInit {
-  @Input() design: DuraformDesignForOrderMenu;
+  @Input() design: DuraformDesignDto;
 
-  @Output() selectDesign = new EventEmitter<DuraformDesignForOrderMenu>();
+  @Output() selectDesign = new EventEmitter<DuraformDesignDto>();
 
   isLoadingImg = true;
 
   constructor() {}
 
   ngOnInit() {}
-
-  onSelectDesign = () => {
-    this.selectDesign.emit(this.design);
-  };
 }

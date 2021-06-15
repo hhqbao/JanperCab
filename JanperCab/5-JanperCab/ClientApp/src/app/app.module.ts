@@ -1,3 +1,5 @@
+import { ObjectEditorComponent } from './components/object-editor/object-editor.component';
+import { DeliveryDocketDuraformMiscsComponent } from './components/delivery-docket-duraform-miscs/delivery-docket-duraform-miscs.component';
 import { DeliveryDocketComponent } from './components/delivery-docket/delivery-docket.component';
 import { PickUpSheetPdfComponent } from './components/pick-up-sheet-pdf/pick-up-sheet-pdf.component';
 import { PickUpFormComponent } from './components/pick-up-form/pick-up-form.component';
@@ -234,6 +236,7 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     DeliveryDocketPantryDoorsComponent,
     DeliveryDocketEndPanelsComponent,
     DeliveryDocketDuraformDrawersComponent,
+    DeliveryDocketDuraformMiscsComponent,
     CustomerListComponent,
     EdgeProfileMenuComponent,
     DuraformPriceEditorComponent,
@@ -268,6 +271,7 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     PickUpFormComponent,
     PickUpFormComponent,
     PickUpSheetPdfComponent,
+    ObjectEditorComponent,
   ],
   imports: [
     BrowserModule,

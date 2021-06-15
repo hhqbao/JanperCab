@@ -192,6 +192,9 @@
                 }
               }
 
+              &.misc-description {
+              }
+
               &.height {
                 width: 110px;
 
@@ -420,7 +423,7 @@
   }
 
   .footer {
-    font-size: 23px;
+    font-size: 16px;
     margin-top: 50px;
 
     .note {
@@ -432,6 +435,42 @@
     @media print {
       font-size: 12px;
       margin-top: 30px;
+    }
+  }
+
+  .signature {
+    margin-top: 50px;
+    page-break-inside: avoid;
+
+    & > h2 {
+      display: flex;
+      font-weight: normal;
+      font-size: 23px;
+
+      &:not(:first-child) {
+        margin-top: 35px;
+
+        @media print {
+          margin-top: 25px;
+        }
+      }
+
+      &::after {
+        content: "";
+        display: block;
+        border-bottom: solid 1px black;
+        flex: 1;
+      }
+
+      @media print {
+        font-size: 18px;
+      }
+    }
+
+    &__end-tag {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 12px;
     }
   }
 }

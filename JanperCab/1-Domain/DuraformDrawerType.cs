@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using _1_Domain.Enum;
+﻿using _1_Domain.Enum;
+using System.Collections.Generic;
 
 namespace _1_Domain
 {

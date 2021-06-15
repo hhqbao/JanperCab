@@ -1,11 +1,10 @@
-import { CabinetMakerDto } from './../../_models/customer/CabinetMakerDto';
-import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
-import { DuraformEdgeProfileForList } from './../../_models/duraform-edge-profile/DuraformEdgeProfileForList';
+import { DuraformArchDto } from './../../_models/duraform-arch/DuraformArchDto';
+import { DuraformWrapTypeDto } from './../../_models/duraform-wrap-type/DuraformWrapTypeDto';
+import { DuraformWrapColorDto } from './../../_models/duraform-wrap-color/DuraformWrapColorDto';
+import { DuraformEdgeProfileDto } from './../../_models/duraform-edge-profile/DuraformEdgeProfileDto';
+import { DuraformDesignDto } from './../../_models/duraform-design/DuraformDesignDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
-import { DuraformDesignForOrderMenu } from '../../_models/duraform-design/DuraformDesignForOrderMenu';
-import { DuraformWrapTypeForSelection } from './../../_models/duraform-wrap-type/DuraformWrapTypeForSelection';
 import { StepOneReturnValue } from '../../_models/duraform-order/StepOneReturnValue';
-import { DuraformWrapColorForSelection } from './../../_models/duraform-wrap-color/DuraformWrapColorForSelection';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -15,8 +14,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class DuraformOrderStepOneComponent implements OnInit {
   @Output() finish = new EventEmitter<StepOneReturnValue>();
 
-  selectedDuraformDesign: DuraformDesignForOrderMenu = null;
-  selectedEdgeProfile: DuraformEdgeProfileForList = null;
+  selectedDuraformDesign: DuraformDesignDto;
+  selectedDuraformArch: DuraformArchDto;
+  selectedEdgeProfile: DuraformEdgeProfileDto;
 
   showEdgeProfileMenu = false;
   showColorSelector = false;
@@ -25,7 +25,7 @@ export class DuraformOrderStepOneComponent implements OnInit {
 
   ngOnInit() {}
 
-  onSelectDesign = (selectedDesign: DuraformDesignForOrderMenu) => {
+  onSelectDesign = (selectedDesign: DuraformDesignDto) => {
     this.selectedDuraformDesign = selectedDesign;
 
     if (this.selectedDuraformDesign.allowedEdgeProfiles.length === 1) {
@@ -38,22 +38,18 @@ export class DuraformOrderStepOneComponent implements OnInit {
     }
   };
 
-  onPickColor = (color: DuraformWrapColorForSelection) => {
-    const selectedSerie = this.asset.getDoorSerie(
-      this.selectedDuraformDesign.duraformSerieId
-    );
+  onSelectArch = (selectedArch: DuraformArchDto) => {
+    this.selectedDuraformArch = selectedArch;
+  };
 
-    const selectedWrapType: DuraformWrapTypeForSelection = {
-      id: color.duraformWrapTypeId,
-      name: color.duraformWrapTypeName,
-    };
-
+  onPickColor = (color: DuraformWrapColorDto) => {
     const returnValue: StepOneReturnValue = {
-      design: { ...this.selectedDuraformDesign },
+      design: this.selectedDuraformDesign,
       edgeProfile: this.selectedEdgeProfile,
-      serie: selectedSerie,
+      serie: this.selectedDuraformDesign.duraformSerie,
+      arch: this.selectedDuraformArch,
       isRoutingOnly: false,
-      wrapType: selectedWrapType,
+      wrapType: color.duraformWrapType,
       wrapColor: color,
     };
 
@@ -67,9 +63,10 @@ export class DuraformOrderStepOneComponent implements OnInit {
     );
 
     const returnValue: StepOneReturnValue = {
-      design: { ...this.selectedDuraformDesign },
+      design: this.selectedDuraformDesign,
       edgeProfile: this.selectedEdgeProfile,
       serie: selectedSerie,
+      arch: this.selectedDuraformArch,
       isRoutingOnly: true,
       wrapType: null,
       wrapColor: null,

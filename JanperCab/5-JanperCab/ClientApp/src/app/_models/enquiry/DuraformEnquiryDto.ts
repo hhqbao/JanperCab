@@ -1,3 +1,9 @@
+import { DuraformArchDto } from './../duraform-arch/DuraformArchDto';
+import { HingeHoleTypeDto } from './../hinge-hole-type/HingeHoleTypeDto';
+import { DuraformWrapColorDto } from './../duraform-wrap-color/DuraformWrapColorDto';
+import { DuraformWrapTypeDto } from './../duraform-wrap-type/DuraformWrapTypeDto';
+import { DuraformSerieDto } from './../duraform-serie/DuraformSerieDto';
+import { DuraformEdgeProfileDto } from './../duraform-edge-profile/DuraformEdgeProfileDto';
 import { DuraformDesignDto } from './../duraform-design/DuraformDesignDto';
 import { DuraformComponentService } from 'src/app/_services/duraform-component.service';
 import { DuraformProcessDeliveringDto } from '../DuraformProcess/DuraformProcessDeliveringDto';
@@ -13,7 +19,6 @@ import { DuraformMiscHeatStripDto } from './../duraform-misc-component/DuraformM
 import { DuraformMiscFingerPullDto } from './../duraform-misc-component/DuraformMiscFingerPullDto';
 import { DuraformMiscCapMouldDto } from './../duraform-misc-component/DuraformMiscCapMouldDto';
 import { DuraformMiscLooseFoilDto } from './../duraform-misc-component/DuraformMiscLooseFoilDto';
-import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { Type } from 'class-transformer';
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -25,14 +30,7 @@ import { DuraformDoorDto } from '../duraform-component/DuraformDoorDto';
 import { DuraformDrawerDto } from '../duraform-component/DuraformDrawerDto';
 import { DuraformEndPanelDto } from '../duraform-component/DuraformEndPanelDto';
 import { DuraformPantryDoorDto } from '../duraform-component/DuraformPantryDoorDto';
-import { DuraformDesignForOrderMenu } from '../duraform-design/DuraformDesignForOrderMenu';
 import { EnquiryDto } from './EnquiryDto';
-import { DuraformSerieForList } from '../duraform-serie/DuraformSerieForList';
-import { DuraformWrapTypeForSelection } from '../duraform-wrap-type/DuraformWrapTypeForSelection';
-import { DuraformWrapColorForSelection } from '../duraform-wrap-color/DuraformWrapColorForSelection';
-import { HingeHoleTypeDto } from '../hinge-hole-type/HingeHoleTypeDto';
-import { DuraformEdgeProfileForList } from '../duraform-edge-profile/DuraformEdgeProfileForList';
-import { DuraformArchForList } from '../duraform-arch/DuraformArchForList';
 import { DuraformComponentWithOptionDto } from '../duraform-component/DuraformComponentWithOptionDto';
 import { DuraformOptionTypeKey } from 'src/app/_enums/DuraformOptionTypeKey';
 import { DuraformMiscComponentDto } from '../duraform-misc-component/DuraformMiscComponentDto';
@@ -46,6 +44,14 @@ export class DuraformEnquiryDto extends EnquiryDto {
   duraformEdgeProfileId: number;
   hingeHoleTypeId: number;
   duraformArchId: number;
+
+  duraformDesign: DuraformDesignDto;
+  duraformSerie: DuraformSerieDto;
+  duraformWrapType: DuraformWrapTypeDto;
+  duraformWrapColor: DuraformWrapColorDto;
+  duraformEdgeProfile: DuraformEdgeProfileDto;
+  hingeHoleType: HingeHoleTypeDto;
+  duraformArch: DuraformArchDto;
 
   @Type(() => DuraformComponentDto, {
     keepDiscriminatorProperty: true,
@@ -248,36 +254,6 @@ export class DuraformEnquiryDto extends EnquiryDto {
     return heatStrips as DuraformMiscHeatStripDto[];
   }
 
-  get duraformDesign(): DuraformDesignForOrderMenu {
-    return DuraformAssetService.instance.getDesign(this.duraformDesignId);
-  }
-
-  get duraformSerie(): DuraformSerieForList {
-    return DuraformAssetService.instance.getDoorSerie(this.duraformSerieId);
-  }
-
-  get duraformWrapType(): DuraformWrapTypeForSelection {
-    return DuraformAssetService.instance.getWrapType(this.duraformWrapTypeId);
-  }
-
-  get duraformWrapColor(): DuraformWrapColorForSelection {
-    return DuraformAssetService.instance.getWrapColor(this.duraformWrapColorId);
-  }
-
-  get hingeHoleType(): HingeHoleTypeDto {
-    return DuraformAssetService.instance.getHingeType(this.hingeHoleTypeId);
-  }
-
-  get duraformEdgeProfile(): DuraformEdgeProfileForList {
-    return DuraformAssetService.instance.getEdgeProfile(
-      this.duraformEdgeProfileId
-    );
-  }
-
-  get duraformArch(): DuraformArchForList {
-    return DuraformAssetService.instance.getArch(this.duraformArchId);
-  }
-
   get timeInSystem(): string {
     const offset = moment().diff(moment(this.orderedDate), 'days');
 
@@ -327,16 +303,26 @@ export class DuraformEnquiryDto extends EnquiryDto {
     this.calculatePrice();
   };
 
-  calculatePrice = (): void => {
+  calculatePrice = (includeUnitPrice: boolean = true): void => {
     this.subTotal = 0;
 
     this.duraformComponents.forEach((comp) => {
-      DuraformComponentService.instance.calculateComponentPrice(comp, this);
+      if (includeUnitPrice) {
+        comp.calculateUnitPrice(this);
+      }
+
+      comp.calculateTotal(this);
+
       this.subTotal += comp.totalPrice;
     });
 
     this.miscComponents.forEach((miscItem) => {
-      DuraformComponentService.instance.calculateMiscItemPrice(miscItem, this);
+      if (includeUnitPrice) {
+        miscItem.calculateUnitPrice(this);
+      }
+
+      miscItem.calculateTotal(this);
+
       this.subTotal += miscItem.totalPrice;
     });
 

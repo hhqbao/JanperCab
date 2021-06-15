@@ -28,7 +28,7 @@ namespace _5_JanperCab.Controllers
         {
             var colors = await _unitOfWork.DuraformWrapColors.GetAllAsync();
 
-            return Ok(_mapper.Map<List<DuraformWrapColor>, List<DuraformWrapColorForSelection>>(colors));
+            return Ok(_mapper.Map<List<DuraformWrapColor>, List<DuraformWrapColorDto>>(colors));
         }
 
         [HttpGet("ForDesign/{designId}")]
@@ -36,7 +36,7 @@ namespace _5_JanperCab.Controllers
         {
             var colors = await _unitOfWork.DuraformWrapColors.GetForDesignAsync(designId);
 
-            return Ok(_mapper.Map<List<DuraformWrapColor>, List<DuraformWrapColorForSelection>>(colors));
+            return Ok(_mapper.Map<List<DuraformWrapColor>, List<DuraformWrapColorDto>>(colors));
         }
     }
 }

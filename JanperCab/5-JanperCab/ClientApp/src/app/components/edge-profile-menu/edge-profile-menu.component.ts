@@ -1,5 +1,5 @@
-import { DuraformDesignForOrderMenu } from './../../_models/duraform-design/DuraformDesignForOrderMenu';
-import { DuraformEdgeProfileForList } from './../../_models/duraform-edge-profile/DuraformEdgeProfileForList';
+import { DuraformDesignDto } from './../../_models/duraform-design/DuraformDesignDto';
+import { DuraformEdgeProfileDto } from './../../_models/duraform-edge-profile/DuraformEdgeProfileDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
@@ -8,9 +8,9 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   templateUrl: 'edge-profile-menu.component.html',
 })
 export class EdgeProfileMenuComponent implements OnInit {
-  @Input() selectedDuraformDesign: DuraformDesignForOrderMenu;
+  @Input() selectedDuraformDesign: DuraformDesignDto;
 
-  @Output() selectProfile = new EventEmitter<DuraformEdgeProfileForList>();
+  @Output() selectProfile = new EventEmitter<DuraformEdgeProfileDto>();
   @Output() closeMenu = new EventEmitter();
 
   constructor(public asset: DuraformAssetService) {}

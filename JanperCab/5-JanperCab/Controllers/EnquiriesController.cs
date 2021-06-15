@@ -144,6 +144,22 @@ namespace _5_JanperCab.Controllers
         }
 
         [Authorize(Roles = "Sale")]
+        [HttpPut("update-price-only/{id}")]
+        public async Task<IActionResult> UpdatePriceOnly(int id, EnquiryPriceDto enquiryPriceDto)
+        {
+            var enquiryInDb = await _unitOfWork.Enquiries.GetAsync(id);
+
+            if (enquiryInDb == null) return BadRequest("Enquiry Not Found");
+
+            _mapper.Map(enquiryPriceDto, enquiryInDb);
+            enquiryInDb.LastEditted = DateTime.Now;
+
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(_mapper.Map<Enquiry, EnquiryDto>(enquiryInDb));
+        }
+
+        [Authorize(Roles = "Sale")]
         [HttpPut("decline/{id}")]
         public async Task<IActionResult> Decline(int id)
         {

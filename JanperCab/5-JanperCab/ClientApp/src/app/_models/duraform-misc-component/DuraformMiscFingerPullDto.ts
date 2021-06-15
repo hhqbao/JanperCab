@@ -5,7 +5,7 @@ import { FingerPullTypeEnum } from './../../_enums/FingerPullTypeEnum';
 import { DuraformMiscComponentDto } from './DuraformMiscComponentDto';
 import { DuraformEnquiryDto } from '../enquiry/DuraformEnquiryDto';
 import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
-import { DuraformComponentService } from 'src/app/_services/duraform-component.service';
+import { Expose } from 'class-transformer';
 
 export class DuraformMiscFingerPullDto extends DuraformMiscComponentDto {
   type: FingerPullTypeEnum;
@@ -24,6 +24,7 @@ export class DuraformMiscFingerPullDto extends DuraformMiscComponentDto {
     return DuraformMiscTypeEnum.FingerPull;
   }
 
+  @Expose()
   update(formGroup: FormGroup) {
     const values = formGroup.value;
     this.quantity = values.quantity;
@@ -31,6 +32,7 @@ export class DuraformMiscFingerPullDto extends DuraformMiscComponentDto {
     this.isRaw = values.isRaw;
   }
 
+  @Expose()
   getUnitPrice(duraformEnquiry: DuraformEnquiryDto): number {
     const fingerPullPrices = DuraformAssetService.instance.miscPrices.filter(
       (x) => x instanceof DuraformMiscPriceFingerPullDto
@@ -45,6 +47,12 @@ export class DuraformMiscFingerPullDto extends DuraformMiscComponentDto {
     return unitPrice ? unitPrice.price : 0;
   }
 
+  @Expose()
+  calculateUnitPrice(duraformEnquiry: DuraformEnquiryDto): void {
+    this.unitPrice = this.getUnitPrice(duraformEnquiry);
+  }
+
+  @Expose()
   toString(): string {
     return `Finger Pull - Type ${FingerPullTypeEnum[this.type]} - ${
       this.isRaw ? 'Raw' : 'Pressed'

@@ -1,4 +1,4 @@
-<div class="color-card" (click)="onClick()">
+<div class="color-card" (click)="this.pick.emit(this.color)">
   <div class="color-card__img-box">
     <div class="img-loader" *ngIf="isLoadingImage">
       <i class="fa fa-spinner fa-spin"></i>
@@ -12,7 +12,7 @@
     />
   </div>
   <div class="color-card__type-name" *ngIf="showType">
-    {{ color.duraformWrapTypeName }}
+    {{ color.duraformWrapType.name }}
   </div>
   <div class="color-card__name">
     {{ color.name }}

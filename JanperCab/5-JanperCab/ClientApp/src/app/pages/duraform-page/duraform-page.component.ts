@@ -64,7 +64,7 @@ export class DuraformPageComponent implements OnInit {
 
     const observables = forkJoin({
       series: this.serieService.getAll(),
-      designs: this.designService.getForOrderMenu(),
+      designs: this.designService.getAll(),
       edgeProfiles: this.edgeProfileService.getAll(),
       arches: this.archService.getAll(),
       wrapTypes: this.wrapTypeService.getAll(),
@@ -110,11 +110,8 @@ export class DuraformPageComponent implements OnInit {
           (response) => {
             this.order.duraformEnquiry = response;
 
-            const {
-              isRoutingOnly,
-              duraformSerieId,
-              duraformWrapTypeId,
-            } = this.order.duraformEnquiry;
+            const { isRoutingOnly, duraformSerieId, duraformWrapTypeId } =
+              this.order.duraformEnquiry;
             this.asset.loadPrices(
               isRoutingOnly,
               duraformSerieId,

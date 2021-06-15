@@ -1,4 +1,3 @@
-import { DuraformEdgeProfileForList } from './../../_models/duraform-edge-profile/DuraformEdgeProfileForList';
 import { DuraformEndPanelDto } from './../../_models/duraform-component/DuraformEndPanelDto';
 import { Component, OnInit, Input } from '@angular/core';
 

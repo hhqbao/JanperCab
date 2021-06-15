@@ -1,6 +1,6 @@
 ﻿namespace _3_Application.Dtos.PantryDoorChairRailType
 {
-    public class PantryDoorChairRailTypeForList
+    public class PantryDoorChairRailTypeDto
     {
         public int Id { get; set; }
 

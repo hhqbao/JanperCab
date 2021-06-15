@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _3_Application.Dtos.Customer;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -57,6 +58,8 @@ namespace _3_Application.Dtos.Invoice
 
         public decimal TotalPrice { get; set; }
 
+
+        public CustomerDto Customer { get; set; }
 
         public ICollection<InvoiceComponentDto> InvoiceComponents { get; set; }
 

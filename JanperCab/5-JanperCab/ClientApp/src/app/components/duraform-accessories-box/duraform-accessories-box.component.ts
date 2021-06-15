@@ -1,11 +1,11 @@
+import { HingeHoleTypeDto } from './../../_models/hinge-hole-type/HingeHoleTypeDto';
+import { DuraformArchDto } from './../../_models/duraform-arch/DuraformArchDto';
+import { DuraformEdgeProfileDto } from './../../_models/duraform-edge-profile/DuraformEdgeProfileDto';
 import { DuraformEnquiryDto } from './../../_models/enquiry/DuraformEnquiryDto';
-import { DuraformEdgeProfileForList } from './../../_models/duraform-edge-profile/DuraformEdgeProfileForList';
-import { DialogService } from './../../_services/dialog.service';
 import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { DuraformOrderService } from 'src/app/_services/duraform-order.service';
-import { DuraformArchForList } from 'src/app/_models/duraform-arch/DuraformArchForList';
 
 @Component({
   selector: 'app-duraform-accessories-box',
@@ -14,6 +14,10 @@ import { DuraformArchForList } from 'src/app/_models/duraform-arch/DuraformArchF
 export class DuraformAccessoriesBoxComponent implements OnInit {
   formGroup: FormGroup;
   duraformEnquiry: DuraformEnquiryDto;
+
+  get hingeHoleTypeIdControl(): AbstractControl {
+    return this.formGroup.get('hingeHoleTypeId');
+  }
 
   constructor(
     public asset: DuraformAssetService,
@@ -30,21 +34,20 @@ export class DuraformAccessoriesBoxComponent implements OnInit {
   }
 
   onSelectHingeHoleType = () => {
-    this.duraformEnquiry.hingeHoleTypeId = this.formGroup.value.hingeHoleTypeId;
+    let hingeType: HingeHoleTypeDto = null;
 
-    if (!this.duraformEnquiry.hingeHoleTypeId) {
-      const componentsWithHingeHole = this.duraformEnquiry
-        .componentsWithHingeHole;
-
-      componentsWithHingeHole.forEach((x) => (x.hingeHoleOption = null));
+    if (this.hingeHoleTypeIdControl.value) {
+      hingeType = this.asset.getHingeType(this.hingeHoleTypeIdControl.value);
     }
+
+    this.order.setHingeHoleType(hingeType);
   };
 
-  onSelectArch = (arch: DuraformArchForList) => {
+  onSelectArch = (arch: DuraformArchDto) => {
     this.order.setArch(arch);
   };
 
-  onSelectProfile = (profile: DuraformEdgeProfileForList) => {
+  onSelectProfile = (profile: DuraformEdgeProfileDto) => {
     this.order.setEdgeProfile(profile);
   };
 }

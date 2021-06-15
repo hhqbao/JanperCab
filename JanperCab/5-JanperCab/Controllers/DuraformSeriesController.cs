@@ -28,7 +28,7 @@ namespace _5_JanperCab.Controllers
         {
             var series = await _unitOfWork.DuraformSeries.GetAllAsync();
 
-            return Ok(_mapper.Map<List<DuraformSerie>, List<DuraformSerieForList>>(series));
+            return Ok(_mapper.Map<List<DuraformSerie>, List<DuraformSerieDto>>(series));
         }
     }
 }

@@ -1,4 +1,4 @@
-import { DuraformWrapColorForSelection } from './../../_models/duraform-wrap-color/DuraformWrapColorForSelection';
+import { DuraformWrapColorDto } from './../../_models/duraform-wrap-color/DuraformWrapColorDto';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -6,18 +6,14 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: 'color-card.component.html',
 })
 export class ColorCardComponent implements OnInit {
-  @Input() color: DuraformWrapColorForSelection;
+  @Input() color: DuraformWrapColorDto;
   @Input() showType = false;
 
-  @Output() pick = new EventEmitter<DuraformWrapColorForSelection>();
+  @Output() pick = new EventEmitter<DuraformWrapColorDto>();
 
   isLoadingImage = true;
 
   constructor() {}
 
   ngOnInit() {}
-
-  onClick = () => {
-    this.pick.emit(this.color);
-  };
 }

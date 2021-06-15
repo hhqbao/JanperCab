@@ -1,4 +1,4 @@
-import { DuraformDesignForOrderMenu } from '../_models/duraform-design/DuraformDesignForOrderMenu';
+import { DuraformDesignDto } from './../_models/duraform-design/DuraformDesignDto';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -7,9 +7,9 @@ import { environment } from 'src/environments/environment';
 export class DuraformDesignService {
   constructor(private http: HttpClient) {}
 
-  getForOrderMenu = () => {
-    return this.http.get<DuraformDesignForOrderMenu[]>(
-      `${environment.baseUrl}/DuraformDesigns/GetForOrderMenu`
+  getAll = () => {
+    return this.http.get<DuraformDesignDto[]>(
+      `${environment.baseUrl}/DuraformDesigns`
     );
   };
 }

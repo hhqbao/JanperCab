@@ -1,3 +1,10 @@
+import { HingeHoleTypeDto } from './../_models/hinge-hole-type/HingeHoleTypeDto';
+import { DuraformWrapColorDto } from './../_models/duraform-wrap-color/DuraformWrapColorDto';
+import { DuraformWrapTypeDto } from './../_models/duraform-wrap-type/DuraformWrapTypeDto';
+import { DuraformSerieDto } from './../_models/duraform-serie/DuraformSerieDto';
+import { DuraformDesignDto } from './../_models/duraform-design/DuraformDesignDto';
+import { DuraformArchDto } from './../_models/duraform-arch/DuraformArchDto';
+import { DuraformEdgeProfileDto } from './../_models/duraform-edge-profile/DuraformEdgeProfileDto';
 import { Role } from './../_enums/Role';
 import { DuraformComponentService } from 'src/app/_services/duraform-component.service';
 import { DuraformMiscFingerPullDto } from './../_models/duraform-misc-component/DuraformMiscFingerPullDto';
@@ -5,15 +12,11 @@ import { DuraformMiscCapMouldDto } from 'src/app/_models/duraform-misc-component
 import { DuraformMiscLooseFoilDto } from 'src/app/_models/duraform-misc-component/DuraformMiscLooseFoilDto';
 import { DuraformMiscComponentDto } from 'src/app/_models/duraform-misc-component/DuraformMiscComponentDto';
 import { DuraformEnquiryDto } from './../_models/enquiry/DuraformEnquiryDto';
-import { CabinetMakerDto } from 'src/app/_models/customer/CabinetMakerDto';
 import { AuthService } from './auth.service';
 import { DuraformAssetService } from './duraform-asset.service';
-import { DuraformArchForList } from './../_models/duraform-arch/DuraformArchForList';
-import { DuraformEdgeProfileForList } from './../_models/duraform-edge-profile/DuraformEdgeProfileForList';
 import { StepOneReturnValue } from '../_models/duraform-order/StepOneReturnValue';
 import { Injectable } from '@angular/core';
 import { DuraformComponentDto } from '../_models/duraform-component/DuraformComponentDto';
-import { CustomerType } from '../_enums/CustomerType';
 import { DuraformComponentWithOptionDto } from '../_models/duraform-component/DuraformComponentWithOptionDto';
 import { CustomerDto } from '../_models/customer/CustomerDto';
 
@@ -50,16 +53,14 @@ export class DuraformOrderService {
   }
 
   submitStepOne = (model: StepOneReturnValue) => {
-    this.duraformEnquiry.duraformDesignId = model.design.id;
-    this.duraformEnquiry.duraformSerieId = model.serie.id;
-    this.duraformEnquiry.isRoutingOnly = model.isRoutingOnly;
-    this.duraformEnquiry.duraformWrapTypeId = model.wrapType?.id;
-    this.duraformEnquiry.duraformWrapColorId = model.wrapColor?.id;
-    this.duraformEnquiry.duraformArchId = model.design.hasNoArch
-      ? null
-      : this.duraformEnquiry.duraformArchId;
+    this.setDuraformDesign(model.design);
+    this.setEdgeProfile(model.edgeProfile);
+    this.setDuraformSerie(model.serie);
+    this.setArch(model.arch);
+    this.setWrapType(model.wrapType);
+    this.setWrapColor(model.wrapColor);
 
-    this.setEdgeProfile(this.asset.getEdgeProfile(model.edgeProfile.id));
+    this.duraformEnquiry.isRoutingOnly = model.isRoutingOnly;
 
     if (this.duraformEnquiry.hasComponent) {
       if (this.duraformEnquiry.isRoutingOnly) {
@@ -117,15 +118,50 @@ export class DuraformOrderService {
     this.duraformEnquiry.updateDiscountRate(customer.discountRate);
   };
 
-  setEdgeProfile = (model: DuraformEdgeProfileForList) => {
-    this.duraformEnquiry.duraformEdgeProfileId = model.id;
+  setDuraformDesign = (design: DuraformDesignDto) => {
+    this.duraformEnquiry.duraformDesignId = design.id;
+    this.duraformEnquiry.duraformDesign = design;
+  };
+
+  setDuraformSerie = (serie: DuraformSerieDto) => {
+    this.duraformEnquiry.duraformSerieId = serie.id;
+    this.duraformEnquiry.duraformSerie = serie;
+  };
+
+  setWrapType = (wrapType: DuraformWrapTypeDto) => {
+    this.duraformEnquiry.duraformWrapTypeId = wrapType?.id;
+    this.duraformEnquiry.duraformWrapType = wrapType;
+  };
+
+  setWrapColor = (wrapColor: DuraformWrapColorDto) => {
+    this.duraformEnquiry.duraformWrapColorId = wrapColor?.id;
+    this.duraformEnquiry.duraformWrapColor = wrapColor;
+  };
+
+  setEdgeProfile = (edgeProfile: DuraformEdgeProfileDto) => {
+    this.duraformEnquiry.duraformEdgeProfileId = edgeProfile.id;
+    this.duraformEnquiry.duraformEdgeProfile = edgeProfile;
+
     this.duraformEnquiry.duraformComponents.forEach((x) => {
-      x.setEdgeProfile(model);
+      x.setEdgeProfile(edgeProfile);
     });
   };
 
-  setArch = (model: DuraformArchForList) => {
-    this.duraformEnquiry.duraformArchId = model ? model.id : null;
+  setArch = (duraformArch: DuraformArchDto) => {
+    this.duraformEnquiry.duraformArchId = duraformArch?.id;
+    this.duraformEnquiry.duraformArch = duraformArch;
+  };
+
+  setHingeHoleType = (hingeType: HingeHoleTypeDto) => {
+    this.duraformEnquiry.hingeHoleTypeId = hingeType?.id;
+    this.duraformEnquiry.hingeHoleType = hingeType;
+
+    if (!this.duraformEnquiry.hingeHoleType) {
+      const componentsWithHingeHole =
+        this.duraformEnquiry.componentsWithHingeHole;
+
+      componentsWithHingeHole.forEach((x) => (x.hingeHoleOption = null));
+    }
   };
 
   addComponent = (

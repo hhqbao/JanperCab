@@ -6,8 +6,8 @@ import * as _ from 'lodash';
 
 export class DuraformDoorDto extends DuraformComponentWithOptionAndHingeHoleDto {
   @Expose()
-  getPriceForOne(duraformEnquiry: DuraformEnquiryDto): number {
-    let priceForOne = super.getPriceForOne(duraformEnquiry);
+  getUnitPrice(duraformEnquiry: DuraformEnquiryDto): number {
+    let priceForOne = super.getUnitPrice(duraformEnquiry);
 
     if (this.hingeHoleOption) {
       const hingeStyle = DuraformAssetService.instance.getHingeStyle(
@@ -18,5 +18,10 @@ export class DuraformDoorDto extends DuraformComponentWithOptionAndHingeHoleDto 
     }
 
     return _.round(priceForOne, 2);
+  }
+
+  @Expose()
+  calculateUnitPrice(duraformEnquiry: DuraformEnquiryDto): void {
+    this.unitPrice = this.getUnitPrice(duraformEnquiry);
   }
 }

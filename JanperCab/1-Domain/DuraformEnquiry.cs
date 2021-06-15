@@ -57,11 +57,11 @@ namespace _1_Domain
             DuraformProcesses = new Collection<DuraformProcess>();
         }
 
-        public override string JobType => IsRoutingOnly ? "DSW" : "DF";
+        public override string JobType => IsRoutingOnly ? ICBLineStructure.DSW : "DF";
 
         public override string DoorType => DuraformDesign.Name;
 
-        public override string DoorColor => IsRoutingOnly ? "DSW" : $"{DuraformWrapType.Name} {DuraformWrapColor.Name}";
+        public override string DoorColor => IsRoutingOnly ? ICBLineStructure.DSW : $"{DuraformWrapType.Name} {DuraformWrapColor.Name}";
 
         public override Process CurrentProcess
         {
@@ -72,12 +72,10 @@ namespace _1_Domain
 
         public override int PartCount
         {
-            get { return DuraformComponents.Sum(x => x.Quantity); }
+            get { return DuraformComponents.Sum(x => x.Quantity) + MiscComponents.Sum(x => x.Quantity); }
         }
 
-        public override bool HasBeenDelivered => DuraformProcesses.Any(x =>
-            (x.DuraformProcessType == DuraformProcessEnum.Delivering || x.DuraformProcessType == DuraformProcessEnum.PickingUp) &&
-            x.EndTime.HasValue);
+        public override bool HasBeenDelivered => DeliveredTime.HasValue;
 
 
         public override DateTime? DeliveredTime
@@ -400,7 +398,7 @@ namespace _1_Domain
 
         public override string GetDescription()
         {
-            var type = IsRoutingOnly ? "DSW" : "DF";
+            var type = IsRoutingOnly ? ICBLineStructure.DSW : "DF";
             var numberOfPieces = DuraformComponents.Sum(x => x.Quantity);
 
             return $"{type} - {Customer.Name} | {numberOfPieces} parts";

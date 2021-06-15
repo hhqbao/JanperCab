@@ -1,4 +1,7 @@
-<div class="duraform-design can-select" (click)="onSelectDesign()">
+<div
+  class="duraform-design can-select"
+  (click)="this.selectDesign.emit(this.design)"
+>
   <div class="duraform-design__img-box">
     <div class="img-loader" *ngIf="isLoadingImg">
       <i class="fa fa-spinner fa-spin"></i>
@@ -15,7 +18,7 @@
   <div class="duraform-design__control-box">
     <div class="duraform-design__control-box__door-name">{{ design.name }}</div>
     <div class="duraform-design__control-box__profile-name">
-      {{ design.defaultEdgeProfileName }}
+      {{ design.defaultEdgeProfile.name }}
     </div>
     <img
       class="duraform-design__control-box__profile-img"

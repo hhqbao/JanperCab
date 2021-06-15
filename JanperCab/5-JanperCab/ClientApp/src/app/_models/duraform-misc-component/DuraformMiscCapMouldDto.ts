@@ -5,7 +5,8 @@ import { DuraformEnquiryDto } from '../enquiry/DuraformEnquiryDto';
 import { CapMouldSizeEnum } from './../../_enums/CapMouldSizeEnum';
 import { DuraformMiscComponentDto } from './DuraformMiscComponentDto';
 import { DuraformMiscPriceCapMouldDto } from '../duraform-misc-price/DuraformMiscPriceCapMouldDto';
-import { DuraformComponentService } from 'src/app/_services/duraform-component.service';
+import { Expose } from 'class-transformer';
+import * as _ from 'lodash';
 
 export class DuraformMiscCapMouldDto extends DuraformMiscComponentDto {
   size: CapMouldSizeEnum;
@@ -24,6 +25,7 @@ export class DuraformMiscCapMouldDto extends DuraformMiscComponentDto {
     return DuraformMiscTypeEnum.CapMould;
   }
 
+  @Expose()
   update(formGroup: FormGroup) {
     const values = formGroup.value;
     this.quantity = values.quantity;
@@ -31,6 +33,7 @@ export class DuraformMiscCapMouldDto extends DuraformMiscComponentDto {
     this.isRaw = values.isRaw;
   }
 
+  @Expose()
   getUnitPrice(duraformEnquiry: DuraformEnquiryDto): number {
     const mouldPrices = DuraformAssetService.instance.miscPrices.filter(
       (x) => x instanceof DuraformMiscPriceCapMouldDto
@@ -45,6 +48,12 @@ export class DuraformMiscCapMouldDto extends DuraformMiscComponentDto {
     return unitPrice ? unitPrice.price : 0;
   }
 
+  @Expose()
+  calculateUnitPrice(duraformEnquiry: DuraformEnquiryDto): void {
+    this.unitPrice = this.getUnitPrice(duraformEnquiry);
+  }
+
+  @Expose()
   toString(): string {
     return `Cap Mould - ${this.size}mm - ${this.isRaw ? 'Raw' : 'Pressed'}`;
   }

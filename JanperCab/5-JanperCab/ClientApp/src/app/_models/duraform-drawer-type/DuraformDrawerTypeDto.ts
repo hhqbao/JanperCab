@@ -1,6 +1,6 @@
 import { DrawerDesign } from './../../_enums/DrawerDesign';
 
-export class DuraformDrawerTypeForList {
+export class DuraformDrawerTypeDto {
   id: number;
   name: string;
   drawerDesign: DrawerDesign;

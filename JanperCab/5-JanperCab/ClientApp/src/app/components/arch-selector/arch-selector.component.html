@@ -11,7 +11,7 @@
       [ngClass]="{
         selected: !selectedArch
       }"
-      (click)="onSelectArch(null)"
+      (click)="this.selectArch.emit(null)"
     >
       <img
         src="./../../../assets/images/Duraform/Arches/square.jpg"
@@ -26,7 +26,7 @@
         selected: selectedArch && selectedArch.id === arch.id
       }"
       *ngFor="let arch of asset.arches"
-      (click)="onSelectArch(arch)"
+      (click)="this.selectArch.emit(arch)"
     >
       <img
         src="./../../../assets/images/Duraform/Arches/{{ arch.imageUrl }}"

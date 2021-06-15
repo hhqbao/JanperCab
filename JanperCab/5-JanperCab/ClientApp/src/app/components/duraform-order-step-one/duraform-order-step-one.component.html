@@ -18,6 +18,7 @@
     [design]="selectedDuraformDesign"
     [selectedEdgeProfile]="selectedEdgeProfile"
     (cancel)="onCancelColorSelection()"
+    (archPick)="onSelectArch($event)"
     (colorPick)="onPickColor($event)"
     (routingPick)="onRoutingPick()"
   ></app-duraform-color-selector>

@@ -1,4 +1,4 @@
-import { DuraformEnquiryDto } from './../enquiry/DuraformEnquiryDto';
+import { DuraformEnquiryDto } from 'src/app/_models/enquiry/DuraformEnquiryDto';
 import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 import { DuraformOptionAngledShelfDto } from './../duraform-option/DuraformOptionAngledShelfDto';
 import { DuraformOptionMicrowaveFrameDto } from './../duraform-option/DuraformOptionMicrowaveFrameDto';
@@ -92,7 +92,7 @@ export abstract class DuraformComponentWithOptionDto extends DuraformComponentDt
   }
 
   @Expose()
-  getPriceForOne(duraformEnquiry: DuraformEnquiryDto): number {
+  getUnitPrice(duraformEnquiry: DuraformEnquiryDto): number {
     const serieId =
       this.duraformOption && this.duraformOption.hasNoProfile
         ? 1
@@ -113,5 +113,10 @@ export abstract class DuraformComponentWithOptionDto extends DuraformComponentDt
     }
 
     return _.round(basePrice, 2);
+  }
+
+  @Expose()
+  calculateUnitPrice(duraformEnquiry: DuraformEnquiryDto): void {
+    this.unitPrice = this.getUnitPrice(duraformEnquiry);
   }
 }

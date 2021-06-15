@@ -11,7 +11,6 @@ import { DuraformCartItemComponent } from '../duraform-cart-item/duraform-cart-i
 })
 export class PantryDoorCartItemComponent extends DuraformCartItemComponent<DuraformPantryDoorDto> {
   constructor(
-    public asset: DuraformAssetService,
     public componentService: DuraformComponentService,
     public order: DuraformOrderService,
     public ef: ElementRef

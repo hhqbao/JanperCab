@@ -72,33 +72,21 @@ namespace _5_JanperCab.Helpers
             CreateMap<CustomerCategoryCBD, CustomerCategoryCBDDto>();
             CreateMap<CustomerCategoryCBDDto, CustomerCategoryCBD>();
 
-            CreateMap<DuraformSerie, DuraformSerieForList>();
             CreateMap<DuraformSerie, DuraformSerieDto>();
 
-            CreateMap<DuraformDesign, DuraformDesignForOrderMenu>()
-                .ForMember(
-                    dest => dest.DefaultEdgeProfileName,
-                    opt => opt.MapFrom(src => src.DefaultEdgeProfile.Name)
-                );
             CreateMap<DuraformDesign, DuraformDesignDto>();
 
-            CreateMap<DuraformWrapType, DuraformWrapTypeForSelection>();
             CreateMap<DuraformWrapType, DuraformWrapTypeDto>();
 
-            CreateMap<DuraformWrapColor, DuraformWrapColorForSelection>()
-                .ForMember(
-                    dest => dest.DuraformWrapTypeName,
-                    opt => opt.MapFrom(src => src.DuraformWrapType.Name)
-                );
             CreateMap<DuraformWrapColor, DuraformWrapColorDto>();
 
-            CreateMap<DuraformEdgeProfile, DuraformEdgeProfileForList>();
             CreateMap<DuraformEdgeProfile, DuraformEdgeProfileDto>();
 
-            CreateMap<DuraformArch, DuraformArchForList>();
             CreateMap<DuraformArch, DuraformArchDto>();
-            CreateMap<PantryDoorChairRailType, PantryDoorChairRailTypeForList>();
-            CreateMap<DuraformDrawerType, DuraformDrawerTypeForList>();
+
+            CreateMap<PantryDoorChairRailType, PantryDoorChairRailTypeDto>();
+
+            CreateMap<DuraformDrawerType, DuraformDrawerTypeDto>();
 
             CreateMap<DuraformOptionType, DuraformOptionTypeDto>();
             CreateMap<DuraformOptionTypeDto, DuraformOptionType>();
@@ -156,6 +144,10 @@ namespace _5_JanperCab.Helpers
             CreateMap<DuraformComponentDto, DuraformComponent>()
                 .Include<DuraformComponentWithOptionDto, DuraformComponentWithOption>()
                 .Include<DuraformDrawerDto, DuraformDrawer>()
+                .ForMember(x => x.DuraformEdgeProfile, opt => opt.Ignore())
+                .EqualityComparison((dto, x) => dto.Id == x.Id);
+
+            CreateMap<DuraformComponentPriceDto, DuraformComponent>()
                 .EqualityComparison((dto, x) => dto.Id == x.Id);
 
             CreateMap<DuraformComponentWithOption, DuraformComponentWithOptionDto>()
@@ -178,13 +170,15 @@ namespace _5_JanperCab.Helpers
             CreateMap<DuraformDoorDto, DuraformDoor>();
 
             CreateMap<DuraformPantryDoor, DuraformPantryDoorDto>();
-            CreateMap<DuraformPantryDoorDto, DuraformPantryDoor>();
+            CreateMap<DuraformPantryDoorDto, DuraformPantryDoor>()
+                .ForMember(x => x.ChairRailType, opt => opt.Ignore());
 
             CreateMap<DuraformEndPanel, DuraformEndPanelDto>();
             CreateMap<DuraformEndPanelDto, DuraformEndPanel>();
 
             CreateMap<DuraformDrawer, DuraformDrawerDto>();
-            CreateMap<DuraformDrawerDto, DuraformDrawer>();
+            CreateMap<DuraformDrawerDto, DuraformDrawer>()
+                .ForMember(x => x.DuraformDrawerType, opt => opt.Ignore());
 
             CreateMap<DuraformMiscComponent, DuraformMiscComponentDto>()
                 .Include<DuraformMiscLooseFoil, DuraformMiscLooseFoilDto>()
@@ -196,6 +190,9 @@ namespace _5_JanperCab.Helpers
                 .Include<DuraformMiscCapMouldDto, DuraformMiscCapMould>()
                 .Include<DuraformMiscFingerPullDto, DuraformMiscFingerPull>()
                 .Include<DuraformMiscHeatStripDto, DuraformMiscHeatStrip>()
+                .EqualityComparison((dto, x) => dto.Id == x.Id);
+
+            CreateMap<DuraformMiscComponentPriceDto, DuraformMiscComponent>()
                 .EqualityComparison((dto, x) => dto.Id == x.Id);
 
             CreateMap<DuraformMiscLooseFoil, DuraformMiscLooseFoilDto>();
@@ -292,14 +289,28 @@ namespace _5_JanperCab.Helpers
             CreateMap<EnquiryDto, Enquiry>()
                 .Include<DuraformEnquiryDto, DuraformEnquiry>()
                 .ForMember(x => x.CreatedDate, opt => opt.Ignore())
-                .ForMember(x => x.Invoice, opt => opt.Ignore());
+                .ForMember(x => x.Invoice, opt => opt.Ignore())
+                .ForMember(x => x.Customer, opt => opt.Ignore())
+                .ForMember(x => x.Manager, opt => opt.Ignore());
+
+            CreateMap<EnquiryPriceDto, Enquiry>()
+                .Include<DuraformEnquiryPriceDto, DuraformEnquiry>();
 
             CreateMap<Enquiry, EnquiryForInvoicingDto>()
                 .ForMember(x => x.CustomerName, opt => opt.MapFrom(x => x.Customer.Name));
 
             CreateMap<DuraformEnquiry, DuraformEnquiryDto>();
             CreateMap<DuraformEnquiry, DuraformEnquiryListDto>();
-            CreateMap<DuraformEnquiryDto, DuraformEnquiry>();
+            CreateMap<DuraformEnquiryDto, DuraformEnquiry>()
+                .ForMember(x => x.DuraformDesign, opt => opt.Ignore())
+                .ForMember(x => x.DuraformSerie, opt => opt.Ignore())
+                .ForMember(x => x.DuraformWrapType, opt => opt.Ignore())
+                .ForMember(x => x.DuraformWrapColor, opt => opt.Ignore())
+                .ForMember(x => x.DuraformEdgeProfile, opt => opt.Ignore())
+                .ForMember(x => x.HingeHoleType, opt => opt.Ignore())
+                .ForMember(x => x.DuraformArch, opt => opt.Ignore());
+
+            CreateMap<DuraformEnquiryPriceDto, DuraformEnquiry>();
 
             CreateMap<Enquiry, DeliveryDocketDto>()
                 .Include<DuraformEnquiry, DeliveryDocketDuraformDto>()

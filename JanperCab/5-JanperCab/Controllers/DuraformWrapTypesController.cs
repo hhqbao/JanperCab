@@ -28,7 +28,7 @@ namespace _5_JanperCab.Controllers
         {
             var types = await _unitOfWork.DuraformWrapTypes.GetAllAsync(x => !x.IsDisabledFromDisplay);
 
-            return Ok(_mapper.Map<List<DuraformWrapType>, List<DuraformWrapTypeForSelection>>(types));
+            return Ok(_mapper.Map<List<DuraformWrapType>, List<DuraformWrapTypeDto>>(types));
         }
 
         [HttpGet("ForDesign/{designId}")]
@@ -36,7 +36,7 @@ namespace _5_JanperCab.Controllers
         {
             var types = await _unitOfWork.DuraformWrapTypes.GetForDesignAsync(designId);
 
-            return Ok(_mapper.Map<List<DuraformWrapType>, List<DuraformWrapTypeForSelection>>(types));
+            return Ok(_mapper.Map<List<DuraformWrapType>, List<DuraformWrapTypeDto>>(types));
         }
     }
 }

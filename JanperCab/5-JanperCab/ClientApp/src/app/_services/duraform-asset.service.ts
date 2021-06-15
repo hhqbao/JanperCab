@@ -1,20 +1,19 @@
+import { DuraformDrawerTypeDto } from './../_models/duraform-drawer-type/DuraformDrawerTypeDto';
+import { PantryDoorChairRailTypeDto } from './../_models/pantry-door-chair-rail-type/PantryDoorChairRailTypeDto';
+import { DuraformWrapColorDto } from './../_models/duraform-wrap-color/DuraformWrapColorDto';
+import { DuraformWrapTypeDto } from './../_models/duraform-wrap-type/DuraformWrapTypeDto';
+import { DuraformSerieDto } from './../_models/duraform-serie/DuraformSerieDto';
+import { DuraformArchDto } from './../_models/duraform-arch/DuraformArchDto';
+import { DuraformDesignDto } from './../_models/duraform-design/DuraformDesignDto';
+import { DuraformEdgeProfileDto } from './../_models/duraform-edge-profile/DuraformEdgeProfileDto';
 import { DuraformPriceService } from './duraform-price.service';
 import { HingeHoleStyleEnum } from './../_enums/HingeHoleStyleEnum';
 import { HingeHoleStyleDto } from './../_models/hinge-hole-option/HingeHoleStyleDto';
 import { DialogService } from './dialog.service';
 import { DuraformPriceGridDto } from './../_models/duraform-price/DuraformPriceGridDto';
-
 import { ComponentType } from './../_enums/ComponentType';
 import { DuraformComponentTypeDto } from './../_models/duraform-component/DuraformComponentType';
-import { DuraformWrapColorForSelection } from './../_models/duraform-wrap-color/DuraformWrapColorForSelection';
-import { DuraformWrapTypeForSelection } from './../_models/duraform-wrap-type/DuraformWrapTypeForSelection';
 import { Injectable } from '@angular/core';
-import { DuraformDesignForOrderMenu } from '../_models/duraform-design/DuraformDesignForOrderMenu';
-import { DuraformSerieForList } from '../_models/duraform-serie/DuraformSerieForList';
-import { DuraformEdgeProfileForList } from '../_models/duraform-edge-profile/DuraformEdgeProfileForList';
-import { DuraformArchForList } from '../_models/duraform-arch/DuraformArchForList';
-import { PantryDoorChairRailTypeForList } from '../_models/pantry-door-chair-rail-type/PantryDoorChairRailTypeForList';
-import { DuraformDrawerTypeForList } from '../_models/duraform-drawer-type/DuraformDrawerTypeForList';
 import { DuraformOptionTypeDto } from '../_models/duraform-option/DuraformOptionTypeDto';
 import { HingeHoleTypeDto } from '../_models/hinge-hole-type/HingeHoleTypeDto';
 import { DuraformMiscPriceDto } from '../_models/duraform-misc-price/DuraformMiscPriceDto';
@@ -26,15 +25,15 @@ export class DuraformAssetService {
   static instance: DuraformAssetService;
 
   componentTypes: DuraformComponentTypeDto[] = [];
-  arches: DuraformArchForList[] = [];
-  duraformDrawerTypes: DuraformDrawerTypeForList[] = [];
+  arches: DuraformArchDto[] = [];
+  duraformDrawerTypes: DuraformDrawerTypeDto[] = [];
   duraformOptionTypes: DuraformOptionTypeDto[] = [];
-  duraformDesigns: DuraformDesignForOrderMenu[] = [];
-  duraformSeries: DuraformSerieForList[] = [];
-  duraformWrapTypes: DuraformWrapTypeForSelection[] = [];
-  duraformWrapColors: DuraformWrapColorForSelection[] = [];
-  edgeProfiles: DuraformEdgeProfileForList[] = [];
-  pantryDoorChairRailTypes: PantryDoorChairRailTypeForList[] = [];
+  duraformDesigns: DuraformDesignDto[] = [];
+  duraformSeries: DuraformSerieDto[] = [];
+  duraformWrapTypes: DuraformWrapTypeDto[] = [];
+  duraformWrapColors: DuraformWrapColorDto[] = [];
+  edgeProfiles: DuraformEdgeProfileDto[] = [];
+  pantryDoorChairRailTypes: PantryDoorChairRailTypeDto[] = [];
   hingeHoleTypes: HingeHoleTypeDto[] = [];
   hingeHoleStyles: HingeHoleStyleDto[] = [];
   priceGrids: DuraformPriceGridDto[] = [];
@@ -132,7 +131,7 @@ export class DuraformAssetService {
     return this.duraformDesigns.find((x) => x.id === id);
   };
 
-  getAllowedEdgeProfiles = (duraformDesign: DuraformDesignForOrderMenu) => {
+  getAllowedEdgeProfiles = (duraformDesign: DuraformDesignDto) => {
     return this.edgeProfiles.filter((x) =>
       duraformDesign.allowedEdgeProfiles.some(
         (y) => y.duraformEdgeProfileId === x.id

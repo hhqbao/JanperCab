@@ -27,7 +27,6 @@ export class DeliveryDocketComponent implements OnInit {
     this.layoutService.showLoadingPanel();
     this.enquiryService.getDeliveryDocket(this.enquiryId).subscribe(
       (response) => {
-        console.log(response);
         this.deliveryDocket = response;
         this.isLoading = false;
         this.layoutService.closeLoadingPanel();

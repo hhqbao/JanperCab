@@ -1,10 +1,11 @@
-import { DuraformEdgeProfileForList } from './../../_models/duraform-edge-profile/DuraformEdgeProfileForList';
+import { DuraformArchDto } from './../../_models/duraform-arch/DuraformArchDto';
+import { DuraformWrapTypeDto } from './../../_models/duraform-wrap-type/DuraformWrapTypeDto';
+import { DuraformWrapColorDto } from './../../_models/duraform-wrap-color/DuraformWrapColorDto';
+import { DuraformEdgeProfileDto } from './../../_models/duraform-edge-profile/DuraformEdgeProfileDto';
+import { DuraformDesignDto } from './../../_models/duraform-design/DuraformDesignDto';
 import { DuraformOrderService } from './../../_services/duraform-order.service';
-import { DuraformArchForList } from './../../_models/duraform-arch/DuraformArchForList';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
-import { DuraformDesignForOrderMenu } from '../../_models/duraform-design/DuraformDesignForOrderMenu';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { DuraformWrapTypeForSelection } from './../../_models/duraform-wrap-type/DuraformWrapTypeForSelection';
 import { DialogService } from 'src/app/_services/dialog.service';
 import { forkJoin } from 'rxjs';
 import { DuraformWrapColorService } from './../../_services/duraform-wrap-color.service';
@@ -19,22 +20,22 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { DuraformWrapColorForSelection } from 'src/app/_models/duraform-wrap-color/DuraformWrapColorForSelection';
 
 @Component({
   selector: 'app-duraform-color-selector',
   templateUrl: 'duraform-color-selector.component.html',
 })
 export class DuraformColorSelectorComponent implements OnInit {
-  @Input() design: DuraformDesignForOrderMenu;
-  @Input() selectedEdgeProfile: DuraformEdgeProfileForList = null;
+  @Input() design: DuraformDesignDto;
+  @Input() selectedEdgeProfile: DuraformEdgeProfileDto;
 
-  @Output() colorPick = new EventEmitter<DuraformWrapColorForSelection>();
-  @Output() routingPick = new EventEmitter<DuraformWrapColorForSelection>();
+  @Output() archPick = new EventEmitter<DuraformArchDto>();
+  @Output() colorPick = new EventEmitter<DuraformWrapColorDto>();
+  @Output() routingPick = new EventEmitter<DuraformWrapColorDto>();
   @Output() cancel = new EventEmitter();
 
-  wrapTypes: DuraformWrapTypeForSelection[] = [];
-  wrapColors: DuraformWrapColorForSelection[] = [];
+  wrapTypes: DuraformWrapTypeDto[] = [];
+  wrapColors: DuraformWrapColorDto[] = [];
 
   filterFg: FormGroup;
   isSelectingColor = false;
@@ -91,7 +92,7 @@ export class DuraformColorSelectorComponent implements OnInit {
     (this.filterFg.get('search') as any).nativeElement.focus();
   };
 
-  hideColor = (color: DuraformWrapColorForSelection) => {
+  hideColor = (color: DuraformWrapColorDto) => {
     const filter = this.filterFg.value;
 
     if (!filter.type) {
@@ -134,7 +135,7 @@ export class DuraformColorSelectorComponent implements OnInit {
     this.focusSearchBox();
   };
 
-  onPickColor = (color: DuraformWrapColorForSelection) => {
+  onPickColor = (color: DuraformWrapColorDto) => {
     this.colorPick.emit(color);
   };
 
@@ -142,8 +143,8 @@ export class DuraformColorSelectorComponent implements OnInit {
     this.routingPick.emit();
   };
 
-  onSelectArch = (arch: DuraformArchForList) => {
-    this.order.setArch(arch);
+  onSelectArch = (arch: DuraformArchDto) => {
+    this.archPick.emit(arch);
     this.isSelectingColor = true;
 
     setTimeout(() => {

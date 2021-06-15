@@ -1,6 +1,6 @@
+import { DuraformSerieDto } from './../../_models/duraform-serie/DuraformSerieDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { DuraformSerieForList } from './../../_models/duraform-serie/DuraformSerieForList';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -12,7 +12,7 @@ export class DuraformFilterBoxComponent implements OnInit {
 
   filterFg: FormGroup;
 
-  get selectableSeries(): DuraformSerieForList[] {
+  get selectableSeries(): DuraformSerieDto[] {
     return this.asset.duraformSeries.filter((x) => !x.isHidden);
   }
 

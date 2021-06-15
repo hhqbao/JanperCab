@@ -1,9 +1,8 @@
-﻿using _1_Domain;
-using _1_Domain.Enum;
+﻿using _1_Domain.Enum;
 
 namespace _3_Application.Dtos.DuraformDrawerType
 {
-    public class DuraformDrawerTypeForList
+    public class DuraformDrawerTypeDto
     {
         public int Id { get; set; }
 

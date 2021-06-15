@@ -28,7 +28,7 @@ namespace _5_JanperCab.Controllers
         {
             var profiles = await _unitOfWork.DuraformEdgeProfiles.GetAllAsync();
 
-            return Ok(_mapper.Map<List<DuraformEdgeProfile>, List<DuraformEdgeProfileForList>>(profiles));
+            return Ok(_mapper.Map<List<DuraformEdgeProfile>, List<DuraformEdgeProfileDto>>(profiles));
         }
 
         [HttpGet("{id}")]

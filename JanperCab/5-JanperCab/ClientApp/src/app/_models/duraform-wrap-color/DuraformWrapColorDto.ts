@@ -1,3 +1,4 @@
+import { DuraformWrapTypeDto } from './../duraform-wrap-type/DuraformWrapTypeDto';
 export class DuraformWrapColorDto {
   id: number;
   duraformWrapTypeId: number;
@@ -5,4 +6,6 @@ export class DuraformWrapColorDto {
   imageUrl: string;
   isJanperMatching: boolean;
   isLaminexMatching: boolean;
+
+  duraformWrapType: DuraformWrapTypeDto;
 }

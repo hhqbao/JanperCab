@@ -28,7 +28,7 @@ namespace _5_JanperCab.Controllers
         {
             var arches = await _unitOfWork.DuraformArches.GetAllAsync();
 
-            return Ok(_mapper.Map<List<DuraformArch>, List<DuraformArchForList>>(arches));
+            return Ok(_mapper.Map<List<DuraformArch>, List<DuraformArchDto>>(arches));
         }
     }
 }

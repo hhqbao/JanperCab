@@ -80,32 +80,15 @@ export class DuraformComponentService {
     component: DuraformComponentDto,
     duraformEnquiry: DuraformEnquiryDto
   ) => {
-    const discountRate = duraformEnquiry.discountRate;
-
-    component.unitPrice = component.getPriceForOne(duraformEnquiry);
-    component.subTotal = component.quantity * component.unitPrice;
-    component.totalDiscount = _.round(
-      (component.subTotal * discountRate) / 100,
-      2
-    );
-
-    component.totalPrice = component.subTotal - component.totalDiscount;
+    component.calculateUnitPrice(duraformEnquiry);
+    component.calculateTotal(duraformEnquiry);
   };
 
   calculateMiscItemPrice = (
     miscItem: DuraformMiscComponentDto,
     duraformEnquiry: DuraformEnquiryDto
   ) => {
-    const unitPrice = miscItem.getUnitPrice(duraformEnquiry);
-
-    miscItem.unitPrice = unitPrice;
-
-    miscItem.subTotal = miscItem.unitPrice * miscItem.quantity;
-    miscItem.totalDiscount = _.round(
-      (miscItem.subTotal * duraformEnquiry.discountRate) / 100,
-      2
-    );
-
-    miscItem.totalPrice = miscItem.subTotal - miscItem.totalDiscount;
+    miscItem.calculateUnitPrice(duraformEnquiry);
+    miscItem.calculateTotal(duraformEnquiry);
   };
 }

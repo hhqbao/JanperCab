@@ -1,4 +1,8 @@
-﻿namespace _3_Application.Dtos.DuraformDesign
+﻿using _3_Application.Dtos.DuraformEdgeProfile;
+using _3_Application.Dtos.DuraformSerie;
+using System.Collections.ObjectModel;
+
+namespace _3_Application.Dtos.DuraformDesign
 {
     public class DuraformDesignDto
     {
@@ -17,5 +21,12 @@
         public bool HasNoArch { get; set; }
 
         public decimal Thickness { get; set; }
+
+
+        public DuraformSerieDto DuraformSerie { get; set; }
+
+        public DuraformEdgeProfileDto DefaultEdgeProfile { get; set; }
+
+        public Collection<DuraformDesignEdgeProfileDto> AllowedEdgeProfiles { set; get; }
     }
 }

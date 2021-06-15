@@ -1,6 +1,5 @@
+import { DuraformDesignDto } from './../../_models/duraform-design/DuraformDesignDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
-import { DuraformDesignForOrderMenu } from '../../_models/duraform-design/DuraformDesignForOrderMenu';
-import { DuraformSerieForList } from '../../_models/duraform-serie/DuraformSerieForList';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -8,7 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: 'duraform-design-list.component.html',
 })
 export class DuraformDesignListComponent implements OnInit {
-  @Output() selectDesign = new EventEmitter<DuraformDesignForOrderMenu>();
+  @Output() selectDesign = new EventEmitter<DuraformDesignDto>();
 
   private filterValue: any = { serie: 0 };
 
@@ -16,7 +15,7 @@ export class DuraformDesignListComponent implements OnInit {
 
   ngOnInit() {}
 
-  hideDesign = (design: DuraformDesignForOrderMenu) => {
+  hideDesign = (design: DuraformDesignDto) => {
     if (this.filterValue.serie === null) {
       return !design.name
         .toLowerCase()
@@ -32,9 +31,5 @@ export class DuraformDesignListComponent implements OnInit {
 
   onFilterChange = (changeValue: any) => {
     this.filterValue = changeValue;
-  };
-
-  onSelectDesign = (selectedDesign: DuraformDesignForOrderMenu) => {
-    this.selectDesign.emit(selectedDesign);
   };
 }

@@ -49,11 +49,11 @@
           <td>{{ pantryDoor.width }}</td>
           <td>{{ pantryDoor.chairRailHeight }}</td>
           <td>
-            {{ asset.getChairRailType(pantryDoor.chairRailTypeId).name }}
+            {{ pantryDoor.chairRailType.name }}
           </td>
           <td>{{ pantryDoor.extraRailBottom }}</td>
           <td class="text-left">
-            {{ asset.getEdgeProfile(pantryDoor.duraformEdgeProfileId).name }}
+            {{ pantryDoor.duraformEdgeProfile.name }}
           </td>
           <td>{{ pantryDoor.top ? "Y" : null }}</td>
           <td>{{ pantryDoor.bottom ? "Y" : null }}</td>
@@ -69,7 +69,16 @@
             {{ pantryDoor.note }}
           </td>
           <td class="text-right">
-            {{ pantryDoor.unitPrice | currency }}
+            <span *ngIf="!canEditPrice">
+              {{ pantryDoor.unitPrice | currency }}
+            </span>
+            <app-object-editor
+              *ngIf="canEditPrice"
+              [object]="pantryDoor"
+              [property]="'unitPrice'"
+              [isRequired]="true"
+              (afterSet)="duraformEnquiry.calculatePrice(false)"
+            ></app-object-editor>
           </td>
           <td class="text-right">
             {{ pantryDoor.subTotal | currency }}

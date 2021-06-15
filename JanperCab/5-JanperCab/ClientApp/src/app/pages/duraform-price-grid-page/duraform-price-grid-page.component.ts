@@ -1,3 +1,5 @@
+import { DuraformSerieDto } from './../../_models/duraform-serie/DuraformSerieDto';
+import { DuraformWrapTypeDto } from './../../_models/duraform-wrap-type/DuraformWrapTypeDto';
 import { DuraformPriceBulkAction } from './../../_models/duraform-price/DuraformPriceBulkAction';
 import { DuraformPriceHeightHeader } from './../../_models/duraform-price/DuraformPriceHeightHeader';
 import { DuraformPriceWidthHeader } from './../../_models/duraform-price/DuraformPriceWidthHeader';
@@ -5,11 +7,9 @@ import { DuraformPriceService } from './../../_services/duraform-price.service';
 import { forkJoin } from 'rxjs';
 import { DuraformSerieService } from 'src/app/_services/duraform-serie.service';
 import { DialogService } from 'src/app/_services/dialog.service';
-import { DuraformWrapTypeForSelection } from '../../_models/duraform-wrap-type/DuraformWrapTypeForSelection';
 import { LayoutService } from 'src/app/_services/layout.service';
 import { DuraformWrapTypeService } from '../../_services/duraform-wrap-type.service';
 import { Component, OnInit } from '@angular/core';
-import { DuraformSerieForList } from 'src/app/_models/duraform-serie/DuraformSerieForList';
 
 import * as _ from 'lodash';
 import { DuraformPriceGridDto } from 'src/app/_models/duraform-price/DuraformPriceGridDto';
@@ -27,8 +27,8 @@ export class DuraformPriceGridPageComponent implements OnInit {
   showBulkActionControl = false;
 
   allPriceGrids: DuraformPriceGridDto[] = [];
-  finishList: DuraformWrapTypeForSelection[] = [];
-  serieList: DuraformSerieForList[] = [];
+  finishList: DuraformWrapTypeDto[] = [];
+  serieList: DuraformSerieDto[] = [];
 
   priceGrids: DuraformPriceGridDto[] = null;
   widthHeaders: DuraformPriceWidthHeader[] = [];

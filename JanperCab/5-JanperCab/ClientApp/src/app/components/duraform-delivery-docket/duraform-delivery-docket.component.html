@@ -101,6 +101,14 @@
         [drawers]="deliveryDocket.duraformDrawers"
       ></app-delivery-docket-duraform-drawers>
     </div>
+    <div
+      class="component-table"
+      *ngIf="deliveryDocket.miscComponents.length > 0"
+    >
+      <app-delivery-docket-duraform-miscs
+        [miscs]="deliveryDocket.miscComponents"
+      ></app-delivery-docket-duraform-miscs>
+    </div>
   </div>
   <div class="footer">
     <div class="note">
@@ -111,6 +119,13 @@
       NOTE: For all series 4 and series 5 orders with a Natural, Matt or Satin
       finish we will waranty the integrity of the product but not the quality of
       the finish.
+    </div>
+  </div>
+  <div class="signature">
+    <h2>Received in good order and condition signed</h2>
+    <h2>Print name</h2>
+    <div class="signature__end-tag">
+      --- Delivery Docket {{ deliveryDocket.id | leading }} ---
     </div>
   </div>
 </div>

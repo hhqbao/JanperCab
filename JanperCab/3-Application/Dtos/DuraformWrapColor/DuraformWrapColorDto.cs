@@ -1,4 +1,6 @@
-﻿namespace _3_Application.Dtos.DuraformWrapColor
+﻿using _3_Application.Dtos.DuraformWrapType;
+
+namespace _3_Application.Dtos.DuraformWrapColor
 {
     public class DuraformWrapColorDto
     {
@@ -13,5 +15,7 @@
         public bool IsJanperMatching { get; set; }
 
         public bool IsLaminexMatching { get; set; }
+
+        public virtual DuraformWrapTypeDto DuraformWrapType { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace _5_JanperCab.Controllers
         {
             var types = await _unitOfWork.DuraformDrawerTypes.GetAllActiveAsync();
 
-            return Ok(_mapper.Map<List<DuraformDrawerType>, List<DuraformDrawerTypeForList>>(types));
+            return Ok(_mapper.Map<List<DuraformDrawerType>, List<DuraformDrawerTypeDto>>(types));
         }
     }
 }

@@ -385,31 +385,41 @@
           class="component-list"
           *ngIf="duraformEnquiry.duraformDoors.length > 0"
         >
-          <app-duraform-door-component-list></app-duraform-door-component-list>
+          <app-duraform-door-component-list
+            [canEditPrice]="canEditPrice"
+          ></app-duraform-door-component-list>
         </div>
         <div
           class="component-list"
           *ngIf="duraformEnquiry.pantryDoors.length > 0"
         >
-          <app-duraform-pantry-door-component-list></app-duraform-pantry-door-component-list>
+          <app-duraform-pantry-door-component-list
+            [canEditPrice]="canEditPrice"
+          ></app-duraform-pantry-door-component-list>
         </div>
         <div
           class="component-list"
           *ngIf="duraformEnquiry.endPanels.length > 0"
         >
-          <app-end-panel-component-list></app-end-panel-component-list>
+          <app-end-panel-component-list
+            [canEditPrice]="canEditPrice"
+          ></app-end-panel-component-list>
         </div>
         <div
           class="component-list"
           *ngIf="duraformEnquiry.duraformDrawers.length > 0"
         >
-          <app-duraform-drawer-component-list></app-duraform-drawer-component-list>
+          <app-duraform-drawer-component-list
+            [canEditPrice]="canEditPrice"
+          ></app-duraform-drawer-component-list>
         </div>
         <div
           class="component-list"
           *ngIf="duraformEnquiry.miscComponents.length > 0"
         >
-          <app-duraform-misc-component-list></app-duraform-misc-component-list>
+          <app-duraform-misc-component-list
+            [canEditPrice]="canEditPrice"
+          ></app-duraform-misc-component-list>
         </div>
       </app-box>
     </div>
@@ -458,33 +468,42 @@
         <li>
           <span class="summary-box__title">Discount</span>
           <span class="summary-box__subtotal">
-            {{ order.duraformEnquiry.discountRate }}%
+            {{ duraformEnquiry.discountRate }}%
           </span>
         </li>
         <li class="summary-box__divider"></li>
         <li>
           <span class="summary-box__title"><b>Freight</b></span>
           <span class="summary-box__subtotal">
-            {{ order.duraformEnquiry.deliveryFee | currency }}
+            <span *ngIf="!canEditPrice">
+              {{ duraformEnquiry.deliveryFee | currency }}
+            </span>
+            <app-object-editor
+              *ngIf="canEditPrice"
+              [object]="duraformEnquiry"
+              [property]="'deliveryFee'"
+              [isRequired]="true"
+              (afterSet)="duraformEnquiry.calculatePrice(false)"
+            ></app-object-editor>
           </span>
         </li>
         <li>
           <span class="summary-box__title"><b>Subtotal</b></span>
           <span class="summary-box__subtotal">
-            {{ order.duraformEnquiry.subTotal | currency }}
+            {{ duraformEnquiry.subTotal | currency }}
           </span>
         </li>
         <li>
           <span class="summary-box__title"><b>GST</b></span>
           <span class="summary-box__subtotal">
-            {{ order.duraformEnquiry.totalGst | currency }}
+            {{ duraformEnquiry.totalGst | currency }}
           </span>
         </li>
         <li class="summary-box__divider"></li>
         <li class="summary-box__total-line">
           <span class="summary-box__title"><b>Total</b></span>
           <span class="summary-box__total">
-            {{ order.duraformEnquiry.totalPrice | currency }}
+            {{ duraformEnquiry.totalPrice | currency }}
           </span>
         </li>
       </ul>
@@ -516,10 +535,11 @@
       <div
         class="option-box__action-center"
         *ngIf="
-          auth.isInRole(role.Manufacturer) &&
+          auth.isInRole(role.Sale) &&
           duraformEnquiry.id &&
           duraformEnquiry.enquiryType === enquiryType.Order &&
-          (!duraformEnquiry.approvedDate || duraformEnquiry.isDeclineable)
+          (!duraformEnquiry.approvedDate || duraformEnquiry.isDeclineable) &&
+          !forceEditPrice
         "
       >
         <button
@@ -541,19 +561,55 @@
       </div>
       <div
         class="option-box__action-center"
-        *ngIf="auth.isInRole(role.Manufacturer) && duraformEnquiry.approvedDate"
+        *ngIf="auth.isInRole(role.Sale) && duraformEnquiry.approvedDate"
       >
-        <button class="action-btn" (click)="onViewDeliveryDocket()">
+        <button
+          class="action-btn"
+          *ngIf="!forceEditPrice"
+          (click)="onViewDeliveryDocket()"
+        >
           <i class="fa fa-truck" aria-hidden="true"></i>
           <span>View Delivery Docket</span>
         </button>
-        <button class="action-btn" (click)="onExportDuraformIcb()">
+        <button
+          class="action-btn"
+          *ngIf="!forceEditPrice"
+          (click)="onExportDuraformIcb()"
+        >
           <i class="fa fa-cogs" aria-hidden="true"></i>
           <span>Export For ICB</span>
         </button>
-        <button class="action-btn" (click)="showProcessViewer = true">
+        <button
+          class="action-btn"
+          *ngIf="!forceEditPrice"
+          (click)="showProcessViewer = true"
+        >
           <i class="fa fa-tasks" aria-hidden="true"></i>
           <span>Show Order Tracking</span>
+        </button>
+        <button
+          class="action-btn"
+          *ngIf="forceEditPrice && !duraformEnquiry.hasBeenInvoiced"
+          (click)="onUpdatePrice()"
+        >
+          <i class="fa fa-floppy-o text-alert" aria-hidden="true"></i>
+          <span>Update New Prices</span>
+        </button>
+        <button
+          class="action-btn"
+          *ngIf="!duraformEnquiry.hasBeenInvoiced"
+          (click)="onToggleForceEditPrice()"
+        >
+          <i
+            class="fa"
+            [ngClass]="{
+              'fa-magic': !forceEditPrice,
+              'fa-ban': forceEditPrice
+            }"
+            aria-hidden="true"
+          ></i>
+          <span *ngIf="!forceEditPrice">Adjust Order Prices</span>
+          <span *ngIf="forceEditPrice">Cancel Adjusting Prices</span>
         </button>
       </div>
       <div
@@ -562,9 +618,7 @@
       >
         <button
           class="action-btn action-btn--alert"
-          *ngIf="
-            auth.isInRole(role.Manufacturer) && !duraformEnquiry.hasBeenInvoiced
-          "
+          *ngIf="auth.isInRole(role.Sale) && !duraformEnquiry.hasBeenInvoiced"
           (click)="onGenerateInvoice()"
         >
           <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>

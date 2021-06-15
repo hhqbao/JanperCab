@@ -1,6 +1,13 @@
 ﻿using _3_Application.Dtos.ApplicationFile;
+using _3_Application.Dtos.DuraformArch;
 using _3_Application.Dtos.DuraformComponent;
+using _3_Application.Dtos.DuraformDesign;
+using _3_Application.Dtos.DuraformEdgeProfile;
 using _3_Application.Dtos.DuraformMiscComponent;
+using _3_Application.Dtos.DuraformSerie;
+using _3_Application.Dtos.DuraformWrapColor;
+using _3_Application.Dtos.DuraformWrapType;
+using _3_Application.Dtos.HingeHoleType;
 using _3_Application.Dtos.Process;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,6 +31,21 @@ namespace _3_Application.Dtos.Enquiry
         public int? HingeHoleTypeId { get; set; }
 
         public int? DuraformArchId { get; set; }
+
+
+        public DuraformDesignDto DuraformDesign { get; set; }
+
+        public DuraformSerieDto DuraformSerie { get; set; }
+
+        public DuraformWrapTypeDto DuraformWrapType { get; set; }
+
+        public DuraformWrapColorDto DuraformWrapColor { get; set; }
+
+        public DuraformEdgeProfileDto DuraformEdgeProfile { get; set; }
+
+        public HingeHoleTypeDto HingeHoleType { get; set; }
+
+        public DuraformArchDto DuraformArch { get; set; }
 
 
         public ICollection<DuraformComponentDto> DuraformComponents { get; set; }

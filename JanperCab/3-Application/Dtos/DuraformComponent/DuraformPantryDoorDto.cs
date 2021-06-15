@@ -1,4 +1,6 @@
-﻿namespace _3_Application.Dtos.DuraformComponent
+﻿using _3_Application.Dtos.PantryDoorChairRailType;
+
+namespace _3_Application.Dtos.DuraformComponent
 {
     public class DuraformPantryDoorDto : DuraformComponentWithOptionAndHingeHoleDto
     {
@@ -7,5 +9,8 @@
         public int ChairRailTypeId { get; set; }
 
         public decimal? ExtraRailBottom { get; set; }
+
+
+        public PantryDoorChairRailTypeDto ChairRailType { get; set; }
     }
 }

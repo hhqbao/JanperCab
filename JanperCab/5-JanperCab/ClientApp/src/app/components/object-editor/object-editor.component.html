@@ -1,0 +1,20 @@
+<div class="object-editor">
+  <input
+    #mainInput
+    class="form__control"
+    currencyMask
+    appSelectOnFocus
+    [formControl]="formControl"
+    (keyup)="onKeyUp()"
+    (blur)="onBlur()"
+    [options]="{
+      align: 'right',
+      allowZero: false,
+      precision: '2',
+      decimal: '.',
+      prefix: '$ ',
+      thousands: '',
+      min: 0
+    }"
+  />
+</div>

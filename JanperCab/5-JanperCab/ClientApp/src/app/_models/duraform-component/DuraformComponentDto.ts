@@ -1,7 +1,9 @@
-import { DuraformEnquiryDto } from './../enquiry/DuraformEnquiryDto';
+import { DuraformEnquiryDto } from 'src/app/_models/enquiry/DuraformEnquiryDto';
+import { DuraformEdgeProfileDto } from './../duraform-edge-profile/DuraformEdgeProfileDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
 import { Expose } from 'class-transformer';
-import { DuraformEdgeProfileForList } from './../duraform-edge-profile/DuraformEdgeProfileForList';
+import * as _ from 'lodash';
+
 export abstract class DuraformComponentDto {
   $type: string;
   id: number;
@@ -21,11 +23,7 @@ export abstract class DuraformComponentDto {
   totalDiscount: number;
   totalPrice: number;
 
-  get duraformEdgeProfile(): DuraformEdgeProfileForList {
-    return DuraformAssetService.instance.getEdgeProfile(
-      this.duraformEdgeProfileId
-    );
-  }
+  duraformEdgeProfile: DuraformEdgeProfileDto;
 
   update(formValue: any) {
     this.quantity = formValue.quantity;
@@ -37,11 +35,16 @@ export abstract class DuraformComponentDto {
     this.left = formValue.left;
     this.right = formValue.right;
     this.note = formValue.note;
+
+    this.duraformEdgeProfile = DuraformAssetService.instance.getEdgeProfile(
+      this.duraformEdgeProfileId
+    );
   }
 
   @Expose()
-  setEdgeProfile(profile: DuraformEdgeProfileForList) {
+  setEdgeProfile(profile: DuraformEdgeProfileDto) {
     this.duraformEdgeProfileId = profile.id;
+    this.duraformEdgeProfile = profile;
 
     const { forceTop, forceBottom, forceLeft, forceRight } = profile;
 
@@ -64,5 +67,17 @@ export abstract class DuraformComponentDto {
 
   abstract get totalHeight(): number;
   abstract get totalWidth(): number;
-  abstract getPriceForOne(duraformEnquiry: DuraformEnquiryDto): number;
+  abstract getUnitPrice(duraformEnquiry: DuraformEnquiryDto): number;
+  abstract calculateUnitPrice(duraformEnquiry: DuraformEnquiryDto): void;
+
+  @Expose()
+  calculateTotal(duraformEnquiry: DuraformEnquiryDto): void {
+    this.subTotal = this.quantity * this.unitPrice;
+    this.totalDiscount = _.round(
+      (this.subTotal * duraformEnquiry.discountRate) / 100,
+      2
+    );
+
+    this.totalPrice = this.subTotal - this.totalDiscount;
+  }
 }
