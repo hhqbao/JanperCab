@@ -70,15 +70,15 @@
     <app-delivery-docket [enquiryId]="scannedEnquiryId"></app-delivery-docket>
   </app-pdf-viewer>
   <div class="delivery-page__content">
-    <app-simple-box [heading]="'Delivery Run Sheets'">
+    <app-simple-box [heading]="'Delivery Sheets'">
       <div class="delivery-page__header">
         <button
           class="btn btn--primary"
           *ngIf="authService.isInRole(role[role.Driver])"
           (click)="selectedSheet = null; showShippingSheetForm = true"
         >
-          <i class="fa fa-plus-circle" aria-hidden="true"></i>
-          Run Sheet
+          <i class="fa fa-car" aria-hidden="true"></i>
+          Shipping
         </button>
         <button
           class="btn btn--secondary"
@@ -86,7 +86,7 @@
           *ngIf="authService.isInRole(role[role.Driver])"
           (click)="selectedSheet = null; showPickUpSheetForm = true"
         >
-          <i class="fa fa-plus-circle" aria-hidden="true"></i>
+          <i class="fa fa-archive" aria-hidden="true"></i>
           Pick Up
         </button>
       </div>

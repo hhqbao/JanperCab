@@ -42,6 +42,7 @@ export class DeliveryPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     document.title = 'Delivery Process';
+    this.layoutService.toggleLeftNav(true);
 
     this.layoutService.showLoadingPanel();
 
