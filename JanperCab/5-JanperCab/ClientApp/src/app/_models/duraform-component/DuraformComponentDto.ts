@@ -25,6 +25,7 @@ export abstract class DuraformComponentDto {
 
   duraformEdgeProfile: DuraformEdgeProfileDto;
 
+  @Expose()
   update(formValue: any) {
     this.quantity = formValue.quantity;
     this.height = formValue.height;

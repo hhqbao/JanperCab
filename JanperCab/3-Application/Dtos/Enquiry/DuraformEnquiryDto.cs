@@ -8,7 +8,6 @@ using _3_Application.Dtos.DuraformSerie;
 using _3_Application.Dtos.DuraformWrapColor;
 using _3_Application.Dtos.DuraformWrapType;
 using _3_Application.Dtos.HingeHoleType;
-using _3_Application.Dtos.Process;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -54,17 +53,14 @@ namespace _3_Application.Dtos.Enquiry
 
         public ICollection<DuraformFileDto> DuraformFiles { get; set; }
 
-        public ICollection<DuraformProcessDto> DuraformProcesses { get; set; }
 
-        protected DuraformEnquiryDto()
+        public DuraformEnquiryDto()
         {
             DuraformComponents = new Collection<DuraformComponentDto>();
 
             MiscComponents = new Collection<DuraformMiscComponentDto>();
 
             DuraformFiles = new Collection<DuraformFileDto>();
-
-            DuraformProcesses = new Collection<DuraformProcessDto>();
         }
     }
 }

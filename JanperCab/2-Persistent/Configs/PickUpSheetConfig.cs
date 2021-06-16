@@ -8,13 +8,6 @@ namespace _2_Persistent.Configs
     {
         public void Configure(EntityTypeBuilder<PickUpSheet> builder)
         {
-            builder.ToTable("PickUpSheets");
-
-            builder.HasKey(x => x.Id);
-
-            builder.Property(x => x.Id)
-                .ValueGeneratedOnAdd();
-
             builder.HasOne(x => x.Customer)
                 .WithMany(y => y.PickUpSheets)
                 .HasForeignKey(x => x.CustomerId)
@@ -22,7 +15,7 @@ namespace _2_Persistent.Configs
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(x => x.ApplicationUser)
-                .WithMany(y => y.CreatedPickUpSheets)
+                .WithMany(y => y.PickUpSheets)
                 .HasForeignKey(x => x.ApplicationUserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);

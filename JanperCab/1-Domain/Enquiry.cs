@@ -1,6 +1,8 @@
 ﻿using _1_Domain.Enum;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace _1_Domain
 {
@@ -64,22 +66,17 @@ namespace _1_Domain
         public bool NotEditable { get; set; }
 
 
-        public int? DeliveryRunSheetId { get; set; }
+        public Process CurrentProcess => Processes.FirstOrDefault(x => x.IsCurrent);
 
-        public int? PickUpSheetId { get; set; }
+        public DateTime? DeliveredTime => Processes.OfType<ProcessDelivering>().FirstOrDefault()?.EndTime;
 
+        public string FullDeliveryAddress => $"{DeliveryAddress}, {DeliverySuburb} {DeliveryState} {DeliveryPostcode}";
 
-        public virtual ApplicationUser Creator { get; set; }
+        public string FullInvoiceAddress => $"{InvoiceAddress}, {InvoiceSuburb} {InvoiceState} {InvoicePostcode}";
 
-        public virtual Customer Customer { get; set; }
+        public bool HasBeenDelivered => DeliveredTime.HasValue;
 
-        public virtual Customer Manager { get; set; }
-
-        public virtual DeliveryRunSheet DeliveryRunSheet { get; set; }
-
-        public virtual PickUpSheet PickUpSheet { get; set; }
-
-        public virtual Invoice Invoice { get; set; }
+        public bool HasBeenInvoiced => Invoice != null;
 
 
         public abstract string JobType { get; }
@@ -88,23 +85,10 @@ namespace _1_Domain
 
         public abstract string DoorColor { get; }
 
-        public abstract Process CurrentProcess { get; }
-
         public abstract bool IsDeclineable { get; }
 
         public abstract int PartCount { get; }
 
-        public abstract bool HasBeenDelivered { get; }
-
-        public abstract DateTime? DeliveredTime { get; }
-
-
-
-        public string FullDeliveryAddress => $"{DeliveryAddress}, {DeliverySuburb} {DeliveryState} {DeliveryPostcode}";
-
-        public string FullInvoiceAddress => $"{InvoiceAddress}, {InvoiceSuburb} {InvoiceState} {InvoicePostcode}";
-
-        public bool HasBeenInvoiced => Invoice != null;
 
 
         public abstract List<InvoiceComponent> GenerateComponentsForInvoice();
@@ -125,25 +109,40 @@ namespace _1_Domain
 
         public abstract void FinishPacking();
 
-        public abstract void ProcessDelivering(DeliveryRunSheet runSheet);
-
-        public abstract void ProcessPickUp(PickUpSheet pickUpSheet);
+        public abstract void ProcessDelivering(DeliverySheet sheet);
 
         public abstract void UndoDelivering();
 
-        public abstract void UndoPickUp();
-
         public abstract void CompleteDelivering();
 
-        public abstract void CompletePickingUp();
+
+        public virtual ApplicationUser Creator { get; set; }
+
+        public virtual Customer Customer { get; set; }
+
+        public virtual Customer Manager { get; set; }
+
+        public virtual ICollection<Process> Processes { get; set; }
+
+        public virtual Invoice Invoice { get; set; }
 
 
         protected Enquiry()
         {
             EnquiryType = EnquiryTypeEnum.Draft;
             CreatedDate = DateTime.Now;
+            Processes = new Collection<Process>();
         }
 
         public abstract string GetDescription();
+
+        public void RemoveDeliveryFee()
+        {
+            SubTotal -= DeliveryFee;
+            DeliveryFee = 0;
+
+            TotalGst = Math.Round(SubTotal / 10, 2);
+            TotalPrice = SubTotal + TotalGst;
+        }
     }
 }

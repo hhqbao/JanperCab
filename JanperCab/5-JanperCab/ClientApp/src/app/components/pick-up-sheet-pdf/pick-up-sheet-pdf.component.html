@@ -23,7 +23,7 @@
     </div>
   </div>
   <div class="pk-pdf__sub-header">
-    TOTAL ORDERS: {{ sheet.enquiriesForPickUpSheet.length }}
+    TOTAL ORDERS: {{ sheet.enquiriesForSheet.length }}
   </div>
   <div class="pk-pdf__body">
     <div class="patch">
@@ -31,6 +31,7 @@
         <table>
           <thead>
             <tr>
+              <th class="col__part">Parts</th>
               <th class="col__enquiry-id">Job No.</th>
               <th class="col__customer-ref">Order No.</th>
               <th class="col__door-type">Door Type</th>
@@ -38,7 +39,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let enquiry of sheet.enquiriesForPickUpSheet">
+            <tr *ngFor="let enquiry of sheet.enquiriesForSheet">
+              <td>{{ enquiry.partCount }}</td>
               <td>{{ enquiry.enquiryId | leading }}</td>
               <td>{{ enquiry.customerReference }}</td>
               <td>{{ enquiry.doorType }}</td>

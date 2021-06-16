@@ -5,7 +5,7 @@ namespace _1_Domain
 {
     public class MachinePresser : Machine
     {
-        public virtual ICollection<DuraformProcessPressing> DuraformProcessPressings { get; set; }
+        public virtual ICollection<ProcessPressing> DuraformProcessPressings { get; set; }
 
         public MachinePresser()
         {

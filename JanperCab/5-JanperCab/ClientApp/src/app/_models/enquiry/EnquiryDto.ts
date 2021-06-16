@@ -1,3 +1,5 @@
+import { ProcessPackingDto } from '../process/ProcessPackingDto';
+import { ProcessPreRouteDto } from '../process/ProcessPreRouteDto';
 import { ManufacturerDto } from './../customer/ManufacturerDto';
 import { DistributorDto } from './../customer/DistributorDto';
 import { CabinetMakerDto } from './../customer/CabinetMakerDto';
@@ -5,6 +7,13 @@ import { CustomerDto } from 'src/app/_models/customer/CustomerDto';
 import { InvoiceDto } from './../invoice/InvoiceDto';
 import { EnquiryTypeEnum } from './../../_enums/EnquiryTypeEnum';
 import { Type } from 'class-transformer';
+import { ProcessDto } from '../process/ProcessDto';
+import { ProcessRoutingDto } from '../process/ProcessRoutingDto';
+import { ProcessPressingDto } from '../process/ProcessPressingDto';
+import { ProcessCleaningDto } from '../process/ProcessCleaningDto';
+import { ProcessDeliveringDto } from '../process/ProcessDeliveringDto';
+import { ProcessTypeEnum } from 'src/app/_enums/ProcessTypeEnum';
+import * as moment from 'moment';
 
 export abstract class EnquiryDto {
   $type: string;
@@ -45,8 +54,6 @@ export abstract class EnquiryDto {
 
   notEditable: boolean;
   isDeclineable: boolean;
-
-  deliveryRunSheetId: number;
 
   @Type(() => InvoiceDto)
   invoice: InvoiceDto;
@@ -95,8 +102,84 @@ export abstract class EnquiryDto {
   })
   manager: CustomerDto;
 
+  @Type(() => ProcessDto, {
+    keepDiscriminatorProperty: true,
+    discriminator: {
+      property: '$type',
+      subTypes: [
+        {
+          value: ProcessPreRouteDto,
+          name: '_3_Application.Dtos.Process.ProcessPreRouteDto, 3-Application',
+        },
+        {
+          value: ProcessRoutingDto,
+          name: '_3_Application.Dtos.Process.ProcessRoutingDto, 3-Application',
+        },
+        {
+          value: ProcessPressingDto,
+          name: '_3_Application.Dtos.Process.ProcessPressingDto, 3-Application',
+        },
+        {
+          value: ProcessCleaningDto,
+          name: '_3_Application.Dtos.Process.ProcessCleaningDto, 3-Application',
+        },
+        {
+          value: ProcessPackingDto,
+          name: '_3_Application.Dtos.Process.ProcessPackingDto, 3-Application',
+        },
+        {
+          value: ProcessDeliveringDto,
+          name: '_3_Application.Dtos.Process.ProcessDeliveringDto, 3-Application',
+        },
+      ],
+    },
+  })
+  processes: ProcessDto[];
+
   get discriminator(): string {
     return `${this.enquiryType}`;
+  }
+
+  get timeInSystem(): string {
+    const offset = moment().diff(moment(this.orderedDate), 'days');
+
+    return `${offset} day${offset > 1 ? 's' : ''}`;
+  }
+
+  get currentStatus(): ProcessDto {
+    if (!this.processes) {
+      return null;
+    }
+
+    const status = this.processes.find((x) => x.isCurrent);
+
+    return status;
+  }
+
+  get statusDescription(): string {
+    if (!this.currentStatus) {
+      return 'Ordered';
+    }
+
+    if (this.hasBeenInvoiced) {
+      return 'Invoiced';
+    }
+
+    return this.currentStatus.getStatus();
+  }
+
+  get hasBeenDelivered(): boolean {
+    if (!this.currentStatus) {
+      return false;
+    }
+
+    const { endTime, processType } = this.currentStatus;
+
+    return (
+      processType === ProcessTypeEnum.Delivering &&
+      endTime !== null &&
+      endTime !== undefined
+    );
   }
 
   get hasBeenInvoiced(): boolean {
@@ -104,6 +187,7 @@ export abstract class EnquiryDto {
   }
 
   abstract get jobType(): string;
+  abstract get hasComponent(): boolean;
 
   constructor() {
     this.$type = '_3_Application.Dtos.Enquiry.EnquiryDto, 3-Application';

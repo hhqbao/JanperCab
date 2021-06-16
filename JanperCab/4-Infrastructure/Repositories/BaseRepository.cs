@@ -50,6 +50,11 @@ namespace _4_Infrastructure.Repositories
             _dbSet.AddRange(entities);
         }
 
+        public virtual void Detach(T entity)
+        {
+            _dbContext.Entry(entity).State = EntityState.Detached;
+        }
+
         public virtual void Remove(T entity)
         {
             _dbSet.Remove(entity);

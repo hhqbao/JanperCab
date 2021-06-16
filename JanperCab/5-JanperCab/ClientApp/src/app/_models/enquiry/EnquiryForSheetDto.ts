@@ -1,5 +1,4 @@
-export abstract class EnquiryForSheetDto {
-  $type: string;
+export class EnquiryForSheetDto {
   enquiryId: number;
   customerId: number;
   customerName: string;
@@ -12,7 +11,7 @@ export abstract class EnquiryForSheetDto {
   state: string;
   postcode: string;
 
-  constructor() {
-    this.$type = '';
-  }
+  getFullAddress = (): string => {
+    return `${this.address}, ${this.suburb} ${this.state} ${this.postcode}`;
+  };
 }

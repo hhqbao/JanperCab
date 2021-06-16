@@ -1,6 +1,6 @@
 ﻿namespace _3_Application.Dtos.Enquiry
 {
-    public abstract class EnquiryForSheetDto
+    public class EnquiryForSheetDto
     {
         public int EnquiryId { get; set; }
 
@@ -24,7 +24,7 @@
 
         public string Postcode { get; set; }
 
-        protected EnquiryForSheetDto(_1_Domain.Enquiry enquiry)
+        public EnquiryForSheetDto(_1_Domain.Enquiry enquiry)
         {
             EnquiryId = enquiry.Id;
             CustomerId = enquiry.CustomerId;

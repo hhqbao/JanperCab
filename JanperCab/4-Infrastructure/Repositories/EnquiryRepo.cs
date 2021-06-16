@@ -39,7 +39,7 @@ namespace _4_Infrastructure.Repositories
             var enquiries = new List<Enquiry>();
 
             var duraforms = await _dbSet.OfType<DuraformEnquiry>()
-                .Where(x => x.DuraformProcesses.Any(y => (y.DuraformProcessType == DuraformProcessEnum.Delivering || y.DuraformProcessType == DuraformProcessEnum.PickingUp) && y.EndTime.HasValue))
+                .Where(x => x.Processes.Any(y => y.ProcessType == ProcessTypeEnum.Delivering && y.EndTime.HasValue))
                 .Where(x => x.Invoice == null)
                 .ToListAsync();
 
@@ -54,7 +54,7 @@ namespace _4_Infrastructure.Repositories
                 .Where(x => x.EnquiryType == EnquiryTypeEnum.Draft && x.CreatorId == creator.Id).ToListAsync();
         }
 
-        public async Task<ItemList<DuraformEnquiry>> GetDuraformOrdersAsync(int? searchCustomerId, ApplicationUser currentUser, DuraformProcessEnum? status, string search, string sortBy, string direction, int page, int take)
+        public async Task<ItemList<DuraformEnquiry>> GetDuraformOrdersAsync(int? searchCustomerId, ApplicationUser currentUser, ProcessTypeEnum? status, string search, string sortBy, string direction, int page, int take)
         {
             var query = _dbSet.OfType<DuraformEnquiry>().Where(x => x.EnquiryType == EnquiryTypeEnum.Order && x.OrderedDate.HasValue);
 
@@ -77,37 +77,37 @@ namespace _4_Infrastructure.Repositories
             {
                 case null:
                     break;
-                case DuraformProcessEnum.Ordered:
+                case ProcessTypeEnum.Ordered:
                     query = query.Where(x => !x.ApprovedDate.HasValue);
                     break;
-                case DuraformProcessEnum.PreRoute:
-                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.DuraformProcessType == DuraformProcessEnum.PreRoute));
+                case ProcessTypeEnum.PreRoute:
+                    query = query.Where(x => x.Processes.Any(y => y.IsCurrent && y.ProcessType == ProcessTypeEnum.PreRoute));
                     break;
-                case DuraformProcessEnum.Routed:
-                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.DuraformProcessType == DuraformProcessEnum.Routing));
+                case ProcessTypeEnum.Routed:
+                    query = query.Where(x => x.Processes.Any(y => y.IsCurrent && y.EndTime.HasValue && y.ProcessType == ProcessTypeEnum.Routing));
                     break;
-                case DuraformProcessEnum.Pressed:
-                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.DuraformProcessType == DuraformProcessEnum.Pressing));
+                case ProcessTypeEnum.Pressed:
+                    query = query.Where(x => x.Processes.Any(y => y.IsCurrent && y.EndTime.HasValue && y.ProcessType == ProcessTypeEnum.Pressing));
                     break;
-                case DuraformProcessEnum.Cleaned:
-                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.DuraformProcessType == DuraformProcessEnum.Cleaning));
+                case ProcessTypeEnum.Cleaned:
+                    query = query.Where(x => x.Processes.Any(y => y.IsCurrent && y.EndTime.HasValue && y.ProcessType == ProcessTypeEnum.Cleaning));
                     break;
-                case DuraformProcessEnum.Packed:
-                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.DuraformProcessType == DuraformProcessEnum.Packing));
+                case ProcessTypeEnum.Packed:
+                    query = query.Where(x => x.Processes.Any(y => y.IsCurrent && y.EndTime.HasValue && y.ProcessType == ProcessTypeEnum.Packing));
                     break;
-                case DuraformProcessEnum.PickedUp:
-                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.DuraformProcessType == DuraformProcessEnum.PickingUp));
+                case ProcessTypeEnum.PickedUp:
+                    query = query.Where(x => x.Processes.Any(y => y.IsCurrent && y.EndTime.HasValue && y.ProcessType == ProcessTypeEnum.PickingUp));
                     query = query.Where(x => x.Invoice == null);
                     break;
-                case DuraformProcessEnum.Delivered:
-                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && y.EndTime.HasValue && y.DuraformProcessType == DuraformProcessEnum.Delivering));
+                case ProcessTypeEnum.Delivered:
+                    query = query.Where(x => x.Processes.Any(y => y.IsCurrent && y.EndTime.HasValue && y.ProcessType == ProcessTypeEnum.Delivering));
                     query = query.Where(x => x.Invoice == null);
                     break;
-                case DuraformProcessEnum.Invoiced:
+                case ProcessTypeEnum.Invoiced:
                     query = query.Where(x => x.Invoice != null);
                     break;
                 default:
-                    query = query.Where(x => x.DuraformProcesses.Any(y => y.IsCurrent && !y.EndTime.HasValue && y.DuraformProcessType == status));
+                    query = query.Where(x => x.Processes.Any(y => y.IsCurrent && !y.EndTime.HasValue && y.ProcessType == status));
                     break;
             }
 

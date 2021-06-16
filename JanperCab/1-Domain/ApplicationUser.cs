@@ -12,14 +12,13 @@ namespace _1_Domain
 
         public virtual ICollection<Enquiry> Enquiries { get; set; }
 
-        public virtual ICollection<PickUpSheet> CreatedPickUpSheets { get; set; }
-
+        public virtual ICollection<PickUpSheet> PickUpSheets { get; set; }
 
         public ApplicationUser()
         {
             Enquiries = new Collection<Enquiry>();
 
-            CreatedPickUpSheets = new Collection<PickUpSheet>();
+            PickUpSheets = new Collection<PickUpSheet>();
         }
     }
 }

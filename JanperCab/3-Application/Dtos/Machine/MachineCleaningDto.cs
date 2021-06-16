@@ -5,6 +5,6 @@ namespace _3_Application.Dtos.Machine
 {
     public class MachineCleaningDto : MachineDto
     {
-        public ICollection<DuraformProcessCleaningDto> DuraformProcessCleanings { set; get; }
+        public ICollection<ProcessCleaningDto> DuraformProcessCleanings { set; get; }
     }
 }

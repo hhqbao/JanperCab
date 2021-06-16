@@ -5,7 +5,7 @@ namespace _1_Domain
 {
     public class MachinePacking : Machine
     {
-        public virtual ICollection<DuraformProcessPacking> DuraformProcessPackings { get; set; }
+        public virtual ICollection<ProcessPacking> DuraformProcessPackings { get; set; }
 
         public MachinePacking()
         {

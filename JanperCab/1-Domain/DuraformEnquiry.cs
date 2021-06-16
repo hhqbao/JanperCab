@@ -47,14 +47,11 @@ namespace _1_Domain
 
         public virtual ICollection<DuraformFile> DuraformFiles { get; set; }
 
-        public virtual ICollection<DuraformProcess> DuraformProcesses { get; set; }
-
         public DuraformEnquiry()
         {
             DuraformComponents = new Collection<DuraformComponent>();
             MiscComponents = new Collection<DuraformMiscComponent>();
             DuraformFiles = new Collection<DuraformFile>();
-            DuraformProcesses = new Collection<DuraformProcess>();
         }
 
         public override string JobType => IsRoutingOnly ? ICBLineStructure.DSW : "DF";
@@ -63,33 +60,11 @@ namespace _1_Domain
 
         public override string DoorColor => IsRoutingOnly ? ICBLineStructure.DSW : $"{DuraformWrapType.Name} {DuraformWrapColor.Name}";
 
-        public override Process CurrentProcess
-        {
-            get { return DuraformProcesses.FirstOrDefault(x => x.IsCurrent); }
-        }
-
-        public override bool IsDeclineable => CurrentProcess == null || CurrentProcess is DuraformProcessPreRoute;
+        public override bool IsDeclineable => CurrentProcess == null || CurrentProcess is ProcessPreRoute;
 
         public override int PartCount
         {
             get { return DuraformComponents.Sum(x => x.Quantity) + MiscComponents.Sum(x => x.Quantity); }
-        }
-
-        public override bool HasBeenDelivered => DeliveredTime.HasValue;
-
-
-        public override DateTime? DeliveredTime
-        {
-            get
-            {
-                var deliveryProcess = DuraformProcesses.OfType<DuraformProcessDelivering>().FirstOrDefault();
-
-                if (deliveryProcess?.EndTime != null) return deliveryProcess.EndTime;
-
-                var pickUpProcess = DuraformProcesses.OfType<DuraformProcessPickingUp>().FirstOrDefault();
-
-                return pickUpProcess?.EndTime;
-            }
         }
 
         public override List<InvoiceComponent> GenerateComponentsForInvoice()
@@ -103,23 +78,23 @@ namespace _1_Domain
         public override void Approve()
         {
             ApprovedDate = DateTime.Now;
-            DuraformProcesses.Clear();
+            Processes.Clear();
 
-            DuraformProcesses.Add(new DuraformProcessPreRoute { StartTime = DateTime.Now, IsCurrent = true });
-            DuraformProcesses.Add(new DuraformProcessRouting());
+            Processes.Add(new ProcessPreRoute { StartTime = DateTime.Now, IsCurrent = true });
+            Processes.Add(new ProcessRouting());
 
             if (IsRoutingOnly)
             {
-                DuraformProcesses.Add(new DuraformProcessPacking());
+                Processes.Add(new ProcessPacking());
             }
             else
             {
-                DuraformProcesses.Add(new DuraformProcessPressing());
-                DuraformProcesses.Add(new DuraformProcessCleaning());
-                DuraformProcesses.Add(new DuraformProcessPacking());
+                Processes.Add(new ProcessPressing());
+                Processes.Add(new ProcessCleaning());
+                Processes.Add(new ProcessPacking());
             }
 
-            DuraformProcesses.Add(new DuraformProcessDelivering());
+            Processes.Add(new ProcessDelivering());
         }
 
         public override void Decline()
@@ -127,14 +102,14 @@ namespace _1_Domain
             EnquiryType = EnquiryTypeEnum.Draft;
             OrderedDate = null;
             ApprovedDate = null;
-            DuraformProcesses.Clear();
+            Processes.Clear();
             NotEditable = false;
         }
 
         public override void ProcessRouting(MachineRouter router)
         {
-            var routingProcess = DuraformProcesses
-                .OfType<DuraformProcessRouting>()
+            var routingProcess = Processes
+                .OfType<ProcessRouting>()
                 .FirstOrDefault();
 
             if (routingProcess == null)
@@ -142,7 +117,7 @@ namespace _1_Domain
 
             switch (CurrentProcess)
             {
-                case DuraformProcessPreRoute preRoute:
+                case ProcessPreRoute preRoute:
                     if (!preRoute.EndTime.HasValue)
                         preRoute.EndTime = DateTime.Now;
 
@@ -152,7 +127,7 @@ namespace _1_Domain
                     routingProcess.MachineId = router.Id;
                     routingProcess.IsCurrent = true;
                     break;
-                case DuraformProcessRouting routing:
+                case ProcessRouting routing:
                     if (routing.EndTime.HasValue)
                         throw new Exception("Order has already been ROUTED");
 
@@ -168,8 +143,8 @@ namespace _1_Domain
 
         public override void ProcessPressing(MachinePresser presser)
         {
-            var pressingProcess = DuraformProcesses
-                .OfType<DuraformProcessPressing>()
+            var pressingProcess = Processes
+                .OfType<ProcessPressing>()
                 .FirstOrDefault();
 
             if (pressingProcess == null)
@@ -177,7 +152,7 @@ namespace _1_Domain
 
             switch (CurrentProcess)
             {
-                case DuraformProcessRouting routing:
+                case ProcessRouting routing:
                     if (!routing.EndTime.HasValue)
                         throw new Exception($"Order is currently being routed on Router {routing.MachineRouter.Name}");
 
@@ -187,7 +162,7 @@ namespace _1_Domain
                     pressingProcess.MachineId = presser.Id;
                     pressingProcess.IsCurrent = true;
                     break;
-                case DuraformProcessPressing pressing:
+                case ProcessPressing pressing:
                     if (pressing.EndTime.HasValue)
                         throw new Exception("Order has already been PRESSED");
 
@@ -203,8 +178,8 @@ namespace _1_Domain
 
         public override void StartCleaning(MachineCleaning cleaningMachine)
         {
-            var cleanProcess = DuraformProcesses
-                .OfType<DuraformProcessCleaning>()
+            var cleanProcess = Processes
+                .OfType<ProcessCleaning>()
                 .FirstOrDefault();
 
             if (cleanProcess == null)
@@ -212,7 +187,7 @@ namespace _1_Domain
 
             switch (CurrentProcess)
             {
-                case DuraformProcessPressing pressing:
+                case ProcessPressing pressing:
                     if (!pressing.EndTime.HasValue)
                         throw new Exception($"Order is currently being pressed on Presser {pressing.MachinePresser.Name}");
 
@@ -222,7 +197,7 @@ namespace _1_Domain
                     cleanProcess.MachineId = cleaningMachine.Id;
                     cleanProcess.IsCurrent = true;
                     break;
-                case DuraformProcessCleaning cleaning:
+                case ProcessCleaning cleaning:
                     if (cleaning.EndTime.HasValue)
                         throw new Exception("Order has already been CLEANED");
                     break;
@@ -235,7 +210,7 @@ namespace _1_Domain
         {
             switch (CurrentProcess)
             {
-                case DuraformProcessCleaning cleaning:
+                case ProcessCleaning cleaning:
                     if (cleaning.EndTime.HasValue)
                         throw new Exception("Order has already been CLEANED");
 
@@ -248,8 +223,8 @@ namespace _1_Domain
 
         public override void StartPacking(MachinePacking packingMachine)
         {
-            var packingProcess = DuraformProcesses
-                .OfType<DuraformProcessPacking>()
+            var packingProcess = Processes
+                .OfType<ProcessPacking>()
                 .FirstOrDefault();
 
             if (packingProcess == null)
@@ -257,7 +232,7 @@ namespace _1_Domain
 
             switch (CurrentProcess)
             {
-                case DuraformProcessRouting routing:
+                case ProcessRouting routing:
                     if (!routing.EndTime.HasValue)
                         throw new Exception($"Order is currently being routed on Router {routing.MachineRouter.Name}");
 
@@ -270,7 +245,7 @@ namespace _1_Domain
                     packingProcess.MachineId = packingMachine.Id;
                     packingProcess.IsCurrent = true;
                     break;
-                case DuraformProcessCleaning cleaning:
+                case ProcessCleaning cleaning:
                     if (!cleaning.EndTime.HasValue)
                         throw new Exception($"Order is currently being cleaned on Cleaning Machine {cleaning.MachineCleaning.Name}");
 
@@ -280,7 +255,7 @@ namespace _1_Domain
                     packingProcess.MachineId = packingMachine.Id;
                     packingProcess.IsCurrent = true;
                     break;
-                case DuraformProcessPacking packing:
+                case ProcessPacking packing:
                     if (packing.EndTime.HasValue)
                         throw new Exception("Order has already been PACKED");
                     break;
@@ -293,7 +268,7 @@ namespace _1_Domain
         {
             switch (CurrentProcess)
             {
-                case DuraformProcessPacking packing:
+                case ProcessPacking packing:
                     if (packing.EndTime.HasValue)
                         throw new Exception("Order has already been PACKED");
 
@@ -304,43 +279,20 @@ namespace _1_Domain
             }
         }
 
-        public override void ProcessDelivering(DeliveryRunSheet runSheet)
+        public override void ProcessDelivering(DeliverySheet sheet)
         {
             switch (CurrentProcess)
             {
-                case DuraformProcessPacking packing:
+                case ProcessPacking packing:
                     if (!packing.EndTime.HasValue)
                         throw new Exception($"Order currently being PACKED on Packing Machine {packing.MachinePacking.Name}");
 
                     packing.IsCurrent = false;
 
-                    var deliveringProcess = DuraformProcesses.OfType<DuraformProcessDelivering>().First();
+                    var deliveringProcess = Processes.OfType<ProcessDelivering>().First();
+                    deliveringProcess.DeliverySheetId = sheet.Id;
                     deliveringProcess.StartTime = DateTime.Now;
                     deliveringProcess.IsCurrent = true;
-
-                    DeliveryRunSheetId = runSheet.Id;
-                    break;
-                default:
-                    throw new Exception("Order needs to be at PACKED stage to be DISPATCHED");
-            }
-        }
-
-        public override void ProcessPickUp(PickUpSheet pickUpSheet)
-        {
-            switch (CurrentProcess)
-            {
-                case DuraformProcessPacking packing:
-                    if (!packing.EndTime.HasValue)
-                        throw new Exception($"Order currently being PACKED on Packing Machine {packing.MachinePacking.Name}");
-
-                    packing.IsCurrent = false;
-
-                    var deliveringProcess = DuraformProcesses.OfType<DuraformProcessDelivering>().First();
-                    DuraformProcesses.Remove(deliveringProcess);
-
-                    DuraformProcesses.Add(new DuraformProcessPickingUp { StartTime = DateTime.Now, IsCurrent = true });
-
-                    PickUpSheetId = pickUpSheet.Id;
                     break;
                 default:
                     throw new Exception("Order needs to be at PACKED stage to be DISPATCHED");
@@ -349,51 +301,33 @@ namespace _1_Domain
 
         public override void UndoDelivering()
         {
-            DeliveryRunSheetId = null;
+            var deliveringProcess = Processes.OfType<ProcessDelivering>().First();
 
-            var packingProcess = DuraformProcesses.OfType<DuraformProcessPacking>().First();
-            var deliveryProvess = DuraformProcesses.OfType<DuraformProcessDelivering>().First();
+            if (!deliveringProcess.DeliverySheetId.HasValue)
+                throw new Exception("Order Not Being Delivered");
 
-            deliveryProvess.IsCurrent = false;
-            deliveryProvess.StartTime = null;
-            deliveryProvess.EndTime = null;
+            if (!deliveringProcess.DeliverySheet.IsEditable)
+                throw new Exception("Delivery Sheet is LOCKED! Cannot Edit");
 
+            deliveringProcess.IsCurrent = false;
+            deliveringProcess.DeliverySheetId = null;
+            deliveringProcess.StartTime = null;
+            deliveringProcess.EndTime = null;
+
+
+            var packingProcess = Processes.OfType<ProcessPacking>().First();
             packingProcess.IsCurrent = true;
-        }
-
-        public override void UndoPickUp()
-        {
-            PickUpSheetId = null;
-
-            var pickUpProcess = DuraformProcesses.OfType<DuraformProcessPickingUp>().First();
-            DuraformProcesses.Remove(pickUpProcess);
-
-            var packingProcess = DuraformProcesses.OfType<DuraformProcessPacking>().First();
-            packingProcess.IsCurrent = true;
-
-            DuraformProcesses.Add(new DuraformProcessDelivering());
         }
 
         public override void CompleteDelivering()
         {
-            if (!(CurrentProcess is DuraformProcessDelivering deliveringProcess))
+            if (!(CurrentProcess is ProcessDelivering deliveringProcess))
                 throw new Exception($"Order [{Id:000000}] Not At Delivering Stage");
 
             if (deliveringProcess.EndTime.HasValue)
                 throw new Exception($"Order [{Id:000000}] was already delivered on {deliveringProcess.EndTime.Value:dd/MM/yyyy hh:mm}");
 
             deliveringProcess.EndTime = DateTime.Now;
-        }
-
-        public override void CompletePickingUp()
-        {
-            if (!(CurrentProcess is DuraformProcessPickingUp pickUpProcess))
-                throw new Exception($"Order [{Id:000000}] Not At Delivering Stage");
-
-            if (pickUpProcess.EndTime.HasValue)
-                throw new Exception($"Order [{Id:000000}] was already picked up on {pickUpProcess.EndTime.Value:dd/MM/yyyy hh:mm}");
-
-            pickUpProcess.EndTime = DateTime.Now;
         }
 
         public override string GetDescription()

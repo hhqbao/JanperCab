@@ -1,7 +1,10 @@
 ﻿using _1_Domain.Enum;
 using _3_Application.Dtos.Customer;
 using _3_Application.Dtos.Invoice;
+using _3_Application.Dtos.Process;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace _3_Application.Dtos.Enquiry
 {
@@ -66,13 +69,19 @@ namespace _3_Application.Dtos.Enquiry
 
         public bool IsDeclineable { get; set; }
 
-        public int? DeliveryRunSheetId { get; set; }
-
 
         public InvoiceDto Invoice { get; set; }
 
-        public virtual CustomerDto Customer { get; set; }
+        public CustomerDto Customer { get; set; }
 
-        public virtual CustomerDto Manager { get; set; }
+        public CustomerDto Manager { get; set; }
+
+        public ICollection<ProcessDto> Processes { get; set; }
+
+
+        protected EnquiryDto()
+        {
+            Processes = new Collection<ProcessDto>();
+        }
     }
 }

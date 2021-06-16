@@ -2,9 +2,7 @@
 using _3_Application.Dtos.Enquiry;
 using _3_Application.Dtos.Machine;
 using _3_Application.Interfaces.Repositories;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -16,14 +14,10 @@ namespace _5_JanperCab.Controllers
     public class ProcessesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IMapper _mapper;
 
-        public ProcessesController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, IMapper mapper)
+        public ProcessesController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _userManager = userManager;
-            _mapper = mapper;
         }
 
         [Authorize(Roles = "Operator")]
@@ -37,10 +31,10 @@ namespace _5_JanperCab.Controllers
 
             var enquiry = await _unitOfWork.Enquiries.GetAsync(enquiryId);
 
-            if (!(enquiry is DuraformEnquiry duraformEnquiry))
-                return BadRequest("Duraform Order Not Found");
+            if (enquiry == null)
+                return BadRequest("Order Not Found");
 
-            if (!duraformEnquiry.ApprovedDate.HasValue)
+            if (!enquiry.ApprovedDate.HasValue)
                 return BadRequest("Order needs to be APPROVED");
 
 
@@ -61,10 +55,10 @@ namespace _5_JanperCab.Controllers
 
             var enquiry = await _unitOfWork.Enquiries.GetAsync(enquiryId);
 
-            if (!(enquiry is DuraformEnquiry duraformEnquiry))
-                return BadRequest("Duraform Order Not Found");
+            if (enquiry == null)
+                return BadRequest("Order Not Found");
 
-            if (!duraformEnquiry.ApprovedDate.HasValue)
+            if (!enquiry.ApprovedDate.HasValue)
                 return BadRequest("Order needs to be APPROVED");
 
             enquiry.ProcessPressing(presser);
@@ -84,10 +78,10 @@ namespace _5_JanperCab.Controllers
 
             var enquiry = await _unitOfWork.Enquiries.GetAsync(enquiryId);
 
-            if (!(enquiry is DuraformEnquiry duraformEnquiry))
-                return BadRequest("Duraform Order Not Found");
+            if (enquiry == null)
+                return BadRequest("Order Not Found");
 
-            if (!duraformEnquiry.ApprovedDate.HasValue)
+            if (!enquiry.ApprovedDate.HasValue)
                 return BadRequest("Order needs to be APPROVED");
 
             enquiry.StartCleaning(cleaningMachine);
@@ -102,10 +96,10 @@ namespace _5_JanperCab.Controllers
         {
             var enquiry = await _unitOfWork.Enquiries.GetAsync(enquiryId);
 
-            if (!(enquiry is DuraformEnquiry duraformEnquiry))
-                return BadRequest("Duraform Order Not Found");
+            if (enquiry == null)
+                return BadRequest("Order Not Found");
 
-            if (!duraformEnquiry.ApprovedDate.HasValue)
+            if (!enquiry.ApprovedDate.HasValue)
                 return BadRequest("Order needs to be APPROVED");
 
             enquiry.FinishCleaning();
@@ -125,10 +119,10 @@ namespace _5_JanperCab.Controllers
 
             var enquiry = await _unitOfWork.Enquiries.GetAsync(enquiryId);
 
-            if (!(enquiry is DuraformEnquiry duraformEnquiry))
-                return BadRequest("Duraform Order Not Found");
+            if (enquiry == null)
+                return BadRequest("Order Not Found");
 
-            if (!duraformEnquiry.ApprovedDate.HasValue)
+            if (!enquiry.ApprovedDate.HasValue)
                 return BadRequest("Order needs to be APPROVED");
 
             enquiry.StartPacking(packingMachine);
@@ -143,10 +137,10 @@ namespace _5_JanperCab.Controllers
         {
             var enquiry = await _unitOfWork.Enquiries.GetAsync(enquiryId);
 
-            if (!(enquiry is DuraformEnquiry duraformEnquiry))
-                return BadRequest("Duraform Order Not Found");
+            if (enquiry == null)
+                return BadRequest("Order Not Found");
 
-            if (!duraformEnquiry.ApprovedDate.HasValue)
+            if (!enquiry.ApprovedDate.HasValue)
                 return BadRequest("Order needs to be APPROVED");
 
             enquiry.FinishPacking();
@@ -159,110 +153,35 @@ namespace _5_JanperCab.Controllers
         [HttpPut("delivering/{sheetId}/{enquiryId}")]
         public async Task<IActionResult> ProcessDelivering(int sheetId, int enquiryId)
         {
-            var sheet = await _unitOfWork.DeliveryRunSheets.GetAsync(sheetId);
-
-            if (sheet == null)
-                return BadRequest("Run Sheet Not Found");
-
-            if (!sheet.IsEditable)
-                return BadRequest("Run Sheet Is Locked! Cannot Be Changed");
-
-            var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
-
-            var enquiry = await _unitOfWork.Enquiries.GetEnquiryAsync(enquiryId, currentUser.Customer);
-
-            if (enquiry == null)
-                return BadRequest("Order Not Found");
-
-            if (enquiry.DeliveryRunSheetId.HasValue)
-                return BadRequest($"Order is already in delivery sheet number {enquiry.DeliveryRunSheetId}");
-
-            if (enquiry.PickUpSheetId.HasValue)
-                return BadRequest($"Order is in pick up sheet number {enquiry.PickUpSheetId}");
-
-            enquiry.ProcessDelivering(sheet);
-            await _unitOfWork.CompleteAsync();
-
-            return Ok(new EnquiryForRunSheetDto(enquiry));
-        }
-
-        [Authorize(Roles = "Driver")]
-        [HttpPut("pickup/{sheetId}/{enquiryId}")]
-        public async Task<IActionResult> ProcessPickUp(int sheetId, int enquiryId)
-        {
-            var sheet = await _unitOfWork.PickUpSheets.GetAsync(sheetId);
+            var sheet = await _unitOfWork.DeliverySheets.GetAsync(sheetId);
 
             if (sheet == null)
                 return BadRequest("Sheet Not Found");
 
-            if (sheet.IsCompleted)
-                return BadRequest("Sheet Is Completed! Cannot Be Changed");
+            if (sheet.LockedDate.HasValue)
+                return BadRequest("Sheet Is Locked! Cannot Be Changed");
 
-            var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
-
-            var enquiry = await _unitOfWork.Enquiries.GetEnquiryAsync(enquiryId, currentUser.Customer);
+            var enquiry = await _unitOfWork.Enquiries.GetAsync(enquiryId);
 
             if (enquiry == null)
                 return BadRequest("Order Not Found");
 
-            if (enquiry.DeliveryRunSheetId.HasValue)
-                return BadRequest($"Order is in delivery sheet number {enquiry.DeliveryRunSheetId}");
-
-            if (enquiry.PickUpSheetId.HasValue)
-                return BadRequest($"Order is in pick up sheet number {enquiry.PickUpSheetId}");
-
-            var pickUpCustomer = await _unitOfWork.Customers.GetAsync(sheet.CustomerId);
-
-            if (enquiry.CustomerId != pickUpCustomer.Id && enquiry.ManagerId != pickUpCustomer.Id)
-                return BadRequest($"This order belongs to {enquiry.Customer.Name}! Cannot process pick up");
-
-            enquiry.ProcessPickUp(sheet);
+            sheet.AddOrder(enquiry);
             await _unitOfWork.CompleteAsync();
 
-            return Ok(new EnquiryForPickUpSheetDto(enquiry));
+            return Ok(new EnquiryForSheetDto(enquiry));
         }
 
         [Authorize(Roles = "Driver")]
         [HttpPut("undo-delivering/{enquiryId}")]
         public async Task<IActionResult> UndoProcessDelivering(int enquiryId)
         {
-            var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
-
-            var enquiry = await _unitOfWork.Enquiries.GetEnquiryAsync(enquiryId, currentUser.Customer);
+            var enquiry = await _unitOfWork.Enquiries.GetAsync(enquiryId);
 
             if (enquiry == null)
                 return BadRequest("Order Not Found");
-
-            if (!enquiry.DeliveryRunSheetId.HasValue)
-                return BadRequest("Order Not Being Delivered");
-
-            if (!enquiry.DeliveryRunSheet.IsEditable)
-                return BadRequest("Run Sheet Is Locked! Cannot Be Changed");
 
             enquiry.UndoDelivering();
-            await _unitOfWork.CompleteAsync();
-
-            return Ok();
-        }
-
-        [Authorize(Roles = "Driver")]
-        [HttpPut("undo-pickup/{enquiryId}")]
-        public async Task<IActionResult> UndoProcessPickUp(int enquiryId)
-        {
-            var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
-
-            var enquiry = await _unitOfWork.Enquiries.GetEnquiryAsync(enquiryId, currentUser.Customer);
-
-            if (enquiry == null)
-                return BadRequest("Order Not Found");
-
-            if (!enquiry.PickUpSheetId.HasValue)
-                return BadRequest("Order Not Being Picked Up");
-
-            if (enquiry.PickUpSheet.IsCompleted)
-                return BadRequest("Order Has Been Picked Up! Cannot Be Changed");
-
-            enquiry.UndoPickUp();
             await _unitOfWork.CompleteAsync();
 
             return Ok();

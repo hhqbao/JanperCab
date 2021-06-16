@@ -43,8 +43,7 @@ namespace _2_Persistent
 
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<Truck> Trucks { get; set; }
-        public DbSet<DeliveryRunSheet> DeliveryRunSheets { get; set; }
-        public DbSet<PickUpSheet> PickUpSheets { get; set; }
+        public DbSet<DeliverySheet> DeliverySheets { get; set; }
 
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<InvoiceComponent> InvoiceComponents { get; set; }
@@ -129,18 +128,18 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new DuraformMiscPriceHeatStripConfig());
 
             builder.ApplyConfiguration(new ProcessConfig());
-            builder.ApplyConfiguration(new DuraformProcessConfig());
-            builder.ApplyConfiguration(new DuraformProcessPreRouteConfig());
-            builder.ApplyConfiguration(new DuraformProcessRoutingConfig());
-            builder.ApplyConfiguration(new DuraformProcessPressingConfig());
-            builder.ApplyConfiguration(new DuraformProcessCleaningConfig());
-            builder.ApplyConfiguration(new DuraformProcessPackingConfig());
-            builder.ApplyConfiguration(new DuraformProcessPickingUpConfig());
-            builder.ApplyConfiguration(new DuraformProcessDeliveringConfig());
+            builder.ApplyConfiguration(new ProcessPreRouteConfig());
+            builder.ApplyConfiguration(new ProcessRoutingConfig());
+            builder.ApplyConfiguration(new ProcessPressingConfig());
+            builder.ApplyConfiguration(new ProcessCleaningConfig());
+            builder.ApplyConfiguration(new ProcessPackingConfig());
+            builder.ApplyConfiguration(new ProcessDeliveringConfig());
 
             builder.ApplyConfiguration(new DriverConfig());
             builder.ApplyConfiguration(new TruckConfig());
-            builder.ApplyConfiguration(new DeliveryRunSheetConfig());
+
+            builder.ApplyConfiguration(new DeliverySheetConfig());
+            builder.ApplyConfiguration(new ShippingSheetConfig());
             builder.ApplyConfiguration(new PickUpSheetConfig());
 
             builder.ApplyConfiguration(new InvoiceConfig());

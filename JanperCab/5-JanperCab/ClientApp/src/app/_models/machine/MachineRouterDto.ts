@@ -1,6 +1,6 @@
-import { DuraformProcessRoutingDto } from './../DuraformProcess/DuraformProcessRoutingDto';
+import { ProcessRoutingDto } from '../process/ProcessRoutingDto';
 import { MachineDto } from './MachineDto';
 
 export class MachineRouterDto extends MachineDto {
-  duraformProcessRoutings: DuraformProcessRoutingDto[];
+  duraformProcessRoutings: ProcessRoutingDto[];
 }

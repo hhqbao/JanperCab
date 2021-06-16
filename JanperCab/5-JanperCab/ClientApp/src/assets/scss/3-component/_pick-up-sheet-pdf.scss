@@ -117,6 +117,14 @@
                   width: 220px;
                 }
               }
+
+              &__part {
+                width: 75px;
+
+                @media print {
+                  width: 50px;
+                }
+              }
             }
 
             @media print {

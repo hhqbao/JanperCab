@@ -17,6 +17,8 @@ namespace _3_Application.Interfaces.Repositories
 
         void AddRange(List<T> entities);
 
+        void Detach(T entity);
+
         void Remove(T entity);
 
         void RemoveRange(List<T> entities);

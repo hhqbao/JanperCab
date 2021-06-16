@@ -1,4 +1,4 @@
-import { DuraformProcessEnum } from './../../_enums/DuraformProcessEnum';
+import { ProcessTypeEnum } from '../../_enums/ProcessTypeEnum';
 import { plainToClass } from 'class-transformer';
 import { DialogService } from 'src/app/_services/dialog.service';
 import { EnquiryService } from './../../_services/enquiry.service';
@@ -23,7 +23,7 @@ export class DuraformOrderListPageComponent implements OnInit {
 
   itemList: ItemList<DuraformEnquiryListDto>;
   filterValues = new OrderSearchFilterValues();
-  statusEnums = DuraformProcessEnum;
+  statusEnums = ProcessTypeEnum;
 
   isLoading = true;
   showCustomerPicker = false;

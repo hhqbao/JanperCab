@@ -1,6 +1,6 @@
-import { DuraformProcessPackingDto } from './../DuraformProcess/DuraformProcessPackingDto';
+import { ProcessPackingDto } from '../process/ProcessPackingDto';
 import { MachineDto } from './MachineDto';
 
 export class MachinePackingDto extends MachineDto {
-  duraformProcessPackings: DuraformProcessPackingDto[];
+  duraformProcessPackings: ProcessPackingDto[];
 }

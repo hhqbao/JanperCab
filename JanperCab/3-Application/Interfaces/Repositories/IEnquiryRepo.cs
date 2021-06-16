@@ -14,7 +14,7 @@ namespace _3_Application.Interfaces.Repositories
 
         Task<List<DuraformEnquiry>> GetDuraformDraftsAsync(ApplicationUser creator);
 
-        Task<ItemList<DuraformEnquiry>> GetDuraformOrdersAsync(int? searchCustomerId, ApplicationUser currentUser, DuraformProcessEnum? status,
+        Task<ItemList<DuraformEnquiry>> GetDuraformOrdersAsync(int? searchCustomerId, ApplicationUser currentUser, ProcessTypeEnum? status,
             string search, string sortBy, string direction, int page, int take);
     }
 }

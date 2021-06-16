@@ -3,7 +3,7 @@ using _3_Application.Dtos.ApplicationFile;
 using _3_Application.Dtos.Customer;
 using _3_Application.Dtos.CustomerCategory;
 using _3_Application.Dtos.DeliveryDocket;
-using _3_Application.Dtos.DeliveryRunSheet;
+using _3_Application.Dtos.DeliverySheet;
 using _3_Application.Dtos.Driver;
 using _3_Application.Dtos.DuraformArch;
 using _3_Application.Dtos.DuraformComponent;
@@ -25,7 +25,6 @@ using _3_Application.Dtos.Invoice;
 using _3_Application.Dtos.Machine;
 using _3_Application.Dtos.OnHoldComponent;
 using _3_Application.Dtos.PantryDoorChairRailType;
-using _3_Application.Dtos.PickUpSheet;
 using _3_Application.Dtos.Process;
 using _3_Application.Dtos.Truck;
 using _3_Application.Dtos.UploadFile;
@@ -242,47 +241,37 @@ namespace _5_JanperCab.Helpers
             CreateMap<MachinePackingDto, MachinePacking>();
 
             CreateMap<Process, ProcessDto>()
-                .Include<DuraformProcess, DuraformProcessDto>();
+                .Include<ProcessPreRoute, ProcessPreRouteDto>()
+                .Include<ProcessRouting, ProcessRoutingDto>()
+                .Include<ProcessPressing, ProcessPressingDto>()
+                .Include<ProcessCleaning, ProcessCleaningDto>()
+                .Include<ProcessPacking, ProcessPackingDto>()
+                .Include<ProcessDelivering, ProcessDeliveringDto>();
             CreateMap<ProcessDto, Process>()
-                .Include<DuraformProcessDto, DuraformProcess>();
+                .Include<ProcessPreRouteDto, ProcessPreRoute>()
+                .Include<ProcessRoutingDto, ProcessRouting>()
+                .Include<ProcessPressingDto, ProcessPressing>()
+                .Include<ProcessCleaningDto, ProcessCleaning>()
+                .Include<ProcessPackingDto, ProcessPacking>()
+                .Include<ProcessDeliveringDto, ProcessDelivering>();
 
-            CreateMap<DuraformProcess, DuraformProcessDto>()
-                .Include<DuraformProcessPreRoute, DuraformProcessPreRouteDto>()
-                .Include<DuraformProcessRouting, DuraformProcessRoutingDto>()
-                .Include<DuraformProcessPressing, DuraformProcessPressingDto>()
-                .Include<DuraformProcessCleaning, DuraformProcessCleaningDto>()
-                .Include<DuraformProcessPacking, DuraformProcessPackingDto>()
-                .Include<DuraformProcessPickingUp, DuraformProcessPickingUpDto>()
-                .Include<DuraformProcessDelivering, DuraformProcessDeliveringDto>();
-            CreateMap<DuraformProcessDto, DuraformProcess>()
-                .Include<DuraformProcessPreRouteDto, DuraformProcessPreRoute>()
-                .Include<DuraformProcessRoutingDto, DuraformProcessRouting>()
-                .Include<DuraformProcessPressingDto, DuraformProcessPressing>()
-                .Include<DuraformProcessCleaningDto, DuraformProcessCleaning>()
-                .Include<DuraformProcessPackingDto, DuraformProcessPacking>()
-                .Include<DuraformProcessPickingUpDto, DuraformProcessPickingUp>()
-                .Include<DuraformProcessDeliveringDto, DuraformProcessDelivering>();
+            CreateMap<ProcessPreRoute, ProcessPreRouteDto>();
+            CreateMap<ProcessPreRouteDto, ProcessPreRoute>();
 
-            CreateMap<DuraformProcessPreRoute, DuraformProcessPreRouteDto>();
-            CreateMap<DuraformProcessPreRouteDto, DuraformProcessPreRoute>();
+            CreateMap<ProcessRouting, ProcessRoutingDto>();
+            CreateMap<ProcessRoutingDto, ProcessRouting>();
 
-            CreateMap<DuraformProcessRouting, DuraformProcessRoutingDto>();
-            CreateMap<DuraformProcessRoutingDto, DuraformProcessRouting>();
+            CreateMap<ProcessPressing, ProcessPressingDto>();
+            CreateMap<ProcessPressingDto, ProcessPressing>();
 
-            CreateMap<DuraformProcessPressing, DuraformProcessPressingDto>();
-            CreateMap<DuraformProcessPressingDto, DuraformProcessPressing>();
+            CreateMap<ProcessCleaning, ProcessCleaningDto>();
+            CreateMap<ProcessCleaningDto, ProcessCleaning>();
 
-            CreateMap<DuraformProcessCleaning, DuraformProcessCleaningDto>();
-            CreateMap<DuraformProcessCleaningDto, DuraformProcessCleaning>();
+            CreateMap<ProcessPacking, ProcessPackingDto>();
+            CreateMap<ProcessPackingDto, ProcessPacking>();
 
-            CreateMap<DuraformProcessPacking, DuraformProcessPackingDto>();
-            CreateMap<DuraformProcessPackingDto, DuraformProcessPacking>();
-
-            CreateMap<DuraformProcessPickingUp, DuraformProcessPickingUpDto>();
-            CreateMap<DuraformProcessPickingUpDto, DuraformProcessPickingUp>();
-
-            CreateMap<DuraformProcessDelivering, DuraformProcessDeliveringDto>();
-            CreateMap<DuraformProcessDeliveringDto, DuraformProcessDelivering>();
+            CreateMap<ProcessDelivering, ProcessDeliveringDto>();
+            CreateMap<ProcessDeliveringDto, ProcessDelivering>();
 
             CreateMap<Enquiry, EnquiryDto>()
                 .Include<DuraformEnquiry, DuraformEnquiryDto>();
@@ -291,7 +280,8 @@ namespace _5_JanperCab.Helpers
                 .ForMember(x => x.CreatedDate, opt => opt.Ignore())
                 .ForMember(x => x.Invoice, opt => opt.Ignore())
                 .ForMember(x => x.Customer, opt => opt.Ignore())
-                .ForMember(x => x.Manager, opt => opt.Ignore());
+                .ForMember(x => x.Manager, opt => opt.Ignore())
+                .ForMember(x => x.Processes, opt => opt.Ignore());
 
             CreateMap<EnquiryPriceDto, Enquiry>()
                 .Include<DuraformEnquiryPriceDto, DuraformEnquiry>();
@@ -376,17 +366,26 @@ namespace _5_JanperCab.Helpers
             CreateMap<Truck, TruckDto>();
             CreateMap<TruckDto, Truck>();
 
-            CreateMap<DeliveryRunSheet, DeliveryRunSheetDto>();
-            CreateMap<DeliveryRunSheetDto, DeliveryRunSheet>();
+            CreateMap<DeliverySheet, DeliverySheetDto>()
+                .Include<ShippingSheet, ShippingSheetDto>()
+                .Include<PickUpSheet, PickUpSheetDto>()
+                .ForMember(x => x.EnquiriesForSheet, opt => opt.MapFrom<EnquiriesForSheetResolver>());
+            CreateMap<DeliverySheetDto, DeliverySheet>()
+                .Include<ShippingSheetDto, ShippingSheet>()
+                .Include<PickUpSheetDto, PickUpSheet>()
+                .ForMember(x => x.CreatedDate, opt => opt.Ignore())
+                .ForMember(x => x.LockedDate, opt => opt.Ignore())
+                .ForMember(x => x.CompletedDate, opt => opt.Ignore())
+                .ForMember(x => x.ProcessDeliverings, opt => opt.Ignore());
 
-            CreateMap<DeliveryRunSheet, DeliveryRunSheetForListDto>()
-                .ForMember(x => x.EnquiriesForRunSheet, opt => opt.MapFrom<EnquiriesForRunSheetResolver>());
+            CreateMap<ShippingSheet, ShippingSheetDto>();
+            CreateMap<ShippingSheetDto, ShippingSheet>()
+                .ForMember(x => x.Driver, opt => opt.Ignore())
+                .ForMember(x => x.Truck, opt => opt.Ignore());
 
             CreateMap<PickUpSheet, PickUpSheetDto>();
-            CreateMap<PickUpSheetDto, PickUpSheet>();
-
-            CreateMap<PickUpSheet, PickUpSheetForListDto>()
-                .ForMember(x => x.EnquiriesForPickUpSheet, opt => opt.MapFrom<EnquiriesForPickUpSheetResolver>());
+            CreateMap<PickUpSheetDto, PickUpSheet>()
+                .ForMember(x => x.Customer, opt => opt.Ignore());
 
             CreateMap<InvoiceComponent, InvoiceComponentDto>();
             CreateMap<InvoiceComponentDto, InvoiceComponent>();

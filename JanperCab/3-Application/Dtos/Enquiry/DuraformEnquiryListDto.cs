@@ -32,13 +32,13 @@ namespace _3_Application.Dtos.Enquiry
 
 
 
-        public ICollection<DuraformProcessDto> DuraformProcesses { get; set; }
+        public ICollection<ProcessDto> Processes { get; set; }
 
 
 
         public DuraformEnquiryListDto()
         {
-            DuraformProcesses = new Collection<DuraformProcessDto>();
+            Processes = new Collection<ProcessDto>();
         }
     }
 }

@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace _1_Domain
 {
-    public class PickUpSheet
+    public class PickUpSheet : DeliverySheet
     {
-        public int Id { get; set; }
-
-        public DateTime CreatedDate { get; set; }
-
-        public bool IsCompleted { get; set; }
-
         public int CustomerId { get; set; }
 
         public string ApplicationUserId { get; set; }
@@ -21,29 +14,30 @@ namespace _1_Domain
 
         public virtual ApplicationUser ApplicationUser { get; set; }
 
-        public virtual ICollection<Enquiry> Enquiries { get; set; }
 
+        public override bool IsEditable => !LockedDate.HasValue && !CompletedDate.HasValue;
 
-        public PickUpSheet()
+        public override void AddOrder(Enquiry enquiry)
         {
-            CreatedDate = DateTime.Now;
-            Enquiries = new Collection<Enquiry>();
+            if (enquiry.CustomerId != CustomerId)
+                throw new Exception("Cannot pick up other customer's order");
+
+            enquiry.ProcessDelivering(this);
         }
 
-        public void Complete()
+        public override void Complete()
         {
-            foreach (var enquiry in Enquiries)
+            LockedDate = DateTime.Now;
+            CompletedDate = DateTime.Now;
+
+            var enquiries = ProcessDeliverings.Select(x => x.Enquiry).ToList();
+
+            foreach (var enquiry in enquiries)
             {
-                enquiry.CompletePickingUp();
+                enquiry.CompleteDelivering();
 
-                enquiry.SubTotal -= enquiry.DeliveryFee;
-                enquiry.DeliveryFee = 0;
-
-                enquiry.TotalGst = Math.Round(enquiry.SubTotal / 10, 2);
-                enquiry.TotalPrice = enquiry.SubTotal + enquiry.TotalGst;
+                enquiry.RemoveDeliveryFee();
             }
-
-            IsCompleted = true;
         }
     }
 }

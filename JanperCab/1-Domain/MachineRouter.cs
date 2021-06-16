@@ -5,7 +5,7 @@ namespace _1_Domain
 {
     public class MachineRouter : Machine
     {
-        public virtual ICollection<DuraformProcessRouting> DuraformProcessRoutings { get; set; }
+        public virtual ICollection<ProcessRouting> DuraformProcessRoutings { get; set; }
 
         public MachineRouter()
         {

@@ -21,19 +21,19 @@ namespace _2_Persistent.Migrations
                 });
 
             migrationBuilder.Sql(
-                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.PreRoute}, 'PreRoute', {(int)DuraformProcessEnum.PreRoute})");
+                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)ProcessTypeEnum.PreRoute}, 'PreRoute', {(int)ProcessTypeEnum.PreRoute})");
             migrationBuilder.Sql(
-                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.Routing}, 'Routing', {(int)DuraformProcessEnum.Routing})");
+                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)ProcessTypeEnum.Routing}, 'Routing', {(int)ProcessTypeEnum.Routing})");
             migrationBuilder.Sql(
-                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.Pressing}, 'Pressing', {(int)DuraformProcessEnum.Pressing})");
+                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)ProcessTypeEnum.Pressing}, 'Pressing', {(int)ProcessTypeEnum.Pressing})");
             migrationBuilder.Sql(
-                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.Cleaning}, 'Cleaned', {(int)DuraformProcessEnum.Cleaning})");
+                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)ProcessTypeEnum.Cleaning}, 'Cleaned', {(int)ProcessTypeEnum.Cleaning})");
             migrationBuilder.Sql(
-                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.Packing}, 'Packed', {(int)DuraformProcessEnum.Packing})");
+                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)ProcessTypeEnum.Packing}, 'Packed', {(int)ProcessTypeEnum.Packing})");
             migrationBuilder.Sql(
-                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.PickingUp}, 'PickedUp', {(int)DuraformProcessEnum.PickingUp})");
+                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)ProcessTypeEnum.PickingUp}, 'PickedUp', {(int)ProcessTypeEnum.PickingUp})");
             migrationBuilder.Sql(
-                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)DuraformProcessEnum.Delivering}, 'Delivered', {(int)DuraformProcessEnum.Delivering})");
+                $"Insert EnquiryStatuses(Id, Name, DisplayOrder) Values({(int)ProcessTypeEnum.Delivering}, 'Delivered', {(int)ProcessTypeEnum.Delivering})");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -3,7 +3,7 @@ import { CustomerService } from './../../_services/customer.service';
 import { DuraformEnquiryDto } from './../../_models/enquiry/DuraformEnquiryDto';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CustomerDto } from 'src/app/_models/customer/CustomerDto';
-import { DuraformProcessDto } from 'src/app/_models/DuraformProcess/DuraformProcessDto';
+import { ProcessDto } from 'src/app/_models/process/ProcessDto';
 
 @Component({
   selector: 'app-duraform-process-viewer',
@@ -32,7 +32,7 @@ export class DuraformProcessViewerComponent implements OnInit {
     );
   }
 
-  onDisplayOnHoldComponents = (process: DuraformProcessDto) => {
+  onDisplayOnHoldComponents = (process: ProcessDto) => {
     let msg = '';
 
     process.onHoldComponents.forEach((x) => {

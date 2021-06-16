@@ -443,35 +443,34 @@ namespace _2_Persistent.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("CustomerCategory");
                 });
 
-            modelBuilder.Entity("_1_Domain.DeliveryRunSheet", b =>
+            modelBuilder.Entity("_1_Domain.DeliverySheet", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime?>("CompletedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DeliveredDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DriverId")
+                    b.Property<int>("DeliveryMethod")
                         .HasColumnType("int");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LockedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TruckId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("DriverId");
+                    b.ToTable("DeliverySheets");
 
-                    b.HasIndex("TruckId");
-
-                    b.ToTable("DeliveryRunSheets");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("DeliverySheet");
                 });
 
             modelBuilder.Entity("_1_Domain.Driver", b =>
@@ -1012,9 +1011,6 @@ namespace _2_Persistent.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int?>("DeliveryRunSheetId")
-                        .HasColumnType("int");
-
                     b.Property<string>("DeliveryState")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
@@ -1074,9 +1070,6 @@ namespace _2_Persistent.Migrations
                     b.Property<DateTime?>("OrderedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PickUpSheetId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("SubTotal")
                         .HasColumnName("SubTotal")
                         .HasColumnType("decimal(18,2)");
@@ -1095,11 +1088,7 @@ namespace _2_Persistent.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("DeliveryRunSheetId");
-
                     b.HasIndex("ManagerId");
-
-                    b.HasIndex("PickUpSheetId");
 
                     b.ToTable("Enquiries");
 
@@ -1394,35 +1383,6 @@ namespace _2_Persistent.Migrations
                     b.ToTable("PantryDoorChairRailTypes");
                 });
 
-            modelBuilder.Entity("_1_Domain.PickUpSheet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("PickUpSheets");
-                });
-
             modelBuilder.Entity("_1_Domain.Process", b =>
                 {
                     b.Property<int>("Id")
@@ -1443,10 +1403,15 @@ namespace _2_Persistent.Migrations
                     b.Property<bool>("IsCurrent")
                         .HasColumnType("bit");
 
+                    b.Property<int>("ProcessType")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("StartTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EnquiryId");
 
                     b.ToTable("Processes");
 
@@ -1527,6 +1492,41 @@ namespace _2_Persistent.Migrations
                     b.HasBaseType("_1_Domain.CustomerCategory");
 
                     b.HasDiscriminator().HasValue("CustomerCategoryCBD");
+                });
+
+            modelBuilder.Entity("_1_Domain.PickUpSheet", b =>
+                {
+                    b.HasBaseType("_1_Domain.DeliverySheet");
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasDiscriminator().HasValue("PickUpSheet");
+                });
+
+            modelBuilder.Entity("_1_Domain.ShippingSheet", b =>
+                {
+                    b.HasBaseType("_1_Domain.DeliverySheet");
+
+                    b.Property<int>("DriverId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TruckId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("DriverId");
+
+                    b.HasIndex("TruckId");
+
+                    b.HasDiscriminator().HasValue("ShippingSheet");
                 });
 
             modelBuilder.Entity("_1_Domain.DuraformComponentWithOption", b =>
@@ -1890,16 +1890,78 @@ namespace _2_Persistent.Migrations
                     b.HasDiscriminator().HasValue("MachineRouter");
                 });
 
-            modelBuilder.Entity("_1_Domain.DuraformProcess", b =>
+            modelBuilder.Entity("_1_Domain.ProcessCleaning", b =>
                 {
                     b.HasBaseType("_1_Domain.Process");
 
-                    b.Property<int>("DuraformProcessType")
+                    b.Property<int?>("MachineId")
+                        .HasColumnName("MachineId")
                         .HasColumnType("int");
 
-                    b.HasIndex("EnquiryId");
+                    b.HasIndex("MachineId");
 
-                    b.HasDiscriminator().HasValue("DuraformProcess");
+                    b.HasDiscriminator().HasValue("ProcessCleaning");
+                });
+
+            modelBuilder.Entity("_1_Domain.ProcessDelivering", b =>
+                {
+                    b.HasBaseType("_1_Domain.Process");
+
+                    b.Property<int?>("DeliverySheetId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("DeliverySheetId");
+
+                    b.HasDiscriminator().HasValue("ProcessDelivering");
+                });
+
+            modelBuilder.Entity("_1_Domain.ProcessPacking", b =>
+                {
+                    b.HasBaseType("_1_Domain.Process");
+
+                    b.Property<int?>("MachineId")
+                        .HasColumnName("MachineId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("MachineId")
+                        .HasName("IX_Processes_MachineId1");
+
+                    b.HasDiscriminator().HasValue("ProcessPacking");
+                });
+
+            modelBuilder.Entity("_1_Domain.ProcessPreRoute", b =>
+                {
+                    b.HasBaseType("_1_Domain.Process");
+
+                    b.HasDiscriminator().HasValue("ProcessPreRoute");
+                });
+
+            modelBuilder.Entity("_1_Domain.ProcessPressing", b =>
+                {
+                    b.HasBaseType("_1_Domain.Process");
+
+                    b.Property<int?>("MachineId")
+                        .HasColumnName("MachineId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("MachineId")
+                        .HasName("IX_Processes_MachineId2");
+
+                    b.HasDiscriminator().HasValue("ProcessPressing");
+                });
+
+            modelBuilder.Entity("_1_Domain.ProcessRouting", b =>
+                {
+                    b.HasBaseType("_1_Domain.Process");
+
+                    b.Property<int?>("MachineId")
+                        .HasColumnName("MachineId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("MachineId")
+                        .HasName("IX_Processes_MachineId3");
+
+                    b.HasDiscriminator().HasValue("ProcessRouting");
                 });
 
             modelBuilder.Entity("_1_Domain.DuraformComponentWithOptionAndHingeHole", b =>
@@ -1933,82 +1995,6 @@ namespace _2_Persistent.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasDiscriminator().HasValue("DuraformEndPanel");
-                });
-
-            modelBuilder.Entity("_1_Domain.DuraformProcessCleaning", b =>
-                {
-                    b.HasBaseType("_1_Domain.DuraformProcess");
-
-                    b.Property<int?>("MachineId")
-                        .HasColumnName("MachineId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("MachineId");
-
-                    b.HasDiscriminator().HasValue("DuraformProcessCleaning");
-                });
-
-            modelBuilder.Entity("_1_Domain.DuraformProcessDelivering", b =>
-                {
-                    b.HasBaseType("_1_Domain.DuraformProcess");
-
-                    b.HasDiscriminator().HasValue("DuraformProcessDelivering");
-                });
-
-            modelBuilder.Entity("_1_Domain.DuraformProcessPacking", b =>
-                {
-                    b.HasBaseType("_1_Domain.DuraformProcess");
-
-                    b.Property<int?>("MachineId")
-                        .HasColumnName("MachineId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("MachineId")
-                        .HasName("IX_Processes_MachineId1");
-
-                    b.HasDiscriminator().HasValue("DuraformProcessPacking");
-                });
-
-            modelBuilder.Entity("_1_Domain.DuraformProcessPickingUp", b =>
-                {
-                    b.HasBaseType("_1_Domain.DuraformProcess");
-
-                    b.HasDiscriminator().HasValue("DuraformProcessPickingUp");
-                });
-
-            modelBuilder.Entity("_1_Domain.DuraformProcessPreRoute", b =>
-                {
-                    b.HasBaseType("_1_Domain.DuraformProcess");
-
-                    b.HasDiscriminator().HasValue("DuraformProcessPreRoute");
-                });
-
-            modelBuilder.Entity("_1_Domain.DuraformProcessPressing", b =>
-                {
-                    b.HasBaseType("_1_Domain.DuraformProcess");
-
-                    b.Property<int?>("MachineId")
-                        .HasColumnName("MachineId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("MachineId")
-                        .HasName("IX_Processes_MachineId2");
-
-                    b.HasDiscriminator().HasValue("DuraformProcessPressing");
-                });
-
-            modelBuilder.Entity("_1_Domain.DuraformProcessRouting", b =>
-                {
-                    b.HasBaseType("_1_Domain.DuraformProcess");
-
-                    b.Property<int?>("MachineId")
-                        .HasColumnName("MachineId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("MachineId")
-                        .HasName("IX_Processes_MachineId3");
-
-                    b.HasDiscriminator().HasValue("DuraformProcessRouting");
                 });
 
             modelBuilder.Entity("_1_Domain.DuraformDoor", b =>
@@ -2109,21 +2095,6 @@ namespace _2_Persistent.Migrations
                         .WithMany("ManagedCustomers")
                         .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("_1_Domain.DeliveryRunSheet", b =>
-                {
-                    b.HasOne("_1_Domain.Driver", "Driver")
-                        .WithMany("DeliveryRunSheets")
-                        .HasForeignKey("DriverId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("_1_Domain.Truck", "Truck")
-                        .WithMany("DeliveryRunSheets")
-                        .HasForeignKey("TruckId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("_1_Domain.DuraformComponent", b =>
@@ -2227,19 +2198,9 @@ namespace _2_Persistent.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("_1_Domain.DeliveryRunSheet", "DeliveryRunSheet")
-                        .WithMany("Enquiries")
-                        .HasForeignKey("DeliveryRunSheetId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("_1_Domain.Customer", "Manager")
                         .WithMany("ManagedEnquiries")
                         .HasForeignKey("ManagerId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("_1_Domain.PickUpSheet", "PickUpSheet")
-                        .WithMany("Enquiries")
-                        .HasForeignKey("PickUpSheetId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -2306,18 +2267,12 @@ namespace _2_Persistent.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("_1_Domain.PickUpSheet", b =>
+            modelBuilder.Entity("_1_Domain.Process", b =>
                 {
-                    b.HasOne("_1_Domain.ApplicationUser", "ApplicationUser")
-                        .WithMany("CreatedPickUpSheets")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("_1_Domain.Customer", "Custom")
-                        .WithMany("PickUpSheets")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("_1_Domain.Enquiry", "Enquiry")
+                        .WithMany("Processes")
+                        .HasForeignKey("EnquiryId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -2327,6 +2282,36 @@ namespace _2_Persistent.Migrations
                         .WithMany("DuraformFiles")
                         .HasForeignKey("DuraformEnquiryId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("_1_Domain.PickUpSheet", b =>
+                {
+                    b.HasOne("_1_Domain.ApplicationUser", "ApplicationUser")
+                        .WithMany("PickUpSheets")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("_1_Domain.Customer", "Customer")
+                        .WithMany("PickUpSheets")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("_1_Domain.ShippingSheet", b =>
+                {
+                    b.HasOne("_1_Domain.Driver", "Driver")
+                        .WithMany("ShippingSheets")
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("_1_Domain.Truck", "Truck")
+                        .WithMany("ShippingSheets")
+                        .HasForeignKey("TruckId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -2415,16 +2400,7 @@ namespace _2_Persistent.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("_1_Domain.DuraformProcess", b =>
-                {
-                    b.HasOne("_1_Domain.DuraformEnquiry", "DuraformEnquiry")
-                        .WithMany("DuraformProcesses")
-                        .HasForeignKey("EnquiryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("_1_Domain.DuraformProcessCleaning", b =>
+            modelBuilder.Entity("_1_Domain.ProcessCleaning", b =>
                 {
                     b.HasOne("_1_Domain.MachineCleaning", "MachineCleaning")
                         .WithMany("DuraformProcessCleanings")
@@ -2432,7 +2408,15 @@ namespace _2_Persistent.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("_1_Domain.DuraformProcessPacking", b =>
+            modelBuilder.Entity("_1_Domain.ProcessDelivering", b =>
+                {
+                    b.HasOne("_1_Domain.DeliverySheet", "DeliverySheet")
+                        .WithMany("ProcessDeliverings")
+                        .HasForeignKey("DeliverySheetId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("_1_Domain.ProcessPacking", b =>
                 {
                     b.HasOne("_1_Domain.MachinePacking", "MachinePacking")
                         .WithMany("DuraformProcessPackings")
@@ -2441,7 +2425,7 @@ namespace _2_Persistent.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("_1_Domain.DuraformProcessPressing", b =>
+            modelBuilder.Entity("_1_Domain.ProcessPressing", b =>
                 {
                     b.HasOne("_1_Domain.MachinePresser", "MachinePresser")
                         .WithMany("DuraformProcessPressings")
@@ -2450,7 +2434,7 @@ namespace _2_Persistent.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("_1_Domain.DuraformProcessRouting", b =>
+            modelBuilder.Entity("_1_Domain.ProcessRouting", b =>
                 {
                     b.HasOne("_1_Domain.MachineRouter", "MachineRouter")
                         .WithMany("DuraformProcessRoutings")

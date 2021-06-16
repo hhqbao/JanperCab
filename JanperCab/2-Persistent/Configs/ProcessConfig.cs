@@ -14,6 +14,12 @@ namespace _2_Persistent.Configs
 
             builder.Property(x => x.Id)
                 .ValueGeneratedOnAdd();
+
+            builder.HasOne(x => x.Enquiry)
+                .WithMany(y => y.Processes)
+                .HasForeignKey(x => x.EnquiryId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

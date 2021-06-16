@@ -1,6 +1,4 @@
-﻿using _1_Domain;
-using System;
-using System.Linq;
+﻿using System;
 
 namespace _3_Application.Dtos.Machine
 {
@@ -25,16 +23,8 @@ namespace _3_Application.Dtos.Machine
             StartTime = process.StartTime;
             EndTime = process.EndTime;
             EnquiryId = process.EnquiryId;
-
-            switch (process)
-            {
-                case DuraformProcess duraformProcess:
-                    Description = duraformProcess.DuraformEnquiry.GetDescription();
-                    NumberOfParts = duraformProcess.DuraformEnquiry.DuraformComponents.Sum(x => x.Quantity);
-                    break;
-                default:
-                    throw new NotImplementedException("Unsupported Production Process");
-            }
+            Description = process.Enquiry.GetDescription();
+            NumberOfParts = process.Enquiry.PartCount;
         }
 
     }

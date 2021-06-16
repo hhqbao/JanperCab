@@ -1,4 +1,3 @@
-import { PickUpPageComponent } from './pages/pick-up-page/pick-up-page.component';
 import { InvoiceProcessPageComponent } from './pages/invoice-process-page/invoice-process-page.component';
 import { DeliveryPageComponent } from './pages/delivery-page/delivery-page.component';
 import { MachineListPageComponent } from './pages/machine-list-page/machine-list-page.component';
@@ -45,7 +44,6 @@ export const routes: Routes = [
     children: [
       { path: 'machines', component: MachineListPageComponent },
       { path: 'delivery', component: DeliveryPageComponent },
-      { path: 'pick-up', component: PickUpPageComponent },
       { path: 'invoicing', component: InvoiceProcessPageComponent },
     ],
   },

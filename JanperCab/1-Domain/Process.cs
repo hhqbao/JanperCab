@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _1_Domain.Enum;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -8,6 +9,8 @@ namespace _1_Domain
     {
         public int Id { get; set; }
 
+        public ProcessTypeEnum ProcessType { get; set; }
+
         public int EnquiryId { get; set; }
 
         public DateTime? StartTime { get; set; }
@@ -16,6 +19,8 @@ namespace _1_Domain
 
         public bool IsCurrent { get; set; }
 
+
+        public virtual Enquiry Enquiry { get; set; }
 
         public virtual ICollection<OnHoldComponent> OnHoldComponents { get; set; }
 

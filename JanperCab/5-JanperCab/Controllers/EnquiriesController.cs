@@ -78,7 +78,7 @@ namespace _5_JanperCab.Controllers
 
         [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
         [HttpGet("duraform/orders")]
-        public async Task<IActionResult> GetDuraformOrders(int? cusId, DuraformProcessEnum? status, string search,
+        public async Task<IActionResult> GetDuraformOrders(int? cusId, ProcessTypeEnum? status, string search,
             string sortBy, string dir, int page = 0, int take = 20)
         {
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
@@ -160,23 +160,6 @@ namespace _5_JanperCab.Controllers
         }
 
         [Authorize(Roles = "Sale")]
-        [HttpPut("decline/{id}")]
-        public async Task<IActionResult> Decline(int id)
-        {
-            var creator = await _userManager.FindByEmailAsync(User.Identity.Name);
-            var enquiryInDb = await _unitOfWork.Enquiries.GetEnquiryAsync(id, creator.Customer);
-
-            if (enquiryInDb == null) return BadRequest("Enquiry Not Found");
-
-            if (!enquiryInDb.IsDeclineable) return BadRequest("Enquiry is in production! Cannot be declined");
-
-            enquiryInDb.Decline();
-            await _unitOfWork.CompleteAsync();
-
-            return Ok(_mapper.Map<Enquiry, EnquiryDto>(enquiryInDb));
-        }
-
-        [Authorize(Roles = "Sale")]
         [HttpPut("approve/{id}")]
         public async Task<IActionResult> Approve(int id)
         {
@@ -191,7 +174,23 @@ namespace _5_JanperCab.Controllers
             await _unitOfWork.CompleteAsync();
 
             return Ok();
+        }
 
+        [Authorize(Roles = "Sale")]
+        [HttpPut("decline/{id}")]
+        public async Task<IActionResult> Decline(int id)
+        {
+            var creator = await _userManager.FindByEmailAsync(User.Identity.Name);
+            var enquiryInDb = await _unitOfWork.Enquiries.GetEnquiryAsync(id, creator.Customer);
+
+            if (enquiryInDb == null) return BadRequest("Enquiry Not Found");
+
+            if (!enquiryInDb.IsDeclineable) return BadRequest("Enquiry is in production! Cannot be declined");
+
+            enquiryInDb.Decline();
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(_mapper.Map<Enquiry, EnquiryDto>(enquiryInDb));
         }
     }
 }

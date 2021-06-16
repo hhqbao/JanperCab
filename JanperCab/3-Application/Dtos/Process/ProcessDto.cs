@@ -1,4 +1,5 @@
-﻿using _3_Application.Dtos.OnHoldComponent;
+﻿using _1_Domain.Enum;
+using _3_Application.Dtos.OnHoldComponent;
 using System;
 using System.Collections.Generic;
 
@@ -7,6 +8,8 @@ namespace _3_Application.Dtos.Process
     public abstract class ProcessDto
     {
         public int Id { get; set; }
+
+        public ProcessTypeEnum ProcessType { get; set; }
 
         public int EnquiryId { get; set; }
 

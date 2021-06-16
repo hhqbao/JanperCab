@@ -5,6 +5,6 @@ namespace _3_Application.Dtos.Machine
 {
     public class MachinePresserDto : MachineDto
     {
-        public ICollection<DuraformProcessPressingDto> DuraformProcessPressings { get; set; }
+        public ICollection<ProcessPressingDto> DuraformProcessPressings { get; set; }
     }
 }

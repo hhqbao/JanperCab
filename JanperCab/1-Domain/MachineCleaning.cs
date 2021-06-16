@@ -5,7 +5,7 @@ namespace _1_Domain
 {
     public class MachineCleaning : Machine
     {
-        public virtual ICollection<DuraformProcessCleaning> DuraformProcessCleanings { get; set; }
+        public virtual ICollection<ProcessCleaning> DuraformProcessCleanings { get; set; }
 
         public MachineCleaning()
         {

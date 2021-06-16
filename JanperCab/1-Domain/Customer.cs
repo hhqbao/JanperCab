@@ -63,10 +63,9 @@ namespace _1_Domain
 
         public virtual ICollection<Enquiry> ManagedEnquiries { get; set; }
 
-        public virtual ICollection<PickUpSheet> PickUpSheets { get; set; }
-
         public virtual ICollection<Invoice> Invoices { get; set; }
 
+        public virtual ICollection<PickUpSheet> PickUpSheets { get; set; }
 
 
         protected Customer()
@@ -79,9 +78,9 @@ namespace _1_Domain
 
             ManagedEnquiries = new Collection<Enquiry>();
 
-            PickUpSheets = new Collection<PickUpSheet>();
-
             Invoices = new Collection<Invoice>();
+
+            PickUpSheets = new Collection<PickUpSheet>();
         }
     }
 }

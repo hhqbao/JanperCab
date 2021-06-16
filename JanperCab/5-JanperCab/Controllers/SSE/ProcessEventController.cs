@@ -31,18 +31,18 @@ namespace _5_JanperCab.Controllers.SSE
             _mapper = mapper;
         }
 
-        [HttpGet("duraform/{enquiryId}")]
+        [HttpGet("{enquiryId}")]
         public async Task GetDuraformEnquiryProcesses(int enquiryId)
         {
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
 
             var enquiry = await _unitOfWork.Enquiries.GetEnquiryAsync(enquiryId, currentUser.Customer);
 
-            if (!(enquiry is DuraformEnquiry duraformEnquiry)) throw new Exception("Order Not Found");
+            if (enquiry == null) throw new Exception("Order Not Found");
 
-            if (!duraformEnquiry.ApprovedDate.HasValue) throw new Exception("Order needs to be APPROVED");
+            if (!enquiry.ApprovedDate.HasValue) throw new Exception("Order needs to be APPROVED");
 
-            var model = _mapper.Map<List<DuraformProcess>, List<DuraformProcessDto>>(duraformEnquiry.DuraformProcesses
+            var model = _mapper.Map<List<Process>, List<ProcessDto>>(enquiry.Processes
                 .ToList());
 
             var jsonString = JsonConvert.SerializeObject(model,

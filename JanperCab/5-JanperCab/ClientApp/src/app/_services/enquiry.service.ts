@@ -1,7 +1,6 @@
 import { DeliveryDocketDuraformDto } from './../_models/delivery-docket/DeliveryDocketDuraformDto';
 import { PackingLabelDto } from './../_models/packing-label/PackingLabelDto';
 import { EnquiryForInvoicingDto } from './../_models/enquiry/EnquiryForInvoicingDto';
-import { DuraformProcessDto } from '../_models/DuraformProcess/DuraformProcessDto';
 import { DuraformEnquiryListDto } from './../_models/enquiry/DuraformEnquiryListDto';
 import { DuraformEnquiryDto } from './../_models/enquiry/DuraformEnquiryDto';
 import { plainToClass } from 'class-transformer';

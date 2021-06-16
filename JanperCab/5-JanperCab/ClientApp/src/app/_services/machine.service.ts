@@ -1,6 +1,4 @@
-import { EnquiryForPickUpSheetDto } from './../_models/enquiry/EnquiryForPickUpSheetDto';
-import { OnHoldComponentDto } from './../_models/on-hold-detail/OnHoldComponentDto';
-import { EnquiryForRunSheetDto } from './../_models/enquiry/EnquiryForRunSheetDto';
+import { EnquiryForSheetDto } from './../_models/enquiry/EnquiryForSheetDto';
 import { plainToClass } from 'class-transformer';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -9,7 +7,6 @@ import { MachineProductionListDto } from '../_models/machine/MachineProductionLi
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MachineProdutionCurrentProcessDto } from '../_models/machine/MachineProdutionCurrentProcessDto';
-import { ProcessDto } from '../_models/DuraformProcess/ProcessDto';
 
 @Injectable({ providedIn: 'root' })
 export class MachineService {
@@ -125,31 +122,15 @@ export class MachineService {
   processDelivering = (
     sheetId: number,
     enquiryId: number
-  ): Observable<EnquiryForRunSheetDto> => {
+  ): Observable<EnquiryForSheetDto> => {
     return this.http
-      .put<EnquiryForRunSheetDto>(
+      .put<EnquiryForSheetDto>(
         `${environment.baseUrl}/Processes/Delivering/${sheetId}/${enquiryId}`,
         null
       )
       .pipe(
         map((response) => {
-          return plainToClass(EnquiryForRunSheetDto, response);
-        })
-      );
-  };
-
-  processPickUp = (
-    sheetId: number,
-    enquiryId: number
-  ): Observable<EnquiryForPickUpSheetDto> => {
-    return this.http
-      .put<EnquiryForPickUpSheetDto>(
-        `${environment.baseUrl}/Processes/PickUp/${sheetId}/${enquiryId}`,
-        null
-      )
-      .pipe(
-        map((response) => {
-          return plainToClass(EnquiryForPickUpSheetDto, response);
+          return plainToClass(EnquiryForSheetDto, response);
         })
       );
   };
@@ -157,13 +138,6 @@ export class MachineService {
   undoDelivering = (enquiryId: number) => {
     return this.http.put(
       `${environment.baseUrl}/Processes/undo-delivering/${enquiryId}`,
-      null
-    );
-  };
-
-  undoPickUp = (enquiryId: number) => {
-    return this.http.put(
-      `${environment.baseUrl}/Processes/undo-pickup/${enquiryId}`,
       null
     );
   };

@@ -1,19 +1,37 @@
 <div class="delivery-page">
-  <app-float-box *ngIf="showRunSheetForm" [width]="70">
-    <app-run-sheet-form
+  <app-float-box *ngIf="showShippingSheetForm" [width]="70">
+    <app-shipping-sheet-form
       [selectedSheet]="selectedSheet"
-      [runSheets]="runSheets"
+      [sheets]="deliverySheets"
       (printBtnClick)="onPrintClick($event)"
       (closeBtnClick)="onCloseSheetForm()"
-    ></app-run-sheet-form>
+    ></app-shipping-sheet-form>
   </app-float-box>
-  <app-float-box *ngIf="selectedSheet && showControlBox" [width]="30">
+  <app-float-box *ngIf="showPickUpSheetForm" [width]="70">
+    <app-pickup-sheet-form
+      [selectedSheet]="selectedSheet"
+      [sheets]="deliverySheets"
+      (printBtnClick)="onPrintClick($event)"
+      (closeBtnClick)="onCloseSheetForm()"
+    ></app-pickup-sheet-form>
+  </app-float-box>
+  <app-pdf-viewer *ngIf="showSheetPdf" (closePanel)="onCloseSheetPdf()">
+    <app-shipping-sheet-pdf
+      *ngIf="selectedSheet.deliveryMethod === method.Shipping"
+      [sheetId]="selectedSheet.id"
+    ></app-shipping-sheet-pdf>
+    <app-pick-up-sheet-pdf
+      *ngIf="selectedSheet.deliveryMethod === method.PickUp"
+      [sheetId]="selectedSheet.id"
+    ></app-pick-up-sheet-pdf>
+  </app-pdf-viewer>
+  <app-float-box *ngIf="selectedSheet && showShippingControlBox" [width]="30">
     <div class="control-box">
       <div class="control-box__header">
         Run Sheet - RS{{ selectedSheet.id | leading }}
         <button
           class="btn control-box__btn-close"
-          (click)="onCloseControlBox()"
+          (click)="onCloseShippingControlBox()"
         >
           <i class="fa fa-times-circle" aria-hidden="true"></i>
         </button>
@@ -21,14 +39,14 @@
       <div class="control-box__body">
         <button
           class="btn control-box__action control-box__action--primary"
-          (click)="showControlBox = false; showRunSheetForm = true"
+          (click)="showShippingControlBox = false; showShippingSheetForm = true"
         >
           <i class="fa fa-info-circle" aria-hidden="true"></i>
           View Details
         </button>
         <button
           class="btn control-box__action control-box__action--primary"
-          (click)="showControlBox = false; showRunSheetPdf = true"
+          (click)="showShippingControlBox = false; showSheetPdf = true"
         >
           <i class="fa fa-print" aria-hidden="true"></i>
           Print Sheet
@@ -36,7 +54,7 @@
         <div class="divider"></div>
         <button
           class="btn control-box__action control-box__action--secondary"
-          (click)="onConfirmDelivery()"
+          (click)="onConfirmShippingSheet()"
         >
           <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
           Confirm Delivery
@@ -44,9 +62,6 @@
       </div>
     </div>
   </app-float-box>
-  <app-pdf-viewer *ngIf="showRunSheetPdf" (closePanel)="onCloseRunSheetPdf()">
-    <app-run-sheet-pdf [sheetId]="selectedSheet.id"></app-run-sheet-pdf>
-  </app-pdf-viewer>
   <app-pdf-viewer
     *ngIf="scannedEnquiryId"
     [documentName]="'Delivery-Docket'"
@@ -60,10 +75,19 @@
         <button
           class="btn btn--primary"
           *ngIf="authService.isInRole(role[role.Driver])"
-          (click)="selectedSheet = null; showRunSheetForm = true"
+          (click)="selectedSheet = null; showShippingSheetForm = true"
         >
           <i class="fa fa-plus-circle" aria-hidden="true"></i>
-          Create Run Sheet
+          Run Sheet
+        </button>
+        <button
+          class="btn btn--secondary"
+          style="margin-left: 2rem"
+          *ngIf="authService.isInRole(role[role.Driver])"
+          (click)="selectedSheet = null; showPickUpSheetForm = true"
+        >
+          <i class="fa fa-plus-circle" aria-hidden="true"></i>
+          Pick Up
         </button>
       </div>
       <div class="delivery-page__body">
@@ -71,6 +95,7 @@
           <thead>
             <tr>
               <th class="text-center" style="width: 6rem">Status</th>
+              <th class="text-center" style="width: 10rem">Type</th>
               <th class="text-center" style="width: 9rem">Sheet No.</th>
               <th style="width: 12rem">
                 <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
@@ -80,7 +105,7 @@
                 <i class="fa fa-clock-o" aria-hidden="true"></i>
                 Time At
               </th>
-              <th>Driver Name</th>
+              <th>Description</th>
               <th class="text-center" style="width: 12rem">Order Count</th>
               <th class="text-center" style="width: 15rem">
                 <i class="fa fa-lock" aria-hidden="true"></i>
@@ -90,7 +115,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let sheet of runSheets">
+            <tr *ngFor="let sheet of deliverySheets">
               <td class="text-center">
                 <i
                   *ngIf="sheet.lockedDate"
@@ -98,8 +123,28 @@
                   aria-hidden="true"
                 ></i>
               </td>
+              <td class="text-center">
+                <span
+                  class="text-blue"
+                  *ngIf="sheet.deliveryMethod === method.Shipping"
+                >
+                  <b>Shipping</b>
+                </span>
+                <span
+                  class="text-alert"
+                  *ngIf="sheet.deliveryMethod === method.PickUp"
+                >
+                  <b>Pick Up</b>
+                </span>
+              </td>
               <td class="text-center" (click)="onSelectSheet(sheet)">
-                {{ sheet.getBarcodePrefix() }}{{ sheet.id | leading }}
+                <b
+                  [ngClass]="{
+                    'text-blue': sheet.deliveryMethod === method.Shipping,
+                    'text-alert': sheet.deliveryMethod === method.PickUp
+                  }"
+                  >{{ sheet.getBarcodePrefix() }}{{ sheet.id | leading }}
+                </b>
               </td>
               <td (click)="onSelectSheet(sheet)">
                 {{ sheet.createdDate | date: "dd/MM/yyyy" }}
@@ -108,10 +153,10 @@
                 {{ sheet.createdDate | date: "hh:mm" }}
               </td>
               <td (click)="onSelectSheet(sheet)">
-                {{ sheet.driver.fullName }}
+                {{ sheet.getDescription() }}
               </td>
               <td class="text-center" (click)="onSelectSheet(sheet)">
-                {{ sheet.enquiriesForRunSheet.length }}
+                {{ sheet.enquiriesForSheet.length }}
               </td>
               <td class="text-center" (click)="onSelectSheet(sheet)">
                 <span *ngIf="sheet.lockedDate">
@@ -119,7 +164,11 @@
                 </span>
                 <span *ngIf="!sheet.lockedDate">-- : --</span>
               </td>
-              <td></td>
+              <td>
+                <button class="btn btn--link" (click)="onDeleteSheet(sheet)">
+                  Remove
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>

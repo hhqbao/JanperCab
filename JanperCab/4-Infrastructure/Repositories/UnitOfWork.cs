@@ -53,9 +53,7 @@ namespace _4_Infrastructure.Repositories
 
         public ITruckRepo Trucks { get; }
 
-        public IDeliveryRunSheetRepo DeliveryRunSheets { get; }
-
-        public IPickUpSheetRepo PickUpSheets { get; }
+        public IDeliverySheetRepo DeliverySheets { get; }
 
         public IInvoiceRepo Invoices { get; }
 
@@ -86,8 +84,7 @@ namespace _4_Infrastructure.Repositories
             Machines = new MachineRepo(_dbContext);
             Drivers = new DriverRepo(_dbContext);
             Trucks = new TruckRepo(_dbContext);
-            DeliveryRunSheets = new DeliveryRunSheetRepo(_dbContext);
-            PickUpSheets = new PickUpSheetRepo(_dbContext);
+            DeliverySheets = new DeliverySheetRepo(_dbContext);
             Invoices = new InvoiceRepo(_dbContext);
         }
 

@@ -24,7 +24,7 @@
   <ul class="dpv__process-list">
     <li
       class="dpv__process"
-      *ngFor="let process of duraformEnquiry.duraformProcesses"
+      *ngFor="let process of duraformEnquiry.processes"
       [ngClass]="{
         finished: process.startTime && process.endTime,
         current: process.startTime && !process.endTime,

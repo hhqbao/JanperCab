@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace _1_Domain
 {
@@ -14,7 +15,11 @@ namespace _1_Domain
 
         public bool IsDisabled { get; set; }
 
+        public virtual ICollection<ShippingSheet> ShippingSheets { get; set; }
 
-        public virtual ICollection<DeliveryRunSheet> DeliveryRunSheets { get; set; }
+        public Driver()
+        {
+            ShippingSheets = new Collection<ShippingSheet>();
+        }
     }
 }

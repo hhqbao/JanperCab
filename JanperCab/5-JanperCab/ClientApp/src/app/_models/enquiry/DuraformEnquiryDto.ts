@@ -5,23 +5,12 @@ import { DuraformWrapTypeDto } from './../duraform-wrap-type/DuraformWrapTypeDto
 import { DuraformSerieDto } from './../duraform-serie/DuraformSerieDto';
 import { DuraformEdgeProfileDto } from './../duraform-edge-profile/DuraformEdgeProfileDto';
 import { DuraformDesignDto } from './../duraform-design/DuraformDesignDto';
-import { DuraformComponentService } from 'src/app/_services/duraform-component.service';
-import { DuraformProcessDeliveringDto } from '../DuraformProcess/DuraformProcessDeliveringDto';
-import { DuraformProcessPickingUpDto } from '../DuraformProcess/DuraformProcessPickingUpDto';
-import { DuraformProcessPackingDto } from '../DuraformProcess/DuraformProcessPackingDto';
-import { DuraformProcessCleaningDto } from '../DuraformProcess/DuraformProcessCleaningDto';
-import { DuraformProcessPressingDto } from '../DuraformProcess/DuraformProcessPressingDto';
-import { DuraformProcessRoutingDto } from '../DuraformProcess/DuraformProcessRoutingDto';
-import { DuraformProcessPreRouteDto } from '../DuraformProcess/DuraformProcessPreRouteDto';
-import { DuraformProcessEnum } from 'src/app/_enums/DuraformProcessEnum';
-import { DuraformProcessDto } from '../DuraformProcess/DuraformProcessDto';
 import { DuraformMiscHeatStripDto } from './../duraform-misc-component/DuraformMiscHeatStripDto';
 import { DuraformMiscFingerPullDto } from './../duraform-misc-component/DuraformMiscFingerPullDto';
 import { DuraformMiscCapMouldDto } from './../duraform-misc-component/DuraformMiscCapMouldDto';
 import { DuraformMiscLooseFoilDto } from './../duraform-misc-component/DuraformMiscLooseFoilDto';
 import { Type } from 'class-transformer';
 import * as _ from 'lodash';
-import * as moment from 'moment';
 
 import { DuraformFileDto } from '../application-file/DuraformFileDto';
 import { DuraformComponentDto } from '../duraform-component/DuraformComponentDto';
@@ -104,45 +93,8 @@ export class DuraformEnquiryDto extends EnquiryDto {
     },
   })
   miscComponents: DuraformMiscComponentDto[] = [];
-  duraformFiles: DuraformFileDto[] = [];
 
-  @Type(() => DuraformProcessDto, {
-    keepDiscriminatorProperty: true,
-    discriminator: {
-      property: '$type',
-      subTypes: [
-        {
-          value: DuraformProcessPreRouteDto,
-          name: '_3_Application.Dtos.Process.DuraformProcessPreRouteDto, 3-Application',
-        },
-        {
-          value: DuraformProcessRoutingDto,
-          name: '_3_Application.Dtos.Process.DuraformProcessRoutingDto, 3-Application',
-        },
-        {
-          value: DuraformProcessPressingDto,
-          name: '_3_Application.Dtos.Process.DuraformProcessPressingDto, 3-Application',
-        },
-        {
-          value: DuraformProcessCleaningDto,
-          name: '_3_Application.Dtos.Process.DuraformProcessCleaningDto, 3-Application',
-        },
-        {
-          value: DuraformProcessPackingDto,
-          name: '_3_Application.Dtos.Process.DuraformProcessPackingDto, 3-Application',
-        },
-        {
-          value: DuraformProcessPickingUpDto,
-          name: '_3_Application.Dtos.Process.DuraformProcessPickingUpDto, 3-Application',
-        },
-        {
-          value: DuraformProcessDeliveringDto,
-          name: '_3_Application.Dtos.Process.DuraformProcessDeliveringDto, 3-Application',
-        },
-      ],
-    },
-  })
-  duraformProcesses: DuraformProcessDto[] = [];
+  duraformFiles: DuraformFileDto[] = [];
 
   constructor() {
     super();
@@ -252,46 +204,6 @@ export class DuraformEnquiryDto extends EnquiryDto {
     );
 
     return heatStrips as DuraformMiscHeatStripDto[];
-  }
-
-  get timeInSystem(): string {
-    const offset = moment().diff(moment(this.orderedDate), 'days');
-
-    return `${offset} day${offset > 1 ? 's' : ''}`;
-  }
-
-  get currentStatus(): DuraformProcessDto {
-    const status = this.duraformProcesses.find((x) => x.isCurrent);
-
-    return status;
-  }
-
-  get statusDescription(): string {
-    if (!this.currentStatus) {
-      return 'Ordered';
-    }
-
-    if (this.hasBeenInvoiced) {
-      return 'Invoiced';
-    }
-
-    return this.currentStatus.getStatus();
-  }
-
-  get hasBeenDelivered(): boolean {
-    if (!this.currentStatus) {
-      return false;
-    }
-
-    const { endTime, duraformProcessType } = this.currentStatus;
-
-    return (
-      [DuraformProcessEnum.Delivering, DuraformProcessEnum.PickingUp].includes(
-        duraformProcessType
-      ) &&
-      endTime !== null &&
-      endTime !== undefined
-    );
   }
 
   get jobType(): string {

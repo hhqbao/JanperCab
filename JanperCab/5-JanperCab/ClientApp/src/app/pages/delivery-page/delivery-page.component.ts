@@ -1,49 +1,40 @@
-import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
-import { EnquiryService } from './../../_services/enquiry.service';
-import { DuraformEnquiryDto } from './../../_models/enquiry/DuraformEnquiryDto';
+import { PickUpSheetDto } from './../../_models/delivery-sheet/PickUpSheetDto';
+import { ShippingSheetDto } from './../../_models/delivery-sheet/ShippingSheetDto';
 import { Role } from 'src/app/_enums/Role';
 import { AuthService } from 'src/app/_services/auth.service';
-import { DeliveryRunSheetDto } from './../../_models/delivery-run-sheet/DeliveryRunSheetDto';
 import { LeadingPipe } from './../../_pipes/leading.pipe';
-import { DeliveryRunSheetForListDto } from './../../_models/delivery-run-sheet/DeliveryRunSheetForListDto';
 import { DialogService } from './../../_services/dialog.service';
 import { LayoutService } from './../../_services/layout.service';
-import { RunSheetService } from '../../_services/run-sheet.service';
+import { DeliverySheetService } from '../../_services/delivery-sheet.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as scanner from 'onscan.js';
-import { forkJoin } from 'rxjs';
-import { DuraformArchService } from 'src/app/_services/duraform-arch.service';
-import { DuraformComponentService } from 'src/app/_services/duraform-component.service';
-import { DuraformDesignService } from 'src/app/_services/duraform-design.service';
-import { DuraformDrawerTypeService } from 'src/app/_services/duraform-drawer-type.service';
-import { DuraformEdgeProfileService } from 'src/app/_services/duraform-edge-profile.service';
-import { DuraformOptionTypeService } from 'src/app/_services/duraform-option-type.service';
-import { DuraformSerieService } from 'src/app/_services/duraform-serie.service';
-import { DuraformWrapColorService } from 'src/app/_services/duraform-wrap-color.service';
-import { DuraformWrapTypeService } from 'src/app/_services/duraform-wrap-type.service';
-import { HingeHoleService } from 'src/app/_services/hinge-hole.service';
-import { PantryDoorChairRailTypeService } from 'src/app/_services/pantry-door-chair-rail-type.service';
+import { DeliverySheetDto } from 'src/app/_models/delivery-sheet/DeliverySheetDto';
+import { DeliveryMethodEnum } from 'src/app/_enums/DeliveryMethodEnum';
 
 @Component({
   selector: 'app-delivery-page',
   templateUrl: 'delivery-page.component.html',
 })
 export class DeliveryPageComponent implements OnInit, OnDestroy {
-  selectedSheet: DeliveryRunSheetForListDto;
-  runSheets: DeliveryRunSheetForListDto[] = [];
+  selectedSheet: DeliverySheetDto;
+  deliverySheets: DeliverySheetDto[] = [];
   scannedEnquiryId: number = null;
 
   isLoading = true;
   canScan = true;
 
-  showRunSheetForm = false;
-  showControlBox = false;
-  showRunSheetPdf = false;
+  showShippingSheetForm = false;
+  showShippingControlBox = false;
+
+  showPickUpSheetForm = false;
+
+  showSheetPdf = false;
+
   role = Role;
+  method = DeliveryMethodEnum;
 
   constructor(
-    private leadingPipe: LeadingPipe,
-    private runSheetService: RunSheetService,
+    private deliverySheetService: DeliverySheetService,
     private layoutService: LayoutService,
     private dialogService: DialogService,
     public authService: AuthService
@@ -54,9 +45,9 @@ export class DeliveryPageComponent implements OnInit, OnDestroy {
 
     this.layoutService.showLoadingPanel();
 
-    this.runSheetService.getRunSheets().subscribe(
+    this.deliverySheetService.getSheets().subscribe(
       (response) => {
-        this.runSheets = response;
+        this.deliverySheets = response;
         this.isLoading = false;
         this.layoutService.closeLoadingPanel();
 
@@ -77,6 +68,27 @@ export class DeliveryPageComponent implements OnInit, OnDestroy {
     }
   }
 
+  loadSheetPdf = (sheetId: number) => {
+    this.isLoading = true;
+    this.layoutService.showLoadingPanel();
+    this.deliverySheetService.getSheet(sheetId).subscribe(
+      (response) => {
+        this.selectedSheet = response;
+
+        this.isLoading = false;
+        this.layoutService.closeLoadingPanel();
+        this.showSheetPdf = true;
+      },
+      (error) => {
+        this.layoutService.closeLoadingPanel();
+        this.dialogService.alert('Error Occured', error, () => {
+          this.isLoading = false;
+          this.canScan = true;
+        });
+      }
+    );
+  };
+
   onScan = (sCode: any, sQty: any) => {
     if (!this.canScan) {
       this.dialogService.error(
@@ -87,62 +99,117 @@ export class DeliveryPageComponent implements OnInit, OnDestroy {
 
     this.canScan = false;
     const sheetCode = sCode as string;
+    const prefix = sheetCode.substring(0, 2);
 
-    if (sheetCode.includes(DeliveryRunSheetDto.BARCODE_PREFIX)) {
-      const sheetId = Number(
-        sheetCode.replace(DeliveryRunSheetDto.BARCODE_PREFIX, '')
-      );
-      const runSheet = this.runSheets.find((x) => x.id === sheetId);
-
-      if (runSheet) {
-        this.selectedSheet = runSheet;
-        this.showControlBox = true;
-      } else {
-        this.dialogService.alert(
-          'Not Found',
-          'Run Sheet Not Found Or No Longer Active',
-          () => {
-            this.canScan = true;
-          }
+    switch (prefix) {
+      case ShippingSheetDto.BARCODE_PREFIX:
+        const shippingSheetId = Number(
+          sheetCode.replace(ShippingSheetDto.BARCODE_PREFIX, '')
         );
-      }
-    } else {
-      const enquiryId = Number(sheetCode);
-      this.scannedEnquiryId = enquiryId;
+        const shippingSheet = this.deliverySheets.find(
+          (x) => x.id === shippingSheetId
+        );
+
+        if (shippingSheet) {
+          this.selectedSheet = shippingSheet;
+          this.showShippingControlBox = true;
+        } else {
+          this.loadSheetPdf(shippingSheetId);
+        }
+        break;
+      case PickUpSheetDto.BARCODE_PREFIX:
+        const pickUpSheetId = Number(
+          sheetCode.replace(PickUpSheetDto.BARCODE_PREFIX, '')
+        );
+
+        this.loadSheetPdf(pickUpSheetId);
+        break;
+      default:
+        const enquiryId = Number(sheetCode);
+        this.scannedEnquiryId = enquiryId;
+        break;
     }
   };
 
-  onSelectSheet = (sheet: DeliveryRunSheetForListDto) => {
+  onSelectSheet = (sheet: DeliverySheetDto) => {
     this.selectedSheet = sheet;
-    this.showRunSheetForm = true;
+
+    switch (this.selectedSheet.deliveryMethod) {
+      case DeliveryMethodEnum.Shipping:
+        this.showShippingSheetForm = true;
+        break;
+      case DeliveryMethodEnum.PickUp:
+        this.showPickUpSheetForm = true;
+        break;
+    }
+
     this.canScan = false;
   };
 
-  onPrintClick = (sheet: DeliveryRunSheetForListDto) => {
-    this.selectedSheet = sheet;
-    this.showRunSheetForm = false;
-    this.showRunSheetPdf = true;
+  onDeleteSheet = (sheet: DeliverySheetDto) => {
+    this.dialogService.confirm('Delete Delivery Sheet', 'Are you sure?', () => {
+      this.isLoading = true;
+      this.canScan = false;
+      this.layoutService.showLoadingPanel();
+      this.deliverySheetService.deleteSheet(sheet.id).subscribe(
+        (_) => {
+          const index = this.deliverySheets.indexOf(sheet);
+          this.deliverySheets.splice(index, 1);
 
-    document.title = `RUN SHEET - ${this.selectedSheet.getBarcodePrefix()}${this.leadingPipe.transform(
-      this.selectedSheet.id
-    )}`;
+          this.layoutService.closeLoadingPanel();
+          this.dialogService.alert(
+            'Action Success',
+            'Sheet has been deleted',
+            () => {
+              this.isLoading = false;
+              this.canScan = true;
+            }
+          );
+        },
+        (error) => {
+          this.layoutService.closeLoadingPanel();
+          this.dialogService.alert('Error Occured', error, () => {
+            this.isLoading = false;
+            this.canScan = true;
+          });
+        }
+      );
+    });
   };
 
-  onConfirmDelivery = () => {
+  onPrintClick = (sheet: DeliverySheetDto) => {
+    this.selectedSheet = sheet;
+
+    switch (this.selectedSheet.deliveryMethod) {
+      case DeliveryMethodEnum.Shipping:
+        this.showShippingSheetForm = false;
+        break;
+      case DeliveryMethodEnum.PickUp:
+        this.showPickUpSheetForm = false;
+        break;
+    }
+
+    this.showSheetPdf = true;
+  };
+
+  onConfirmShippingSheet = () => {
     this.dialogService.confirm('Confirming Delivery', 'Are you sure?', () => {
       this.isLoading = true;
       this.layoutService.showLoadingPanel();
-      this.runSheetService.confirmDelivery(this.selectedSheet.id).subscribe(
-        (response) => {
-          this.runSheets.splice(this.runSheets.indexOf(this.selectedSheet), 1);
+      this.deliverySheetService.completeSheet(this.selectedSheet.id).subscribe(
+        (_) => {
+          this.deliverySheets.splice(
+            this.deliverySheets.indexOf(this.selectedSheet),
+            1
+          );
           this.isLoading = false;
           this.layoutService.closeLoadingPanel();
           this.dialogService.alert(
             'Confirmed Delivery',
-            'Run Sheet has been confirmed and completed',
+            'Delivery Sheet has been confirmed and completed',
             () => {
               this.selectedSheet = null;
-              this.showControlBox = false;
+              this.showShippingControlBox = false;
               this.canScan = true;
             }
           );
@@ -157,7 +224,8 @@ export class DeliveryPageComponent implements OnInit, OnDestroy {
   };
 
   onCloseSheetForm = () => {
-    this.showRunSheetForm = false;
+    this.showShippingSheetForm = false;
+    this.showPickUpSheetForm = false;
     this.canScan = true;
 
     setTimeout(() => {
@@ -165,21 +233,26 @@ export class DeliveryPageComponent implements OnInit, OnDestroy {
     });
   };
 
-  onCloseRunSheetPdf = () => {
-    this.showRunSheetPdf = false;
+  onCloseSheetPdf = () => {
+    this.showSheetPdf = false;
 
     if (this.selectedSheet) {
-      this.showRunSheetForm = true;
+      switch (this.selectedSheet.deliveryMethod) {
+        case DeliveryMethodEnum.Shipping:
+          this.showShippingSheetForm = true;
+          break;
+        case DeliveryMethodEnum.PickUp:
+          this.showPickUpSheetForm = true;
+          break;
+      }
     } else {
       this.onCloseSheetForm();
     }
-
-    document.title = 'JanperCab';
   };
 
-  onCloseControlBox = () => {
+  onCloseShippingControlBox = () => {
     this.selectedSheet = null;
-    this.showControlBox = false;
+    this.showShippingControlBox = false;
     this.canScan = true;
   };
 

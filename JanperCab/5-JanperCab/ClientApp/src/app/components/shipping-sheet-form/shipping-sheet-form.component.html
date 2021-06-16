@@ -1,0 +1,89 @@
+<div class="rsf">
+  <div class="rsf__header">Delivery Run Sheet</div>
+  <div class="rsf__body">
+    <div class="rsf__driver-form">
+      <div class="form__group">
+        <label class="form__label">Driver</label>
+        <app-select-menu
+          *ngIf="drivers.length > 0"
+          [control]="driverIdControl"
+          [values]="drivers"
+          [valueKey]="'id'"
+          [valueDisplay]="'fullName'"
+          [isDisabled]="disableEditing"
+          (afterSet)="onSelectionChanged()"
+        ></app-select-menu>
+      </div>
+      <div class="form__group">
+        <label class="form__label">Truck</label>
+        <app-select-menu
+          *ngIf="trucks.length > 0"
+          [control]="truckIdControl"
+          [values]="trucks"
+          [valueKey]="'id'"
+          [valueDisplay]="'plateNumber'"
+          [isDisabled]="disableEditing"
+          (afterSet)="onSelectionChanged()"
+        ></app-select-menu>
+      </div>
+    </div>
+    <div class="rsf__patch-list" *ngIf="patches.length > 0">
+      <div class="patch" *ngFor="let patch of patches">
+        <div class="patch__cabinet-maker">{{ patch.customerName }}</div>
+        <div class="patch__address">{{ patch.fullAddress }}</div>
+        <div class="patch__detail-table">
+          <table>
+            <thead>
+              <tr>
+                <th class="col__enquiry-id">Job No.</th>
+                <th class="col__customer-ref">Order No.</th>
+                <th class="col__door-type">Door Type</th>
+                <th class="col__door-colour">Door Colour</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let enquiry of patch.enquiriesForSheet">
+                <td>{{ enquiry.enquiryId | leading }}</td>
+                <td>{{ enquiry.customerReference }}</td>
+                <td>{{ enquiry.doorType }}</td>
+                <td>{{ enquiry.doorColor }}</td>
+                <td>
+                  <button
+                    class="btn btn--link"
+                    *ngIf="
+                      selectedSheet.isEditable &&
+                      authService.isInRole(role[role.Driver])
+                    "
+                    (click)="onUndoDelivering(enquiry)"
+                  >
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="rsf__footer">
+    <div class="row">
+      <div class="col-1-2">
+        <button
+          class="btn btn--primary"
+          *ngIf="selectedSheet && selectedSheet.enquiriesForSheet.length > 0"
+          (click)="onPrint()"
+        >
+          <i class="fa fa-print" aria-hidden="true"></i>
+          {{ selectedSheet.lockedDate ? "Print" : "Lock & Print" }}
+        </button>
+      </div>
+      <div class="col-1-2 right">
+        <button class="btn btn--default" (click)="closeBtnClick.emit()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

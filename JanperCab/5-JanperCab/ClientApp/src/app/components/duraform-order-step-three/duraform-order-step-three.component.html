@@ -125,7 +125,7 @@
                 >
                   <app-duraform-status-updator
                     *ngIf="duraformEnquiry.approvedDate"
-                    [duraformEnquiry]="duraformEnquiry"
+                    [enquiry]="duraformEnquiry"
                   ></app-duraform-status-updator>
                   {{ duraformEnquiry.statusDescription }}
                 </div>
@@ -614,7 +614,7 @@
       </div>
       <div
         class="option-box__action-center"
-        *ngIf="duraformEnquiry.hasBeenDelivered"
+        *ngIf="duraformEnquiry.hasBeenDelivered && !forceEditPrice"
       >
         <button
           class="action-btn action-btn--alert"

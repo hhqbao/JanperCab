@@ -2,9 +2,7 @@ import { ObjectEditorComponent } from './components/object-editor/object-editor.
 import { DeliveryDocketDuraformMiscsComponent } from './components/delivery-docket-duraform-miscs/delivery-docket-duraform-miscs.component';
 import { DeliveryDocketComponent } from './components/delivery-docket/delivery-docket.component';
 import { PickUpSheetPdfComponent } from './components/pick-up-sheet-pdf/pick-up-sheet-pdf.component';
-import { PickUpFormComponent } from './components/pick-up-form/pick-up-form.component';
-import { PickUpPageComponent } from './pages/pick-up-page/pick-up-page.component';
-import { PickUpSheetService } from './_services/pick-up-sheet.service';
+import { PickUpSheetFormComponent } from './components/pickup-sheet-form/pickup-sheet-form.component';
 import { TruckService } from './_services/truck.service';
 import { PackingLabelPdfComponent } from './components/packing-label-pdf/packing-label-pdf.component';
 import { OnHoldComponentService } from './_services/on-hold-component.service';
@@ -12,10 +10,10 @@ import { OnHoldDetailFormComponent } from './components/on-hold-detail-form/on-h
 import { InvoiceProcessPageComponent } from './pages/invoice-process-page/invoice-process-page.component';
 import { InvoicePdfComponent } from './components/invoice-pdf/invoice-pdf.component';
 import { InvoiceService } from './_services/invoice.service';
-import { RunSheetPdfComponent } from './components/run-sheet-pdf/run-sheet-pdf.component';
-import { RunSheetService } from './_services/run-sheet.service';
+import { ShippingSheetPdfComponent } from './components/shipping-sheet-pdf/shipping-sheet-pdf.component';
+import { DeliverySheetService } from './_services/delivery-sheet.service';
 import { DriverService } from './_services/driver.service';
-import { RunSheetFormComponent } from './components/run-sheet-form/run-sheet-form.component';
+import { ShippingSheetFormComponent } from './components/shipping-sheet-form/shipping-sheet-form.component';
 import { DeliveryPageComponent } from './pages/delivery-page/delivery-page.component';
 import { MachinePackingControllerComponent } from './components/machine-packing-controller/machine-packing-controller.component';
 import { MachineCleaningControllerComponent } from './components/machine-cleaning-controller/machine-cleaning-controller.component';
@@ -152,7 +150,6 @@ import { DuraformDrawerComponentListComponent } from './components/duraform-draw
 import { DuraformOptionRollerShutterComponent } from './components/duraform-option-roller-shutter/duraform-option-roller-shutter.component';
 import { DuraformOptionMicrowaveFrameComponent } from './components/duraform-option-microwave-frame/duraform-option-microwave-frame.component';
 import { DuraformPriceGridPageComponent } from './pages/duraform-price-grid-page/duraform-price-grid-page.component';
-import { DuraformCartItemComponent } from './components/duraform-cart-item/duraform-cart-item.component';
 import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc-cap-mould-edittor/duraform-misc-cap-mould-edittor.component';
 
 @NgModule({
@@ -261,15 +258,14 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     MachineCleaningControllerComponent,
     MachinePackingControllerComponent,
     DeliveryPageComponent,
-    RunSheetFormComponent,
-    RunSheetPdfComponent,
+    ShippingSheetFormComponent,
+    ShippingSheetPdfComponent,
     InvoicePdfComponent,
     InvoiceProcessPageComponent,
     OnHoldDetailFormComponent,
     PackingLabelPdfComponent,
-    PickUpPageComponent,
-    PickUpFormComponent,
-    PickUpFormComponent,
+    PickUpSheetFormComponent,
+    PickUpSheetFormComponent,
     PickUpSheetPdfComponent,
     ObjectEditorComponent,
   ],
@@ -317,8 +313,7 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     MachineService,
     DriverService,
     TruckService,
-    RunSheetService,
-    PickUpSheetService,
+    DeliverySheetService,
     InvoiceService,
     OnHoldComponentService,
     ErrorInterceptorProvider,
