@@ -81,27 +81,41 @@ namespace _4_Infrastructure.Repositories
                     query = query.Where(x => !x.ApprovedDate.HasValue);
                     break;
                 case ProcessTypeEnum.PreRoute:
-                    query = query.Where(x => x.Processes.Any(y => y.IsCurrent && y.ProcessType == ProcessTypeEnum.PreRoute));
+                    query = query.Where(x => x.Processes.OfType<ProcessPreRoute>().Any(y => y.IsCurrent));
                     break;
                 case ProcessTypeEnum.Routed:
-                    query = query.Where(x => x.Processes.Any(y => y.IsCurrent && y.EndTime.HasValue && y.ProcessType == ProcessTypeEnum.Routing));
+                    query = query.Where(x => x.Processes.OfType<ProcessRouting>().Any(y => y.IsCurrent && y.EndTime.HasValue));
                     break;
                 case ProcessTypeEnum.Pressed:
-                    query = query.Where(x => x.Processes.Any(y => y.IsCurrent && y.EndTime.HasValue && y.ProcessType == ProcessTypeEnum.Pressing));
+                    query = query.Where(x => x.Processes.OfType<ProcessPressing>().Any(y => y.IsCurrent && y.EndTime.HasValue));
                     break;
                 case ProcessTypeEnum.Cleaned:
-                    query = query.Where(x => x.Processes.Any(y => y.IsCurrent && y.EndTime.HasValue && y.ProcessType == ProcessTypeEnum.Cleaning));
+                    query = query.Where(x => x.Processes.OfType<ProcessCleaning>().Any(y => y.IsCurrent && y.EndTime.HasValue));
                     break;
                 case ProcessTypeEnum.Packed:
-                    query = query.Where(x => x.Processes.Any(y => y.IsCurrent && y.EndTime.HasValue && y.ProcessType == ProcessTypeEnum.Packing));
+                    query = query.Where(x => x.Processes.OfType<ProcessPacking>().Any(y => y.IsCurrent && y.EndTime.HasValue));
                     break;
                 case ProcessTypeEnum.PickedUp:
-                    query = query.Where(x => x.Processes.Any(y => y.IsCurrent && y.EndTime.HasValue && y.ProcessType == ProcessTypeEnum.PickingUp));
+                    query = query.Where(x => x.Processes.OfType<ProcessDelivering>().Any(y => y.IsCurrent &&
+                                                                                              y.EndTime.HasValue &&
+                                                                                              y.DeliverySheet.DeliveryMethod == DeliveryMethodEnum.PickUp));
                     query = query.Where(x => x.Invoice == null);
                     break;
+                case ProcessTypeEnum.PickingUp:
+                    query = query.Where(x => x.Processes.OfType<ProcessDelivering>().Any(y => y.IsCurrent &&
+                                                                                              !y.EndTime.HasValue &&
+                                                                                              y.DeliverySheet.DeliveryMethod == DeliveryMethodEnum.PickUp));
+                    break;
                 case ProcessTypeEnum.Delivered:
-                    query = query.Where(x => x.Processes.Any(y => y.IsCurrent && y.EndTime.HasValue && y.ProcessType == ProcessTypeEnum.Delivering));
+                    query = query.Where(x => x.Processes.OfType<ProcessDelivering>().Any(y => y.IsCurrent &&
+                                                                                              y.EndTime.HasValue &&
+                                                                                              y.DeliverySheet.DeliveryMethod == DeliveryMethodEnum.Shipping));
                     query = query.Where(x => x.Invoice == null);
+                    break;
+                case ProcessTypeEnum.Delivering:
+                    query = query.Where(x => x.Processes.OfType<ProcessDelivering>().Any(y => y.IsCurrent &&
+                                                                                              !y.EndTime.HasValue &&
+                                                                                              y.DeliverySheet.DeliveryMethod == DeliveryMethodEnum.Shipping));
                     break;
                 case ProcessTypeEnum.Invoiced:
                     query = query.Where(x => x.Invoice != null);
