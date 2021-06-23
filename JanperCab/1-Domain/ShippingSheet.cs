@@ -46,7 +46,8 @@ namespace _1_Domain
                                         x.FullDeliveryAddress.Equals(enquiry.FullDeliveryAddress) &&
                                         x.DeliveryFee > 0)) continue;
 
-                enquiry.RemoveDeliveryFee();
+                if (!enquiry.HasBeenInvoiced)
+                    enquiry.RemoveDeliveryFee();
             }
         }
     }

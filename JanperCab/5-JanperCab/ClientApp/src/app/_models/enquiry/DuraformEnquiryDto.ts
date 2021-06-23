@@ -238,9 +238,6 @@ export class DuraformEnquiryDto extends EnquiryDto {
       this.subTotal += miscItem.totalPrice;
     });
 
-    this.subTotal += this.deliveryFee;
-
-    this.totalGst = _.round(this.subTotal / this.gstRate, 2);
-    this.totalPrice = this.subTotal + this.totalGst;
+    this.calculateTotalPrice();
   };
 }

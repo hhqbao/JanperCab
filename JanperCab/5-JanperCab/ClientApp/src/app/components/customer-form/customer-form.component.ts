@@ -67,6 +67,10 @@ export class CustomerFormComponent implements OnInit {
     return this.formGroup.get('discountRate');
   }
 
+  get deliveryFee(): AbstractControl {
+    return this.formGroup.get('deliveryFee');
+  }
+
   get managerIdValue(): number {
     if (this.customer) {
       return this.customer.managerId;
@@ -121,6 +125,11 @@ export class CustomerFormComponent implements OnInit {
         this.customer ? this.customer.discountRate : 0,
         [Validators.required, Validators.min(0), Validators.max(100)],
       ],
+      deliveryFee: [
+        this.customer ? this.customer.deliveryFee : 0,
+        [Validators.required, Validators.min(0)],
+      ],
+      isOnHold: [this.customer.isOnHold ?? false, []],
     });
 
     this.isLoading = true;

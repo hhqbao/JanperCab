@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _2_Persistent;
 
 namespace _2_Persistent.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210622091503_EditTable_Customers_AddCol_DeliveryFee")]
+    partial class EditTable_Customers_AddCol_DeliveryFee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -399,9 +401,6 @@ namespace _2_Persistent.Migrations
 
                     b.Property<string>("InvoiceTo")
                         .HasColumnType("varchar(255)");
-
-                    b.Property<bool>("IsOnHold")
-                        .HasColumnType("bit");
 
                     b.Property<int?>("ManagerId")
                         .HasColumnType("int");
@@ -1044,9 +1043,6 @@ namespace _2_Persistent.Migrations
                         .HasColumnName("GstRate")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<bool>("HasFixedPrice")
-                        .HasColumnType("bit");
-
                     b.Property<string>("InvoiceAddress")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
@@ -1067,9 +1063,6 @@ namespace _2_Persistent.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<bool>("IsShippingRequired")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("LastEditted")
                         .HasColumnType("datetime2");
 
@@ -1085,9 +1078,6 @@ namespace _2_Persistent.Migrations
                     b.Property<decimal>("SubTotal")
                         .HasColumnName("SubTotal")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("ToBePriced")
-                        .HasColumnType("bit");
 
                     b.Property<decimal>("TotalGst")
                         .HasColumnName("TotalGst")

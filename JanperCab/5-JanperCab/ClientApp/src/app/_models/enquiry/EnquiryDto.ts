@@ -14,6 +14,7 @@ import { ProcessCleaningDto } from '../process/ProcessCleaningDto';
 import { ProcessDeliveringDto } from '../process/ProcessDeliveringDto';
 import { ProcessTypeEnum } from 'src/app/_enums/ProcessTypeEnum';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 
 export abstract class EnquiryDto {
   $type: string;
@@ -54,6 +55,10 @@ export abstract class EnquiryDto {
 
   notEditable: boolean;
   isDeclineable: boolean;
+
+  toBePriced: boolean;
+  isShippingRequired: boolean;
+  hasFixedPrice: boolean;
 
   @Type(() => InvoiceDto)
   invoice: InvoiceDto;
@@ -195,8 +200,24 @@ export abstract class EnquiryDto {
 
     this.gstRate = 10;
     this.discountRate = 0;
-    this.deliveryFee = 30;
+    this.deliveryFee = 0;
+    this.isShippingRequired = true;
   }
 
-  abstract calculatePrice(): void;
+  abstract calculatePrice(includeUnitPrice: boolean): void;
+
+  toggleShippingRequired = (): void => {
+    this.deliveryFee = this.isShippingRequired ? this.customer?.deliveryFee : 0;
+
+    if (!this.hasFixedPrice) {
+      this.calculatePrice(false);
+    }
+  };
+
+  calculateTotalPrice = (): void => {
+    this.subTotal += this.deliveryFee;
+
+    this.totalGst = _.round(this.subTotal / this.gstRate, 2);
+    this.totalPrice = this.subTotal + this.totalGst;
+  };
 }

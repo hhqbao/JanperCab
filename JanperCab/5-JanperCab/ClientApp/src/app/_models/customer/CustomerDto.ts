@@ -3,6 +3,9 @@ import { CustomerCategoryAccountDto } from './../customer-category/CustomerCateg
 import { Type } from 'class-transformer';
 import { CustomerCategoryDto } from '../customer-category/CustomerCategoryDto';
 import { CustomerType } from './../../_enums/CustomerType';
+import { CabinetMakerDto } from './CabinetMakerDto';
+import { DistributorDto } from './DistributorDto';
+import { ManufacturerDto } from './ManufacturerDto';
 
 export abstract class CustomerDto {
   $type: string;
@@ -30,6 +33,9 @@ export abstract class CustomerDto {
   deliveryPostcode: string;
 
   discountRate: number;
+  deliveryFee: number;
+
+  isOnHold: boolean;
 
   @Type(() => CustomerCategoryDto, {
     keepDiscriminatorProperty: true,

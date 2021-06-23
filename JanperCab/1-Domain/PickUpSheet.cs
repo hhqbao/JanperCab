@@ -36,7 +36,8 @@ namespace _1_Domain
             {
                 enquiry.CompleteDelivering();
 
-                enquiry.RemoveDeliveryFee();
+                if (!enquiry.HasBeenInvoiced)
+                    enquiry.RemoveDeliveryFee();
             }
         }
     }

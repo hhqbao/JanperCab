@@ -50,9 +50,6 @@ namespace _5_JanperCab.Controllers
             if (enquiry == null)
                 return BadRequest("Order Not Found");
 
-            if (!enquiry.HasBeenDelivered)
-                return BadRequest("Order Not Delivered");
-
             if (enquiry.Invoice != null)
                 return BadRequest("Order already been INVOICED");
 

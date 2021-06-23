@@ -1,4 +1,16 @@
 <div class="duraform-order-step-three">
+  <app-value-confirm-dialog
+    *ngIf="showTotalPriceConfirmDialog"
+    [object]="duraformEnquiry"
+    [valueKey]="'totalPrice'"
+    [headingText]="'Confirm Order Total Price'"
+    [bodyText]="
+      'This Order needs to be priced. If you have done that please confirm the total price below:'
+    "
+    [placeHolder]="'Total Price...'"
+    (confirm)="showTotalPriceConfirmDialog = false; generateInvoice()"
+    (cancel)="showTotalPriceConfirmDialog = false"
+  ></app-value-confirm-dialog>
   <app-float-box *ngIf="showProcessViewer" [width]="85">
     <app-duraform-process-viewer
       [duraformEnquiry]="duraformEnquiry"
@@ -255,6 +267,68 @@
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td
+                  colspan="2"
+                  class="text-left"
+                  style="border: solid 1px rgba(0, 0, 0, 0.2)"
+                >
+                  <div class="form__group" *ngIf="auth.isInRole(role.Sale)">
+                    <label class="form__checkbox">
+                      <span style="display: inline-block; width: 15rem">
+                        Need To Be Priced
+                      </span>
+                      <input
+                        type="checkbox"
+                        [disabled]="
+                          (duraformEnquiry.enquiryType === enquiryType.Order &&
+                            !duraformEnquiry.approvedDate) ||
+                          duraformEnquiry.hasBeenInvoiced
+                        "
+                        [(ngModel)]="duraformEnquiry.toBePriced"
+                        (change)="onToBePricedChange()"
+                      />
+                      <span></span>
+                    </label>
+                  </div>
+                  <div class="form__group">
+                    <label class="form__checkbox">
+                      <span style="display: inline-block; width: 15rem">
+                        Is Shipping Required?
+                      </span>
+                      <input
+                        type="checkbox"
+                        [disabled]="
+                          (duraformEnquiry.enquiryType === enquiryType.Order &&
+                            !duraformEnquiry.approvedDate) ||
+                          duraformEnquiry.hasBeenInvoiced
+                        "
+                        [(ngModel)]="duraformEnquiry.isShippingRequired"
+                        (change)="onShippingRequireChange()"
+                      />
+                      <span></span>
+                    </label>
+                  </div>
+                  <div class="form__group" *ngIf="auth.isInRole(role.Sale)">
+                    <label class="form__checkbox">
+                      <span style="display: inline-block; width: 15rem">
+                        Has Fixed Price?
+                      </span>
+                      <input
+                        type="checkbox"
+                        [disabled]="
+                          (duraformEnquiry.enquiryType === enquiryType.Order &&
+                            !duraformEnquiry.approvedDate) ||
+                          duraformEnquiry.hasBeenInvoiced
+                        "
+                        [(ngModel)]="duraformEnquiry.hasFixedPrice"
+                        (change)="onHasFixedPriceChange()"
+                      />
+                      <span></span>
+                    </label>
+                  </div>
+                </td>
+              </tr>
               <tr *ngIf="duraformEnquiry.hingeHoleTypeId">
                 <td class="text-left">
                   {{ duraformEnquiry.hingeHoleType.name }}
@@ -386,7 +460,7 @@
           *ngIf="duraformEnquiry.duraformDoors.length > 0"
         >
           <app-duraform-door-component-list
-            [canEditPrice]="canEditPrice"
+            [canEditPrice]="canEditComponentPrice"
           ></app-duraform-door-component-list>
         </div>
         <div
@@ -394,7 +468,7 @@
           *ngIf="duraformEnquiry.pantryDoors.length > 0"
         >
           <app-duraform-pantry-door-component-list
-            [canEditPrice]="canEditPrice"
+            [canEditPrice]="canEditComponentPrice"
           ></app-duraform-pantry-door-component-list>
         </div>
         <div
@@ -402,7 +476,7 @@
           *ngIf="duraformEnquiry.endPanels.length > 0"
         >
           <app-end-panel-component-list
-            [canEditPrice]="canEditPrice"
+            [canEditPrice]="canEditComponentPrice"
           ></app-end-panel-component-list>
         </div>
         <div
@@ -410,7 +484,7 @@
           *ngIf="duraformEnquiry.duraformDrawers.length > 0"
         >
           <app-duraform-drawer-component-list
-            [canEditPrice]="canEditPrice"
+            [canEditPrice]="canEditComponentPrice"
           ></app-duraform-drawer-component-list>
         </div>
         <div
@@ -418,7 +492,7 @@
           *ngIf="duraformEnquiry.miscComponents.length > 0"
         >
           <app-duraform-misc-component-list
-            [canEditPrice]="canEditPrice"
+            [canEditPrice]="canEditComponentPrice"
           ></app-duraform-misc-component-list>
         </div>
       </app-box>
@@ -473,13 +547,17 @@
         </li>
         <li class="summary-box__divider"></li>
         <li>
-          <span class="summary-box__title"><b>Freight</b></span>
+          <span class="summary-box__title">
+            <b>
+              {{ duraformEnquiry.isShippingRequired ? "Freight" : "Pick Up" }}
+            </b>
+          </span>
           <span class="summary-box__subtotal">
-            <span *ngIf="!canEditPrice">
+            <span *ngIf="!canEditDeliveryFee">
               {{ duraformEnquiry.deliveryFee | currency }}
             </span>
             <app-object-editor
-              *ngIf="canEditPrice"
+              *ngIf="canEditDeliveryFee"
               [object]="duraformEnquiry"
               [property]="'deliveryFee'"
               [isRequired]="true"
@@ -501,9 +579,23 @@
         </li>
         <li class="summary-box__divider"></li>
         <li class="summary-box__total-line">
-          <span class="summary-box__title"><b>Total</b></span>
+          <span class="summary-box__title">
+            <b [ngClass]="{ 'text-alert': duraformEnquiry.hasFixedPrice }">
+              {{
+                duraformEnquiry.hasFixedPrice ? "Fixed Price" : "Total Price"
+              }}
+            </b>
+          </span>
           <span class="summary-box__total">
-            {{ duraformEnquiry.totalPrice | currency }}
+            <span *ngIf="!canEditPrice || !duraformEnquiry.hasFixedPrice">
+              {{ duraformEnquiry.totalPrice | currency }}
+            </span>
+            <app-object-editor
+              *ngIf="canEditPrice && duraformEnquiry.hasFixedPrice"
+              [object]="duraformEnquiry"
+              [property]="'totalPrice'"
+              [isRequired]="true"
+            ></app-object-editor>
           </span>
         </li>
       </ul>
@@ -585,7 +677,7 @@
           (click)="showProcessViewer = true"
         >
           <i class="fa fa-tasks" aria-hidden="true"></i>
-          <span>Show Order Tracking</span>
+          <span>Show Tracking</span>
         </button>
         <button
           class="action-btn"
@@ -593,7 +685,7 @@
           (click)="onUpdatePrice()"
         >
           <i class="fa fa-floppy-o text-alert" aria-hidden="true"></i>
-          <span>Update New Prices</span>
+          <span>Update</span>
         </button>
         <button
           class="action-btn"
@@ -608,8 +700,8 @@
             }"
             aria-hidden="true"
           ></i>
-          <span *ngIf="!forceEditPrice">Adjust Order Prices</span>
-          <span *ngIf="forceEditPrice">Cancel Adjusting Prices</span>
+          <span *ngIf="!forceEditPrice">Adjust Order</span>
+          <span *ngIf="forceEditPrice">Cancel</span>
         </button>
       </div>
       <div
@@ -619,7 +711,7 @@
         <button
           class="action-btn action-btn--alert"
           *ngIf="auth.isInRole(role.Sale) && !duraformEnquiry.hasBeenInvoiced"
-          (click)="onGenerateInvoice()"
+          (click)="onGeneratingInvoice()"
         >
           <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
           <span>Generate Invoice</span>

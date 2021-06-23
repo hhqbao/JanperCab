@@ -68,6 +68,9 @@ namespace _2_Persistent.Configs
             builder.Property(x => x.DiscountRate)
                 .HasColumnType("decimal(18,2)");
 
+            builder.Property(x => x.DeliveryFee)
+                .HasColumnType("decimal(18,2)");
+
             builder.Property(x => x.Note)
                 .HasColumnType("varchar(MAX)");
 

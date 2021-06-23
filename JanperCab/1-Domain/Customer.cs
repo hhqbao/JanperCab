@@ -50,6 +50,10 @@ namespace _1_Domain
 
         public decimal DiscountRate { get; set; }
 
+        public decimal DeliveryFee { get; set; }
+
+        public bool IsOnHold { get; set; }
+
 
         public virtual Customer Manager { get; set; }
 

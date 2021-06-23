@@ -89,7 +89,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let maker of itemList.items">
+        <tr
+          *ngFor="let maker of itemList.items"
+          [ngClass]="{ 'text-alert': maker.isOnHold }"
+        >
           <td (click)="onSelectCabinetMaker(maker)">
             {{ maker.name }}
           </td>

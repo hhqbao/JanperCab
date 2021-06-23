@@ -47,7 +47,8 @@ namespace _5_JanperCab.Helpers
                 .Include<DistributorDto, Distributor>()
                 .Include<CabinetMakerDto, CabinetMaker>()
                 .ForMember(x => x.Id, opt => opt.Ignore())
-                .ForMember(x => x.CustomerCategory, opt => opt.Ignore());
+                .ForMember(x => x.CustomerCategory, opt => opt.Ignore())
+                .ForMember(x => x.Manager, opt => opt.Ignore());
 
             CreateMap<Manufacturer, ManufacturerDto>();
             CreateMap<ManufacturerDto, Manufacturer>();

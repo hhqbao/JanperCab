@@ -58,7 +58,13 @@ namespace _3_Application.Dtos.Customer
 
         public decimal DiscountRate { get; set; }
 
+        public decimal DeliveryFee { get; set; }
+
+        public bool IsOnHold { get; set; }
+
 
         public CustomerCategoryDto CustomerCategory { get; set; }
+
+        public CustomerDto Manager { get; set; }
     }
 }

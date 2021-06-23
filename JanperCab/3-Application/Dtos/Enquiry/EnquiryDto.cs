@@ -69,6 +69,12 @@ namespace _3_Application.Dtos.Enquiry
 
         public bool IsDeclineable { get; set; }
 
+        public bool ToBePriced { get; set; }
+
+        public bool IsShippingRequired { get; set; }
+
+        public bool HasFixedPrice { get; set; }
+
 
         public InvoiceDto Invoice { get; set; }
 

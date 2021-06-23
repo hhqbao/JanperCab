@@ -101,6 +101,8 @@ export class DuraformOrderService {
 
   setCustomer = (customer: CustomerDto) => {
     this.duraformEnquiry.customerId = customer.id;
+    this.duraformEnquiry.customer = customer;
+
     this.duraformEnquiry.managerId = customer.managerId;
 
     this.duraformEnquiry.invoiceTo = customer.invoiceTo;
@@ -114,6 +116,7 @@ export class DuraformOrderService {
     this.duraformEnquiry.deliverySuburb = customer.deliverySuburb;
     this.duraformEnquiry.deliveryState = customer.deliveryState;
     this.duraformEnquiry.deliveryPostcode = customer.deliveryPostcode;
+    this.duraformEnquiry.deliveryFee = customer.deliveryFee;
 
     this.duraformEnquiry.updateDiscountRate(customer.discountRate);
   };

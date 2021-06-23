@@ -65,6 +65,12 @@ namespace _1_Domain
 
         public bool NotEditable { get; set; }
 
+        public bool ToBePriced { get; set; }
+
+        public bool IsShippingRequired { get; set; }
+
+        public bool HasFixedPrice { get; set; }
+
 
         public Process CurrentProcess => Processes.FirstOrDefault(x => x.IsCurrent);
 

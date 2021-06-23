@@ -8,6 +8,7 @@ export abstract class DuraformMiscComponentDto {
   id: number;
   duraformEnquiryId: number;
   quantity: number;
+
   unitPrice: number;
   subTotal: number;
   totalDiscount: number;

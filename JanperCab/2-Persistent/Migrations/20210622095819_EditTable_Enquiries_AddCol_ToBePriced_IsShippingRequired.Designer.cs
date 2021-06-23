@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _2_Persistent;
 
 namespace _2_Persistent.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210622095819_EditTable_Enquiries_AddCol_ToBePriced_IsShippingRequired")]
+    partial class EditTable_Enquiries_AddCol_ToBePriced_IsShippingRequired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1043,9 +1045,6 @@ namespace _2_Persistent.Migrations
                     b.Property<decimal>("GstRate")
                         .HasColumnName("GstRate")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("HasFixedPrice")
-                        .HasColumnType("bit");
 
                     b.Property<string>("InvoiceAddress")
                         .IsRequired()

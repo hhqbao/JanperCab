@@ -39,6 +39,7 @@ export class DuraformOrderStepThreeComponent implements OnInit {
   showDeliveryDocket = false;
   showProcessViewer = false;
   showInvoicePdf = false;
+  showTotalPriceConfirmDialog = false;
 
   customer: CustomerDto;
 
@@ -51,6 +52,18 @@ export class DuraformOrderStepThreeComponent implements OnInit {
       this.auth.isInRole(Role.Sale) &&
       this.duraformEnquiry.enquiryType !== EnquiryTypeEnum.Order
     );
+  }
+
+  get canEditDeliveryFee(): boolean {
+    return (
+      this.canEditPrice &&
+      this.duraformEnquiry.isShippingRequired &&
+      !this.duraformEnquiry.hasFixedPrice
+    );
+  }
+
+  get canEditComponentPrice(): boolean {
+    return this.canEditPrice && !this.duraformEnquiry.hasFixedPrice;
   }
 
   get duraformEnquiry(): DuraformEnquiryDto {
@@ -178,6 +191,51 @@ export class DuraformOrderStepThreeComponent implements OnInit {
         }
       );
     } else {
+      this.forceEditPrice = true;
+    }
+  };
+
+  onToBePricedChange = () => {
+    if (this.duraformEnquiry.hasBeenInvoiced) {
+      return;
+    }
+
+    if (
+      this.duraformEnquiry.id &&
+      this.duraformEnquiry.enquiryType === EnquiryTypeEnum.Order
+    ) {
+      this.forceEditPrice = true;
+    }
+  };
+
+  onShippingRequireChange = () => {
+    if (this.duraformEnquiry.hasBeenInvoiced) {
+      return;
+    }
+
+    this.duraformEnquiry.toggleShippingRequired();
+
+    if (
+      this.duraformEnquiry.id &&
+      this.duraformEnquiry.enquiryType === EnquiryTypeEnum.Order
+    ) {
+      this.forceEditPrice = true;
+    }
+  };
+
+  onHasFixedPriceChange = () => {
+    if (this.duraformEnquiry.hasBeenInvoiced) {
+      return;
+    }
+
+    if (!this.duraformEnquiry.hasFixedPrice) {
+      this.duraformEnquiry.calculatePrice(false);
+    }
+
+    if (
+      this.duraformEnquiry.id &&
+      this.duraformEnquiry.enquiryType === EnquiryTypeEnum.Order
+    ) {
       this.forceEditPrice = true;
     }
   };
@@ -342,23 +400,31 @@ export class DuraformOrderStepThreeComponent implements OnInit {
     );
   };
 
-  onGenerateInvoice = () => {
+  onGeneratingInvoice = () => {
     this.dialog.confirm(
       'Invoicing',
       'Invoice will be issued and sent to customer.<br/><br/>Are you sure?',
       () => {
-        this.layout.showLoadingPanel();
-        this.invoiceService.createInvoice(this.duraformEnquiry.id).subscribe(
-          (response) => {
-            this.duraformEnquiry.invoice = response;
-            this.layout.closeLoadingPanel();
-            this.showInvoicePdf = true;
-          },
-          (error) => {
-            this.layout.closeLoadingPanel();
-            this.dialog.error(error);
-          }
-        );
+        if (this.duraformEnquiry.toBePriced) {
+          this.showTotalPriceConfirmDialog = true;
+        } else {
+          this.generateInvoice();
+        }
+      }
+    );
+  };
+
+  generateInvoice = () => {
+    this.layout.showLoadingPanel();
+    this.invoiceService.createInvoice(this.duraformEnquiry.id).subscribe(
+      (response) => {
+        this.duraformEnquiry.invoice = response;
+        this.layout.closeLoadingPanel();
+        this.showInvoicePdf = true;
+      },
+      (error) => {
+        this.layout.closeLoadingPanel();
+        this.dialog.error(error);
       }
     );
   };

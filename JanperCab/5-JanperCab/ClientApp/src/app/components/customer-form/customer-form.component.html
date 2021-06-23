@@ -48,6 +48,24 @@
                 formControlName="email"
               />
             </div>
+            <div class="form__group">
+              <label class="form__label">Delivery Fee</label>
+              <input
+                class="form__control"
+                currencyMask
+                appSelectOnFocus
+                [formControl]="deliveryFee"
+                [options]="{
+                  align: 'left',
+                  allowZero: false,
+                  precision: '2',
+                  decimal: '.',
+                  prefix: '$ ',
+                  thousands: '',
+                  min: 0
+                }"
+              />
+            </div>
           </div>
           <div class="col-1-2">
             <div class="form__group">
@@ -72,6 +90,24 @@
                   max: 100
                 }"
               />
+            </div>
+            <div
+              class="form__group"
+              style="padding-top: 3rem; padding-left: 2rem"
+            >
+              <label class="form__checkbox">
+                <span
+                  class="text-alert"
+                  style="
+                    font-weight: bold;
+                    display: inline-block;
+                    margin-right: 1rem;
+                  "
+                  >Customer On Hold</span
+                >
+                <input type="checkbox" formControlName="isOnHold" />
+                <span></span>
+              </label>
             </div>
           </div>
         </div>

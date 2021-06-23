@@ -1,3 +1,4 @@
+import { ValueConfirmDialogComponent } from './components/value-confirm-dialog/value-confirm-dialog.component';
 import { ObjectEditorComponent } from './components/object-editor/object-editor.component';
 import { DeliveryDocketDuraformMiscsComponent } from './components/delivery-docket-duraform-miscs/delivery-docket-duraform-miscs.component';
 import { DeliveryDocketComponent } from './components/delivery-docket/delivery-docket.component';
@@ -268,6 +269,7 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     PickUpSheetFormComponent,
     PickUpSheetPdfComponent,
     ObjectEditorComponent,
+    ValueConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,

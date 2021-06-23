@@ -151,6 +151,9 @@ namespace _5_JanperCab.Controllers
 
             if (enquiryInDb == null) return BadRequest("Enquiry Not Found");
 
+            if (enquiryInDb.HasBeenInvoiced)
+                return BadRequest("Order has been invoiced! Cannot edit.");
+
             _mapper.Map(enquiryPriceDto, enquiryInDb);
             enquiryInDb.LastEditted = DateTime.Now;
 
