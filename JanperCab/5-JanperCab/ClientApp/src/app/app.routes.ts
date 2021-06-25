@@ -1,3 +1,4 @@
+import { DailyOrderReportPageComponent } from './pages/daily-order-report-page/daily-order-report-page.component';
 import { InvoiceProcessPageComponent } from './pages/invoice-process-page/invoice-process-page.component';
 import { DeliveryPageComponent } from './pages/delivery-page/delivery-page.component';
 import { MachineListPageComponent } from './pages/machine-list-page/machine-list-page.component';
@@ -32,6 +33,10 @@ export const routes: Routes = [
       {
         path: 'settings/duraform-prices',
         component: DuraformPriceGridPageComponent,
+      },
+      {
+        path: 'reports/daily-orders',
+        component: DailyOrderReportPageComponent,
       },
       { path: '', component: HomePageComponent, pathMatch: 'full' },
     ],

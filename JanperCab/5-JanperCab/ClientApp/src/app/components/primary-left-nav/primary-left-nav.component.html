@@ -133,12 +133,39 @@
           </div>
         </a>
       </li>
+      <li class="nav__item" *ngIf="auth.isInRole(role[role.Sale])">
+        <a [appClassToggle]="'active'">
+          <div
+            class="nav__item__icon text-blue"
+            (click)="layoutService.toggleLeftNav(false)"
+          >
+            <i class="fa fa-line-chart" aria-hidden="true"></i>
+          </div>
+          <div class="nav__item__text">
+            Report Centre
+            <ul class="nav__item__sub-menu">
+              <li (click)="layoutService.toggleLeftNav(true)">
+                <a [routerLink]="['/dashboard/reports/daily-orders']">
+                  <i class="fa fa-pie-chart text-alert" aria-hidden="true"></i>
+                  Daily Orders
+                </a>
+              </li>
+              <li>
+                <a [routerLink]="['/dashboard/reports/daily-invoices']">
+                  <i
+                    class="fa fa-credit-card text-purple"
+                    aria-hidden="true"
+                  ></i>
+                  Daily Invoices
+                </a>
+              </li>
+            </ul>
+          </div>
+        </a>
+      </li>
       <li
         class="nav__item"
-        *ngIf="
-          auth.isInRole(role[role.Manufacturer]) &&
-          auth.isInRole(role[role.Sale])
-        "
+        *ngIf="auth.isInRole(role[role.Sale])"
         (click)="layoutService.toggleLeftNav(false)"
       >
         <a [appClassToggle]="'active'">
@@ -164,6 +191,7 @@
           </div>
         </a>
       </li>
+
       <!-- <li class="nav__item">
         <a [appClassToggle]="'active'">
           <div class="nav__item__icon">

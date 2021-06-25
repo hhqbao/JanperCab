@@ -1,3 +1,6 @@
+import { DatePickerComponent } from './components/date-picker/date-picker.component';
+import { DailyOrderReportPageComponent } from './pages/daily-order-report-page/daily-order-report-page.component';
+import { ReportService } from './_services/report.service';
 import { ValueConfirmDialogComponent } from './components/value-confirm-dialog/value-confirm-dialog.component';
 import { ObjectEditorComponent } from './components/object-editor/object-editor.component';
 import { DeliveryDocketDuraformMiscsComponent } from './components/delivery-docket-duraform-miscs/delivery-docket-duraform-miscs.component';
@@ -152,6 +155,7 @@ import { DuraformOptionRollerShutterComponent } from './components/duraform-opti
 import { DuraformOptionMicrowaveFrameComponent } from './components/duraform-option-microwave-frame/duraform-option-microwave-frame.component';
 import { DuraformPriceGridPageComponent } from './pages/duraform-price-grid-page/duraform-price-grid-page.component';
 import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc-cap-mould-edittor/duraform-misc-cap-mould-edittor.component';
+import { DatepickerModule } from 'ng2-datepicker';
 
 @NgModule({
   declarations: [
@@ -228,6 +232,7 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     PaginationComponent,
     DuraformQuotePageComponent,
     DuraformPriceGridPageComponent,
+    DailyOrderReportPageComponent,
     DeliveryDocketComponent,
     DuraformDeliveryDocketComponent,
     DeliveryDocketDuraformDoorsComponent,
@@ -270,9 +275,11 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     PickUpSheetPdfComponent,
     ObjectEditorComponent,
     ValueConfirmDialogComponent,
+    DatePickerComponent,
   ],
   imports: [
     BrowserModule,
+    DatepickerModule,
     NgxBarcodeModule,
     FormsModule,
     ReactiveFormsModule,
@@ -318,6 +325,7 @@ import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc
     DeliverySheetService,
     InvoiceService,
     OnHoldComponentService,
+    ReportService,
     ErrorInterceptorProvider,
   ],
   bootstrap: [AppComponent],

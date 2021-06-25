@@ -35,9 +35,6 @@ namespace _1_Domain
             foreach (var enquiry in enquiries)
             {
                 enquiry.CompleteDelivering();
-
-                if (!enquiry.HasBeenInvoiced)
-                    enquiry.RemoveDeliveryFee();
             }
         }
     }

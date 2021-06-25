@@ -57,6 +57,8 @@ namespace _4_Infrastructure.Repositories
 
         public IInvoiceRepo Invoices { get; }
 
+        public IReportRepo Reports { get; }
+
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {
@@ -86,6 +88,7 @@ namespace _4_Infrastructure.Repositories
             Trucks = new TruckRepo(_dbContext);
             DeliverySheets = new DeliverySheetRepo(_dbContext);
             Invoices = new InvoiceRepo(_dbContext);
+            Reports = new ReportRepo(_dbContext);
         }
 
         public async Task ExecuteCommandAsync(string command)

@@ -1,0 +1,144 @@
+<div class="torp">
+  <app-simple-box [heading]="'Order In Report'">
+    <div class="row">
+      <div class="col-1-2">
+        <div class="form__group">
+          <label class="form__label">Select a Date</label>
+          <app-date-picker
+            (dateSelect)="onDateSelect($event)"
+          ></app-date-picker>
+        </div>
+      </div>
+      <div class="col-1-2 middle right">
+        <div class="dropdown dropdown--1" appDropdownBtn>
+          <button type="button" class="dropdown__toggle">
+            Options
+            <i class="fa fa-cogs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown__list">
+            <li>
+              <a (click)="onDownloadExcel()">
+                <i class="fa fa-print" aria-hidden="true"></i>
+                Export CSV
+              </a>
+            </li>
+            <li class="dropdown__divider"></li>
+            <li>
+              <a>
+                <i class="fa fa-file-pdf-o text-alert" aria-hidden="true"></i>
+                Print
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <table
+      style="margin-top: 3rem"
+      class="table table--hovered table--bordered table--left"
+    >
+      <thead>
+        <tr>
+          <th style="width: 7rem">Job</th>
+          <th style="width: 7rem">Type</th>
+          <th style="width: 20rem">Door</th>
+          <th style="width: 35rem">Colour</th>
+          <th style="width: 5rem">DF</th>
+          <th style="width: 5rem">JE</th>
+          <th style="width: 5rem">RO</th>
+          <th style="width: 5rem">FP</th>
+          <th>Client</th>
+          <th>Order</th>
+          <th style="width: 11rem">
+            Created At
+            <i class="fa fa-clock-o" aria-hidden="true"></i>
+          </th>
+          <th class="text-right" style="width: 15rem">
+            Inc GST
+            <i class="fa fa-money" aria-hidden="true"></i>
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!isLoading && dailyOrders.length === 0">
+        <tr>
+          <td colspan="12">
+            <i class="text-alert">
+              No Orders on {{ chosenDate | date: "dd/MM/yyyy" }}
+            </i>
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="!isLoading && dailyOrders.length > 0">
+        <tr *ngFor="let order of dailyOrders">
+          <td>
+            <a
+              style="text-decoration: none"
+              target="_black"
+              [routerLink]="['/dashboard/duraform', { id: order.enquiryId }]"
+            >
+              <b>{{ order.enquiryId | leading }}</b>
+            </a>
+          </td>
+          <td>{{ order.type }}</td>
+          <td>{{ order.door }}</td>
+          <td>{{ order.colour }}</td>
+          <td [ngClass]="{ 'text-bold': order.duraformParts > 0 }">
+            {{ order.duraformParts }}
+          </td>
+          <td [ngClass]="{ 'text-bold': order.janperEdgeParts > 0 }">
+            {{ order.janperEdgeParts }}
+          </td>
+          <td [ngClass]="{ 'text-bold': order.routeOnlyParts > 0 }">
+            {{ order.routeOnlyParts }}
+          </td>
+          <td [ngClass]="{ 'text-bold': order.flatpackParts > 0 }">
+            {{ order.flatpackParts }}
+          </td>
+          <td>{{ order.customerName }}</td>
+          <td>{{ order.orderReference }}</td>
+          <td>{{ order.createdDate | date: "hh:mm" }}</td>
+          <td class="text-right">
+            <i
+              *ngIf="order.hasFixedPrice"
+              style="font-size: 1.2rem"
+              class="text-alert"
+              >(Fixed)</i
+            >
+            <b [ngClass]="{ 'text-alert': order.totalPrice < 0 }">
+              {{ order.totalPrice | currency }}
+            </b>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4"></td>
+          <td>
+            <b class="text-alert">
+              {{ dailyOrders | arraySum: "duraformParts" }}
+            </b>
+          </td>
+          <td>
+            <b class="text-alert">
+              {{ dailyOrders | arraySum: "janperEdgeParts" }}
+            </b>
+          </td>
+          <td>
+            <b class="text-alert">
+              {{ dailyOrders | arraySum: "routeOnlyParts" }}
+            </b>
+          </td>
+          <td>
+            <b class="text-alert">
+              {{ dailyOrders | arraySum: "flatpackParts" }}
+            </b>
+          </td>
+          <td colspan="3"></td>
+          <td class="text-right">
+            <b class="text-alert">
+              {{ dailyOrders | arraySum: "totalPrice" | currency }}
+            </b>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </app-simple-box>
+</div>

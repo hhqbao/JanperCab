@@ -52,6 +52,8 @@ namespace _3_Application.Interfaces.Repositories
 
         IInvoiceRepo Invoices { get; }
 
+        IReportRepo Reports { get; }
+
         Task ExecuteCommandAsync(string command);
 
         Task<int> CompleteAsync();
