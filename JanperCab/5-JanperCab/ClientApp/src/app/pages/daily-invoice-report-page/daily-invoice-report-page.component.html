@@ -1,0 +1,148 @@
+<div class="torp">
+  <app-simple-box [heading]="'Daily Invoice Report'">
+    <div class="row">
+      <div class="col-1-2">
+        <div class="form__group">
+          <label class="form__label">Select a Date</label>
+          <app-date-picker
+            (dateSelect)="onDateSelect($event)"
+          ></app-date-picker>
+        </div>
+      </div>
+      <div class="col-1-2 middle right">
+        <div class="dropdown dropdown--1" appDropdownBtn>
+          <button type="button" class="dropdown__toggle">
+            Options
+            <i class="fa fa-cogs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown__list">
+            <li>
+              <a (click)="onDownloadExcel()">
+                <i class="fa fa-print" aria-hidden="true"></i>
+                Export CSV
+              </a>
+            </li>
+            <li class="dropdown__divider"></li>
+            <li>
+              <a>
+                <i class="fa fa-file-pdf-o text-alert" aria-hidden="true"></i>
+                Print
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <table
+      style="margin-top: 3rem"
+      class="table table--hovered table--bordered table--left"
+    >
+      <thead>
+        <tr>
+          <th style="width: 7rem">JOB</th>
+          <th>CLIENT</th>
+          <th>ORDER NUMBER</th>
+          <th style="width: 10rem">JOB TYPE</th>
+          <th class="text-right" style="width: 15rem">
+            DELIVERY
+            <i class="fa fa-money" aria-hidden="true"></i>
+          </th>
+          <th class="text-right" style="width: 15rem">
+            EX GST AMT
+            <i class="fa fa-money" aria-hidden="true"></i>
+          </th>
+          <th class="text-right" style="width: 15rem">
+            GST
+            <i class="fa fa-money" aria-hidden="true"></i>
+          </th>
+          <th class="text-right" style="width: 15rem">
+            INC GST
+            <i class="fa fa-money" aria-hidden="true"></i>
+          </th>
+          <th class="text-right" style="width: 11rem">
+            Created At
+            <i class="fa fa-clock-o" aria-hidden="true"></i>
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!isLoading && dailyInvoices.length === 0">
+        <tr>
+          <td colspan="9">
+            <i class="text-alert">
+              No Invoices on {{ chosenDate | date: "dd/MM/yyyy" }}
+            </i>
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="!isLoading && dailyInvoices.length > 0">
+        <tr>
+          <td colspan="4"></td>
+          <td class="text-right text-alert">
+            <b>{{ dailyInvoices | arraySum: "deliveryFee" | currency }}</b>
+          </td>
+          <td class="text-right text-alert">
+            <b>{{ dailyInvoices | arraySum: "subTotal" | currency }}</b>
+          </td>
+          <td class="text-right text-alert">
+            <b>{{ dailyInvoices | arraySum: "totalGst" | currency }}</b>
+          </td>
+          <td class="text-right text-alert">
+            <b>{{ dailyInvoices | arraySum: "totalPrice" | currency }}</b>
+          </td>
+          <td></td>
+        </tr>
+        <tr *ngFor="let invoice of dailyInvoices">
+          <td>
+            <a
+              style="text-decoration: none"
+              target="_black"
+              [routerLink]="['/dashboard/duraform', { id: invoice.enquiryId }]"
+            >
+              <b>{{ invoice.enquiryId | leading }}</b>
+            </a>
+          </td>
+          <td>{{ invoice.customerName }}</td>
+          <td>{{ invoice.orderReference }}</td>
+          <td>{{ invoice.type }}</td>
+          <td class="text-right">
+            {{ invoice.deliveryFee | currency }}
+          </td>
+          <td class="text-right">
+            {{ invoice.subTotal | currency }}
+          </td>
+          <td class="text-right">
+            {{ invoice.totalGst | currency }}
+          </td>
+          <td class="text-right">
+            <i
+              *ngIf="invoice.hasFixedPrice"
+              style="font-size: 1.2rem"
+              class="text-alert"
+              >(Fixed)</i
+            >
+            <b [ngClass]="{ 'text-alert': invoice.totalPrice < 0 }">
+              {{ invoice.totalPrice | currency }}
+            </b>
+          </td>
+          <td class="text-right">{{ invoice.createdDate | date: "hh:mm" }}</td>
+        </tr>
+        <tr>
+          <td colspan="4"></td>
+          <td class="text-right text-alert">
+            <b>{{ dailyInvoices | arraySum: "deliveryFee" | currency }}</b>
+          </td>
+          <td class="text-right text-alert">
+            <b>{{ dailyInvoices | arraySum: "subTotal" | currency }}</b>
+          </td>
+          <td class="text-right text-alert">
+            <b>{{ dailyInvoices | arraySum: "totalGst" | currency }}</b>
+          </td>
+          <td class="text-right text-alert">
+            <b>{{ dailyInvoices | arraySum: "totalPrice" | currency }}</b>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </app-simple-box>
+</div>

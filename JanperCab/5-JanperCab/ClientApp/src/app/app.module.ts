@@ -156,6 +156,7 @@ import { DuraformOptionMicrowaveFrameComponent } from './components/duraform-opt
 import { DuraformPriceGridPageComponent } from './pages/duraform-price-grid-page/duraform-price-grid-page.component';
 import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc-cap-mould-edittor/duraform-misc-cap-mould-edittor.component';
 import { DatepickerModule } from 'ng2-datepicker';
+import { DailyInvoiceReportPageComponent } from './pages/daily-invoice-report-page/daily-invoice-report-page.component';
 
 @NgModule({
   declarations: [
@@ -276,6 +277,7 @@ import { DatepickerModule } from 'ng2-datepicker';
     ObjectEditorComponent,
     ValueConfirmDialogComponent,
     DatePickerComponent,
+    DailyInvoiceReportPageComponent,
   ],
   imports: [
     BrowserModule,

@@ -13,6 +13,7 @@ import { PrimaryLayoutComponent } from './components/primary-layout/primary-layo
 
 import { Routes } from '@angular/router';
 import { DuraformPriceGridPageComponent } from './pages/duraform-price-grid-page/duraform-price-grid-page.component';
+import { DailyInvoiceReportPageComponent } from './pages/daily-invoice-report-page/daily-invoice-report-page.component';
 
 export const routes: Routes = [
   {
@@ -37,6 +38,10 @@ export const routes: Routes = [
       {
         path: 'reports/daily-orders',
         component: DailyOrderReportPageComponent,
+      },
+      {
+        path: 'reports/daily-invoices',
+        component: DailyInvoiceReportPageComponent,
       },
       { path: '', component: HomePageComponent, pathMatch: 'full' },
     ],

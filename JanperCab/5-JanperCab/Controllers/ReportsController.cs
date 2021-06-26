@@ -32,5 +32,20 @@ namespace _5_JanperCab.Controllers
 
             return File(reportStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         }
+
+        [HttpGet("daily-invoices")]
+        public async Task<IActionResult> DailyInvoices(DateTime chosenDate)
+        {
+            return Ok(await _unitOfWork.Reports.DailyInvoiceReportAsync(chosenDate));
+        }
+
+        [HttpGet("excel/daily-invoices")]
+        public async Task<IActionResult> ExcelDailyInvoices(DateTime chosenDate)
+        {
+            var reportStream = await _unitOfWork.Reports.DailyInvoiceReportExcelAsync(chosenDate);
+
+
+            return File(reportStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        }
     }
 }

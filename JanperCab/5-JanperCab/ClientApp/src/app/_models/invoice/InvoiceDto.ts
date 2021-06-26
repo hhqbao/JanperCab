@@ -27,6 +27,7 @@ export class InvoiceDto {
   deliveryState: string;
   deliveryPostcode: string;
 
+  hasFixedPrice: boolean;
   gstRate: number;
   discountRate: number;
   deliveryFee: number;

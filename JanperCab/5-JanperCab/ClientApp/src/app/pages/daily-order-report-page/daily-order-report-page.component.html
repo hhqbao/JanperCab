@@ -1,5 +1,5 @@
 <div class="torp">
-  <app-simple-box [heading]="'Order In Report'">
+  <app-simple-box [heading]="'Daily Order Report'">
     <div class="row">
       <div class="col-1-2">
         <div class="form__group">
@@ -69,6 +69,35 @@
         </tr>
       </tbody>
       <tbody *ngIf="!isLoading && dailyOrders.length > 0">
+        <tr>
+          <td colspan="4"></td>
+          <td>
+            <b class="text-alert">
+              {{ dailyOrders | arraySum: "duraformParts" }}
+            </b>
+          </td>
+          <td>
+            <b class="text-alert">
+              {{ dailyOrders | arraySum: "janperEdgeParts" }}
+            </b>
+          </td>
+          <td>
+            <b class="text-alert">
+              {{ dailyOrders | arraySum: "routeOnlyParts" }}
+            </b>
+          </td>
+          <td>
+            <b class="text-alert">
+              {{ dailyOrders | arraySum: "flatpackParts" }}
+            </b>
+          </td>
+          <td colspan="3"></td>
+          <td class="text-right">
+            <b class="text-alert">
+              {{ dailyOrders | arraySum: "totalPrice" | currency }}
+            </b>
+          </td>
+        </tr>
         <tr *ngFor="let order of dailyOrders">
           <td>
             <a

@@ -1,3 +1,4 @@
+import { DailyInvoiceDto } from './../_models/reports/DailyInvoiceDto';
 import { plainToClass } from 'class-transformer';
 import { map } from 'rxjs/operators';
 import { environment } from './../../environments/environment';
@@ -45,6 +46,46 @@ export class ReportService {
           FileSaver.saveAs(
             blob,
             `Orders_${moment(chosenDate).format('DD-MM-yyyy')}.xlsx`
+          );
+        })
+      );
+  };
+
+  getInvoiceReport = (chosenDate: Date): Observable<DailyInvoiceDto[]> => {
+    return this.http
+      .get<DailyInvoiceDto[]>(
+        `${environment.baseUrl}/Reports/daily-invoices?chosenDate=${moment(
+          chosenDate
+        ).format('MM/DD/yyyy')}`
+      )
+      .pipe(
+        map((response) => {
+          return plainToClass(DailyInvoiceDto, response);
+        })
+      );
+  };
+
+  getInvoiceReportExcel = (chosenDate: Date): Observable<void> => {
+    return this.http
+      .get(
+        `${
+          environment.baseUrl
+        }/Reports/Excel/daily-invoices?chosenDate=${moment(chosenDate).format(
+          'MM/DD/yyyy'
+        )}`,
+        {
+          responseType: 'blob',
+        }
+      )
+      .pipe(
+        map((response) => {
+          const blob = new Blob([response], {
+            type: response.type,
+          });
+
+          FileSaver.saveAs(
+            blob,
+            `Invoices_${moment(chosenDate).format('DD-MM-yyyy')}.xlsx`
           );
         })
       );

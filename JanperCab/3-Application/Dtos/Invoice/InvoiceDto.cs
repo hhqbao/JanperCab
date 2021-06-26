@@ -46,6 +46,8 @@ namespace _3_Application.Dtos.Invoice
         public string DeliveryPostcode { get; set; }
 
 
+        public bool HasFixedPrice { get; set; }
+
         public decimal GstRate { get; set; }
 
         public decimal DiscountRate { get; set; }

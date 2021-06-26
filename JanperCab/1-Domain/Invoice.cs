@@ -45,6 +45,8 @@ namespace _1_Domain
         public string DeliveryPostcode { get; set; }
 
 
+        public bool HasFixedPrice { get; set; }
+
         public decimal GstRate { get; set; }
 
         public decimal DiscountRate { get; set; }
@@ -92,6 +94,7 @@ namespace _1_Domain
             DeliveryState = enquiry.DeliveryState;
             DeliveryPostcode = enquiry.DeliveryPostcode;
 
+            HasFixedPrice = enquiry.HasFixedPrice;
             GstRate = enquiry.GstRate;
             DiscountRate = enquiry.DiscountRate;
             DeliveryFee = enquiry.DeliveryFee;

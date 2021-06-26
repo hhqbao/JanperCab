@@ -11,5 +11,9 @@ namespace _3_Application.Interfaces.Repositories
         Task<List<DailyOrderDto>> DailyOrderReportAsync(DateTime chosenDate);
 
         Task<MemoryStream> DailyOrderReportExcelAsync(DateTime chosenDate);
+
+        Task<List<DailyInvoiceDto>> DailyInvoiceReportAsync(DateTime chosenDate);
+
+        Task<MemoryStream> DailyInvoiceReportExcelAsync(DateTime chosenDate);
     }
 }

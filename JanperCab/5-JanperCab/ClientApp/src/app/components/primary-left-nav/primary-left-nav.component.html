@@ -150,7 +150,7 @@
                   Daily Orders
                 </a>
               </li>
-              <li>
+              <li (click)="layoutService.toggleLeftNav(true)">
                 <a [routerLink]="['/dashboard/reports/daily-invoices']">
                   <i
                     class="fa fa-credit-card text-purple"
