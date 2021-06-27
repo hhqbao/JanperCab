@@ -1,0 +1,276 @@
+<div class="torp">
+  <app-simple-box [heading]="'Monthly Tally Report'" *ngIf="isInitialized">
+    <div class="row">
+      <div class="col-1-4">
+        <div class="form__group">
+          <label class="form__label">Year</label>
+          <app-select-menu
+            [control]="yearControl"
+            [values]="selectableYears"
+            [valueKey]="'value'"
+            [valueDisplay]="'text'"
+            (afterSet)="onLoadReport()"
+          ></app-select-menu>
+        </div>
+      </div>
+      <div class="col-1-4">
+        <div class="form__group">
+          <label class="form__label">Choose a Month</label>
+          <app-select-menu
+            [control]="monthControl"
+            [values]="selectableMonths"
+            [valueKey]="'value'"
+            [valueDisplay]="'text'"
+            (afterSet)="onLoadReport()"
+          ></app-select-menu>
+        </div>
+      </div>
+      <div class="col-1-4"></div>
+      <div class="col-1-4 right">
+        <div class="dropdown dropdown--1" appDropdownBtn>
+          <button type="button" class="dropdown__toggle">
+            Options
+            <i class="fa fa-cogs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown__list">
+            <li>
+              <a (click)="onDownloadExcel()">
+                <i class="fa fa-print" aria-hidden="true"></i>
+                Export CSV
+              </a>
+            </li>
+            <li class="dropdown__divider"></li>
+            <li>
+              <a>
+                <i class="fa fa-file-pdf-o text-alert" aria-hidden="true"></i>
+                Print
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <table
+      style="margin-top: 3rem"
+      class="table table--hovered table--bordered table--left"
+    >
+      <thead>
+        <tr>
+          <th style="width: 7rem">DAY</th>
+          <th style="width: 7rem">ORD</th>
+          <th style="width: 7rem">DF</th>
+          <th style="width: 10rem">DF ORD</th>
+          <th style="width: 7rem">JE</th>
+          <th style="width: 10rem">JE ORD</th>
+          <th style="width: 7rem">RO</th>
+          <th style="width: 10rem">RO ORD</th>
+          <th style="width: 7rem">FP</th>
+          <th style="width: 10rem">FP ORD</th>
+          <th style="width: 10rem">ORDER $</th>
+          <th style="width: 7rem">INV</th>
+          <th style="width: 7rem">DF</th>
+          <th style="width: 10rem">DF INV</th>
+          <th style="width: 7rem">JE</th>
+          <th style="width: 10rem">JE INV</th>
+          <th style="width: 7rem">RO</th>
+          <th style="width: 10rem">RO INV</th>
+          <th style="width: 7rem">FP</th>
+          <th style="width: 10rem">FP INV</th>
+          <th style="width: 10rem">INV $</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!isLoading && report.length > 0">
+        <tr>
+          <td></td>
+          <td class="text-alert">{{ report | arraySum: "orderCount" }}</td>
+          <td class="text-alert">
+            {{ report | arraySum: "orderedDuraformParts" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "orderedDuraformPrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "orderedJanperEdgeParts" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "orderedJanperEdgePrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "orderedRouteOnlyParts" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "orderedRouteOnlyPrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "orderedFlatpackParts" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "orderedFlatpackPrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "totalOrderedPrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoiceCount" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoicedDuraformParts" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoicedDuraformPrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoicedJanperEdgeParts" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoicedJanperEdgePrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoicedRouteOnlyParts" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoicedRouteOnlyPrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoicedFlatpackParts" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoicedFlatpackPrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "totalInvoicedPrice" | currency }}
+          </td>
+        </tr>
+        <tr *ngFor="let x of report">
+          <td title="Date" class="text-bold">{{ x.date | date: "dd-MMM" }}</td>
+          <td title="Order Count" class="text-black">{{ x.orderCount }}</td>
+          <td title="DF" class="text-black">{{ x.orderedDuraformParts }}</td>
+          <td title="DF ORD" class="text-black">
+            {{ x.orderedDuraformPrice | currency }}
+          </td>
+          <td title="JE" class="text-black">{{ x.orderedJanperEdgeParts }}</td>
+          <td title="JE ORD" class="text-black">
+            {{ x.orderedJanperEdgePrice | currency }}
+          </td>
+          <td title="RO" class="text-black">{{ x.orderedRouteOnlyParts }}</td>
+          <td title="RO ORD" class="text-black">
+            {{ x.orderedRouteOnlyPrice | currency }}
+          </td>
+          <td title="FP" class="text-black">{{ x.orderedFlatpackParts }}</td>
+          <td title="FP ORD" class="text-black">
+            {{ x.orderedFlatpackPrice | currency }}
+          </td>
+          <td title="ORDER $" class="text-black">
+            {{ x.totalOrderedPrice | currency }}
+          </td>
+          <td title="Invoice Count" class="text-blue">{{ x.invoiceCount }}</td>
+          <td title="DF" class="text-blue">{{ x.invoicedDuraformParts }}</td>
+          <td title="DF INV" class="text-blue">
+            {{ x.invoicedDuraformPrice | currency }}
+          </td>
+          <td title="JE" class="text-blue">{{ x.invoicedJanperEdgeParts }}</td>
+          <td title="JE INV" class="text-blue">
+            {{ x.invoicedJanperEdgePrice | currency }}
+          </td>
+          <td title="RO" class="text-blue">{{ x.invoicedRouteOnlyParts }}</td>
+          <td title="RO INV" class="text-blue">
+            {{ x.invoicedRouteOnlyPrice | currency }}
+          </td>
+          <td title="FP" class="text-blue">{{ x.invoicedFlatpackParts }}</td>
+          <td title="FP INV" class="text-blue">
+            {{ x.invoicedFlatpackPrice | currency }}
+          </td>
+          <td title="INV $" class="text-blue">
+            {{ x.totalInvoicedPrice | currency }}
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="text-alert">{{ report | arraySum: "orderCount" }}</td>
+          <td class="text-alert">
+            {{ report | arraySum: "orderedDuraformParts" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "orderedDuraformPrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "orderedJanperEdgeParts" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "orderedJanperEdgePrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "orderedRouteOnlyParts" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "orderedRouteOnlyPrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "orderedFlatpackParts" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "orderedFlatpackPrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "totalOrderedPrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoiceCount" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoicedDuraformParts" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoicedDuraformPrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoicedJanperEdgeParts" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoicedJanperEdgePrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoicedRouteOnlyParts" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoicedRouteOnlyPrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoicedFlatpackParts" }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "invoicedFlatpackPrice" | currency }}
+          </td>
+          <td class="text-alert">
+            {{ report | arraySum: "totalInvoicedPrice" | currency }}
+          </td>
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <th style="width: 7rem">DAY</th>
+          <th style="width: 7rem">ORD</th>
+          <th style="width: 7rem">DF</th>
+          <th style="width: 10rem">DF ORD</th>
+          <th style="width: 7rem">JE</th>
+          <th style="width: 10rem">JE ORD</th>
+          <th style="width: 7rem">RO</th>
+          <th style="width: 10rem">RO ORD</th>
+          <th style="width: 7rem">FP</th>
+          <th style="width: 10rem">FP ORD</th>
+          <th style="width: 10rem">ORDER $</th>
+          <th style="width: 7rem">INV</th>
+          <th style="width: 7rem">DF</th>
+          <th style="width: 10rem">DF INV</th>
+          <th style="width: 7rem">JE</th>
+          <th style="width: 10rem">JE INV</th>
+          <th style="width: 7rem">RO</th>
+          <th style="width: 10rem">RO INV</th>
+          <th style="width: 7rem">FP</th>
+          <th style="width: 10rem">FP INV</th>
+          <th style="width: 10rem">INV $</th>
+        </tr>
+      </thead>
+    </table>
+  </app-simple-box>
+</div>

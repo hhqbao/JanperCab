@@ -1,3 +1,4 @@
+import { MonthlyTallyReportPageComponent } from './pages/monthly-tally-report-page/monthly-tally-report-page.component';
 import { DailyOrderReportPageComponent } from './pages/daily-order-report-page/daily-order-report-page.component';
 import { InvoiceProcessPageComponent } from './pages/invoice-process-page/invoice-process-page.component';
 import { DeliveryPageComponent } from './pages/delivery-page/delivery-page.component';
@@ -42,6 +43,10 @@ export const routes: Routes = [
       {
         path: 'reports/daily-invoices',
         component: DailyInvoiceReportPageComponent,
+      },
+      {
+        path: 'reports/monthly-tally',
+        component: MonthlyTallyReportPageComponent,
       },
       { path: '', component: HomePageComponent, pathMatch: 'full' },
     ],

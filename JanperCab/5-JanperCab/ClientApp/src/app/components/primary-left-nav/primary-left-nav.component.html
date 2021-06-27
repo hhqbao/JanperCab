@@ -159,6 +159,12 @@
                   Daily Invoices
                 </a>
               </li>
+              <li (click)="layoutService.toggleLeftNav(true)">
+                <a [routerLink]="['/dashboard/reports/monthly-tally']">
+                  <i class="fa fa-bar-chart text-blue" aria-hidden="true"></i>
+                  Tally Report
+                </a>
+              </li>
             </ul>
           </div>
         </a>

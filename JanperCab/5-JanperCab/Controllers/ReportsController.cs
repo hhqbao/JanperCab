@@ -47,5 +47,20 @@ namespace _5_JanperCab.Controllers
 
             return File(reportStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         }
+
+        [HttpGet("monthly-tally/{year}/{month}")]
+        public async Task<IActionResult> MonthlyTally(int year, int month)
+        {
+            return Ok(await _unitOfWork.Reports.MonthlyTallyReportAsync(year, month));
+        }
+
+        [HttpGet("excel/monthly-tally/{year}/{month}")]
+        public async Task<IActionResult> ExcelMonthlyTally(int year, int month)
+        {
+            var reportStream = await _unitOfWork.Reports.MonthlyTallyReportExcelAsync(year, month);
+
+
+            return File(reportStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        }
     }
 }

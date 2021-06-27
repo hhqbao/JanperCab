@@ -1,3 +1,4 @@
+import { MonthlyTallyReportPageComponent } from './pages/monthly-tally-report-page/monthly-tally-report-page.component';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 import { DailyOrderReportPageComponent } from './pages/daily-order-report-page/daily-order-report-page.component';
 import { ReportService } from './_services/report.service';
@@ -278,6 +279,7 @@ import { DailyInvoiceReportPageComponent } from './pages/daily-invoice-report-pa
     ValueConfirmDialogComponent,
     DatePickerComponent,
     DailyInvoiceReportPageComponent,
+    MonthlyTallyReportPageComponent,
   ],
   imports: [
     BrowserModule,

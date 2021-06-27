@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import * as FileSaver from 'file-saver';
+import { MonthlyTallyReportDto } from '../_models/reports/MonthlyTallyReportDto';
 
 @Injectable({ providedIn: 'root' })
 export class ReportService {
@@ -86,6 +87,48 @@ export class ReportService {
           FileSaver.saveAs(
             blob,
             `Invoices_${moment(chosenDate).format('DD-MM-yyyy')}.xlsx`
+          );
+        })
+      );
+  };
+
+  getMonthlyTallyReport = (
+    year: number,
+    month: number
+  ): Observable<MonthlyTallyReportDto[]> => {
+    return this.http
+      .get<MonthlyTallyReportDto[]>(
+        `${environment.baseUrl}/Reports/monthly-tally/${year}/${month}`
+      )
+      .pipe(
+        map((response) => {
+          return plainToClass(MonthlyTallyReportDto, response);
+        })
+      );
+  };
+
+  getMonthlyTallyReportExcel = (
+    year: number,
+    month: number
+  ): Observable<void> => {
+    return this.http
+      .get(
+        `${environment.baseUrl}/Reports/excel/monthly-tally/${year}/${month}`,
+        {
+          responseType: 'blob',
+        }
+      )
+      .pipe(
+        map((response) => {
+          const blob = new Blob([response], {
+            type: response.type,
+          });
+
+          FileSaver.saveAs(
+            blob,
+            `MonthlyTally_${moment(new Date(year, month)).format(
+              'MMM_yyyy'
+            )}.xlsx`
           );
         })
       );
