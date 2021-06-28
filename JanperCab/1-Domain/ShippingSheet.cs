@@ -26,6 +26,9 @@ namespace _1_Domain
 
         public override void AddOrder(Enquiry enquiry)
         {
+            if (!enquiry.IsShippingRequired)
+                throw new Exception("Order cannot be shipped! Pick up only");
+
             enquiry.ProcessDelivering(this);
         }
 

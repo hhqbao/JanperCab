@@ -18,6 +18,8 @@ namespace _1_Domain
 
         public EnquiryTypeEnum EnquiryType { get; set; }
 
+        public EnquiryPaymentType EnquiryPaymentType { get; set; }
+
         public DateTime CreatedDate { get; set; }
 
         public DateTime? LastEditted { get; set; }
@@ -84,6 +86,18 @@ namespace _1_Domain
 
         public bool HasBeenInvoiced => Invoice != null;
 
+        public bool HasBeenFullyPaid
+        {
+            get
+            {
+                if (EnquiryPaymentType == EnquiryPaymentType.Account) return true;
+
+                var paidAmount = CashOrderPayments.Sum(x => x.Amount);
+
+                return paidAmount >= TotalPrice;
+            }
+        }
+
 
         public abstract string JobType { get; }
 
@@ -98,6 +112,8 @@ namespace _1_Domain
 
 
         public abstract List<InvoiceComponent> GenerateComponentsForInvoice();
+
+        public abstract string GetDescription();
 
         public abstract void Approve();
 
@@ -132,15 +148,43 @@ namespace _1_Domain
 
         public virtual Invoice Invoice { get; set; }
 
+        public virtual ICollection<CashOrderPayment> CashOrderPayments { get; set; }
+
 
         protected Enquiry()
         {
             EnquiryType = EnquiryTypeEnum.Draft;
             CreatedDate = DateTime.Now;
+
             Processes = new Collection<Process>();
+            CashOrderPayments = new Collection<CashOrderPayment>();
         }
 
-        public abstract string GetDescription();
+        public CashOrderPayment ReceiveCashPayment(decimal amount)
+        {
+            var payment = new CashOrderPayment
+            {
+                EnquiryId = Id,
+                Amount = amount
+            };
+
+            CashOrderPayments.Add(payment);
+
+            return payment;
+        }
+
+        public void TryIssueInvoice(int invoiceId)
+        {
+            if (EnquiryPaymentType != EnquiryPaymentType.CBD) return;
+
+            if (HasBeenInvoiced) return;
+
+            if (CurrentProcess.ProcessType != ProcessTypeEnum.Routing) return;
+
+            if (!CurrentProcess.EndTime.HasValue) return;
+
+            Invoice = new Invoice(this) { Id = invoiceId };
+        }
 
         public void RemoveDeliveryFee()
         {

@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import { DeliveryDocketType } from 'src/app/_enums/DeliveryDocketType';
+import { EnquiryPaymentType } from 'src/app/_enums/EnquiryPaymentType';
 import { EnquiryTypeEnum } from 'src/app/_enums/EnquiryTypeEnum';
 import { CabinetMakerDto } from '../customer/CabinetMakerDto';
 import { CustomerDto } from '../customer/CustomerDto';
@@ -12,6 +13,7 @@ export abstract class DeliveryDocketDto {
   id: number;
   customerReference: string;
   enquiryType: EnquiryTypeEnum;
+  enquiryPaymentType: EnquiryPaymentType;
   createdDate: Date;
   lastEditted: Date;
   orderedDate: Date;

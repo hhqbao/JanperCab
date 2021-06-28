@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _2_Persistent;
 
 namespace _2_Persistent.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210627103205_EditTable_Enquiries_AddCol_EnquiryPaymentType")]
+    partial class EditTable_Enquiries_AddCol_EnquiryPaymentType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -335,29 +337,6 @@ namespace _2_Persistent.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("_1_Domain.CashOrderPayment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EnquiryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EnquiryId");
-
-                    b.ToTable("CashOrderPayments");
                 });
 
             modelBuilder.Entity("_1_Domain.Customer", b =>
@@ -2123,15 +2102,6 @@ namespace _2_Persistent.Migrations
                     b.HasOne("_1_Domain.Customer", "Customer")
                         .WithMany("ApplicationUsers")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("_1_Domain.CashOrderPayment", b =>
-                {
-                    b.HasOne("_1_Domain.Enquiry", "Enquiry")
-                        .WithMany("CashOrderPayments")
-                        .HasForeignKey("EnquiryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

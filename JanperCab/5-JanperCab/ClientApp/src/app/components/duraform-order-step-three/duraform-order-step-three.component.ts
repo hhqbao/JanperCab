@@ -1,3 +1,4 @@
+import { EnquiryPaymentType } from './../../_enums/EnquiryPaymentType';
 import { DuraformEnquiryPriceDto } from './../../_models/enquiry/DuraformEnquiryPriceDto';
 import { InvoiceService } from './../../_services/invoice.service';
 import { MachineService } from './../../_services/machine.service';
@@ -30,6 +31,7 @@ export class DuraformOrderStepThreeComponent implements OnInit {
   role = Role;
 
   enquiryType = EnquiryTypeEnum;
+  enquiryPaymentType = EnquiryPaymentType;
   customerType = CustomerType;
 
   forceEditPrice = false;
@@ -40,6 +42,7 @@ export class DuraformOrderStepThreeComponent implements OnInit {
   showProcessViewer = false;
   showInvoicePdf = false;
   showTotalPriceConfirmDialog = false;
+  showCashPaymentMaker = false;
 
   customer: CustomerDto;
 
@@ -64,6 +67,25 @@ export class DuraformOrderStepThreeComponent implements OnInit {
 
   get canEditComponentPrice(): boolean {
     return this.canEditPrice && !this.duraformEnquiry.hasFixedPrice;
+  }
+
+  get canMakeCashPayment(): boolean {
+    if (
+      this.duraformEnquiry.enquiryPaymentType === EnquiryPaymentType.Account
+    ) {
+      return false;
+    }
+
+    return this.duraformEnquiry.paidAmount < this.duraformEnquiry.totalPrice;
+  }
+
+  get canViewInvoiceSection(): boolean {
+    switch (this.duraformEnquiry.enquiryPaymentType) {
+      case EnquiryPaymentType.Account:
+        return this.duraformEnquiry.hasBeenDelivered && !this.forceEditPrice;
+      case EnquiryPaymentType.CBD:
+        return this.duraformEnquiry.hasBeenInvoiced && !this.forceEditPrice;
+    }
   }
 
   get duraformEnquiry(): DuraformEnquiryDto {
@@ -398,6 +420,25 @@ export class DuraformOrderStepThreeComponent implements OnInit {
         this.dialog.error(error);
       }
     );
+  };
+
+  onMakeCashPayment = (amount: number) => {
+    this.showCashPaymentMaker = false;
+    this.layout.showLoadingPanel();
+    this.enquiryService
+      .makeCashPayment(this.duraformEnquiry.id, amount)
+      .subscribe(
+        (response) => {
+          this.duraformEnquiry.cashOrderPayments.push(response);
+
+          this.layout.closeLoadingPanel();
+          this.dialog.success('Payment has been made successfully.');
+        },
+        (error) => {
+          this.layout.closeLoadingPanel();
+          this.dialog.alert('Make Payment Failed', error, null);
+        }
+      );
   };
 
   onGeneratingInvoice = () => {

@@ -25,6 +25,8 @@ namespace _3_Application.Dtos.DeliveryDocket
 
         public EnquiryTypeEnum EnquiryType { get; set; }
 
+        public EnquiryPaymentType EnquiryPaymentType { get; set; }
+
         public DateTime CreatedDate { get; set; }
 
         public DateTime? LastEditted { get; set; }

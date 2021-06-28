@@ -1,5 +1,6 @@
 ﻿using _1_Domain;
 using _1_Domain.Enum;
+using _3_Application.Dtos.CashOrderPayment;
 using _3_Application.Dtos.Common;
 using _3_Application.Dtos.Enquiry;
 using _3_Application.Dtos.PackingLabel;
@@ -130,7 +131,7 @@ namespace _5_JanperCab.Controllers
             var creator = await _userManager.FindByEmailAsync(User.Identity.Name);
             var enquiryInDb = await _unitOfWork.Enquiries.GetEnquiryAsync(id, creator.Customer);
 
-            if (enquiryInDb == null) return BadRequest("Enquiry Not Found");
+            if (enquiryInDb == null) return BadRequest("Order Not Found");
 
             if (enquiryInDb.EnquiryType == EnquiryTypeEnum.Order)
                 return BadRequest("Enquiry has been converted to Order! Cannot be editted");
@@ -149,7 +150,7 @@ namespace _5_JanperCab.Controllers
         {
             var enquiryInDb = await _unitOfWork.Enquiries.GetAsync(id);
 
-            if (enquiryInDb == null) return BadRequest("Enquiry Not Found");
+            if (enquiryInDb == null) return BadRequest("Order Not Found");
 
             if (enquiryInDb.HasBeenInvoiced)
                 return BadRequest("Order has been invoiced! Cannot edit.");
@@ -166,12 +167,10 @@ namespace _5_JanperCab.Controllers
         [HttpPut("approve/{id}")]
         public async Task<IActionResult> Approve(int id)
         {
-            var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
-
-            var enquiry = await _unitOfWork.Enquiries.GetEnquiryAsync(id, currentUser.Customer);
+            var enquiry = await _unitOfWork.Enquiries.GetAsync(id);
 
             if (enquiry == null)
-                return BadRequest("Enquiry Not Found");
+                return BadRequest("Order Not Found");
 
             enquiry.Approve();
             await _unitOfWork.CompleteAsync();
@@ -183,17 +182,36 @@ namespace _5_JanperCab.Controllers
         [HttpPut("decline/{id}")]
         public async Task<IActionResult> Decline(int id)
         {
-            var creator = await _userManager.FindByEmailAsync(User.Identity.Name);
-            var enquiryInDb = await _unitOfWork.Enquiries.GetEnquiryAsync(id, creator.Customer);
+            var enquiry = await _unitOfWork.Enquiries.GetAsync(id);
 
-            if (enquiryInDb == null) return BadRequest("Enquiry Not Found");
+            if (enquiry == null) return BadRequest("Order Not Found");
 
-            if (!enquiryInDb.IsDeclineable) return BadRequest("Enquiry is in production! Cannot be declined");
+            if (!enquiry.IsDeclineable) return BadRequest("Order is in production! Cannot be declined");
 
-            enquiryInDb.Decline();
+            enquiry.Decline();
             await _unitOfWork.CompleteAsync();
 
-            return Ok(_mapper.Map<Enquiry, EnquiryDto>(enquiryInDb));
+            return Ok(_mapper.Map<Enquiry, EnquiryDto>(enquiry));
+        }
+
+        [Authorize(Roles = "Sale")]
+        [HttpPost("make-cash-payment")]
+        public async Task<IActionResult> MakeCashPayment(MakeCashPaymentModelDto model)
+        {
+            var enquiry = await _unitOfWork.Enquiries.GetAsync(model.EnquiryId);
+
+            if (enquiry == null) return BadRequest("Order Not Found");
+
+            if (enquiry.EnquiryPaymentType == EnquiryPaymentType.Account)
+                return BadRequest("Not CBD Order! Cannot make payment");
+
+            if (enquiry.HasBeenFullyPaid)
+                return BadRequest("Order has already fully paid! No longer accept more payment");
+
+            var payment = enquiry.ReceiveCashPayment(model.Amount);
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(_mapper.Map<CashOrderPayment, CashOrderPaymentDto>(payment));
         }
     }
 }

@@ -19,6 +19,8 @@ import { Injectable } from '@angular/core';
 import { DuraformComponentDto } from '../_models/duraform-component/DuraformComponentDto';
 import { DuraformComponentWithOptionDto } from '../_models/duraform-component/DuraformComponentWithOptionDto';
 import { CustomerDto } from '../_models/customer/CustomerDto';
+import { CustomerCategoryType } from '../_enums/CustomerCategoryType';
+import { EnquiryPaymentType } from '../_enums/EnquiryPaymentType';
 
 @Injectable({ providedIn: 'root' })
 export class DuraformOrderService {
@@ -117,6 +119,16 @@ export class DuraformOrderService {
     this.duraformEnquiry.deliveryState = customer.deliveryState;
     this.duraformEnquiry.deliveryPostcode = customer.deliveryPostcode;
     this.duraformEnquiry.deliveryFee = customer.deliveryFee;
+
+    switch (customer.customerCategory.categoryType) {
+      case CustomerCategoryType.Account:
+        this.duraformEnquiry.enquiryPaymentType = EnquiryPaymentType.Account;
+        break;
+      case CustomerCategoryType.CBD:
+        this.duraformEnquiry.enquiryPaymentType = EnquiryPaymentType.CBD;
+        this.duraformEnquiry.toBePriced = false;
+        break;
+    }
 
     this.duraformEnquiry.updateDiscountRate(customer.discountRate);
   };

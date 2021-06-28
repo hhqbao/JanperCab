@@ -60,7 +60,7 @@ namespace _1_Domain
 
         public override string DoorColor => IsRoutingOnly ? ICBLineStructure.DSW : $"{DuraformWrapType.Name} {DuraformWrapColor.Name}";
 
-        public override bool IsDeclineable => CurrentProcess == null || CurrentProcess is ProcessPreRoute;
+        public override bool IsDeclineable => !HasBeenInvoiced && (CurrentProcess == null || CurrentProcess is ProcessPreRoute);
 
         public override int PartCount
         {

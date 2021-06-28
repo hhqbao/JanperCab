@@ -1,4 +1,5 @@
 ﻿using _1_Domain.Enum;
+using _3_Application.Dtos.CashOrderPayment;
 using _3_Application.Dtos.Customer;
 using _3_Application.Dtos.Invoice;
 using _3_Application.Dtos.Process;
@@ -19,6 +20,8 @@ namespace _3_Application.Dtos.Enquiry
         public string CustomerReference { get; set; }
 
         public EnquiryTypeEnum EnquiryType { get; set; }
+
+        public EnquiryPaymentType EnquiryPaymentType { get; set; }
 
         public DateTime CreatedDate { get; set; }
 
@@ -84,10 +87,14 @@ namespace _3_Application.Dtos.Enquiry
 
         public ICollection<ProcessDto> Processes { get; set; }
 
+        public ICollection<CashOrderPaymentDto> CashOrderPayments { get; set; }
+
 
         protected EnquiryDto()
         {
             Processes = new Collection<ProcessDto>();
+
+            CashOrderPayments = new Collection<CashOrderPaymentDto>();
         }
     }
 }

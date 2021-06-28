@@ -1,3 +1,4 @@
+import { CashOrderPaymentDto } from './../cash-order-payment/CashOrderPaymentDto';
 import { ProcessPackingDto } from '../process/ProcessPackingDto';
 import { ProcessPreRouteDto } from '../process/ProcessPreRouteDto';
 import { ManufacturerDto } from './../customer/ManufacturerDto';
@@ -15,12 +16,14 @@ import { ProcessDeliveringDto } from '../process/ProcessDeliveringDto';
 import { ProcessTypeEnum } from 'src/app/_enums/ProcessTypeEnum';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { EnquiryPaymentType } from 'src/app/_enums/EnquiryPaymentType';
 
 export abstract class EnquiryDto {
   $type: string;
   id: number;
   customerReference: string;
   enquiryType: EnquiryTypeEnum;
+  enquiryPaymentType: EnquiryPaymentType;
   createdDate: Date;
   lastEditted: Date;
   orderedDate: Date;
@@ -141,6 +144,9 @@ export abstract class EnquiryDto {
   })
   processes: ProcessDto[];
 
+  @Type(() => CashOrderPaymentDto)
+  cashOrderPayments: CashOrderPaymentDto[];
+
   get discriminator(): string {
     return `${this.enquiryType}`;
   }
@@ -152,10 +158,6 @@ export abstract class EnquiryDto {
   }
 
   get currentStatus(): ProcessDto {
-    if (!this.processes) {
-      return null;
-    }
-
     const status = this.processes.find((x) => x.isCurrent);
 
     return status;
@@ -191,12 +193,32 @@ export abstract class EnquiryDto {
     return this.invoice !== null && this.invoice !== undefined;
   }
 
+  get hasBeenFullyPaid(): boolean {
+    if (this.enquiryPaymentType === EnquiryPaymentType.Account) {
+      return true;
+    }
+
+    return this.paidAmount >= this.totalPrice;
+  }
+
+  get paidAmount(): number {
+    let paidAmount = 0;
+
+    this.cashOrderPayments.forEach((x) => (paidAmount += x.amount));
+
+    return paidAmount;
+  }
+
   abstract get jobType(): string;
   abstract get hasComponent(): boolean;
 
   constructor() {
     this.$type = '_3_Application.Dtos.Enquiry.EnquiryDto, 3-Application';
     this.enquiryType = EnquiryTypeEnum.Draft;
+    this.enquiryPaymentType = EnquiryPaymentType.CBD;
+
+    this.processes = [];
+    this.cashOrderPayments = [];
 
     this.gstRate = 10;
     this.discountRate = 0;

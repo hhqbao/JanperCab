@@ -1,5 +1,6 @@
 ﻿using _1_Domain;
 using _3_Application.Dtos.ApplicationFile;
+using _3_Application.Dtos.CashOrderPayment;
 using _3_Application.Dtos.Customer;
 using _3_Application.Dtos.CustomerCategory;
 using _3_Application.Dtos.DeliveryDocket;
@@ -282,7 +283,8 @@ namespace _5_JanperCab.Helpers
                 .ForMember(x => x.Invoice, opt => opt.Ignore())
                 .ForMember(x => x.Customer, opt => opt.Ignore())
                 .ForMember(x => x.Manager, opt => opt.Ignore())
-                .ForMember(x => x.Processes, opt => opt.Ignore());
+                .ForMember(x => x.Processes, opt => opt.Ignore())
+                .ForMember(x => x.CashOrderPayments, opt => opt.Ignore());
 
             CreateMap<EnquiryPriceDto, Enquiry>()
                 .Include<DuraformEnquiryPriceDto, DuraformEnquiry>();
@@ -393,6 +395,10 @@ namespace _5_JanperCab.Helpers
 
             CreateMap<Invoice, InvoiceDto>();
             CreateMap<InvoiceDto, Invoice>();
+
+            CreateMap<CashOrderPayment, CashOrderPaymentDto>();
+            CreateMap<CashOrderPaymentDto, CashOrderPayment>()
+                .ForMember(x => x.CreatedDate, opt => opt.Ignore());
         }
     }
 }

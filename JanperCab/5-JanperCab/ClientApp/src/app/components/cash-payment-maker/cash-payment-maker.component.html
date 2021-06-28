@@ -1,0 +1,49 @@
+<app-float-box [isFit]="true">
+  <div class="cpm">
+    <div class="cpm__heading">Cash Payment</div>
+    <div class="cpm__body">
+      <p class="body-paragraph">
+        <span style="display: block">
+          <b style="display: inline-block; width: 20rem">Total Price:</b>
+          {{ enquiry.totalPrice | currency }}
+        </span>
+        <span style="display: block">
+          <b style="display: inline-block; width: 20rem">Remaining Amount:</b>
+          {{ remainingAmount | currency }}
+        </span>
+      </p>
+      <form [formGroup]="formGroup">
+        <div class="form__input-btn">
+          <input
+            class="form__control"
+            currencyMask
+            appSelectOnFocus
+            [formControl]="formGroup.get('amount')"
+            [options]="{
+              align: 'left',
+              allowZero: false,
+              precision: '2',
+              decimal: '.',
+              prefix: '$ ',
+              thousands: '',
+              min: 0
+            }"
+          />
+          <button
+            type="button"
+            [disabled]="formGroup.invalid"
+            class="btn btn--secondary"
+            (click)="onMakePayment()"
+          >
+            Make Payment
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="cpm__footer">
+      <button class="btn btn--default" (click)="cancel.emit()">
+        Nevermind! Go Back
+      </button>
+    </div>
+  </div>
+</app-float-box>

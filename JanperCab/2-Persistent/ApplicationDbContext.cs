@@ -48,6 +48,8 @@ namespace _2_Persistent
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<InvoiceComponent> InvoiceComponents { get; set; }
 
+        public DbSet<CashOrderPayment> CashOrderPayments { get; set; }
+
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
@@ -144,6 +146,8 @@ namespace _2_Persistent
 
             builder.ApplyConfiguration(new InvoiceConfig());
             builder.ApplyConfiguration(new InvoiceComponentConfig());
+
+            builder.ApplyConfiguration(new CashOrderPaymentConfig());
 
             base.OnModelCreating(builder);
         }

@@ -6,7 +6,12 @@
       <div class="abn-tel">ABN 45 004 772 034 - Tel 03 9720 0533</div>
     </div>
     <div class="header__tag-box">
-      <span class="cbd-tag" *ngIf="isCBDCustomer">C.B.D</span>
+      <span
+        class="cbd-tag"
+        *ngIf="deliveryDocket.enquiryPaymentType === paymentType.CBD"
+      >
+        C.B.D
+      </span>
     </div>
     <div class="header__form-details">
       <div class="barcode">

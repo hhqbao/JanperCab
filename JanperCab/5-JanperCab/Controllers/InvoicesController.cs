@@ -50,7 +50,7 @@ namespace _5_JanperCab.Controllers
             if (enquiry == null)
                 return BadRequest("Order Not Found");
 
-            if (enquiry.Invoice != null)
+            if (enquiry.HasBeenInvoiced)
                 return BadRequest("Order already been INVOICED");
 
             var invoice = await _unitOfWork.Invoices.GenerateAsync(enquiry);

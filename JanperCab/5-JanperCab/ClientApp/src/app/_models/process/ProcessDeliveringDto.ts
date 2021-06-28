@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import { DeliveryMethodEnum } from 'src/app/_enums/DeliveryMethodEnum';
 import { DeliverySheetDto } from '../delivery-sheet/DeliverySheetDto';
 import { ProcessDto } from './ProcessDto';
@@ -5,9 +6,14 @@ import { ProcessDto } from './ProcessDto';
 export class ProcessDeliveringDto extends ProcessDto {
   deliverySheetId: number;
 
+  @Type(() => DeliverySheetDto)
   deliverySheet: DeliverySheetDto;
 
   getStatus(): string {
+    if (!this.deliverySheet) {
+      return 'Delivery - TBA';
+    }
+
     if (this.startTime && this.endTime) {
       switch (this.deliverySheet.deliveryMethod) {
         case DeliveryMethodEnum.Shipping:

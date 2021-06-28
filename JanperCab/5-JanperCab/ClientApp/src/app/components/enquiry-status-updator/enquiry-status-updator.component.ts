@@ -1,9 +1,9 @@
 import { ProcessDeliveringDto } from '../../_models/process/ProcessDeliveringDto';
-import { ProcessTypeEnum } from './../../_enums/ProcessTypeEnum';
+import { ProcessTypeEnum } from '../../_enums/ProcessTypeEnum';
 import { ProcessPackingDto } from '../../_models/process/ProcessPackingDto';
 import { ProcessRoutingDto } from '../../_models/process/ProcessRoutingDto';
-import { DialogService } from './../../_services/dialog.service';
-import { AuthService } from './../../_services/auth.service';
+import { DialogService } from '../../_services/dialog.service';
+import { AuthService } from '../../_services/auth.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { EventSourcePolyfill } from 'event-source-polyfill';
 import { ProcessPressingDto } from 'src/app/_models/process/ProcessPressingDto';
@@ -11,10 +11,10 @@ import { ProcessCleaningDto } from 'src/app/_models/process/ProcessCleaningDto';
 import { EnquiryDto } from 'src/app/_models/enquiry/EnquiryDto';
 
 @Component({
-  selector: 'app-duraform-status-updator',
-  templateUrl: 'duraform-status-updator.component.html',
+  selector: 'app-enquiry-status-updator',
+  templateUrl: 'enquiry-status-updator.component.html',
 })
-export class DuraformStatusUpdatorComponent implements OnInit, OnDestroy {
+export class EnquiryStatusUpdatorComponent implements OnInit, OnDestroy {
   @Input() enquiry: EnquiryDto;
 
   eventSource: any;

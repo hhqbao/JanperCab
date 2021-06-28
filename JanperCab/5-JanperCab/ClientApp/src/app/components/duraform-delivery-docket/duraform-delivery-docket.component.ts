@@ -2,7 +2,7 @@ import { DeliveryDocketDuraformDto } from './../../_models/delivery-docket/Deliv
 import { CustomerDto } from 'src/app/_models/customer/CustomerDto';
 import { DialogService } from '../../_services/dialog.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { CustomerCategoryType } from 'src/app/_enums/CustomerCategoryType';
+import { EnquiryPaymentType } from 'src/app/_enums/EnquiryPaymentType';
 
 @Component({
   selector: 'app-duraform-delivery-docket',
@@ -11,23 +11,14 @@ import { CustomerCategoryType } from 'src/app/_enums/CustomerCategoryType';
 export class DuraformDeliveryDocketComponent implements OnInit {
   @Input() deliveryDocket: DeliveryDocketDuraformDto;
 
+  paymentType = EnquiryPaymentType;
+
   get mainCustomer(): CustomerDto {
     if (!this.deliveryDocket) {
       return null;
     }
 
     return this.deliveryDocket.manager ?? this.deliveryDocket.customer;
-  }
-
-  get isCBDCustomer(): boolean {
-    if (!this.mainCustomer) {
-      return false;
-    }
-
-    return (
-      this.mainCustomer.customerCategory.categoryType ===
-      CustomerCategoryType.CBD
-    );
   }
 
   constructor(private dialog: DialogService) {}

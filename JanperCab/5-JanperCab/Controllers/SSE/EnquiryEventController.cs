@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -26,7 +27,7 @@ namespace _5_JanperCab.Controllers.SSE
             _mapper = mapper;
         }
 
-        [Authorize(Roles = "Manufacturer")]
+        [Authorize(Roles = "Sale")]
         [HttpGet("for-invoicing")]
         public async Task GetEnquiriesForInvoicing()
         {
@@ -42,6 +43,26 @@ namespace _5_JanperCab.Controllers.SSE
 
             await response
                 .WriteAsync($"data: {jsonString}\r\r");
+
+            await response.Body.FlushAsync();
+
+            await Task.Delay(10 * 1000);
+        }
+
+        [Authorize(Roles = "Sale")]
+        [HttpGet("check-has-been-invoiced/{enquiryId}")]
+        public async Task CheckHasBeenInvoiced(int enquiryId)
+        {
+            var enquiry = await _unitOfWork.Enquiries.GetAsync(enquiryId);
+
+            if (enquiry == null)
+                throw new NullReferenceException("Enquiry Not Found");
+
+            var response = Response;
+            response.Headers.Add("Content-Type", "text/event-stream");
+
+            await response
+                .WriteAsync($"data: {enquiry.HasBeenInvoiced}\r\r");
 
             await response.Body.FlushAsync();
 

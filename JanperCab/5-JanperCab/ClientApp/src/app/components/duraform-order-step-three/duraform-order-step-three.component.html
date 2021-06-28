@@ -11,6 +11,12 @@
     (confirm)="showTotalPriceConfirmDialog = false; generateInvoice()"
     (cancel)="showTotalPriceConfirmDialog = false"
   ></app-value-confirm-dialog>
+  <app-cash-payment-maker
+    *ngIf="showCashPaymentMaker"
+    [enquiry]="duraformEnquiry"
+    (confirm)="onMakeCashPayment($event)"
+    (cancel)="showCashPaymentMaker = false"
+  ></app-cash-payment-maker>
   <app-float-box *ngIf="showProcessViewer" [width]="85">
     <app-duraform-process-viewer
       [duraformEnquiry]="duraformEnquiry"
@@ -95,7 +101,8 @@
               style="font-size: inherit; margin-left: 2rem"
               *ngIf="
                 duraformEnquiry.enquiryType === enquiryType.Draft &&
-                (auth.isInRole(role.Distributor) || auth.isInRole(role.Sale))
+                (auth.isInRole(role.Distributor) || auth.isInRole(role.Sale)) &&
+                duraformEnquiry.cashOrderPayments.length === 0
               "
               (click)="showCustomerSelector = true"
             >
@@ -135,10 +142,17 @@
                   style="text-transform: uppercase"
                   *ngIf="duraformEnquiry.enquiryType === enquiryType.Order"
                 >
-                  <app-duraform-status-updator
+                  <app-enquiry-status-updator
                     *ngIf="duraformEnquiry.approvedDate"
                     [enquiry]="duraformEnquiry"
-                  ></app-duraform-status-updator>
+                  ></app-enquiry-status-updator>
+                  <app-enquiry-invoicing-status-updator
+                    *ngIf="
+                      duraformEnquiry.approvedDate &&
+                      !duraformEnquiry.hasBeenInvoiced
+                    "
+                    [enquiry]="duraformEnquiry"
+                  ></app-enquiry-invoicing-status-updator>
                   {{ duraformEnquiry.statusDescription }}
                 </div>
               </app-simple-box>
@@ -283,6 +297,8 @@
                         [disabled]="
                           (duraformEnquiry.enquiryType === enquiryType.Order &&
                             !duraformEnquiry.approvedDate) ||
+                          duraformEnquiry.enquiryPaymentType ===
+                            enquiryPaymentType.CBD ||
                           duraformEnquiry.hasBeenInvoiced
                         "
                         [(ngModel)]="duraformEnquiry.toBePriced"
@@ -598,6 +614,19 @@
             ></app-object-editor>
           </span>
         </li>
+        <li
+          *ngIf="duraformEnquiry.enquiryPaymentType === enquiryPaymentType.CBD"
+          class="summary-box__divider"
+        ></li>
+        <li
+          *ngIf="duraformEnquiry.enquiryPaymentType === enquiryPaymentType.CBD"
+          [ngClass]="{ 'text-green': duraformEnquiry.hasBeenFullyPaid }"
+        >
+          <span class="summary-box__title"><b>Paid Amount</b></span>
+          <span class="summary-box__subtotal">
+            {{ duraformEnquiry.paidAmount | currency }}
+          </span>
+        </li>
       </ul>
     </app-simple-box>
     <div style="margin-top: 1rem">
@@ -656,6 +685,14 @@
         *ngIf="auth.isInRole(role.Sale) && duraformEnquiry.approvedDate"
       >
         <button
+          class="action-btn text-green"
+          *ngIf="!forceEditPrice && canMakeCashPayment"
+          (click)="showCashPaymentMaker = true"
+        >
+          <i class="fa fa-money" aria-hidden="true"></i>
+          <span>Make Payment (CBD)</span>
+        </button>
+        <button
           class="action-btn"
           *ngIf="!forceEditPrice"
           (click)="onViewDeliveryDocket()"
@@ -704,10 +741,7 @@
           <span *ngIf="forceEditPrice">Cancel</span>
         </button>
       </div>
-      <div
-        class="option-box__action-center"
-        *ngIf="duraformEnquiry.hasBeenDelivered && !forceEditPrice"
-      >
+      <div class="option-box__action-center" *ngIf="canViewInvoiceSection">
         <button
           class="action-btn action-btn--alert"
           *ngIf="auth.isInRole(role.Sale) && !duraformEnquiry.hasBeenInvoiced"

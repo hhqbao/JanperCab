@@ -1,4 +1,5 @@
 ﻿using _1_Domain;
+using _1_Domain.Enum;
 using _3_Application.Dtos.Enquiry;
 using _3_Application.Dtos.Machine;
 using _3_Application.Interfaces.Repositories;
@@ -39,6 +40,8 @@ namespace _5_JanperCab.Controllers
 
 
             enquiry.ProcessRouting(router);
+            enquiry.TryIssueInvoice(await _unitOfWork.Invoices.GetNextAvailableInvoiceIdAsync());
+
             await _unitOfWork.CompleteAsync();
 
             return Ok(new MachineProdutionCurrentProcessDto(enquiry.CurrentProcess));
@@ -165,6 +168,15 @@ namespace _5_JanperCab.Controllers
 
             if (enquiry == null)
                 return BadRequest("Order Not Found");
+
+            if (enquiry.Manager != null && enquiry.Manager.IsOnHold)
+                return BadRequest($"{enquiry.Manager.Name} is on hold! Cannot proceed delivery");
+
+            if (enquiry.Customer.IsOnHold)
+                return BadRequest($"{enquiry.Customer.Name} is on hold! Cannot proceed delivery");
+
+            if (enquiry.EnquiryPaymentType == EnquiryPaymentType.CBD && !enquiry.HasBeenFullyPaid)
+                return BadRequest("CBD Order has not been fully paid! Cannot proceed delivery");
 
             sheet.AddOrder(enquiry);
             await _unitOfWork.CompleteAsync();

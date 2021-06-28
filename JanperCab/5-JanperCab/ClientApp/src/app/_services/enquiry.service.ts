@@ -1,3 +1,5 @@
+import { CashOrderPaymentDto } from './../_models/cash-order-payment/CashOrderPaymentDto';
+import { MakeCashPaymentModelDto } from './../_models/cash-order-payment/MakeCashPaymentModelDto';
 import { DeliveryDocketDuraformDto } from './../_models/delivery-docket/DeliveryDocketDuraformDto';
 import { PackingLabelDto } from './../_models/packing-label/PackingLabelDto';
 import { EnquiryForInvoicingDto } from './../_models/enquiry/EnquiryForInvoicingDto';
@@ -157,5 +159,23 @@ export class EnquiryService {
       `${environment.baseUrl}/enquiries/decline/${id}`,
       null
     );
+  };
+
+  makeCashPayment = (
+    enquiryId: number,
+    amount: number
+  ): Observable<CashOrderPaymentDto> => {
+    const model = new MakeCashPaymentModelDto(enquiryId, amount);
+
+    return this.http
+      .post<CashOrderPaymentDto>(
+        `${environment.baseUrl}/enquiries/make-cash-payment`,
+        model
+      )
+      .pipe(
+        map((response) => {
+          return plainToClass(CashOrderPaymentDto, response);
+        })
+      );
   };
 }
