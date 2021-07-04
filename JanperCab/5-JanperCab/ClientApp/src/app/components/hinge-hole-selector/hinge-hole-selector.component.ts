@@ -1,3 +1,4 @@
+import { HingeHoleOptionDto } from './../../_models/hinge-hole-option/HingeHoleOptionDto';
 import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 import { HingeHoleStyleEnum } from '../../_enums/HingeHoleStyleEnum';
 import {
@@ -66,15 +67,6 @@ export class HingeHoleSelectorComponent implements OnInit {
     return this.formGroup.get('hingeHole')?.get('bottom');
   }
 
-  @HostListener('document:click', ['$event.target'])
-  onBlur = (target: HTMLElement) => {
-    const self = this.ef.nativeElement as HTMLElement;
-
-    if (!self.contains(target)) {
-      this.showOption = false;
-    }
-  };
-
   constructor(
     private fb: FormBuilder,
     private ef: ElementRef,
@@ -93,6 +85,15 @@ export class HingeHoleSelectorComponent implements OnInit {
       });
     }
   }
+
+  @HostListener('document:click', ['$event.target'])
+  onBlur = (target: HTMLElement) => {
+    const self = this.ef.nativeElement as HTMLElement;
+
+    if (!self.contains(target)) {
+      this.showOption = false;
+    }
+  };
 
   onInputClick = () => {
     this.showOption = true;
@@ -227,27 +228,23 @@ export class HingeHoleSelectorComponent implements OnInit {
   };
 
   private initialForm = (hingeHoleStyle: HingeHoleStyleEnum) => {
-    if (!this.formGroup.get('hingeHole')) {
-      this.formGroup.addControl(
-        'hingeHole',
-        this.fb.group({
-          hingeHoleStyle: [hingeHoleStyle, Validators.required],
-          quantity: [
-            2,
-            [Validators.required, Validators.min(1), Validators.max(5)],
-          ],
-          top: [96, [Validators.required, Validators.min(50)]],
-          topCenter: [null, []],
-          middleOne: [null, []],
-          bottomCenter: [null, []],
-          bottom: [96, [Validators.required, Validators.min(50)]],
-        })
-      );
-    } else {
-      this.formGroup.get('hingeHole').patchValue({
-        hingeHoleStyle,
-      });
-    }
+    this.formGroup.removeControl('hingeHole');
+
+    const emptyOption = new HingeHoleOptionDto();
+    emptyOption.hingeHoleStyle = hingeHoleStyle;
+
+    this.formGroup.addControl('hingeHole', emptyOption.toFormGroup());
+
+    // if (!this.formGroup.get('hingeHole')) {
+    //   const emptyOption = new HingeHoleOptionDto();
+    //   emptyOption.hingeHoleStyle = hingeHoleStyle;
+
+    //   this.formGroup.addControl('hingeHole', emptyOption.toFormGroup());
+    // } else {
+    //   this.formGroup.get('hingeHole').patchValue({
+    //     hingeHoleStyle,
+    //   });
+    // }
   };
 
   private updateMainInput = () => {
@@ -283,7 +280,10 @@ export class HingeHoleSelectorComponent implements OnInit {
         valueString
       );
     } else {
-      (this.mainInput.nativeElement as HTMLElement).setAttribute('value', '');
+      (this.mainInput.nativeElement as HTMLElement).setAttribute(
+        'value',
+        'No Hinge Hole'
+      );
     }
   };
 }

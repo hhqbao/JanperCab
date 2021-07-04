@@ -15,7 +15,11 @@ export class HingeHoleOptionDto {
   bottomCenter: number;
   bottom: number;
 
-  constructor() {}
+  constructor() {
+    this.quantity = 2;
+    this.top = 96;
+    this.bottom = 96;
+  }
 
   @Expose()
   toFormGroup(): FormGroup {
