@@ -133,11 +133,32 @@ namespace _5_JanperCab.Helpers
             CreateMap<HingeHoleType, HingeHoleTypeDto>();
             CreateMap<HingeHoleTypeDto, HingeHoleType>();
 
-            CreateMap<HingeHoleOption, HingeHoleOptionDto>();
-            CreateMap<HingeHoleOptionDto, HingeHoleOption>();
-
             CreateMap<HingeHoleStyle, HingeHoleStyleDto>();
             CreateMap<HingeHoleStyleDto, HingeHoleStyle>();
+
+            CreateMap<HingeHoleOption, HingeHoleOptionDto>()
+                .Include<HingeHoleOptionSide, HingeHoleOptionSideDto>()
+                .Include<HingeHoleOptionDraw, HingeHoleOptionDrawDto>()
+                .Include<HingeHoleOptionCornerDoor, HingeHoleOptionCornerDoorDto>()
+                .Include<HingeHoleOptionCornerBlank, HingeHoleOptionCornerBlankDto>();
+            CreateMap<HingeHoleOptionDto, HingeHoleOption>()
+                .Include<HingeHoleOptionSideDto, HingeHoleOptionSide>()
+                .Include<HingeHoleOptionDrawDto, HingeHoleOptionDraw>()
+                .Include<HingeHoleOptionCornerDoorDto, HingeHoleOptionCornerDoor>()
+                .Include<HingeHoleOptionCornerBlankDto, HingeHoleOptionCornerBlank>()
+                .ForMember(x => x.HingeHoleStyle, opt => opt.Ignore());
+
+            CreateMap<HingeHoleOptionSide, HingeHoleOptionSideDto>();
+            CreateMap<HingeHoleOptionSideDto, HingeHoleOptionSide>();
+
+            CreateMap<HingeHoleOptionDraw, HingeHoleOptionDrawDto>();
+            CreateMap<HingeHoleOptionDrawDto, HingeHoleOptionDraw>();
+
+            CreateMap<HingeHoleOptionCornerDoor, HingeHoleOptionCornerDoorDto>();
+            CreateMap<HingeHoleOptionCornerDoorDto, HingeHoleOptionCornerDoor>();
+
+            CreateMap<HingeHoleOptionCornerBlank, HingeHoleOptionCornerBlankDto>();
+            CreateMap<HingeHoleOptionCornerBlankDto, HingeHoleOptionCornerBlank>();
 
             CreateMap<DuraformComponent, DuraformComponentDto>()
                 .Include<DuraformComponentWithOption, DuraformComponentWithOptionDto>()

@@ -1,0 +1,92 @@
+<div class="option-form__form-wrapper" [formGroup]="optionGroup">
+  <div class="form__group">
+    <div class="row">
+      <div class="col-1-2">
+        <label class="form__label">Left Top</label>
+        <input
+          #leftTopInput
+          type="text"
+          class="form__control tab-ignore"
+          currencyMask
+          appSelectOnFocus
+          formControlName="leftTop"
+          [options]="{
+            align: 'center',
+            allowZero: false,
+            precision: '0',
+            decimal: '',
+            prefix: '',
+            thousands: ''
+          }"
+          (blur)="onSizeBlur(leftTop)"
+          (keydown)="onInputTab($event, leftBottomInput)"
+        />
+      </div>
+      <div class="col-1-2">
+        <label class="form__label">Left Bottom</label>
+        <input
+          #leftBottomInput
+          type="text"
+          class="form__control tab-ignore"
+          currencyMask
+          appSelectOnFocus
+          formControlName="leftBottom"
+          [options]="{
+            align: 'center',
+            allowZero: false,
+            precision: '0',
+            decimal: '',
+            prefix: '',
+            thousands: ''
+          }"
+          (blur)="onSizeBlur(leftBottom)"
+          (keydown)="onInputTab($event, rightTopInput)"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-1-2">
+        <label class="form__label">Right Top</label>
+        <input
+          #rightTopInput
+          type="text"
+          class="form__control tab-ignore"
+          currencyMask
+          appSelectOnFocus
+          formControlName="rightTop"
+          [options]="{
+            align: 'center',
+            allowZero: false,
+            precision: '0',
+            decimal: '',
+            prefix: '',
+            thousands: ''
+          }"
+          (blur)="onSizeBlur(rightTop)"
+          (keydown)="onInputTab($event, rightBottomInput)"
+        />
+      </div>
+      <div class="col-1-2">
+        <label class="form__label">Right Bottom</label>
+        <input
+          #rightBottomInput
+          type="text"
+          class="form__control tab-ignore"
+          currencyMask
+          appSelectOnFocus
+          formControlName="rightBottom"
+          [options]="{
+            align: 'center',
+            allowZero: false,
+            precision: '0',
+            decimal: '',
+            prefix: '',
+            thousands: ''
+          }"
+          (blur)="onSizeBlur(rightBottom)"
+          (keydown)="onInputTab($event, null)"
+        />
+      </div>
+    </div>
+  </div>
+</div>

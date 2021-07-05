@@ -36,6 +36,7 @@ export abstract class DeliveryDocketDto {
   deliveryState: string;
   deliveryPostcode: string;
 
+  useBlackBoard: boolean;
   deliveryNote: string;
 
   gstRate: number;

@@ -1,3 +1,5 @@
+import { Role } from 'src/app/_enums/Role';
+import { AuthService } from './../../_services/auth.service';
 import { DuraformSerieDto } from './../../_models/duraform-serie/DuraformSerieDto';
 import { DuraformWrapTypeDto } from './../../_models/duraform-wrap-type/DuraformWrapTypeDto';
 import { DuraformPriceBulkAction } from './../../_models/duraform-price/DuraformPriceBulkAction';
@@ -38,6 +40,7 @@ export class DuraformPriceGridPageComponent implements OnInit {
   selectedSerieType: DuraformSerieTypeEnum = null;
 
   constructor(
+    private authService: AuthService,
     private finishService: DuraformWrapTypeService,
     private serieService: DuraformSerieService,
     private priceService: DuraformPriceService,
@@ -54,6 +57,11 @@ export class DuraformPriceGridPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.authService.isInRole(Role.Admin)) {
+      this.authService.homePageNavigate();
+      return;
+    }
+
     this.layout.showLoadingPanel();
 
     const observables = forkJoin({

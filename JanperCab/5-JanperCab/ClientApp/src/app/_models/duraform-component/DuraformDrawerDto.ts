@@ -5,6 +5,7 @@ import { DrawerDesign } from 'src/app/_enums/DrawerDesign';
 import { DuraformComponentDto } from './DuraformComponentDto';
 import * as _ from 'lodash';
 import { Expose } from 'class-transformer';
+import { DuraformComponentTypeEnum } from 'src/app/_enums/DuraformComponentTypeEnum';
 
 export class DuraformDrawerDto extends DuraformComponentDto {
   numberOfDrawers: 2 | 3 | 4 | 5;
@@ -18,7 +19,11 @@ export class DuraformDrawerDto extends DuraformComponentDto {
   drawerFive: number;
 
   duraformDrawerType: DuraformDrawerTypeDto;
-
+  
+  get componentType(): DuraformComponentTypeEnum {
+    return DuraformComponentTypeEnum.Drawer;
+  }
+  
   get totalHeight(): number {
     const totalGap = (this.numberOfDrawers - 1) * this.drawerGap;
 
@@ -31,7 +36,7 @@ export class DuraformDrawerDto extends DuraformComponentDto {
       this.drawerFive
     );
   }
-
+  
   get totalWidth(): number {
     return this.width;
   }

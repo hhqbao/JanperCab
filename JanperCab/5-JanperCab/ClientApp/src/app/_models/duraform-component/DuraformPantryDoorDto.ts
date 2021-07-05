@@ -5,6 +5,7 @@ import { DuraformComponentWithOptionAndHingeHoleDto } from './DuraformComponentW
 import { DuraformOptionTypeDto } from '../duraform-option/DuraformOptionTypeDto';
 import { Expose } from 'class-transformer';
 import * as _ from 'lodash';
+import { DuraformComponentTypeEnum } from 'src/app/_enums/DuraformComponentTypeEnum';
 
 export class DuraformPantryDoorDto extends DuraformComponentWithOptionAndHingeHoleDto {
   chairRailHeight: number;
@@ -12,6 +13,10 @@ export class DuraformPantryDoorDto extends DuraformComponentWithOptionAndHingeHo
   extraRailBottom: number;
 
   chairRailType: PantryDoorChairRailTypeDto;
+
+  get componentType(): DuraformComponentTypeEnum {
+    return DuraformComponentTypeEnum.PantryDoor;
+  }
 
   @Expose()
   updateWithOption(
@@ -34,11 +39,7 @@ export class DuraformPantryDoorDto extends DuraformComponentWithOptionAndHingeHo
     let priceForOne = super.getUnitPrice(duraformEnquiry);
 
     if (this.hingeHoleOption) {
-      const hingeStyle = DuraformAssetService.instance.getHingeStyle(
-        this.hingeHoleOption.hingeHoleStyle
-      );
-
-      priceForOne += this.hingeHoleOption.quantity * hingeStyle.pantryPrice;
+      priceForOne += this.hingeHoleOption.getPrice(this);
     }
 
     return _.round(priceForOne, 2);

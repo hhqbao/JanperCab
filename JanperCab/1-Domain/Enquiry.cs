@@ -73,6 +73,8 @@ namespace _1_Domain
 
         public bool HasFixedPrice { get; set; }
 
+        public bool UseBlackBoard { get; set; }
+
 
         public Process CurrentProcess => Processes.FirstOrDefault(x => x.IsCurrent);
 

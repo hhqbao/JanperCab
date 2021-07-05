@@ -1,37 +1,34 @@
 .hinge-hole-selector {
+  display: flex;
   position: relative;
+  padding: 0 0.5rem;
 
-  .control-box {
-    border: unset;
-    box-shadow: unset;
-    border-top-left-radius: unset;
-    border-top-right-radius: unset;
+  .input-for-display {
+    display: inline-block;
+    flex: 1;
+    text-align: left;
   }
 
-  .absolute-container {
+  .container {
     left: 50%;
     position: absolute;
-    top: calc(100% + 1rem);
+    top: calc(100% + 0.5rem);
     transform: translateX(-50%);
-    width: calc(100% + 10rem);
+    min-width: calc(100% + 2rem);
+    z-index: 999;
   }
 
-  .option-box,
-  .form-box {
+  .type-list {
     animation: slideInTop 0.3s ease-out;
     background-color: white;
     border: solid 1px #8c8c8c;
     border-radius: 0.3rem;
     box-shadow: 0 0 1rem rgba(black, 0.3);
     cursor: pointer;
-
-    text-align: left;
-    transform-origin: top;
-  }
-
-  .option-box {
     list-style: none;
     padding: 0.7rem 0;
+    text-align: left;
+    transform-origin: top;
 
     & > li {
       font-weight: bold;
@@ -43,7 +40,17 @@
     }
   }
 
-  .form-box {
-    padding: 0.7rem;
+  .option-form {
+    animation: slideInTop 0.3s ease-out;
+    transform-origin: top;
+
+    &__form-wrapper {
+      background-color: white;
+      border-radius: 0.5rem;
+      border: solid 1px rgba($color: black, $alpha: 0.2);
+      box-shadow: 0 0 1rem rgba($color: black, $alpha: 0.3);
+      padding: 1rem 1.5rem;
+      text-align: left;
+    }
   }
 }

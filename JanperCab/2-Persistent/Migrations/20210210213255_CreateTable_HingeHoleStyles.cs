@@ -22,11 +22,7 @@ namespace _2_Persistent.Migrations
                 });
 
             migrationBuilder.Sql(
-                $"Insert HingeHoleStyles(Id, Name, DoorPrice, PantryPrice) Values({(int)HingeHoleStyleEnum.Pair}, 'Pair', 3, 6)");
-            migrationBuilder.Sql(
-                $"Insert HingeHoleStyles(Id, Name, DoorPrice, PantryPrice) Values({(int)HingeHoleStyleEnum.Left}, 'Left', 3, 6)");
-            migrationBuilder.Sql(
-                $"Insert HingeHoleStyles(Id, Name, DoorPrice, PantryPrice) Values({(int)HingeHoleStyleEnum.Right}, 'Right', 3, 6)");
+                  $"Insert HingeHoleStyles(Id, Name, DoorPrice, PantryPrice) Values({(int)HingeHoleStyleEnum.Side}, 'Side', 3, 6)");
             migrationBuilder.Sql(
                 $"Insert HingeHoleStyles(Id, Name, DoorPrice, PantryPrice) Values({(int)HingeHoleStyleEnum.Draw}, 'Draw', 8, 8)");
         }

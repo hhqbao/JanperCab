@@ -126,6 +126,8 @@
     <Compile Remove="Migrations\20210603114456_CreateTable_CustomerCategories.Designer.cs" />
     <Compile Remove="Migrations\20210606231342_CreateTable_PickUpSheets.cs" />
     <Compile Remove="Migrations\20210606231342_CreateTable_PickUpSheets.Designer.cs" />
+    <Compile Remove="Migrations\20210705032647_foo.cs" />
+    <Compile Remove="Migrations\20210705032647_foo.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

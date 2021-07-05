@@ -60,10 +60,11 @@ export class DuraformOptionSelectorComponent implements OnInit {
           (x) => x.id === optionValues.optionTypeId
         );
 
-        const duraformOption: DuraformOptionDto = DuraformOptionTypeDto.GetDuraformOptionInstance(
-          this.selectedType,
-          optionValues
-        );
+        const duraformOption: DuraformOptionDto =
+          DuraformOptionTypeDto.GetDuraformOptionInstance(
+            this.selectedType,
+            optionValues
+          );
 
         this.typeInput.nativeElement.value = duraformOption?.toString();
         this.showTypeList = false;
@@ -156,10 +157,11 @@ export class DuraformOptionSelectorComponent implements OnInit {
     }
 
     const optionValues = this.formGroup.get('optionGroup').value;
-    const duraformOption: DuraformOptionDto = DuraformOptionTypeDto.GetDuraformOptionInstance(
-      this.selectedType,
-      optionValues
-    );
+    const duraformOption: DuraformOptionDto =
+      DuraformOptionTypeDto.GetDuraformOptionInstance(
+        this.selectedType,
+        optionValues
+      );
 
     this.typeInput.nativeElement.value = duraformOption?.toString();
     this.typeInput.nativeElement.focus();

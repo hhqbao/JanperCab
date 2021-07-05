@@ -171,7 +171,7 @@
       </li>
       <li
         class="nav__item"
-        *ngIf="auth.isInRole(role[role.Sale])"
+        *ngIf="auth.isInRole(role[role.Admin])"
         (click)="layoutService.toggleLeftNav(false)"
       >
         <a [appClassToggle]="'active'">

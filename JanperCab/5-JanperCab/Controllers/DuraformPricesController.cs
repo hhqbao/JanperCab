@@ -75,7 +75,7 @@ namespace _5_JanperCab.Controllers
             return Ok(_mapper.Map<List<DuraformRouteOnlyPriceGrid>, List<DuraformRouteOnlyPriceGridDto>>(prices));
         }
 
-        [Authorize(Roles = "Sale")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("Grids")]
         public async Task<IActionResult> SavePriceGrids(List<DuraformPriceGridDto> priceGridDtos)
         {

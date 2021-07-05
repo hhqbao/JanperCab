@@ -58,6 +58,8 @@ namespace _3_Application.Dtos.DeliveryDocket
 
         public string DeliveryPostcode { get; set; }
 
+        public bool UseBlackBoard { get; set; }
+
         public string DeliveryNote { get; set; }
 
         public decimal GstRate { get; set; }

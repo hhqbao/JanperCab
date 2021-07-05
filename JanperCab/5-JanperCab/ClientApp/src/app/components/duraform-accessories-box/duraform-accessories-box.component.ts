@@ -15,8 +15,17 @@ export class DuraformAccessoriesBoxComponent implements OnInit {
   formGroup: FormGroup;
   duraformEnquiry: DuraformEnquiryDto;
 
+  blackBoardOpts = [
+    { text: 'Yes', value: true },
+    { text: 'No', value: false },
+  ];
+
   get hingeHoleTypeIdControl(): AbstractControl {
     return this.formGroup.get('hingeHoleTypeId');
+  }
+
+  get useBlackBoardControl(): AbstractControl {
+    return this.formGroup.get('useBlackBoard');
   }
 
   constructor(
@@ -30,6 +39,7 @@ export class DuraformAccessoriesBoxComponent implements OnInit {
 
     this.formGroup = this.fb.group({
       hingeHoleTypeId: [this.duraformEnquiry.hingeHoleTypeId],
+      useBlackBoard: [this.duraformEnquiry.useBlackBoard],
     });
   }
 
@@ -41,6 +51,10 @@ export class DuraformAccessoriesBoxComponent implements OnInit {
     }
 
     this.order.setHingeHoleType(hingeType);
+  };
+
+  onSelectBlackBoard = () => {
+    this.order.setChoiceOfBlackBoard(this.useBlackBoardControl.value);
   };
 
   onSelectArch = (arch: DuraformArchDto) => {

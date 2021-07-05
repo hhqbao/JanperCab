@@ -1,20 +1,21 @@
 import { DuraformEnquiryDto } from './../enquiry/DuraformEnquiryDto';
-import { DuraformAssetService } from 'src/app/_services/duraform-asset.service';
 import { Expose } from 'class-transformer';
 import { DuraformComponentWithOptionAndHingeHoleDto } from './DuraformComponentWithOptionAndHingeHoleDto';
 import * as _ from 'lodash';
+import { DuraformComponentTypeEnum } from 'src/app/_enums/DuraformComponentTypeEnum';
 
 export class DuraformDoorDto extends DuraformComponentWithOptionAndHingeHoleDto {
+  @Expose()
+  get componentType(): DuraformComponentTypeEnum {
+    return DuraformComponentTypeEnum.Door;
+  }
+
   @Expose()
   getUnitPrice(duraformEnquiry: DuraformEnquiryDto): number {
     let priceForOne = super.getUnitPrice(duraformEnquiry);
 
     if (this.hingeHoleOption) {
-      const hingeStyle = DuraformAssetService.instance.getHingeStyle(
-        this.hingeHoleOption.hingeHoleStyle
-      );
-
-      priceForOne += this.hingeHoleOption.quantity * hingeStyle.doorPrice;
+      priceForOne += this.hingeHoleOption.getPrice(this);
     }
 
     return _.round(priceForOne, 2);

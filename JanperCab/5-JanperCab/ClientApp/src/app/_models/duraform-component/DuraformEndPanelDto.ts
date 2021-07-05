@@ -1,5 +1,7 @@
 import { DuraformComponentWithOptionDto } from './DuraformComponentWithOptionDto';
 import { DuraformOptionTypeDto } from '../duraform-option/DuraformOptionTypeDto';
+import { DuraformComponentTypeEnum } from 'src/app/_enums/DuraformComponentTypeEnum';
+import { Expose } from 'class-transformer';
 
 export class DuraformEndPanelDto extends DuraformComponentWithOptionDto {
   numberOfShields: number;
@@ -9,6 +11,11 @@ export class DuraformEndPanelDto extends DuraformComponentWithOptionDto {
   extraRailBottom: number;
   extraRailTop: number;
 
+  get componentType(): DuraformComponentTypeEnum {
+    return DuraformComponentTypeEnum.EndPanel;
+  }
+
+  @Expose()
   updateWithOption(
     formValue: any,
     duraformOptionTypes: DuraformOptionTypeDto[]

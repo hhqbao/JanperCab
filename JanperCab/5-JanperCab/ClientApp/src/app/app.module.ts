@@ -1,3 +1,6 @@
+import { HingeHoleOptionCornerBlankFormComponent } from './components/hinge-hole-option-corner-blank-form/hinge-hole-option-corner-blank-form.component';
+import { HingeHoleOptionDrawFormComponent } from './components/hinge-hole-option-draw-form/hinge-hole-option-draw-form.component';
+import { HingeHoleOptionSideFormComponent } from './components/hinge-hole-option-side-form/hinge-hole-option-side-form.component';
 import { CashPaymentMakerComponent } from './components/cash-payment-maker/cash-payment.maker.component';
 import { EnquiryInvoicingStatusUpdatorComponent } from './components/enquiry-invoicing-status-updator/enquiry-invoicing-status-updator.component';
 import { MonthlyTallyReportPageComponent } from './pages/monthly-tally-report-page/monthly-tally-report-page.component';
@@ -160,6 +163,7 @@ import { DuraformPriceGridPageComponent } from './pages/duraform-price-grid-page
 import { DuraformMiscCapMouldEdittorComponent } from './components/duraform-misc-cap-mould-edittor/duraform-misc-cap-mould-edittor.component';
 import { DatepickerModule } from 'ng2-datepicker';
 import { DailyInvoiceReportPageComponent } from './pages/daily-invoice-report-page/daily-invoice-report-page.component';
+import { HingeHoleOptionCornerDoorFormComponent } from './components/hinge-hole-option-corner-door-form/hinge-hole-option-corner-door-form.component';
 
 @NgModule({
   declarations: [
@@ -284,6 +288,10 @@ import { DailyInvoiceReportPageComponent } from './pages/daily-invoice-report-pa
     MonthlyTallyReportPageComponent,
     EnquiryInvoicingStatusUpdatorComponent,
     CashPaymentMakerComponent,
+    HingeHoleOptionSideFormComponent,
+    HingeHoleOptionDrawFormComponent,
+    HingeHoleOptionCornerDoorFormComponent,
+    HingeHoleOptionCornerBlankFormComponent,
   ],
   imports: [
     BrowserModule,

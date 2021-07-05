@@ -133,6 +133,12 @@ export class DuraformOrderService {
     this.duraformEnquiry.updateDiscountRate(customer.discountRate);
   };
 
+  setChoiceOfBlackBoard = (choice: boolean) => {
+    this.duraformEnquiry.useBlackBoard = choice;
+
+    console.log(this.duraformEnquiry.useBlackBoard);
+  };
+
   setDuraformDesign = (design: DuraformDesignDto) => {
     this.duraformEnquiry.duraformDesignId = design.id;
     this.duraformEnquiry.duraformDesign = design;

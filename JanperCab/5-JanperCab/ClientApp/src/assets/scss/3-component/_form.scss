@@ -31,11 +31,23 @@
       border-top-right-radius: unset;
       border-bottom-right-radius: unset;
       flex: 1;
+
+      &:not(:first-child) {
+        border-top-left-radius: unset;
+        border-bottom-left-radius: unset;
+      }
     }
 
     .btn {
-      border-top-left-radius: unset;
-      border-bottom-left-radius: unset;
+      &:first-child {
+        border-top-right-radius: unset;
+        border-bottom-right-radius: unset;
+      }
+
+      &:last-child {
+        border-top-left-radius: unset;
+        border-bottom-left-radius: unset;
+      }
 
       &:hover {
         transform: translateY(0) !important;

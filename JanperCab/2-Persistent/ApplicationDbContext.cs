@@ -20,9 +20,12 @@ namespace _2_Persistent
         public DbSet<DuraformDrawerType> DuraformDrawerTypes { get; set; }
         public DbSet<DuraformOptionType> DuraformOptionTypes { get; set; }
         public DbSet<DuraformOption> DuraformOptions { get; set; }
+
+
         public DbSet<HingeHoleType> HingeHoleTypes { get; set; }
         public DbSet<HingeHoleOption> HingeHoleOptions { get; set; }
         public DbSet<HingeHoleStyle> HingeHoleStyle { get; set; }
+
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CustomerCategory> CustomerCategories { get; set; }
@@ -77,8 +80,12 @@ namespace _2_Persistent
             builder.ApplyConfiguration(new MachinePackingConfig());
 
             builder.ApplyConfiguration(new HingeHoleTypeConfig());
-            builder.ApplyConfiguration(new HingeHoleOptionConfig());
             builder.ApplyConfiguration(new HingeHoleStyleConfig());
+            builder.ApplyConfiguration(new HingeHoleOptionConfig());
+            builder.ApplyConfiguration(new HingeHoleOptionSideConfig());
+            builder.ApplyConfiguration(new HingeHoleOptionDrawConfig());
+            builder.ApplyConfiguration(new HingeHoleOptionCornerDoorConfig());
+            builder.ApplyConfiguration(new HingeHoleOptionCornerBlankConfig());
 
             builder.ApplyConfiguration(new DuraformOptionConfig());
             builder.ApplyConfiguration(new DuraformOptionNoFaceConfig());

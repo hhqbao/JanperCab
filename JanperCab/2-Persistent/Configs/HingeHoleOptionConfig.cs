@@ -15,21 +15,6 @@ namespace _2_Persistent.Configs
             builder.Property(x => x.Id)
                 .ValueGeneratedNever();
 
-            builder.Property(x => x.Top)
-                .HasColumnType("decimal(18,2)");
-
-            builder.Property(x => x.TopCenter)
-                .HasColumnType("decimal(18,2)");
-
-            builder.Property(x => x.MiddleOne)
-                .HasColumnType("decimal(18,2)");
-
-            builder.Property(x => x.BottomCenter)
-                .HasColumnType("decimal(18,2)");
-
-            builder.Property(x => x.Bottom)
-                .HasColumnType("decimal(18,2)");
-
             builder.HasOne(x => x.DuraformComponentWithOptionAndHingeHole)
                 .WithOne(y => y.HingeHoleOption)
                 .HasForeignKey<HingeHoleOption>(x => x.Id)

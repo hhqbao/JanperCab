@@ -1,3 +1,4 @@
+import { DuraformComponentTypeEnum } from './../../_enums/DuraformComponentTypeEnum';
 import { DuraformEnquiryDto } from 'src/app/_models/enquiry/DuraformEnquiryDto';
 import { DuraformEdgeProfileDto } from './../duraform-edge-profile/DuraformEdgeProfileDto';
 import { DuraformAssetService } from './../../_services/duraform-asset.service';
@@ -24,6 +25,12 @@ export abstract class DuraformComponentDto {
   totalPrice: number;
 
   duraformEdgeProfile: DuraformEdgeProfileDto;
+
+  abstract get componentType(): DuraformComponentTypeEnum;
+  abstract get totalHeight(): number;
+  abstract get totalWidth(): number;
+  abstract getUnitPrice(duraformEnquiry: DuraformEnquiryDto): number;
+  abstract calculateUnitPrice(duraformEnquiry: DuraformEnquiryDto): void;
 
   @Expose()
   update(formValue: any) {
@@ -65,11 +72,6 @@ export abstract class DuraformComponentDto {
       this.right = forceRight;
     }
   }
-
-  abstract get totalHeight(): number;
-  abstract get totalWidth(): number;
-  abstract getUnitPrice(duraformEnquiry: DuraformEnquiryDto): number;
-  abstract calculateUnitPrice(duraformEnquiry: DuraformEnquiryDto): void;
 
   @Expose()
   calculateTotal(duraformEnquiry: DuraformEnquiryDto): void {

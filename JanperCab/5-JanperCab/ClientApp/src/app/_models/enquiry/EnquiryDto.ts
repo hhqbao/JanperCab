@@ -62,6 +62,7 @@ export abstract class EnquiryDto {
   toBePriced: boolean;
   isShippingRequired: boolean;
   hasFixedPrice: boolean;
+  useBlackBoard: boolean;
 
   @Type(() => InvoiceDto)
   invoice: InvoiceDto;
@@ -224,6 +225,7 @@ export abstract class EnquiryDto {
     this.discountRate = 0;
     this.deliveryFee = 0;
     this.isShippingRequired = true;
+    this.useBlackBoard = false;
   }
 
   abstract calculatePrice(includeUnitPrice: boolean): void;
@@ -237,6 +239,12 @@ export abstract class EnquiryDto {
   };
 
   calculateTotalPrice = (): void => {
+    if (this.useBlackBoard) {
+      const blackBoardCost = _.round(this.subTotal / 10, 2);
+
+      this.subTotal += blackBoardCost;
+    }
+
     this.subTotal += this.deliveryFee;
 
     this.totalGst = _.round(this.subTotal / this.gstRate, 2);

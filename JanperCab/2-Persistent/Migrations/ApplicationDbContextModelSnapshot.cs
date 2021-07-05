@@ -1123,6 +1123,9 @@ namespace _2_Persistent.Migrations
                         .HasColumnName("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<bool>("UseBlackBoard")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CreatorId");
@@ -1141,32 +1144,20 @@ namespace _2_Persistent.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("Bottom")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("BottomCenter")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("HingeHoleStyle")
                         .HasColumnType("int");
-
-                    b.Property<decimal?>("MiddleOne")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Top")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("TopCenter")
-                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("HingeHoleStyle");
 
                     b.ToTable("HingeHoleOptions");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("HingeHoleOption");
                 });
 
             modelBuilder.Entity("_1_Domain.HingeHoleStyle", b =>
@@ -1897,6 +1888,67 @@ namespace _2_Persistent.Migrations
                     b.HasIndex("HingeHoleTypeId");
 
                     b.HasDiscriminator().HasValue("DuraformEnquiry");
+                });
+
+            modelBuilder.Entity("_1_Domain.HingeHoleOptionCornerBlank", b =>
+                {
+                    b.HasBaseType("_1_Domain.HingeHoleOption");
+
+                    b.HasDiscriminator().HasValue("HingeHoleOptionCornerBlank");
+                });
+
+            modelBuilder.Entity("_1_Domain.HingeHoleOptionCornerDoor", b =>
+                {
+                    b.HasBaseType("_1_Domain.HingeHoleOption");
+
+                    b.Property<decimal>("LeftBottom")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("LeftTop")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("RightBottom")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("RightTop")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasDiscriminator().HasValue("HingeHoleOptionCornerDoor");
+                });
+
+            modelBuilder.Entity("_1_Domain.HingeHoleOptionDraw", b =>
+                {
+                    b.HasBaseType("_1_Domain.HingeHoleOption");
+
+                    b.HasDiscriminator().HasValue("HingeHoleOptionDraw");
+                });
+
+            modelBuilder.Entity("_1_Domain.HingeHoleOptionSide", b =>
+                {
+                    b.HasBaseType("_1_Domain.HingeHoleOption");
+
+                    b.Property<decimal?>("Bottom")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("BottomCenter")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Direction")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("MiddleOne")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Top")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("TopCenter")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasDiscriminator().HasValue("HingeHoleOptionSide");
                 });
 
             modelBuilder.Entity("_1_Domain.MachineCleaning", b =>

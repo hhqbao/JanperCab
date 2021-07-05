@@ -78,6 +78,8 @@ namespace _3_Application.Dtos.Enquiry
 
         public bool HasFixedPrice { get; set; }
 
+        public bool UseBlackBoard { get; set; }
+
 
         public InvoiceDto Invoice { get; set; }
 
