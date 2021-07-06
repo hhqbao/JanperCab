@@ -1,4 +1,4 @@
-import { DuraformEnquiryListDto } from './../../_models/enquiry/DuraformEnquiryListDto';
+import { EnquiryListDto } from '../../_models/enquiry/EnquiryListDto';
 import { LayoutService } from './../../_services/layout.service';
 import { EnquiryService } from './../../_services/enquiry.service';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 export class DuraformDraftListComponent implements OnInit {
   isInitializing = true;
 
-  drafts: DuraformEnquiryListDto[] = [];
+  drafts: EnquiryListDto[] = [];
 
   constructor(
     private dialog: DialogService,
@@ -37,7 +37,7 @@ export class DuraformDraftListComponent implements OnInit {
     );
   }
 
-  onItemClick = (item: DuraformEnquiryListDto) => {
+  onItemClick = (item: EnquiryListDto) => {
     this.router.navigate([`dashboard/duraform/${item.id}`]);
   };
 }

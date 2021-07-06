@@ -314,7 +314,7 @@ namespace _5_JanperCab.Helpers
                 .ForMember(x => x.CustomerName, opt => opt.MapFrom(x => x.Customer.Name));
 
             CreateMap<DuraformEnquiry, DuraformEnquiryDto>();
-            CreateMap<DuraformEnquiry, DuraformEnquiryListDto>();
+            CreateMap<DuraformEnquiry, EnquiryListDto>();
             CreateMap<DuraformEnquiryDto, DuraformEnquiry>()
                 .ForMember(x => x.DuraformDesign, opt => opt.Ignore())
                 .ForMember(x => x.DuraformSerie, opt => opt.Ignore())

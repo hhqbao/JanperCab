@@ -1,4 +1,5 @@
-﻿using _1_Domain.Enum;
+﻿using _1_Domain;
+using _1_Domain.Enum;
 using _2_Persistent;
 using _3_Application.Dtos.Reports;
 using _3_Application.Interfaces.Repositories;
@@ -235,6 +236,112 @@ namespace _4_Infrastructure.Repositories
                 sheet.Cells[$"S{index}"].Value = report.Sum(x => x.InvoicedFlatpackParts);
                 sheet.Cells[$"T{index}"].Value = report.Sum(x => x.InvoicedFlatpackPrice).ToString("C");
                 sheet.Cells[$"U{index}"].Value = report.Sum(x => x.TotalInvoicedPrice).ToString("C");
+
+                package.Save();
+            }
+
+            stream.Position = 0;
+
+            return stream;
+        }
+
+        public async Task<List<DailyProductionReportDto>> DailyProductionReportAsync(ProcessTypeEnum stage)
+        {
+            var query = _dbContext.Enquiries.Where(x => x.EnquiryType == EnquiryTypeEnum.Order);
+
+            switch (stage)
+            {
+                case ProcessTypeEnum.Ordered:
+                    query = query.Where(x => !x.ApprovedDate.HasValue);
+                    break;
+                case ProcessTypeEnum.PreRoute:
+                    query = query.Where(x => x.Processes.OfType<ProcessPreRoute>().Any(y => y.IsCurrent));
+                    break;
+                case ProcessTypeEnum.Routed:
+                    query = query.Where(x => x.Processes.OfType<ProcessRouting>().Any(y => y.IsCurrent && y.EndTime.HasValue));
+                    break;
+                case ProcessTypeEnum.Pressed:
+                    query = query.Where(x => x.Processes.OfType<ProcessPressing>().Any(y => y.IsCurrent && y.EndTime.HasValue));
+                    break;
+                case ProcessTypeEnum.Cleaned:
+                    query = query.Where(x => x.Processes.OfType<ProcessCleaning>().Any(y => y.IsCurrent && y.EndTime.HasValue));
+                    break;
+                case ProcessTypeEnum.Packed:
+                    query = query.Where(x => x.Processes.OfType<ProcessPacking>().Any(y => y.IsCurrent && y.EndTime.HasValue));
+                    break;
+                case ProcessTypeEnum.PickedUp:
+                    query = query.Where(x => x.Processes.OfType<ProcessDelivering>().Any(y => y.IsCurrent &&
+                                                                                              y.EndTime.HasValue &&
+                                                                                              y.DeliverySheet.DeliveryMethod == DeliveryMethodEnum.PickUp));
+                    query = query.Where(x => x.Invoice == null);
+                    break;
+                case ProcessTypeEnum.PickingUp:
+                    query = query.Where(x => x.Processes.OfType<ProcessDelivering>().Any(y => y.IsCurrent &&
+                                                                                              !y.EndTime.HasValue &&
+                                                                                              y.DeliverySheet.DeliveryMethod == DeliveryMethodEnum.PickUp));
+                    break;
+                case ProcessTypeEnum.Delivered:
+                    query = query.Where(x => x.Processes.OfType<ProcessDelivering>().Any(y => y.IsCurrent &&
+                                                                                              y.EndTime.HasValue &&
+                                                                                              y.DeliverySheet.DeliveryMethod == DeliveryMethodEnum.Shipping));
+                    query = query.Where(x => x.Invoice == null);
+                    break;
+                case ProcessTypeEnum.Delivering:
+                    query = query.Where(x => x.Processes.OfType<ProcessDelivering>().Any(y => y.IsCurrent &&
+                                                                                              !y.EndTime.HasValue &&
+                                                                                              y.DeliverySheet.DeliveryMethod == DeliveryMethodEnum.Shipping));
+                    break;
+                case ProcessTypeEnum.Invoiced:
+                    query = query.Where(x => x.Invoice != null);
+                    break;
+                default:
+                    query = query.Where(x => x.Processes.Any(y => y.IsCurrent && !y.EndTime.HasValue && y.ProcessType == stage));
+                    break;
+            }
+
+            var enquiries = await query.ToListAsync();
+
+            return enquiries.Select(x => new DailyProductionReportDto(x)).OrderBy(x => x.Colour).ToList();
+        }
+
+        public async Task<MemoryStream> DailyProductionReportExcelAsync(ProcessTypeEnum stage)
+        {
+            var report = await DailyProductionReportAsync(stage);
+
+            var stream = new MemoryStream();
+            using (var package = new ExcelPackage(stream))
+            {
+                var sheet = package.Workbook.Worksheets.Add("WorkSheet1");
+
+                var headers = new List<string[]>
+                {
+                    new []{ "JOB","TYPE","DOOR","COLOUR","PARTS","CLIENT","ORDER","STATUS","DAYS IN SYSTEM"}
+                };
+                sheet.Cells["A1:I1"].LoadFromArrays(headers);
+                sheet.Cells["A1:I1"].Style.Font.Bold = true;
+                sheet.Cells["A1:I1"].Style.Font.Color.SetColor(Color.Blue);
+
+                var index = 2;
+                foreach (var item in report)
+                {
+                    sheet.Cells[$"A{index}"].Value = item.EnquiryId;
+                    sheet.Cells[$"B{index}"].Value = item.Type;
+                    sheet.Cells[$"C{index}"].Value = item.Door;
+                    sheet.Cells[$"D{index}"].Value = item.Colour;
+                    sheet.Cells[$"E{index}"].Value = item.PartCount;
+                    sheet.Cells[$"F{index}"].Value = item.CustomerName;
+                    sheet.Cells[$"G{index}"].Value = item.CustomerReference;
+                    sheet.Cells[$"H{index}"].Value = item.Status.ToString();
+                    sheet.Cells[$"I{index}"].Value = item.DaysInSystem;
+
+                    if (item.DaysInSystem >= 8)
+                    {
+                        sheet.Cells[$"A{index}:I{index}"].Style.Font.Bold = true;
+                        sheet.Cells[$"A{index}:I{index}"].Style.Font.Color.SetColor(Color.Red);
+                    }
+
+                    index += 1;
+                }
 
                 package.Save();
             }

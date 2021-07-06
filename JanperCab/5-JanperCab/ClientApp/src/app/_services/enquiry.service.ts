@@ -3,7 +3,7 @@ import { MakeCashPaymentModelDto } from './../_models/cash-order-payment/MakeCas
 import { DeliveryDocketDuraformDto } from './../_models/delivery-docket/DeliveryDocketDuraformDto';
 import { PackingLabelDto } from './../_models/packing-label/PackingLabelDto';
 import { EnquiryForInvoicingDto } from './../_models/enquiry/EnquiryForInvoicingDto';
-import { DuraformEnquiryListDto } from './../_models/enquiry/DuraformEnquiryListDto';
+import { EnquiryListDto } from '../_models/enquiry/EnquiryListDto';
 import { DuraformEnquiryDto } from './../_models/enquiry/DuraformEnquiryDto';
 import { plainToClass } from 'class-transformer';
 import { Observable, throwError } from 'rxjs';
@@ -75,21 +75,19 @@ export class EnquiryService {
       );
   };
 
-  getDuraformDrafts = (): Observable<DuraformEnquiryListDto[]> => {
+  getDuraformDrafts = (): Observable<EnquiryListDto[]> => {
     return this.http
-      .get<DuraformEnquiryListDto[]>(
-        `${environment.baseUrl}/enquiries/duraform/drafts`
-      )
+      .get<EnquiryListDto[]>(`${environment.baseUrl}/enquiries/duraform/drafts`)
       .pipe(
         map((response) => {
-          return plainToClass(DuraformEnquiryListDto, response);
+          return plainToClass(EnquiryListDto, response);
         })
       );
   };
 
   getDuraformOrders = (
     filterValues: OrderSearchFilterValues
-  ): Observable<ItemList<DuraformEnquiryListDto>> => {
+  ): Observable<ItemList<EnquiryListDto>> => {
     const { customerId, search, status, sortBy, direction, page, take } =
       filterValues;
 
@@ -108,7 +106,7 @@ export class EnquiryService {
       url += `&cusId=${customerId}`;
     }
 
-    return this.http.get<ItemList<DuraformEnquiryListDto>>(url);
+    return this.http.get<ItemList<EnquiryListDto>>(url);
   };
 
   createEnquiry = (enquiry: EnquiryDto): Observable<EnquiryDto> => {

@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  domain: 'janperweb.janper.local',
-  baseUrl: 'http://janperweb.janper.local/Api',
+  domain: 'cabpro2.janper.com.au',
+  baseUrl: 'http://cabpro2.janper.com.au/Api',
 };

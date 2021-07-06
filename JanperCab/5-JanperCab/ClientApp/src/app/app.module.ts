@@ -1,3 +1,4 @@
+import { DailyProductionReportPageComponent } from './pages/daily-production-report-page/daily-production-report-page.component';
 import { HingeHoleOptionCornerBlankFormComponent } from './components/hinge-hole-option-corner-blank-form/hinge-hole-option-corner-blank-form.component';
 import { HingeHoleOptionDrawFormComponent } from './components/hinge-hole-option-draw-form/hinge-hole-option-draw-form.component';
 import { HingeHoleOptionSideFormComponent } from './components/hinge-hole-option-side-form/hinge-hole-option-side-form.component';
@@ -292,6 +293,7 @@ import { HingeHoleOptionCornerDoorFormComponent } from './components/hinge-hole-
     HingeHoleOptionDrawFormComponent,
     HingeHoleOptionCornerDoorFormComponent,
     HingeHoleOptionCornerBlankFormComponent,
+    DailyProductionReportPageComponent,
   ],
   imports: [
     BrowserModule,

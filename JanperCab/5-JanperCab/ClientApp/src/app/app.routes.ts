@@ -1,3 +1,4 @@
+import { DailyProductionReportPageComponent } from './pages/daily-production-report-page/daily-production-report-page.component';
 import { MonthlyTallyReportPageComponent } from './pages/monthly-tally-report-page/monthly-tally-report-page.component';
 import { DailyOrderReportPageComponent } from './pages/daily-order-report-page/daily-order-report-page.component';
 import { InvoiceProcessPageComponent } from './pages/invoice-process-page/invoice-process-page.component';
@@ -43,6 +44,10 @@ export const routes: Routes = [
       {
         path: 'reports/daily-invoices',
         component: DailyInvoiceReportPageComponent,
+      },
+      {
+        path: 'reports/daily-production',
+        component: DailyProductionReportPageComponent,
       },
       {
         path: 'reports/monthly-tally',

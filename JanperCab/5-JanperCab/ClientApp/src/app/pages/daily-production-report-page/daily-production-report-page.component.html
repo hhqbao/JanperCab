@@ -1,0 +1,111 @@
+<div class="torp">
+  <app-simple-box [heading]="'Daily Production Report'">
+    <div class="row">
+      <div class="col-1-2">
+        <div class="form__group">
+          <label class="form__label">Production Stage</label>
+          <select
+            class="form__control"
+            [(ngModel)]="chosenStage"
+            (change)="loadReport()"
+          >
+            <option *ngIf="!chosenStage" [value]="null">
+              -- Select a Stage --
+            </option>
+            <option [value]="statusEnums.Ordered">Ordered</option>
+            <option [value]="statusEnums.PreRoute">Pre Route</option>
+            <option [value]="statusEnums.Routing">Routing</option>
+            <option [value]="statusEnums.Routed">Routed</option>
+            <option [value]="statusEnums.Pressing">Pressing</option>
+            <option [value]="statusEnums.Pressed">Pressed</option>
+            <option [value]="statusEnums.Cleaning">Cleaning</option>
+            <option [value]="statusEnums.Cleaned">Cleaned</option>
+            <option [value]="statusEnums.Packing">Packing</option>
+            <option [value]="statusEnums.Packed">Packed</option>
+            <option [value]="statusEnums.PickingUp">Picking Up</option>
+            <option [value]="statusEnums.PickedUp">Picked Up</option>
+            <option [value]="statusEnums.Delivering">Delivering</option>
+            <option [value]="statusEnums.Delivered">Delivered</option>
+            <option [value]="statusEnums.Invoiced">Invoiced</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-1-2 middle right">
+        <div class="dropdown dropdown--1" appDropdownBtn>
+          <button type="button" class="dropdown__toggle">
+            Options
+            <i class="fa fa-cogs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown__list">
+            <li>
+              <a (click)="onDownloadExcel()">
+                <i class="fa fa-print" aria-hidden="true"></i>
+                Export CSV
+              </a>
+            </li>
+            <li class="dropdown__divider"></li>
+            <li>
+              <a>
+                <i class="fa fa-file-pdf-o text-alert" aria-hidden="true"></i>
+                Print
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <table
+      style="margin-top: 3rem"
+      class="table table--hovered table--bordered table--left"
+    >
+      <thead>
+        <tr>
+          <th style="width: 7rem">Job</th>
+          <th style="width: 7rem">Type</th>
+          <th style="width: 20rem">Door</th>
+          <th style="width: 35rem">Colour</th>
+          <th style="width: 6rem">Parts</th>
+          <th>Client</th>
+          <th>Order</th>
+          <th class="text-right" style="width: 10rem">Status</th>
+          <th class="text-right" style="width: 8rem">Days In System</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!isLoading && dailyProductions.length === 0">
+        <tr>
+          <td colspan="9">
+            <i class="text-alert"> No Orders Match </i>
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="!isLoading && dailyProductions.length > 0">
+        <tr
+          [class]="{ 'text-alert': order.daysInSystem >= 8 }"
+          *ngFor="let order of dailyProductions"
+        >
+          <td>
+            <a
+              style="text-decoration: none"
+              target="_black"
+              [routerLink]="['/dashboard/duraform', { id: order.enquiryId }]"
+            >
+              <b>{{ order.enquiryId | leading }}</b>
+            </a>
+          </td>
+          <td>{{ order.type }}</td>
+          <td>{{ order.door }}</td>
+          <td>{{ order.colour }}</td>
+          <td>
+            {{ order.partCount }}
+          </td>
+          <td>{{ order.customerName }}</td>
+          <td>{{ order.customerReference }}</td>
+          <td class="text-right">{{ statusEnums[order.status] }}</td>
+          <td class="text-right">
+            {{ order.daysInSystem }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </app-simple-box>
+</div>

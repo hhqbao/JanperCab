@@ -1,4 +1,5 @@
-﻿using _3_Application.Dtos.Reports;
+﻿using _1_Domain.Enum;
+using _3_Application.Dtos.Reports;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,5 +20,9 @@ namespace _3_Application.Interfaces.Repositories
         Task<List<MonthlyTallyReportDto>> MonthlyTallyReportAsync(int year, int month);
 
         Task<MemoryStream> MonthlyTallyReportExcelAsync(int year, int month);
+
+        Task<List<DailyProductionReportDto>> DailyProductionReportAsync(ProcessTypeEnum stage);
+
+        Task<MemoryStream> DailyProductionReportExcelAsync(ProcessTypeEnum stage);
     }
 }

@@ -1,4 +1,5 @@
-﻿using _3_Application.Interfaces.Repositories;
+﻿using _1_Domain.Enum;
+using _3_Application.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -58,6 +59,21 @@ namespace _5_JanperCab.Controllers
         public async Task<IActionResult> ExcelMonthlyTally(int year, int month)
         {
             var reportStream = await _unitOfWork.Reports.MonthlyTallyReportExcelAsync(year, month);
+
+
+            return File(reportStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        }
+
+        [HttpGet("daily-production/{stage}")]
+        public async Task<IActionResult> DailyProduction(ProcessTypeEnum stage)
+        {
+            return Ok(await _unitOfWork.Reports.DailyProductionReportAsync(stage));
+        }
+
+        [HttpGet("excel/daily-production/{stage}")]
+        public async Task<IActionResult> ExcelDailyProduction(ProcessTypeEnum stage)
+        {
+            var reportStream = await _unitOfWork.Reports.DailyProductionReportExcelAsync(stage);
 
 
             return File(reportStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");

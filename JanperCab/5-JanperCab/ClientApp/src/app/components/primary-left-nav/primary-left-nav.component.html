@@ -160,6 +160,12 @@
                 </a>
               </li>
               <li (click)="layoutService.toggleLeftNav(true)">
+                <a [routerLink]="['/dashboard/reports/daily-production']">
+                  <i class="fa fa-cogs text-green" aria-hidden="true"></i>
+                  Daily Production
+                </a>
+              </li>
+              <li (click)="layoutService.toggleLeftNav(true)">
                 <a [routerLink]="['/dashboard/reports/monthly-tally']">
                   <i class="fa fa-bar-chart text-blue" aria-hidden="true"></i>
                   Tally Report

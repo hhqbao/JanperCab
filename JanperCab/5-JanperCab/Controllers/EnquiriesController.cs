@@ -74,7 +74,7 @@ namespace _5_JanperCab.Controllers
 
             var duraformDrafts = await _unitOfWork.Enquiries.GetDuraformDraftsAsync(currentUser);
 
-            return Ok(_mapper.Map<List<DuraformEnquiry>, List<DuraformEnquiryListDto>>(duraformDrafts));
+            return Ok(_mapper.Map<List<DuraformEnquiry>, List<EnquiryListDto>>(duraformDrafts));
         }
 
         [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
@@ -84,7 +84,7 @@ namespace _5_JanperCab.Controllers
         {
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
 
-            var itemListDto = new ItemList<DuraformEnquiryListDto>();
+            var itemListDto = new ItemList<EnquiryListDto>();
 
             if (int.TryParse(search, out var enquiryId))
             {
@@ -92,7 +92,7 @@ namespace _5_JanperCab.Controllers
 
                 if (enquiry is DuraformEnquiry duraformEnquiry)
                 {
-                    itemListDto.Items.Add(_mapper.Map<DuraformEnquiry, DuraformEnquiryListDto>(duraformEnquiry));
+                    itemListDto.Items.Add(_mapper.Map<DuraformEnquiry, EnquiryListDto>(duraformEnquiry));
                     itemListDto.TotalItemCount = 1;
 
                     return Ok(itemListDto);
@@ -102,7 +102,7 @@ namespace _5_JanperCab.Controllers
             var itemList = await _unitOfWork.Enquiries.GetDuraformOrdersAsync(cusId, currentUser, status, search, sortBy,
                 dir, page, take);
 
-            itemListDto.Items = _mapper.Map<List<DuraformEnquiry>, List<DuraformEnquiryListDto>>(itemList.Items);
+            itemListDto.Items = _mapper.Map<List<DuraformEnquiry>, List<EnquiryListDto>>(itemList.Items);
             itemListDto.TotalItemCount = itemList.TotalItemCount;
 
             return Ok(itemListDto);

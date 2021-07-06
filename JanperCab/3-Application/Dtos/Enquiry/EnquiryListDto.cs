@@ -3,14 +3,27 @@ using _3_Application.Dtos.Process;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace _3_Application.Dtos.Enquiry
 {
-    public class DuraformEnquiryListDto
+    public class EnquiryListDto
     {
         public int Id { get; set; }
 
         public DateTime CreatedDate { get; set; }
+
+        public int DaysInSystem
+        {
+            get
+            {
+                var dayDifference = (int)DateTime.Today.Subtract(CreatedDate).TotalDays;
+                return Enumerable
+                    .Range(1, dayDifference)
+                    .Select(x => CreatedDate.AddDays(x))
+                    .Count(x => x.DayOfWeek != DayOfWeek.Saturday && x.DayOfWeek != DayOfWeek.Sunday);
+            }
+        }
 
         public DateTime? LastEditted { get; set; }
 
@@ -36,7 +49,7 @@ namespace _3_Application.Dtos.Enquiry
 
 
 
-        public DuraformEnquiryListDto()
+        public EnquiryListDto()
         {
             Processes = new Collection<ProcessDto>();
         }

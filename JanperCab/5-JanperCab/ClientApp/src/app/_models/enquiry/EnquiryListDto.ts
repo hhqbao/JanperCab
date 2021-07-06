@@ -1,9 +1,7 @@
-import { ManufacturerDto } from './../customer/ManufacturerDto';
+import { ManufacturerDto } from '../customer/ManufacturerDto';
 import { CustomerDto } from 'src/app/_models/customer/CustomerDto';
-import { DistributorDto } from './../customer/DistributorDto';
+import { DistributorDto } from '../customer/DistributorDto';
 import { CabinetMakerDto } from 'src/app/_models/customer/CabinetMakerDto';
-import { ProcessTypeEnum } from 'src/app/_enums/ProcessTypeEnum';
-import * as moment from 'moment';
 import { Type } from 'class-transformer';
 import { ProcessCleaningDto } from '../process/ProcessCleaningDto';
 import { ProcessDeliveringDto } from '../process/ProcessDeliveringDto';
@@ -13,9 +11,10 @@ import { ProcessPressingDto } from '../process/ProcessPressingDto';
 import { ProcessRoutingDto } from '../process/ProcessRoutingDto';
 import { ProcessDto } from '../process/ProcessDto';
 
-export class DuraformEnquiryListDto {
+export class EnquiryListDto {
   id: number;
   createdDate: Date;
+  daysInSystem: number;
   lastEditted: Date;
   orderedDate: Date;
   approvedDate: Date;
@@ -102,12 +101,6 @@ export class DuraformEnquiryListDto {
     },
   })
   processes: ProcessDto[];
-
-  get timeInSystem(): string {
-    const offset = moment().diff(moment(this.orderedDate), 'days');
-
-    return `${offset} day${offset > 1 ? 's' : ''}`;
-  }
 
   get currentStatus(): ProcessDto {
     if (!this.processes) {

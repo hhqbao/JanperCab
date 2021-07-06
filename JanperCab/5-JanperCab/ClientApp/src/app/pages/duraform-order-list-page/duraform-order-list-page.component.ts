@@ -3,7 +3,7 @@ import { plainToClass } from 'class-transformer';
 import { DialogService } from 'src/app/_services/dialog.service';
 import { EnquiryService } from './../../_services/enquiry.service';
 import { ItemList } from './../../_models/commons/ItemList';
-import { DuraformEnquiryListDto } from './../../_models/enquiry/DuraformEnquiryListDto';
+import { EnquiryListDto } from '../../_models/enquiry/EnquiryListDto';
 import { CustomerType } from './../../_enums/CustomerType';
 import { CabinetMakerDto } from './../../_models/customer/CabinetMakerDto';
 import { Router } from '@angular/router';
@@ -21,7 +21,7 @@ import { Role } from 'src/app/_enums/Role';
 export class DuraformOrderListPageComponent implements OnInit {
   @ViewChild('customerSelector') customerSelector: ElementRef;
 
-  itemList: ItemList<DuraformEnquiryListDto>;
+  itemList: ItemList<EnquiryListDto>;
   filterValues = new OrderSearchFilterValues();
   statusEnums = ProcessTypeEnum;
 
@@ -61,11 +61,8 @@ export class DuraformOrderListPageComponent implements OnInit {
     this.layout.showLoadingPanel();
     this.enquiryService.getDuraformOrders(this.filterValues).subscribe(
       (response) => {
-        this.itemList = new ItemList<DuraformEnquiryListDto>();
-        this.itemList.items = plainToClass(
-          DuraformEnquiryListDto,
-          response.items
-        );
+        this.itemList = new ItemList<EnquiryListDto>();
+        this.itemList.items = plainToClass(EnquiryListDto, response.items);
         this.itemList.totalItemCount = response.totalItemCount;
 
         this.isLoading = false;

@@ -1,3 +1,5 @@
+import { DailyProductionReportDto } from './../_models/reports/DailyProductionReportDto';
+import { ProcessTypeEnum } from './../_enums/ProcessTypeEnum';
 import { DailyInvoiceDto } from './../_models/reports/DailyInvoiceDto';
 import { plainToClass } from 'class-transformer';
 import { map } from 'rxjs/operators';
@@ -127,7 +129,44 @@ export class ReportService {
           FileSaver.saveAs(
             blob,
             `MonthlyTally_${moment(new Date(year, month)).format(
-              'MMM_yyyy'
+              'MMM-yyyy'
+            )}.xlsx`
+          );
+        })
+      );
+  };
+
+  getDailyProductionReport = (
+    stage: ProcessTypeEnum
+  ): Observable<DailyProductionReportDto[]> => {
+    return this.http
+      .get<DailyProductionReportDto[]>(
+        `${environment.baseUrl}/Reports/daily-production/${stage}`
+      )
+      .pipe(
+        map((response) => {
+          return plainToClass(DailyProductionReportDto, response);
+        })
+      );
+  };
+
+  getDailyProductionReportExcel = (
+    stage: ProcessTypeEnum
+  ): Observable<void> => {
+    return this.http
+      .get(`${environment.baseUrl}/Reports/excel/daily-production/${stage}`, {
+        responseType: 'blob',
+      })
+      .pipe(
+        map((response) => {
+          const blob = new Blob([response], {
+            type: response.type,
+          });
+
+          FileSaver.saveAs(
+            blob,
+            `${ProcessTypeEnum[stage]}_${moment(new Date()).format(
+              'DD-MM-yyyy'
             )}.xlsx`
           );
         })
