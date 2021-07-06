@@ -50,6 +50,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_WebToolingArtifacts Remove="Properties\PublishProfiles\Folder Publish Live.pubxml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\1-Domain\1-Domain.csproj" />
     <ProjectReference Include="..\2-Persistent\2-Persistent.csproj" />
     <ProjectReference Include="..\3-Application\3-Application.csproj" />

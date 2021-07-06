@@ -240,7 +240,14 @@ namespace _1_Domain
             DOORFINISH = component.DuraformEnquiry.IsRoutingOnly ? ROUTER_ONLY : component.DuraformEnquiry.DuraformWrapType.Name.ToUpper();
             DOORCOLOR = component.DuraformEnquiry.IsRoutingOnly ? DSW : $"{component.DuraformEnquiry.DuraformWrapColor.Name.ToUpper()} {component.DuraformEnquiry.DuraformWrapType.Name.ToUpper()}";
             CNCCODE = "DOOR";
-            MATERIAL = component.DuraformEnquiry.IsRoutingOnly ? $"{DSW}{DIMZ} MDF" : $"SS{DIMZ} MDF";
+
+            if (component.DuraformEnquiry.IsRoutingOnly)
+                MATERIAL = $"{DSW}{DIMZ} MDF";
+            else
+            {
+                MATERIAL = component.DuraformEnquiry.UseBlackBoard ? $"SSB{DIMZ} MDF" : $"SS{DIMZ} MDF";
+            }
+
             CNCTYPE = "DOOR";
             QUANTITY = component.Quantity;
             DESCRIPTION = component.Note.ToUpper();

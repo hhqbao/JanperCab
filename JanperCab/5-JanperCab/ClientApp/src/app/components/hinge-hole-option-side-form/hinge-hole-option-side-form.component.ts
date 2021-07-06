@@ -1,16 +1,9 @@
 import { HingeHoleOptionBaseForm } from './../hinge-hole-option-base-form/hinge-hole-option-base-form';
 import { HingeHoleDirectionEnum } from './../../_enums/HingeHoleDirectionEnum';
 import { HingeHoleOptionSideDto } from './../../_models/hinge-hole-option/HingeHoleOptionSideDto';
-import { AbstractControl, FormGroup, Validators } from '@angular/forms';
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-  EventEmitter,
-} from '@angular/core';
+import { AbstractControl, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-hinge-hole-option-side-form',
@@ -134,15 +127,12 @@ export class HingeHoleOptionSideFormComponent
   };
 
   onSizeBlur = (control: AbstractControl) => {
-    if (control.invalid) {
-      control.setValue(96);
-    }
-
     this.valueChange.emit();
   };
 
   onSelectQuantity = () => {
     const quantity = this.quantity.value;
+    const height = this.formGroup.get('height').value;
 
     this.topCenter.patchValue(null);
     this.middleOne.patchValue(null);
@@ -154,18 +144,26 @@ export class HingeHoleOptionSideFormComponent
     this.bottomCenter.clearValidators();
     this.bottom.clearValidators();
 
+    this.top.patchValue(96);
+
     if (quantity >= 2) {
       this.bottom.patchValue(96);
       this.bottom.setValidators([Validators.required, Validators.min(50)]);
     }
 
-    if (quantity >= 3) {
-      this.topCenter.patchValue(96);
+    if (quantity === 3) {
+      this.topCenter.patchValue(_.floor(height / 2, 0));
       this.topCenter.setValidators([Validators.required, Validators.min(50)]);
     }
 
-    if (quantity >= 4) {
-      this.bottomCenter.patchValue(96);
+    if (quantity === 4) {
+      const offset = height - 96 - 96;
+      const pos = _.floor(offset / 3, 0) + 96;
+
+      this.topCenter.patchValue(pos);
+      this.topCenter.setValidators([Validators.required, Validators.min(50)]);
+
+      this.bottomCenter.patchValue(pos);
       this.bottomCenter.setValidators([
         Validators.required,
         Validators.min(50),
@@ -173,8 +171,20 @@ export class HingeHoleOptionSideFormComponent
     }
 
     if (quantity >= 5) {
-      this.middleOne.patchValue(96);
+      const offset = height - 96 - 96;
+      const pos = _.floor(offset / 4, 0) + 96;
+
+      this.topCenter.patchValue(pos);
+      this.topCenter.setValidators([Validators.required, Validators.min(50)]);
+
+      this.middleOne.patchValue(_.floor(height / 2, 0));
       this.middleOne.setValidators([Validators.required, Validators.min(50)]);
+
+      this.bottomCenter.patchValue(pos);
+      this.bottomCenter.setValidators([
+        Validators.required,
+        Validators.min(50),
+      ]);
     }
 
     this.topCenter.updateValueAndValidity();

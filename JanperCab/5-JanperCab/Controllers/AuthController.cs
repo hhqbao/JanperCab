@@ -3,6 +3,7 @@ using _3_Application.Dtos.Auth;
 using _3_Application.Interfaces.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace _5_JanperCab.Controllers
@@ -23,9 +24,16 @@ namespace _5_JanperCab.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login(UserForLogin modelDto)
         {
-            var userToken = await _authService.Login(modelDto.Email, modelDto.Password);
+            try
+            {
+                var userToken = await _authService.Login(modelDto.Email, modelDto.Password);
 
-            return Ok(userToken);
+                return Ok(userToken);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
         //[HttpPut("ChangePassword")]

@@ -107,7 +107,6 @@ namespace _1_Domain
                 TYPE = ICB_TYPE_ENUM.DOOR,
                 BT = drawerNumber == 1 ? design.BT : topOffset,
                 BB = NumberOfDrawers == drawerNumber ? design.BB : bottomOffset,
-                QUANTITY = 1
             };
 
             line.EDGE_TOP = drawerNumber == 1 ? line.EDGE_TOP : 0;
