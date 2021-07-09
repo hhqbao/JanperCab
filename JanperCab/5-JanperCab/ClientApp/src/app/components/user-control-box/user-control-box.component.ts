@@ -1,5 +1,3 @@
-import { LayoutService } from './../../_services/layout.service';
-import { Router } from '@angular/router';
 import { AuthService } from './../../_services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,7 +6,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: 'user-control-box.component.html',
 })
 export class UserControlBoxComponent implements OnInit {
-  constructor(public authService: AuthService, private router: Router) {}
+  showChangePasswordForm = false;
+
+  constructor(public authService: AuthService) {}
 
   ngOnInit() {}
 

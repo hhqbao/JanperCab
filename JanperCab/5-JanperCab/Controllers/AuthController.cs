@@ -1,6 +1,7 @@
 ﻿using _1_Domain;
 using _3_Application.Dtos.Auth;
 using _3_Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -36,21 +37,24 @@ namespace _5_JanperCab.Controllers
             }
         }
 
-        //[HttpPut("ChangePassword")]
-        //public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
-        //{
-        //    var user = await _userManager.FindByEmailAsync(model.Email);
+        [Authorize]
+        [HttpPut("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(User.Identity.Name);
 
-        //    if (user == null)
-        //        return BadRequest("user Not Found");
+            if (user == null)
+                return BadRequest("user Not Found");
 
-        //    var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+            var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
 
-        //    if (result.Succeeded)
-        //        return Ok();
+            if (!result.Succeeded) return BadRequest("Change Password Failed");
 
-        //    return BadRequest("Change Password Failed");
-        //}
+            var userToken = await _authService.Login(user.Email, model.NewPassword);
+
+            return Ok(userToken);
+
+        }
 
         //[HttpPost("Register")]
         //public async Task<IActionResult> Register(UserForRegister modelDto)
@@ -62,13 +66,4 @@ namespace _5_JanperCab.Controllers
         //    return Ok(userToken);
         //}
     }
-
-    //public class ChangePasswordViewModel
-    //{
-    //    public string Email { get; set; }
-
-    //    public string CurrentPassword { get; set; }
-
-    //    public string NewPassword { get; set; }
-    //}
 }

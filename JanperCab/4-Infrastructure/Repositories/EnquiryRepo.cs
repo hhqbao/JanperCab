@@ -17,18 +17,18 @@ namespace _4_Infrastructure.Repositories
 
         public async Task<Enquiry> GetEnquiryAsync(int id, Customer customer)
         {
-            var duraformEnquiry = await _dbSet.FindAsync(id);
+            var enquiry = await _dbSet.FindAsync(id);
 
-            if (duraformEnquiry == null) return null;
+            if (enquiry == null) return null;
 
             switch (customer)
             {
                 case CabinetMaker cabinetMaker:
-                    return duraformEnquiry.CustomerId == cabinetMaker.Id ? duraformEnquiry : null;
+                    return enquiry.CustomerId == cabinetMaker.Id ? enquiry : null;
                 case Distributor distributor:
-                    return duraformEnquiry.CustomerId == distributor.Id || duraformEnquiry.ManagerId == distributor.Id ? duraformEnquiry : null;
+                    return enquiry.CustomerId == distributor.Id || enquiry.ManagerId == distributor.Id ? enquiry : null;
                 case Manufacturer _:
-                    return duraformEnquiry;
+                    return enquiry;
                 default:
                     return null;
             }
@@ -54,9 +54,9 @@ namespace _4_Infrastructure.Repositories
                 .Where(x => x.EnquiryType == EnquiryTypeEnum.Draft && x.CreatorId == creator.Id).ToListAsync();
         }
 
-        public async Task<ItemList<DuraformEnquiry>> GetDuraformOrdersAsync(int? searchCustomerId, ApplicationUser currentUser, ProcessTypeEnum? status, string search, string sortBy, string direction, int page, int take)
+        public async Task<ItemList<Enquiry>> GetOrdersAsync(int? searchCustomerId, ApplicationUser currentUser, ProcessTypeEnum? status, string search, string sortBy, string direction, int page, int take)
         {
-            var query = _dbSet.OfType<DuraformEnquiry>().Where(x => x.EnquiryType == EnquiryTypeEnum.Order && x.OrderedDate.HasValue);
+            var query = _dbSet.Where(x => x.EnquiryType == EnquiryTypeEnum.Order && x.OrderedDate.HasValue);
 
             switch (currentUser.Customer)
             {
@@ -125,11 +125,11 @@ namespace _4_Infrastructure.Repositories
                     break;
             }
 
-            return await GetSortedDuraformEnquiryListAsync(search, sortBy, direction, page, take, query);
+            return await GetSortedEnquiryListAsync(search, sortBy, direction, page, take, query);
         }
 
-        private static async Task<ItemList<DuraformEnquiry>> GetSortedDuraformEnquiryListAsync(string search, string sortBy, string direction, int page, int take,
-            IQueryable<DuraformEnquiry> query)
+        private static async Task<ItemList<Enquiry>> GetSortedEnquiryListAsync(string search, string sortBy, string direction, int page, int take,
+            IQueryable<Enquiry> query)
         {
             if (!string.IsNullOrEmpty(search))
                 query = query.Where(x => x.CustomerReference.Contains(search) || x.Customer.Name.Contains(search));
@@ -143,8 +143,8 @@ namespace _4_Infrastructure.Repositories
                     break;
                 case "type":
                     query = direction.Equals("asc")
-                        ? query.OrderBy(x => x.IsRoutingOnly)
-                        : query.OrderByDescending(x => x.IsRoutingOnly);
+                        ? query.OrderBy(x => x.JobType)
+                        : query.OrderByDescending(x => x.JobType);
                     break;
                 case "customer":
                     query = direction.Equals("asc")
@@ -153,8 +153,8 @@ namespace _4_Infrastructure.Repositories
                     break;
                 case "description":
                     query = direction.Equals("asc")
-                        ? query.OrderBy(x => x.DuraformDesign.Name)
-                        : query.OrderByDescending(x => x.DuraformDesign.Name);
+                        ? query.OrderBy(x => x.DoorType)
+                        : query.OrderByDescending(x => x.DoorType);
                     break;
                 case "orderedDate":
                     query = direction.Equals("asc")
@@ -171,7 +171,7 @@ namespace _4_Infrastructure.Repositories
             var totalCount = await query.CountAsync();
             var orders = await query.Skip(page * take).Take(take).ToListAsync();
 
-            var itemList = new ItemList<DuraformEnquiry>
+            var itemList = new ItemList<Enquiry>
             {
                 Items = orders,
                 TotalItemCount = totalCount

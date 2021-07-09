@@ -1,10 +1,16 @@
+<app-float-box *ngIf="showChangePasswordForm">
+  <app-change-password-form
+    (afterSubmit)="showChangePasswordForm = false"
+    (cancel)="showChangePasswordForm = false"
+  ></app-change-password-form>
+</app-float-box>
 <div class="dropdown" appDropdownBtn>
   <button type="button" class="dropdown__toggle">
     <img class="dropdown__avatar" src="./../../../assets/images/avatar.jpg" />
     {{ authService.decodedToken?.unique_name | titlecase }}
     <i class="fa fa-caret-down"></i>
   </button>
-  <ul class="dropdown__list" style="top: 125%;">
+  <ul class="dropdown__list" style="top: 125%">
     <li>
       <a href="#" class="active">
         <i class="fa fa-cog"></i>
@@ -21,6 +27,13 @@
       <a href="#">
         <i class="fa fa-commenting-o"></i>
         Messages
+      </a>
+    </li>
+    <li class="dropdown__divider"></li>
+    <li>
+      <a (click)="showChangePasswordForm = true">
+        <i class="fa fa-lock" aria-hidden="true"></i>
+        Change Password
       </a>
     </li>
     <li class="dropdown__divider"></li>

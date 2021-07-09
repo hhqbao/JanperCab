@@ -90,19 +90,19 @@ namespace _5_JanperCab.Controllers
             {
                 var enquiry = await _unitOfWork.Enquiries.GetEnquiryAsync(enquiryId, cusId.HasValue ? await _unitOfWork.Customers.GetAsync(cusId) : currentUser.Customer);
 
-                if (enquiry is DuraformEnquiry duraformEnquiry)
+                if (enquiry != null)
                 {
-                    itemListDto.Items.Add(_mapper.Map<DuraformEnquiry, EnquiryListDto>(duraformEnquiry));
+                    itemListDto.Items.Add(_mapper.Map<Enquiry, EnquiryListDto>(enquiry));
                     itemListDto.TotalItemCount = 1;
 
                     return Ok(itemListDto);
                 }
             }
 
-            var itemList = await _unitOfWork.Enquiries.GetDuraformOrdersAsync(cusId, currentUser, status, search, sortBy,
+            var itemList = await _unitOfWork.Enquiries.GetOrdersAsync(cusId, currentUser, status, search, sortBy,
                 dir, page, take);
 
-            itemListDto.Items = _mapper.Map<List<DuraformEnquiry>, List<EnquiryListDto>>(itemList.Items);
+            itemListDto.Items = _mapper.Map<List<Enquiry>, List<EnquiryListDto>>(itemList.Items);
             itemListDto.TotalItemCount = itemList.TotalItemCount;
 
             return Ok(itemListDto);

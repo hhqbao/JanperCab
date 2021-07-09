@@ -1,3 +1,4 @@
+import { ChangePasswordFormComponent } from './components/change-password-form/change-password-form.component';
 import { DailyProductionReportPageComponent } from './pages/daily-production-report-page/daily-production-report-page.component';
 import { HingeHoleOptionCornerBlankFormComponent } from './components/hinge-hole-option-corner-blank-form/hinge-hole-option-corner-blank-form.component';
 import { HingeHoleOptionDrawFormComponent } from './components/hinge-hole-option-draw-form/hinge-hole-option-draw-form.component';
@@ -294,6 +295,7 @@ import { HingeHoleOptionCornerDoorFormComponent } from './components/hinge-hole-
     HingeHoleOptionCornerDoorFormComponent,
     HingeHoleOptionCornerBlankFormComponent,
     DailyProductionReportPageComponent,
+    ChangePasswordFormComponent,
   ],
   imports: [
     BrowserModule,

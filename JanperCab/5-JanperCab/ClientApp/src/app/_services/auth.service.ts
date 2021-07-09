@@ -1,3 +1,4 @@
+import { ChangePasswordViewModel } from './../_models/auth/ChangePasswordViewModel';
 import { Router } from '@angular/router';
 import { Role } from './../_enums/Role';
 import { plainToClass, classToClass, classToPlain } from 'class-transformer';
@@ -99,6 +100,24 @@ export class AuthService {
         map((response) => {
           if (response) {
             this.userToken = plainToClass(UserTokenDto, response);
+
+            localStorage.setItem('token', this.userToken.token);
+            localStorage.setItem('customer', JSON.stringify(response.customer));
+          }
+        })
+      );
+  };
+
+  changePassword = (model: ChangePasswordViewModel) => {
+    return this.http
+      .put<UserTokenDto>(`${environment.baseUrl}/auth/ChangePassword`, model)
+      .pipe(
+        map((response) => {
+          if (response) {
+            this.userToken = plainToClass(UserTokenDto, response);
+
+            localStorage.removeItem('token');
+            localStorage.removeItem('customer');
 
             localStorage.setItem('token', this.userToken.token);
             localStorage.setItem('customer', JSON.stringify(response.customer));

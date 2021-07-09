@@ -57,7 +57,12 @@ export class LoginFormComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         (this.loginFormGroup.get('email') as any).nativeElement.focus();
-        this.dialog.error(error);
+
+        if (error.Message) {
+          this.dialog.error(error.Message);
+        } else {
+          this.dialog.error(error);
+        }
       }
     );
   };
