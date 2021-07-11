@@ -1,36 +1,22 @@
-<div class="torp">
+<div class="dpr">
   <app-simple-box [heading]="'Daily Production Report'">
     <div class="row">
-      <div class="col-1-2">
-        <div class="form__group">
-          <label class="form__label">Production Stage</label>
-          <select
-            class="form__control"
-            [(ngModel)]="chosenStage"
-            (change)="loadReport()"
-          >
-            <option *ngIf="!chosenStage" [value]="null">
-              -- Select a Stage --
-            </option>
-            <option [value]="statusEnums.Ordered">Ordered</option>
-            <option [value]="statusEnums.PreRoute">Pre Route</option>
-            <option [value]="statusEnums.Routing">Routing</option>
-            <option [value]="statusEnums.Routed">Routed</option>
-            <option [value]="statusEnums.Pressing">Pressing</option>
-            <option [value]="statusEnums.Pressed">Pressed</option>
-            <option [value]="statusEnums.Cleaning">Cleaning</option>
-            <option [value]="statusEnums.Cleaned">Cleaned</option>
-            <option [value]="statusEnums.Packing">Packing</option>
-            <option [value]="statusEnums.Packed">Packed</option>
-            <option [value]="statusEnums.PickingUp">Picking Up</option>
-            <option [value]="statusEnums.PickedUp">Picked Up</option>
-            <option [value]="statusEnums.Delivering">Delivering</option>
-            <option [value]="statusEnums.Delivered">Delivered</option>
-            <option [value]="statusEnums.Invoiced">Invoiced</option>
-          </select>
-        </div>
+      <div class="col-2-3">
+        <ul class="stage-list">
+          <li class="stage-list__stage" *ngFor="let stage of displayStages">
+            <label class="form__checkbox">
+              <span
+                style="display: inline-block; font-weight: bold; width: 8.5rem"
+              >
+                {{ statusEnums[stage] }}
+              </span>
+              <input type="checkbox" (change)="onSelectStage(stage)" />
+              <span></span>
+            </label>
+          </li>
+        </ul>
       </div>
-      <div class="col-1-2 middle right">
+      <div class="col-1-3 middle right">
         <div class="dropdown dropdown--1" appDropdownBtn>
           <button type="button" class="dropdown__toggle">
             Options

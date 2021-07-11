@@ -301,13 +301,11 @@ namespace _4_Infrastructure.Repositories
 
             var enquiries = await query.ToListAsync();
 
-            return enquiries.Select(x => new DailyProductionReportDto(x)).OrderBy(x => x.Colour).ToList();
+            return enquiries.Select(x => new DailyProductionReportDto(x)).ToList();
         }
 
-        public async Task<MemoryStream> DailyProductionReportExcelAsync(ProcessTypeEnum stage)
+        public MemoryStream DailyProductionReportExcel(List<DailyProductionReportDto> productionReport)
         {
-            var report = await DailyProductionReportAsync(stage);
-
             var stream = new MemoryStream();
             using (var package = new ExcelPackage(stream))
             {
@@ -322,7 +320,7 @@ namespace _4_Infrastructure.Repositories
                 sheet.Cells["A1:I1"].Style.Font.Color.SetColor(Color.Blue);
 
                 var index = 2;
-                foreach (var item in report)
+                foreach (var item in productionReport)
                 {
                     sheet.Cells[$"A{index}"].Value = item.EnquiryId;
                     sheet.Cells[$"B{index}"].Value = item.Type;

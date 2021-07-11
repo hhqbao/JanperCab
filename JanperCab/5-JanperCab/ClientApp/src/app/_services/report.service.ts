@@ -137,11 +137,17 @@ export class ReportService {
   };
 
   getDailyProductionReport = (
-    stage: ProcessTypeEnum
+    stages: ProcessTypeEnum[]
   ): Observable<DailyProductionReportDto[]> => {
+    let param = `stages=${stages[0]}`;
+
+    for (let i = 1; i < stages.length; i++) {
+      param += `&stages=${stages[i]}`;
+    }
+
     return this.http
       .get<DailyProductionReportDto[]>(
-        `${environment.baseUrl}/Reports/daily-production/${stage}`
+        `${environment.baseUrl}/Reports/daily-production?${param}`
       )
       .pipe(
         map((response) => {
@@ -151,10 +157,16 @@ export class ReportService {
   };
 
   getDailyProductionReportExcel = (
-    stage: ProcessTypeEnum
+    stages: ProcessTypeEnum[]
   ): Observable<void> => {
+    let param = `stages=${stages[0]}`;
+
+    for (let i = 1; i < stages.length; i++) {
+      param += `&stages=${stages[i]}`;
+    }
+
     return this.http
-      .get(`${environment.baseUrl}/Reports/excel/daily-production/${stage}`, {
+      .get(`${environment.baseUrl}/Reports/excel/daily-production?${param}`, {
         responseType: 'blob',
       })
       .pipe(
@@ -165,9 +177,7 @@ export class ReportService {
 
           FileSaver.saveAs(
             blob,
-            `${ProcessTypeEnum[stage]}_${moment(new Date()).format(
-              'DD-MM-yyyy'
-            )}.xlsx`
+            `Production-Report_${moment(new Date()).format('DD-MM-yyyy')}.xlsx`
           );
         })
       );

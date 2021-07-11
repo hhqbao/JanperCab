@@ -23,6 +23,6 @@ namespace _3_Application.Interfaces.Repositories
 
         Task<List<DailyProductionReportDto>> DailyProductionReportAsync(ProcessTypeEnum stage);
 
-        Task<MemoryStream> DailyProductionReportExcelAsync(ProcessTypeEnum stage);
+        MemoryStream DailyProductionReportExcel(List<DailyProductionReportDto> productionReport);
     }
 }

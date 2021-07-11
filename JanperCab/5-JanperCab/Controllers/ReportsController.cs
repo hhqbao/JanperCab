@@ -1,8 +1,11 @@
 ﻿using _1_Domain.Enum;
+using _3_Application.Dtos.Reports;
 using _3_Application.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace _5_JanperCab.Controllers
@@ -64,16 +67,30 @@ namespace _5_JanperCab.Controllers
             return File(reportStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         }
 
-        [HttpGet("daily-production/{stage}")]
-        public async Task<IActionResult> DailyProduction(ProcessTypeEnum stage)
+        [HttpGet("daily-production")]
+        public async Task<IActionResult> DailyProduction([FromQuery] ProcessTypeEnum[] stages)
         {
-            return Ok(await _unitOfWork.Reports.DailyProductionReportAsync(stage));
+            var result = new List<DailyProductionReportDto>();
+
+            foreach (var stage in stages.Distinct().ToList())
+            {
+                result.AddRange(await _unitOfWork.Reports.DailyProductionReportAsync(stage));
+            }
+
+            return Ok(result.OrderBy(x => x.Colour).ToList());
         }
 
-        [HttpGet("excel/daily-production/{stage}")]
-        public async Task<IActionResult> ExcelDailyProduction(ProcessTypeEnum stage)
+        [HttpGet("excel/daily-production")]
+        public async Task<IActionResult> ExcelDailyProduction([FromQuery] ProcessTypeEnum[] stages)
         {
-            var reportStream = await _unitOfWork.Reports.DailyProductionReportExcelAsync(stage);
+            var result = new List<DailyProductionReportDto>();
+
+            foreach (var stage in stages.Distinct().ToList())
+            {
+                result.AddRange(await _unitOfWork.Reports.DailyProductionReportAsync(stage));
+            }
+
+            var reportStream = _unitOfWork.Reports.DailyProductionReportExcel(result.OrderBy(x => x.Colour).ToList());
 
 
             return File(reportStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
