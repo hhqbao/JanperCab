@@ -1,24 +1,24 @@
 import { ProcessTypeEnum } from '../../_enums/ProcessTypeEnum';
 import { plainToClass } from 'class-transformer';
 import { DialogService } from 'src/app/_services/dialog.service';
-import { EnquiryService } from './../../_services/enquiry.service';
-import { ItemList } from './../../_models/commons/ItemList';
+import { EnquiryService } from '../../_services/enquiry.service';
+import { ItemList } from '../../_models/commons/ItemList';
 import { EnquiryListDto } from '../../_models/enquiry/EnquiryListDto';
-import { CustomerType } from './../../_enums/CustomerType';
-import { CabinetMakerDto } from './../../_models/customer/CabinetMakerDto';
+import { CustomerType } from '../../_enums/CustomerType';
+import { CabinetMakerDto } from '../../_models/customer/CabinetMakerDto';
 import { Router } from '@angular/router';
-import { OrderSearchFilterValues } from './../../_models/commons/OrderSearchFilterValues';
-import { AuthService } from './../../_services/auth.service';
-import { LayoutService } from './../../_services/layout.service';
+import { OrderSearchFilterValues } from '../../_models/commons/OrderSearchFilterValues';
+import { AuthService } from '../../_services/auth.service';
+import { LayoutService } from '../../_services/layout.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as scanner from 'onscan.js';
 import { Role } from 'src/app/_enums/Role';
 
 @Component({
-  selector: 'app-duraform-order-list-page',
-  templateUrl: 'duraform-order-list-page.component.html',
+  selector: 'app-order-list-page',
+  templateUrl: 'order-list-page.component.html',
 })
-export class DuraformOrderListPageComponent implements OnInit {
+export class OrderListPageComponent implements OnInit {
   @ViewChild('customerSelector') customerSelector: ElementRef;
 
   itemList: ItemList<EnquiryListDto>;
@@ -59,7 +59,7 @@ export class DuraformOrderListPageComponent implements OnInit {
   loadDuraformOrderList = () => {
     this.isLoading = true;
     this.layout.showLoadingPanel();
-    this.enquiryService.getDuraformOrders(this.filterValues).subscribe(
+    this.enquiryService.getOrders(this.filterValues).subscribe(
       (response) => {
         this.itemList = new ItemList<EnquiryListDto>();
         this.itemList.items = plainToClass(EnquiryListDto, response.items);

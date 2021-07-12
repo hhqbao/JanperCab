@@ -12,7 +12,7 @@ namespace _3_Application.Interfaces.Repositories
 
         Task<List<Enquiry>> GetEnquiriesForInvoicingAsync();
 
-        Task<List<DuraformEnquiry>> GetDuraformDraftsAsync(ApplicationUser creator);
+        Task<List<Enquiry>> GetDraftsAsync(ApplicationUser creator);
 
         Task<ItemList<Enquiry>> GetOrdersAsync(int? searchCustomerId, ApplicationUser currentUser, ProcessTypeEnum? status,
             string search, string sortBy, string direction, int page, int take);

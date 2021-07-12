@@ -4,7 +4,7 @@ import { DailyOrderReportPageComponent } from './pages/daily-order-report-page/d
 import { InvoiceProcessPageComponent } from './pages/invoice-process-page/invoice-process-page.component';
 import { DeliveryPageComponent } from './pages/delivery-page/delivery-page.component';
 import { MachineListPageComponent } from './pages/machine-list-page/machine-list-page.component';
-import { DuraformOrderListPageComponent } from './pages/duraform-order-list-page/duraform-order-list-page.component';
+import { OrderListPageComponent } from './pages/order-list-page/order-list-page.component';
 import { CustomerListPageComponent } from './pages/customer-list-page/customer-list-page.component';
 import { DuraformQuotePageComponent } from './pages/duraform-quote-page/duraform-quote-page.component';
 import { AuthGuard } from './_guards/auth.guard';
@@ -29,7 +29,7 @@ export const routes: Routes = [
     runGuardsAndResolvers: 'always',
     children: [
       { path: 'customers', component: CustomerListPageComponent },
-      { path: 'duraform/orders', component: DuraformOrderListPageComponent },
+      { path: 'orders', component: OrderListPageComponent },
       { path: 'duraform/quote/:id', component: DuraformQuotePageComponent },
       { path: 'duraform/:id', component: DuraformPageComponent },
       { path: 'duraform', component: DuraformPageComponent },

@@ -1,15 +1,15 @@
 import { EnquiryListDto } from '../../_models/enquiry/EnquiryListDto';
-import { LayoutService } from './../../_services/layout.service';
-import { EnquiryService } from './../../_services/enquiry.service';
+import { LayoutService } from '../../_services/layout.service';
+import { EnquiryService } from '../../_services/enquiry.service';
 import { Router } from '@angular/router';
 import { DialogService } from '../../_services/dialog.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-duraform-draft-list',
-  templateUrl: 'duraform-draft-list.component.html',
+  selector: 'app-draft-list',
+  templateUrl: 'draft-list.component.html',
 })
-export class DuraformDraftListComponent implements OnInit {
+export class DraftListComponent implements OnInit {
   isInitializing = true;
 
   drafts: EnquiryListDto[] = [];
@@ -24,7 +24,7 @@ export class DuraformDraftListComponent implements OnInit {
   ngOnInit() {
     this.layout.showLoadingPanel();
 
-    this.enquiryService.getDuraformDrafts().subscribe(
+    this.enquiryService.getDrafts().subscribe(
       (response) => {
         this.drafts = response;
         this.isInitializing = false;

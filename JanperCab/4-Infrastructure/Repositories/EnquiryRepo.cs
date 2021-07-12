@@ -48,9 +48,9 @@ namespace _4_Infrastructure.Repositories
             return enquiries;
         }
 
-        public async Task<List<DuraformEnquiry>> GetDuraformDraftsAsync(ApplicationUser creator)
+        public async Task<List<Enquiry>> GetDraftsAsync(ApplicationUser creator)
         {
-            return await _dbSet.OfType<DuraformEnquiry>()
+            return await _dbSet
                 .Where(x => x.EnquiryType == EnquiryTypeEnum.Draft && x.CreatorId == creator.Id).ToListAsync();
         }
 
@@ -99,7 +99,6 @@ namespace _4_Infrastructure.Repositories
                     query = query.Where(x => x.Processes.OfType<ProcessDelivering>().Any(y => y.IsCurrent &&
                                                                                               y.EndTime.HasValue &&
                                                                                               y.DeliverySheet.DeliveryMethod == DeliveryMethodEnum.PickUp));
-                    query = query.Where(x => x.Invoice == null);
                     break;
                 case ProcessTypeEnum.PickingUp:
                     query = query.Where(x => x.Processes.OfType<ProcessDelivering>().Any(y => y.IsCurrent &&
@@ -110,7 +109,6 @@ namespace _4_Infrastructure.Repositories
                     query = query.Where(x => x.Processes.OfType<ProcessDelivering>().Any(y => y.IsCurrent &&
                                                                                               y.EndTime.HasValue &&
                                                                                               y.DeliverySheet.DeliveryMethod == DeliveryMethodEnum.Shipping));
-                    query = query.Where(x => x.Invoice == null);
                     break;
                 case ProcessTypeEnum.Delivering:
                     query = query.Where(x => x.Processes.OfType<ProcessDelivering>().Any(y => y.IsCurrent &&

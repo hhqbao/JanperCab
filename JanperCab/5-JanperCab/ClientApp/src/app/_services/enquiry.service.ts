@@ -75,9 +75,9 @@ export class EnquiryService {
       );
   };
 
-  getDuraformDrafts = (): Observable<EnquiryListDto[]> => {
+  getDrafts = (): Observable<EnquiryListDto[]> => {
     return this.http
-      .get<EnquiryListDto[]>(`${environment.baseUrl}/enquiries/duraform/drafts`)
+      .get<EnquiryListDto[]>(`${environment.baseUrl}/enquiries/drafts`)
       .pipe(
         map((response) => {
           return plainToClass(EnquiryListDto, response);
@@ -85,13 +85,13 @@ export class EnquiryService {
       );
   };
 
-  getDuraformOrders = (
+  getOrders = (
     filterValues: OrderSearchFilterValues
   ): Observable<ItemList<EnquiryListDto>> => {
     const { customerId, search, status, sortBy, direction, page, take } =
       filterValues;
 
-    let url = `${environment.baseUrl}/Enquiries/Duraform/Orders?page=${page}&take=${take}`;
+    let url = `${environment.baseUrl}/Enquiries/Orders?page=${page}&take=${take}`;
     url += `&sortBy=${sortBy}&dir=${direction}`;
 
     if (status && `${status}` !== 'null') {

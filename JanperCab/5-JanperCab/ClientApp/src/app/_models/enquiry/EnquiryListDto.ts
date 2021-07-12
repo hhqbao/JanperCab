@@ -10,6 +10,7 @@ import { ProcessPreRouteDto } from '../process/ProcessPreRouteDto';
 import { ProcessPressingDto } from '../process/ProcessPressingDto';
 import { ProcessRoutingDto } from '../process/ProcessRoutingDto';
 import { ProcessDto } from '../process/ProcessDto';
+import { ProcessTypeEnum } from 'src/app/_enums/ProcessTypeEnum';
 
 export class EnquiryListDto {
   id: number;
@@ -18,8 +19,11 @@ export class EnquiryListDto {
   lastEditted: Date;
   orderedDate: Date;
   approvedDate: Date;
-  isRoutingOnly: boolean;
+  jobType: string;
+  doorType: string;
+  doorColour: string;
   customerReference: string;
+  totalPrice: number;
 
   @Type(() => CustomerDto, {
     keepDiscriminatorProperty: true,
@@ -66,6 +70,7 @@ export class EnquiryListDto {
   manager: CustomerDto;
 
   deliveryNote: string;
+  hasBeenDelivered: boolean;
   hasBeenInvoiced: boolean;
 
   @Type(() => ProcessDto, {
@@ -117,10 +122,10 @@ export class EnquiryListDto {
       return 'Ordered';
     }
 
-    if (this.hasBeenInvoiced) {
-      return 'Invoiced';
-    }
-
     return this.currentStatus.getStatus();
+  }
+
+  get isCompleted(): boolean {
+    return this.hasBeenDelivered && this.hasBeenInvoiced;
   }
 }

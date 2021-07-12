@@ -67,19 +67,19 @@ namespace _5_JanperCab.Controllers
         }
 
         [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
-        [HttpGet("duraform/drafts")]
+        [HttpGet("drafts")]
         public async Task<IActionResult> GetDuraformDrafts()
         {
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
 
-            var duraformDrafts = await _unitOfWork.Enquiries.GetDuraformDraftsAsync(currentUser);
+            var drafts = await _unitOfWork.Enquiries.GetDraftsAsync(currentUser);
 
-            return Ok(_mapper.Map<List<DuraformEnquiry>, List<EnquiryListDto>>(duraformDrafts));
+            return Ok(_mapper.Map<List<Enquiry>, List<EnquiryListDto>>(drafts));
         }
 
         [Authorize(Roles = "CabinetMaker,Distributor,Sale")]
-        [HttpGet("duraform/orders")]
-        public async Task<IActionResult> GetDuraformOrders(int? cusId, ProcessTypeEnum? status, string search,
+        [HttpGet("orders")]
+        public async Task<IActionResult> GetOrders(int? cusId, ProcessTypeEnum? status, string search,
             string sortBy, string dir, int page = 0, int take = 20)
         {
             var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);

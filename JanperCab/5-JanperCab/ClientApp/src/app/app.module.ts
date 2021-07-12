@@ -56,7 +56,7 @@ import { CustomerListComponent } from './components/customer-list/customer-list.
 import { FileSizePipe } from './_pipes/fileSize.pipe';
 import { FileService } from './_services/file.service';
 import { PaginationComponent } from './components/pagination/pagination.component';
-import { DuraformOrderListPageComponent } from './pages/duraform-order-list-page/duraform-order-list-page.component';
+import { OrderListPageComponent } from './pages/order-list-page/order-list-page.component';
 import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
 import { DeliveryDocketDuraformDrawersComponent } from './components/delivery-docket-duraform-drawers/delivery-docket-duraform-drawers.component';
 import { DeliveryDocketEndPanelsComponent } from './components/delivery-docket-end-panels/delivery-docket-end-panels.component';
@@ -70,7 +70,7 @@ import { CommonAssetsService } from './_services/common-assets.service';
 import { CustomerFormComponent } from './components/customer-form/customer-form.component';
 import { LeadingPipe } from './_pipes/leading.pipe';
 import { DuraformQuotePageComponent } from './pages/duraform-quote-page/duraform-quote-page.component';
-import { DuraformDraftListComponent } from './components/duraform-draft-list/duraform-draft-list.component.';
+import { DraftListComponent } from './components/draft-list/draft-list.component.';
 import { LatestItemsComponent } from './components/latest-items/latest-items.component';
 import { SimpleBoxComponent } from './components/simple-box/simple-box.component';
 import { DashboardService } from './_services/dashboard.service';
@@ -232,13 +232,13 @@ import { HingeHoleOptionCornerDoorFormComponent } from './components/hinge-hole-
     DuraformPantryDoorComponentListComponent,
     EndPanelComponentListComponent,
     DuraformDrawerComponentListComponent,
-    DuraformDraftListComponent,
+    DraftListComponent,
     CustomerFormComponent,
     LoginPageComponent,
     HomePageComponent,
     CustomerListPageComponent,
     DuraformPageComponent,
-    DuraformOrderListPageComponent,
+    OrderListPageComponent,
     PaginationComponent,
     DuraformQuotePageComponent,
     DuraformPriceGridPageComponent,

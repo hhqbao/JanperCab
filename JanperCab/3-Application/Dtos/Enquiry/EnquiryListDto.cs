@@ -33,7 +33,11 @@ namespace _3_Application.Dtos.Enquiry
 
         public string CustomerReference { get; set; }
 
-        public bool IsRoutingOnly { get; set; }
+        public string JobType { get; set; }
+
+        public string DoorType { get; set; }
+
+        public string DoorColour { get; set; }
 
         public CustomerDto Customer { get; set; }
 
@@ -41,7 +45,11 @@ namespace _3_Application.Dtos.Enquiry
 
         public string DeliveryNote { get; set; }
 
+        public bool HasBeenDelivered { get; set; }
+
         public bool HasBeenInvoiced { get; set; }
+
+        public decimal TotalPrice { get; set; }
 
 
 

@@ -1,4 +1,4 @@
-<div class="duraform-order-list-page">
+<div class="order-list-page">
   <app-float-box *ngIf="showCustomerPicker" [width]="150">
     <div style="padding: 2rem; background-color: white">
       <div class="row" style="margin-bottom: 1.5rem">
@@ -37,8 +37,8 @@
       ></app-customer-list>
     </div>
   </app-float-box>
-  <app-simple-box [heading]="'Duraform Order List'" [height]="'100%'">
-    <div class="duraform-order-list-page__control-box">
+  <app-simple-box [heading]="'Order List'" [height]="'100%'">
+    <div class="order-list-page__control-box">
       <div
         class="row"
         *ngIf="
@@ -136,7 +136,7 @@
             Ref
           </th>
           <th
-            style="width: 10rem"
+            style="width: 15rem"
             [ngClass]="{
               active: filterValues.sortBy === 'type',
               asc: filterValues.direction === 'asc',
@@ -180,12 +180,14 @@
             Duration
           </th>
           <th style="width: 15rem">Status</th>
+          <th class="text-center" style="width: 7rem">Invoiced</th>
           <th style="width: 15rem">Created At</th>
+          <th class="text-right" style="width: 15rem">Total Price</th>
         </tr>
       </thead>
       <tbody *ngIf="!isLoading && itemList.items.length === 0">
         <tr>
-          <td colspan="9">
+          <td colspan="11">
             <i>No Order Match</i>
           </td>
         </tr>
@@ -199,7 +201,7 @@
             {{ order.customerReference }}
           </td>
           <td (click)="onSelectOrder(order.id)">
-            {{ order.isRoutingOnly ? "DSW" : "DF" }}
+            {{ order.doorType }}
           </td>
           <td (click)="onSelectOrder(order.id)">
             {{ order.customer.name }}
@@ -209,15 +211,29 @@
           </td>
           <td (click)="onSelectOrder(order.id)">{{ order.deliveryNote }}</td>
           <td (click)="onSelectOrder(order.id)">
-            {{
-              order.hasBeenInvoiced ? "Complete" : order.daysInSystem + " days"
-            }}
+            <span
+              *ngIf="!order.isCompleted"
+              [ngClass]="{ 'text-alert text-bold': order.daysInSystem >= 8 }"
+            >
+              {{ order.daysInSystem + " days" }}
+            </span>
+            <span *ngIf="order.isCompleted">Complete</span>
           </td>
           <td (click)="onSelectOrder(order.id)">
-            {{ order.statusDescription }}
+            <span [ngClass]="{ 'text-green': order.isCompleted }">
+              {{ order.statusDescription }}
+            </span>
+          </td>
+          <td class="text-center">
+            <b *ngIf="order.hasBeenInvoiced">
+              <i class="fa fa-check-circle text-green" aria-hidden="true"></i>
+            </b>
           </td>
           <td>
             {{ order.createdDate | date: "dd/MM/yyyy hh:mm" }}
+          </td>
+          <td class="text-right">
+            {{ order.totalPrice | currency }}
           </td>
         </tr>
       </tbody>
